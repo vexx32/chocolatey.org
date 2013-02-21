@@ -204,7 +204,16 @@
 
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_shortname = 'chocolatey'; 
+        var disqus_shortname = 'chocolatey';
+
+        var commentItem;
+        function disqus_config() {
+            this.callbacks.onNewComment = [function (comment) {
+                //comment.id comment.text
+                //commentItem = comment;
+                //console.log('New comment: ' + comment.text);
+            } ];
+        }
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
