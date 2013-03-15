@@ -14,7 +14,7 @@
                 @if (Model.Prerelease)
                 {<text> -Pre </text>}</code>
             </div>
-            <h1><a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @if (Model.UseVersion) {<text> @Model.Version</text>}</a></h1>
+            <h1><a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a></h1>
             @*<pre>cinst @Model.Id</pre>*@
             <h2>By:</h2>
             <ul class="owners">
