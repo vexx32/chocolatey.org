@@ -201,11 +201,16 @@
             <li>Share your experiences with the package, or extra configuration or got yas that you've found.</li>
         </ul>
     </p>
+    
+@{
+    var disqusUrl = Request.Url.Scheme + "://" + Request.Url.Host + @Url.Package(Model.Id);
+}
 
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'chocolatey';
 
+        var disqus_url = '@disqusUrl';
         var commentItem;
         function disqus_config() {
             this.callbacks.onNewComment = [function (comment) {
