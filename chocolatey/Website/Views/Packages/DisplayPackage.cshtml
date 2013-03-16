@@ -186,16 +186,7 @@
     <p>Ground rules: <br />
         <ul>
             <li>This discussion is only about @Model.Title and the @Model.Title package. If you have feedback for chocolatey, please contact the <a href="http://groups.google.com/group/chocolatey">google group</a>.</li>
-            @if (Model.IsLatestVersionAvailable)
-            {
-                <li>This discussion will carry over multiple versions. If you have a comment about a particular version, please note that in your comments.</li>
-                <li>This discussion may also have comments on the particular <a href="@Url.Package(Model.Id, Model.Version)">package version page</a>. </li>
-            }
-            else
-            {
-                <li>This discussion may also have comments on the general <a href="@Url.Package(Model.Id)">package page</a>. </li>
-            }
-            
+            <li>This discussion will carry over multiple versions. If you have a comment about a particular version, please note that in your comments.</li>
             <li>This is not a substitute for contacting package maintainers (aka package owners). Please use the link on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">contact maintainers</a>.</li>
             <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
             <li>Share your experiences with the package, or extra configuration or got yas that you've found.</li>
