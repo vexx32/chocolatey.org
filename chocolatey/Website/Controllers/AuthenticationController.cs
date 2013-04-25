@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery
 {
@@ -18,14 +19,13 @@ namespace NuGetGallery
             this.userSvc = userSvc;
         }
 
-        //[RequireRemoteHttps]
+        [RequireHttpsAppHarbor]
         public virtual ActionResult LogOn()
         {
             return View();
         }
 
-        //[HttpPost, RequireRemoteHttps]
-        [HttpPost]
+        [HttpPost, RequireHttpsAppHarbor]
         public virtual ActionResult LogOn(SignInRequest request, string returnUrl)
         {
             // TODO: improve the styling of the validation summary

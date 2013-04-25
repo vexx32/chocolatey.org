@@ -1162,6 +1162,7 @@
     <Compile Include="MvcOverrides\HttpContextProxy.cs" />
     <Compile Include="MvcOverrides\HttpRequestDecorator.cs" />
     <Compile Include="MvcOverrides\HttpRequestProxy.cs" />
+    <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />

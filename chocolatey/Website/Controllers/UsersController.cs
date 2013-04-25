@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery
 {
@@ -33,7 +34,7 @@ namespace NuGetGallery
             this.profilesService = profilesService;
         }
 
-        [Authorize]
+        [Authorize, RequireHttpsAppHarbor]
         public virtual ActionResult Account()
         {
             var user = GetService<IUserByUsernameQuery>().Execute(Identity.Name);
@@ -45,7 +46,7 @@ namespace NuGetGallery
             });
         }
 
-        [Authorize]
+        [Authorize, RequireHttpsAppHarbor]
         public virtual ActionResult Edit()
         {
             var user = userService.FindByUsername(currentUser.Identity.Name);
@@ -75,8 +76,8 @@ namespace NuGetGallery
             };
             return View(model);
         }
-        
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+
+        [Authorize, HttpPost, RequireHttpsAppHarbor,ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditProfileViewModel profile)
         {
             if (ModelState.IsValid)
@@ -119,12 +120,13 @@ namespace NuGetGallery
             return View(profile);
         }
 
+        [RequireHttpsAppHarbor]
         public virtual ActionResult Register()
         {
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
         public virtual ActionResult Register(RegisterRequest request)
         {
             // TODO: consider client-side validation for unique username
@@ -169,7 +171,7 @@ namespace NuGetGallery
             }
         }
 
-        [Authorize]
+        [Authorize, RequireHttpsAppHarbor]
         public virtual ActionResult Packages()
         {
             var user = userService.FindByUsername(currentUser.Identity.Name);
@@ -333,13 +335,13 @@ namespace NuGetGallery
             return View(model);
         }
 
-        [Authorize]
+        [Authorize, RequireHttpsAppHarbor]
         public virtual ActionResult ChangePassword()
         {
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken, Authorize]
+        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, Authorize]
         public virtual ActionResult ChangePassword(PasswordChangeViewModel model)
         {
             if (ModelState.IsValid)
