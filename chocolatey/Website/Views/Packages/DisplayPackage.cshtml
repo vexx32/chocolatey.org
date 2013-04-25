@@ -194,7 +194,7 @@
     </p>
     
 @{
-    var disqusUrl = Request.Url.Scheme + "://" + Request.Url.Host + @Url.Package(Model.Id);
+    var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
 }
 
     <div id="disqus_thread"></div>
