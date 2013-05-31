@@ -110,7 +110,8 @@ nav, section { display: block; }
 }
 
 .prerelease-message,
-.not-latest-message {
+.not-latest-message, 
+.app-or-tool-message {
     border-radius: 0 0 5px 5px;
     -moz-border-radius:  0 0 5px 5px;
     -webkit-border-radius:  0 0 5px 5px;
@@ -132,6 +133,19 @@ nav, section { display: block; }
     background-color: #eff7fa;
     border-color: #52a4ca;
     color: #52a4ca;
+}
+
+.app-or-tool-message
+{
+    background-color: #eeeeee;
+    color: #474334;
+    border-top: 1px solid;
+     border-color: #bbb9b6;
+    margin-top: -10px;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius:  5px 5px 5px 5px;
+    -webkit-border-radius:  5px 5px 5px 5px;
+    font-size: 1.1em;
 }
 
 /* Header */

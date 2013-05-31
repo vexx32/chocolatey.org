@@ -63,6 +63,15 @@
                 version</a> of @Model.Title available.
         </p>
     }
+    @if (Model.IsAppOrTool) 
+    {
+        <p class="app-or-tool-message">
+            This is an application (*.app / *.install) or a tool (*.tool / *.commandline) package. 
+            Learn more about chocolatey's distinction of 
+            <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-application-and-a-tool">apps versus tools</a> 
+            and/or learn about <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-installapp-iee-gitinstall-commandlinetool-ie-gitcommandline-and--ie-git">this kind of package</a>.
+        </p>
+    }
     <hgroup class="page-heading">
         <h1>@Model.Title</h1>
         <h2>@Model.Version</h2>
