@@ -44,8 +44,9 @@ namespace NuGetGallery
             }
         }
 
-        public bool IsAppOrTool {
+        public bool IsInstallOrPortable {
             get { return Id.EndsWith(".install") 
+                    || Id.EndsWith(".portable") 
                     || Id.EndsWith(".app") 
                     || Id.EndsWith(".tool") 
                     || Id.EndsWith(".commandline"); 
