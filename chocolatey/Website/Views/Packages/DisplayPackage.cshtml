@@ -63,13 +63,14 @@
                 version</a> of @Model.Title available.
         </p>
     }
-    @if (Model.IsAppOrTool) 
+    @if (Model.IsInstallOrPortable) 
     {
         <p class="app-or-tool-message">
-            This is an application (*.app / *.install) or a tool (*.tool / *.commandline) package. 
+            This is an installer (*.install) or a portable (*.portable) application package. 
             Learn more about chocolatey's distinction of 
-            <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-application-and-a-tool">apps versus tools</a> 
-            and/or learn about <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-installapp-iee-gitinstall-commandlinetool-ie-gitcommandline-and--ie-git">this kind of package</a>.
+            <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">installed versus portable apps</a> 
+            and/or learn about <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-gitinstall-portable-ie-gitportable-and--ie-git">this kind of package</a>.
+            Note that the suffix *.app is a synonym for *.install and *.commandline and *.tool mean the same as *.portable. But these suffixes are deprecated in favor of *.install and *.portable, because the latter are more logical and understandable.
         </p>
     }
     <hgroup class="page-heading">
