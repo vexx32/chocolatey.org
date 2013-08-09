@@ -665,9 +665,9 @@ header.main {
     /* Icon */
     #sideColumn .logo {
         display: block;
-        height: 128px;
+        max-height: 128px;
         margin: 0 0 20px 0;
-        width: 128px;
+        max-width: 128px;
             
     }      
         
@@ -794,7 +794,7 @@ header.main {
         section.package .side img {
             display: block;
             margin:0 auto;
-            width: 48px;
+            width: 48gpx;
             max-height:48px;
         }
             
