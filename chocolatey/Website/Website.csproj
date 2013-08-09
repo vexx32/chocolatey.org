@@ -1339,7 +1339,7 @@
     <Content Include="Content\Images\packageDefaultIcon.png" />
     <Content Include="Content\Images\packageOwnerActionIcons.png" />
     <Content Include="Content\Images\packagesDefaultIcon.png" />
-    <Content Include="Content\Images\RealDimensionsLogo.jpg" />
+    <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
     <Content Include="Content\Images\required.png" />
