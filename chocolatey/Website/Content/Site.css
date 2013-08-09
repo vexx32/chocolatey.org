@@ -792,8 +792,8 @@ header.main {
     }
     
         section.package .side img {
-            height: 50px;
             width: 50px;
+            max-height:50px;
         }
             
             
