@@ -794,7 +794,7 @@ header.main {
         section.package .side img {
             display: block;
             margin:0 auto;
-            width: 48gpx;
+            max-width: 48px;
             max-height:48px;
         }
             
