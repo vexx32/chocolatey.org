@@ -1,9 +1,9 @@
 ﻿/* Footer */
 #layout-footer {
-    background:#e4f1f7;
-    color: #3e483c;
+    background:#f7f1e4;
+    color: #3c483e;
     clear: both;
-    border-top: 1px solid #d3e7fe;   
+    border-top: 1px solid #fee7d3;   
     padding-top: 0px;
     padding-bottom: 0px;
     position: relative;
@@ -45,7 +45,7 @@
 
 #realdimensions-logo
 {
-    background: url(../Content/Images/RealDimensionsLogo.jpg) no-repeat;
+    background: url(../Content/Images/RealDimensionsLogo.png) no-repeat;
     height: 60px;
     display: block;
     margin-top: 0px;
