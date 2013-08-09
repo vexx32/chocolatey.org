@@ -44,7 +44,7 @@
             </ul>
             <div id="searchBox" role="search">
                 <form action="@Url.PackageList()" method="get">
-                <input name="q" id="searchBoxInput" placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" />
+                <input name="q" id="searchBoxInput" placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" autofocus />
                 <input id="searchBoxSubmit" type="submit" value=" " />
                 </form>
             </div>
