@@ -80,7 +80,7 @@
         box-shadow: 2px 2px 3px #6e6e6e;
         color: #e2e2e2;
         display: inline-block;
-        font: 1.25em 'andale mono', 'lucida console', monospace; 
+        font: 1.25em consolas, 'andale mono', 'lucida console', monospace; 
         line-height: 0.90em;
         overflow: auto;
         padding: 15px;
