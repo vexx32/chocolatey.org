@@ -23,17 +23,31 @@ $tempDir = Join-Path $chocTempDir "chocInstall"
 if (![System.IO.Directory]::Exists($tempDir)) {[System.IO.Directory]::CreateDirectory($tempDir)}
 $file = Join-Path $tempDir "chocolatey.zip"
 
-# download the package
-Write-Host "Downloading $url to $file"
-$downloader = new-object System.Net.WebClient
-$downloader.DownloadFile($url, $file)
+function Download-File {
+param (
+  [string]$url,
+  [string]$file
+ )
+  Write-Host "Downloading $url to $file"
+  $downloader = new-object System.Net.WebClient
+  $downloader.DownloadFile($url, $file)
+}
+# download the package
+Download-File $url $file
+
+#download 7zip
+Write-Host "Download 7Zip commandline tool"
+$7zaExe = Join-Path $tempDir '7za.exe'
+Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
+
 
 # unzip the package
-Write-Host "Extracting $file to $destination..."
-$shellApplication = new-object -com shell.application 
-$zipPackage = $shellApplication.NameSpace($file) 
-$destinationFolder = $shellApplication.NameSpace($tempDir) 
-$destinationFolder.CopyHere($zipPackage.Items(),0x10)
+Write-Host "Extracting $file to $tempDir..."
+Start-Process "7za" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait
+#$shellApplication = new-object -com shell.application 
+#$zipPackage = $shellApplication.NameSpace($file) 
+#$destinationFolder = $shellApplication.NameSpace($tempDir) 
+#$destinationFolder.CopyHere($zipPackage.Items(),0x10)
 
 # call chocolatey install
 Write-Host "Installing chocolatey on this machine"
