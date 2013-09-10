@@ -29,7 +29,7 @@
                 .OrderByDescending(p => p.Published);
 
             SyndicationFeed feed = new SyndicationFeed("Chocolatey", "Chocolatey Packages", new Uri(siteRoot));
-            feed.Copyright = new TextSyndicationContent("Chocolatey copyright FerventCoder Software, Packages copyright original owner(s), Products copyright original author(s).");
+            feed.Copyright = new TextSyndicationContent("Chocolatey copyright FerventCoder Software, Packages copyright original maintainer(s), Products copyright original author(s).");
             feed.Language = "en-US";
 
             List<SyndicationItem> items = new List<SyndicationItem>();
