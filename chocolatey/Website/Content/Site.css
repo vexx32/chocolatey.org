@@ -603,7 +603,7 @@ header.main {
         padding-right: 6px;
     }
     
-    /* Owners */
+    /* Owners (maintainers) */
     .owners { 
         list-style: none;
         margin: 0;
@@ -644,7 +644,7 @@ header.main {
         margin: 20px 0 6px -6px;
     }
     
-    /* Package page owners */
+    /* Package page owners (maintainers) */
     .package-page .owners li {
         margin-bottom: 12px;
     }

@@ -34,7 +34,7 @@
             }
             <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">
                 Report Abuse</a></li>
-            <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Owners</a></li>
+            <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
             @*@if (User.Identity.IsAuthenticated)
             {*@
                 <li><a href="@Url.PackageDownload(2,Model.Id, Model.Version)" title="Download the raw nupkg file.">Download</a></li>
@@ -43,7 +43,7 @@
             }*@
             @if (Model.IsOwner(User)) {
                 <li><a href="@Url.EditPackage(Model)">Edit Package</a></li>
-                <li><a href="@Url.ManagePackageOwners(Model)">Manage Owners</a></li>
+                <li><a href="@Url.ManagePackageOwners(Model)">Manage Maintainers</a></li>
                 <li><a href="@Url.DeletePackage(Model)" class="delete">Delete Package</a></li>
             }
         </ul>
@@ -86,7 +86,7 @@
     {                                        
         <p  class="message warning">
             This package is unlisted and hidden from package listings.
-            You can see the package because you are one of its owners. To list the package again, 
+            You can see the package because you are one of its maintainers. To list the package again, 
             <a href="@Url.DeletePackage(Model)">change its listing setting</a>.
         </p>                             
     }
@@ -111,7 +111,7 @@
         }
     }
 
-    <h3>Owners</h3>
+    <h3>Maintainers</h3>
     @ViewHelpers.OwnersGravatar(Model.Owners, 32, Url)
     <h3>Authors</h3>
     <ul class="authors">
@@ -197,7 +197,7 @@
         <ul>
             <li>This discussion is only about @Model.Title and the @Model.Title package. If you have feedback for chocolatey, please contact the <a href="http://groups.google.com/group/chocolatey">google group</a>.</li>
             <li>This discussion will carry over multiple versions. If you have a comment about a particular version, please note that in your comments.</li>
-            <li>This is not a substitute for contacting package maintainers (aka package owners). Please use the link on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">contact maintainers</a>.</li>
+            <li>This is not a substitute for contacting package maintainers. Please use the link on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">contact maintainers</a>.</li>
             <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
             <li>Share your experiences with the package, or extra configuration or got yas that you've found.</li>
         </ul>
