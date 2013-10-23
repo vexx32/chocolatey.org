@@ -1,3 +1,7 @@
+param(
+  [switch] $pre = $false
+)
+
 # ==============================================================================
 # 
 # Fervent Coder Copyright 2011 - Present - Released under the Apache 2.0 License
@@ -32,7 +36,20 @@ param (
   $downloader = new-object System.Net.WebClient
   $downloader.DownloadFile($url, $file)
 }
-# download the package
+if ($pre) {
+  $absoluteLatestVersionUrl = "http://chocolatey.org/api/v2/Packages()?`$filter=(Id%20eq%20'chocolatey')%20and%20IsAbsoluteLatestVersion"
+  $absXml = (new-object net.webclient).DownloadString("$absoluteLatestVersionUrl")
+  $regex = '\<content type\=\"application\/zip\" src=\"(?<Url>.*)\"'
+  $matchingItems = ([regex]$regex).match($absXml)
+  if ($matchingItems.Success) {
+    $groupMatch = $matchingItems.Groups['Url']
+    if ($groupMatch.Success) {
+      $url = $groupMatch.Value
+    }
+  }
+}
+
+# download the package
 Download-File $url $file
 
 #download 7zip
@@ -58,13 +75,13 @@ $chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 
 write-host 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
-$nuGetPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName, [System.EnvironmentVariableTarget]::User)
-$nugetExePath = 'C:\NuGet\bin'
-if ($nuGetPath -ne $null) {
-  $nugetExePath = Join-Path $nuGetPath 'bin'
+$chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName, [System.EnvironmentVariableTarget]::User)
+$chocoExePath = 'C:\Chocolatey\bin'
+if ($chocoPath -ne $null) {
+  $chocoExePath = Join-Path $chocoPath 'bin'
 }
 
-if ($($env:Path).ToLower().Contains($($nugetExePath).ToLower()) -eq $false) {
+if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower()) -eq $false) {
   $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
 }
 
