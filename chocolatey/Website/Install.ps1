@@ -1,7 +1,3 @@
-param(
-  [switch] $pre = $false
-)
-
 # ==============================================================================
 # 
 # Fervent Coder Copyright 2011 - Present - Released under the Apache 2.0 License
@@ -36,24 +32,11 @@ param (
   $downloader = new-object System.Net.WebClient
   $downloader.DownloadFile($url, $file)
 }
-if ($pre) {
-  $absoluteLatestVersionUrl = "http://chocolatey.org/api/v2/Packages()?`$filter=(Id%20eq%20'chocolatey')%20and%20IsAbsoluteLatestVersion"
-  $absXml = (new-object net.webclient).DownloadString("$absoluteLatestVersionUrl")
-  $regex = '\<content type\=\"application\/zip\" src=\"(?<Url>.*)\"'
-  $matchingItems = ([regex]$regex).match($absXml)
-  if ($matchingItems.Success) {
-    $groupMatch = $matchingItems.Groups['Url']
-    if ($groupMatch.Success) {
-      $url = $groupMatch.Value
-    }
-  }
-}
 
 # download the package
 Download-File $url $file
 
-#download 7zip
-Write-Host "Download 7Zip commandline tool"
+# download 7zipWrite-Host "Download 7Zip commandline tool"
 $7zaExe = Join-Path $tempDir '7za.exe'
 Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
 
