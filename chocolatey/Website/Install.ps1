@@ -36,14 +36,15 @@ param (
 # download the package
 Download-File $url $file
 
-# download 7zipWrite-Host "Download 7Zip commandline tool"
+# download 7zip
+Write-Host "Download 7Zip commandline tool"
 $7zaExe = Join-Path $tempDir '7za.exe'
 Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
 
 
 # unzip the package
 Write-Host "Extracting $file to $tempDir..."
-Start-Process "7za" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait
+Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait
 #$shellApplication = new-object -com shell.application 
 #$zipPackage = $shellApplication.NameSpace($file) 
 #$destinationFolder = $shellApplication.NameSpace($tempDir) 

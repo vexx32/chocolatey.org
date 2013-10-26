@@ -32,7 +32,8 @@ param (
   $downloader = new-object System.Net.WebClient
   $downloader.DownloadFile($url, $file)
 }
-$absoluteLatestVersionUrl = "http://chocolatey.org/api/v2/Packages()?`$filter=(Id%20eq%20'chocolatey')%20and%20IsAbsoluteLatestVersion"
+
+$absoluteLatestVersionUrl = "http://chocolatey.org/api/v2/Packages()?`$filter=(Id%20eq%20'chocolatey')%20and%20IsAbsoluteLatestVersion"
 $absXml = (new-object net.webclient).DownloadString("$absoluteLatestVersionUrl")
 $regex = '\<content type\=\"application\/zip\" src=\"(?<Url>.*)\"'
 $matchingItems = ([regex]$regex).match($absXml)
@@ -46,7 +47,8 @@ if ($matchingItems.Success) {
 # download the package
 Download-File $url $file
 
-#download 7zip
+#download 7zip
+
 Write-Host "Download 7Zip commandline tool"
 $7zaExe = Join-Path $tempDir '7za.exe'
 Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
@@ -54,7 +56,7 @@ Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7z
 
 # unzip the package
 Write-Host "Extracting $file to $tempDir..."
-Start-Process "7za" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait
+Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait
 #$shellApplication = new-object -com shell.application 
 #$zipPackage = $shellApplication.NameSpace($file) 
 #$destinationFolder = $shellApplication.NameSpace($tempDir) 
