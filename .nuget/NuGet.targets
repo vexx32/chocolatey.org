@@ -5,11 +5,15 @@
     <Target Name="RestorePackages" DependsOnTargets="CheckPrerequisites">
         <Exec Command="$(RestoreCommand)"
               LogStandardErrorAsError="true"
-              Condition="Exists('$(PackagesConfig)')" />
+              Condition="Exists('$(PackagesConfig)')" 
+              ContinueOnError="true"
+              />
     </Target>
 
     <Target Name="BuildPackage" DependsOnTargets="CheckPrerequisites">
         <Exec Command="$(BuildCommand)"
-              LogStandardErrorAsError="true" />
+              LogStandardErrorAsError="true"
+              ContinueOnError="true"
+              />
     </Target>
 </Project>
