@@ -37,10 +37,8 @@ h4 img, h5 img, h6 img {
   margin: 0;
 }
 
-.page-heading h1,
-.page-heading h2,
-.search h1,
-.search h2, {
+.hgroup h1,
+.hgroup h2 {
     margin: 0;
     padding: 0;
 }
