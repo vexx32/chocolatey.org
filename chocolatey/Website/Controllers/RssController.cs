@@ -28,12 +28,22 @@
                 .GetPackagesForListing(includePrerelease: false)
                 .OrderByDescending(p => p.Published);
 
+            if (page != null && pageSize != null)
+            {
+                int skip = page.GetValueOrDefault() * pageSize.GetValueOrDefault(1);
+                packageVersions = packageVersions.Skip(skip).Take(pageSize.GetValueOrDefault(1));
+            }
+            else if (pageSize != null)
+            {
+                packageVersions = packageVersions.Take(pageSize.GetValueOrDefault(1));
+            }
+
             SyndicationFeed feed = new SyndicationFeed("Chocolatey", "Chocolatey Packages", new Uri(siteRoot));
             feed.Copyright = new TextSyndicationContent("Chocolatey copyright RealDimensions Software, LLC, Packages copyright original maintainer(s), Products copyright original author(s).");
             feed.Language = "en-US";
 
             List<SyndicationItem> items = new List<SyndicationItem>();
-            foreach (Package package in packageVersions.ToList())
+            foreach (Package package in packageVersions.ToList().OrEmptyListIfNull())
             {
                 string title = string.Format("{0} ({1})", package.PackageRegistration.Id, package.Version);
                 var galleryUrl = siteRoot + "packages/" + package.PackageRegistration.Id + "/" + package.Version;
@@ -48,8 +58,17 @@
 
                 items.Add(item);
             }
-            //this will bomb until you have one published package in the feed.
-            feed.LastUpdatedTime = packageVersions.First().Published;
+
+            try
+            {
+                var mostRecentPackage = packageVersions.FirstOrDefault();
+                feed.LastUpdatedTime = mostRecentPackage == null ? DateTime.Now : mostRecentPackage.Published;
+            }
+            catch (Exception)
+            {
+                feed.LastUpdatedTime = DateTime.Now;
+            }
+
             feed.Items = items;
 
             return new RSSActionResult { Feed = feed };
