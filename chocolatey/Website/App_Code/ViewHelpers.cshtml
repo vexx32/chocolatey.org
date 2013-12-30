@@ -3,6 +3,7 @@
 @using System.Configuration
 @using System.Linq;
 @using System.Collections;
+@using System.Web;
 @using System.Web.Mvc;
 @using Microsoft.Web.Helpers;
 @using NuGetGallery;
@@ -76,7 +77,7 @@
 
 @helper GravatarImage(string email, string username, int size) {
     var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "owner-image" });
-    if (gravatarHtml != null && Request.IsSecureConnection)
+    if (gravatarHtml != null && System.Web.HttpContext.Current.Request.IsSecureConnection)
     {
         gravatarHtml = new HtmlString(gravatarHtml.ToHtmlString().Replace("http://www.gravatar.com/", "https://secure.gravatar.com/"));
     }
