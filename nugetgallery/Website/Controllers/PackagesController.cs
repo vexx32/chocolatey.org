@@ -266,7 +266,7 @@ namespace NuGetGallery
             var fromAddress = new MailAddress(user.EmailAddress, user.Username);
             messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme));
 
-            string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the owners of {0}.", id);
+            string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the maintainers of {0}.", id);
             TempData["Message"] = message;
             return RedirectToAction(MVC.Packages.DisplayPackage(id, null));
         }

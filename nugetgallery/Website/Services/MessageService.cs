@@ -63,14 +63,14 @@ _Message sent from {5}_
 
         public void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl)
         {
-            string subject = "[{0}] Message for owners of the package '{1}'";
-            string body = @"_User {0} &lt;{1}&gt; sends the following message to the owners of Package '{2}'._
+            string subject = "[{0}] Message for maintainers of the package '{1}'";
+            string body = @"_User {0} &lt;{1}&gt; sends the following message to the maintainers of Package '{2}'._
 
 {3}
 
 -----------------------------------------------
 <em style=""font-size: 0.8em;"">
-    To stop receiving contact emails as an owner of this package, sign in to the {4} and 
+    To stop receiving contact emails as a maintainer of this package, sign in to the {4} and 
     [change your email notification settings]({5}).
 </em>";
 
@@ -231,12 +231,12 @@ The {2} Team";
                 return;
             }
 
-            string subject = "[{0}] The user '{1}' wants to add you as an owner of the package '{2}'.";
+            string subject = "[{0}] The user '{1}' wants to add you as a maintainer of the package '{2}'.";
 
-            string body = @"The user '{0}' wants to add you as an owner of the package '{1}'. 
-If you do not want to be listed as an owner of this package, simply delete this email.
+            string body = @"The user '{0}' wants to add you as a maintainer of the package '{1}'. 
+If you do not want to be listed as a maintainer of this package, simply delete this email.
 
-To accept this request and become a listed owner of the package, click the following URL:
+To accept this request and become a listed maintainer of the package, click the following URL:
 
 [{2}]({2})
 

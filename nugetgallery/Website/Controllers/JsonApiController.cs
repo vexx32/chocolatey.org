@@ -57,12 +57,12 @@ namespace NuGetGallery
             }
             if (!package.IsOwner(HttpContext.User))
             {
-                return new { success = false, message = "You are not the package owner." };
+                return new { success = false, message = "You are not the package maintainer." };
             }
             var user = userSvc.FindByUsername(username);
             if (user == null)
             {
-                return new { success = false, message = "Owner not found" };
+                return new { success = false, message = "Maintainer not found" };
             }
 
             var currentUser = userSvc.FindByUsername(HttpContext.User.Identity.Name);
@@ -83,12 +83,12 @@ namespace NuGetGallery
             }
             if (!package.IsOwner(HttpContext.User))
             {
-                return new { success = false, message = "You are not the package owner." };
+                return new { success = false, message = "You are not the package maintainer." };
             }
             var user = userSvc.FindByUsername(username);
             if (user == null)
             {
-                return new { success = false, message = "Owner not found" };
+                return new { success = false, message = "Maintainer not found" };
             }
 
             packageSvc.RemovePackageOwner(package, user);
