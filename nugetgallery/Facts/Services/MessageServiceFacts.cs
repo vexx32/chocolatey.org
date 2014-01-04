@@ -30,9 +30,9 @@ namespace NuGetGallery.Services
                 mailSender.Verify(m => m.Send(It.IsAny<MailMessage>()));
                 Assert.Equal("yung@example.com", message.To[0].Address);
                 Assert.Equal("flynt@example.com", message.To[1].Address);
-                Assert.Contains("[NuGet Gallery] Message for owners of the package 'smangit'", message.Subject);
+                Assert.Contains("[NuGet Gallery] Message for maintainers of the package 'smangit'", message.Subject);
                 Assert.Contains("Test message", message.Body);
-                Assert.Contains("User flossy &lt;smangit@example.com&gt; sends the following message to the owners of Package 'smangit'.", message.Body);
+                Assert.Contains("User flossy &lt;smangit@example.com&gt; sends the following message to the maintainers of Package 'smangit'.", message.Body);
             }
 
             [Fact]
@@ -166,9 +166,9 @@ namespace NuGetGallery.Services
 
                 Assert.Equal("new-owner@example.com", message.To[0].Address);
                 Assert.Equal("existing-owner@example.com", message.From.Address);
-                Assert.Equal("[NuGet Gallery] The user 'Existing' wants to add you as an owner of the package 'CoolStuff'.", message.Subject);
+                Assert.Equal("[NuGet Gallery] The user 'Existing' wants to add you as a maintainer of the package 'CoolStuff'.", message.Subject);
                 Assert.Contains(confirmationUrl, message.Body);
-                Assert.Contains("The user 'Existing' wants to add you as an owner of the package 'CoolStuff'.", message.Body);
+                Assert.Contains("The user 'Existing' wants to add you as a maintainer of the package 'CoolStuff'.", message.Body);
             }
 
             [Fact]

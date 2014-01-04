@@ -4,34 +4,34 @@
 }
 
 
-<h1 class="page-heading">Manage Owners for Package @Model.Title</h1>
+<h1 class="page-heading">Manage Maintainers for Package @Model.Title</h1>
 <div class="error message" data-bind="text: message, visible: message"></div>
 
-<h2>Current Owners</h2>
+<h2>Current Maintainers</h2>
 <ul id="package-owner-list" data-bind="foreach: owners">
     <li>
         <span data-bind="text: name"></span> <em data-bind="visible: current">(that&#8217;s you!)</em> 
         <em data-bind="visible: pending">(pending approval)</em> 
-        <a href="#" title="Remove as owner of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
+        <a href="#" title="Remove as maintainer of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
     </li>
 </ul>
 
-<h2>Add Owner</h2>
+<h2>Add Maintainer</h2>
 <p>
-    Enter an owner's username to add them as a package owner.
+    Enter a maintainer's username to add them as a package maintainer.
 </p>
  <p class="message">
-    NOTE: All package owners have full control over their packages,
-    including the ability to remove other users as owners.
+    NOTE: All package maintainers have full control over their packages,
+    including the ability to remove other users as maintainers.
 </p>
 @using (Html.BeginForm()) {
     <fieldset class="form">
-        <legend>Add Owner</legend>
+        <legend>Add Maintainer</legend>
         <div class="form-field">
             <label for="newOwnerUserName">Username</label>
             <input type="text" name="newOwnerUserName" data-bind="value: newOwner().name" />
         </div>
-        <input type="submit" value="Add" title="Add the user as an owner to @Model.Title" data-bind="click: addOwner" />
+        <input type="submit" value="Add" title="Add the user as a maintainer to @Model.Title" data-bind="click: addOwner" />
     </fieldset>
 }
 
@@ -86,7 +86,7 @@
         };
         ko.applyBindings(viewModel);
 
-        // Load initial owners.
+        // Load initial owners (maintainers).
         $mvc.JsonApi.GetPackageOwners(viewModel.package)
         .done(function (data) {
             viewModel.owners($.map(data, function (item) { return new Owner(item) }));

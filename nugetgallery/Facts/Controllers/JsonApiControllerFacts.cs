@@ -30,7 +30,7 @@ namespace NuGetGallery.Controllers
                 var result = controller.AddPackageOwner("foo", "steve");
 
                 Assert.False(TestUtility.GetAnonymousPropertyValue<bool>(result, "success"));
-                Assert.Equal("You are not the package owner.", TestUtility.GetAnonymousPropertyValue<string>(result, "message"));
+                Assert.Equal("You are not the package maintainer.", TestUtility.GetAnonymousPropertyValue<string>(result, "message"));
             }
 
             [Fact]
@@ -46,7 +46,7 @@ namespace NuGetGallery.Controllers
                 var result = controller.AddPackageOwner("foo", "steve");
 
                 Assert.False(TestUtility.GetAnonymousPropertyValue<bool>(result, "success"));
-                Assert.Equal("Owner not found", TestUtility.GetAnonymousPropertyValue<string>(result, "message"));
+                Assert.Equal("Maintainer not found", TestUtility.GetAnonymousPropertyValue<string>(result, "message"));
             }
 
             [Fact]
