@@ -53,7 +53,14 @@
         Keep this a secret. You can always regenerate your key at any time (invalidating 
         previous keys) if your token is accidentally revealed. The 
         <a href="http://nuget.codeplex.com/">NuGet</a> command-line utility allows you to 
-        submit a NuGet package to the gallery, and you would pass you token like this:
+        submit a NuGet package to the gallery. 
+    </p>
+    <p>
+        You can install the nuget command-line utility using chocolatey like so:
+        <pre>
+cinst nuget.commandline
+        </pre>
+        and you would pass your token like this:
     </p>
     
     <div id="generateKey">
@@ -78,8 +85,8 @@
             <h2>Example usage:</h2>
             <p>
                 <pre>
-nuget.exe setApiKey @Model.ApiKey
-nuget.exe push MyPackage.1.0.nupkg</pre>
+nuget setApiKey @Model.ApiKey
+nuget push MyPackage.1.0.nupkg</pre>
             </p>
         </div>
 
