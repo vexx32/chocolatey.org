@@ -5,21 +5,22 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>NuGet Gallery</title> 
+        <title>Chocolatey Gallery</title> 
         <link href="@Href("~/Content/site.css")" rel="stylesheet" />
+        <link href="@Href("~/Content/chocolatey.css")" rel="stylesheet" />
         <link href="@Href("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
         <script src="@Href("~/Scripts/modernizr-2.0.6-development-only.js")"></script>
     </head>
     <body>
         <div id="content-wrapper">
             <header class="main">
-                <div id="logo"><a href="@Href("~/")">NuGet Gallery</a></div>
+                <div id="logo"><a href="@Href("~/")">Chocolatey Gallery</a></div>
             </header>
             <nav class="main">
                 <ul id="menu">
                     <li><a href="@Href("~/")">Home</a></li>
                     <li><a href="@Href("~/Packages")">Packages</a></li>
-                    <li><a href="http://docs.nuget.org">Documentation</a></li>
+                    <li><a href="https://github.com/chocolatey/chocolatey/wiki">Documentation</a></li>
                     <li><a href="@Href("~/packages/upload")" class="upload">Upload Package</a></li>
                 </ul>
             </nav>
@@ -29,32 +30,52 @@
             </div>
         </div>
         <div id="layout-footer" class="group">
-            <footer id="footer">
-                <ul class="recommended">
-                    <li>
-                        <a href="http://docs.nuget.org/docs/start-here/overview">Overview</a>
-                        <p>NuGet is a Visual Studio 2010 extension that makes it easy to add, remove, and update libraries and...</p>
-                    </li>
-                    <li>
-                        <a href="http://docs.nuget.org/docs/start-here/installing-nuget">Install</a>
-                        <p>NuGet can be installed and updated using the Visual Studio Extension Manager. To check if your copy...</p>
-                    </li>
-                    <li>
-                        <a href="http://docs.nuget.org/docs/start-here/videos">Videos</a>
-                        <p>Watch screencasts and presentations about anything and everything NuGet.</p>
-                    </li>
-                    <li>
-                        <a href="http://docs.nuget.org/docs/start-here/nuget-faq">FAQ</a>
-                        <p>Read the Frequently Asked Questions about NuGet and see if your question made the list.</p>
-                    </li>
-                </ul>
-                <div class="license">
-                    <p>
-                        &copy; @DateTime.UtcNow.Year Outercurve Foundation.
-                    </p>
-                </div>
-            </footer>
-        </div>
+			<footer id="footer">
+				<ul class="recommended">
+					<li><a href="https://github.com/chocolatey/chocolatey/wiki">Overview</a>
+						<p>
+							Where did Chocolatey get it's name? What exactly is chocolatey anyway?</p>
+					</li>
+					<li><a href="http://groups.google.com/group/chocolatey">Discussion</a>
+						<p>
+							Find a possible bug? Got a feature request? Get involved in the discussion!</p>
+					</li>
+					<li><a href="http://bit.ly/chocolateyVideo">Video</a>
+						<p>
+							Want to see Chocolatey in action?</p>
+					</li>
+					<li><a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs">FAQ</a>
+						<p>
+							Read the Frequently Asked Questions about Chocolatey.</p>
+					</li>
+				</ul>
+				<div class="license">
+					<p>
+						<a href="https://twitter.com/chocolateynuget" class="twitter-follow-button" data-show-count="true"
+							data-width="250px" data-lang="en">Follow @@chocolateynuget</a> <a href="https://twitter.com/share"
+								class="twitter-share-button" data-hashtags="chocolatey" data-lang="en">Tweet</a>
+
+						<script type="text/javascript">
+							!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");
+						</script>
+
+						<br />
+						&copy; @DateTime.UtcNow.Year RealDimensions Software, LLC.
+					</p>
+					@ViewHelpers.ReleaseTag()
+				</div>
+				<div class="supporters">
+					Site made possible by the following sponsors:
+					<ul class="supporters">
+						<li></li>
+						<li><a href="http://codingutopia.com">RealDimensions</a> <a id="realdimensions-logo" href="http://codingutopia.com"></a></li>
+						<li><a href="http://appharbor.com">AppHarbor</a> <a id="appharbor-logo" href="http://appharbor.com">
+						</a></li>
+						<li></li>
+					</ul>
+				</div>
+			</footer>
+		</div>
         <script src="@Href("~/Scripts/jquery-1.6.2.min.js")"></script>
         @RenderSection("BottomScripts", required: false)
     </body>
