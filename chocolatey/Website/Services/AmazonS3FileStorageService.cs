@@ -31,7 +31,7 @@ namespace NuGetGallery
         public string BuildPath(string fileName)
         {
             //string.IsNullOrEmpty(folderName) ? String.Empty : folderName + "/",
-            return string.Format("http://{0}.s3.amazonaws.com/{1}", clientContext.BucketName, fileName);
+            return string.Format("https://{0}.s3.amazonaws.com/{1}", clientContext.BucketName, fileName);
         }
 
         private T WrapRequestInErrorHandler<T>(Func<T> func)
@@ -82,7 +82,7 @@ namespace NuGetGallery
             ListObjectsRequest request = new ListObjectsRequest();
             request.WithBucketName(clientContext.BucketName);
             request.WithPrefix(fileName);
-            
+
             using (AmazonS3 client = this.clientContext.CreateInstance())
             {
                 ListObjectsResponse response = WrapRequestInErrorHandler(() => client.ListObjects(request));
