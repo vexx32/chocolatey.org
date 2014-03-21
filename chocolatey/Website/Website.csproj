@@ -1311,6 +1311,7 @@
     <EmbeddedResource Include="..\..\nugetgallery\Website\Infrastructure\Elmah.SqlServer.sql">
       <Link>Infrastructure\Elmah.SqlServer.sql</Link>
     </EmbeddedResource>
+    <Content Include="7za.exe" />
     <Content Include="Content\chocolatey.css" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
