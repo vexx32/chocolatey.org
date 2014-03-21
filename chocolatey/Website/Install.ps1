@@ -39,7 +39,22 @@ Download-File $url $file
 # download 7zip
 Write-Host "Download 7Zip commandline tool"
 $7zaExe = Join-Path $tempDir '7za.exe'
-Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
+
+# Github's Raw endpoint does not honor TLS and the .net 2.0 client will
+# not fall back to Ssl3 un like the newer .net4 clients. So .net2 will 
+# time out if we do not explicitly set the protocol to Ssl3
+$currentProtocol = [System.Net.ServicePointManager]::SecurityProtocol
+try {
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Ssl3
+    Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
+}
+catch {
+    throw
+}
+finally {
+    [System.Net.ServicePointManager]::SecurityProtocol = $currentProtocol
+}
+
 
 
 # unzip the package
