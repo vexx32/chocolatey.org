@@ -8,15 +8,24 @@
     padding-bottom: 0px;
     position: relative;
     margin-top: -161px;
-    height: 330px;
+    height: 380px;
 }
 
 .supporters
 {
-    padding-top: 10px; 
+    padding-top: 6px; 
     vertical-align: bottom;
     clear: both;
     height: 140px;
+}
+
+.donate
+{
+    vertical-align: bottom;
+    clear: both;
+    height: 43px;
+    position: relative;
+    left: -18px;
 }
 
     footer#footer ul.supporters {
