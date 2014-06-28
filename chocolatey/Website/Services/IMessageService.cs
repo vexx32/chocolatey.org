@@ -4,8 +4,9 @@ namespace NuGetGallery
 {
     public interface IMessageService
     {
-        void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl);
-        void ReportAbuse(MailAddress fromAddress, Package package, string message);
+        void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl,string packageUrl);
+        void ReportAbuse(MailAddress fromAddress, Package package, string message, string packageUrl);
+        void ContactSiteAdmins(MailAddress fromAddress, Package package, string message, string packageUrl);
         void SendNewAccountEmail(MailAddress toAddress, string confirmationUrl);
         void SendEmailChangeConfirmationNotice(MailAddress newEmailAddress, string confirmationUrl);
         void SendPasswordResetInstructions(User user, string resetPasswordUrl);

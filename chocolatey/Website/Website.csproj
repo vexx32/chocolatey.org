@@ -1447,6 +1447,7 @@
     <Content Include="Web.ForbiddenHandlers.config" />
     <Content Include="Install.ps1" />
     <Content Include="InstallAbsoluteLatest.ps1" />
+    <Content Include="Views\Packages\ContactAdmins.cshtml" />
     <Content Include="Views\Pages\About.cshtml" />
   </ItemGroup>
   <ItemGroup />

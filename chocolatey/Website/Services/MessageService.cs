@@ -31,7 +31,7 @@ namespace NuGetGallery
             }
         }
 
-        public void ReportAbuse(MailAddress fromAddress, Package package, string message)
+        public void ReportAbuse(MailAddress fromAddress, Package package, string message, string packageUrl)
         {
             string subject = "[{0}] Abuse Report for Package '{1}' Version '{2}'";
             string body = @"_User {0} ({1}) reports the package '{2}' version '{3}' as abusive. 
@@ -40,6 +40,8 @@ namespace NuGetGallery
 {4}
 
 _Message sent from {5}_
+
+Package Url: [{6}]({6})
 ";
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
@@ -48,7 +50,41 @@ _Message sent from {5}_
                 package.PackageRegistration.Id,
                 package.Version,
                 message,
-                settings.GalleryOwnerName);
+                settings.GalleryOwnerName,
+                packageUrl);
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+
+                mailMessage.To.Add(settings.GalleryOwnerEmail);
+                SendMessage(mailMessage);
+            }
+        } 
+        
+        public void ContactSiteAdmins(MailAddress fromAddress, Package package, string message,string packageUrl)
+        {
+            string subject = "[{0}] Contact Site Admins for Package '{1}' Version '{2}'";
+            string body = @"_User {0} ({1}) is reporting on '{2}' version '{3}'. 
+{0} left the following information in the report:_
+
+{4}
+
+_Message sent from {5}_
+
+Package Url: [{6}]({6})
+";
+            body = String.Format(CultureInfo.CurrentCulture,
+                body,
+                fromAddress.DisplayName,
+                fromAddress.Address,
+                package.PackageRegistration.Id,
+                package.Version,
+                message,
+                settings.GalleryOwnerName,
+                packageUrl);
 
             using (var mailMessage = new MailMessage())
             {
@@ -61,13 +97,15 @@ _Message sent from {5}_
             }
         }
 
-        public void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl)
+        public void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl, string packageUrl)
         {
             string subject = "[{0}] Message for maintainers of the package '{1}'";
             string body = @"_User {0} &lt;{1}&gt; sends the following message to the maintainers of Package '{2}'._
 
 {3}
 
+
+Package Url: [{6}]({6})
 -----------------------------------------------
 <em style=""font-size: 0.8em;"">
     To stop receiving contact emails as a maintainer of this package, sign in to the {4} and 
@@ -81,7 +119,8 @@ _Message sent from {5}_
                 packageRegistration.Id,
                 message,
                 settings.GalleryOwnerName,
-                emailSettingsUrl);
+                emailSettingsUrl,
+                packageUrl);
 
             subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, packageRegistration.Id);
 
@@ -222,8 +261,7 @@ The {2} Team";
                 SendMessage(mailMessage);
             }
         }
-
-
+        
         public void SendPackageOwnerRequest(User fromUser, User toUser, PackageRegistration package, string confirmationUrl)
         {
             if (!toUser.EmailAllowed)

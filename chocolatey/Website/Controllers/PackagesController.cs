@@ -223,9 +223,68 @@ namespace NuGetGallery
                 from = new MailAddress(reportForm.Email);
             }
 
-            messageService.ReportAbuse(from, package, reportForm.Message);
+            messageService.ReportAbuse(from, package, reportForm.Message, Url.Package(package));
 
             TempData["Message"] = "Your abuse report has been sent to the gallery operators.";
+            return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
+        }
+
+        // NOTE: Intentionally NOT requiring authentication
+        public virtual ActionResult ContactAdmins(string id, string version)
+        {
+            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+
+            if (package == null)
+            {
+                return PackageNotFound(id, version);
+            }
+
+            var model = new ReportAbuseViewModel
+            {
+                PackageId = id,
+                PackageVersion = package.Version,
+            };
+
+            if (Request.IsAuthenticated)
+            {
+                var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
+                if (user.Confirmed)
+                {
+                    model.ConfirmedUser = true;
+                }
+            }
+
+            return View(model);
+        }
+        
+        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        public virtual ActionResult ContactAdmins(string id, string version, ReportAbuseViewModel reportForm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ContactAdmins(id, version);
+            }
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            if (package == null)
+            {
+                return PackageNotFound(id, version);
+            }
+
+            MailAddress from = null;
+            if (Request.IsAuthenticated)
+            {
+                var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
+                from = user.ToMailAddress();
+            }
+            else
+            {
+                from = new MailAddress(reportForm.Email);
+            }
+
+            messageService.ContactSiteAdmins(from, package, reportForm.Message, Url.Package(package));
+
+            TempData["Message"] = "Your message has been sent to the gallery operators.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
         }
 
@@ -264,7 +323,7 @@ namespace NuGetGallery
 
             var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
             var fromAddress = new MailAddress(user.EmailAddress, user.Username);
-            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme));
+            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), Url.Package(package));
 
             string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the maintainers of {0}.", id);
             TempData["Message"] = message;

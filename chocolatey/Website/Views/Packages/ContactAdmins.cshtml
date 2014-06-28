@@ -4,22 +4,23 @@
     ViewBag.Tab = "Packages";
 }
 
-<h1 class="page-heading">Report Abuse</h1>
+<h1 class="page-heading">Contact Website Administrators</h1>
 
 <p class="message">
-    Important: This form is for reporting <em>abusive</em> packages such as 
-    packages containing <em>malicious code</em> or spam. If "@Model.PackageId" simply doesn't 
+    Important: This form is for contacting site administrators about packages that are seriously neglected or to work through the package triage process to become a co-maintainer. If "@Model.PackageId" simply doesn't 
     appear to work or work correctly, please 
     <a href="@Url.Action(MVC.Packages.ContactOwners(Model.PackageId))" title="contact the maintainers">contact the maintainers of "@Model.PackageId".</a> 
     <br /><br />
-    Note: If you need to contact the <em>site administrators for any other reason</em> (including package triage / become a co-maintainer) for this package, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.PackageId, version = Model.PackageVersion })" title="Contact Site Admins">contact the admins.</a>
+    Note: If you want to report abuse, please <a href="@Url.Action(MVC.Packages.ReportAbuse(Model.PackageId, Model.PackageVersion))" title="Report Abuse">report abuse</a>.
+    <br /><br />
+    If you are contacting the admins for a package that is outdated, please be sure you have contacted the maintainers of the package first and waited the allotted time prior to continuing the package triage process.
 </p>                            
 
-<p>Please provide a detailed abuse report. Include exactly what the package did.</p>
+<p>Please provide a detailed report.</p>
 
 @using (Html.BeginForm()) {
     <fieldset class="form">
-        <legend>Report Abuse</legend>
+        <legend>Contact Admins</legend>
         @Html.AntiForgeryToken()
         <div class="form-field">
         @if (!Model.ConfirmedUser) {

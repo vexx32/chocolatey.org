@@ -32,9 +32,11 @@
             @if (!String.IsNullOrEmpty(Model.LicenseUrl)) {
                 <li><a href="@Model.LicenseUrl" title="Make sure you agree with the license">License</a></li>
             }
+            <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li> 
+            <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction,new{action="ContactAdmins",id=Model.Id,version = Model.Version})" title="Contact Site Admins">
+                    Contact Site Admins</a></li>
             <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">
-                Report Abuse</a></li>
-            <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
+                    Report Abuse</a></li> 
             @*@if (User.Identity.IsAuthenticated)
             {*@
                 <li><a href="@Url.PackageDownload(2,Model.Id, Model.Version)" title="Download the raw nupkg file.">Download</a></li>
