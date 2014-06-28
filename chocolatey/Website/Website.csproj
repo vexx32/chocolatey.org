@@ -1089,9 +1089,6 @@
     <Compile Include="..\..\nugetgallery\Website\RequestModels\SubmitPackageRequest.cs">
       <Link>RequestModels\SubmitPackageRequest.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\RouteNames.cs">
-      <Link>RouteNames.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\App_Start\VersionRouteConstraint.cs">
       <Link>App_Start\VersionRouteConstraint.cs</Link>
     </Compile>
@@ -1153,6 +1150,7 @@
     <Compile Include="MvcOverrides\HttpRequestDecorator.cs" />
     <Compile Include="MvcOverrides\HttpRequestProxy.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
+    <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />
@@ -1449,6 +1447,7 @@
     <Content Include="Web.ForbiddenHandlers.config" />
     <Content Include="Install.ps1" />
     <Content Include="InstallAbsoluteLatest.ps1" />
+    <Content Include="Views\Pages\About.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

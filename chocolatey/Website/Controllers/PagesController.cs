@@ -14,7 +14,12 @@ namespace NuGetGallery
 
         public virtual ActionResult Home()
         {
-            return View();
+            return View("~/Views/Pages/Home.cshtml");
+        }  
+        
+        public virtual ActionResult About()
+        {
+            return View("~/Views/Pages/About.cshtml");
         }
 
         public virtual ActionResult Terms()

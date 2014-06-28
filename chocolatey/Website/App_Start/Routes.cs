@@ -13,6 +13,11 @@ namespace NuGetGallery
                 RouteName.Home,
                 "",
                 MVC.Pages.Home());
+            
+            routes.MapRoute(
+                RouteName.About,
+                "",
+                new {controller = "Pages", Action="About"});
 
             routes.MapRoute(
                 RouteName.Stats,
@@ -23,7 +28,6 @@ namespace NuGetGallery
              "rss feed",
              "feed.rss",
              new {controller = "RSS", Action = "feed.rss"});
-
 
             routes.Add(new JsonRoute("json/{controller}"));
 
