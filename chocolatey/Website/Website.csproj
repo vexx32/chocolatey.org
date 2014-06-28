@@ -657,9 +657,6 @@
     <Compile Include="..\..\nugetgallery\Website\Controllers\JsonApiController.cs">
       <Link>Controllers\JsonApiController.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Controllers\PackagesController.cs">
-      <Link>Controllers\PackagesController.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\DynamicData\Content\GridViewPager.ascx.cs">
       <Link>DynamicData\Content\GridViewPager.ascx.cs</Link>
       <DependentUpon>GridViewPager.ascx</DependentUpon>
@@ -973,12 +970,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\Extensions.cs">
       <Link>Services\Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IMessageService.cs">
-      <Link>Services\IMessageService.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\MessageService.cs">
-      <Link>Services\MessageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\SharedController.generated.cs">
       <Link>SharedController.generated.cs</Link>
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1139,6 +1130,7 @@
     <Compile Include="App_Start\PackageStoreType.cs" />
     <Compile Include="App_Start\Routes.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -1164,7 +1156,9 @@
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />
+    <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IUserSiteProfilesService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\RssActionResult.cs" />
     <Compile Include="Services\UserSiteProfilesService.cs" />
     <Compile Include="Strings.Designer.cs">
