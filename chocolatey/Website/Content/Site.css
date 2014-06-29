@@ -650,7 +650,7 @@ header.main {
     }
         
     .package-page a.owner {
-        color: #333;
+        /*color: #333;*/
         font-size: 1.4em;
     }
         
