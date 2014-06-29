@@ -1,8 +1,16 @@
-﻿@model DisplayPackageViewModel
+﻿@using MarkdownSharp
+@model DisplayPackageViewModel
 @{
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
+    var markdownGenerator = new Markdown(new MarkdownOptions
+        {
+            AutoHyperlink = true,
+            AutoNewLines = true,
+            EncodeProblemUrlCharacters = true,
+            LinkEmails = true,
+        });
 }
 @section SideColumn {
     <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
@@ -79,10 +87,11 @@
         <h1>@Model.Title</h1>
         <h2>@Model.Version</h2>
     </div>
-    @foreach (var line in Model.Description.ToStringSafe().Split('\n'))
+    @Html.Raw(markdownGenerator.Transform(Model.Description))
+    @*foreach (var line in Model.Description.ToStringSafe().Split('\n'))
     {
         <p>@line</p>
-    }
+    }*@
 
     @if (!Model.Listed && Model.IsOwner(User))
     {                                        
@@ -107,10 +116,11 @@
     @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
     {
         <h3>Release Notes</h3>
-        foreach (var note in Model.ReleaseNotes.Split('\n'))
+        @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
+        @* foreach (var note in Model.ReleaseNotes.Split('\n'))
         {
             <p>@note</p>
-        }
+        }*@
     }
 
     <h3>Maintainers</h3>
