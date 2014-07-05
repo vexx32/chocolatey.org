@@ -8,14 +8,16 @@
         <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
         <h2>Easy Install!</h2>
         <p style="vertical-align:bottom;font-size:18px">
-        To install chocolatey now, open a command prompt and paste the text from the box below and press enter. Click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" /> to copy the text below to clipboard <span>(<a href="https://github.com/chocolatey/chocolatey/wiki/Installation">Advanced</a>)</span>.
+            To install chocolatey now, open an <strong><em>administrative</em></strong> cmd.exe command prompt and paste the text from the box below and press enter (or click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />). 
+            For <strong><em>administrative</em></strong> PowerShell copy the second box (<input type="button" id="copyButtonPS" class="copy-button" title="Copy To Clipboard" />). 
+            If you need to install as a non-administrator or want more advanced options, see <span><a href="https://github.com/chocolatey/chocolatey/wiki/Installation">Advanced</a></span>.
         </p>
     </div>
     <img src="@Url.Content("~/content/images/hero.png")" alt="Chocolatey install of Git (cinst git)" />
 </section>
 <div class="nuget-badge">
     <p>
-        <code><span>C:\&gt;</span> @@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%systemdrive%\chocolatey\bin</code>
+        <code><span>C:\&gt;</span> @@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</code>
     </p>
     <p>
         <code><span>PS:\&gt;</span>iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))</code>
@@ -68,12 +70,18 @@
         $(document).ready(function () {
             ZeroClipboard.setMoviePath('@Url.Content("~/Scripts/ZeroClipboard.swf")');
             var clip = new ZeroClipboard.Client();
-            clip.setText('@@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET PATH=%PATH%;%systemdrive%\\chocolatey\\bin');
+            clip.setText('@@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin');
             clip.setHandCursor(true);
             clip.glue('copyButton');
+            
+            var clipPS = new ZeroClipboard.Client();
+            clipPS.setText('iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))');
+            clipPS.setHandCursor(true);
+            clipPS.glue('copyButtonPS');
 
             $(window).resize(function () {
                 clip.reposition();
+                clipPS.reposition();
             });
         });
     </script>

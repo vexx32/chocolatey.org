@@ -350,7 +350,7 @@ header.main {
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
         margin: 10px auto;
-        padding: 20px 10px 0 10px;
+        padding: 20px 10px 40px 10px;
     }
     
         .featured div {
