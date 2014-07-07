@@ -8,8 +8,8 @@
         <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
         <h2>Easy Install!</h2>
         <p style="vertical-align:bottom;font-size:18px">
-            To install chocolatey now, open an <strong><em>administrative</em></strong> cmd.exe command prompt and paste the text from the box below and press enter (or click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />). 
-            For <strong><em>administrative</em></strong> PowerShell copy the second box (<input type="button" id="copyButtonPS" class="copy-button" title="Copy To Clipboard" />). 
+            To install chocolatey now, open an <strong><em>administrative</em></strong> cmd.exe command prompt and paste the text from the box below and press enter (or click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />).
+            For <strong><em>administrative</em></strong> PowerShell copy the second box (<input type="button" id="copyButtonPS" class="copy-button" title="Copy To Clipboard" />).
             If you need to install as a non-administrator or want more advanced options, see <span><a href="https://github.com/chocolatey/chocolatey/wiki/Installation">Advanced</a></span>.
         </p>
     </div>
@@ -39,8 +39,8 @@
 <section class="release">
      <h2>Chocolatey v0.9.8.25 Released!</h2>
      <p>
-        The latest version of chocolatey includes new features and fixes. 
-        If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="https://github.com/chocolatey/chocolatey/wiki/ReleaseNotes">new features</a>. 
+        The latest version of chocolatey includes new features and fixes.
+        If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="https://github.com/chocolatey/chocolatey/wiki/ReleaseNotes">new features</a>.
         <em>chocolatey update (cup)</em> to get the latest version of chocolatey&nbsp;– <a href="https://github.com/chocolatey/chocolatey/wiki/ReleaseNotes">More information?</a>
      </p>
 </section>
@@ -49,10 +49,10 @@
     <p>When you use chocolatey to install applicatons/tools, nearly all you need to do is type one line and let it finish the rest!</p>
 
     <h3>Important Notice</h3>
-    <p>You can develop your own packages and share them via the Chocolatey Gallery. Read the documentation for more details on 
-    <a title="Creating and submitting a package" href="https://github.com/chocolatey/chocolatey/wiki/CreatePackages">how to 
+    <p>You can develop your own packages and share them via the Chocolatey Gallery. Read the documentation for more details on
+    <a title="Creating and submitting a package" href="https://github.com/chocolatey/chocolatey/wiki/CreatePackages">how to
     create and publish a package</a>. If you don&rsquo;t plan on submitting a package, there&rsquo;s no need to register.</p>
-    
+
     <h3>Package Issues?</h3>
     <p>If you find something wrong with a package or the package is out of date and you would like it updated, please use the contact maintainers link on the package page. For follow up procedures, please see the <a title="Package Triage Process" href="https://github.com/chocolatey/chocolatey/wiki/PackageTriageProcess">Package Triage Process</a>.</p>
 </section>
@@ -63,7 +63,7 @@
     <script type="text/javascript" >
         $(getStats);
     </script>
-    
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/ZeroClipboard.js")"></script>
     <script type="text/javascript">
 
@@ -73,7 +73,7 @@
             clip.setText('@@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin');
             clip.setHandCursor(true);
             clip.glue('copyButton');
-            
+
             var clipPS = new ZeroClipboard.Client();
             clipPS.setText('iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))');
             clipPS.setHandCursor(true);
