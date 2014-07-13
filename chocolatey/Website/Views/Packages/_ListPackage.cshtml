@@ -8,7 +8,7 @@
     <div class="main">
         <header> 
             <div class="nuget-badge-small">
-                <code>c:\&gt; cinst @Model.Id
+                <code><span>C:\&gt; </span>choco install @Model.Id
                 @if (!Model.LatestVersion || !Model.Listed)
                 { <text> -Version @Model.Version</text> }
                 @if (Model.Prerelease)
