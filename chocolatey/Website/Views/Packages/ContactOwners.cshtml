@@ -6,6 +6,11 @@
 
 <h1 class="page-heading">Contact the Maintainers of "<a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a>"</h1>
 @if (Model.Owners.Any()) {
+    <h3>Is there a problem with the installation of the package?</h3>
+    <ul>
+        <li>Provide the output of your installation command or a link to a gist with it.</li>
+    </ul>
+
     <p class="message">
         By submitting this form, you agree to <em>disclose your email address</em> 
         to the package maintainers listed below so they can reply to you.
