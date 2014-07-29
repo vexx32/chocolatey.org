@@ -150,6 +150,15 @@ Package Url: [{6}]({6})
             string body = @"Thank you for registering with the {0}. 
 We can't wait to see what packages you'll upload.
 
+Remember to read the packaging rules:
+https://github.com/chocolatey/chocolatey/wiki/CreatePackages#rules-to-be-observed-before-publishing-packages
+
+And the package naming guidelines:
+https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
+
+If you can't adhere to this advice, the chocolatey gods might get unhappy and put you in the hall of shame.
+Hall of shame users might notice their packages getting unlisted or deleted.
+
 So we can be sure to contact you, please verify your email address and click the following link:
 
 [{1}]({2})
