@@ -25,6 +25,7 @@ namespace NuGetGallery
         private readonly ISearchService searchSvc;
         private readonly IAutomaticallyCuratePackageCommand autoCuratedPackageCmd;
         private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
+        public IConfiguration Configuration { get; set; }
 
         public PackagesController(
             IPackageService packageSvc,
@@ -33,7 +34,8 @@ namespace NuGetGallery
             IMessageService messageService,
             ISearchService searchSvc,
             IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
-            INuGetExeDownloaderService nugetExeDownloaderSvc)
+            INuGetExeDownloaderService nugetExeDownloaderSvc,
+            IConfiguration configuration)
         {
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
@@ -42,6 +44,7 @@ namespace NuGetGallery
             this.searchSvc = searchSvc;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
             this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
+            this.Configuration = configuration;
         }
 
         [Authorize]
@@ -223,7 +226,9 @@ namespace NuGetGallery
                 from = new MailAddress(reportForm.Email);
             }
 
-            messageService.ReportAbuse(from, package, reportForm.Message, Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+
+            messageService.ReportAbuse(from, package, reportForm.Message, packageUrl);
 
             TempData["Message"] = "Your abuse report has been sent to the gallery operators.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
@@ -282,7 +287,9 @@ namespace NuGetGallery
                 from = new MailAddress(reportForm.Email);
             }
 
-            messageService.ContactSiteAdmins(from, package, reportForm.Message, Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+
+            messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl);
 
             TempData["Message"] = "Your message has been sent to the gallery operators.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
@@ -323,7 +330,9 @@ namespace NuGetGallery
 
             var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
             var fromAddress = new MailAddress(user.EmailAddress, user.Username);
-            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+
+            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl);
 
             string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the maintainers of {0}.", id);
             TempData["Message"] = message;
@@ -614,6 +623,25 @@ namespace NuGetGallery
                 default:
                     return "PackageRegistration.DownloadCount desc";
             }
+        }
+
+        private static string EnsureTrailingSlash(string siteRoot)
+        {
+            if (!siteRoot.EndsWith("/", StringComparison.Ordinal))
+            {
+                siteRoot = siteRoot + '/';
+            }
+            return siteRoot;
+        }
+
+        private static string RemoveStartingSlash(string urlPath)
+        {
+            if (urlPath.StartsWith("/"))
+            {
+                return urlPath.Substring(1);
+            }
+
+            return urlPath;
         }
     }
 }

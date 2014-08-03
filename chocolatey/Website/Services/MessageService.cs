@@ -41,6 +41,7 @@ namespace NuGetGallery
 
 _Message sent from {5}_
 
+Current Maintainer(s): {7}
 Package Url: [{6}]({6})
 ";
             body = String.Format(CultureInfo.CurrentCulture,
@@ -51,7 +52,8 @@ Package Url: [{6}]({6})
                 package.Version,
                 message,
                 settings.GalleryOwnerName,
-                packageUrl);
+                packageUrl,
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)));
 
             using (var mailMessage = new MailMessage())
             {
@@ -74,6 +76,7 @@ Package Url: [{6}]({6})
 
 _Message sent from {5}_
 
+Current Maintainer(s): {7}
 Package Url: [{6}]({6})
 ";
             body = String.Format(CultureInfo.CurrentCulture,
@@ -84,7 +87,8 @@ Package Url: [{6}]({6})
                 package.Version,
                 message,
                 settings.GalleryOwnerName,
-                packageUrl);
+                packageUrl,
+                string.Join(", ",package.PackageRegistration.Owners.Select(x => x.Username)));
 
             using (var mailMessage = new MailMessage())
             {
@@ -292,5 +296,6 @@ The {3} Team";
                 SendMessage(mailMessage);
             }
         }
+
     }
 }
