@@ -12,6 +12,9 @@ namespace NuGetGallery
         [Display(Name = "Abuse Report")]
         public string Message { get; set; }
 
+        [Display(Name = "Send me a copy")]
+        public bool CopySender { get; set; }
+
         [Required(ErrorMessage = "Please enter your email address.")]
         [StringLength(4000)]
         [DataType(DataType.EmailAddress)]

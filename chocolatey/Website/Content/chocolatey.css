@@ -119,3 +119,7 @@ section.package .profile {
    height: 16px; 
    background: url('../Content/Images/copy.png') no-repeat;
 }
+
+.form-field label.for-checkbox {
+     display: inline-block;
+ }

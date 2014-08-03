@@ -38,6 +38,9 @@
             @Html.TextAreaFor(m => m.Message, 10, 50, null)
             @Html.ValidationMessageFor(m => m.Message)
         </div>
+        <div class="form-field">
+            @Html.CheckBoxFor(m => m.CopySender)<label for="@Model.CopySender" class="for-checkbox">Send me a copy</label>
+        </div>
         @Html.SpamPreventionFields()
         <input type="submit" value="Report" title="Report '@Model.PackageId' for abuse" />
     </fieldset>

@@ -22,6 +22,9 @@
                 @Html.TextAreaFor(m => m.Message, 10, 50, null)
                 @Html.ValidationMessageFor(m => m.Message)
             </div>
+            <div class="form-field">
+                @Html.CheckBoxFor(m => m.CopySender)<label for="@Model.CopySender" class="for-checkbox">Send me a copy</label>
+            </div>
             <input type="submit" value="Send" title="Send your message to the maintainers of '@Model.PackageId'" />
         </fieldset>
     }

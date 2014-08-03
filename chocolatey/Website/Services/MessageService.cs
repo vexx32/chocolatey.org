@@ -18,11 +18,19 @@ namespace NuGetGallery
             this.settings = settings;
         }
 
-        private void SendMessage(MailMessage mailMessage)
+        private void SendMessage(MailMessage mailMessage, bool copySender = false)
         {
             try
             {
                 mailSender.Send(mailMessage);
+                if (copySender)
+                {
+                    var senderNote = string.Format("You sent the following message via {0}:{1}{1}", settings.GalleryOwnerName,Environment.NewLine);
+                    mailMessage.To.Clear();
+                    mailMessage.Body = senderNote + mailMessage.Body;
+                    mailMessage.To.Add(mailMessage.From);
+                    mailSender.Send(mailMessage);
+                }
             }
             catch (SmtpException ex)
             {
@@ -31,7 +39,7 @@ namespace NuGetGallery
             }
         }
 
-        public void ReportAbuse(MailAddress fromAddress, Package package, string message, string packageUrl)
+        public void ReportAbuse(MailAddress fromAddress, Package package, string message, string packageUrl, bool copySender)
         {
             string subject = "[{0}] Abuse Report for Package '{1}' Version '{2}'";
             string body = @"_User {0} ({1}) reports the package '{2}' version '{3}' as abusive. 
@@ -62,11 +70,11 @@ Package Url: [{6}]({6})
                 mailMessage.From = fromAddress;
 
                 mailMessage.To.Add(settings.GalleryOwnerEmail);
-                SendMessage(mailMessage);
+                SendMessage(mailMessage,copySender);
             }
         } 
         
-        public void ContactSiteAdmins(MailAddress fromAddress, Package package, string message,string packageUrl)
+        public void ContactSiteAdmins(MailAddress fromAddress, Package package, string message,string packageUrl, bool copySender)
         {
             string subject = "[{0}] Contact Site Admins for Package '{1}' Version '{2}'";
             string body = @"_User {0} ({1}) is reporting on '{2}' version '{3}'. 
@@ -97,11 +105,11 @@ Package Url: [{6}]({6})
                 mailMessage.From = fromAddress;
 
                 mailMessage.To.Add(settings.GalleryOwnerEmail);
-                SendMessage(mailMessage);
+                SendMessage(mailMessage,copySender);
             }
         }
 
-        public void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl, string packageUrl)
+        public void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl, string packageUrl, bool copySender)
         {
             string subject = "[{0}] Message for maintainers of the package '{1}'";
             string body = @"_User {0} &lt;{1}&gt; sends the following message to the maintainers of Package '{2}'._
@@ -136,7 +144,7 @@ Package Url: [{6}]({6})
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
                 if (mailMessage.To.Any())
                 {
-                    SendMessage(mailMessage);
+                    SendMessage(mailMessage,copySender);
                 }
             }
         }

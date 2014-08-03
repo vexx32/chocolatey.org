@@ -228,7 +228,7 @@ namespace NuGetGallery
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.ReportAbuse(from, package, reportForm.Message, packageUrl);
+            messageService.ReportAbuse(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
             TempData["Message"] = "Your abuse report has been sent to the gallery operators.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
@@ -289,7 +289,7 @@ namespace NuGetGallery
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl);
+            messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
             TempData["Message"] = "Your message has been sent to the gallery operators.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
@@ -332,7 +332,7 @@ namespace NuGetGallery
             var fromAddress = new MailAddress(user.EmailAddress, user.Username);
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl);
+            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl, contactForm.CopySender);
 
             string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the maintainers of {0}.", id);
             TempData["Message"] = message;
