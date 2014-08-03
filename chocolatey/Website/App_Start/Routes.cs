@@ -16,7 +16,7 @@ namespace NuGetGallery
             
             routes.MapRoute(
                 RouteName.About,
-                "",
+                "about",
                 new {controller = "Pages", Action="About"});
 
             routes.MapRoute(

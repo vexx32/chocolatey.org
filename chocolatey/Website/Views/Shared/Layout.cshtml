@@ -31,13 +31,15 @@
             <ul id="menu">
                 @{
                     var homeClass = ViewBag.Tab == "Home" ? "current" : "";
+                    var aboutClass = ViewBag.Tab == "About" ? "current" : "";
                     var packagesClass = ViewBag.Tab == "Packages" ? "current" : "";
                     var uploadClass = ViewBag.Tab == "Upload" ? "current" : "";
                 }
                 <li class="@homeClass"><a href="@Url.Home()">Home</a></li>
+                <li class="@aboutClass"><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
                 <li class="@packagesClass"><a href="@Url.PackageList()">Packages</a></li>
-                <li class="@uploadClass"><a href="@Url.UploadPackage()" class="upload">Upload Package</a></li>
-                <li><a href="https://github.com/chocolatey/chocolatey/wiki">Documentation*</a></li>
+                <li class="@uploadClass"><a href="@Url.UploadPackage()" class="upload">Upload</a></li>
+                <li><a href="https://github.com/chocolatey/chocolatey/wiki">Docs*</a></li>
                 <li><a href="https://github.com/chocolatey/chocolatey">Project*</a></li>
                 <li><a href="http://groups.google.com/group/chocolatey">Forum*</a></li>
                 <li><a href="http://cafepress.com/chocolatey">Shop*</a></li>

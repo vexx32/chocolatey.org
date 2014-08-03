@@ -1,4 +1,157 @@
-﻿<article class="about">
+﻿@{
+    ViewBag.Tab = "About";
+}
+<article class="about">
     <h2>About Chocolatey</h2>
-    <p>Please update</p>
+    <p>
+        <strong>Chocolatey is a package manager for Windows (like apt-get or yum but for
+        Windows)</strong>. It was designed to be a <strong>decentralized</strong> framework
+        for quickly installing applications and tools that you need. It is built on the
+        NuGet infrastructure currently using PowerShell as its focus for delivering packages
+        from the distros to your door, err computer.
+    </p>
+    <p>
+        Chocolatey is brought to you by the work and inspiration of the community, the work
+        and thankless nights of the <a href="https://github.com/orgs/chocolatey/members">
+        Chocolatey Team</a>, and <a href="https://twitter.com/ferventcoder">Rob</a> heading
+        up the direction.
+    </p>
+    <p>
+        You can <strong>host your own sources</strong> and add them to Chocolatey, you can
+        extend Chocolatey's capabilities, and folks, it's only going to get better.
+    </p>
+    <p>
+        With all of this in mind, <strong>think of Chocolatey as a framework</strong> that
+        you can build on top of. <a href="https://supermarket.getchef.com/cookbooks/chocolatey">
+        Chef</a>, <strong><a href="https://forge.puppetlabs.com/rismoney/chocolatey">Puppet</a></strong>
+        and <a href="https://boxstarter.org">Boxstarter</a> all have ways for using Chocolatey
+        to ensure the state of a computer and packages installed. <strong><em>Even Microsoft
+        has decided to use Chocolatey's framework</em></strong> with the upcoming <a href="https://oneget.codeplex.com/">
+        OneGet</a> client! See Jeffrey Snover's <a href="http://blogs.technet.com/b/windowsserver/archive/2014/04/03/windows-management-framework-v5-preview.aspx">
+        post</a> for more information.
+    </p>
+</article>
+<article class="about">
+    <h2>About Chocolatey.org</h2>
+    <p>
+        Chocolatey.org is a feed of packages provided and maintained by the community. If
+        you are a business looking at using Chocolatey, it is strongly recommended that
+        you do not use the community feed. See the question below on trusting the community
+        feed.
+    </p>
+    <p>
+        Chocolatey.org is currently a fork of the NuGet gallery. Over time Chocolatey.org
+        is planned to be rewritten as a totally custom website. The Chocolatey team has
+        over 20 years of experience in writing fast, efficient and secure websites.
+    </p>
+    <p>
+        Package moderation and package signing are planned to increase the security of the
+        community feed. Bear with us, this is going to take time to get into place. The
+        plan is that a moderator would review and sign off on a package with a cryptographic
+        key. Users of chocolatey would only need to trust moderators. As moderators are
+        shifted, updates of chocolatey will reflect this. There will also be an out of band
+        way for users to trust a new maintainer.
+    </p>
+    <p>
+        The repository for issues/enhancements/requests for Chocolatey.org at <a href="https://github.com/chocolatey/chocolatey.org">
+        GitHub Chocolatey.org</a>
+    </p>
+</article>
+<article class="about">
+    <h2>About the official Chocolatey Client</h2>
+    <p>
+        The official Chocolatey client is the one you get from chocolatey.org on the <a href="https://chocolatey.org/packages/chocolatey">
+        package page</a>. This is the only official client. Chocolatey GUI is a recognized
+        client that can be used as well. It is recommended you use the official client as
+        it has the latest security fixes, the latest features, and is supported by the Chocolatey
+        team.
+    </p>
+    <p>
+        The official client is currently being rewritten in C# for a much faster and more
+        stable experience using Chocolatey. Look for that to debut near the end of 2014
+        if not sooner.
+    </p>
+    <p>
+        The repository for issues/enhancements/requests for Chocolatey at <a href="https://github.com/chocolatey/chocolatey">
+        GitHub Chocolatey</a>
+        <br />
+        <span>Note that broken packages should be reported back to package maintainers,
+        not to the client repository. </span>
+    </p>
+</article>
+<article class="about">
+    <h2>Frequently Asked Questions</h2>
+    <p>
+        <strong>What is the difference between Chocolatey and NuGet?</strong> NuGet is for
+        development libraries, Chocolatey is a binary machine package manager. Typically
+        you can think of it like this: <strong><em>"You use NuGet to get 3rd party libraries
+        that you use to build the applications/tools that you host on Chocolatey."</em></strong>
+    </p>
+    <p>
+        <strong>How do I contact the chocolatey group?</strong> The best way to do this
+        is to use the <a href="http://groups.google.com/group/chocolatey">official mailing
+        list</a> (see the forum link above).
+    </p>
+    <p>
+        <strong>Why can't I see my post on the mailing list?</strong> First time posters
+        are moderated to cut down on spammers. Be patient and we will post your message.
+    </p>
+    <p>
+        <strong>Why is my software listed here? I haven't given anyone distribution permission!</strong>
+        Many times the way chocolatey works is to use PowerShell to download the package
+        from the official distribution point, this way no distribution rules are broken.
+        This is not always the case so feel free to reach out to the site administrators
+        (the email address is chocolateywebadmin at google groups dot com) if you do have
+        questions.
+    </p>
+    <p>
+        <strong>I am the owner of software listed here and would like to maintain the package.</strong>
+        That's awesome to hear! The way this works out is to use the contact site admins
+        link on the package page and we will handle reaching out to the current maintainers
+        for you.
+    </p>
+    <p>
+        <strong>How do I know if I can trust the community feed (the packages on this site?)</strong>
+        Until we have package moderation in place, the answer is that you can't trust the
+        packages here. If you require trust (e.g. most organizations require this), you
+        should have an internal feed with vetted packages using internal resources. You
+        should always decide whether you trust the maintainer(s) of the package, and even
+        then you may want to inspect the package prior to installing. You can inspect pacakges
+        easily with <a href="https://chocolatey.org/packages/nugetpackageexplorer">nuget
+        package explorer</a> or by clicking download on the package page (and then treating
+        the nupkg as a zip archive).
+    </p>
+    <p>
+        <strong>There is a package that has is broken, needs updating or something else.</strong>
+        Please use the contact maintainers link to let them know. Many packages also have
+        github repositories where the maintainers keep the packages. If you go to a maintainer's
+        profile (linked from package page, click on maintainer), their profiles will many
+        times include the link to the github repository where they keep their packages.
+        If contacting the maintainer or filing a Pull Request doesn't get the package updated
+        within a certain amount of time, there are steps we can take to TOS a package. This
+        is known as the <a title="Package Triage Process" href="https://github.com/chocolatey/chocolatey/wiki/PackageTriageProcess">
+        Package Triage Process</a>.
+    </p>
+    <p>
+        <strong>Who <em>owns</em> Chocolatey?</strong> The copyright for Chocolatey belongs
+        to RealDimensions Software, LLC. RealDimensions Software, LLC is Rob's company that
+        supports development of FOSS software and libraries that further the ecosystems
+        in which they are built for.
+    </p>
+    <p>
+        <strong>Are there plans to offer a pro version of Chocolatey?</strong> Yes! Ultimately
+        there are some things that we want to offer that are not free to us, so we can't
+        offer them for free. We believe these things are important for the community, so
+        we want to offer an even more stable and safe experience.
+    </p>
+    <p>
+        <strong>I need a support contract.</strong> We can work with you on that. Please
+        contact the site administrators (the email address is chocolateywebadmin at google
+        groups dot com) and we will route you to the correct folks. In time this will be
+        better automated to set up. Bear with us as we improve this aspect of our service.
+    </p>
+    <p>
+        <strong>Are there other FAQs?</strong> The current FAQs live on the <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs">
+        project wiki FAQ page</a>.
+    </p>
 </article>
