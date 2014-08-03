@@ -987,9 +987,6 @@
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordChangeViewModel.cs">
       <Link>ViewModels\PasswordChangeViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\ContactOwnersViewModel.cs">
-      <Link>ViewModels\ContactOwnersViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordResetViewModel.cs">
       <Link>ViewModels\PasswordResetViewModel.cs</Link>
     </Compile>
@@ -1113,9 +1110,6 @@
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PreviousNextPagerViewModel.cs">
       <Link>ViewModels\PreviousNextPagerViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\ReportAbuseViewModel.cs">
-      <Link>ViewModels\ReportAbuseViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\VerifyPackageViewModel.cs">
       <Link>ViewModels\VerifyPackageViewModel.cs</Link>
     </Compile>
@@ -1165,8 +1159,10 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="UrlExtensions.cs" />
+    <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
+    <Compile Include="ViewModels\ReportAbuseViewModel.cs" />
     <Compile Include="ViewModels\UserProfileModel.cs" />
     <Compile Include="ViewModels\UserSiteProfileViewModel.cs" />
   </ItemGroup>
