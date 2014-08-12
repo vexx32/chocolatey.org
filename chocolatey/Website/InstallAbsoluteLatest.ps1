@@ -68,7 +68,7 @@ Download-File 'http://chocolatey.org/7za.exe' "$7zaExe"
 
 # unzip the package
 Write-Host "Extracting $file to $tempDir..."
-Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait
+Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait -NoNewWindow
 #$shellApplication = new-object -com shell.application 
 #$zipPackage = $shellApplication.NameSpace($file) 
 #$destinationFolder = $shellApplication.NameSpace($tempDir) 
