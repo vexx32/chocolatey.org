@@ -144,6 +144,15 @@ namespace NuGetGallery
         {
             modelBuilder.Entity<UserSiteProfile>()
                .HasKey(e => e.Key);
+
+            modelBuilder.Entity<Package>()
+               .HasMany<PackageFile>(p => p.Files)
+               .WithRequired(pf => pf.Package)
+               .HasForeignKey(pf => pf.PackageKey);
+
+            modelBuilder.Entity<PackageFile>()
+               .HasKey(pa => pa.Key);
+
         }
     }
 }
