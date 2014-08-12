@@ -1124,6 +1124,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Entities\EntitiesContext.cs" />
     <Compile Include="Entities\Package.cs" />
+    <Compile Include="Entities\PackageFile.cs" />
     <Compile Include="Entities\UserSiteProfile.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Migrations\201210010306298_AddUserSiteProfiles.cs" />
