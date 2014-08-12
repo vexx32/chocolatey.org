@@ -17,41 +17,42 @@
     <div id="stats">
         <div class="stat">
             <p class="stat-number">@Model.TotalDownloadCount.ToString("n0")</p>
-            <p class="stat-label">
-                Downloads</p>
+            <p class="stat-label">Downloads</p>
         </div>
         <div class="stat">
             <p class="stat-number">@Model.DownloadCount.ToString("n0")</p>
-            <p class="stat-label">
-                Downloads of v @Model.Version</p>
+            <p class="stat-label">Downloads of v @Model.Version</p>
         </div>
         <div class="stat">
             <p class="stat-number">@Model.LastUpdated.ToShortDateString()</p>
-            <p class="stat-label">
-                Last update</p>
+            <p class="stat-label">Last update</p>
         </div>
     </div>
     <nav>
         <ul class="links">
-            @if (!String.IsNullOrEmpty(Model.ProjectUrl)) {
+            @if (!String.IsNullOrEmpty(Model.ProjectUrl))
+            {
                 <li><a href="@Model.ProjectUrl" title="Visit the project site to learn more about this package">
-                    Project Site</a></li>
+                Project Site</a></li>
             }
-            @if (!String.IsNullOrEmpty(Model.LicenseUrl)) {
+            @if (!String.IsNullOrEmpty(Model.LicenseUrl))
+            {
                 <li><a href="@Model.LicenseUrl" title="Make sure you agree with the license">License</a></li>
             }
-            <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li> 
-            <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction,new{action="ContactAdmins",id=Model.Id,version = Model.Version})" title="Contact Site Admins">
-                    Contact Site Admins</a></li>
+            <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
+            <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">
+            Contact Site Admins</a></li>
             <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">
-                    Report Abuse</a></li> 
+            Report Abuse</a></li>
             @*@if (User.Identity.IsAuthenticated)
             {*@
-                <li><a href="@Url.PackageDownload(2,Model.Id, Model.Version)" title="Download the raw nupkg file.">Download</a></li>
+            <li><a href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file.">
+            Download</a></li>
             @*} else {
                 <li><a href="@Url.Action(@MVC.Packages.Download())" title="How do I download?">How to Download</a></li>
             }*@
-            @if (Model.IsOwner(User)) {
+            @if (Model.IsOwner(User))
+            {
                 <li><a href="@Url.EditPackage(Model)">Edit Package</a></li>
                 <li><a href="@Url.ManagePackageOwners(Model)">Manage Maintainers</a></li>
                 <li><a href="@Url.DeletePackage(Model)" class="delete">Delete Package</a></li>
@@ -62,26 +63,22 @@
 <div class="package-page">
     @if (Model.Prerelease)
     {
-        <p class="prerelease-message">
-            This is a prerelease version of @Model.Title.
-        </p>
+        <p class="prerelease-message">This is a prerelease version of @Model.Title. </p>
     }
     else if (!Model.IsLatestVersionAvailable)
     {
-        <p class="not-latest-message">
-            This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">latest
-                version</a> of @Model.Title available.
-        </p>
+        <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
+        latest version</a> of @Model.Title available. </p>
     }
-    @if (Model.IsInstallOrPortable) 
+    @if (Model.IsInstallOrPortable)
     {
-        <p class="app-or-tool-message">
-            This is an installer (*.install) or a portable (*.portable) application package. 
-            Learn more about chocolatey's distinction of 
-            <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">installed versus portable apps</a> 
-            and/or learn about <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-gitinstall-portable-ie-gitportable-and--ie-git">this kind of package</a>.
-            Note that the suffix *.app is a synonym for *.install. Similarly, *.commandline and *.tool mean the same as *.portable. But these suffixes are deprecated in favor of *.install and *.portable, because the latter are more logical and understandable.
-        </p>
+        <p class="app-or-tool-message">This is an installer (*.install) or a portable (*.portable)
+            application package. Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
+            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-gitinstall-portable-ie-gitportable-and--ie-git">
+            this kind of package</a>. Note that the suffix *.app is a synonym for *.install.
+            Similarly, *.commandline and *.tool mean the same as *.portable. But these suffixes
+            are deprecated in favor of *.install and *.portable, because the latter are more
+            logical and understandable. </p>
     }
     <div class="hgroup page-heading">
         <h1>@Model.Title</h1>
@@ -92,37 +89,30 @@
     {
         <p>@line</p>
     }*@
-
     @if (!Model.Listed && Model.IsOwner(User))
     {                                        
-        <p  class="message warning">
-            This package is unlisted and hidden from package listings.
-            You can see the package because you are one of its maintainers. To list the package again, 
-            <a href="@Url.DeletePackage(Model)">change its listing setting</a>.
-        </p>                             
+        <p class="message warning">This package is unlisted and hidden from package listings.
+            You can see the package because you are one of its maintainers. To list the package
+            again, <a href="@Url.DeletePackage(Model)">change its listing setting</a>. </p>                             
     }
-    <p>
-        To install @Model.Title, run the following command from the command line or from PowerShell:
-    </p>
+    <p>To install @Model.Title, run the following command from the command line or from
+        PowerShell: </p>
     <div class="nuget-badge">
-        <p>
-            <code><span>C:\&gt; </span>choco install @Model.Id
-                @if (!Model.LatestVersion || !Model.Listed)
-                { <text> -Version @Model.Version</text> }
-                @if (Model.Prerelease)
-                {<text> -Pre </text>}</code></p>
+        <p><code><span>C:\&gt; </span>choco install @Model.Id
+            @if (!Model.LatestVersion || !Model.Listed)
+            { <text> -Version @Model.Version</text> }
+            @if (Model.Prerelease)
+            {<text> -Pre </text>}</code></p>
     </div>
-
     @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
     {
         <h3>Release Notes</h3>
         @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
-        @* foreach (var note in Model.ReleaseNotes.Split('\n'))
+@* foreach (var note in Model.ReleaseNotes.Split('\n'))
         {
             <p>@note</p>
         }*@
     }
-
     <h3>Maintainers</h3>
     @ViewHelpers.OwnersGravatar(Model.Owners, 32, Url)
     <h3>Authors</h3>
@@ -174,52 +164,59 @@
             {
                 if (packageVersion.Listed || Model.IsOwner(User))
                 {
-                    <tr class="versionTableRow @if (packageVersion.LatestVersion)
-                                               {<text>recommended </text>}">
-                        <td class="version" @if (packageVersion.LatestVersion)
-                                            {<text>title="Latest Version"</text>}>
-                            @if (!packageVersion.IsCurrent(Model))
-                            {
-                                <a href="@Url.Package(packageVersion)">@packageVersion.Title @packageVersion.Version</a>
-                            }
-                            else
-                            {
-                                <span>@packageVersion.Title @packageVersion.Version</span>
-                            }
-                        </td>
-                        <td>@packageVersion.DownloadCount
-                        </td>
-                        <td>@packageVersion.LastUpdated.ToString("D")
-                        </td>
-                        @if (Model.IsOwner(User))
+                <tr class="versionTableRow @if (packageVersion.LatestVersion)
+                                           {<text>recommended </text>}">
+                    <td class="version" @if (packageVersion.LatestVersion)
+                                        {<text>title="Latest Version"</text>}>
+                        @if (!packageVersion.IsCurrent(Model))
                         {
-                            <td><a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
-                            </td>
+                            <a href="@Url.Package(packageVersion)">@packageVersion.Title @packageVersion.Version</a>
                         }
-                    </tr>
+                        else
+                        {
+                            <span>@packageVersion.Title @packageVersion.Version</span>
+                        }
+                    </td>
+                    <td>@packageVersion.DownloadCount
+                    </td>
+                    <td>@packageVersion.LastUpdated.ToString("D")
+                    </td>
+                    @if (Model.IsOwner(User))
+                    {
+                        <td>
+                            <a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
+                        </td>
+                    }
+                </tr>
                 }
             }
         </tbody>
     </table>
 </div>
-
 <div class="package-page">
     <h3>Discussion for the @Model.Title Package</h3>
-    <p>Ground rules: <br />
+    <p>Ground rules:
+        <br />
         <ul>
-            <li>This discussion is only about @Model.Title and the @Model.Title package. If you have feedback for chocolatey, please contact the <a href="http://groups.google.com/group/chocolatey">google group</a>.</li>
-            <li>This discussion will carry over multiple versions. If you have a comment about a particular version, please note that in your comments.</li>
-            <li>This is not a substitute for contacting package maintainers. Please use the link on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">contact maintainers</a>.</li>
+            <li>This discussion is only about @Model.Title and the @Model.Title package. If you
+                have feedback for chocolatey, please contact the <a href="http://groups.google.com/group/chocolatey">
+                google group</a>.</li>
+            <li>This discussion will carry over multiple versions. If you have a comment about a
+                particular version, please note that in your comments.</li>
+            <li>This is not a substitute for contacting package maintainers. Please use the link
+                on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">
+                contact maintainers</a>.</li>
             <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
-            <li>Share your experiences with the package, or extra configuration or got yas that you've found.</li>
+            <li>Share your experiences with the package, or extra configuration or got yas that
+                you've found.</li>
         </ul>
     </p>
-    
-@{
-    var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
-}
+    @{
+        var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
+    }
+    <div id="disqus_thread">
+    </div>
 
-    <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'chocolatey';
 
@@ -233,7 +230,7 @@
             } ];
         }
 
-        (function() {
+        (function () {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
