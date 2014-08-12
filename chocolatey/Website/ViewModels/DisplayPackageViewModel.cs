@@ -23,6 +23,7 @@ namespace NuGetGallery
                                   select new DisplayPackageViewModel(p, isVersionHistory: true);
             }
 
+            Files = package.Files;
             DownloadCount = package.DownloadCount;
         }
 
@@ -51,6 +52,11 @@ namespace NuGetGallery
                     || Id.EndsWith(".tool") 
                     || Id.EndsWith(".commandline"); 
             }
+        }
+
+        public IEnumerable<PackageFile> Files
+        {
+            get; private set;
         }
     }
 }
