@@ -1059,9 +1059,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageAuthor.cs">
       <Link>Entities\PackageAuthor.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\Package.cs">
-      <Link>Entities\Package.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\EntityRepository.cs">
       <Link>Entities\EntityRepository.cs</Link>
     </Compile>
@@ -1126,6 +1123,7 @@
     <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Entities\EntitiesContext.cs" />
+    <Compile Include="Entities\Package.cs" />
     <Compile Include="Entities\UserSiteProfile.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Migrations\201210010306298_AddUserSiteProfiles.cs" />
