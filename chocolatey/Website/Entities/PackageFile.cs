@@ -27,7 +27,6 @@
         /// <remarks>
         /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
-        [Required]
         public string FileContent { get; set; }
     }
 }

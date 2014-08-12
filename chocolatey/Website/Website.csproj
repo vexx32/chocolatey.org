@@ -1136,6 +1136,10 @@
     <Compile Include="Migrations\201408121427165_AddPackageFiles.Designer.cs">
       <DependentUpon>201408121427165_AddPackageFiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201408121529063_UpdatePackageFiles.cs" />
+    <Compile Include="Migrations\201408121529063_UpdatePackageFiles.Designer.cs">
+      <DependentUpon>201408121529063_UpdatePackageFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\CustomMvcHandler.cs" />
     <Compile Include="MvcOverrides\CustomMvcRouteHandler.cs" />
