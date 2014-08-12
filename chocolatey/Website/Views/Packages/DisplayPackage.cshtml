@@ -163,9 +163,9 @@
                 </th>
                 @if (Model.IsOwner(User))
                 {
-                <th class="last">
-                    Listed
-                </th>
+                    <th class="last">
+                        Listed
+                    </th>
                 }
             </tr>
         </thead>
@@ -193,8 +193,8 @@
                         </td>
                         @if (Model.IsOwner(User))
                         {
-                        <td><a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
-                        </td>
+                            <td><a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
+                            </td>
                         }
                     </tr>
                 }
