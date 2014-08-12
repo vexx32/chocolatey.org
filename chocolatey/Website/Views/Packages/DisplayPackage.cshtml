@@ -192,6 +192,47 @@
             }
         </tbody>
     </table>
+    @if (Model.Files.Any())
+    {
+        <h3>Files</h3>
+        <ul>
+            @foreach (var file in Model.Files)
+            {
+                <li>@file.FilePath
+                    @if (!string.IsNullOrWhiteSpace(file.FileContent))
+                    {
+                        var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-");
+                        <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">
+                        Show</a>
+                        <br />
+                        <div id="@fileDivId" class="package-file-content">
+                            @{ var shBrush = "";
+                            }
+                            @switch (Path.GetExtension(file.FilePath))
+                            {
+                                case ".ps1":
+                                case ".psm1":
+                                    shBrush = "ps";
+                                    break;
+                                case ".xml":
+                                case ".config":
+                                    shBrush = "xml";
+                                    break;
+                                case ".js":
+                                case ".json":
+                                    shBrush = "js";
+                                    break;
+                                default:
+                                    shBrush = "plain";
+                                    break;
+                            }
+                            <pre class="brush: @shBrush">@file.FileContent</pre>
+                        </div>
+                    }
+                </li>
+            }
+        </ul>
+    }
 </div>
 <div class="package-page">
     <h3>Discussion for the @Model.Title Package</h3>
@@ -236,7 +277,29 @@
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
+
+    <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shCore.js")"></script>
+    <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shBrushPlain.js")"></script>
+    <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shBrushPowerShell.js")"></script>
+    <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shBrushJScript.js")"></script>
+    <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shBrushXml.js")"></script>
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/SyntaxHighlighter/shCore.css")" />
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/SyntaxHighlighter/shThemeDefault.css")" />
+
+    <script type="text/javascript">
+        SyntaxHighlighter.defaults['gutter'] = true;
+        SyntaxHighlighter.defaults['tab-size'] = 2;
+        SyntaxHighlighter.defaults['toolbar'] = false;
+        SyntaxHighlighter.defaults['wrap-lines'] = false;
+        SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+        SyntaxHighlighter.defaults['auto-links'] = true;
+        SyntaxHighlighter.defaults['collapse'] = false;
+        SyntaxHighlighter.all();
+    </script>
+
+    <noscript>
+        Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments
+        powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">
+    Disqus</span></a>
 </div>

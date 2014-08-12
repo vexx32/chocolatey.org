@@ -114,12 +114,19 @@ section.package .profile {
     }
     
 .copy-button {
-    border:0;
+   border:0;
    width: 16px; 
    height: 16px; 
    background: url('../Content/Images/copy.png') no-repeat;
 }
 
 .form-field label.for-checkbox {
-     display: inline-block;
+   display: inline-block;
  }
+ 
+.package-file-content {
+    display: none;
+    position: relative;
+    left: -110px;
+    width: 1080px;
+}
