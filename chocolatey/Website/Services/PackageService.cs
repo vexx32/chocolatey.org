@@ -9,6 +9,8 @@ using StackExchange.Profiling;
 
 namespace NuGetGallery
 {
+    using System.IO;
+
     public class PackageService : IPackageService
     {
         private readonly ICryptographyService cryptoSvc;
@@ -307,6 +309,41 @@ namespace NuGetGallery
                             VersionSpec = dependency.VersionSpec == null ? null : dependency.VersionSpec.ToString(),
                             TargetFramework = dependency.TargetFramework.ToShortNameOrNull()
                         });
+            }
+
+            foreach (var packageFile in nugetPackage.GetFiles())
+            {
+                var filePath = packageFile.Path;
+                var fileContent = " ";
+
+                IList<string> extensions = new List<string>();
+                var approvedExtensions = Configuration.ReadAppSettings("PackageFileTextExtensions");
+                if (!string.IsNullOrWhiteSpace(approvedExtensions))
+                {
+                    foreach (var extension in approvedExtensions.Split(',', ';'))
+                    {
+                        extensions.Add("." + extension);
+                    }
+                }
+
+                try
+                {
+                    if (extensions.Contains(Path.GetExtension(filePath)))
+                    {
+                        fileContent = packageFile.GetStream().ReadToEnd();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log but swallow the exception
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                }
+
+                package.Files.Add(new PackageFile
+                    {
+                        FilePath = filePath,
+                        FileContent = fileContent,
+                    });
             }
 
             package.FlattenedAuthors = package.Authors.Flatten();
