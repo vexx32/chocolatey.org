@@ -311,7 +311,7 @@ namespace NuGetGallery
                         });
             }
 
-            foreach (var packageFile in nugetPackage.GetFiles())
+            foreach (var packageFile in nugetPackage.GetFiles().OrEmptyListIfNull())
             {
                 var filePath = packageFile.Path;
                 var fileContent = " ";
