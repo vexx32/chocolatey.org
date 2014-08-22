@@ -52,7 +52,9 @@ namespace NuGetGallery
         private static void AppPostStart()
         {
             Routes.RegisterRoutes(RouteTable.Routes);
-            SetCustomRouteHandler();
+            // deprecated - the aspnet:UseHostHeaderForRequestUrl setting in the web.config file
+            //  should now process the urls accurately
+            //SetCustomRouteHandler();
 
             GlobalFilters.Filters.Add(new ElmahHandleErrorAttribute());
             ValueProviderFactories.Factories.Add(new HttpHeaderValueProviderFactory());
