@@ -1372,6 +1372,9 @@
     <Content Include="Content\SyntaxHighlighter\shThemeRDark.css" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
+    <None Include="optipng.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
