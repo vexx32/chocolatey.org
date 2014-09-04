@@ -16,6 +16,7 @@
     <link rel="nuget" type="application/atom+xml" title="Chocolatey" href="http://www.chocolatey.org/api/v2" />
 
     <script type="text/javascript" src="@Url.Content("~/Scripts/modernizr-2.0.6-development-only.js")"></script>
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.6.2.min.js")"></script>
 
     @MiniProfiler.RenderIncludes()
@@ -69,51 +70,77 @@
     <div id="layout-footer" class="group">
         <footer id="footer">
             <ul class="recommended">
-                <li><a href="https://github.com/chocolatey/chocolatey/wiki">Overview</a>
-                    <p>
-                        Where did Chocolatey get it's name? What exactly is chocolatey anyway?</p>
+                <li><a name="newsletter" id="newsletter">Sign up for the Newsletter!</a>
+                    <p>Be the first to know about upcoming features, security releases, and news about Chocolatey.</p>
+                </li>
+                <li> <!-- Begin MailChimp Signup Form -->
+                    <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet"
+                        type="text/css">
+                    <style type="text/css">
+                        #mc_embed_signup
+                        {
+                            font: 12px Helvetica,Arial,sans-serif;
+                            width: 160px;
+                        }
+                        #mc_embed_signup input.email { min-width: 150px;}
+                        /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+                    </style>
+                    <div id="mc_embed_signup">
+                        <form action="//chocolatey.us8.list-manage.com/subscribe/post?u=86a6d80146a0da7f2223712e4&amp;id=73b018498d"
+                        method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+                        target="_blank" novalidate>
+                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Your e-mail address"
+                            required />
+                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                        <div style="position: absolute; left: -5000px;">
+                            <input type="text" name="b_86a6d80146a0da7f2223712e4_73b018498d" tabindex="-1" value="">
+                        </div>
+                        <div class="clear">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"
+                                class="button" /></div>
+                        </form>
+                    </div>
+                    <!--End mc_embed_signup-->
                 </li>
                 <li><a href="http://groups.google.com/group/chocolatey">Discussion</a>
-                    <p>
-                        Find a possible bug? Got a feature request? Get involved in the discussion!</p>
-                </li>
-                <li><a href="http://bit.ly/chocolateyVideo">Video</a>
-                    <p>
-                        Want to see Chocolatey in action?</p>
+                    <p>Find a possible bug? Got a feature request? Get involved in the discussion!</p>
                 </li>
                 <li><a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs">FAQ</a>
-                    <p>
-                        Read the Frequently Asked Questions about Chocolatey.</p>
+                    <p>Read the Frequently Asked Questions about Chocolatey.</p>
                 </li>
             </ul>
             <div class="donate">
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="E8ZPVL5PNTABW">
-                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="E8ZPVL5PNTABW">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                    border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
+                    width="1" height="1">
                 </form>
             </div>
+            <div class="newsletter">
+            </div>
             <div class="license">
-                <p>
-                    <a href="https://twitter.com/chocolateynuget" class="twitter-follow-button" data-show-count="true"
-                        data-width="250px" data-lang="en">Follow @@chocolateynuget</a> <a href="https://twitter.com/share"
-                            class="twitter-share-button" data-hashtags="chocolatey" data-lang="en">Tweet</a>
+                <p><a href="https://twitter.com/chocolateynuget" class="twitter-follow-button" data-show-count="true"
+                data-width="250px" data-lang="en">Follow @@chocolateynuget</a> <a href="https://twitter.com/share"
+                class="twitter-share-button" data-hashtags="chocolatey" data-lang="en">Tweet</a>
 
                     <script type="text/javascript">
                         !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");
                     </script>
 
                     <br />
-                    &copy; 2011 - @DateTime.UtcNow.Year RealDimensions Software, LLC.
-                </p>
+                    &copy; 2011 - @DateTime.UtcNow.Year RealDimensions Software, LLC. </p>
                 @ViewHelpers.ReleaseTag()
             </div>
             <div class="supporters">
                 Site made possible by the following sponsors:
                 <ul class="supporters">
                     <li></li>
-                    <li><a href="http://codingutopia.com">RealDimensions</a> <a id="realdimensions-logo" href="http://codingutopia.com"></a></li>
+                    <li><a href="http://codingutopia.com">RealDimensions</a> <a id="realdimensions-logo"
+                    href="http://codingutopia.com"></a></li>
                     <li><a href="http://appharbor.com">AppHarbor</a> <a id="appharbor-logo" href="http://appharbor.com">
                     </a></li>
                     <li></li>
