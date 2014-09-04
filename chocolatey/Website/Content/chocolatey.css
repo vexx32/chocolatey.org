@@ -8,9 +8,33 @@
     padding-bottom: 0px;
     position: relative;
     margin-top: -161px;
-    height: 380px;
+    height: 425px;
 }
 
+#header-right {
+    float: right;
+    width: 560px;
+}
+
+.notices
+{
+    padding: 0 10px 0 10px;
+    clear: right;
+    position: relative;
+    top: 29px;
+    left: 10px;
+    color: #4e2c01;
+    font-weight: bold;
+    font-size: 1.25em;
+    height: 50px;
+    -webkit-animation: fade 8s ease-out 0.5s 1 normal forwards;
+    animation: fade 6s ease-out 0.5s 1 normal forwards;
+}
+
+.notices a
+{
+    color: #FFFFFF;
+}
 .supporters
 {
     padding-top: 6px; 
@@ -26,6 +50,15 @@
     height: 56px;
     position: relative;
     left: -18px;
+}
+
+.newsletter
+{
+    vertical-align: bottom;
+    clear: both;
+    height: 0px;
+    position: relative;
+    left: 0px;
 }
 
     footer#footer ul.supporters {

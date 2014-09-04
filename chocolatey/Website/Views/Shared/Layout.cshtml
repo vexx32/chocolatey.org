@@ -1,5 +1,8 @@
 ﻿@using NuGetGallery;
 @using StackExchange.Profiling
+@{
+    var noticeText = "A Kickstarter is coming. Sign up for the <a href=\"#newsletter\">newsletter</a> to learn more and stay up to date!";
+}
 <!DOCTYPE html>
 <html lang="en" class="static ">
 <head>
@@ -24,8 +27,12 @@
     <div id="content-wrapper">
         <header class="main">
             <div id="logo">
-                <a href="@Url.Home()">Chocolatey Gallery</a></div>
-            @Html.Partial(MVC.Shared.Views.UserDisplay)
+                <a href="@Url.Home()">Chocolatey Gallery</a>
+            </div>
+            <div id="header-right">
+                <div class="notices">@Html.Raw(noticeText)</div>
+                @Html.Partial(MVC.Shared.Views.UserDisplay)
+            </div>
         </header>
         <nav class="main">
             <ul id="menu">
@@ -115,5 +122,22 @@
         </footer>
     </div>
     @RenderSection("BottomScripts", required: false)
+    @if (!string.IsNullOrWhiteSpace(noticeText))
+    {
+        <style media="screen" type="text/css">
+            @@-webkit-keyframes fade {
+              0% { background:#dedede; }
+              20% { background:@@notices; }
+              30% { background:@@notices; }
+              90% { background:lighten( @@notices, 20% ); }
+            }
+            @@keyframes fade {
+              0% { background:#dedede; }
+              20% { background:@@notices; }
+              30% { background:@@notices; }
+              90% { background:lighten( @@notices, 20% ); }
+            }
+        </style>
+    }
 </body>
 </html>
