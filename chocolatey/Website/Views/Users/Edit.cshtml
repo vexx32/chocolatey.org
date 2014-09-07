@@ -47,14 +47,14 @@
             @Html.LabelFor(m => m.PackagesRepository)
             @Html.EditorFor(m => m.PackagesRepository)
             @Html.ValidationMessageFor(m => m.PackagesRepository)
-            <span class="field-hint-message">The full Url to your packages repository (this is where you keep what builds the packages)</span>
+            <span class="field-hint-message">The full Url to your packages repository (this is where you keep what builds the packages). Also put your automatic packages into this repository (the packages that use Chocolatey Package Updater to build and push automatically).</span>
         </div>
         
          <div class="form-field">
             @Html.LabelFor(m => m.PackagesRepositoryAuto)
             @Html.EditorFor(m => m.PackagesRepositoryAuto)
             @Html.ValidationMessageFor(m => m.PackagesRepositoryAuto)
-            <span class="field-hint-message">The full Url to your automatic packages repository (this is a secondary repository you might have that uses Chocolatey Package Updater to build and push your packages automatically)</span>
+            <span class="field-hint-message">Deprecated field, leave this empty. It is recommended to include your automatic packages into the repository you specified above. No need for an additional separate repository</span>
         </div>
 
         <div class="form-field">
