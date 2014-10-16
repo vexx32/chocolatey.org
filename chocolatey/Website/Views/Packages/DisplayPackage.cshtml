@@ -99,23 +99,64 @@
         PowerShell: </p>
     <div class="nuget-badge">
         <p><code><span>C:\&gt; </span>choco install @Model.Id
-            @if (!Model.LatestVersion || !Model.Listed)
-            { <text> -Version @Model.Version</text> }
-            @if (Model.Prerelease)
-            {<text> -Pre </text>}</code></p>
+               @if (!Model.LatestVersion || !Model.Listed)
+               { <text> -Version @Model.Version</text> }
+               @if (Model.Prerelease)
+               {<text> -Pre </text>}</code></p>
     </div>
+      @if (Model.Files.Any())
+    {
+       <a name="files" id="files"></a><h3>Files</h3>
+        <ul>
+            @foreach (var file in Model.Files)
+            {
+                <li>@file.FilePath
+                    @if (!string.IsNullOrWhiteSpace(file.FileContent))
+                    {
+                        var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-");
+                        <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">
+                        Show</a>
+                        <br />
+                        <div id="@fileDivId" class="package-file-content">
+                            @{ var shBrush = "";
+                            }
+                            @switch (Path.GetExtension(file.FilePath))
+                            {
+                                case ".ps1":
+                                case ".psm1":
+                                    shBrush = "ps";
+                                    break;
+                                case ".xml":
+                                case ".config":
+                                    shBrush = "xml";
+                                    break;
+                                case ".js":
+                                case ".json":
+                                    shBrush = "js";
+                                    break;
+                                default:
+                                    shBrush = "plain";
+                                    break;
+                            }
+                            <pre class="brush: @shBrush">@file.FileContent</pre>
+                        </div>
+                    }
+                </li>
+            }
+        </ul>
+    }
     @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
     {
-        <h3>Release Notes</h3>
+        <a name="releasenotes" id="releasenotes"></a><h3>Release Notes</h3>
         @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
 @* foreach (var note in Model.ReleaseNotes.Split('\n'))
         {
             <p>@note</p>
         }*@
     }
-    <h3>Maintainers</h3>
+    <a name="maintainers" id="maintainers"></a><h3>Maintainers</h3>
     @ViewHelpers.OwnersGravatar(Model.Owners, 32, Url)
-    <h3>Authors</h3>
+    <a name="authors" id="authors"></a><h3>Authors</h3>
     <ul class="authors">
         @foreach (var author in Model.Authors)
         {
@@ -129,7 +170,7 @@
     }
     @if (@Model.Tags.AnySafe())
     {
-        <h3>Tags</h3>
+        <a name="tags" id="tags"></a><h3>Tags</h3>
         <ul class="tags">
             @foreach (var tag in Model.Tags)
             {
@@ -138,7 +179,7 @@
         </ul>
     }
     @Html.Partial("_PackageDependencies", Model.Dependencies)
-    <h3>Version History</h3>
+    <a name="versionhistory" id="versionhistory"></a><h3>Version History</h3>
     <table class="sexy-table">
         <thead>
             <tr>
@@ -192,50 +233,10 @@
             }
         </tbody>
     </table>
-    @if (Model.Files.Any())
-    {
-        <h3>Files</h3>
-        <ul>
-            @foreach (var file in Model.Files)
-            {
-                <li>@file.FilePath
-                    @if (!string.IsNullOrWhiteSpace(file.FileContent))
-                    {
-                        var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-");
-                        <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">
-                        Show</a>
-                        <br />
-                        <div id="@fileDivId" class="package-file-content">
-                            @{ var shBrush = "";
-                            }
-                            @switch (Path.GetExtension(file.FilePath))
-                            {
-                                case ".ps1":
-                                case ".psm1":
-                                    shBrush = "ps";
-                                    break;
-                                case ".xml":
-                                case ".config":
-                                    shBrush = "xml";
-                                    break;
-                                case ".js":
-                                case ".json":
-                                    shBrush = "js";
-                                    break;
-                                default:
-                                    shBrush = "plain";
-                                    break;
-                            }
-                            <pre class="brush: @shBrush">@file.FileContent</pre>
-                        </div>
-                    }
-                </li>
-            }
-        </ul>
-    }
+  
 </div>
 <div class="package-page">
-    <h3>Discussion for the @Model.Title Package</h3>
+    <a name="discussion" id="discussion"></a><h3>Discussion for the @Model.Title Package</h3>
     <p>Ground rules:
         <br />
         <ul>
