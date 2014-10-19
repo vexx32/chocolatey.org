@@ -279,6 +279,7 @@ namespace NuGetGallery
             package.IsPrerelease = !nugetPackage.IsReleaseVersion();
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
+            package.ApprovedDate = null;
 
             package.IconUrl = nugetPackage.IconUrl == null ? string.Empty : nugetPackage.IconUrl.ToString();
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
