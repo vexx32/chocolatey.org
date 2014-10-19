@@ -115,7 +115,11 @@ namespace NuGetGallery
             if (!fileSystemSvc.DirectoryExists(folderPath)) fileSystemSvc.CreateDirectory(folderPath);
 
             var filePath = BuildPath(configuration.FileStorageDirectory, folderName, fileName);
-       
+            if (fileSystemSvc.FileExists(filePath))
+            {
+                fileSystemSvc.DeleteFile(filePath);
+            }
+
             using (var file = fileSystemSvc.OpenWrite(filePath))
             {
                 packageFile.CopyTo(file);
