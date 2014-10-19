@@ -16,6 +16,17 @@
     width: 560px;
 }
 
+.review-instructions {
+    background-color: #e3fbf9;
+    color: #000000;
+    font-weight: 600;
+}
+
+.review-instructions li {
+    position: relative;
+    left: 20px;
+}
+
 .notices
 {
     padding: 0 10px 0 10px;
