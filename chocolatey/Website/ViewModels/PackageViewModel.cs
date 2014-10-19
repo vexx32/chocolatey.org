@@ -20,6 +20,7 @@ namespace NuGetGallery
             Listed = package.Listed;
             DownloadCount = package.DownloadCount;
             Prerelease = package.IsPrerelease;
+            Status = package.Status;
         }
 
         public string Id
@@ -48,6 +49,7 @@ namespace NuGetGallery
         public bool Prerelease { get; set; }
         public int DownloadCount { get; set; }
         public bool Listed { get; set; }
+        public PackageStatusType Status { get; set; }
         public int TotalDownloadCount
         {
             get
