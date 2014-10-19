@@ -21,6 +21,10 @@ namespace NuGetGallery
             DownloadCount = package.DownloadCount;
             Prerelease = package.IsPrerelease;
             Status = package.Status;
+            ApprovedDate = package.ApprovedDate;
+            ReviewedByUserName = package.ReviewedBy !=null ? package.ReviewedBy.Username : string.Empty;
+            ReviewedDate = package.ReviewedDate;
+            ReviewComments = package.ReviewComments;
         }
 
         public string Id
@@ -50,6 +54,12 @@ namespace NuGetGallery
         public int DownloadCount { get; set; }
         public bool Listed { get; set; }
         public PackageStatusType Status { get; set; }
+        public DateTime? ReviewedDate { get; set; }
+        public string ReviewedByUserName { get; set; }
+        public string ReviewComments { get; set; }
+        public DateTime? ApprovedDate { get; set; }
+
+
         public int TotalDownloadCount
         {
             get
