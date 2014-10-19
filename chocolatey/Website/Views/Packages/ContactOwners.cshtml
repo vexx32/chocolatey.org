@@ -3,7 +3,7 @@
     ViewBag.Tab = "Packages";
 }
 
-<h1 class="page-heading">Contact the Maintainers of "@Model.PackageId"</h1>
+<h1 class="page-heading">Contact the Maintainers of "<a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a>"</h1>
 @if (Model.Owners.Any()) {
     <p class="message">
         By submitting this form, you agree to <em>disclose your email address</em> 
