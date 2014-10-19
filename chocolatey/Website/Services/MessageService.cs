@@ -103,7 +103,7 @@ Package Url: [{6}]({6})
                 mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
                 mailMessage.Body = body;
                 mailMessage.From = fromAddress;
-
+                //mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(plainTextBody, new ContentType("text/plain")));
                 mailMessage.To.Add(settings.GalleryOwnerEmail);
                 SendMessage(mailMessage,copySender);
             }
