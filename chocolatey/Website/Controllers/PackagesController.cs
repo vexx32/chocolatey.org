@@ -230,7 +230,7 @@ namespace NuGetGallery
 
             messageService.ReportAbuse(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
-            TempData["Message"] = "Your abuse report has been sent to the gallery operators.";
+            TempData["Message"] = "Your abuse report has been sent to the site admins.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
         }
 
@@ -291,7 +291,7 @@ namespace NuGetGallery
 
             messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
-            TempData["Message"] = "Your message has been sent to the gallery operators.";
+            TempData["Message"] = "Your message has been sent to the site admins.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
         }
 
