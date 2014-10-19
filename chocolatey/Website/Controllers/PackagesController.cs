@@ -105,7 +105,7 @@ namespace NuGetGallery
             }
 
             var package = packageSvc.FindPackageByIdAndVersion(nuGetPackage.Id, nuGetPackage.Version.ToStringSafe());
-            if (package != null)
+            if (package != null && package.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError)
             {
                 ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
                 return View();

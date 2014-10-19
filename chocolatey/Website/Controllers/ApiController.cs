@@ -121,13 +121,15 @@ namespace NuGetGallery
                     return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
                 }
 
-                // Check if a particular Id-Version combination already exists. We eventually need to remove this check.
-                bool packageExists = packageRegistration.Packages.Any(p => p.Version.Equals(packageToPush.Version.ToString(), StringComparison.OrdinalIgnoreCase));
-                if (packageExists)
-                {
-                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict,
-                        String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version.ToString()));
-                }
+                 var existingPackage =  packageRegistration.Packages.FirstOrDefault(p => p.Version.Equals(packageToPush.Version.ToString(), StringComparison.OrdinalIgnoreCase));
+                 if (existingPackage != null && existingPackage.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError)
+                 {
+                     return new HttpStatusCodeWithBodyResult(
+                         HttpStatusCode.Conflict,
+                         String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version.ToString())
+                         );
+                     
+                 }
             }
 
             var package = packageSvc.CreatePackage(packageToPush, user);
