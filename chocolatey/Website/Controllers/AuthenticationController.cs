@@ -22,6 +22,16 @@ namespace NuGetGallery
         [RequireHttpsAppHarbor]
         public virtual ActionResult LogOn()
         {
+            if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
+            {
+                ViewData[Constants.ReturnUrlViewDataKey] = TempData[Constants.ReturnUrlViewDataKey];
+            }
+            
+            if (Request.IsAuthenticated)
+            {
+                return SafeRedirect(ViewData[Constants.ReturnUrlViewDataKey] as string);
+            }
+
             return View();
         }
 
@@ -31,8 +41,9 @@ namespace NuGetGallery
             // TODO: improve the styling of the validation summary
             // TODO: modify the Object.cshtml partial to make the first text box autofocus, or use additional metadata
 
-            if (!ModelState.IsValid)
-                return View();
+            ViewData[Constants.ReturnUrlViewDataKey] = returnUrl;
+
+            if (!ModelState.IsValid) return View();
 
             var user = userSvc.FindByUsernameOrEmailAddressAndPassword(
                 request.UserNameOrEmail,
@@ -79,19 +90,17 @@ namespace NuGetGallery
         [NonAction]
         public virtual ActionResult SafeRedirect(string returnUrl)
         {
-            if (!String.IsNullOrWhiteSpace(returnUrl)
-                && Url.IsLocalUrl(returnUrl)
-                && returnUrl.Length > 1
-                && returnUrl.StartsWith("/", StringComparison.Ordinal)
-                && !returnUrl.StartsWith("//", StringComparison.Ordinal)
-                && !returnUrl.StartsWith("/\\", StringComparison.Ordinal))
+            if (!string.IsNullOrWhiteSpace(returnUrl) &&
+                Url.IsLocalUrl(returnUrl) 
+                && returnUrl.Length > 1 
+                && returnUrl.StartsWith("/")
+                && !returnUrl.StartsWith("//") 
+                && !returnUrl.StartsWith("/\\"))
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return Redirect(Url.Home());
-            }
+          
+            return Redirect(Url.Home());
         }
     }
 }

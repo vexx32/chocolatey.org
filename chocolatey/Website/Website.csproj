@@ -651,9 +651,6 @@
       <Link>AuthenticationController.generated.cs</Link>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Controllers\ApiController.cs">
-      <Link>Controllers\ApiController.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Controllers\JsonApiController.cs">
       <Link>Controllers\JsonApiController.cs</Link>
     </Compile>
@@ -1011,9 +1008,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageDependency.cs">
       <Link>Entities\PackageDependency.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Constants.cs">
-      <Link>Constants.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\App_Start\Container.cs">
       <Link>App_Start\Container.cs</Link>
     </Compile>
@@ -1114,6 +1108,8 @@
     <Compile Include="App_Start\IConfiguration.cs" />
     <Compile Include="App_Start\PackageStoreType.cs" />
     <Compile Include="App_Start\Routes.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />

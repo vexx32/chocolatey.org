@@ -16,7 +16,7 @@
 
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-
+        @Html.Hidden("ReturnUrl", ViewData[Constants.ReturnUrlViewDataKey])
         @if (ViewBag.ConfirmationRequired != null && ViewBag.ConfirmationRequired) {
             <p class="validation-summary-errors">
                 Before you can log on, you&#8217;ll need to confirm your account. When you registered, 

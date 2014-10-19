@@ -230,7 +230,7 @@ namespace NuGetGallery
 
             messageService.ReportAbuse(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
-            TempData["Message"] = "Your abuse report has been sent to the gallery operators.";
+            TempData["Message"] = "Your abuse report has been sent to the site admins.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
         }
 
@@ -291,11 +291,11 @@ namespace NuGetGallery
 
             messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
-            TempData["Message"] = "Your message has been sent to the gallery operators.";
+            TempData["Message"] = "Your message has been sent to the site admins.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
         }
 
-        [Authorize]
+        // NOTE: Intentionally NOT requiring authentication
         public virtual ActionResult ContactOwners(string id)
         {
             var package = packageSvc.FindPackageRegistrationById(id);
@@ -311,10 +311,19 @@ namespace NuGetGallery
                 Owners = package.Owners.Where(u => u.EmailAllowed)
             };
 
+            if (Request.IsAuthenticated)
+            {
+                var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
+                if (user.Confirmed)
+                {
+                    model.ConfirmedUser = true;
+                }
+            }
+
             return View(model);
         }
 
-        [HttpPost, Authorize, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult ContactOwners(string id, ContactOwnersViewModel contactForm)
         {
             if (!ModelState.IsValid)
@@ -328,11 +337,20 @@ namespace NuGetGallery
                 return PackageNotFound(id);
             }
 
-            var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
-            var fromAddress = new MailAddress(user.EmailAddress, user.Username);
+            MailAddress from = null;
+            if (Request.IsAuthenticated)
+            {
+                var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
+                from = user.ToMailAddress();
+            }
+            else
+            {
+                from = new MailAddress(contactForm.Email);
+            }
+
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.SendContactOwnersMessage(fromAddress, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl, contactForm.CopySender);
+            messageService.SendContactOwnersMessage(from, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl, contactForm.CopySender);
 
             string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the maintainers of {0}.", id);
             TempData["Message"] = message;
