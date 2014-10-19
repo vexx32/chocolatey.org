@@ -1135,6 +1135,10 @@
     <Compile Include="Migrations\201410190823050_PackageStatuses.Designer.cs">
       <DependentUpon>201410190823050_PackageStatuses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410191904327_PackageReviewComments.cs" />
+    <Compile Include="Migrations\201410191904327_PackageReviewComments.Designer.cs">
+      <DependentUpon>201410191904327_PackageReviewComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
     <Compile Include="RouteNames.cs" />
