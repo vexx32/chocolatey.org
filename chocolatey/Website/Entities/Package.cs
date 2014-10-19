@@ -112,7 +112,12 @@ namespace NuGetGallery
         public DateTime? ReviewedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public virtual User ReviewedBy { get; set; }
-        public int? ReviewedById { get; set; }
+        public int? ReviewedById { get; set; } 
+        
+        /// <remarks>
+        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        /// </remarks>
+        public string ReviewComments { get; set; }
 
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }
