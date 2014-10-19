@@ -12,28 +12,37 @@
     are still available for download. For example, they can still be downloaded as dependencies to 
     other packages.
 </p>
-
-@using (Html.BeginForm()) {
-    <fieldset id="unlist-form" class="form">
-        <legend>Edit @Model.Title Package</legend>
-        @Html.AntiForgeryToken()
-        <div class="form-field">
-            @Html.EditorFor(package => package.Listed)
-            <label for="Listed" class="checkbox">
-                List @Model.Title @Model.Version in search results.
-            </label>
-        </div>
-
-        <p>
-            Unchecking this box means your package cannot be installed directly and it will 
-            not show up in search results.
-        </p>
-
-        <input type="submit" value="Save" title="Save Changes" />
-        <a class="cancel" href="@Url.Action("DisplayPackage")" title="Cancel Changes and go back to package page.">Cancel</a>
-    </fieldset>
+ @if (!Model.Listed && Model.Status != PackageStatusType.Approved)
+{
+    <p class="message warning">Until this package is approved, it is not allowed to be listed.</p>
 }
+else
+{
+    using (Html.BeginForm())
+    {
+        <fieldset id="unlist-form" class="form">
+            <legend>Edit @Model.Title Package</legend>
+            @Html.AntiForgeryToken()
+            <div class="form-field">
+          
+                @Html.EditorFor(package => package.Listed)
+                <label for="Listed" class="checkbox">
+                    List @Model.Title @Model.Version in search results.
+                </label>
+            
+            </div>
 
+            <p>
+                Unchecking this box means your package cannot be installed directly and it will 
+                not show up in search results.
+            </p>
+
+            <input type="submit" value="Save" title="Save Changes" />
+        
+            <a class="cancel" href="@Url.Action("DisplayPackage")" title="Cancel Changes and go back to package page.">Cancel</a>
+        </fieldset>
+    }
+}
 <h2>Why can&#8217;t I delete my package?</h2>
 <p>
     Our policy is to only permanently delete Chocolatey packages that really need it, such as 
