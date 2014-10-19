@@ -96,6 +96,24 @@ namespace NuGetGallery
         public string Version { get; set; }
 
         public bool Listed { get; set; }
+
+        public PackageStatusType Status { get; set; }
+        [MaxLength(100)]
+        [Column("Status")]
+        public string StatusForDatabase
+        {
+            get { return Status.ToString(); }
+            set
+            {
+                if (value == null) Status = PackageStatusType.Unknown; 
+                else Status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), value);
+            }
+        }
+        public DateTime? ReviewedDate { get; set; }
+        public DateTime? ApprovedDate { get; set; }
+        public virtual User ReviewedBy { get; set; }
+        public int? ReviewedById { get; set; }
+
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }
 

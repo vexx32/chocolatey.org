@@ -83,7 +83,13 @@ namespace NuGetGallery
             modelBuilder.Entity<Package>()
                 .HasMany<PackageDependency>(p => p.Dependencies)
                 .WithRequired(pd => pd.Package)
-                .HasForeignKey(pd => pd.PackageKey);
+                .HasForeignKey(pd => pd.PackageKey);  
+            
+             modelBuilder.Entity<Package>()
+                .HasOptional<User>(e => e.ReviewedBy)
+                .WithMany()
+                .HasForeignKey(e => e.ReviewedById)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PackageAuthor>()
                 .HasKey(pa => pa.Key);

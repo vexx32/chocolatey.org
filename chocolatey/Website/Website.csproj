@@ -1112,6 +1112,7 @@
     <Compile Include="Entities\EntitiesContext.cs" />
     <Compile Include="Entities\Package.cs" />
     <Compile Include="Entities\PackageFile.cs" />
+    <Compile Include="Entities\PackageStatusType.cs" />
     <Compile Include="Entities\UserSiteProfile.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Migrations\201210010306298_AddUserSiteProfiles.cs" />
@@ -1129,6 +1130,10 @@
     <Compile Include="Migrations\201408121529063_UpdatePackageFiles.cs" />
     <Compile Include="Migrations\201408121529063_UpdatePackageFiles.Designer.cs">
       <DependentUpon>201408121529063_UpdatePackageFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410190823050_PackageStatuses.cs" />
+    <Compile Include="Migrations\201410190823050_PackageStatuses.Designer.cs">
+      <DependentUpon>201410190823050_PackageStatuses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\CustomMvcHandler.cs" />
