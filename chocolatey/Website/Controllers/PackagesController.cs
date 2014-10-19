@@ -68,8 +68,7 @@ namespace NuGetGallery
 
             using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (existingUploadFile != null)
-                    return new HttpStatusCodeResult(409, "Cannot upload file because an upload is already in progress.");
+                if (existingUploadFile != null) return new HttpStatusCodeResult(409, "Cannot upload file because an upload is already in progress.");
             }
 
             if (uploadFile == null)
@@ -466,14 +465,9 @@ namespace NuGetGallery
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
-            if (!package.IsOwner(HttpContext.User))
-            {
-                return new HttpStatusCodeResult(401, "Unauthorized");
-            }
+            if (package == null) return PackageNotFound(id, version);
+
+            if (!package.IsOwner(HttpContext.User)) return new HttpStatusCodeResult(401, "Unauthorized");
 
             if (!(listed ?? false))
             {
@@ -521,9 +515,7 @@ namespace NuGetGallery
             IPackage package;
             using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (uploadFile == null)
-                    return RedirectToRoute(RouteName.UploadPackage);
-
+                if (uploadFile == null) return RedirectToRoute(RouteName.UploadPackage);
                 package = ReadNuGetPackage(uploadFile);
             }
 
@@ -551,9 +543,7 @@ namespace NuGetGallery
             IPackage nugetPackage;
             using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (uploadFile == null)
-                    return HttpNotFound();
-
+                if (uploadFile == null) return HttpNotFound();
                 nugetPackage = ReadNuGetPackage(uploadFile);
             }
 
