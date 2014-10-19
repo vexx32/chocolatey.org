@@ -17,7 +17,7 @@
 # ==============================================================================
 
 # variables
-$url = "http://chocolatey.org/api/v2/package/chocolatey/"
+$url = "https://chocolatey.org/api/v2/package/chocolatey/"
 $chocTempDir = Join-Path $env:TEMP "chocolatey"
 $tempDir = Join-Path $chocTempDir "chocInstall"
 if (![System.IO.Directory]::Exists($tempDir)) {[System.IO.Directory]::CreateDirectory($tempDir)}
@@ -33,7 +33,7 @@ param (
   $downloader.DownloadFile($url, $file)
 }
 
-$absoluteLatestVersionUrl = "http://chocolatey.org/api/v2/Packages()?`$filter=(Id%20eq%20'chocolatey')%20and%20IsAbsoluteLatestVersion"
+$absoluteLatestVersionUrl = "https://chocolatey.org/api/v2/Packages()?`$filter=(Id%20eq%20'chocolatey')%20and%20IsAbsoluteLatestVersion"
 $absXml = (new-object net.webclient).DownloadString("$absoluteLatestVersionUrl")
 $regex = '\<content type\=\"application\/zip\" src=\"(?<Url>.*)\"'
 $matchingItems = ([regex]$regex).match($absXml)
@@ -50,7 +50,7 @@ Download-File $url $file
 #download 7zip
 Write-Host "Download 7Zip commandline tool"
 $7zaExe = Join-Path $tempDir '7za.exe'
-Download-File 'http://chocolatey.org/7za.exe' "$7zaExe"
+Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
 # Github's Raw endpoint does not honor TLS and the .net 2.0 client will
 # not fall back to Ssl3 un like the newer .net4 clients. So .net2 will 
 # time out if we do not explicitly set the protocol to Ssl3
