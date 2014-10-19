@@ -2,6 +2,18 @@
 @using StackExchange.Profiling
 @{
     var noticeText = "The Kickstarter is <strong><a href=\"https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum\">live</a></strong>! Let's take Chocolatey to <a href=\"https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum\">the next level!</a>";
+
+    if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string) ViewData[Constants.ReturnUrlViewDataKey]))
+    {
+        if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
+        {
+            TempData[Constants.ReturnUrlViewDataKey] = Request.RawUrl;
+        }
+        else
+        {
+            TempData.Add(Constants.ReturnUrlViewDataKey, Request.RawUrl);
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="en" class="static ">
