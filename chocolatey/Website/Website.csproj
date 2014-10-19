@@ -1136,12 +1136,6 @@
       <DependentUpon>201410190823050_PackageStatuses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
-    <Compile Include="MvcOverrides\CustomMvcHandler.cs" />
-    <Compile Include="MvcOverrides\CustomMvcRouteHandler.cs" />
-    <Compile Include="MvcOverrides\HttpContextDecorator.cs" />
-    <Compile Include="MvcOverrides\HttpContextProxy.cs" />
-    <Compile Include="MvcOverrides\HttpRequestDecorator.cs" />
-    <Compile Include="MvcOverrides\HttpRequestProxy.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
     <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />

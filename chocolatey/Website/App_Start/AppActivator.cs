@@ -60,14 +60,14 @@ namespace NuGetGallery
             ValueProviderFactories.Factories.Add(new HttpHeaderValueProviderFactory());
         }
 
-        private static void SetCustomRouteHandler()
-        {
-             var routes = RouteTable.Routes.OfType<Route>().Where(x => x.RouteHandler is MvcRouteHandler);
-            foreach (var route in routes)
-            {
-                route.RouteHandler = new CustomMvcRouteHandler();
-            }
-        }
+        //private static void SetCustomRouteHandler()
+        //{
+        //     var routes = RouteTable.Routes.OfType<Route>().Where(x => x.RouteHandler is MvcRouteHandler);
+        //    foreach (var route in routes)
+        //    {
+        //        route.RouteHandler = new CustomMvcRouteHandler();
+        //    }
+        //}
 
         private static void BackgroundJobsPostStart()
         {
