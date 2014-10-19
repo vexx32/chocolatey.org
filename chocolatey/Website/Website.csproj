@@ -575,9 +575,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\CloudBlobWrapper.cs">
       <Link>Services\CloudBlobWrapper.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\FileSystemFileStorageService.cs">
-      <Link>Services\FileSystemFileStorageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\IAggregateStatsService.cs">
       <Link>Services\IAggregateStatsService.cs</Link>
     </Compile>
@@ -1089,9 +1086,6 @@
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PackageListViewModel.cs">
       <Link>ViewModels\PackageListViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\PackageViewModel.cs">
-      <Link>ViewModels\PackageViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordResetRequestViewModel.cs">
       <Link>ViewModels\PasswordResetRequestViewModel.cs</Link>
     </Compile>
@@ -1147,6 +1141,7 @@
     <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
+    <Compile Include="Services\FileSystemFileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IUserSiteProfilesService.cs" />
@@ -1163,6 +1158,7 @@
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
+    <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\ReportAbuseViewModel.cs" />
     <Compile Include="ViewModels\UserProfileModel.cs" />
     <Compile Include="ViewModels\UserSiteProfileViewModel.cs" />
