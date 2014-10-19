@@ -295,28 +295,39 @@ namespace NuGetGallery
             packageFrameworksRepo.CommitChanges();
             var supportedFrameworks = GetSupportedFrameworks(nugetPackage).Select(fn => fn.ToShortNameOrNull()).ToArray();
             if (!supportedFrameworks.AnySafe(sf => sf == null))
+            {
                 foreach (var supportedFramework in supportedFrameworks)
+                {
                     package.SupportedFrameworks.Add(new PackageFramework { TargetFramework = supportedFramework });
+                }
+            }
 
             foreach (var item in package.Dependencies.OrEmptyListIfNull().ToList()) packageDependenciesRepo.DeleteOnCommit(item);
             packageDependenciesRepo.CommitChanges();
             foreach (var dependencySet in nugetPackage.DependencySets)
             {
                 if (dependencySet.Dependencies.Count == 0)
+                {
+
                     package.Dependencies.Add(new PackageDependency
-                    {
-                        Id = null,
-                        VersionSpec = null,
-                        TargetFramework = dependencySet.TargetFramework.ToShortNameOrNull()
-                    });
+                        {
+                            Id = null,
+                            VersionSpec = null,
+                            TargetFramework = dependencySet.TargetFramework.ToShortNameOrNull()
+                        });
+                }
                 else
+                {
                     foreach (var dependency in dependencySet.Dependencies.Select(d => new { d.Id, d.VersionSpec, dependencySet.TargetFramework }))
+                    {
                         package.Dependencies.Add(new PackageDependency
                         {
                             Id = dependency.Id,
                             VersionSpec = dependency.VersionSpec == null ? null : dependency.VersionSpec.ToString(),
                             TargetFramework = dependency.TargetFramework.ToShortNameOrNull()
                         });
+                    }
+                }
             }
 
             foreach (var item in package.Files.OrEmptyListIfNull().ToList()) packageFilesRepo.DeleteOnCommit(item);
@@ -491,15 +502,8 @@ namespace NuGetGallery
         // TODO: Should probably be run in a transaction
         public void MarkPackageListed(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-
-            if (package.Listed)
-            {
-                return;
-            }
+            if (package == null) throw new ArgumentNullException("package");
+            if (package.Listed) return;
 
             if (!package.Listed && (package.IsLatestStable || package.IsLatest))
             {
