@@ -130,6 +130,10 @@ namespace NuGetGallery
                          );
                      
                  }
+                if (existingPackage != null && existingPackage.Status == PackageStatusType.Rejected)
+                {
+                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, "This package has been rejected and can no longer be submitted.");
+                }
             }
 
             var package = packageSvc.CreatePackage(packageToPush, user);

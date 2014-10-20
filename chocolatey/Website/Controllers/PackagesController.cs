@@ -110,6 +110,12 @@ namespace NuGetGallery
                 ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
                 return View();
             }
+            if (package != null && package.Status == PackageStatusType.Rejected)
+            {
+                ModelState.AddModelError(String.Empty, "This package has been rejected and can no longer be submitted.");
+                return View();
+            }
+           
 
             using (var fileStream = nuGetPackage.GetStream())
             {

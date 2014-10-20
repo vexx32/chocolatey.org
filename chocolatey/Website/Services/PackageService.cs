@@ -254,6 +254,7 @@ namespace NuGetGallery
                 .SingleOrDefault();
 
             if (package != null && package.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError) throw new EntityException("A package with identifier '{0}' and version '{1}' already exists.", packageRegistration.Id, package.Version);
+            if (package != null && package.Status == PackageStatusType.Rejected) throw new EntityException("This package has been rejected and can no longer be submitted.");
 
             var now = DateTime.UtcNow;
             var packageFileStream = nugetPackage.GetStream();
