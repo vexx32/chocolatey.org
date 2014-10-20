@@ -571,7 +571,7 @@ namespace NuGetGallery
                 nugetExeDownloaderSvc.UpdateExecutable(nugetPackage);
             }
 
-            TempData["Message"] = String.Format(CultureInfo.CurrentCulture, Strings.SuccessfullyUploadedPackage, package.PackageRegistration.Id, package.Version);
+            TempData["Message"] = string.Format("You have successfully created '{0}' version '{1}'. The package is now under review by the moderators and will show up once approved.", package.PackageRegistration.Id, package.Version);
             return RedirectToRoute(RouteName.DisplayPackage, new { package.PackageRegistration.Id, package.Version });
         }
 
