@@ -143,7 +143,7 @@ namespace NuGetGallery
                 nugetExeDownloaderSvc.UpdateExecutable(packageToPush);
             }
 
-            return new HttpStatusCodeResult(201);
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
         }
 
         [ActionName("DeletePackageApi"), HttpDelete]
