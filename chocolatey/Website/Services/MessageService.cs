@@ -314,5 +314,44 @@ The {3} Team";
             }
         }
 
+        public void SendPackageModerationRequest(PackageRegistration packageRegistration, Package package)
+        {
+            string subject = "[{0}] Moderation request for the package '{1}' v{2}";
+            var packageUrl = string.Format("{0}packages/{1}/{2}",EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),packageRegistration.Id,package.Version);
+            string body = @"The {0} package has been submitted and is up for moderation. Please follow the link to review the package:
+
+Package Url: [{1}]({1})
+";
+
+            body = String.Format(CultureInfo.CurrentCulture,
+                body,
+                packageRegistration.Id,
+                packageUrl);
+
+            subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, packageRegistration.Id,package.Version);
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
+
+                AddOwnersToMailMessage(packageRegistration, mailMessage);
+                mailMessage.To.Add(settings.GalleryOwnerEmail);
+                if (mailMessage.To.Any())
+                {
+                    SendMessage(mailMessage);
+                }
+            }
+        }
+
+        private static string EnsureTrailingSlash(string siteRoot)
+        {
+            if (string.IsNullOrWhiteSpace(siteRoot)) return string.Empty;
+            if (!siteRoot.EndsWith("/", StringComparison.Ordinal))
+            {
+                siteRoot = siteRoot + '/';
+            }
+            return siteRoot;
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace NuGetGallery
         private readonly IPackageFileService packageFileSvc;
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
         private readonly IIndexingService indexingSvc;
+        private readonly IMessageService messageSvc;
 
         public PackageService(
             ICryptographyService cryptoSvc,
@@ -36,7 +37,8 @@ namespace NuGetGallery
             IEntityRepository<PackageAuthor> packageAuthorRepo,
             IEntityRepository<PackageFramework> packageFrameworksRepo, 
             IEntityRepository<PackageDependency> packageDependenciesRepo, 
-            IEntityRepository<PackageFile> packageFilesRepo)
+            IEntityRepository<PackageFile> packageFilesRepo,
+            IMessageService messageSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageRegistrationRepo = packageRegistrationRepo;
@@ -49,6 +51,7 @@ namespace NuGetGallery
             this.packageFrameworksRepo = packageFrameworksRepo;
             this.packageDependenciesRepo = packageDependenciesRepo;
             this.packageFilesRepo = packageFilesRepo;
+            this.messageSvc = messageSvc;
         }
 
         public Package CreatePackage(IPackage nugetPackage, User currentUser)
@@ -70,6 +73,8 @@ namespace NuGetGallery
                     tx.Complete();
                 }
             }
+
+            NotifyForModeration(packageRegistration, package);
 
             NotifyIndexingService();
 
@@ -625,5 +630,11 @@ namespace NuGetGallery
         {
             indexingSvc.UpdateIndex();
         }
+
+        private void NotifyForModeration(PackageRegistration registration, Package package)
+        {
+            messageSvc.SendPackageModerationRequest(registration, package);
+        }
+
     }
 }
