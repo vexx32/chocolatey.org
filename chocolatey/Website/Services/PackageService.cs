@@ -74,7 +74,10 @@ namespace NuGetGallery
                 }
             }
 
-            NotifyForModeration(packageRegistration, package);
+            if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted)
+            {
+                NotifyForModeration(packageRegistration, package);
+            }
 
             NotifyIndexingService();
 
@@ -286,6 +289,13 @@ namespace NuGetGallery
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
             package.ApprovedDate = null;
+
+            //we don't moderate prereleases
+            if (package.IsPrerelease)
+            {
+                package.Listed = true;
+                package.Status = PackageStatusType.Exempted;
+            }
 
             package.IconUrl = nugetPackage.IconUrl == null ? string.Empty : nugetPackage.IconUrl.ToString();
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
@@ -517,7 +527,7 @@ namespace NuGetGallery
                 throw new InvalidOperationException("An unlisted package should never be latest or latest stable!");
             }
 
-            if (package.Status == PackageStatusType.Approved)
+            if (package.Status == PackageStatusType.Approved || package.Status == PackageStatusType.Exempted)
             {
                 package.Listed = true;
                 package.LastUpdated = DateTime.UtcNow;
