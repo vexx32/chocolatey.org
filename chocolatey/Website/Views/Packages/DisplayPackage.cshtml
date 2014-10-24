@@ -93,7 +93,7 @@
             @Model.ReviewComments
         </p>
     }
-    else if (Model.IsOwner(User) && !Model.Listed && Model.Status != PackageStatusType.Approved)
+    else if (Model.IsOwner(User) && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
         <p class="message error">This package will remain unlisted until it has been approved by a moderator.
             You can see the package because you are one of its maintainers.  If you have not heard from 
@@ -124,7 +124,7 @@
         <p class="message warning">This package was approved by moderator @Model.ReviewedByUserName on @Model.ApprovedDate.GetValueOrDefault().ToShortDateString().</p>
     }
     
-    @if (Model.Listed && Model.Status != PackageStatusType.Approved)
+    @if (Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
         <p class="message error">This package was submitted prior to moderation and had not been approved. Use at your own risk.</p>
     }
