@@ -12,7 +12,7 @@
     are still available for download. For example, they can still be downloaded as dependencies to 
     other packages.
 </p>
- @if (!Model.Listed && Model.Status != PackageStatusType.Approved)
+ @if (!Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
 {
     <p class="message warning">Until this package is approved, it is not allowed to be listed.</p>
 }
