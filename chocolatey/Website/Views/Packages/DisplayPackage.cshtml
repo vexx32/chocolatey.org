@@ -128,8 +128,12 @@
     {
         <p class="message error">This package was submitted prior to moderation and had not been approved. Use at your own risk.</p>
     }
-
-
+    
+    @if (Model.Listed && Model.Status == PackageStatusType.Exempted)
+    {
+        <p class="message error">This package is exempt from moderation. Use at your own risk.</p>
+    }
+    
     @Html.Raw(markdownGenerator.Transform(Model.Description))
     @*foreach (var line in Model.Description.ToStringSafe().Split('\n'))
     {
