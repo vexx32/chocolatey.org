@@ -1,6 +1,8 @@
 ﻿using System;
 namespace NuGetGallery
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class PackageViewModel : IPackageVersionModel
     {
         readonly Package package;
@@ -53,12 +55,13 @@ namespace NuGetGallery
         public bool Prerelease { get; set; }
         public int DownloadCount { get; set; }
         public bool Listed { get; set; }
+        [Display(Name = "Package Status")]
         public PackageStatusType Status { get; set; }
         public DateTime? ReviewedDate { get; set; }
         public string ReviewedByUserName { get; set; }
+        [Display(Name = "Review Comments")]
         public string ReviewComments { get; set; }
         public DateTime? ApprovedDate { get; set; }
-
 
         public int TotalDownloadCount
         {
