@@ -538,6 +538,32 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
         }
 
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user)
+        {
+            if (package.Status == status && package.ReviewComments == comments) return;
+
+            if (package.Status != status && status != PackageStatusType.Unknown)
+            {
+                package.Status = status;
+                package.ApprovedDate = null;
+
+                if (package.Status == PackageStatusType.Approved)
+                {
+                    package.ApprovedDate = DateTime.UtcNow;
+                }       
+            }
+            
+            package.ReviewedDate = DateTime.UtcNow;
+            package.ReviewedById = user.Key;
+
+            if (package.ReviewComments != comments && !string.IsNullOrWhiteSpace(package.ReviewComments))
+            {
+                package.ReviewComments = comments;
+            }
+            
+            MarkPackageListed(package);
+        }
+
         // TODO: Should probably be run in a transaction
         public void MarkPackageUnlisted(Package package)
         {
