@@ -3,6 +3,7 @@ namespace NuGetGallery
 {
     public static class Constants
     {
+        public const int MaximumDownloadsBeforePackageExistsError = 3;
         public const string AdminRoleName = "Admins";
         public const string AlphabeticSortOrder = "package-title";
         public const int DefaultPackageListPageSize = 20;

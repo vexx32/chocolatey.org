@@ -56,9 +56,17 @@ namespace NuGetGallery
             Bind<IEntityRepository<PackageAuthor>>()
                 .To<EntityRepository<PackageAuthor>>()
                 .InRequestScope();
+            
+            Bind<IEntityRepository<PackageFramework>>()
+                .To<EntityRepository<PackageFramework>>()
+                .InRequestScope();
 
             Bind<IEntityRepository<PackageDependency>>()
                 .To<EntityRepository<PackageDependency>>()
+                .InRequestScope();
+
+            Bind<IEntityRepository<PackageFile>>()
+                .To<EntityRepository<PackageFile>>()
                 .InRequestScope();
 
             Bind<IEntityRepository<PackageStatistics>>()

@@ -108,8 +108,7 @@ namespace NuGetGallery
             }
 
             var user = userSvc.FindByApiKey(parsedApiKey);
-            if (user == null)
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
+            if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
 
             var packageToPush = ReadPackageFromRequest();
 
@@ -122,12 +121,18 @@ namespace NuGetGallery
                     return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
                 }
 
-                // Check if a particular Id-Version combination already exists. We eventually need to remove this check.
-                bool packageExists = packageRegistration.Packages.Any(p => p.Version.Equals(packageToPush.Version.ToString(), StringComparison.OrdinalIgnoreCase));
-                if (packageExists)
+                 var existingPackage =  packageRegistration.Packages.FirstOrDefault(p => p.Version.Equals(packageToPush.Version.ToString(), StringComparison.OrdinalIgnoreCase));
+                 if (existingPackage != null && existingPackage.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError)
+                 {
+                     return new HttpStatusCodeWithBodyResult(
+                         HttpStatusCode.Conflict,
+                         String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version.ToString())
+                         );
+                     
+                 }
+                if (existingPackage != null && existingPackage.Status == PackageStatusType.Rejected)
                 {
-                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict,
-                        String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version.ToString()));
+                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, "This package has been rejected and can no longer be submitted.");
                 }
             }
 
@@ -138,7 +143,7 @@ namespace NuGetGallery
                 nugetExeDownloaderSvc.UpdateExecutable(packageToPush);
             }
 
-            return new HttpStatusCodeResult(201);
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
         }
 
         [ActionName("DeletePackageApi"), HttpDelete]
@@ -175,18 +180,15 @@ namespace NuGetGallery
             }
 
             var user = userSvc.FindByApiKey(parsedApiKey);
-            if (user == null)
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "publish"));
+            if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "publish"));
 
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
-
-            if (!package.IsOwner(user))
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "publish"));
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            if (!package.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "publish"));
 
             packageSvc.MarkPackageListed(package);
-            return new EmptyResult();
+
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package has been accepted and will show up once moderated and approved.");
         }
 
         protected override void OnException(ExceptionContext filterContext)

@@ -68,8 +68,7 @@ namespace NuGetGallery
 
             using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (existingUploadFile != null)
-                    return new HttpStatusCodeResult(409, "Cannot upload file because an upload is already in progress.");
+                if (existingUploadFile != null) return new HttpStatusCodeResult(409, "Cannot upload file because an upload is already in progress.");
             }
 
             if (uploadFile == null)
@@ -106,11 +105,17 @@ namespace NuGetGallery
             }
 
             var package = packageSvc.FindPackageByIdAndVersion(nuGetPackage.Id, nuGetPackage.Version.ToStringSafe());
-            if (package != null)
+            if (package != null && package.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError)
             {
                 ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
                 return View();
             }
+            if (package != null && package.Status == PackageStatusType.Rejected)
+            {
+                ModelState.AddModelError(String.Empty, "This package has been rejected and can no longer be submitted.");
+                return View();
+            }
+           
 
             using (var fileStream = nuGetPackage.GetStream())
             {
@@ -129,6 +134,52 @@ namespace NuGetGallery
                 return PackageNotFound(id, version);
             }
             var model = new DisplayPackageViewModel(package);
+            return View(model);
+        }
+
+        [Authorize(Roles="Admins"), HttpPost]
+        public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
+        {
+            if (!ModelState.IsValid)
+            {
+                return DisplayPackage(id, version);
+            }
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+
+            if (package == null)
+            {
+                return PackageNotFound(id, version);
+            }
+            var model = new DisplayPackageViewModel(package);
+            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var status = PackageStatusType.Unknown;
+            try
+            {
+                status = (PackageStatusType) Enum.Parse(typeof (PackageStatusType), form["Status"]);
+            }
+            catch (Exception ex)
+            {
+
+                // Log but swallow the exception
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            }
+
+            var comments = form["ReviewComments"];
+
+            packageSvc.ChangePackageStatus(package, status, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name));
+            
+            //grab updated package
+            package = packageSvc.FindPackageByIdAndVersion(id, version);
+            model = new DisplayPackageViewModel(package);
+            
+            TempData["Message"] = "Changes to package status have been saved.";
+            
             return View(model);
         }
 
@@ -466,14 +517,9 @@ namespace NuGetGallery
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
-            if (!package.IsOwner(HttpContext.User))
-            {
-                return new HttpStatusCodeResult(401, "Unauthorized");
-            }
+            if (package == null) return PackageNotFound(id, version);
+
+            if (!package.IsOwner(HttpContext.User)) return new HttpStatusCodeResult(401, "Unauthorized");
 
             if (!(listed ?? false))
             {
@@ -521,9 +567,7 @@ namespace NuGetGallery
             IPackage package;
             using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (uploadFile == null)
-                    return RedirectToRoute(RouteName.UploadPackage);
-
+                if (uploadFile == null) return RedirectToRoute(RouteName.UploadPackage);
                 package = ReadNuGetPackage(uploadFile);
             }
 
@@ -551,9 +595,7 @@ namespace NuGetGallery
             IPackage nugetPackage;
             using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (uploadFile == null)
-                    return HttpNotFound();
-
+                if (uploadFile == null) return HttpNotFound();
                 nugetPackage = ReadNuGetPackage(uploadFile);
             }
 
@@ -575,7 +617,7 @@ namespace NuGetGallery
                 nugetExeDownloaderSvc.UpdateExecutable(nugetPackage);
             }
 
-            TempData["Message"] = String.Format(CultureInfo.CurrentCulture, Strings.SuccessfullyUploadedPackage, package.PackageRegistration.Id, package.Version);
+            TempData["Message"] = string.Format("You have successfully created '{0}' version '{1}'. The package is now under review by the moderators and will show up once approved.", package.PackageRegistration.Id, package.Version);
             return RedirectToRoute(RouteName.DisplayPackage, new { package.PackageRegistration.Id, package.Version });
         }
 

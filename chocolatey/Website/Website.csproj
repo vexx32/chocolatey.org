@@ -575,9 +575,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\CloudBlobWrapper.cs">
       <Link>Services\CloudBlobWrapper.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\FileSystemFileStorageService.cs">
-      <Link>Services\FileSystemFileStorageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\IAggregateStatsService.cs">
       <Link>Services\IAggregateStatsService.cs</Link>
     </Compile>
@@ -1002,9 +999,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\IFileSystemService.cs">
       <Link>Services\IFileSystemService.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IPackageService.cs">
-      <Link>Services\IPackageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageDependency.cs">
       <Link>Entities\PackageDependency.cs</Link>
     </Compile>
@@ -1089,9 +1083,6 @@
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PackageListViewModel.cs">
       <Link>ViewModels\PackageListViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\PackageViewModel.cs">
-      <Link>ViewModels\PackageViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordResetRequestViewModel.cs">
       <Link>ViewModels\PasswordResetRequestViewModel.cs</Link>
     </Compile>
@@ -1118,8 +1109,10 @@
     <Compile Include="Entities\EntitiesContext.cs" />
     <Compile Include="Entities\Package.cs" />
     <Compile Include="Entities\PackageFile.cs" />
+    <Compile Include="Entities\PackageStatusType.cs" />
     <Compile Include="Entities\UserSiteProfile.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="EnumerationExtensions.cs" />
     <Compile Include="Migrations\201210010306298_AddUserSiteProfiles.cs" />
     <Compile Include="Migrations\201210010306298_AddUserSiteProfiles.Designer.cs">
       <DependentUpon>201210010306298_AddUserSiteProfiles.cs</DependentUpon>
@@ -1136,19 +1129,23 @@
     <Compile Include="Migrations\201408121529063_UpdatePackageFiles.Designer.cs">
       <DependentUpon>201408121529063_UpdatePackageFiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410190823050_PackageStatuses.cs" />
+    <Compile Include="Migrations\201410190823050_PackageStatuses.Designer.cs">
+      <DependentUpon>201410190823050_PackageStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410191904327_PackageReviewComments.cs" />
+    <Compile Include="Migrations\201410191904327_PackageReviewComments.Designer.cs">
+      <DependentUpon>201410191904327_PackageReviewComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
-    <Compile Include="MvcOverrides\CustomMvcHandler.cs" />
-    <Compile Include="MvcOverrides\CustomMvcRouteHandler.cs" />
-    <Compile Include="MvcOverrides\HttpContextDecorator.cs" />
-    <Compile Include="MvcOverrides\HttpContextProxy.cs" />
-    <Compile Include="MvcOverrides\HttpRequestDecorator.cs" />
-    <Compile Include="MvcOverrides\HttpRequestProxy.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
     <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
+    <Compile Include="Services\FileSystemFileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />
     <Compile Include="Services\IMessageService.cs" />
+    <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IUserSiteProfilesService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\PackageService.cs" />
@@ -1163,6 +1160,7 @@
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
+    <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\ReportAbuseViewModel.cs" />
     <Compile Include="ViewModels\UserProfileModel.cs" />
     <Compile Include="ViewModels\UserSiteProfileViewModel.cs" />
