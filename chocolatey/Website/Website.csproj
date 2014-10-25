@@ -999,9 +999,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\IFileSystemService.cs">
       <Link>Services\IFileSystemService.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IPackageService.cs">
-      <Link>Services\IPackageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageDependency.cs">
       <Link>Entities\PackageDependency.cs</Link>
     </Compile>
@@ -1147,6 +1144,7 @@
     <Compile Include="Services\FileSystemFileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />
     <Compile Include="Services\IMessageService.cs" />
+    <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IUserSiteProfilesService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\PackageService.cs" />
