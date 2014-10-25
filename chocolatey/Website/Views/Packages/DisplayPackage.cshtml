@@ -104,7 +104,14 @@
     {
         <p class="message error">This package will remain unlisted until it has been approved by a moderator.
             You can see the package because you are one of its maintainers.  If you have not heard from 
-            the moderators within one business day, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.</p>
+            the moderators within one business day, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.
+               
+        </p>
+
+        if (moderator && maintainer)
+        {
+             <p class="message error">Since you are a maintainer of this package, you are not able to review it.</p>
+        }
 
         if (maintainer && !string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
@@ -136,7 +143,7 @@
     }
     
     
-    @if (moderator)
+    @if (moderator && !maintainer)
     {
         if (Model.Listed || Model.Status == PackageStatusType.Rejected)
         {
