@@ -122,7 +122,7 @@ namespace NuGetGallery
                             settings.SmtpPassword);
                     }
 
-                    return new MailSender(mailSenderConfiguration);
+                    return new NuGetGallery.MailSender(mailSenderConfiguration);
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace NuGetGallery
                         PickupDirectoryLocation = HostingEnvironment.MapPath("~/App_Data/Mail")
                     };
 
-                    return new MailSender(mailSenderConfiguration);
+                    return new NuGetGallery.MailSender(mailSenderConfiguration);
                 }
             });
 

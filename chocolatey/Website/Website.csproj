@@ -1147,6 +1147,7 @@
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IUserSiteProfilesService.cs" />
+    <Compile Include="Services\MailSender.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\PackageService.cs" />
     <Compile Include="Services\RssActionResult.cs" />
