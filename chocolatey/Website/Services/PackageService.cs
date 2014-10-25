@@ -546,22 +546,36 @@ namespace NuGetGallery
             {
                 package.Status = status;
                 package.ApprovedDate = null;
+                package.LastUpdated = DateTime.UtcNow;
 
-                if (package.Status == PackageStatusType.Approved)
+                switch (package.Status)
                 {
-                    package.ApprovedDate = DateTime.UtcNow;
-                }       
+                    case PackageStatusType.Submitted:
+                    case PackageStatusType.Rejected:
+                        package.Listed = false;
+                        break;
+                    case PackageStatusType.Approved:
+                        package.ApprovedDate = DateTime.UtcNow;
+                        package.Listed = true;
+                        break;
+                    case PackageStatusType.Exempted:
+                        package.Listed = true;
+                        break;
+                }
+
+                UpdateIsLatest(package.PackageRegistration);
             }
             
             package.ReviewedDate = DateTime.UtcNow;
             package.ReviewedById = user.Key;
 
-            if (package.ReviewComments != comments && !string.IsNullOrWhiteSpace(package.ReviewComments))
+            if (package.ReviewComments != comments && comments != null)
             {
                 package.ReviewComments = comments;
             }
-            
-            MarkPackageListed(package);
+
+            packageRepo.CommitChanges();
+            NotifyIndexingService();
         }
 
         // TODO: Should probably be run in a transaction
