@@ -85,7 +85,7 @@ Package Url: [{6}]({6})
 _Message sent from {5}_
 
 Current Maintainer(s): {7}
-Package Url: [{6}]({6})
+Package Url: {6}
 ";
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
@@ -103,7 +103,6 @@ Package Url: [{6}]({6})
                 mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
                 mailMessage.Body = body;
                 mailMessage.From = fromAddress;
-                //mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(plainTextBody, new ContentType("text/plain")));
                 mailMessage.To.Add(settings.GalleryOwnerEmail);
                 SendMessage(mailMessage,copySender);
             }
@@ -116,7 +115,7 @@ Package Url: [{6}]({6})
 
 {3}
 
-Package Url: [{6}]({6})
+Package Url: {6}
 -----------------------------------------------
 <em style=""font-size: 0.8em;"">
     To stop receiving contact emails as a maintainer of this package, sign in to the {4} and 
@@ -259,7 +258,7 @@ If you haven't forgotten your password you can safely ignore this email. Your pa
 
 Click the following link within the next {0} hours to reset your password:
 
-[{1}]({1})
+{1}
 
 Thanks,
 The {2} Team";
@@ -296,7 +295,7 @@ If you do not want to be listed as a maintainer of this package, simply delete t
 
 To accept this request and become a listed maintainer of the package, click the following URL:
 
-[{2}]({2})
+{2}
 
 Thanks,
 The {3} Team";
@@ -320,8 +319,8 @@ The {3} Team";
             var packageUrl = string.Format("{0}packages/{1}/{2}",EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),packageRegistration.Id,package.Version);
             string body = @"The {0} package has been submitted and is up for moderation. Please follow the link to review the package:
 
-Package Url: [{1}]({1})
-";
+Package Url: {1}
+";           
 
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
