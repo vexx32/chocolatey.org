@@ -137,7 +137,7 @@ namespace NuGetGallery
             return View(model);
         }
 
-        [Authorize, HttpPost]
+        [Authorize(Roles="Admins"), HttpPost]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
             if (!ModelState.IsValid)
