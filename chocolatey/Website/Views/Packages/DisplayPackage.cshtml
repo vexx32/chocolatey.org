@@ -105,6 +105,23 @@
                 <li>Leave comments here and/or in email.</li>
                 <li>Please do not reject a package until the end of the conversation</li>
             </ul> 
+            using (Html.BeginForm())
+            {
+                <fieldset class="form">
+                    <legend></legend>
+
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.ReviewComments)
+                        @Html.TextAreaFor(m => m.ReviewComments)
+                        @Html.ValidationMessageFor(m => m.ReviewComments)
+                        <span class="field-hint-message">If you change your email address, you will need to confirm 
+                            your new address for it to take effect.</span>
+                    </div>
+
+        
+                    <input type="submit" value="Save" title="Save Changes" />
+                </fieldset> 
+            }
 
         }
         else if (!string.IsNullOrWhiteSpace(Model.ReviewComments))

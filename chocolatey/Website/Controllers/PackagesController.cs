@@ -137,6 +137,41 @@ namespace NuGetGallery
             return View(model);
         }
 
+        [Authorize, HttpPost]
+        public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
+        {
+            if (!ModelState.IsValid)
+            {
+                return DisplayPackage(id, version);
+            }
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+
+            if (package == null)
+            {
+                return PackageNotFound(id, version);
+            }
+            var model = new DisplayPackageViewModel(package);
+            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            //var status = form["Status"];
+            var comments = form["ReviewComments"];
+
+            packageSvc.ChangePackageStatus(package, PackageStatusType.Unknown, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name));
+            
+            //grab updated package
+            package = packageSvc.FindPackageByIdAndVersion(id, version);
+            model = new DisplayPackageViewModel(package);
+            
+            TempData["Message"] = "Changes to package status have been saved.";
+            
+            return View(model);
+        }
+
         public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false)
         {
             if (page < 1)
