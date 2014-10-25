@@ -1,16 +1,23 @@
 ﻿@using MarkdownSharp
+@using NuGetGallery
 @model DisplayPackageViewModel
 @{
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
     var markdownGenerator = new Markdown(new MarkdownOptions
-        {
-            AutoHyperlink = true,
-            AutoNewLines = true,
-            EncodeProblemUrlCharacters = true,
-            LinkEmails = true,
-        });
+    {
+        AutoHyperlink = true,
+        AutoNewLines = true,
+        EncodeProblemUrlCharacters = true,
+        LinkEmails = true,
+    });
+
+    var statuses = Model.Status.GetEnumerationItems().ToList();
+
+    
+    var moderator = User !=null && User.IsInRole(Constants.AdminRoleName);
+    var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);     
 }
 @section SideColumn {
     <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
@@ -88,10 +95,10 @@
 
     @if (Model.IsOwner(User) && Model.Status == PackageStatusType.Rejected)
     {
-        <p class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewedByUserName has listed the following reason(s): 
+        <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewedByUserName has listed the following reason(s): 
             <br />
-            @Model.ReviewComments
-        </p>
+            @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
+        </div> <br />
     }
     else if (Model.IsOwner(User) && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
@@ -99,34 +106,11 @@
             You can see the package because you are one of its maintainers.  If you have not heard from 
             the moderators within one business day, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.</p>
 
-        if (User.IsInRole(Constants.AdminRoleName))
+        if (maintainer && !string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
-            <ul class="message review-instructions">Instructions for review:
-                <li>Leave comments here and/or in email.</li>
-                <li>Please do not reject a package until the end of the conversation</li>
-            </ul> 
-            using (Html.BeginForm())
-            {
-                <fieldset class="form">
-                    <legend></legend>
-
-                    <div class="form-field">
-                        @Html.LabelFor(m => m.ReviewComments)
-                        @Html.TextAreaFor(m => m.ReviewComments)
-                        @Html.ValidationMessageFor(m => m.ReviewComments)
-                        <span class="field-hint-message">If you change your email address, you will need to confirm 
-                            your new address for it to take effect.</span>
-                    </div>
-
-        
-                    <input type="submit" value="Save" title="Save Changes" />
-                </fieldset> 
-            }
-
-        }
-        else if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
-        {
-            <p class="message">@Model.ReviewComments</p>
+            <div class="message"><p>Review Comments:</p>
+             @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
+            </div><br />
         }
     }
     else if (Model.IsOwner(User) && !Model.Listed)
@@ -150,6 +134,49 @@
     {
         <p class="message error">This package is exempt from moderation. Use at your own risk.</p>
     }
+    
+    
+    @if (moderator)
+    {
+        if (Model.Listed || Model.Status == PackageStatusType.Rejected)
+        {
+        <p class="message review-instructions">Review Package <a onclick="if ($(this).text() == 'Hide') {$('#div-review').hide();$(this).text('Show');} else {$('#div-review').show();$(this).text('Hide');}">Show</a></p>
+            <script type="text/javascript">
+                $(function() {
+                    $('#div-review').hide();
+                });
+            </script>
+        }
+        <div id="div-review" class="message review-instructions">
+            Instructions for review:
+            <ul>
+                <li>Leave comments here and/or in email.</li>
+                <li>Please do not reject a package until the end of the conversation</li>
+            </ul> 
+            @using (Html.BeginForm())
+            {
+                <fieldset class="form">
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.ReviewComments)
+                        @Html.TextAreaFor(m => m.ReviewComments, new { @cols = 80, @rows = 10 })
+                        @Html.ValidationMessageFor(m => m.ReviewComments)
+                        <span class="field-hint-message"></span>
+                    </div>  
+
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.Status)
+                        @Html.DropDownListFor(m => m.Status, statuses)
+                        @Html.ValidationMessageFor(m => m.Status)
+                        <span class="field-hint-message"></span>
+                    </div>
+        
+                    <input type="submit" value="Save" title="Save Changes" />
+                </fieldset> 
+            }
+        
+        </div>
+    }
+
     
     @Html.Raw(markdownGenerator.Transform(Model.Description))
     @*foreach (var line in Model.Description.ToStringSafe().Split('\n'))

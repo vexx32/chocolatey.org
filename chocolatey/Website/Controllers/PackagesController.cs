@@ -158,10 +158,21 @@ namespace NuGetGallery
                 return View(model);
             }
 
-            //var status = form["Status"];
+            var status = PackageStatusType.Unknown;
+            try
+            {
+                status = (PackageStatusType) Enum.Parse(typeof (PackageStatusType), form["Status"]);
+            }
+            catch (Exception ex)
+            {
+
+                // Log but swallow the exception
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            }
+
             var comments = form["ReviewComments"];
 
-            packageSvc.ChangePackageStatus(package, PackageStatusType.Unknown, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name));
+            packageSvc.ChangePackageStatus(package, status, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name));
             
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version);
