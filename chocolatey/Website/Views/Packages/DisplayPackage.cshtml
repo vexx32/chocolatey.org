@@ -134,12 +134,12 @@
     
     @if (Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
-        <p class="message error">This package was submitted prior to moderation and had not been approved. Use at your own risk.</p>
+        <p class="message error">This package was submitted prior to moderation and has not been approved. While it is likely safe for you, there is more risk involved.</p>
     }
     
     @if (Model.Listed && Model.Status == PackageStatusType.Exempted)
     {
-        <p class="message error">This package is exempt from moderation. Use at your own risk.</p>
+        <p class="message error">This package is exempt from moderation. While it is likely safe for you, there is more risk involved.</p>
     }
     
     
