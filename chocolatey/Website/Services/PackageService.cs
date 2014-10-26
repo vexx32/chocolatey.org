@@ -569,15 +569,15 @@ namespace NuGetGallery
             package.ReviewedDate = DateTime.UtcNow;
             package.ReviewedById = user.Key;
 
-            string emailComments = string.Empty;
+           // string emailComments = string.Empty;
             if (package.ReviewComments != comments && comments != null)
             {
                 package.ReviewComments = comments;
-                emailComments = comments;
+             //   emailComments = comments;
             }
 
             packageRepo.CommitChanges();
-            messageSvc.SendPackageModerationEmail(package, emailComments);
+            //messageSvc.SendPackageModerationEmail(package, emailComments);
             NotifyIndexingService();
         }
 
