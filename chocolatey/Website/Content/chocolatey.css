@@ -22,6 +22,12 @@
     /*font-weight: 600;*/
 }
 
+.approved {
+    background-color: #15f962;
+    color: #006a48;
+    /*font-weight: 600;*/
+}
+
 .review-instructions li {
     position: relative;
     left: 20px;
