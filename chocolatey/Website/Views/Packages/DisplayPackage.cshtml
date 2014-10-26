@@ -241,15 +241,9 @@
             }
         </ul>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
-    {
-        <a name="releasenotes" id="releasenotes"></a><h3>Release Notes</h3>
-        @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
-@* foreach (var note in Model.ReleaseNotes.Split('\n'))
-        {
-            <p>@note</p>
-        }*@
-    }
+    
+    @Html.Partial("_PackageDependencies", Model.Dependencies)
+
     <a name="maintainers" id="maintainers"></a><h3>Maintainers</h3>
     @ViewHelpers.OwnersGravatar(Model.Owners, 32, Url)
     <a name="authors" id="authors"></a><h3>Authors</h3>
@@ -274,7 +268,16 @@
             }
         </ul>
     }
-    @Html.Partial("_PackageDependencies", Model.Dependencies)
+    
+    @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
+    {
+        <a name="releasenotes" id="releasenotes"></a><h3>Release Notes</h3>
+        @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
+@* foreach (var note in Model.ReleaseNotes.Split('\n'))
+        {
+            <p>@note</p>
+        }*@
+    }
     <a name="versionhistory" id="versionhistory"></a><h3>Version History</h3>
     <table class="sexy-table">
         <thead>
@@ -301,35 +304,35 @@
             {
                 if (packageVersion.Listed || Model.IsOwner(User))
                 {
-                <tr class="versionTableRow @if (packageVersion.LatestVersion)
-                                           {<text>recommended </text>}">
-                    <td class="version" @if (packageVersion.LatestVersion)
-                                        {<text>title="Latest Version"</text>}>
-                        @if (!packageVersion.IsCurrent(Model))
-                        {
-                            <a href="@Url.Package(packageVersion)">@packageVersion.Title @packageVersion.Version</a>
-                        }
-                        else
-                        {
-                            <span>@packageVersion.Title @packageVersion.Version</span>
-                        }
-                    </td>
-                    <td>@packageVersion.DownloadCount
-                    </td>
-                    <td>@packageVersion.LastUpdated.ToString("D")
-                    </td>
-                    @if (Model.IsOwner(User))
-                    {
-                        <td>
-                            <a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
+                    <tr class="versionTableRow @if (packageVersion.LatestVersion)
+                                               {<text>recommended </text>}">
+                        <td class="version" @if (packageVersion.LatestVersion)
+                                            {<text>title="Latest Version"</text>}>
+                            @if (!packageVersion.IsCurrent(Model))
+                            {
+                                <a href="@Url.Package(packageVersion)">@packageVersion.Title @packageVersion.Version</a>
+                            }
+                            else
+                            {
+                                <span>@packageVersion.Title @packageVersion.Version</span>
+                            }
                         </td>
-                    }
-                </tr>
+                        <td>@packageVersion.DownloadCount
+                        </td>
+                        <td>@packageVersion.LastUpdated.ToString("D")
+                        </td>
+                        @if (Model.IsOwner(User))
+                        {
+                            <td>
+                                <a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
+                            </td>
+                        }
+                    </tr>
                 }
             }
         </tbody>
     </table>
-  
+      
 </div>
 <div class="package-page">
     <a name="discussion" id="discussion"></a><h3>Discussion for the @Model.Title Package</h3>
