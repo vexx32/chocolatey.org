@@ -76,7 +76,7 @@ namespace NuGetGallery
 
             if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted)
             {
-                NotifyForModeration(packageRegistration, package);
+                NotifyForModeration(package,comments:string.Empty);
             }
 
             NotifyIndexingService();
@@ -569,12 +569,15 @@ namespace NuGetGallery
             package.ReviewedDate = DateTime.UtcNow;
             package.ReviewedById = user.Key;
 
+            string emailComments = string.Empty;
             if (package.ReviewComments != comments && comments != null)
             {
                 package.ReviewComments = comments;
+                emailComments = comments;
             }
 
             packageRepo.CommitChanges();
+            messageSvc.SendPackageModerationEmail(package, emailComments);
             NotifyIndexingService();
         }
 
@@ -681,9 +684,9 @@ namespace NuGetGallery
             indexingSvc.UpdateIndex();
         }
 
-        private void NotifyForModeration(PackageRegistration registration, Package package)
+        private void NotifyForModeration(Package package,string comments)
         {
-            messageSvc.SendPackageModerationRequest(registration, package);
+            messageSvc.SendPackageModerationEmail(package,comments);
         }
 
     }

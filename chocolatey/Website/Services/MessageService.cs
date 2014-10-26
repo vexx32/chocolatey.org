@@ -7,6 +7,8 @@ using AnglicanGeek.MarkdownMailer;
 
 namespace NuGetGallery
 {
+    using System.Text;
+
     public class MessageService : IMessageService
     {
         private readonly IMailSender mailSender;
@@ -313,28 +315,32 @@ The {3} Team";
             }
         }
 
-        public void SendPackageModerationRequest(PackageRegistration packageRegistration, Package package)
+        public void SendPackageModerationEmail(Package package,string comments)
         {
-            string subject = "[{0}] Moderation request for the package '{1}' v{2}";
-            var packageUrl = string.Format("{0}packages/{1}/{2}",EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),packageRegistration.Id,package.Version);
-            string body = @"The {0} package has been submitted and is up for moderation. Please follow the link to review the package:
+            string subject = "[{0}] Moderation for the package '{1}' v{2}";
+            var packageUrl = string.Format("{0}packages/{1}/{2}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.PackageRegistration.Id, package.Version);
+            string body = @"The '{0}' package is subject to moderation.
+Package Url: {1} 
+Package Status: {2}
 
-Package Url: {1}
+{3}
 ";           
 
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
-                packageRegistration.Id,
-                packageUrl);
+                package.PackageRegistration.Id,
+                packageUrl,
+                package.Status.GetDescriptionOrValue(),
+                GetModerationMessage(package,comments));
 
-            subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, packageRegistration.Id,package.Version);
+            subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
             using (var mailMessage = new MailMessage())
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
-                AddOwnersToMailMessage(packageRegistration, mailMessage);
+                AddOwnersToMailMessage(package.PackageRegistration, mailMessage);
                 mailMessage.To.Add(settings.GalleryOwnerEmail);
                 if (mailMessage.To.Any())
                 {
@@ -342,6 +348,39 @@ Package Url: {1}
                 }
             }
         }
+
+        private string GetModerationMessage(Package package, string comments)
+        {
+            var message = new StringBuilder();
+            switch (package.Status)
+            {
+                case PackageStatusType.Submitted:
+                    break;
+                case PackageStatusType.Rejected:
+                case PackageStatusType.Approved:
+                case PackageStatusType.Exempted:
+                    message.AppendFormat("The package was {0} by moderator {1} on {2}.{3}{3}",
+                        package.Status.GetDescriptionOrValue().ToLower(),
+                        package.ReviewedBy.Username,
+                        package.ReviewedDate.GetValueOrDefault().ToShortDateString(), 
+                        Environment.NewLine);
+                    break;
+            }
+
+            if (!string.IsNullOrWhiteSpace(comments))
+            {
+                message.AppendFormat("{0} left the following comment(s):{1}",package.ReviewedBy.Username, Environment.NewLine);
+                message.Append(Environment.NewLine + comments);
+            }
+            else if (package.Status == PackageStatusType.Rejected)
+            {
+                message.AppendFormat("The moderator left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
+                message.Append(Environment.NewLine + package.ReviewComments);
+            }
+
+            return message.ToString();
+        }
+
 
         private static string EnsureTrailingSlash(string siteRoot)
         {
