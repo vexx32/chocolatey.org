@@ -321,15 +321,17 @@ The {3} Team";
             var packageUrl = string.Format("{0}packages/{1}/{2}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.PackageRegistration.Id, package.Version);
             string body = @"The '{0}' package is subject to moderation.
 Package Url: {1} 
-Package Status: {2}
+Maintainer(s): {2}
+Package Status: {3}
 
-{3}
+{4}
 ";           
 
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
                 package.PackageRegistration.Id,
                 packageUrl,
+                string.Join(", ",package.PackageRegistration.Owners.Select(x => x.Username)),
                 package.Status.GetDescriptionOrValue(),
                 GetModerationMessage(package,comments));
 
