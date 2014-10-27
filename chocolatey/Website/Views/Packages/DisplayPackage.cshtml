@@ -157,7 +157,7 @@
         <div id="div-review" class="message review-instructions">
             Instructions for review:
             <ul>
-                <li>Leave comments here (email temporarily disable, so reply to email with comments).</li>
+                <li>Leave comments here (will be emailed unless box is unchecked).</li>
                 <li>Please do not reject a package until the end of the conversation.</li>
             </ul> 
             @using (Html.BeginForm())
@@ -175,6 +175,10 @@
                         @Html.DropDownListFor(m => m.Status, statuses)
                         @Html.ValidationMessageFor(m => m.Status)
                         <span class="field-hint-message"></span>
+                    </div>
+                    <div class="form-field">
+                        <input id="SendEmail" name="SendEmail" type="checkbox" checked="checked" value="true">
+                        <label for="SendEmail" class="for-checkbox">Send Email</label>
                     </div>
         
                     <input type="submit" value="Save" title="Save Changes" />

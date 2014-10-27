@@ -171,8 +171,9 @@ namespace NuGetGallery
             }
 
             var comments = form["ReviewComments"];
+            bool sendEmail = form["SendEmail"] != null;
 
-            packageSvc.ChangePackageStatus(package, status, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name));
+            packageSvc.ChangePackageStatus(package, status, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name), sendEmail);
             
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version);

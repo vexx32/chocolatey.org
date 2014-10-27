@@ -538,7 +538,7 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
         }
 
-        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user)
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user, bool sendEmail)
         {
             if (package.Status == status && package.ReviewComments == comments) return;
 
@@ -569,15 +569,19 @@ namespace NuGetGallery
             package.ReviewedDate = DateTime.UtcNow;
             package.ReviewedById = user.Key;
 
-           // string emailComments = string.Empty;
+           string emailComments = string.Empty;
             if (package.ReviewComments != comments && comments != null)
             {
                 package.ReviewComments = comments;
-             //   emailComments = comments;
+                emailComments = comments;
             }
 
             packageRepo.CommitChanges();
-            //messageSvc.SendPackageModerationEmail(package, emailComments);
+            if (sendEmail)
+            {
+                messageSvc.SendPackageModerationEmail(package, emailComments);
+            }
+
             NotifyIndexingService();
         }
 
