@@ -1005,9 +1005,6 @@
     <Compile Include="..\..\nugetgallery\Website\App_Start\Container.cs">
       <Link>App_Start\Container.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\CryptographyService.cs">
-      <Link>Services\CryptographyService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\EntityException.cs">
       <Link>Entities\EntityException.cs</Link>
     </Compile>
@@ -1142,6 +1139,7 @@
     <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
+    <Compile Include="Services\CryptographyService.cs" />
     <Compile Include="Services\FileSystemFileStorageService.cs" />
     <Compile Include="Services\IAmazonS3Client.cs" />
     <Compile Include="Services\IMessageService.cs" />
