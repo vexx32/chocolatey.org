@@ -73,7 +73,7 @@ namespace NuGetGallery
             {
                 crypto.GetBytes(data);
 
-                return HttpServerUtility.UrlTokenEncode(data);
+                return HttpServerUtility.UrlTokenEncode(data).Replace('_', '-');
             }
         }
 
