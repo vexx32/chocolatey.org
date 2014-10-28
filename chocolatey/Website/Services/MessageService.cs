@@ -174,7 +174,7 @@ Hall of shame users might notice their packages getting unlisted or deleted.
 
 So we can be sure to contact you, please verify your email address and click the following link:
 
-[{1}]({2})
+{1}
 
 Thanks,
 The {0} Team";
@@ -182,7 +182,6 @@ The {0} Team";
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
                 settings.GalleryOwnerName,
-                HttpUtility.UrlDecode(confirmationUrl),
                 confirmationUrl);
 
             using (var mailMessage = new MailMessage())
@@ -202,7 +201,7 @@ The {0} Team";
 
 To verify your new email address, please click the following link:
 
-[{1}]({2})
+{1}
 
 Thanks,
 The {0} Team";
@@ -210,7 +209,6 @@ The {0} Team";
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
                 settings.GalleryOwnerName,
-                HttpUtility.UrlDecode(confirmationUrl),
                 confirmationUrl);
 
             using (var mailMessage = new MailMessage())
@@ -382,7 +380,6 @@ Package Status: {3}
 
             return message.ToString();
         }
-
 
         private static string EnsureTrailingSlash(string siteRoot)
         {
