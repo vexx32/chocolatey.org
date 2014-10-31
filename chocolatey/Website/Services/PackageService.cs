@@ -261,9 +261,20 @@ namespace NuGetGallery
                 .Where(pv => pv.Version == nugetPackage.Version.ToString())
                 .SingleOrDefault();
 
-            if (package != null && package.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError) throw new EntityException("A package with identifier '{0}' and version '{1}' already exists.", packageRegistration.Id, package.Version);
-            if (package != null && package.Status == PackageStatusType.Rejected) throw new EntityException("This package has been rejected and can no longer be submitted.");
-
+            if (package != null)
+            {
+                switch (package.Status)
+                {
+                    case PackageStatusType.Rejected:
+                        throw new EntityException(string.Format("This package has been {0} and can no longer be submitted.", package.Status.GetDescriptionOrValue().ToLower()));
+                    case PackageStatusType.Submitted:
+                        //continue on 
+                        break;
+                    default:
+                        throw new EntityException("A package with identifier '{0}' and version '{1}' already exists.", packageRegistration.Id, package.Version);
+                }
+            }
+          
             var now = DateTime.UtcNow;
             var packageFileStream = nugetPackage.GetStream();
 

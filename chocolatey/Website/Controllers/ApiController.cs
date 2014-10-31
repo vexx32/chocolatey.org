@@ -122,25 +122,32 @@ namespace NuGetGallery
                 }
 
                  var existingPackage =  packageRegistration.Packages.FirstOrDefault(p => p.Version.Equals(packageToPush.Version.ToString(), StringComparison.OrdinalIgnoreCase));
-                 if (existingPackage != null && existingPackage.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError)
-                 {
-                     return new HttpStatusCodeWithBodyResult(
-                         HttpStatusCode.Conflict,
-                         String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version.ToString())
-                         );
-                     
-                 }
-                if (existingPackage != null && existingPackage.Status == PackageStatusType.Rejected)
+
+                if (existingPackage != null)
                 {
-                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, "This package has been rejected and can no longer be submitted.");
+                    switch (existingPackage.Status)
+                    {  
+                        case PackageStatusType.Rejected:
+                            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package has been {0} and can no longer be submitted.",existingPackage.Status.GetDescriptionOrValue().ToLower()));
+                        case PackageStatusType.Submitted:
+                            //continue on 
+                            break;
+                        default:
+                            return new HttpStatusCodeWithBodyResult(
+                                   HttpStatusCode.Conflict,
+                                   String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version.ToString())
+                                   );
+                    }
                 }
             }
 
-            var package = packageSvc.CreatePackage(packageToPush, user);
-            if (packageToPush.Id.Equals(Constants.NuGetCommandLinePackageId, StringComparison.OrdinalIgnoreCase) && package.IsLatestStable)
+            try
             {
-                // If we're pushing a new stable version of NuGet.CommandLine, update the extracted executable.
-                nugetExeDownloaderSvc.UpdateExecutable(packageToPush);
+                packageSvc.CreatePackage(packageToPush, user);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, ex.Message, ex.Message);
             }
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");

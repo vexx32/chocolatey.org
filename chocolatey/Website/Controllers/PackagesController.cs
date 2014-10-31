@@ -105,17 +105,21 @@ namespace NuGetGallery
             }
 
             var package = packageSvc.FindPackageByIdAndVersion(nuGetPackage.Id, nuGetPackage.Version.ToStringSafe());
-            if (package != null && package.DownloadCount >= Constants.MaximumDownloadsBeforePackageExistsError)
+            if (package != null)
             {
-                ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
-                return View();
+                switch (package.Status)
+                {
+                    case PackageStatusType.Rejected:
+                        ModelState.AddModelError(String.Empty, string.Format("This package has been {0} and can no longer be submitted.", package.Status.GetDescriptionOrValue().ToLower()));
+                        return View();
+                    case PackageStatusType.Submitted:
+                        //continue on 
+                        break;
+                    default:
+                        ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
+                        return View();
+                }
             }
-            if (package != null && package.Status == PackageStatusType.Rejected)
-            {
-                ModelState.AddModelError(String.Empty, "This package has been rejected and can no longer be submitted.");
-                return View();
-            }
-           
 
             using (var fileStream = nuGetPackage.GetStream())
             {
