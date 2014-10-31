@@ -52,7 +52,7 @@ namespace NuGetGallery
 _Message sent from {5}_
 
 Current Maintainer(s): {7}
-Package Url: [{6}]({6})
+Package Url: {6}
 ";
             body = String.Format(CultureInfo.CurrentCulture,
                 body,
