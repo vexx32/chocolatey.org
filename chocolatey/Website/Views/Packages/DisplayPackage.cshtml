@@ -103,9 +103,8 @@
     else if (Model.IsOwner(User) && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
         <p class="message error">This package will remain unlisted until it has been approved by a moderator.
-            You can see the package because you are one of its maintainers.  If you have not heard from 
-            the moderators within one business day, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.
-               
+            You can see the package because you are one of its maintainers. You should have received an email about moderation. You can respond to that email to correspond with the moderators. Moderators typically respond within one business day.
+            If you have not received that email, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.
         </p>
 
         if (moderator && maintainer)
