@@ -174,6 +174,11 @@ namespace NuGetGallery
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
+            if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Unknown)
+            {
+                ModelState.AddModelError(String.Empty, "A package cannot be moved into unknown status.");
+                return View(model);
+            }
             var comments = form["ReviewComments"];
             bool sendEmail = form["SendEmail"] != null;
 
