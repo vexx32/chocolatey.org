@@ -317,12 +317,13 @@ The {3} Team";
         {
             string subject = "[{0}] Moderation for the package '{1}' v{2}";
             var packageUrl = string.Format("{0}packages/{1}/{2}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.PackageRegistration.Id, package.Version);
-            string body = @"The '{0}' package is subject to moderation.
+            string body = @"The '{0}' package has been {3}.
 Package Url: {1} 
 Maintainer(s): {2}
-Package Status: {3}
 
 {4}
+
+Note: Moderators typically review a package within one business day. You may respond directly to this message to correspond directly with site moderators. If you have not heard anything within two business days, please reply to this message and ask for status.
 ";           
 
             body = String.Format(CultureInfo.CurrentCulture,
