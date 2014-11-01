@@ -179,7 +179,7 @@ namespace NuGetGallery
                 ModelState.AddModelError(String.Empty, "A package cannot be moved into unknown status.");
                 return View(model);
             }
-            if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Submitted)
+            if (package.Status == PackageStatusType.Unknown && status == PackageStatusType.Submitted)
             {
                 ModelState.AddModelError(String.Empty, "A package cannot be moved from unknown to submitted status.");
                 return View(model);
