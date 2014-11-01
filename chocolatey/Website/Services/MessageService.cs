@@ -323,7 +323,14 @@ Maintainer(s): {2}
 
 {4}
 
-Note: Moderators typically review a package within one business day. You may respond directly to this message to correspond directly with site moderators. If you have not heard anything within two business days, please reply to this message and ask for status.
+### Information for Maintainers
+
+ * While in submitted status you can continually repush the package with the same version.
+ * Moderators typically review a package within one business day.
+ * You may respond directly to this message to correspond directly with site moderators. 
+ * If you have not heard anything within two business days, please reply to this message and ask for status.
+ * Packages should conform to our guidelines https://github.com/chocolatey/chocolatey/wiki/CreatePackages
+ * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
 ";           
 
             body = String.Format(CultureInfo.CurrentCulture,
