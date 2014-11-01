@@ -158,6 +158,12 @@
             <ul>
                 <li>Leave comments here (will be emailed unless box is unchecked).</li>
                 <li>Please do not reject a package until the end of the conversation.</li>
+                <li>Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
+                <li>Check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li>
+                <li>Check over the chocolateyInstall.ps1 - anything look unsafe? Download urls should be official distro</li>
+                <li>Until December 1st, we are being quite leniant on holding up existing packages for things that we prefer to see, except for broken or unsafe packages (urls look fishy).</li>
+                <li>New packages are subject to the full wrath of the moderator. Be Nice! :)</li>
+                <li>Icons are preferred but I wouldn't hold up a package because there is no logo or it's wrong.</li>
             </ul> 
             @using (Html.BeginForm())
             {
