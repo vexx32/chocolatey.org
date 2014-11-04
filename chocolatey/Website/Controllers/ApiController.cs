@@ -147,7 +147,7 @@ namespace NuGetGallery
             }
             catch (Exception ex)
             {
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, ex.Message, ex.Message);
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}",ex.Message));
             }
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
