@@ -1035,9 +1035,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\EmailMessage.cs">
       <Link>Entities\EmailMessage.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageRegistration.cs">
-      <Link>Entities\PackageRegistration.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageAuthor.cs">
       <Link>Entities\PackageAuthor.cs</Link>
     </Compile>
@@ -1106,6 +1103,7 @@
     <Compile Include="Entities\EntitiesContext.cs" />
     <Compile Include="Entities\Package.cs" />
     <Compile Include="Entities\PackageFile.cs" />
+    <Compile Include="Entities\PackageRegistration.cs" />
     <Compile Include="Entities\PackageStatusType.cs" />
     <Compile Include="Entities\UserSiteProfile.cs" />
     <Compile Include="EnumerableExtensions.cs" />
