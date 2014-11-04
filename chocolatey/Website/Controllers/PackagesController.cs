@@ -187,9 +187,13 @@ namespace NuGetGallery
 
             var comments = form["ReviewComments"];
             bool sendEmail = form["SendEmail"] != null;
+            bool trustedPackage = form["IsTrusted"] == "true,false";
 
-            packageSvc.ChangePackageStatus(package, status, comments, userSvc.FindByUsername(HttpContext.User.Identity.Name), sendEmail);
-            
+            var moderator = userSvc.FindByUsername(HttpContext.User.Identity.Name);
+            packageSvc.ChangePackageStatus(package, status, comments, moderator, sendEmail);
+
+            packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
+
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version);
             model = new DisplayPackageViewModel(package);

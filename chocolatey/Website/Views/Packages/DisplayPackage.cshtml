@@ -17,7 +17,8 @@
 
     
     var moderator = User !=null && User.IsInRole(Constants.AdminRoleName);
-    var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);     
+    var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
+    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewedByUserName) ? "by moderator " + Model.ReviewedByUserName : "as a trusted package";    
 }
 @section SideColumn {
     <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
@@ -128,7 +129,7 @@
     
     @if (Model.Status == PackageStatusType.Approved)
     {
-        <p class="message approved">This package was approved by moderator @Model.ReviewedByUserName on @Model.ApprovedDate.GetValueOrDefault().ToShortDateString().</p>
+        <p class="message approved">This package was approved @reviewerComments on @Model.ApprovedDate.GetValueOrDefault().ToShortDateString().</p>
     }
     
     @if (Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
@@ -185,10 +186,31 @@
                         <input id="SendEmail" name="SendEmail" type="checkbox" checked="checked" value="true">
                         <label for="SendEmail" class="for-checkbox">Send Email</label>
                     </div>
+                  
                     @Html.ValidationSummary(true)
                     <input type="submit" value="Save" title="Save Changes" />
+                    
+                    <br /><br />
+                    <a onclick="if ($(this).text() == 'Hide') {$('#div-trustedpackage').hide();$(this).text('Show Trusted Section');} else {$('#div-trustedpackage').show();$(this).text('Hide');}">Show Trusted Section</a>
+           
+                    <div class="form-field" id="div-trustedpackage">
+                        <ul>
+                            <li>Trusted package ids are packages where we have built trust in the package maintainer(s).</li>
+                            <li>This usually happens after we have seen several iterations of a package without issues.</li>
+                            <li>All package submitted from now on will automatically be approved.</li>
+                            <li>Use with care.</li>
+                            <li>Use "Save" above to make this change. You may want to uncheck Send Email.</li>
+                        </ul>
+                        <br />
+                        @Html.CheckBoxFor(m=> m.IsTrusted) @Html.LabelFor(m => m.IsTrusted)
+                    </div>
                 </fieldset> 
             }
+             <script type="text/javascript">
+                $(function () {
+                    $('#div-trustedpackage').hide();
+                });
+            </script>
         
         </div>
     }
@@ -210,7 +232,7 @@
                {<text> -Pre </text>}</code></p>
     </div>
       @if (Model.Files.Any())
-    {
+      {
        <a name="files" id="files"></a><h3>Files</h3>
         <ul>
             @foreach (var file in Model.Files)
@@ -249,7 +271,7 @@
                 </li>
             }
         </ul>
-    }
+      }
     
     @Html.Partial("_PackageDependencies", Model.Dependencies)
 

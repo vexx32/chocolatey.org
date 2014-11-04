@@ -4,6 +4,8 @@ using NuGet;
 
 namespace NuGetGallery
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class DisplayPackageViewModel : ListPackageItemViewModel
     {
         public DisplayPackageViewModel(Package package)
@@ -22,6 +24,8 @@ namespace NuGetGallery
                                   orderby new SemanticVersion(p.Version) descending
                                   select new DisplayPackageViewModel(p, isVersionHistory: true);
             }
+
+            IsTrusted = package.PackageRegistration.IsTrusted;
 
             Files = package.Files;
             DownloadCount = package.DownloadCount;
@@ -54,9 +58,9 @@ namespace NuGetGallery
             }
         }
 
-        public IEnumerable<PackageFile> Files
-        {
-            get; private set;
-        }
+        public IEnumerable<PackageFile> Files { get; private set; }
+
+        [Display(Name = "This package id is trusted")]
+        public bool IsTrusted { get; private set; }
     }
 }
