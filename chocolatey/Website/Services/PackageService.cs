@@ -307,6 +307,13 @@ namespace NuGetGallery
                 package.Listed = true;
                 package.Status = PackageStatusType.Exempted;
             }
+            if (packageRegistration.IsTrusted)
+            {
+                package.Listed = true;
+                package.Status = PackageStatusType.Approved;
+                package.ReviewedDate = now;
+                package.ApprovedDate = now;
+            }
 
             package.IconUrl = nugetPackage.IconUrl == null ? string.Empty : nugetPackage.IconUrl.ToString();
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
