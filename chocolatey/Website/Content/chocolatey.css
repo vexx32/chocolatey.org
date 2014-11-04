@@ -28,10 +28,10 @@
     /*font-weight: 600;*/
 }
 
-.review-instructions li {
+/*.review-instructions li {
     position: relative;
     left: 20px;
-}
+}*/
 
 .review-instructions textarea {
     width: 500px;
