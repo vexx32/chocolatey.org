@@ -1132,6 +1132,14 @@
     <Compile Include="Migrations\201410191904327_PackageReviewComments.Designer.cs">
       <DependentUpon>201410191904327_PackageReviewComments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411041729492_AddPackageIsTrusted.cs" />
+    <Compile Include="Migrations\201411041729492_AddPackageIsTrusted.Designer.cs">
+      <DependentUpon>201411041729492_AddPackageIsTrusted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411042101302_AddPackageTrustedFields.cs" />
+    <Compile Include="Migrations\201411042101302_AddPackageTrustedFields.Designer.cs">
+      <DependentUpon>201411042101302_AddPackageTrustedFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
     <Compile Include="RouteNames.cs" />

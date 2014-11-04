@@ -60,6 +60,12 @@ namespace NuGetGallery
                 .HasForeignKey(p => p.PackageRegistrationKey);
 
             modelBuilder.Entity<PackageRegistration>()
+               .HasOptional<User>(e => e.TrustedBy)
+               .WithMany()
+               .HasForeignKey(e => e.TrustedById)
+               .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PackageRegistration>()
                 .HasMany<User>(pr => pr.Owners)
                 .WithMany()
                 .Map(c => c
