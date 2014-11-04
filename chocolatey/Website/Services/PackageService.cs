@@ -596,6 +596,40 @@ namespace NuGetGallery
             NotifyIndexingService();
         }
 
+        public void ChangeTrustedStatus(Package package, bool trustedPackage, User user)
+        {
+            if (package.PackageRegistration.IsTrusted == trustedPackage) return;
+
+            package.PackageRegistration.IsTrusted = trustedPackage;
+            package.PackageRegistration.TrustedById = user.Key;
+            package.PackageRegistration.TrustedDate = DateTime.UtcNow;
+         
+            if (trustedPackage)
+            {
+                var packagesToUpdate = package.PackageRegistration.Packages.Where(p => p.Status == PackageStatusType.Unknown || p.Status == PackageStatusType.Submitted).ToList();
+
+                if (packagesToUpdate.Count != 0)
+                {
+
+                var now = DateTime.UtcNow;
+                foreach (var trustedPkg in packagesToUpdate.OrEmptyListIfNull())
+                {
+                    trustedPkg.Status = PackageStatusType.Approved;
+                    trustedPkg.LastUpdated = now;
+                    trustedPkg.ReviewedDate = now;
+                    trustedPkg.ApprovedDate = now;
+                    trustedPkg.Listed = true;
+                }
+
+                    packageRegistrationRepo.CommitChanges();
+                }
+            }
+
+            UpdateIsLatest(package.PackageRegistration);
+
+            packageRepo.CommitChanges();
+        }
+
         // TODO: Should probably be run in a transaction
         public void MarkPackageUnlisted(Package package)
         {
