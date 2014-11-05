@@ -202,7 +202,10 @@
                             <li>Use "Save" above to make this change. You may want to uncheck Send Email.</li>
                         </ul>
                         <br />
-                        @Html.CheckBoxFor(m=> m.IsTrusted) @Html.LabelFor(m => m.IsTrusted)
+                         @Html.EditorFor(m => m.IsTrusted)
+                        <label for="IsTrusted" class="checkbox">
+                            Trust this package id? 
+                        </label>
                     </div>
                 </fieldset> 
             }

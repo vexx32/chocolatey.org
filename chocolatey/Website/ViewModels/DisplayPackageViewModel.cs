@@ -60,7 +60,7 @@ namespace NuGetGallery
 
         public IEnumerable<PackageFile> Files { get; private set; }
 
-        [Display(Name = "This package id is trusted")]
+        [Display(Name = "Trust this package id?")]
         public bool IsTrusted { get; private set; }
     }
 }
