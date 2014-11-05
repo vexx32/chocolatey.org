@@ -621,11 +621,15 @@ namespace NuGetGallery
                 var now = DateTime.UtcNow;
                 foreach (var trustedPkg in packagesToUpdate.OrEmptyListIfNull())
                 {
+                    if (trustedPkg.Status == PackageStatusType.Submitted)
+                    {
+                        trustedPkg.Listed = true;
+                    }
+
                     trustedPkg.Status = PackageStatusType.Approved;
                     trustedPkg.LastUpdated = now;
                     trustedPkg.ReviewedDate = now;
                     trustedPkg.ApprovedDate = now;
-                    trustedPkg.Listed = true;
                 }
 
                     packageRegistrationRepo.CommitChanges();
