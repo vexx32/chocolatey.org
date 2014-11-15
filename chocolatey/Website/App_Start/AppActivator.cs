@@ -20,6 +20,7 @@ using WebBackgrounder;
 namespace NuGetGallery
 {
     using System.Configuration;
+    using System.Data.Entity;
     using MvcOverrides;
 
     public static class AppActivator
