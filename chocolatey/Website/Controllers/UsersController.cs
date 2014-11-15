@@ -39,7 +39,8 @@ namespace NuGetGallery
         {
             var user = GetService<IUserByUsernameQuery>().Execute(Identity.Name);
             var curatedFeeds = GetService<ICuratedFeedsByManagerQuery>().Execute(user.Key);
-            return View(new AccountViewModel
+           
+            return View("~/Views/Users/Account.cshtml", new AccountViewModel
             {
                 ApiKey = user.ApiKey.ToString(),
                 CuratedFeeds = curatedFeeds.Select(cf => cf.Name),
@@ -74,7 +75,7 @@ namespace NuGetGallery
                 PackagesRepository = packagesRepo,
                 PackagesRepositoryAuto = packagesRepoAuto
             };
-            return View(model);
+            return View("~/Views/Users/Edit.cshtml", model);
         }
 
         [Authorize, HttpPost, RequireHttpsAppHarbor,ValidateAntiForgeryToken]
@@ -96,7 +97,7 @@ namespace NuGetGallery
                 catch (EntityException ex)
                 {
                     ModelState.AddModelError(String.Empty, ex.Message);
-                    return View(profile);
+                    return View("~/Views/Users/Edit.cshtml", profile);
                 }
 
                 if (existingConfirmationToken == user.EmailConfirmationToken)
@@ -117,7 +118,7 @@ namespace NuGetGallery
 
                 return RedirectToAction(MVC.Users.Account());
             }
-            return View(profile);
+            return View("~/Views/Users/Edit.cshtml", profile);
         }
 
         [RequireHttpsAppHarbor]
@@ -133,7 +134,7 @@ namespace NuGetGallery
             // TODO: add email validation
 
             if (!ModelState.IsValid)
-                return View();
+                return View("~/Views/Users/Register.cshtml");
 
             User user;
             try
@@ -146,7 +147,7 @@ namespace NuGetGallery
             catch (EntityException ex)
             {
                 ModelState.AddModelError(String.Empty, ex.Message);
-                return View();
+                return View("~/Views/Users/Register.cshtml");
             }
 
             if (settings.ConfirmEmailAddresses)
@@ -162,12 +163,12 @@ namespace NuGetGallery
         {
             if (settings.ConfirmEmailAddresses)
             {
-                return View();
+                return View("~/Views/Users/Thanks.cshtml");
             }
             else
             {
                 var model = new EmailConfirmationModel { SuccessfulConfirmation = true, ConfirmingNewAccount = true };
-                return View("Confirm", model);
+                return View("~/Views/Users/Confirm.cshtml", model);
             }
         }
 
@@ -189,7 +190,7 @@ namespace NuGetGallery
                                Version = null
                            },
             };
-            return View(model);
+            return View("~/Views/Users/Packages.cshtml", model);
         }
 
         [Authorize, ValidateAntiForgeryToken, HttpPost]
@@ -201,7 +202,7 @@ namespace NuGetGallery
 
         public virtual ActionResult ForgotPassword()
         {
-            return View();
+            return View("~/Views/Users/ForgotPassword.cshtml");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -222,12 +223,12 @@ namespace NuGetGallery
                 ModelState.AddModelError("Email", "Could not find anyone with that email.");
             }
 
-            return View(model);
+            return View("~/Views/Users/ForgotPassword.cshtml", model);
         }
 
         public virtual ActionResult ResendConfirmation()
         {
-            return View();
+            return View("~/Views/Users/ResendConfirmation.cshtml");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -244,20 +245,22 @@ namespace NuGetGallery
                 }
                 ModelState.AddModelError("Email", "There was an issue resending your confirmation token.");
             }
-            return View(model);
+
+            return View("~/Views/Users/ResendConfirmation.cshtml", model);
         }
 
         public virtual ActionResult PasswordSent()
         {
             ViewBag.Email = TempData["Email"];
             ViewBag.Expiration = Constants.DefaultPasswordResetTokenExpirationHours;
-            return View();
+            
+            return View("~/Views/Users/PasswordSent.cshtml");
         }
 
         public virtual ActionResult ResetPassword()
         {
             ViewBag.ResetTokenValid = true;
-            return View();
+            return View("~/Views/Users/ResetPassword.cshtml");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -268,7 +271,7 @@ namespace NuGetGallery
             if (!ViewBag.ResetTokenValid)
             {
                 ModelState.AddModelError("", "The Password Reset Token is not valid or expired.");
-                return View(model);
+                return View("~/Views/Users/ResetPassword.cshtml", model);
             }
             return RedirectToAction(MVC.Users.PasswordChanged());
         }
@@ -296,7 +299,7 @@ namespace NuGetGallery
             {
                 messageService.SendEmailChangeNoticeToPreviousEmailAddress(user, existingEmail);
             }
-            return View(model);
+            return View("~/Views/Users/Confirm.cshtml", model);
         }
 
         public virtual ActionResult Profiles(string username)
@@ -332,13 +335,13 @@ namespace NuGetGallery
                 UserProfiles = userProfiles
             };
 
-            return View(model);
+            return View("~/Views/Users/Profiles.cshtml", model);
         }
 
         [Authorize, RequireHttpsAppHarbor]
         public virtual ActionResult ChangePassword()
         {
-            return View();
+            return View("~/Views/Users/ChangePassword.cshtml");
         }
 
         [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, Authorize]
@@ -356,7 +359,7 @@ namespace NuGetGallery
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("~/Views/Users/ChangePassword.cshtml", model);
             }
 
             return RedirectToAction(MVC.Users.PasswordChanged());
@@ -364,7 +367,7 @@ namespace NuGetGallery
 
         public virtual ActionResult PasswordChanged()
         {
-            return View();
+            return View("~/Views/Users/PasswordChanged.cshtml");
         }
     }
 }

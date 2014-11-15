@@ -24,12 +24,12 @@ namespace NuGetGallery
 
         public virtual ActionResult Terms()
         {
-            return View();
+            return View("~/Views/Pages/Terms.cshtml");
         }
 
         public virtual ActionResult Privacy()
         {
-            return View();
+            return View("~/Views/Pages/Privacy.cshtml");
         }
 
         //public ActionResult Install()

@@ -58,7 +58,7 @@ namespace NuGetGallery
                     return RedirectToRoute(RouteName.VerifyPackage);
             }
 
-            return View();
+            return View("~/Views/Packages/UploadPackage.cshtml");
         }
 
         [Authorize, HttpPost, ValidateAntiForgeryToken]
@@ -74,13 +74,13 @@ namespace NuGetGallery
             if (uploadFile == null)
             {
                 ModelState.AddModelError(String.Empty, Strings.UploadFileIsRequired);
-                return View();
+                return View("~/Views/Packages/UploadPackage.cshtml");
             }
 
             if (!Path.GetExtension(uploadFile.FileName).Equals(Constants.NuGetPackageFileExtension, StringComparison.OrdinalIgnoreCase))
             {
                 ModelState.AddModelError(String.Empty, Strings.UploadFileMustBeNuGetPackage);
-                return View();
+                return View("~/Views/Packages/UploadPackage.cshtml");
             }
 
             IPackage nuGetPackage;
@@ -94,14 +94,14 @@ namespace NuGetGallery
             catch
             {
                 ModelState.AddModelError(String.Empty, Strings.FailedToReadUploadFile);
-                return View();
+                return View("~/Views/Packages/UploadPackage.cshtml");
             }
 
             var packageRegistration = packageSvc.FindPackageRegistrationById(nuGetPackage.Id);
             if (packageRegistration != null && !packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key))
             {
                 ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageIdNotAvailable, packageRegistration.Id));
-                return View();
+                return View("~/Views/Packages/UploadPackage.cshtml");
             }
 
             var package = packageSvc.FindPackageByIdAndVersion(nuGetPackage.Id, nuGetPackage.Version.ToStringSafe());
@@ -111,13 +111,13 @@ namespace NuGetGallery
                 {
                     case PackageStatusType.Rejected:
                         ModelState.AddModelError(String.Empty, string.Format("This package has been {0} and can no longer be submitted.", package.Status.GetDescriptionOrValue().ToLower()));
-                        return View();
+                        return View("~/Views/Packages/UploadPackage.cshtml");
                     case PackageStatusType.Submitted:
                         //continue on 
                         break;
                     default:
                         ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
-                        return View();
+                        return View("~/Views/Packages/UploadPackage.cshtml");
                 }
             }
 
@@ -138,7 +138,7 @@ namespace NuGetGallery
                 return PackageNotFound(id, version);
             }
             var model = new DisplayPackageViewModel(package);
-            return View(model);
+            return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
         [Authorize(Roles="Admins"), HttpPost]
@@ -159,7 +159,7 @@ namespace NuGetGallery
             
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
             var status = PackageStatusType.Unknown;
@@ -177,12 +177,12 @@ namespace NuGetGallery
             if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Unknown)
             {
                 ModelState.AddModelError(String.Empty, "A package cannot be moved into unknown status.");
-                return View(model);
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
             if (package.Status == PackageStatusType.Unknown && status == PackageStatusType.Submitted)
             {
                 ModelState.AddModelError(String.Empty, "A package cannot be moved from unknown to submitted status.");
-                return View(model);
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
             var comments = form["ReviewComments"];
@@ -200,7 +200,7 @@ namespace NuGetGallery
             
             TempData["Message"] = "Changes to package status have been saved.";
             
-            return View(model);
+            return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
         public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false)
@@ -241,7 +241,7 @@ namespace NuGetGallery
 
             ViewBag.SearchTerm = q;
 
-            return View(viewModel);
+            return View("~/Views/Packages/ListPackages.cshtml", viewModel);
         }
 
         // NOTE: Intentionally NOT requiring authentication
@@ -269,7 +269,7 @@ namespace NuGetGallery
                 }
             }
 
-            return View(model);
+            return View("~/Views/Packages/ReportAbuse.cshtml", model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
@@ -330,7 +330,7 @@ namespace NuGetGallery
                 }
             }
 
-            return View(model);
+            return View("~/Views/Packages/ContactAdmins.cshtml", model);
         }
         
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
@@ -391,7 +391,7 @@ namespace NuGetGallery
                 }
             }
 
-            return View(model);
+            return View("~/Views/Packages/ContactOwners.cshtml", model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
@@ -431,7 +431,7 @@ namespace NuGetGallery
         // This is the page that explains why there's no download link.
         public virtual ActionResult Download()
         {
-            return View();
+            return View("~/Views/Packages/Download.cshtml");
         }
 
         [Authorize]
@@ -449,7 +449,7 @@ namespace NuGetGallery
 
             var model = new ManagePackageOwnersViewModel(package, HttpContext.User);
 
-            return View(model);
+            return View("~/Views/Packages/ManagePackageOwners.cshtml", model);
         }
 
         [Authorize]
@@ -531,7 +531,7 @@ namespace NuGetGallery
                 PackageId = id
             };
 
-            return View(model);
+            return View("~/Views/Packages/ConfirmOwner.cshtml", model);
         }
 
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
@@ -591,7 +591,7 @@ namespace NuGetGallery
                 package = ReadNuGetPackage(uploadFile);
             }
 
-            return View(new VerifyPackageViewModel
+            return View("~/Views/Packages/VerifyPackage.cshtml", new VerifyPackageViewModel
             {
                 Id = package.Id,
                 Version = package.Version.ToStringSafe(),
