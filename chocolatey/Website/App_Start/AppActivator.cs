@@ -7,8 +7,6 @@ using System.Web.Routing;
 using Elmah;
 using Elmah.Contrib.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using Ninject;
-using Ninject.Web.Mvc;
 using NuGetGallery.Jobs;
 using NuGetGallery.Migrations;
 using StackExchange.Profiling;
@@ -21,22 +19,22 @@ using WebBackgrounder;
 
 namespace NuGetGallery
 {
+    using System.Configuration;
     using MvcOverrides;
 
     public static class AppActivator
     {
         private static JobManager _jobManager;
-        private static readonly Bootstrapper _ninjectBootstrapper = new Bootstrapper();
 
         public static void PreStart()
         {
-            NinjectPreStart();
             MiniProfilerPreStart();
         }
 
         public static void PostStart()
         {
             MiniProfilerPostStart();
+            //todo: this is how database is automatically updated
             DbMigratorPostStart();
             BackgroundJobsPostStart();
             AppPostStart();
@@ -46,18 +44,24 @@ namespace NuGetGallery
         public static void Stop()
         {
             BackgroundJobsStop();
-            NinjectStop();
         }
 
         private static void AppPostStart()
         {
-            Routes.RegisterRoutes(RouteTable.Routes);
-            // deprecated - the aspnet:UseHostHeaderForRequestUrl setting in the web.config file
-            //  should now process the urls accurately
-            //SetCustomRouteHandler();
+            RegisterGlobalFilters(GlobalFilters.Filters);
 
-            GlobalFilters.Filters.Add(new ElmahHandleErrorAttribute());
+            Routes.RegisterRoutes(RouteTable.Routes);
+
+#if !DEBUG
+                Database.SetInitializer<EntitiesContext>(null);
+#endif
+
             ValueProviderFactories.Factories.Add(new HttpHeaderValueProviderFactory());
+        }
+
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new ElmahHandleErrorAttribute());
         }
 
         //private static void SetCustomRouteHandler()
@@ -89,7 +93,7 @@ namespace NuGetGallery
         {
             _jobManager.Dispose();
         }
-        
+
         private static void DbMigratorPostStart()
         {
             var dbMigrator = new DbMigrator(new MigrationsConfiguration());
@@ -116,18 +120,6 @@ namespace NuGetGallery
             var copy = ViewEngines.Engines.ToList();
             ViewEngines.Engines.Clear();
             foreach (var item in copy) ViewEngines.Engines.Add(new ProfilingViewEngine(item));
-        }
-
-        private static void NinjectPreStart()
-        {
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestModule));
-            DynamicModuleUtility.RegisterModule(typeof(HttpApplicationInitializationModule));
-            _ninjectBootstrapper.Initialize(() => Container.Kernel);
-        }
-
-        private static void NinjectStop()
-        {
-            _ninjectBootstrapper.ShutDown();
         }
 
         private class MiniProfilerStartupModule : IHttpModule
