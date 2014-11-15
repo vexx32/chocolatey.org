@@ -35,7 +35,7 @@ namespace NuGetGallery
         {
             MiniProfilerPostStart();
             //todo: this is how database is automatically updated
-            DbMigratorPostStart();
+            //DbMigratorPostStart();
             BackgroundJobsPostStart();
             AppPostStart();
             DynamicDataPostStart();
