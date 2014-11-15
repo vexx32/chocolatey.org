@@ -62,6 +62,11 @@ namespace NuGetGallery
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new ElmahHandleErrorAttribute());
+
+            if (ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
+            {
+                filters.Add(new RequireHttpsAppHarborAttribute());
+            }
         }
 
         //private static void SetCustomRouteHandler()
