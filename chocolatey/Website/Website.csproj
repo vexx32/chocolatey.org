@@ -271,10 +271,6 @@
     <Compile Include="..\..\nugetgallery\Website\DataServices\FeedServiceBase.cs">
       <Link>DataServices\FeedServiceBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\PackageExtensions.cs">
-      <Link>DataServices\PackageExtensions.cs</Link>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\DataServices\V2CuratedFeed.svc.cs">
       <Link>DataServices\V2CuratedFeed.svc.cs</Link>
       <DependentUpon>V2CuratedFeed.svc</DependentUpon>
@@ -525,10 +521,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\PackageCurators\Windows8PackageCurator.cs">
       <Link>PackageCurators\Windows8PackageCurator.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\PackagesController.generated.cs">
-      <Link>PackagesController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Queries\CuratedFeedByKeyQuery.cs">
       <Link>Queries\CuratedFeedByKeyQuery.cs</Link>
@@ -1071,9 +1063,6 @@
     <Compile Include="..\..\nugetgallery\Website\ViewModels\ListPackageItemViewModel.cs">
       <Link>ViewModels\ListPackageItemViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\PackageListViewModel.cs">
-      <Link>ViewModels\PackageListViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordResetRequestViewModel.cs">
       <Link>ViewModels\PasswordResetRequestViewModel.cs</Link>
     </Compile>
@@ -1090,6 +1079,7 @@
     <Compile Include="App_Start\IConfiguration.cs" />
     <Compile Include="App_Start\PackageStoreType.cs" />
     <Compile Include="App_Start\Routes.cs" />
+    <Compile Include="DataServices\PackageExtensions.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\SimpleInjectorContainerResolutionBehavior.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
@@ -1142,6 +1132,9 @@
     </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
+    <Compile Include="PackagesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
@@ -1165,6 +1158,7 @@
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
+    <Compile Include="ViewModels\PackageListViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\ReportAbuseViewModel.cs" />
     <Compile Include="ViewModels\UserProfileModel.cs" />
