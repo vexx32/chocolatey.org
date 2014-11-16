@@ -203,14 +203,29 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false)
+        public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false, bool moderatorQueue = false)
         {
             if (page < 1)
             {
                 page = 1;
             }
+            if (!User.IsInRole(Constants.AdminRoleName))
+            {
+                moderatorQueue = false;
+            }
 
             IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
+
+            if (moderatorQueue)
+            {
+                var unknownStatus = PackageStatusType.Unknown.GetDescriptionOrValue();
+
+                //This is going to be fun. Unknown status ones would be listed, but sometimes a few might slip through the cracks if a maintainer unlists a package.
+                // we have email to catch those though.
+                packageVersions = packageVersions
+                    .Where(p => !p.IsPrerelease)
+                    .Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
+            }
 
             q = (q ?? "").Trim();
 
@@ -221,8 +236,10 @@ namespace NuGetGallery
                 sortOrder = q.IsEmpty() ? Constants.PopularitySortOrder : Constants.RelevanceSortOrder;
             }
 
+            int totalHits = 0;
+
             var searchFilter = GetSearchFilter(q, sortOrder, page, prerelease);
-            int totalHits;
+
             packageVersions = searchSvc.Search(packageVersions, searchFilter, out totalHits);
             if (page == 1 && !packageVersions.Any())
             {
@@ -230,6 +247,24 @@ namespace NuGetGallery
                 totalHits = 0;
             }
 
+            if (moderatorQueue)
+            {
+                var submittedPackages = packageSvc.GetSubmittedPackages();
+
+                var resubmittedPackages = submittedPackages.Where(p => p.LastUpdated > p.ReviewedDate && p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
+                var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
+                var waitingForContributorPackages = submittedPackages.Where(p => p.ReviewedDate >= p.LastUpdated).OrderByDescending(p => p.ReviewedDate).ToList();
+
+                packageVersions = resubmittedPackages
+                                    .Union(unreviewedPackages)
+                                    .Union(waitingForContributorPackages)
+                                    .Union(packageVersions)
+                                    .AsQueryable();
+
+ 
+                totalHits = packageVersions.Count();
+            }
+            
             var viewModel = new PackageListViewModel(packageVersions,
                 q,
                 sortOrder,
@@ -237,7 +272,8 @@ namespace NuGetGallery
                 page - 1,
                 Constants.DefaultPackageListPageSize,
                 Url,
-                prerelease);
+                prerelease,
+                moderatorQueue);
 
             ViewBag.SearchTerm = q;
 

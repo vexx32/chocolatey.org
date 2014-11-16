@@ -30,6 +30,14 @@
         <input type="hidden" name="q" value="@Model.SearchTerm" />
 
         <div class="form-field">
+            @if (User.IsInRole(Constants.AdminRoleName))
+            {
+                <select name="moderatorQueue" id="moderatorQueue">
+                    @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
+                    @ViewHelpers.Option("true", "ModeratorQueue", Model.ModeratorQueue)
+                </select>
+            }
+            
             <select name="prerelease" id="prerelease">
                 @ViewHelpers.Option("", "Stable Only", Model.IncludePrerelease)
                 @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
@@ -62,7 +70,7 @@
 @section BottomScripts {
     <script>
         $(function () {
-            $("#sortOrder,#prerelease").change(function () {
+            $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
                 $(this).closest("form").submit();
             });
         });

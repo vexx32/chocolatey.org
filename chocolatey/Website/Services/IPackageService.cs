@@ -16,6 +16,8 @@ namespace NuGetGallery
 
         IQueryable<Package> GetPackagesForListing(bool includePrerelease);
 
+        IQueryable<Package> GetSubmittedPackages();
+
         void PublishPackage(string id, string version);
 
         IEnumerable<Package> FindPackagesByOwner(User user);

@@ -25,6 +25,8 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
         private readonly IIndexingService indexingSvc;
         private readonly IMessageService messageSvc;
+        private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
+
 
         public PackageService(
             ICryptographyService cryptoSvc,
@@ -33,10 +35,10 @@ namespace NuGetGallery
             IEntityRepository<PackageStatistics> packageStatsRepo,
             IPackageFileService packageFileSvc,
             IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository,
-            IIndexingService indexingSvc, 
+            IIndexingService indexingSvc,
             IEntityRepository<PackageAuthor> packageAuthorRepo,
-            IEntityRepository<PackageFramework> packageFrameworksRepo, 
-            IEntityRepository<PackageDependency> packageDependenciesRepo, 
+            IEntityRepository<PackageFramework> packageFrameworksRepo,
+            IEntityRepository<PackageDependency> packageDependenciesRepo,
             IEntityRepository<PackageFile> packageFilesRepo,
             IMessageService messageSvc)
         {
@@ -76,7 +78,7 @@ namespace NuGetGallery
 
             if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted)
             {
-                NotifyForModeration(package,comments:string.Empty);
+                NotifyForModeration(package, comments: string.Empty);
             }
 
             NotifyIndexingService();
@@ -171,14 +173,26 @@ namespace NuGetGallery
 
         public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
         {
-            var packages = packageRepo.GetAll()
-                .Include(x => x.PackageRegistration)
-                .Include(x => x.PackageRegistration.Owners)
-                .Where(p => p.Listed);
+            IQueryable<Package> packages = null;
+
+            packages = packageRepo.GetAll()
+            .Include(x => x.PackageRegistration)
+            .Include(x => x.PackageRegistration.Owners)
+            .Where(p => p.Listed);
 
             return includePrerelease ? packages.Where(p => p.IsLatest) :
                                        packages.Where(p => p.IsLatestStable);
         }
+
+        public IQueryable<Package> GetSubmittedPackages()
+        {
+            return packageRepo.GetAll()
+                    .Include(x => x.PackageRegistration)
+                    .Include(x => x.PackageRegistration.Owners)
+                    .Where(p => !p.IsPrerelease)
+                    .Where(p => p.StatusForDatabase == submittedStatus);
+        }
+
 
         public IEnumerable<Package> FindPackagesByOwner(User user)
         {
@@ -274,7 +288,7 @@ namespace NuGetGallery
                         throw new EntityException("A package with identifier '{0}' and version '{1}' already exists.", packageRegistration.Id, package.Version);
                 }
             }
-          
+
             var now = DateTime.UtcNow;
             var packageFileStream = nugetPackage.GetStream();
 
@@ -321,7 +335,7 @@ namespace NuGetGallery
             package.Summary = nugetPackage.Summary ?? string.Empty;
             package.Tags = nugetPackage.Tags ?? string.Empty;
             package.Title = nugetPackage.Title ?? string.Empty;
-            
+
             foreach (var item in package.Authors.OrEmptyListIfNull().ToList()) packageAuthorRepo.DeleteOnCommit(item);
             packageAuthorRepo.CommitChanges();
             foreach (var author in nugetPackage.Authors) package.Authors.Add(new PackageAuthor { Name = author });
@@ -583,11 +597,11 @@ namespace NuGetGallery
 
                 UpdateIsLatest(package.PackageRegistration);
             }
-            
+
             package.ReviewedDate = DateTime.UtcNow;
             package.ReviewedById = user.Key;
 
-           string emailComments = string.Empty;
+            string emailComments = string.Empty;
             if (package.ReviewComments != comments && comments != null)
             {
                 package.ReviewComments = comments;
@@ -610,7 +624,7 @@ namespace NuGetGallery
             package.PackageRegistration.IsTrusted = trustedPackage;
             package.PackageRegistration.TrustedById = user.Key;
             package.PackageRegistration.TrustedDate = DateTime.UtcNow;
-         
+
             if (trustedPackage)
             {
                 var packagesToUpdate = package.PackageRegistration.Packages.Where(p => p.Status == PackageStatusType.Unknown || p.Status == PackageStatusType.Submitted).ToList();
@@ -618,19 +632,19 @@ namespace NuGetGallery
                 if (packagesToUpdate.Count != 0)
                 {
 
-                var now = DateTime.UtcNow;
-                foreach (var trustedPkg in packagesToUpdate.OrEmptyListIfNull())
-                {
-                    if (trustedPkg.Status == PackageStatusType.Submitted)
+                    var now = DateTime.UtcNow;
+                    foreach (var trustedPkg in packagesToUpdate.OrEmptyListIfNull())
                     {
-                        trustedPkg.Listed = true;
-                    }
+                        if (trustedPkg.Status == PackageStatusType.Submitted)
+                        {
+                            trustedPkg.Listed = true;
+                        }
 
-                    trustedPkg.Status = PackageStatusType.Approved;
-                    trustedPkg.LastUpdated = now;
-                    trustedPkg.ReviewedDate = now;
-                    trustedPkg.ApprovedDate = now;
-                }
+                        trustedPkg.Status = PackageStatusType.Approved;
+                        trustedPkg.LastUpdated = now;
+                        trustedPkg.ReviewedDate = now;
+                        trustedPkg.ApprovedDate = now;
+                    }
 
                     packageRegistrationRepo.CommitChanges();
                 }
@@ -744,9 +758,9 @@ namespace NuGetGallery
             indexingSvc.UpdateIndex();
         }
 
-        private void NotifyForModeration(Package package,string comments)
+        private void NotifyForModeration(Package package, string comments)
         {
-            messageSvc.SendPackageModerationEmail(package,comments);
+            messageSvc.SendPackageModerationEmail(package, comments);
         }
 
     }

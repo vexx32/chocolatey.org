@@ -785,19 +785,42 @@ header.main {
             section.package div.tags h2 {
                 margin-right: 5px;
             }
-            
+    
     section.package .side {
         float: left;
         width: 70px;
     }
     
-        section.package .side img {
+         section.package .side img {
             display: block;
             margin:0 auto;
             max-width: 48px;
             max-height:48px;
         }
             
+    section.package .moderator-side {
+        position: relative;
+        float: right;
+        left: -1050px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.0em;
+        margin: 0px;
+        padding: 0px;
+        width: 0px;
+    }
+         section.package .moderator-side .ready {
+             color: #02a602;             
+         }
+         section.package .moderator-side .updated {
+             color: #044604;             
+         }
+         
+         section.package .moderator-side .waiting {
+             color: #ffb662;             
+         }
+         
+    
             
     /* Pager */
     ul.pager {

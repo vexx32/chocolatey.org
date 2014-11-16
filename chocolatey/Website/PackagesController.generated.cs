@@ -142,7 +142,7 @@ namespace NuGetGallery {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ListPackages(string q, string sortOrder, int page, bool prerelease) {
+        public override System.Web.Mvc.ActionResult ListPackages(string q, string sortOrder, int page, bool prerelease, bool moderatorQueue) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ListPackages);
             callInfo.RouteValueDictionary.Add("q", q);
             callInfo.RouteValueDictionary.Add("sortOrder", sortOrder);
