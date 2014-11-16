@@ -740,6 +740,10 @@ header.main {
         section.package.my-package {
             background: url("Images/yourpackage.png") no-repeat 100% 0; 
         }
+        
+        section.package.unknown-status {
+            background-color: #fff0f0;
+        }
     
     section.package .main {
         margin-left: 70px;

@@ -1,5 +1,5 @@
 ﻿@model ListPackageItemViewModel
-<section class="package @if(Model.IsOwner(User)) {<text>my-package</text>}">
+<section class="package @if(Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text>unknown-status </text>}">
     @if (Model.Status == PackageStatusType.Submitted) {
         <div class="moderator-side">
             @if (!Model.ReviewedDate.HasValue)
