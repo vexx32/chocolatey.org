@@ -349,7 +349,7 @@ Maintainer(s): {2}
                 mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage);
-                mailMessage.To.Add(settings.GalleryOwnerEmail);
+                //mailMessage.To.Add(settings.GalleryOwnerEmail);
                 if (mailMessage.To.Any())
                 {
                     SendMessage(mailMessage);
