@@ -7,7 +7,7 @@ namespace NuGetGallery
 {
     public class PackageListViewModel
     {
-        public PackageListViewModel(IQueryable<Package> packages,
+        public PackageListViewModel(IEnumerable<Package> packages,
             string searchTerm,
             string sortOrder,
             int totalCount,

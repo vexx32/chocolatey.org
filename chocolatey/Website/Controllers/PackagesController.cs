@@ -12,6 +12,8 @@ using PoliteCaptcha;
 
 namespace NuGetGallery
 {
+    using System.Collections.Generic;
+
     public partial class PackagesController : Controller
     {
         // TODO: add support for URL-based package submission
@@ -215,6 +217,7 @@ namespace NuGetGallery
             }
 
             IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
+            IEnumerable<Package> packagesToShow = new List<Package>();
 
             if (moderatorQueue)
             {
@@ -246,38 +249,41 @@ namespace NuGetGallery
             {
                 var submittedPackages = packageSvc.GetSubmittedPackages();
 
-                var resubmittedPackages = submittedPackages.Where(p => p.LastUpdated > p.ReviewedDate && p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
+                var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.LastUpdated > p.ReviewedDate).OrderBy(p => p.LastUpdated).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
                 var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.LastUpdated).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
-
-                packageVersions = resubmittedPackages
+            
+                packagesToShow = resubmittedPackages
                     .Union(unreviewedPackages)
-                    .Union(waitingForMaintainerPackages)
-                    .Union(packageVersions)
-                    .AsQueryable();
+                    .Union(waitingForMaintainerPackages);
 
-                totalHits = packageVersions.Count();
-                   
+                totalHits = packagesToShow.Count() + packageVersions.Count();
 
-                packageVersions = packageVersions
+                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count())
+                {
+                    packagesToShow = packagesToShow
+                   .Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
+                }
+
+                packagesToShow = packagesToShow
                     .Skip(searchFilter.Skip)
                     .Take(searchFilter.Take);
             }
             else
             {
-                packageVersions = searchSvc.Search(packageVersions, searchFilter, out totalHits);
+                packagesToShow = searchSvc.Search(packageVersions, searchFilter, out totalHits).ToList();
             }
 
-            if (page == 1 && !packageVersions.Any())
+            if (page == 1 && !packagesToShow.Any())
             {
                 // In the event the index wasn't updated, we may get an incorrect count. 
                 totalHits = 0;
             }
 
-            var viewModel = new PackageListViewModel(packageVersions,
+            var viewModel = new PackageListViewModel(packagesToShow,
                 q,
                 sortOrder,
                 totalHits,
