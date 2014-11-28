@@ -261,12 +261,6 @@ namespace NuGetGallery
 
                 totalHits = packageVersions.Count();
                    
-                //wow, super slow as expected
-                //packageVersions = submittedPackages
-                //    .ToList()
-                //    .OrderBy(_ => _, new PackageModerationComparer())
-                //    .Union(packageVersions)
-                //    .AsQueryable();
 
                 packageVersions = packageVersions
                     .Skip(searchFilter.Skip)
