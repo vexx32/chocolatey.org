@@ -237,34 +237,45 @@ namespace NuGetGallery
             }
 
             int totalHits = 0;
-
+            int updatedPackagesCount = 0;
+            int unreviewedPackagesCount = 0;
+            int waitingPackagesCount = 0;
             var searchFilter = GetSearchFilter(q, sortOrder, page, prerelease);
-
-            packageVersions = searchSvc.Search(packageVersions, searchFilter, out totalHits);
-            if (page == 1 && !packageVersions.Any())
-            {
-                // In the event the index wasn't updated, we may get an incorrect count. 
-                totalHits = 0;
-            }
 
             if (moderatorQueue)
             {
                 var submittedPackages = packageSvc.GetSubmittedPackages();
 
                 var resubmittedPackages = submittedPackages.Where(p => p.LastUpdated > p.ReviewedDate && p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
+                updatedPackagesCount = resubmittedPackages.Count;
                 var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
-                var waitingForContributorPackages = submittedPackages.Where(p => p.ReviewedDate >= p.LastUpdated).OrderByDescending(p => p.ReviewedDate).ToList();
+                unreviewedPackagesCount = unreviewedPackages.Count;
+                var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.LastUpdated).OrderByDescending(p => p.ReviewedDate).ToList();
+                waitingPackagesCount = waitingForMaintainerPackages.Count;
 
                 packageVersions = resubmittedPackages
-                                    .Union(unreviewedPackages)
-                                    .Union(waitingForContributorPackages)
-                                    .Union(packageVersions)
-                                    .AsQueryable();
+                    .Union(unreviewedPackages)
+                    .Union(waitingForMaintainerPackages)
+                    .Union(packageVersions)
+                    .AsQueryable();
 
- 
                 totalHits = packageVersions.Count();
+
+                packageVersions = packageVersions
+                    .Skip(searchFilter.Skip)
+                    .Take(searchFilter.Take);
             }
-            
+            else
+            {
+                packageVersions = searchSvc.Search(packageVersions, searchFilter, out totalHits);
+            }
+
+            if (page == 1 && !packageVersions.Any())
+            {
+                // In the event the index wasn't updated, we may get an incorrect count. 
+                totalHits = 0;
+            }
+
             var viewModel = new PackageListViewModel(packageVersions,
                 q,
                 sortOrder,
@@ -273,7 +284,10 @@ namespace NuGetGallery
                 Constants.DefaultPackageListPageSize,
                 Url,
                 prerelease,
-                moderatorQueue);
+                moderatorQueue,
+                updatedPackagesCount,
+                unreviewedPackagesCount,
+                waitingPackagesCount);
 
             ViewBag.SearchTerm = q;
 

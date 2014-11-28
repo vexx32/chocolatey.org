@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Packages";
+    var moderationQueue = !string.IsNullOrWhiteSpace(Model.ModeratorQueue) && Model.ModeratorQueue.Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
 }
-
 
 
 <div class="hgroup search">
@@ -16,7 +16,16 @@
         <h1>Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1) { <text>package</text> } else { <text>packages</text> }</h1>
     }
     else {
-        <h1>@if (Model.TotalCount == 1) { <text>There is @Model.TotalCount package</text> } else { <text>There are @Model.TotalCount packages</text> }</h1>
+        if (moderationQueue)
+        {
+            <h1>@if (Model.TotalCount == 1) { <text>There is @Model.TotalCount package in moderation</text> } else { <text>There are @Model.TotalCount packages in moderation</text> }</h1>
+            <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer</h2>
+        }
+        else
+        {
+            <h1>@if (Model.TotalCount == 1) { <text>There is @Model.TotalCount package</text> } else { <text>There are @Model.TotalCount packages</text> }</h1>
+        }
+        
     }
     @if (@Model.LastResultIndex > 0)
     {

@@ -148,6 +148,10 @@ namespace NuGetGallery {
             callInfo.RouteValueDictionary.Add("sortOrder", sortOrder);
             callInfo.RouteValueDictionary.Add("page", page);
             callInfo.RouteValueDictionary.Add("prerelease", prerelease);
+            if (moderatorQueue)
+            {
+                callInfo.RouteValueDictionary.Add("moderatorQueue", moderatorQueue);
+            }
             return callInfo;
         }
 

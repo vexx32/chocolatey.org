@@ -15,7 +15,10 @@ namespace NuGetGallery
             int pageSize,
             UrlHelper url,
             bool includePrerelease, 
-            bool moderatorQueue)
+            bool moderatorQueue,
+            int updatedCount,
+            int submittedCount,
+            int waitingCount)
         {
             // TODO: Implement actual sorting
             IEnumerable<ListPackageItemViewModel> items;
@@ -36,7 +39,7 @@ namespace NuGetGallery
                 items,
                 PageIndex,
                 pageCount,
-                page => url.PackageList(page, sortOrder, searchTerm, includePrerelease)
+                page => url.PackageList(page, sortOrder, searchTerm, includePrerelease, moderatorQueue)
             );
             Items = pager.Items;
             FirstResultIndex = 1 + (PageIndex * PageSize);
@@ -44,6 +47,9 @@ namespace NuGetGallery
             Pager = pager;
             IncludePrerelease = includePrerelease ? "true" : null;
             ModeratorQueue = moderatorQueue ? "true" : null;
+            ModerationUpdatedPackageCount = updatedCount;
+            ModerationSubmittedPackageCount = submittedCount;
+            ModerationWaitingPackageCount = waitingCount;
         }
 
         public int FirstResultIndex { get; set; }
@@ -67,5 +73,9 @@ namespace NuGetGallery
         public string IncludePrerelease { get; private set; }
 
         public string ModeratorQueue { get; private set; }
+
+        public int ModerationUpdatedPackageCount { get; private set; }
+        public int ModerationSubmittedPackageCount { get; private set; }
+        public int ModerationWaitingPackageCount { get; private set; }
     }
 }
