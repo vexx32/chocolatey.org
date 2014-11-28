@@ -574,11 +574,13 @@ namespace NuGetGallery
         {
             if (package.Status == status && package.ReviewComments == comments) return;
 
+            var now = DateTime.UtcNow; 
+
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
                 package.Status = status;
                 package.ApprovedDate = null;
-                package.LastUpdated = DateTime.UtcNow;
+                package.LastUpdated = now;
 
                 switch (package.Status)
                 {
@@ -587,7 +589,7 @@ namespace NuGetGallery
                         package.Listed = false;
                         break;
                     case PackageStatusType.Approved:
-                        package.ApprovedDate = DateTime.UtcNow;
+                        package.ApprovedDate = now;
                         package.Listed = true;
                         break;
                     case PackageStatusType.Exempted:
@@ -598,7 +600,7 @@ namespace NuGetGallery
                 UpdateIsLatest(package.PackageRegistration);
             }
 
-            package.ReviewedDate = DateTime.UtcNow;
+            package.ReviewedDate = now;
             package.ReviewedById = user.Key;
 
             string emailComments = string.Empty;
