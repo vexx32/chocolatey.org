@@ -5,7 +5,7 @@ namespace NuGetGallery
     {
         public const string AdminRoleName = "Admins";
         public const string AlphabeticSortOrder = "package-title";
-        public const int DefaultPackageListPageSize = 20;
+        public const int DefaultPackageListPageSize = 30;
         public const string DefaultPackageListSortOrder = "package-download-count";
         public const int DefaultPasswordResetTokenExpirationHours = 24;
         public const int MaxEmailSubjectLength = 255;
