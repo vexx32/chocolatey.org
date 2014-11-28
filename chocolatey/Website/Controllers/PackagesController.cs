@@ -141,7 +141,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        [Authorize(Roles="Admins"), HttpPost]
+        [Authorize(Roles = "Admins"), HttpPost]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
             if (!ModelState.IsValid)
@@ -156,7 +156,7 @@ namespace NuGetGallery
                 return PackageNotFound(id, version);
             }
             var model = new DisplayPackageViewModel(package);
-            
+
             if (!ModelState.IsValid)
             {
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
@@ -165,7 +165,7 @@ namespace NuGetGallery
             var status = PackageStatusType.Unknown;
             try
             {
-                status = (PackageStatusType) Enum.Parse(typeof (PackageStatusType), form["Status"]);
+                status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
             }
             catch (Exception ex)
             {
@@ -197,9 +197,9 @@ namespace NuGetGallery
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version);
             model = new DisplayPackageViewModel(package);
-            
+
             TempData["Message"] = "Changes to package status have been saved.";
-            
+
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
@@ -368,7 +368,7 @@ namespace NuGetGallery
 
             return View("~/Views/Packages/ContactAdmins.cshtml", model);
         }
-        
+
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult ContactAdmins(string id, string version, ReportAbuseViewModel reportForm)
         {
