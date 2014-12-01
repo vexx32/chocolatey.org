@@ -163,11 +163,10 @@ Package Url: {6}
             string body = @"Thank you for registering with the {0}. 
 We can't wait to see what packages you'll upload.
 
-Remember to read the packaging rules:
-https://github.com/chocolatey/chocolatey/wiki/CreatePackages#rules-to-be-observed-before-publishing-packages
+Remember to read the packaging guidelines:
+https://github.com/chocolatey/chocolatey/wiki/CreatePackages
 
-And the package naming guidelines:
-https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
+All packages sumbitted to the Chocolatey Gallery must meet these guidelines.
 
 If you can't adhere to this advice, the chocolatey gods might get unhappy and put you in the hall of shame.
 Hall of shame users might notice their packages getting unlisted or deleted.
@@ -329,7 +328,7 @@ Maintainer(s): {2}
  * Moderators typically review a package within one business day.
  * You may respond directly to this message to correspond directly with site moderators. 
  * If you have not heard anything within two business days, please reply to this message and ask for status.
- * Packages should conform to our guidelines https://github.com/chocolatey/chocolatey/wiki/CreatePackages
+ * Packages must conform to our guidelines https://github.com/chocolatey/chocolatey/wiki/CreatePackages
  * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
 ";           
 
