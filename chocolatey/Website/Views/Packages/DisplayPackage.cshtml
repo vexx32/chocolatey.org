@@ -368,7 +368,7 @@
         <tbody>
             @foreach (var packageVersion in Model.PackageVersions)
             {
-                if (packageVersion.Listed || Model.IsOwner(User))
+                if (packageVersion.Listed || Model.IsOwner(User) || packageVersion.Status == PackageStatusType.Submitted)
                 {
                     <tr class="versionTableRow @if (packageVersion.LatestVersion)
                                                {<text>recommended </text>}">
