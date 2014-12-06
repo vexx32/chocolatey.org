@@ -34,7 +34,14 @@
         <div class="stat">
             <p class="stat-number">@Model.LastUpdated.ToShortDateString()</p>
             <p class="stat-label">Last update</p>
-        </div>
+        </div> 
+        @if (Model.Status == PackageStatusType.Submitted)
+        {
+            <div class="stat">
+                <p class="stat-number">@Model.PublishedDate.ToShortDateString()</p>
+                <p class="stat-label">Published Date</p>
+            </div>
+        }
     </div>
     <nav>
         <ul class="links">
