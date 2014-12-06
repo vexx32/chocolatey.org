@@ -102,7 +102,7 @@
     
     @if (Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
     {
-        <div class="message warning">There are versions of this package awaiting moderation.</div>
+        <div class="message warning">There are versions of this package awaiting moderation.</div> <br />
     }
 
     @if (Model.IsOwner(User) && Model.Status == PackageStatusType.Rejected)
