@@ -107,7 +107,7 @@
         <h2>@Model.Version</h2>
     </div>
     
-    @if (Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
+    @if (Model.Status != PackageStatusType.Submitted && Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
     {
         <div class="message warning">There are versions of this package awaiting moderation.</div> <br />
     }
