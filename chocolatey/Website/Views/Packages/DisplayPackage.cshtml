@@ -15,8 +15,8 @@
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
 
-    
-    var moderator = User !=null && User.IsInRole(Constants.AdminRoleName);
+
+    var moderator = User != null && User.IsInRole(Constants.AdminRoleName);
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
 }
@@ -331,10 +331,6 @@
     {
         <a name="releasenotes" id="releasenotes"></a><h3>Release Notes</h3>
         @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
-@* foreach (var note in Model.ReleaseNotes.Split('\n'))
-        {
-            <p>@note</p>
-        }*@
     }
     <a name="versionhistory" id="versionhistory"></a><h3>Version History</h3>
     <table class="sexy-table">
