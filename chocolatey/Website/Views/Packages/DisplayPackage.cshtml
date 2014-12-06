@@ -218,12 +218,7 @@
         </div>
     }
 
-    
     @Html.Raw(markdownGenerator.Transform(Model.Description))
-    @*foreach (var line in Model.Description.ToStringSafe().Split('\n'))
-    {
-        <p>@line</p>
-    }*@
 
     <p>To install @Model.Title, run the following command from the command line or from
         PowerShell: </p>
