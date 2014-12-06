@@ -743,6 +743,18 @@ header.main {
         
         section.package.unknown-status {
             background-color: #fff0f0;
+        }       
+        
+        section.package.ready {
+            background-color: #ddfcdd;
+        }
+        
+        section.package.updated {
+            background-color: #a2c1a2;
+        }
+        
+        section.package.waiting {
+            background-color: #ffead2;  
         }
     
     section.package .main {
@@ -816,6 +828,7 @@ header.main {
          section.package .moderator-side .ready {
              color: #02a602;             
          }
+         
          section.package .moderator-side .updated {
              color: #044604;             
          }
@@ -823,8 +836,7 @@ header.main {
          section.package .moderator-side .waiting {
              color: #ffb662;             
          }
-         
-    
+   
             
     /* Pager */
     ul.pager {

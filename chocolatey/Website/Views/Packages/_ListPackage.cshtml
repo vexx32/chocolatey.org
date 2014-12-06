@@ -1,18 +1,30 @@
 ﻿@model ListPackageItemViewModel
-<section class="package @if(Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text>unknown-status </text>}">
-    @if (Model.Status == PackageStatusType.Submitted) {
+@{
+    var submittedStatus = "waiting";
+    if (!Model.ReviewedDate.HasValue) 
+    {
+        submittedStatus = "ready";
+    }
+    else if (Model.LastUpdated > Model.ReviewedDate)
+    {
+        submittedStatus = "updated";
+    }
+}
+<section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus </text>}">
+    @if (Model.Status == PackageStatusType.Submitted)
+    {
         <div class="moderator-side">
-            @if (!Model.ReviewedDate.HasValue)
+            @switch (submittedStatus)
             {
-                <span class="ready">Ready</span>
-            }
-            else if (Model.LastUpdated > Model.ReviewedDate)
-            {
-                <span class="updated">Updated</span>
-            }
-            else
-            {
-                <span class="waiting">Waiting for Maintainer</span>
+                case "ready":
+                    <span class="ready">Ready</span>
+                    break;
+                case "updated":
+                    <span class="updated">Updated</span>
+                    break;
+               default:
+                    <span class="waiting">Waiting for Maintainer</span>
+                    break;
             }
         </div>        
     }
