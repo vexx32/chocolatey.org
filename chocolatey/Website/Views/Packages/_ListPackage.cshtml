@@ -21,9 +21,11 @@
                     break;
                 case "updated":
                     <span class="updated">Updated</span>
+                    @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                     break;
                default:
                     <span class="waiting">Waiting for Maintainer</span>
+                    @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                     break;
             }
         </div>        

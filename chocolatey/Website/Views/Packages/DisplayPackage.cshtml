@@ -18,7 +18,7 @@
     
     var moderator = User !=null && User.IsInRole(Constants.AdminRoleName);
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
-    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewedByUserName) ? "by moderator " + Model.ReviewedByUserName : "as a trusted package";    
+    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
 }
 @section SideColumn {
     <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
@@ -96,7 +96,7 @@
 
     @if (Model.IsOwner(User) && Model.Status == PackageStatusType.Rejected)
     {
-        <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewedByUserName has listed the following reason(s): 
+        <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s): 
             <br />
             @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
         </div> <br />

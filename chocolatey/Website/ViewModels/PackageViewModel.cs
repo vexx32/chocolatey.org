@@ -24,7 +24,8 @@ namespace NuGetGallery
             Prerelease = package.IsPrerelease;
             Status = package.Status;
             ApprovedDate = package.ApprovedDate;
-            ReviewedByUserName = package.ReviewedBy !=null ? package.ReviewedBy.Username : string.Empty;
+            ReviewerUserName = package.ReviewedBy !=null ? package.ReviewedBy.Username : string.Empty;
+            ReviewerEmailAddress = package.ReviewedBy != null ? package.ReviewedBy.EmailAddress : string.Empty;
             ReviewedDate = package.ReviewedDate;
             ReviewComments = package.ReviewComments;
         }
@@ -58,7 +59,8 @@ namespace NuGetGallery
         [Display(Name = "Package Status")]
         public PackageStatusType Status { get; set; }
         public DateTime? ReviewedDate { get; set; }
-        public string ReviewedByUserName { get; set; }
+        public string ReviewerUserName { get; set; }
+        public string ReviewerEmailAddress { get; set; }
         [Display(Name = "Review Comments")]
         public string ReviewComments { get; set; }
         public DateTime? ApprovedDate { get; set; }
