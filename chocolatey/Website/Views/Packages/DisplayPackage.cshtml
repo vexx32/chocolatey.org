@@ -82,8 +82,15 @@
     }
     else if (!Model.IsLatestVersionAvailable)
     {
-        <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
+        if (Model.Status == PackageStatusType.Submitted)
+        {
+            <p class="message error">This version is in moderation and has not yet been approved.</p>
+        }
+        else
+        {
+            <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
         latest version</a> of @Model.Title available. </p>
+        }
     }
     @if (Model.IsInstallOrPortable)
     {
