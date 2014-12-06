@@ -38,7 +38,7 @@
     <div class="main">
         <header> 
             <div class="nuget-badge-small">
-                <code><span>C:\&gt; </span>choco install @Model.Id
+                <code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
                     @if (!Model.LatestVersion || !Model.Listed)
                     { <text> -Version @Model.Version</text> }
                     @if (Model.Prerelease)
