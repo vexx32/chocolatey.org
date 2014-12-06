@@ -138,6 +138,16 @@
             again, <a href="@Url.DeletePackage(Model)">change its listing setting</a>. </p>
     }
     
+    @if (!Model.IsOwner(User) && Model.Status == PackageStatusType.Submitted)
+    {
+        if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
+        {
+            <div class="message"><p>Review Comments:</p>
+                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
+            </div><br />
+        }
+    }
+
     @if (Model.Status == PackageStatusType.Approved)
     {
         <p class="message approved">This package was approved @reviewerComments on @Model.ApprovedDate.GetValueOrDefault().ToShortDateString().</p>
@@ -329,14 +339,26 @@
                 <th>
                     Downloads
                 </th>
-                <th class="@(Model.IsOwner(User) ? "" : "last")">
+                <th>
                     Last updated
                 </th>
                 @if (Model.IsOwner(User))
                 {
-                    <th class="last">
+                    <th class="@(moderator ? "" : "last")">
                         Listed
                     </th>
+                }
+                else
+                {
+                  <th class="@(moderator ? "" : "last")">
+                       Status
+                    </th>
+                }  
+                @if (moderator)
+                {
+                    <th class="last">
+                        Notes
+                    </th>            
                 }
             </tr>
         </thead>
@@ -366,6 +388,49 @@
                         {
                             <td>
                                 <a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
+                            </td>
+                        }
+                        else
+                        {
+                            switch (packageVersion.Status)
+                            {
+                                case PackageStatusType.Submitted:
+                                    if (!Model.ReviewedDate.HasValue || Model.LastUpdated > Model.ReviewedDate)
+                                    {
+                                        <td>submitted</td>
+                                    }
+                                    else
+                                    {
+                                        <td>waiting</td>
+                                    }
+                                    break;
+                                case PackageStatusType.Approved:
+                                case PackageStatusType.Exempted:
+                                    <td>@packageVersion.Status.GetDescriptionOrValue().ToLower()</td>
+                                   break;
+                                default:
+                                    <td>&nbsp;</td>
+                                   break;
+                            }
+                        }
+                        @if (moderator)
+                        {
+                            var divVersionId = "divVersion-" + packageVersion.Version.ToString().Replace(".", "-");
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(packageVersion.ReviewComments))
+                                {
+                                    <a onclick="if ($(this).text() == 'Hide') {$('#@divVersionId').hide();$(this).text('Show');} else {$('#@divVersionId').show();$(this).text('Hide');}">
+                                    Show</a>
+                                    <div id="@divVersionId">
+                                        <br />
+                                          @Html.Raw(markdownGenerator.Transform(packageVersion.ReviewComments))
+                                    </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#@divVersionId').hide();
+                                    });
+                                </script>    
+                                }
                             </td>
                         }
                     </tr>
