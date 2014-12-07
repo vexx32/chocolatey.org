@@ -16,7 +16,6 @@
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
 
-
     var moderator = User != null && User.IsInRole(Constants.AdminRoleName);
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
@@ -83,11 +82,7 @@
     }
     else if (!Model.IsLatestVersionAvailable)
     {
-        if (Model.Status == PackageStatusType.Submitted)
-        {
-            <p class="message error">This version is in moderation and has not yet been approved.</p>
-        }
-        else
+        if (Model.Status != PackageStatusType.Submitted && Model.Status != PackageStatusType.Rejected)
         {
             <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
         latest version</a> of @Model.Title available. </p>
@@ -103,11 +98,19 @@
             are deprecated in favor of *.install and *.portable, because the latter are more
             logical and understandable. </p>
     }
+    
+
     <div class="hgroup page-heading">
         <h1>@Model.Title</h1>
         <h2>@Model.Version</h2>
     </div>
     
+    @if (Model.Status == PackageStatusType.Submitted)
+    {
+        <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can 
+            change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
+            that have been made to the package. There are also no guarantees that it will be approved.</div><br />
+    }
     @if (Model.Status != PackageStatusType.Submitted && Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
     {
         <div class="message warning">There are versions of this package awaiting moderation.</div> <br />
