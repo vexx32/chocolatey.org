@@ -211,10 +211,6 @@ namespace NuGetGallery
             {
                 page = 1;
             }
-            if (!User.IsInRole(Constants.AdminRoleName))
-            {
-                moderatorQueue = false;
-            }
 
             IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
