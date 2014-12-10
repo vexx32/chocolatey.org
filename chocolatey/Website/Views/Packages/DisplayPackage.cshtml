@@ -40,6 +40,19 @@
                 <p class="stat-number">@Model.PublishedDate.ToShortDateString()</p>
                 <p class="stat-label">Published Date</p>
             </div>
+
+            if (Model.ReviewedDate.HasValue)
+            {
+                <div class="stat">
+                    <p class="stat-number">@Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</p>
+                    <p class="stat-label">Reviewed Date</p>
+                </div>
+
+                <div class="stat">
+                    <p class="stat-number">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 64)</p>
+                    <p class="stat-label">Reviewer</p>
+                </div>
+            }
         }
     </div>
     <nav>

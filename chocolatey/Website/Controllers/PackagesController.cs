@@ -245,11 +245,11 @@ namespace NuGetGallery
             {
                 var submittedPackages = packageSvc.GetSubmittedPackages();
 
-                var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.LastUpdated > p.ReviewedDate).OrderBy(p => p.LastUpdated).ToList();
+                var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.LastUpdated).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
                 var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
-                var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.LastUpdated).OrderByDescending(p => p.ReviewedDate).ToList();
+                var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
             
                 packagesToShow = resubmittedPackages
