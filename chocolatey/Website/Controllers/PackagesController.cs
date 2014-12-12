@@ -245,7 +245,7 @@ namespace NuGetGallery
             {
                 var submittedPackages = packageSvc.GetSubmittedPackages();
 
-                var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.LastUpdated).ToList();
+                var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
                 var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
