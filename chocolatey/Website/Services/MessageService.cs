@@ -228,6 +228,9 @@ The {0} Team";
 The email address associated to your {0} account was recently 
 changed from _{1}_ to _{2}_.
 
+**Note:** If you are getting this and both emails are the same, there is likely a space in your email address. 
+If you go into your account and set the email address to the same thing, it should remove this message.
+
 Thanks,
 The {0} Team";
 
