@@ -314,22 +314,14 @@ The {3} Team";
 
         public void SendPackageModerationEmail(Package package,string comments)
         {
-            string subject = "[{0}] Moderation for the package '{1}' v{2}";
+            string subject = "[{0}] Moderation for '{1}' v{2}";
             var packageUrl = string.Format("{0}packages/{1}/{2}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.PackageRegistration.Id, package.Version);
-            string body = @"The '{0}' package has been {3}.
-Package Url: {1} 
-Maintainer(s): {2}
-
+            string body = @"'{0}' is {3}{6}.
 {4}
 
-### Information for Maintainers
-
- * While in submitted status you can continually repush the package with the same version.
- * Moderators typically review a package within one business day.
- * You may respond directly to this message to correspond directly with site moderators. 
- * If you have not heard anything within two business days, please reply to this message and ask for status.
- * Packages must conform to our guidelines https://github.com/chocolatey/chocolatey/wiki/CreatePackages
- * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
+Package Url: {1} 
+Maintainer(s): {2}
+{5}
 ";           
 
             body = String.Format(CultureInfo.CurrentCulture,
@@ -338,7 +330,9 @@ Maintainer(s): {2}
                 packageUrl,
                 string.Join(", ",package.PackageRegistration.Owners.Select(x => x.Username)),
                 package.Status.GetDescriptionOrValue(),
-                GetModerationMessage(package,comments));
+                GetModerationMessage(package,comments),
+                GetInformationForMaintainers(package,comments),
+                package.Status == PackageStatusType.Approved && !string.IsNullOrWhiteSpace(comments) ? " with comments" : string.Empty);
 
             subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
             using (var mailMessage = new MailMessage())
@@ -356,23 +350,38 @@ Maintainer(s): {2}
             }
         }
 
+        private string GetInformationForMaintainers(Package package, string comments)
+        {
+            if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments))
+            {
+                return @"
+### Information for Maintainers
+
+ * If you have fixes, repush your package with the **same version**. This is allowed until approved.
+ * Reply to this message with questions/comments. 
+
+#### Other Pertinent Information
+
+ * Moderators typically review a package within 1-3 business days.
+ * If you have not heard anything within two business days, please reply to this message and ask for status.
+ * Packages must conform to our guidelines https://github.com/chocolatey/chocolatey/wiki/CreatePackages
+ * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
+";
+            }
+            else if (package.Status == PackageStatusType.Submitted)
+            {
+                return @"
+#### Maintainer Notes
+
+ * If we've asked you to make changes, repush your updated package with the **_same_ version**.";
+            }
+
+            return string.Empty;
+        }
+
         private string GetModerationMessage(Package package, string comments)
         {
             var message = new StringBuilder();
-            switch (package.Status)
-            {
-                case PackageStatusType.Submitted:
-                    break;
-                case PackageStatusType.Rejected:
-                case PackageStatusType.Approved:
-                case PackageStatusType.Exempted:
-                    message.AppendFormat("The package was {0} by moderator {1} on {2}.{3}{3}",
-                        package.Status.GetDescriptionOrValue().ToLower(),
-                        package.ReviewedBy.Username,
-                        package.ReviewedDate.GetValueOrDefault().ToShortDateString(), 
-                        Environment.NewLine);
-                    break;
-            }
 
             if (!string.IsNullOrWhiteSpace(comments))
             {
@@ -383,6 +392,21 @@ Maintainer(s): {2}
             {
                 message.AppendFormat("The moderator left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
                 message.Append(Environment.NewLine + package.ReviewComments);
+            }
+
+            switch (package.Status)
+            {
+                case PackageStatusType.Submitted:
+                    break;
+                case PackageStatusType.Rejected:
+                case PackageStatusType.Approved:
+                case PackageStatusType.Exempted:
+                    message.AppendFormat("{3}{3}The package was {0} by moderator {1} on {2}.",
+                        package.Status.GetDescriptionOrValue().ToLower(),
+                        package.ReviewedBy.Username,
+                        package.ReviewedDate.GetValueOrDefault().ToShortDateString(),
+                        Environment.NewLine);
+                    break;
             }
 
             return message.ToString();
