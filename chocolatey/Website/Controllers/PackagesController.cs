@@ -247,7 +247,7 @@ namespace NuGetGallery
 
                 var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
-                var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.LastUpdated).ToList();
+                var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
