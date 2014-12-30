@@ -117,7 +117,7 @@
         <h2>@Model.Version</h2>
     </div>
     
-    @if (Model.Status == PackageStatusType.Submitted)
+    @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User))
     {
         <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can 
             change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
