@@ -5,13 +5,13 @@
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
-    var markdownGenerator = new Markdown(new MarkdownOptions
-    {
+    var markdownGenerator = new Markdown {
         AutoHyperlink = true,
         AutoNewLines = true,
-        EncodeProblemUrlCharacters = true,
+        //EncodeProblemUrlCharacters = true,
         LinkEmails = true,
-    });
+        SkipCodeBlocks = true,
+    };
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
 

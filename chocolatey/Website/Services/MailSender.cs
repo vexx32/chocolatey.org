@@ -83,13 +83,12 @@
             mailMessage.AlternateViews.Add(textView);
 
             //this is what is different. Tired of receiving plaintext messages with the markdown crap in them.
-            var markdownGenerator = new Markdown(new MarkdownOptions
-                {
+            var markdownGenerator = new Markdown {
                     AutoHyperlink = true,
                     AutoNewLines = true,
-                    EncodeProblemUrlCharacters = true,
+                    //EncodeProblemUrlCharacters = true,
                     LinkEmails = true,
-                });
+                };
 
             string htmlBody = markdownGenerator.Transform(markdownBody);
 
