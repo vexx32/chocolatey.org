@@ -79,7 +79,7 @@ $chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 write-host 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
 $chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName, [System.EnvironmentVariableTarget]::User)
-$chocoExePath = 'C:\Chocolatey\bin'
+$chocoExePath = 'C:\ProgramData\Chocolatey\bin'
 if ($chocoPath -ne $null) {
   $chocoExePath = Join-Path $chocoPath 'bin'
 }
