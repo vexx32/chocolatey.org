@@ -41,6 +41,11 @@ namespace NuGetGallery
                 "packages",
                 MVC.Packages.ListPackages());
 
+            var packageNotifyComment = routes.MapRoute(
+                RouteName.NotifyComment,
+                "packages/{packageId}/notify-comment",
+                new { controller = MVC.Packages.Name, action = "NotifyMaintainersOfAddedComment" });
+
             var uploadPackageRoute = routes.MapRoute(
                 RouteName.UploadPackage,
                 "packages/upload",

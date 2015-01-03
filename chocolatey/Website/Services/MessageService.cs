@@ -150,6 +150,42 @@ Package Url: {6}
             }
         }
 
+        public void SendCommentNotificationToMaintainers(PackageRegistration packageRegistration, CommentViewModel comment, string packageUrl)
+        {
+            string body = @"Comment: {0}
+
+This comment has been added to the disqus forum thread for {1}. 
+It may not show up immediately if it is subject to moderation but we wanted you to know about it.
+
+Package Url: {2}
+Comment Url: {3}
+";
+            string subject = "[{0}] New disqus comment for maintainers of '{1}'";
+            string disqusCommentUrl = string.Format("{0}#comment-{1}", packageUrl, comment.Id);
+
+            body = String.Format(CultureInfo.CurrentCulture,
+                body,
+                comment.Text,
+				packageRegistration.Id,
+                packageUrl,
+                disqusCommentUrl);
+
+            subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, packageRegistration.Id);
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
+
+                AddOwnersToMailMessage(packageRegistration, mailMessage);
+                if (mailMessage.To.Any())
+                {
+                    SendMessage(mailMessage);
+                }
+            }
+        }
+
         private static void AddOwnersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage)
         {
             foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllowed))

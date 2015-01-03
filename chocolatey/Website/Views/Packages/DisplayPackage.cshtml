@@ -487,6 +487,7 @@
     @{
         var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
         string disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
+        var commentPostUrl = disqusUrl + "/notify-comment";
     }
     <div id="disqus_thread">
     </div>
@@ -498,9 +499,15 @@
         var commentItem;
         function disqus_config() {
             this.callbacks.onNewComment = [function (comment) {
-                //comment.id comment.text
-                //commentItem = comment;
-                //console.log('New comment: ' + comment.text);
+                console.log('New Comment Id: ' + comment.id);
+                console.log('New Comment Text: ' + comment.text);
+
+                var commentViewModel = { Id: comment.id, Text: comment.text };
+
+                // take the data and post it via json
+                $.post('@commentPostUrl', commentViewModel, function (data) {
+                    // At the minute, it is fire and forget
+                });
             } ];
         }
 
