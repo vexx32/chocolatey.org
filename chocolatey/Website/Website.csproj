@@ -1155,6 +1155,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="UrlExtensions.cs" />
+    <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />

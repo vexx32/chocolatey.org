@@ -703,6 +703,22 @@ namespace NuGetGallery
             return RedirectToAction(MVC.Packages.UploadPackage());
         }
 
+        [HttpPost, ValidateSpamPrevention]
+        public virtual ActionResult NotifyMaintainersOfAddedComment(string packageId, CommentViewModel commentViewModel)
+        {
+            var package = packageSvc.FindPackageRegistrationById(packageId);
+            if (package == null)
+            {
+                return PackageNotFound(packageId);
+            }
+
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+
+            messageService.SendCommentNotificationToMaintainers(package, commentViewModel, packageUrl);
+
+            return new HttpStatusCodeResult(200);
+        }
+
         // this methods exist to make unit testing easier
         protected internal virtual IIdentity GetIdentity()
         {

@@ -18,6 +18,7 @@
         public const string ListPackages = "ListPackages";
         public const string Authentication = "SignIn";
         public const string UploadPackage = "UploadPackage";
+        public const string NotifyComment = "NotifyComment";
         public const string ManagePackageOwners = "ManagePackageOwners";
         public const string PackageVersionAction = "PackageVersionAction";
         public const string PackageOwnerConfirmation = "PackageOwnerConfirmation";
