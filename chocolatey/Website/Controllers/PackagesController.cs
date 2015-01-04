@@ -703,7 +703,7 @@ namespace NuGetGallery
             return RedirectToAction(MVC.Packages.UploadPackage());
         }
 
-        [HttpPost, ValidateSpamPrevention]
+        [HttpPost]
         public virtual ActionResult NotifyMaintainersOfAddedComment(string packageId, CommentViewModel commentViewModel)
         {
             var package = packageSvc.FindPackageRegistrationById(packageId);
