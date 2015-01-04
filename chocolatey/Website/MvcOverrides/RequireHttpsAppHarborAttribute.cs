@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace NuGetGallery.MvcOverrides
 {
@@ -19,11 +20,16 @@ namespace NuGetGallery.MvcOverrides
                 return;
             }
 
-            if (string.Equals(filterContext.HttpContext.Request.Headers["X-Forwarded-Proto"],
-                "https",
-                StringComparison.InvariantCultureIgnoreCase))
+            var protoHeaders = filterContext.HttpContext.Request.Headers.GetValues("X-Forwarded-Proto");
+            if (protoHeaders != null)
             {
-                return;
+                if (string.Equals(
+                    protoHeaders.FirstOrDefault(),
+                    "https",
+                    StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return;
+                }
             }
 
             if (filterContext.HttpContext.Request.IsLocal)
