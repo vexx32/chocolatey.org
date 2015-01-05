@@ -118,6 +118,12 @@ Package Url: {6}
 {3}
 
 Package Url: {6}
+
+<b>Pro-tip:</b> It is recommended to (also) post your answer to [the {2} comment section](http://chocolatey.org/packages/{2}#disqus) so that the information is publicly available.
+This can prevent you from receiving the same question from multiple users.
+
+Package comments: [http://chocolatey.org/packages/{2}#disqus](http://chocolatey.org/packages/{2}#disqus)
+
 -----------------------------------------------
 <em style=""font-size: 0.8em;"">
     To stop receiving contact emails as a maintainer of this package, sign in to the {4} and 
