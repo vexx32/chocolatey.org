@@ -161,10 +161,11 @@ Package comments: [http://chocolatey.org/packages/{2}#disqus](http://chocolatey.
             string body = @"Comment: {0}
 
 This comment has been added to the disqus forum thread for {1}. 
-It may not show up immediately if it is subject to moderation but we wanted you to know about it.
 
 Package Url: {2}
 Comment Url: {3}
+
+{4}
 ";
             string subject = "[{0}] New disqus comment for maintainers of '{1}'";
             string disqusCommentUrl = string.Format("{0}#comment-{1}", packageUrl, comment.Id);
@@ -174,7 +175,8 @@ Comment Url: {3}
                 comment.Text,
 				packageRegistration.Id,
                 packageUrl,
-                disqusCommentUrl);
+                disqusCommentUrl,
+                GetDisqusInformationMessage());
 
             subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, packageRegistration.Id);
 
@@ -393,6 +395,18 @@ Maintainer(s): {2}
                     SendMessage(mailMessage);
                 }
             }
+        }
+
+        private string GetDisqusInformationMessage()
+        {
+            return @"
+### Information for Maintainers
+
+ * Disqus comments can be moderated.  As a result, you may not see the above comment on the package page until the comment is moderated.
+ * If the comment seems legitimate, i.e. not a spam comment, you can take action straight away.
+ * You will not be able to reply to the Disqus Comment until it is moderated.
+ * You are encouraged to reply directly to the Disqus Comment when required action is taken.
+";
         }
 
         private string GetInformationForMaintainers(Package package, string comments)

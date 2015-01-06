@@ -476,18 +476,20 @@
                 google group</a>.</li>
             <li>This discussion will carry over multiple versions. If you have a comment about a
                 particular version, please note that in your comments.</li>
-            <li>This is not a substitute for contacting package maintainers. Please use the link
+            <li>The maintainers of this Chocolatey Package will be notified about new comments that are posted to this Disqus thread, however, it is NOT a guarantee that you
+                will get a response.  If you do not hear back from the maintainers after posting a message below, please follow up by using the link
                 on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">
-                contact maintainers</a>.</li>
+                contact maintainers</a>.  If you still hear nothing back, please follow the <a href="https://github.com/chocolatey/chocolatey/wiki/PackageTriageProcess">package triage process</a>.</li>
             <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
-            <li>Share your experiences with the package, or extra configuration or got yas that
+            <li>Share your experiences with the package, or extra configuration or gotchas that
                 you've found.</li>
         </ul>
     </p>
     @{
         var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
-        string disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
-        var commentPostUrl = Request.Url + "/notify-comment";
+        var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
+        bool forceSsl = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["ForceSSL"]);
+        var commentPostUrl = (forceSsl ? "https" : Request.Url.Scheme) + "://" + Request.Url.Authority + @Url.Package(Model.Id) + "/notify-comment";
     }
 	<a name="disqus"></a>
     <div id="disqus_thread">
@@ -500,9 +502,6 @@
         var commentItem;
         function disqus_config() {
             this.callbacks.onNewComment = [function (comment) {
-                console.log('New Comment Id: ' + comment.id);
-                console.log('New Comment Text: ' + comment.text);
-
                 var commentViewModel = { Id: comment.id, Text: comment.text };
 
                 // take the data and post it via json
