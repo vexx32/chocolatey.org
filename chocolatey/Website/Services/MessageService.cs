@@ -194,9 +194,10 @@ Comment Url: {3}
             }
         }
 
-        private static void AddOwnersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage)
+        private static void AddOwnersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage,bool requireEmail = false)
         {
-            foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllowed))
+
+            foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllowed || requireEmail))
             {
                 mailMessage.To.Add(owner.ToMailAddress());
             }
@@ -388,7 +389,7 @@ Maintainer(s): {2}
                 mailMessage.Body = body;
                 mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
-                AddOwnersToMailMessage(package.PackageRegistration, mailMessage);
+                AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail:true);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
                 if (mailMessage.To.Any())
                 {
