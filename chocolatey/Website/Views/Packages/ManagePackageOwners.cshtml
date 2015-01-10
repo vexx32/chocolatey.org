@@ -15,12 +15,13 @@
         <em data-bind="visible: pending">(pending approval)</em> 
         @if (moderator)
         {
-            <a href="#" title="Remove as maintainer of of @Model.Title" data-bind="click: remove">Remove</a>
+            <a href="#" title="Remove as maintainer of @Model.Title" data-bind="click: remove">Remove</a>
         }
         else
         { 
-            <a href="#" title="Remove as maintainer of of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
-        }        
+            <a href="#" title="Remove as maintainer of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
+        }  
+        <input type="checkbox" data-bind="visible: false, checked: addDirectly" />
     </li>
 </ul>
 
@@ -32,7 +33,8 @@
     NOTE: All package maintainers have full control over their packages,
     including the ability to remove other users as maintainers.
 </p>
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     <fieldset class="form">
         <legend>Add Maintainer</legend>
         <div class="form-field">
@@ -40,7 +42,12 @@
             <input type="text" name="newOwnerUserName" data-bind="value: newOwner().name" />
         </div>
         <input type="submit" value="Add" title="Add the user as a maintainer to @Model.Title" data-bind="click: addOwner" />
-    </fieldset>
+        @if (moderator)
+        {
+            <input type="checkbox" name="newOwnerAddDirectly" data-bind="checked: newOwner().addDirectly" />
+            <label for="newOwnerAddDirectly">Add Without Pending</label>
+        }
+     </fieldset>
 }
 
 
@@ -60,6 +67,7 @@
             owners: ko.observableArray([]),
             newOwner: ko.observable(new Owner(null)),
             message: ko.observable(''),
+            
             addOwner: function () {
                 var ownerInputModel = viewModel.newOwner().toJS();
                 ownerInputModel.id = viewModel.package.id;
@@ -68,7 +76,7 @@
                     .done(function (data) {
                         if (data.success) {
                             viewModel.newOwner().name(data.name);
-                            viewModel.newOwner().pending(true);
+                            viewModel.newOwner().pending(data.pending);
                             viewModel.owners.push(viewModel.newOwner());
                             viewModel.newOwner(new Owner(null));
                         }
@@ -97,7 +105,7 @@
         // Load initial maintainers (owners).
         $mvc.JsonApi.GetPackageOwners(viewModel.package)
         .done(function (data) {
-            viewModel.owners($.map(data, function (item) { return new Owner(item) }));
+            viewModel.owners($.map(data, function (item) { return new Owner(item); }));
         })
         .fail(failHandler);
 
@@ -109,11 +117,12 @@
             this.name = ko.observable(item.name);
             this.pending = ko.observable(item.pending);
             this.current = item.current;
+            this.addDirectly = ko.observable(false);
             this.remove = function () {
                 viewModel.removeOwner(this);
             };
             this.toJS = function () {
-                return { username: this.name() };
+                return { username: this.name(), addDirectly: this.addDirectly() };
             };
         }
     });

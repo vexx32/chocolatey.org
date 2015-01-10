@@ -48,7 +48,7 @@ namespace NuGetGallery
             return owners.Union(pending);
         }
 
-        public object AddPackageOwner(string id, string username)
+        public object AddPackageOwner(string id, string username, bool addDirectly = false)
         {
             var package = packageSvc.FindPackageRegistrationById(id);
             if (package == null)
@@ -66,12 +66,21 @@ namespace NuGetGallery
             }
 
             var currentUser = userSvc.FindByUsername(HttpContext.User.Identity.Name);
+
             var ownerRequest = packageSvc.CreatePackageOwnerRequest(package, currentUser, user);
+            var success = true;
+            if (!addDirectly)
+            {
+                var confirmationUrl = Url.ConfirmationUrl(MVC.Packages.ConfirmOwner().AddRouteValue("id", package.Id), user.Username, ownerRequest.ConfirmationCode, Request.Url.Scheme);
+                messageSvc.SendPackageOwnerRequest(currentUser, user, package, confirmationUrl);
+            }
+            else
+            {
+                success = packageSvc.ConfirmPackageOwner(package, user, ownerRequest.ConfirmationCode);
+                if (success) messageSvc.SendPackageOwnerConfirmation(currentUser, user, package);
+            }
 
-            var confirmationUrl = Url.ConfirmationUrl(MVC.Packages.ConfirmOwner().AddRouteValue("id", package.Id), user.Username, ownerRequest.ConfirmationCode, Request.Url.Scheme);
-            messageSvc.SendPackageOwnerRequest(currentUser, user, package, confirmationUrl);
-
-            return new { success = true, name = user.Username, pending = true };
+            return new { success = success, name = user.Username, pending = !addDirectly };
         }
 
         public object RemovePackageOwner(string id, string username)
