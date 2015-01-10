@@ -640,9 +640,6 @@
       <Link>AuthenticationController.generated.cs</Link>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Controllers\JsonApiController.cs">
-      <Link>Controllers\JsonApiController.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\DynamicData\Content\GridViewPager.ascx.cs">
       <Link>DynamicData\Content\GridViewPager.ascx.cs</Link>
       <DependentUpon>GridViewPager.ascx</DependentUpon>
@@ -1079,6 +1076,7 @@
     <Compile Include="App_Start\IConfiguration.cs" />
     <Compile Include="App_Start\PackageStoreType.cs" />
     <Compile Include="App_Start\Routes.cs" />
+    <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="DataServices\PackageExtensions.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\SimpleInjectorContainerResolutionBehavior.cs" />
