@@ -1,6 +1,7 @@
 ﻿@model ManagePackageOwnersViewModel
 @{
     ViewBag.Tab = "Packages";
+    var moderator = User != null && User.IsInRole(Constants.AdminRoleName);
 }
 
 
@@ -12,7 +13,14 @@
     <li>
         <span data-bind="text: name"></span> <em data-bind="visible: current">(that&#8217;s you!)</em> 
         <em data-bind="visible: pending">(pending approval)</em> 
-        <a href="#" title="Remove as maintainer of of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
+        @if (moderator)
+        {
+            <a href="#" title="Remove as maintainer of of @Model.Title" data-bind="click: remove">Remove</a>
+        }
+        else
+        { 
+            <a href="#" title="Remove as maintainer of of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
+        }        
     </li>
 </ul>
 
