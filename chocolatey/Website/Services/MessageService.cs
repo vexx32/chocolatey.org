@@ -360,6 +360,37 @@ The {3} Team";
             }
         }
 
+        public void SendPackageOwnerConfirmation(User fromUser, User toUser, PackageRegistration package)
+        {
+            if (!toUser.EmailAllowed)
+            {
+                return;
+            }
+            var packageUrl = string.Format("{0}packages/{1}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.Id);
+          
+
+            string subject = "[{0}] The user '{1}' has added you as a maintainer of the package '{2}'.";
+
+            string body = @"The user '{0}' has added you as a maintainer of the package '{1}'. 
+
+Package Url: {2}
+
+Thanks,
+The {3} Team";
+
+            body = String.Format(CultureInfo.CurrentCulture, body, fromUser.Username, package.Id, packageUrl, settings.GalleryOwnerName);
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, fromUser.Username, package.Id);
+                mailMessage.Body = body;
+                mailMessage.From = fromUser.ToMailAddress();
+
+                mailMessage.To.Add(toUser.ToMailAddress());
+                SendMessage(mailMessage);
+            }
+        }
+
         public void SendPackageModerationEmail(Package package,string comments)
         {
             string subject = "[{0}] Moderation for '{1}' v{2}";
