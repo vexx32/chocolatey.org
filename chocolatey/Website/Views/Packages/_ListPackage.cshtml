@@ -40,9 +40,9 @@
             <div class="nuget-badge-small">
                 <code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
                     @if (!Model.LatestVersion || !Model.Listed)
-                    { <text> -Version @Model.Version</text> }
+                    { <text> -version @Model.Version</text> }
                     @if (Model.Prerelease)
-                    {<text> -Pre </text>}</code>
+                    {<text> -pre </text>}</code>
             </div>
             <h1><a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a></h1>
             @*<pre>cinst @Model.Id</pre>*@
