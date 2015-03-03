@@ -103,8 +103,8 @@
     @if (Model.IsInstallOrPortable)
     {
         <p class="app-or-tool-message">This is an installer (*.install) or a portable (*.portable)
-            application package. Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
-            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/chocolatey/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-gitinstall-portable-ie-gitportable-and--ie-git">
+            application package. Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
+            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-gitinstall-portable-ie-gitportable-and--ie-git">
             this kind of package</a>. Note that the suffix *.app is a synonym for *.install.
             Similarly, *.commandline and *.tool mean the same as *.portable. But these suffixes
             are deprecated in favor of *.install and *.portable, because the latter are more
@@ -201,7 +201,7 @@
         <div id="div-review" class="message review-instructions">
             Instructions for review:
             <ul>
-                <li>Moderators must have meticulous knowledge about our <a href="https://github.com/chocolatey/chocolatey/wiki/CreatePackages">packaging guidelines</a>. Every package going into approved status must meet these guidelines.</li>
+                <li>Moderators must have meticulous knowledge about our <a href="https://github.com/chocolatey/choco/wiki/CreatePackages">packaging guidelines</a>. Every package going into approved status must meet these guidelines.</li>
                 <li>Leave comments here (will be emailed unless box is unchecked).</li>
                 <li>Please do not reject a package until the end of the conversation.</li>
                 <li>Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
@@ -479,7 +479,7 @@
             <li>The maintainers of this Chocolatey Package will be notified about new comments that are posted to this Disqus thread, however, it is NOT a guarantee that you
                 will get a response.  If you do not hear back from the maintainers after posting a message below, please follow up by using the link
                 on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">
-                contact maintainers</a>.  If you still hear nothing back, please follow the <a href="https://github.com/chocolatey/chocolatey/wiki/PackageTriageProcess">package triage process</a>.</li>
+                contact maintainers</a>.  If you still hear nothing back, please follow the <a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">package triage process</a>.</li>
             <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
             <li>Share your experiences with the package, or extra configuration or gotchas that
                 you've found.</li>

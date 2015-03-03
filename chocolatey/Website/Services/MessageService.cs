@@ -209,7 +209,7 @@ Comment Url: {3}
 We can't wait to see what packages you'll upload.
 
 Remember to read the packaging guidelines:
-https://github.com/chocolatey/chocolatey/wiki/CreatePackages
+https://github.com/chocolatey/choco/wiki/CreatePackages
 
 All packages sumbitted to the Chocolatey Gallery must meet these guidelines.
 
@@ -455,8 +455,8 @@ Maintainer(s): {2}
 
  * Moderators typically review a package within 1-3 business days.
  * If you have not heard anything within two business days, please reply to this message and ask for status.
- * Packages must conform to our guidelines https://github.com/chocolatey/chocolatey/wiki/CreatePackages
- * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package
+ * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
+ * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
 ";
             }
             else if (package.Status == PackageStatusType.Submitted)
