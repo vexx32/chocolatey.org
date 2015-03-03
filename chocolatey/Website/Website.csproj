@@ -1364,6 +1364,7 @@
     <Content Include="Content\SyntaxHighlighter\shThemeRDark.css" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
+    <Content Include="Install-LastPoshClient.ps1" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
