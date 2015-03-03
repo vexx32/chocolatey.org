@@ -52,8 +52,7 @@
         Your API key provides you with a token that identifies you to the gallery. 
         Keep this a secret. You can always regenerate your key at any time (invalidating 
         previous keys) if your token is accidentally revealed. The 
-        <a href="http://nuget.codeplex.com/">NuGet</a> command-line utility allows you to 
-        submit a Chocolatey NuGet package to the gallery, and you would pass you token like this:
+        You would pass your token like this:
     </p>
     
     <div id="generateKey">
@@ -77,9 +76,8 @@
             <h2>Example usage:</h2>
             <p>
                 <pre>
-NuGet setApiKey @Model.ApiKey -Source https://chocolatey.org/
-chocolatey push MyPackage.1.0.nupkg 
-NuGet push MyPackage.1.0.nupkg -Source https://chocolatey.org/</pre>
+choco apiKey -k @Model.ApiKey -source https://chocolatey.org/
+choco push MyPackage.1.0.nupkg 
             </p>
         </div>
 
