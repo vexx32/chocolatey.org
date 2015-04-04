@@ -17,7 +17,7 @@
 # ==============================================================================
 
 # variables
-$url = "https://chocolatey.org/api/v2/package/chocolatey/0.9.8.33"
+$url = "https://chocolatey.org/api/v2/package/chocolatey/"
 if ($env:TEMP -eq $null) {
   $env:TEMP = Join-Path $env:SystemDrive 'temp'
 }
