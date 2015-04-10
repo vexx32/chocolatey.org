@@ -263,6 +263,11 @@ namespace NuGetGallery
                 typeof(V2CuratedFeed));
 
             routes.MapServiceRoute(
+                RouteName.V2ApiSubmittedFeed, 
+                "api/v2/submitted", 
+                typeof(V2SubmittedFeed));
+
+            routes.MapServiceRoute(
                 RouteName.V2ApiFeed,
                 "api/v2/",
                 typeof(V2Feed));
