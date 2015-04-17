@@ -22,6 +22,16 @@ namespace NuGetGallery.Migrations
                 roles.Add(new Role() { Name = Constants.AdminRoleName });
                 context.SaveChanges();
             }
+            if (!roles.Any(x => x.Name == Constants.ModeratorsRoleName))
+            {
+                roles.Add(new Role() { Name = Constants.ModeratorsRoleName });
+                context.SaveChanges();
+            }
+            if (!roles.Any(x => x.Name == Constants.ReviewersRoleName))
+            {
+                roles.Add(new Role() { Name = Constants.ReviewersRoleName });
+                context.SaveChanges();
+            }
 
             var gallerySettings = context.Set<GallerySetting>();
             if (!gallerySettings.Any())
