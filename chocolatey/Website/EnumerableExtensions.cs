@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace NuGetGallery
 {
-
     /// <summary>
     /// Extensions for IEnumerable
     /// </summary>
@@ -20,5 +19,4 @@ namespace NuGetGallery
             return source ?? Enumerable.Empty<T>();
         }
     }
-
 }

@@ -58,7 +58,8 @@
             @if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 350) {
                 @Model.Description
             }
-            else {
+            else
+            {
                 @Model.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(Model)">More information</a>
             }
         </p>
@@ -68,11 +69,13 @@
                 @Model.TotalDownloadCount.ToString("n0") downloads
             </p>
             
-            @if (@Model.Tags.AnySafe()) {
+            @if (@Model.Tags.AnySafe())
+            {
                 <div class="tags">
                     <h2>Tags</h2>
                     <ul class="tags">
-                        @foreach (var tag in Model.Tags) {
+                        @foreach (var tag in Model.Tags)
+                        {
                             <li><a href="@Url.Search(tag)" title="Search for @tag">@tag</a></li>
                         }
                     </ul>

@@ -131,7 +131,6 @@ namespace NuGetGallery
         public virtual ActionResult Register(RegisterRequest request)
         {
             // TODO: consider client-side validation for unique username
-            // TODO: add email validation
 
             if (!ModelState.IsValid)
                 return View("~/Views/Users/Register.cshtml");

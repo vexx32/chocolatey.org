@@ -38,7 +38,6 @@ namespace NuGetGallery
         [HttpPost, RequireHttpsAppHarbor]
         public virtual ActionResult LogOn(SignInRequest request, string returnUrl)
         {
-            // TODO: improve the styling of the validation summary
             // TODO: modify the Object.cshtml partial to make the first text box autofocus, or use additional metadata
 
             ViewData[Constants.ReturnUrlViewDataKey] = returnUrl;
@@ -80,8 +79,6 @@ namespace NuGetGallery
 
         public virtual ActionResult LogOff(string returnUrl)
         {
-            // TODO: this should really be a POST
-
             formsAuthSvc.SignOut();
 
             return SafeRedirect(returnUrl);
