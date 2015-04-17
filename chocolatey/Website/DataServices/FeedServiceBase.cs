@@ -14,6 +14,7 @@ using QueryInterceptor;
 
 namespace NuGetGallery
 {
+    using MvcOverrides;
 
     [ServiceBehavior(IncludeExceptionDetailInFaults = true, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public abstract class FeedServiceBase<TPackage> : DataService<FeedContext<TPackage>>, IDataServiceStreamProvider, IServiceProvider
@@ -283,7 +284,7 @@ namespace NuGetGallery
 
         protected virtual bool UseHttps()
         {
-            return HttpContext.Request.IsSecureConnection;
+            return AppHarbor.IsSecureConnection(HttpContext);
         }
 
         private static string EnsureTrailingSlash(string siteRoot)

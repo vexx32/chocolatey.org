@@ -7,6 +7,7 @@
 @using System.Web.Mvc;
 @using Microsoft.Web.Helpers;
 @using NuGetGallery;
+@using NuGetGallery.MvcOverrides
 
 @helper PreviousNextPager(IPreviousNextPager pager) {
     if (pager.HasNextPage || pager.HasPreviousPage) {
@@ -77,7 +78,7 @@
 
 @helper GravatarImage(string email, string username, int size) {
     var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "owner-image" });
-    if (gravatarHtml != null && System.Web.HttpContext.Current.Request.IsSecureConnection)
+    if (gravatarHtml != null && AppHarbor.IsSecureConnection(new HttpContextWrapper(HttpContext.Current)))
     {
         gravatarHtml = new HtmlString(gravatarHtml.ToHtmlString().Replace("http://www.gravatar.com/", "https://secure.gravatar.com/"));
     }

@@ -1131,6 +1131,7 @@
       <DependentUpon>201411042101302_AddPackageTrustedFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
+    <Compile Include="MvcOverrides\AppHarbor.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
     <Compile Include="PackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
