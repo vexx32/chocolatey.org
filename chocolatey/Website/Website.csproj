@@ -1078,6 +1078,9 @@
     <Compile Include="App_Start\Routes.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="DataServices\PackageExtensions.cs" />
+    <Compile Include="DataServices\V2SubmittedFeed.svc.cs">
+      <DependentUpon>V2SubmittedFeed.svc</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\SimpleInjectorContainerResolutionBehavior.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
@@ -1362,6 +1365,7 @@
     <Content Include="Content\SyntaxHighlighter\shThemeMDUltra.css" />
     <Content Include="Content\SyntaxHighlighter\shThemeMidnight.css" />
     <Content Include="Content\SyntaxHighlighter\shThemeRDark.css" />
+    <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="Install-LastPoshClient.ps1" />
@@ -1500,7 +1504,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

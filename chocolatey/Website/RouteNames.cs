@@ -5,6 +5,7 @@
         public const string V2ApiCuratedFeed = "V2ApiCuratedFeed";
         public const string V1ApiFeed = "V1ApiFeed";
         public const string V2ApiFeed = "V2ApiFeed";
+        public const string V2ApiSubmittedFeed = "V2ApiSubmittedFeed";
         public const string ApiFeed = "ApiFeed";
         public const string Account = "Account";
         public const string Profile = "Profile";
