@@ -1,8 +1,17 @@
-﻿@using NuGetGallery;
+﻿@using MarkdownSharp
+@using NuGetGallery;
 @model UserProfileModel
 @{
     ViewBag.Title = @Model.Username;
     Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
+    var markdownGenerator = new Markdown
+    {
+        AutoHyperlink = true,
+        AutoNewLines = true,
+        //EncodeProblemUrlCharacters = true,
+        LinkEmails = true,
+        SkipCodeBlocks = true,
+    };
 }
 
 
@@ -24,65 +33,119 @@
 <h2>External Sites</h2>
  
 <ul id="profileResults">
-  @foreach (var siteProfile in Model.UserProfiles)
-  {
-    <li>
-        <section class="package">
-            <div class="profile">
-                <a href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
-                    <img src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
-                </a>
-            </div>
-            <div class="main">
-                <h2><a href="@siteProfile.Url" target="_blank">@siteProfile.Name</a></h2>
-            </div>
-        </section>
-    </li>
-  }
-  @if(Model.UserProfiles.Count ==0)
-  {
-       <li>
-        <section class="package">
-            <div class="main">
-                <h2>User has not linked any external sites</h2>
-            </div>
-        </section>
-    </li>
-  }
+    @foreach (var siteProfile in Model.UserProfiles)
+    {
+        <li>
+            <section class="package">
+                <div class="profile">
+                    <a href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
+                        <img src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
+                    </a>
+                </div>
+                <div class="main">
+                    <h2><a href="@siteProfile.Url" target="_blank">@siteProfile.Name</a></h2>
+                </div>
+            </section>
+        </li>
+    }
+    @if(Model.UserProfiles.Count ==0)
+    {
+        <li>
+            <section class="package">
+                <div class="main">
+                    <h2>User has not linked any external sites</h2>
+                </div>
+            </section>
+        </li>
+    }
 
 </ul>
+
+
+<h2>Packages In Moderation</h2>
+<ul id="searchResults">
+    @foreach (var package in Model.PackagesModerationQueue)
+    {
+        var submittedStatus = "Reviewed, waiting for user action";
+        if (!package.ReviewedDate.HasValue)
+        {
+            submittedStatus = "Ready";
+        }
+        else if (package.PublishedDate > package.ReviewedDate)
+        {
+            submittedStatus = "Updated";
+        } 
+        
+        <li>
+            <section class="package">
+                <div class="side">
+                    <a href="@Url.Package(package.Id)" title="View more about @package.Title">
+                        <img src="@(package.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                    </a>
+                </div>
+                <div class="main">
+                    <h1><a href="@Url.Package(package.Id)">@package.Title</a></h1>
+                
+                    <p>
+                        @if (String.IsNullOrEmpty(package.ReviewComments))
+                        {
+                            @Html.Raw(markdownGenerator.Transform(package.ReviewComments))
+                        }
+                    </p>
+                    
+                    <footer>
+                            <ol>
+                                <li><strong>Package Status:</strong> @submittedStatus</li>
+                                <li><strong>Submitted Date:</strong> @package.PublishedDate.ToShortDateString()</li>
+                                @if (package.ReviewedDate != null)
+                                {
+                                    <li><strong>Reviewed:</strong> @package.ReviewedDate.GetValueOrDefault().ToShortDateString()</li>
+                                }
+                                else
+                                {
+                                    <li><strong>Reviewed:</strong> Waiting for Review</li>
+                                }
+                            </ol> 
+                      
+                    </footer>
+                </div>
+            </section>
+        </li>
+    }
+</ul>
+
 <h2>Packages</h2>
 <ul id="searchResults">
     @foreach (var package in Model.Packages)
     {
-    <li>
-        <section class="package">
-            <div class="side">
-                <a href="@Url.Package(package.Id)" title="View more about @package.Title">
-                    <img src="@(package.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
-                </a>
-            </div>
-            <div class="main">
-                <h1><a href="@Url.Package(package.Id)">@package.Title</a></h1>
+        <li>
+            <section class="package">
+                <div class="side">
+                    <a href="@Url.Package(package.Id)" title="View more about @package.Title">
+                        <img src="@(package.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                    </a>
+                </div>
+                <div class="main">
+                    <h1><a href="@Url.Package(package.Id)">@package.Title</a></h1>
                 
-                <p>
-                    @if (String.IsNullOrEmpty(package.Description) || package.Description.Length < 350)
-                    {
-                        @package.Description
-                    }
-                    else
-                    {
-                        @package.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(package)">More information</a>
-                    }
-                </p>
-
-                <footer>
-                    <p class="downloads">
-                        @package.TotalDownloadCount.ToString("n0") downloads
+                    <p>
+                        @if (String.IsNullOrEmpty(package.Description) || package.Description.Length < 350)
+                        {
+                             @Html.Raw(markdownGenerator.Transform(package.Description))
+                        }
+                        else
+                        {
+                            @package.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(package)">More information</a>
+                        }
                     </p>
-                </footer>
-            </div>
-        </section>
-    </li>
+
+                    <footer>
+                        <p class="downloads">
+                            @package.TotalDownloadCount.ToString("n0") downloads
+                        </p>
+                    </footer>
+                </div>
+            </section>
+        </li>
     }
 </ul>

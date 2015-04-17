@@ -779,6 +779,9 @@ header.main {
         section.package li {
             display: inline;
         }
+        section.package ol li {
+            display: list-item;
+        }
         
          section.package p {
             line-height: 1.25em;

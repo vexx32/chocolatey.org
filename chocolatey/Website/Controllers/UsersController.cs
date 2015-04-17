@@ -315,8 +315,14 @@ namespace NuGetGallery
                             group p by p.PackageRegistration.Id)
                            .Select(c => new PackageViewModel(c.First()))
                            .ToList();
-
-
+            
+            var packagesInModeration = (from p in packageService.FindPackagesByOwner(user)
+                            where p.Status == PackageStatusType.Submitted
+                            orderby p.Version descending
+                            group p by p.PackageRegistration.Id)
+                           .Select(c => new PackageViewModel(c.First()))
+                           .ToList();
+            
             //var userProfiles = profilesService.GetUserProfiles(user).ToList();
             var userProfiles = (from p in profilesService.GetUserProfiles(user)
                                 orderby p.Name
@@ -330,6 +336,7 @@ namespace NuGetGallery
                 Username = user.Username,
                 EmailAddress = user.EmailAddress,
                 Packages = packages,
+                PackagesModerationQueue = packagesInModeration,
                 TotalPackageDownloadCount = packages.Sum(p => p.TotalDownloadCount),
                 UserProfiles = userProfiles
             };
