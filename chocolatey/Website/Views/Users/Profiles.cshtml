@@ -61,7 +61,8 @@
 
 </ul>
 
-
+@if (Model.PackagesModerationQueue.Any())
+{
 <h2>Packages In Moderation</h2>
 <ul id="searchResults">
     @foreach (var package in Model.PackagesModerationQueue)
@@ -113,6 +114,8 @@
         </li>
     }
 </ul>
+}
+
 
 <h2>Packages</h2>
 <ul id="searchResults">
