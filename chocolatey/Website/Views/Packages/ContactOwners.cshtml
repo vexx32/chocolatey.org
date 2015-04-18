@@ -4,7 +4,7 @@
     ViewBag.Tab = "Packages";
 }
 
-<h1 class="page-heading">Contact the Maintainers of "<a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a>"</h1>
+<h1 class="page-heading">Contact the Maintainers of <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
 @if (Model.Owners.Any()) {
     <h3>Is there a problem with the installation of the package?</h3>
     <ul>
