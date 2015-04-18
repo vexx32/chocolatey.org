@@ -14,6 +14,7 @@
         public const string DownloadNuGetExe = "DownloadNuGetExe";
         public const string Home = "Home";
         public const string About = "About";
+        public const string Notice = "Notice";
         public const string Stats = "Stats";
         public const string Policies = "Policies";
         public const string ListPackages = "ListPackages";

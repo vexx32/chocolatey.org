@@ -446,6 +446,17 @@ Maintainer(s): {2}
             if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments))
             {
                 return @"
+**NOTICE:** Currently we have a very large backlog (popularity is a double-edged sword) and are addressing it, but as a result moderation may take 
+upwards of two or more weeks until we resolve issues.
+
+For urgent issues (including packages that are security releases), please reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco 
+
+Things we are doing to help resolve the large backlog of moderation:
+
+ * Adding in a service to automatically verify the install and uninstall of packages.
+ * Adding some auto-moderation for things a computer can check in a package.
+ * Adding more moderators
+
 ### Information for Maintainers
 
  * If you have fixes, repush your package with the **same version**. This is allowed until approved.
@@ -453,8 +464,9 @@ Maintainer(s): {2}
 
 #### Other Pertinent Information
 
- * Moderators typically review a package within 1-3 business days.
- * If you have not heard anything within two business days, please reply to this message and ask for status.
+ * Moderators typically review a package within about a week or less. 
+ * If you have not heard anything within a week, please reply to this message and ask for status.
+ * If the package is an urgent release (resolves security issues or CVEs), reach out to use immediately on Gitter at https://gitter.im/chocolatey/choco
  * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
  * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
 ";

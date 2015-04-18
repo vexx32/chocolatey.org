@@ -18,6 +18,11 @@ namespace NuGetGallery
                 RouteName.About,
                 "about",
                 new {controller = "Pages", Action="About"});
+ 
+            routes.MapRoute(
+                RouteName.Notice,
+                "notice",
+                new {controller = "Pages", Action="Notice"});
 
             routes.MapRoute(
                 RouteName.Stats,

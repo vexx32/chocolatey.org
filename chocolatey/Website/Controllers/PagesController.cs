@@ -20,6 +20,11 @@ namespace NuGetGallery
         public virtual ActionResult About()
         {
             return View("~/Views/Pages/About.cshtml");
+        } 
+        
+        public virtual ActionResult Notice()
+        {
+            return View("~/Views/Pages/Notice.cshtml");
         }
 
         public virtual ActionResult Terms()

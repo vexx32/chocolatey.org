@@ -1,7 +1,8 @@
 ﻿@using NuGetGallery;
 @using StackExchange.Profiling
 @{
-    var noticeText = "";
+    var noticeText = @"Currently we have a very large backlog of packages in moderation and are actively taking measures to resolve it. <a href='/notice'>More...</a>
+";
 
     if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string) ViewData[Constants.ReturnUrlViewDataKey]))
     {
