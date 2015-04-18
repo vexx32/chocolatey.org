@@ -5,6 +5,8 @@
     var moderationQueue = !string.IsNullOrWhiteSpace(Model.ModeratorQueue) && Model.ModeratorQueue.Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
     var moderationCount = Model.ModerationUpdatedPackageCount+ Model.ModerationSubmittedPackageCount + Model.ModerationWaitingPackageCount;
     var unreviewedCount = Model.TotalCount - moderationCount;
+
+    var moderationRole = User != null && User.IsInAnyModerationRole();
 }
 
 
@@ -41,7 +43,7 @@
         <input type="hidden" name="q" value="@Model.SearchTerm" />
 
         <div class="form-field">
-            @if (User.IsInRole(Constants.AdminRoleName))
+            @if (moderationRole)
             {
                 <select name="moderatorQueue" id="moderatorQueue">
                     @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)

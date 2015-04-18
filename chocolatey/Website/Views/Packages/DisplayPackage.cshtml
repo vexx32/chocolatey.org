@@ -15,7 +15,8 @@
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
 
-    var moderator = User != null && User.IsInRole(Constants.AdminRoleName);
+    var moderator = User != null && User.IsModerator();
+    var moderationRole = User != null && User.IsInAnyModerationRole();
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
 }
@@ -71,14 +72,10 @@
             Contact Site Admins</a></li>
             <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">
             Report Abuse</a></li>
-            @*@if (User.Identity.IsAuthenticated)
-            {*@
+
             <li><a href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file.">
             Download</a></li>
-            @*} else {
-                <li><a href="@Url.Action(@MVC.Packages.Download())" title="How do I download?">How to Download</a></li>
-            }*@
-            @if (Model.IsOwner(User))
+            @if (maintainer || moderator)
             {
                 <li><a href="@Url.EditPackage(Model)">Edit Package</a></li>
                 <li><a href="@Url.ManagePackageOwners(Model)">Manage Maintainers</a></li>
@@ -142,7 +139,7 @@
             If you have not received that email, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.
         </p>
 
-        if (moderator && maintainer)
+        if (moderationRole && maintainer)
         {
              <p class="message error">Since you are a maintainer of this package, you are not able to review it.</p>
         }
@@ -186,8 +183,7 @@
         <p class="message error">This package is exempt from moderation. While it is likely safe for you, there is more risk involved.</p>
     }
     
-    
-    @if (moderator && !maintainer)
+    @if (moderationRole && !maintainer)
     {
         if (Model.Listed || Model.Status == PackageStatusType.Rejected)
         {
@@ -204,12 +200,12 @@
                 <li>Moderators must have meticulous knowledge about our <a href="https://github.com/chocolatey/choco/wiki/CreatePackages">packaging guidelines</a>. Every package going into approved status must meet these guidelines.</li>
                 <li>Leave comments here (will be emailed unless box is unchecked).</li>
                 <li>Please do not reject a package until the end of the conversation.</li>
-                <li>Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
+                <li>Moderators: Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
                 <li>Check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li>
                 <li>Check over the chocolateyInstall.ps1 - anything look unsafe? Download urls should be official distro</li>
                 <li>Check dependencies</li>
                 <li>Check tags</li>
-                <li>New packages are subject to the full wrath of the moderator. Be Nice! :)</li>
+                <li>Be Nice! :)</li>
             </ul> 
             @using (Html.BeginForm())
             {
@@ -223,7 +219,14 @@
 
                     <div class="form-field">
                         @Html.LabelFor(m => m.Status)
-                        @Html.DropDownListFor(m => m.Status, statuses)
+                        @if (moderator)
+                        {
+                          @Html.DropDownListFor(m => m.Status, statuses)
+                        }
+                        else
+                        {
+                            @Html.DisplayTextFor(m => m.Status)
+                        }
                         @Html.ValidationMessageFor(m => m.Status)
                         <span class="field-hint-message"></span>
                     </div>
@@ -235,6 +238,7 @@
                     @Html.ValidationSummary(true)
                     <input type="submit" value="Save" title="Save Changes" />
                     
+                   
                     <br /><br />
                     <a onclick="if ($(this).text() == 'Hide') {$('#div-trustedpackage').hide();$(this).text('Show Trusted Section');} else {$('#div-trustedpackage').show();$(this).text('Hide');}">Show Trusted Section</a>
            
@@ -247,12 +251,19 @@
                             <li>Use with care.</li>
                             <li>Use "Save" above to make this change. You may want to uncheck Send Email.</li>
                         </ul>
-                        <br />
-                         @Html.EditorFor(m => m.IsTrusted)
-                        <label for="IsTrusted" class="checkbox">
-                            Trust this package id? 
-                        </label>
-                    </div>
+                        <br /> 
+                        @if (moderator)
+                        {
+                            @Html.EditorFor(m => m.IsTrusted)
+                            <label for="IsTrusted" class="checkbox">
+                                Trust this package id? 
+                            </label>
+                        }
+                        else
+                        {
+                            <text>This package is trusted?</text> @Html.DisplayTextFor(m => m.IsTrusted)
+                        }
+                    </div>  
                 </fieldset> 
             }
              <script type="text/javascript">
