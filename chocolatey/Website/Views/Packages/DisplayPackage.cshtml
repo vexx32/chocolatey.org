@@ -287,6 +287,8 @@
     </div>
     
     <a name="files" id="files"></a><h3>Files</h3>
+    <a onclick="if ($(this).text() == 'Hide') {$('#div-filessection').hide();$(this).text('Show');} else {$('#div-filessection').show();$(this).text('Hide');}">Hide</a>
+    <div id="div-filessection">     
     @if (Model.Files.Any())
     {
         <ul>
@@ -333,6 +335,7 @@
             <li>Either there are no files or this package was submitted prior to inspecting packages for file content (July 2014). You can download and unzip the package or use <a href="https://chocolatey.org/packages/NugetPackageExplorer">Nuget Package Explorer</a> to see the contents.</li>
         </ul>
     }
+    </div>
     
     @Html.Partial("_PackageDependencies", Model.Dependencies)
 
