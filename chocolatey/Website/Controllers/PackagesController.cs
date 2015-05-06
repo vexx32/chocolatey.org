@@ -143,7 +143,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        [Authorize(Roles = "Admins"), HttpPost]
+        [Authorize(Roles = "Admins, Moderators, Reviewers"), HttpPost]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
             if (!ModelState.IsValid)
@@ -176,6 +176,12 @@ namespace NuGetGallery
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
+            //reviewers cannot change the current status
+            if (User.IsReviewer())
+            {
+                status = package.Status;
+            }
+            
             if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Unknown)
             {
                 ModelState.AddModelError(String.Empty, "A package cannot be moved into unknown status.");
@@ -184,6 +190,12 @@ namespace NuGetGallery
             if (package.Status == PackageStatusType.Unknown && status == PackageStatusType.Submitted)
             {
                 ModelState.AddModelError(String.Empty, "A package cannot be moved from unknown to submitted status.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
+            if (User.IsReviewer() && status != PackageStatusType.Submitted)
+            {
+                ModelState.AddModelError(String.Empty, "A reviewer can only comment/submit in submitted status.");
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
