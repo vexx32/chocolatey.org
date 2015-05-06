@@ -15,7 +15,12 @@
         By submitting this form, you agree to <em>disclose your email address</em> 
         to the package maintainers listed below so they can reply to you.
     </p>
-    using(Html.BeginForm()){
+    <p class="warning">
+        Do not share sensitive information with this form.
+    </p>
+    
+    using (Html.BeginForm())
+    {
         <fieldset class="form">
             <legend>Contact Maintainers</legend>
             @Html.AntiForgeryToken()
@@ -24,15 +29,17 @@
                 <input name="NotUsed" type="text" value="@Model.Owners.Flatten(@<text>@item.Username</text>)" disabled="disabled" />
             </div>
             <div class="form-field">
-                 @if (!Model.ConfirmedUser) {
+                 @if (!Model.ConfirmedUser)
+                 {
                     @Html.LabelFor(m => m.Email)
                     @Html.EditorFor(m => m.Email)
                     <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
                     @Html.ValidationMessageFor(m => m.Email)
-                }
-                else {
+                 }
+                 else
+                 {
                     <input type="hidden" id="Email" name="Email" value="test@example.com" />
-                }
+                 }
             </div>
             <div class="form-field"> 
                 @Html.LabelFor(m => m.Message)
@@ -48,7 +55,8 @@
     }
 
 }
-else {
+else
+{
     <p class="error message">
         Sorry, the maintainers of this package do not allow contacting them through this form.
         Try visiting the project home page for "@Model.PackageId" in order to contact the package maintainer.
