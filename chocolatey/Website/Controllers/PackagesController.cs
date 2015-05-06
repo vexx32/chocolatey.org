@@ -499,6 +499,16 @@ namespace NuGetGallery
             return View("~/Views/Packages/Download.cshtml");
         }
 
+        private bool UserHasPackageChangePermissions(IPrincipal user, Package package)
+        {
+            if (user != null && (package.IsOwner(user) || user.IsModerator()))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         [Authorize]
         public virtual ActionResult ManagePackageOwners(string id, string version)
         {
@@ -507,7 +517,8 @@ namespace NuGetGallery
             {
                 return PackageNotFound(id, version);
             }
-            if (!package.IsOwner(HttpContext.User))
+
+            if (!UserHasPackageChangePermissions(HttpContext.User, package))
             {
                 return new HttpStatusCodeResult(401, "Unauthorized");
             }
@@ -536,7 +547,7 @@ namespace NuGetGallery
             {
                 return PackageNotFound(id, version);
             }
-            if (!package.IsOwner(HttpContext.User))
+            if (!UserHasPackageChangePermissions(HttpContext.User, package))
             {
                 return new HttpStatusCodeResult(401, "Unauthorized");
             }
@@ -604,7 +615,7 @@ namespace NuGetGallery
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
             if (package == null) return PackageNotFound(id, version);
 
-            if (!package.IsOwner(HttpContext.User)) return new HttpStatusCodeResult(401, "Unauthorized");
+            if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
             if (!(listed ?? false))
             {
@@ -624,7 +635,7 @@ namespace NuGetGallery
             {
                 return PackageNotFound(id, version);
             }
-            if (!package.IsOwner(HttpContext.User))
+            if (!UserHasPackageChangePermissions(HttpContext.User, package))
             {
                 return new HttpStatusCodeResult(401, "Unauthorized");
             }

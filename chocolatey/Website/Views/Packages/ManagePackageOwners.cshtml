@@ -1,7 +1,7 @@
 ﻿@model ManagePackageOwnersViewModel
 @{
     ViewBag.Tab = "Packages";
-    var moderator = User != null && User.IsInRole(Constants.AdminRoleName);
+    var moderator = User != null && User.IsModerator();
 }
 
 

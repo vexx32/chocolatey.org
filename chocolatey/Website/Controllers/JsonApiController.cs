@@ -5,6 +5,8 @@ using MvcHaack.Ajax;
 
 namespace NuGetGallery
 {
+    using System.Security.Principal;
+
     public partial class JsonApiController : JsonController
     {
         IPackageService packageSvc;
@@ -20,6 +22,16 @@ namespace NuGetGallery
             this.messageSvc = messageService;
         }
 
+        private bool UserHasPackageChangePermissions(IPrincipal user, PackageRegistration package)
+        {
+            if (user != null && (package.IsOwner(user) || user.IsModerator()))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         [Authorize]
         public virtual object GetPackageOwners(string id, string version)
         {
@@ -28,7 +40,8 @@ namespace NuGetGallery
             {
                 return new { message = "Package not found" };
             }
-            if (!package.IsOwner(HttpContext.User))
+
+            if (!UserHasPackageChangePermissions(HttpContext.User, package.PackageRegistration))
             {
                 return new HttpStatusCodeResult(401, "Unauthorized");
             }
@@ -55,7 +68,7 @@ namespace NuGetGallery
             {
                 return new { success = false, message = "Package not found" };
             }
-            if (!package.IsOwner(HttpContext.User))
+            if (!UserHasPackageChangePermissions(HttpContext.User, package))
             {
                 return new { success = false, message = "You are not the package maintainer." };
             }
@@ -90,7 +103,8 @@ namespace NuGetGallery
             {
                 return new { success = false, message = "Package not found" };
             }
-            if (!package.IsOwner(HttpContext.User))
+
+            if (!UserHasPackageChangePermissions(HttpContext.User, package))
             {
                 return new { success = false, message = "You are not the package maintainer." };
             }
