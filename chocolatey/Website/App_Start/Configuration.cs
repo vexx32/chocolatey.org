@@ -130,6 +130,16 @@ namespace NuGetGallery
             }
         }
 
+        public string ModerationEmail
+        {
+            get
+            {
+                return ReadAppSettings<string>(
+                    "ModerationEmail",
+                    (value) => value ?? string.Empty);
+            }
+        }
+
         protected virtual string GetConfiguredSiteRoot()
         {
             return ReadAppSettings("SiteRoot");

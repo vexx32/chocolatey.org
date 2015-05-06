@@ -105,7 +105,7 @@ Package Url: {6}
                 mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
                 mailMessage.Body = body;
                 mailMessage.From = fromAddress;
-                mailMessage.To.Add(settings.GalleryOwnerEmail);
+                mailMessage.To.Add(Configuration.ReadAppSettings("ModeratorEmail"));
                 SendMessage(mailMessage,copySender);
             }
         }
@@ -418,7 +418,7 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
+                mailMessage.From = new MailAddress(Configuration.ReadAppSettings("ModeratorEmail"), settings.GalleryOwnerName);
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail:true);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
