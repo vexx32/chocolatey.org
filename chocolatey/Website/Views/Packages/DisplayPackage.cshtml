@@ -114,7 +114,7 @@
         <h2>@Model.Version</h2>
     </div>
     
-    @if (Model.Status == PackageStatusType.Submitted && (!Model.IsOwner(User) || !moderationRole))
+    @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User) && !moderationRole)
     {
         <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can 
             change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
@@ -132,7 +132,7 @@
             @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
         </div> <br />
     }
-    else if (Model.IsOwner(User) && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
+    else if (maintainer && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
         <p class="message error">This package will remain unlisted until it has been approved by a moderator.
             You can see the package because you are one of its maintainers. You should have received an email about moderation. You can respond to that email to correspond with the moderators. Moderators typically respond within one business day.
@@ -144,7 +144,7 @@
              <p class="message error">Since you are a maintainer of this package, you are not able to review it.</p>
         }
     }
-    else if (Model.IsOwner(User) && !Model.Listed)
+    else if (maintainer && !Model.Listed)
     {
         <p class="message warning">This package is unlisted and hidden from package listings.
             You can see the package because you are one of its maintainers. To list the package
@@ -397,17 +397,17 @@
                 </th>
                 @if (Model.IsOwner(User))
                 {
-                    <th class="@(moderator ? "" : "last")">
+                    <th class="@(moderationRole ? "" : "last")">
                         Listed
                     </th>
                 }
                 else
                 {
-                  <th class="@(moderator ? "" : "last")">
+                  <th class="@(moderationRole ? "" : "last")">
                        Status
                     </th>
                 }  
-                @if (moderator)
+                @if (moderationRole)
                 {
                     <th class="last">
                         Notes
@@ -466,7 +466,7 @@
                                    break;
                             }
                         }
-                        @if (moderator)
+                        @if (moderationRole)
                         {
                             var divVersionId = "divVersion-" + packageVersion.Version.ToString().Replace(".", "-");
                             <td>
