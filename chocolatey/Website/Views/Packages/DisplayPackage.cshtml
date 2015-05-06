@@ -114,7 +114,7 @@
         <h2>@Model.Version</h2>
     </div>
     
-    @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User))
+    @if (Model.Status == PackageStatusType.Submitted && (!Model.IsOwner(User) || !moderationRole))
     {
         <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can 
             change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
@@ -143,13 +143,6 @@
         {
              <p class="message error">Since you are a maintainer of this package, you are not able to review it.</p>
         }
-
-        if (maintainer && !string.IsNullOrWhiteSpace(Model.ReviewComments))
-        {
-            <div class="message"><p>Review Comments:</p>
-             @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
-            </div><br />
-        }
     }
     else if (Model.IsOwner(User) && !Model.Listed)
     {
@@ -158,9 +151,18 @@
             again, <a href="@Url.DeletePackage(Model)">change its listing setting</a>. </p>
     }
     
-    @if (!Model.IsOwner(User) && Model.Status == PackageStatusType.Submitted)
+    @* Maintainers always see the review comments *@
+    @if (Model.Status == PackageStatusType.Submitted && !moderationRole && !maintainer)
     {
         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
+        {
+            <div class="message"><p>Review Comments:</p>
+                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
+            </div><br />
+        }
+    } else if(maintainer && Model.Status != PackageStatusType.Rejected)
+    {
+      if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
             <div class="message"><p>Review Comments:</p>
                 @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
