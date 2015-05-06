@@ -19,6 +19,10 @@
     @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 128)
      <div id="stats">
         <div class="stat">
+            <p class="stat-number">@Model.PackagesModerationQueue.Count.ToString("n0")</p>
+            <p class="stat-label">Packages in Queue</p>
+        </div> 
+        <div class="stat">
             <p class="stat-number">@Model.Packages.Count.ToString("n0")</p>
             <p class="stat-label">Packages</p>
         </div>
@@ -48,7 +52,7 @@
             </section>
         </li>
     }
-    @if(Model.UserProfiles.Count ==0)
+    @if (Model.UserProfiles.Count == 0)
     {
         <li>
             <section class="package">
@@ -80,12 +84,12 @@
         <li>
             <section class="package">
                 <div class="side">
-                    <a href="@Url.Package(package.Id)" title="View more about @package.Title">
+                    <a href="@Url.Package(package.Id, package.Version)" title="View more about @package.Title">
                         <img src="@(package.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
                     </a>
                 </div>
                 <div class="main">
-                    <h1><a href="@Url.Package(package.Id)">@package.Title</a></h1>
+                    <h1><a href="@Url.Package(package.Id, package.Version)">@package.Title</a></h1>
                 
                     <p>
                         @if (String.IsNullOrEmpty(package.ReviewComments))
