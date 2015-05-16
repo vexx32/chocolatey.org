@@ -42,7 +42,8 @@ else {
                 <th class="first actions">Actions</th>
                 <th>Package</th>
                 <th>Package ID</th>
-                <th>Description</th>
+                <th>Version</th>
+                <th>Published</th>
                 <th class="last">Downloads</th>
                 
             </tr>
@@ -65,18 +66,8 @@ else {
                     <a href="@Url.Package(package)"  title="View package page.">@package.Title</a>
                 </td>
                 <td>@package.Id</td>
-                <td>
-                    @if (String.IsNullOrEmpty(package.Description) || package.Description.Length < 65)
-                    {
-                            @package.Description
-                    }
-                    else
-                    {
-                            @package.Description.Substring(0, 65)
-                            <a href="@Url.Package(package)" title="View package page.">...</a>
-                    }
-                </td>
-                
+                <td>@package.Version</td>
+                <td>@package.PublishedDate.ToShortDateString()</td>
                 <td>@package.DownloadCount</td>
             </tr>
                     totlalDownloads += package.DownloadCount;
@@ -84,7 +75,7 @@ else {
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     You have a total of @packages.Count() packages.
                 </td>
                 <td class="total">

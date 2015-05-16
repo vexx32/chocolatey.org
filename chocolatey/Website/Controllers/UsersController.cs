@@ -186,7 +186,7 @@ namespace NuGetGallery
                            select new PackageViewModel(pr.First())
                            {
                                DownloadCount = pr.Sum(p => p.DownloadCount),
-                               Version = null
+                               Version = pr.Max(p=> p.Version),
                            },
             };
             return View("~/Views/Users/Packages.cshtml", model);
