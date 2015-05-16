@@ -89,14 +89,12 @@
     {
         <p class="prerelease-message">This is a prerelease version of @Model.Title. </p>
     }
-    else if (!Model.IsLatestVersionAvailable)
+    else if (!Model.IsLatestVersionAvailable && Model.Status != PackageStatusType.Submitted && Model.Status != PackageStatusType.Rejected)
     {
-        if (Model.Status != PackageStatusType.Submitted && Model.Status != PackageStatusType.Rejected)
-        {
-            <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
+        <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
         latest version</a> of @Model.Title available. </p>
-        }
     }
+    
     @if (Model.IsInstallOrPortable)
     {
         <p class="app-or-tool-message">This is an installer (*.install) or a portable (*.portable)
