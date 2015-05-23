@@ -404,9 +404,22 @@ namespace NuGetGallery
 
                 try
                 {
-                    if (extensions.Contains(Path.GetExtension(filePath)))
+                    var extension = Path.GetExtension(filePath);
+
+                    if (extension != null)
                     {
-                        fileContent = packageFile.GetStream().ReadToEnd();
+                        if (extensions.Contains(extension))
+                        {
+                            fileContent = packageFile.GetStream().ReadToEnd();
+                        }
+                        else if (extension.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            var bytes = packageFile.GetStream().ReadAllBytes();
+                            var md5Hash = BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "MD5"))).Replace("-", string.Empty);
+                            var sha1Hash = BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA1"))).Replace("-", string.Empty);
+
+                            fileContent = string.Format("md5: {0} | sha1: {1}", md5Hash, sha1Hash);
+                        }
                     }
                 }
                 catch (Exception ex)
