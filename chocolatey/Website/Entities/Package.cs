@@ -108,6 +108,19 @@ namespace NuGetGallery
                 if (value == null) Status = PackageStatusType.Unknown; 
                 else Status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), value);
             }
+        } 
+        
+        public PackageSubmittedStatusType SubmittedStatus { get; set; }
+        [MaxLength(50)]
+        [Column("SubmittedStatus")]
+        public string SubmittedStatusForDatabase
+        {
+            get { return SubmittedStatus.ToString(); }
+            set
+            {
+                if (value == null) SubmittedStatus = PackageSubmittedStatusType.Ready;
+                else SubmittedStatus = (PackageSubmittedStatusType)Enum.Parse(typeof(PackageSubmittedStatusType), value);
+            }
         }
         public DateTime? ReviewedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }

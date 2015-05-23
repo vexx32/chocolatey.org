@@ -1079,6 +1079,7 @@
     <Compile Include="DataServices\V2SubmittedFeed.svc.cs">
       <DependentUpon>V2SubmittedFeed.svc</DependentUpon>
     </Compile>
+    <Compile Include="Entities\PackageSubmittedStatusType.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\SimpleInjectorContainerResolutionBehavior.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
@@ -1129,6 +1130,10 @@
     <Compile Include="Migrations\201411042101302_AddPackageTrustedFields.cs" />
     <Compile Include="Migrations\201411042101302_AddPackageTrustedFields.Designer.cs">
       <DependentUpon>201411042101302_AddPackageTrustedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505232028439_PackageSubmittedStatusType.cs" />
+    <Compile Include="Migrations\201505232028439_PackageSubmittedStatusType.Designer.cs">
+      <DependentUpon>201505232028439_PackageSubmittedStatusType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\AppHarbor.cs" />
