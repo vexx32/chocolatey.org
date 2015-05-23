@@ -24,6 +24,7 @@ namespace NuGetGallery
             DownloadCount = package.DownloadCount;
             Prerelease = package.IsPrerelease;
             Status = package.Status;
+            SubmittedStatus = package.SubmittedStatus;
             ApprovedDate = package.ApprovedDate;
             ReviewerUserName = package.ReviewedBy !=null ? package.ReviewedBy.Username : string.Empty;
             ReviewerEmailAddress = package.ReviewedBy != null ? package.ReviewedBy.EmailAddress : string.Empty;
@@ -60,6 +61,8 @@ namespace NuGetGallery
         public bool Listed { get; set; }
         [Display(Name = "Package Status")]
         public PackageStatusType Status { get; set; }
+        [Display(Name = "Submitted Status")]
+        public PackageSubmittedStatusType SubmittedStatus { get; set; }
         public DateTime? ReviewedDate { get; set; }
         public string ReviewerUserName { get; set; }
         public string ReviewerEmailAddress { get; set; }

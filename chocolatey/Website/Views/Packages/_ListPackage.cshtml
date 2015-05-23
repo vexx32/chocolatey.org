@@ -1,25 +1,17 @@
 ﻿@model ListPackageItemViewModel
 @{
-    var submittedStatus = "waiting";
-    if (!Model.ReviewedDate.HasValue) 
-    {
-        submittedStatus = "ready";
-    }
-    else if (Model.PublishedDate > Model.ReviewedDate)
-    {
-        submittedStatus = "updated";
-    }
+    var submittedStatus = Model.SubmittedStatus;
 }
-<section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus </text>}">
+<section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
     @if (Model.Status == PackageStatusType.Submitted)
     {
         <div class="moderator-side">
             @switch (submittedStatus)
             {
-                case "ready":
+                case PackageSubmittedStatusType.Ready:
                     <span class="ready">Ready</span>
                     break;
-                case "updated":
+                case PackageSubmittedStatusType.Updated:
                     <span class="updated">Updated</span>
                     @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                     break;

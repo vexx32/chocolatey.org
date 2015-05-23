@@ -255,13 +255,21 @@ namespace NuGetGallery
 
             if (moderatorQueue)
             {
-                var submittedPackages = packageSvc.GetSubmittedPackages();
+                var submittedPackages = packageSvc.GetSubmittedPackages().ToList();
+                
+                var updatedStatus = PackageSubmittedStatusType.Updated.ToString();
+                var readyStatus = PackageSubmittedStatusType.Ready.ToString();
+                var waitingStatus = PackageSubmittedStatusType.Waiting.ToString();
 
-                var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
+                //var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
+                var resubmittedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == updatedStatus).OrderBy(p => p.Published).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
-                var unreviewedPackages = submittedPackages.Where(p => !p.ReviewedDate.HasValue).OrderBy(p => p.Published).ToList();
+                
+                var unreviewedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
-                var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
+                
+                //var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
+                var waitingForMaintainerPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
             
                 packagesToShow = resubmittedPackages
