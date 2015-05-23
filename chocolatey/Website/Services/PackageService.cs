@@ -313,7 +313,13 @@ namespace NuGetGallery
             package.IsPrerelease = !nugetPackage.IsReleaseVersion();
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
+            package.SubmittedStatus = PackageSubmittedStatusType.Ready;
             package.ApprovedDate = null;
+
+             if (package.ReviewedDate.HasValue)
+            {
+                package.SubmittedStatus = PackageSubmittedStatusType.Updated;
+            }
 
             //we don't moderate prereleases
             if (package.IsPrerelease)
@@ -587,6 +593,7 @@ namespace NuGetGallery
                     case PackageStatusType.Submitted:
                     case PackageStatusType.Rejected:
                         package.Listed = false;
+                        package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
                         break;
                     case PackageStatusType.Approved:
                         package.ApprovedDate = now;
