@@ -232,7 +232,7 @@ namespace NuGetGallery
                 var unknownStatus = PackageStatusType.Unknown.GetDescriptionOrValue();
 
                 //This is going to be fun. Unknown status ones would be listed, but sometimes a few might slip through the cracks if a maintainer unlists a package.
-                // we have email to catch those though.
+                // A user can just email us to catch those though.
                 packageVersions = packageVersions
                     .Where(p => !p.IsPrerelease)
                     .Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
