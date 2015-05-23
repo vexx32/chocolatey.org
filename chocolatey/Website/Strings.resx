@@ -136,7 +136,7 @@
     <value>A nuget package's {0} property may not be more than {1} characters long.</value>
   </data>
   <data name="ApiKeyNotAuthorized" xml:space="preserve">
-    <value>The specified API key does not provide the authority to {0} packages. This package may already exist and be owned by a different user. It could also be hidden. If you try going directly to http://chocolatey.org/packages/'packageName'</value>
+    <value>The specified API key does not provide the authority to {0} packages. This package may already exist and be owned by a different user. It could also be hidden. Try going directly to https://chocolatey.org/packages/'packageName' to determine maintainers.</value>
   </data>
   <data name="PackageExistsAndCannotBeModified" xml:space="preserve">
     <value>A package with id '{0}' and version '{1}' already exists and cannot be modified.</value>
