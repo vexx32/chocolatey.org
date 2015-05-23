@@ -580,7 +580,7 @@ namespace NuGetGallery
         {
             if (package.Status == status && package.ReviewComments == comments) return;
 
-            var now = DateTime.UtcNow; 
+            var now = DateTime.UtcNow;
 
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
