@@ -595,6 +595,11 @@ namespace NuGetGallery
 
             var now = DateTime.UtcNow;
 
+            if (package.Status == PackageStatusType.Submitted)
+            {
+                package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
+            }
+
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
                 package.Status = status;
@@ -606,7 +611,6 @@ namespace NuGetGallery
                     case PackageStatusType.Submitted:
                     case PackageStatusType.Rejected:
                         package.Listed = false;
-                        package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
                         break;
                     case PackageStatusType.Approved:
                         package.ApprovedDate = now;
