@@ -60,12 +60,39 @@
         <ul class="links">
             @if (!String.IsNullOrEmpty(Model.ProjectUrl))
             {
-                <li><a href="@Model.ProjectUrl" title="Visit the project site to learn more about this package">
-                Project Site</a></li>
+                <li><a href="@Model.ProjectUrl" title="Visit the software site to learn more about the software this package installs">
+                Software Site</a></li>
+            }
+            @if (!String.IsNullOrEmpty(Model.ProjectSourceUrl))
+            {
+                <li><a href="@Model.ProjectSourceUrl" title="See the software source">
+                Software Source</a></li>
             }
             @if (!String.IsNullOrEmpty(Model.LicenseUrl))
             {
-                <li><a href="@Model.LicenseUrl" title="Make sure you agree with the license">License</a></li>
+                <li><a href="@Model.LicenseUrl" title="Make sure you agree with the software license">Software License</a></li>
+            }
+            @if (!String.IsNullOrEmpty(Model.DocsUrl))
+            {
+                <li><a href="@Model.DocsUrl" title="See the project's documentation">
+                Software Docs</a></li>
+            }
+            @if (!String.IsNullOrEmpty(Model.MailingListUrl))
+            {
+                <li><a href="@Model.MailingListUrl" title="See the project's mailing list">
+                Software Mailing List</a></li>
+            }
+            @if (!String.IsNullOrEmpty(Model.BugTrackerUrl))
+            {
+                <li><a href="@Model.BugTrackerUrl" title="See the project's issue link">
+                Software Issues</a></li>
+            }
+            <li>&nbsp;</li>
+            <li><span>Package Specific</span></li>
+            @if (!String.IsNullOrEmpty(Model.PackageSourceUrl))
+            {
+                <li><a href="@Model.PackageSourceUrl" title="See the package source">
+                Package Source</a></li>
             }
             <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
             <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Moderators">

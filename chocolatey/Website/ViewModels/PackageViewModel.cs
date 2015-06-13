@@ -15,6 +15,11 @@ namespace NuGetGallery
             ReleaseNotes = package.ReleaseNotes;
             IconUrl = package.IconUrl;
             ProjectUrl = package.ProjectUrl;
+            ProjectSourceUrl = package.ProjectSourceUrl;
+            PackageSourceUrl = package.PackageSourceUrl;
+            DocsUrl = package.DocsUrl;
+            MailingListUrl = package.MailingListUrl;
+            BugTrackerUrl = package.BugTrackerUrl;
             LicenseUrl = package.LicenseUrl;
             LatestVersion = package.IsLatest;
             LatestStableVersion = package.IsLatestStable;
@@ -51,6 +56,11 @@ namespace NuGetGallery
         public string ReleaseNotes { get; set; }
         public string IconUrl { get; set; }
         public string ProjectUrl { get; set; }
+        public string ProjectSourceUrl { get; set; }
+        public string PackageSourceUrl { get; set; }
+        public string DocsUrl { get; set; }
+        public string MailingListUrl { get; set; }
+        public string BugTrackerUrl { get; set; }
         public string LicenseUrl { get; set; }
         public DateTime LastUpdated { get; set; }
         public DateTime PublishedDate { get; set; }
