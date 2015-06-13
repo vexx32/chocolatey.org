@@ -220,10 +220,6 @@
     <Compile Include="..\..\nugetgallery\Website\App_Start\AuthenticationModule.cs">
       <Link>App_Start\AuthenticationModule.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ApiController.generated.cs">
-      <Link>ApiController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Commands\AppCommand.cs">
       <Link>Commands\AppCommand.cs</Link>
     </Compile>
@@ -247,14 +243,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Controllers\CuratedPackagesController.cs">
       <Link>Controllers\CuratedPackagesController.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\CuratedFeedsController.generated.cs">
-      <Link>CuratedFeedsController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\CuratedPackagesController.generated.cs">
-      <Link>CuratedPackagesController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\DataServices\CountInterceptor.cs">
       <Link>DataServices\CountInterceptor.cs</Link>
@@ -338,10 +326,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\Jobs\UpdateStatisticsJob.cs">
       <Link>Infrastructure\Jobs\UpdateStatisticsJob.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\JsonApiController.generated.cs">
-      <Link>JsonApiController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Migrations\201110060711357_Initial.cs">
       <Link>Migrations\201110060711357_Initial.cs</Link>
@@ -642,10 +626,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\ResendConfirmationEmailViewModel.cs">
       <Link>ViewModels\ResendConfirmationEmailViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\AuthenticationController.generated.cs">
-      <Link>AuthenticationController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\DynamicData\Content\GridViewPager.ascx.cs">
       <Link>DynamicData\Content\GridViewPager.ascx.cs</Link>
@@ -953,25 +933,39 @@
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\NuGetControllerFactory.cs">
       <Link>Infrastructure\NuGetControllerFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\PagesController.generated.cs">
-      <Link>PagesController.generated.cs</Link>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\Extensions.cs">
       <Link>Services\Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\SharedController.generated.cs">
-      <Link>SharedController.generated.cs</Link>
+    <Compile Include="ApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\T4MVC.cs">
-      <Link>T4MVC.cs</Link>
+    <Compile Include="AuthenticationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CuratedFeedsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CuratedPackagesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JsonApiController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackagesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PagesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RssController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4MVC.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\UsersController.generated.cs">
-      <Link>UsersController.generated.cs</Link>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordChangeViewModel.cs">
@@ -1148,9 +1142,6 @@
     <Compile Include="Migrations\MigrationsConfiguration.cs" />
     <Compile Include="MvcOverrides\AppHarbor.cs" />
     <Compile Include="MvcOverrides\RequireHttpsAppHarborAttribute.cs" />
-    <Compile Include="PackagesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="RouteNames.cs" />
     <Compile Include="Services\AmazonS3ClientWrapper.cs" />
     <Compile Include="Services\AmazonS3FileStorageService.cs" />
@@ -1171,6 +1162,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="UrlExtensions.cs" />
+    <Compile Include="UsersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
@@ -1457,14 +1451,11 @@
     <Content Include="..\..\nugetgallery\Website\DynamicData\Site.master">
       <Link>DynamicData\Site.master</Link>
     </Content>
-    <None Include="..\..\nugetgallery\Website\T4MVC.tt">
-      <Link>T4MVC.tt</Link>
+    <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
-    <None Include="..\..\nugetgallery\Website\T4MVC.tt.settings.t4">
-      <Link>T4MVC.tt.settings.t4</Link>
-    </None>
+    <None Include="T4MVC.tt.settings.t4" />
     <Content Include="Views\Authentication\LogOn.cshtml" />
     <Content Include="Views\Packages\ConfirmOwner.cshtml" />
     <Content Include="Views\Packages\ContactOwners.cshtml" />

@@ -6,7 +6,7 @@
     using System.ServiceModel.Syndication;
     using System.Web.Mvc;
 
-    public class RssController : Controller
+    public partial class RssController : Controller
     {
         private readonly IPackageService packageSvc;
         public IConfiguration Configuration { get; set; }
@@ -21,7 +21,7 @@
         }
 
         [ActionName("feed.rss")]
-        public ActionResult Feed(int? page, int? pageSize)
+        public virtual ActionResult Feed(int? page, int? pageSize)
         {
             var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false));
             IQueryable<Package> packageVersions = packageSvc
