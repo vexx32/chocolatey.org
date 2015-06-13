@@ -275,10 +275,6 @@
       <DependentUpon>V2Feed.svc</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V2FeedPackage.cs">
-      <Link>DataServices\V2FeedPackage.cs</Link>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\CuratedFeed.cs">
       <Link>Entities\CuratedFeed.cs</Link>
     </Compile>
@@ -948,6 +944,7 @@
     <Compile Include="CuratedPackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
