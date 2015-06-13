@@ -11,7 +11,7 @@ namespace NuGetGallery
     [EntityPropertyMapping("Summary", SyndicationItemProperty.Summary, SyndicationTextContentKind.Plaintext, keepInContent: false)]
     public class V2FeedPackage
     {
-
+        
         public string Id { get; set; }
         public string Version { get; set; }
 
@@ -34,6 +34,11 @@ namespace NuGetGallery
         public string PackageHashAlgorithm { get; set; }
         public long PackageSize { get; set; }
         public string ProjectUrl { get; set; }
+        public string ProjectSourceUrl { get; set; }
+        public string PackageSourceUrl { get; set; }
+        public string DocsUrl { get; set; }
+        public string MailingListUrl { get; set; }
+        public string BugTrackerUrl { get; set; }
         public string ReportAbuseUrl { get; set; }
         public string ReleaseNotes { get; set; }
         public bool RequireLicenseAcceptance { get; set; }

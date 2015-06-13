@@ -12,6 +12,8 @@ namespace NuGetGallery
 {
     public class LuceneSearchService : ISearchService
     {
+        public bool ContainsAllVersions { get { return false; } }
+
         public IQueryable<Package> Search(IQueryable<Package> packages, SearchFilter searchFilter, out int totalHits)
         {
             if (packages == null)
