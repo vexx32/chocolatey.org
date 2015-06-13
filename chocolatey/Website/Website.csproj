@@ -951,6 +951,10 @@
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506131442550_Add-InformationUrls.cs" />
+    <Compile Include="Migrations\201506131442550_Add-InformationUrls.Designer.cs">
+      <DependentUpon>201506131442550_Add-InformationUrls.cs</DependentUpon>
+    </Compile>
     <Compile Include="PackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
