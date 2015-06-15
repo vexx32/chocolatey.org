@@ -85,6 +85,8 @@ namespace NuGetGallery
                          MailingListUrl = p.MailingListUrl,
                          BugTrackerUrl = p.BugTrackerUrl,
                          ReleaseNotes = p.ReleaseNotes,
+                         PackageStatus = p.StatusForDatabase,
+                         PackageSubmittedStatus = p.SubmittedStatusForDatabase,
                          ReportAbuseUrl = siteRoot + "package/ReportAbuse/" + p.PackageRegistration.Id + "/" + p.Version,
                          RequireLicenseAcceptance = p.RequiresLicenseAcceptance,
                          Published = p.Listed ? p.Published : magicDateThatActuallyMeansUnpublishedBecauseOfLegacyDecisions,

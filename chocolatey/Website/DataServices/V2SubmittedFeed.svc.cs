@@ -12,7 +12,7 @@ namespace NuGetGallery
     public class V2SubmittedFeed : FeedServiceBase<V2FeedPackage>
     {
         private const int FeedVersion = 2;
-        private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
+        private readonly string submittedStatus = PackageStatusType.Submitted.ToStringSafe();
 
         public V2SubmittedFeed()
         {
