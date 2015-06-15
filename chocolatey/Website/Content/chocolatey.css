@@ -186,3 +186,9 @@ section.package .profile {
     left: -110px;
     width: 1080px;
 }
+
+#sideColumn nav ul li span
+{
+    text-decoration: underline;
+    font-weight: 400;
+}

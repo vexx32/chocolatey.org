@@ -4,6 +4,7 @@ using System;
 namespace NuGetGallery
 {
     using System.Text.RegularExpressions;
+    using MvcOverrides;
 
     public static class UrlExtensions
     {
@@ -61,12 +62,15 @@ namespace NuGetGallery
         public static string PackageDownload(this UrlHelper url, int feedVersion, string id, string version)
         {
             string routeName = "v" + feedVersion + RouteName.DownloadPackage;
-            //return url.RouteUrl(routeName, new { Id = id, Version = version }, protocol: "http");
-            string returnUrl = url.RouteUrl(routeName, new { Id = id, Version = version }, protocol: "http");
-            //string returnUrl = url.Action(MVC.Packages.DownloadPackage(id, version), protocol: "http");
-            //hack, replace removing port
-            return Regex.Replace(returnUrl, @"\:\d+\/", "/");
 
+            string protocol = AppHarbor.IsSecureConnection(url.RequestContext.HttpContext) ? "https" : "http";
+            string returnUrl = url.RouteUrl(routeName, new { Id = id, Version = version }, protocol: protocol);
+            //hack, replace removing port
+            //return Regex.Replace(returnUrl, @"\:\d+\/", "/");
+
+
+            // Ensure trailing slashes for versionless package URLs, as a fix for package filenames that look like known file extensions
+            return version == null ? EnsureTrailingSlash(returnUrl) : returnUrl;
         }
 
         public static string LogOn(this UrlHelper url)
@@ -112,6 +116,16 @@ namespace NuGetGallery
         public static string VerifyPackage(this UrlHelper url)
         {
             return url.Action(MVC.Packages.VerifyPackage());
+        }
+
+        internal static string EnsureTrailingSlash(string url)
+        {
+            if (url != null && !url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
+            {
+                return url + '/';
+            }
+
+            return url;
         }
     }
 }

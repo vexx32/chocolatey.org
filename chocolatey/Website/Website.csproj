@@ -120,9 +120,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NuGet.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NuGet.Core, Version=2.8.2.0, Culture=neutral, PublicKeyToken=fd112f53c3ab578c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Nuget.Core.2.1.0-alpha001\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <HintPath>..\..\lib\Nuget-Chocolatey\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="ODataNullPropagationVisitor">
       <HintPath>..\..\packages\ODataNullPropagationVisitor.0.5.4237.2641\lib\net40\ODataNullPropagationVisitor.dll</HintPath>
@@ -273,10 +273,6 @@
     <Compile Include="..\..\nugetgallery\Website\DataServices\V2Feed.svc.cs">
       <Link>DataServices\V2Feed.svc.cs</Link>
       <DependentUpon>V2Feed.svc</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V2FeedPackage.cs">
-      <Link>DataServices\V2FeedPackage.cs</Link>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\CuratedFeed.cs">
@@ -948,8 +944,13 @@
     <Compile Include="CuratedPackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506131442550_Add-InformationUrls.cs" />
+    <Compile Include="Migrations\201506131442550_Add-InformationUrls.Designer.cs">
+      <DependentUpon>201506131442550_Add-InformationUrls.cs</DependentUpon>
     </Compile>
     <Compile Include="PackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>

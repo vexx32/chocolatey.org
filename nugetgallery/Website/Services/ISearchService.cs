@@ -11,5 +11,10 @@ namespace NuGetGallery
         /// <param name="filter">The filter to be used.</param>
         /// <param name="totalHits">The total number of packages discovered.</param>
         IQueryable<Package> Search(IQueryable<Package> packages, SearchFilter filter, out int totalHits);
+
+        /// <summary>
+        /// Gets a boolean indicating if all versions of each package are stored in the index
+        /// </summary>
+        bool ContainsAllVersions { get; }
     }
 }

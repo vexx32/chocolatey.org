@@ -338,6 +338,12 @@ namespace NuGetGallery
             package.IconUrl = nugetPackage.IconUrl == null ? string.Empty : nugetPackage.IconUrl.ToString();
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
             package.ProjectUrl = nugetPackage.ProjectUrl == null ? string.Empty : nugetPackage.ProjectUrl.ToString();
+
+            package.ProjectSourceUrl = nugetPackage.ProjectSourceUrl == null ? string.Empty : nugetPackage.ProjectSourceUrl.ToString();
+            package.PackageSourceUrl = nugetPackage.PackageSourceUrl == null ? string.Empty : nugetPackage.PackageSourceUrl.ToString();
+            package.DocsUrl = nugetPackage.DocsUrl == null ? string.Empty : nugetPackage.DocsUrl.ToString();
+            package.MailingListUrl = nugetPackage.MailingListUrl == null ? string.Empty : nugetPackage.MailingListUrl.ToString();
+            package.BugTrackerUrl = nugetPackage.BugTrackerUrl == null ? string.Empty : nugetPackage.BugTrackerUrl.ToString();
             package.Summary = nugetPackage.Summary ?? string.Empty;
             package.Tags = nugetPackage.Tags ?? string.Empty;
             package.Title = nugetPackage.Title ?? string.Empty;

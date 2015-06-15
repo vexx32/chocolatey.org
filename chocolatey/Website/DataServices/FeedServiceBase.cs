@@ -14,10 +14,11 @@ using QueryInterceptor;
 
 namespace NuGetGallery
 {
+    using System.Collections;
     using MvcOverrides;
 
     [ServiceBehavior(IncludeExceptionDetailInFaults = true, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public abstract class FeedServiceBase<TPackage> : DataService<FeedContext<TPackage>>, IDataServiceStreamProvider, IServiceProvider
+    public abstract class FeedServiceBase<TPackage> : DataService<FeedContext<TPackage>>, IDataServiceStreamProvider, IServiceProvider, IDataServicePagingProvider
     {
         /// <summary>
         /// Determines the maximum number of packages returned in a single page of an OData result.
@@ -28,6 +29,9 @@ namespace NuGetGallery
         private readonly IConfiguration configuration;
         private readonly ISearchService searchService;
         private HttpContextBase httpContext;
+        private int _currentSkip;
+        private object[] _continuationToken;
+        private readonly Type _packageType;
 
         public FeedServiceBase()
             : this(DependencyResolver.Current.GetService<IEntitiesContext>(),
@@ -48,6 +52,8 @@ namespace NuGetGallery
             this.packageRepo = packageRepo;
             this.configuration = configuration;
             this.searchService = searchService;
+            _currentSkip = 0;
+            _packageType = typeof(TPackage);
         }
 
         protected IEntitiesContext Entities
@@ -164,6 +170,11 @@ namespace NuGetGallery
             {
                 return this;
             }
+            //todo rr 20150614 look at turning this on for custom data service paging 
+            //if (serviceType == typeof(IDataServicePagingProvider))
+            //{
+            //    return this;
+            //}
 
             return null;
         }
@@ -223,6 +234,7 @@ namespace NuGetGallery
                 CountOnly = keywordPath != null && keywordPath.Keyword == KeywordKind.Count,
                 SortDirection = SortDirection.Ascending
             };
+            _currentSkip = odataQuery.Skip ?? 0;
 
             var filterProperty = odataQuery.Filter as PropertyAccessQueryToken;
             if (filterProperty == null ||
@@ -294,6 +306,37 @@ namespace NuGetGallery
                 siteRoot = siteRoot + '/';
             }
             return siteRoot;
+        }
+
+        public void SetContinuationToken(IQueryable query, ResourceType resourceType, object[] continuationToken)
+        {
+            if (resourceType.FullName != _packageType.FullName)
+            {
+                throw new ArgumentException("The paging provider can not construct a meaningful continuation token because its type is different from the ResourceType for which a continuation token is requested.");
+            }
+
+            var materializedQuery = (query as IQueryable<TPackage>).ToList();
+            var lastElement = materializedQuery.LastOrDefault();
+            if (lastElement != null && materializedQuery.Count == MaxPageSize)
+            {
+                string packageId = _packageType.GetProperty("Id").GetValue(lastElement, null).ToString();
+                string packageVersion = _packageType.GetProperty("Version").GetValue(lastElement, null).ToString();
+                _continuationToken = new object[]
+                    {
+                        packageId,
+                        packageVersion,
+                        _currentSkip + Math.Min(materializedQuery.Count, MaxPageSize)
+                    };
+            }
+            else
+            {
+                _continuationToken = null;
+            }
+        }
+
+        public object[] GetContinuationToken(IEnumerator enumerator)
+        {
+            return _continuationToken;
         }
     }
 }
