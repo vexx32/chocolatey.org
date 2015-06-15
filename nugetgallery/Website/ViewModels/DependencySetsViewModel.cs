@@ -16,8 +16,8 @@ namespace NuGetGallery
                 .OrderBy(ds => ds.Key);
 
             OnlyHasAllFrameworks = dependencySets.Count() == 1 && dependencySets.First().Key == null;
-            
-            foreach(var dependencySet in dependencySets)
+
+            foreach (var dependencySet in dependencySets)
             {
                 var targetFramework = dependencySet.Key == null ? "All Frameworks" : VersionUtility.ParseFrameworkName(dependencySet.Key).ToFriendlyName();
                 DependencySets.Add(targetFramework, dependencySet.Select(d => d.Id == null ? null : new DependencyViewModel(d.Id, d.VersionSpec)));
@@ -33,12 +33,17 @@ namespace NuGetGallery
             {
                 Id = id;
 
+
                 if (!String.IsNullOrEmpty(versionSpec))
+                {
+                    RawVersionSpec = versionSpec;
                     VersionSpec = VersionUtility.PrettyPrint(VersionUtility.ParseVersionSpec(versionSpec));
+                }
             }
 
             public string Id { get; private set; }
             public string VersionSpec { get; private set; }
+            public string RawVersionSpec { get; private set; }
         }
     }
 }

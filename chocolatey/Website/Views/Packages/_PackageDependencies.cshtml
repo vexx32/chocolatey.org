@@ -1,5 +1,5 @@
 ﻿@model DependencySetsViewModel
-<a name="dependencies" id="dependencies"></a><h3>Dependencies</h3>
+<a name="dependencies" id="dependencies"></a><h3 title="Nuspec reference: dependencies">Dependencies</h3>
 @if (Model.DependencySets.Any())
 {
     <ul id="dependencySets">
@@ -20,8 +20,9 @@
                         }
                         else
                         {
-                            <a href="@Url.Package(dependency.Id)">@dependency.Id</a>
-                            <span>@dependency.VersionSpec</span>
+                            var dependencyTitleText = string.Format("<dependency id=\"{0}\" {1}/>",dependency.Id,string.IsNullOrWhiteSpace(dependency.RawVersionSpec) ? string.Empty : "version=\"" + dependency.RawVersionSpec + "\" ");
+                            <span title='Nuspec reference: @dependencyTitleText'><a href="@Url.Package(dependency.Id)">@dependency.Id</a>
+                            <span>@dependency.VersionSpec</span></span>
                         }
                         </li>
                     }

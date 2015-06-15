@@ -21,7 +21,7 @@
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
 }
 @section SideColumn {
-    <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
+    <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" title="Icon for package @Model.Id | Nuspec reference: &lt;iconUrl&gt;@Model.IconUrl&lt;/iconurl&gt;" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
     <div id="stats">
         <div class="stat">
             <p class="stat-number">@Model.TotalDownloadCount.ToString("n0")</p>
@@ -60,38 +60,38 @@
         <ul class="links">
             @if (!String.IsNullOrEmpty(Model.ProjectUrl))
             {
-                <li><a href="@Model.ProjectUrl" title="Visit the software site to learn more about the software this package installs">
+                <li><a href="@Model.ProjectUrl" title="Visit the software site to learn more about the software this package installs. Nuspec reference: &lt;projectUrl&gt;@Model.ProjectUrl&lt;/projectUrl&gt;">
                 Software Site</a></li>
             }
             @if (!String.IsNullOrEmpty(Model.ProjectSourceUrl))
             {
-                <li><a href="@Model.ProjectSourceUrl" title="See the software source">
+                <li><a href="@Model.ProjectSourceUrl" title="See the software source. Nuspec reference: &lt;projectSourceUrl&gt;@Model.ProjectSourceUrl&lt;/projectSourceUrl&gt;">
                 Software Source</a></li>
             }
             @if (!String.IsNullOrEmpty(Model.LicenseUrl))
             {
-                <li><a href="@Model.LicenseUrl" title="Make sure you agree with the software license">Software License</a></li>
+                <li><a href="@Model.LicenseUrl" title="Make sure you agree with the software license. Nuspec reference: &lt;licenseUrl&gt;@Model.LicenseUrl&lt;/licenseUrl&gt;">Software License</a></li>
             }
             @if (!String.IsNullOrEmpty(Model.DocsUrl))
             {
-                <li><a href="@Model.DocsUrl" title="See the project's documentation">
+                <li><a href="@Model.DocsUrl" title="See the project's documentation. Nuspec reference: &lt;docsUrl&gt;@Model.DocsUrl&lt;/docsUrl&gt;">
                 Software Docs</a></li>
             }
             @if (!String.IsNullOrEmpty(Model.MailingListUrl))
             {
-                <li><a href="@Model.MailingListUrl" title="See the project's mailing list">
+                <li><a href="@Model.MailingListUrl" title="See the project's mailing list. Nuspec reference: &lt;mailingListUrl&gt;@Model.MailingListUrl&lt;/mailingListUrl&gt;">
                 Software Mailing List</a></li>
             }
             @if (!String.IsNullOrEmpty(Model.BugTrackerUrl))
             {
-                <li><a href="@Model.BugTrackerUrl" title="See the project's issue link">
+                <li><a href="@Model.BugTrackerUrl" title="See the project's issue link. Nuspec reference: &lt;bugTrackerUrl&gt;@Model.BugTrackerUrl&lt;/bugTrackerUrl&gt;">
                 Software Issues</a></li>
             }
             <li>&nbsp;</li>
             <li><span>Package Specific</span></li>
             @if (!String.IsNullOrEmpty(Model.PackageSourceUrl))
             {
-                <li><a href="@Model.PackageSourceUrl" title="See the package source">
+                <li><a href="@Model.PackageSourceUrl" title="See the package source. Nuspec reference: &lt;packageSourceUrl&gt;@Model.PackageSourceUrl&lt;/packageSourceUrl&gt;">
                 Package Source</a></li>
             }
             <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
@@ -135,8 +135,8 @@
     
 
     <div class="hgroup page-heading">
-        <h1>@Model.Title</h1>
-        <h2>@Model.Version</h2>
+        <h1 title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">@Model.Title</h1>
+        <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
     </div>
     
     @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User) && !moderationRole)
@@ -301,7 +301,8 @@
         
         </div>
     }
-
+    
+    <a name="description" id="description" title="Nuspec reference: description"></a>
     @Html.Raw(markdownGenerator.Transform(Model.Description))
 
     <p>To install @Model.Title, run the following command from the command line or from
@@ -324,7 +325,7 @@
                {<text> -pre </text>}</code></p>
     </div>
     
-    <a name="files" id="files"></a><h3>Files</h3>
+    <a name="files" id="files"></a><h3 title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</h3>
     <a onclick="if ($(this).text() == 'Hide') {$('#div-filessection').hide();$(this).text('Show');} else {$('#div-filessection').show();$(this).text('Hide');}">Hide</a>
     <div id="div-filessection">     
     @if (Model.Files.Any())
@@ -377,9 +378,9 @@
     
     @Html.Partial("_PackageDependencies", Model.Dependencies)
 
-    <a name="maintainers" id="maintainers"></a><h3>Maintainers</h3>
+    <a name="maintainers" id="maintainers"></a><h3 title="Nuspec reference: owners | nuspec value not used on community feed | Specified as comma-separated">Maintainer(s)</h3>
     @ViewHelpers.OwnersGravatar(Model.Owners, 32, Url)
-    <a name="authors" id="authors"></a><h3>Authors</h3>
+    <a name="authors" id="authors"></a><h3 title="Software authors. Nuspec reference: authors | Specified as comma-separated">Sofware Author(s)</h3>
     <ul class="authors">
         @foreach (var author in Model.Authors)
         {
@@ -388,12 +389,12 @@
     </ul>
     @if (!String.IsNullOrEmpty(Model.Copyright))
     {
-        <h3>Copyright</h3>
+        <h3 title="Nuspec reference: copyright">Copyright</h3>
         <p>@Model.Copyright</p>
     }
     @if (@Model.Tags.AnySafe())
     {
-        <a name="tags" id="tags"></a><h3>Tags</h3>
+        <a name="tags" id="tags"></a><h3 title="Nuspec reference: tags | Specified as space-separated">Tags</h3>
         <ul class="tags">
             @foreach (var tag in Model.Tags)
             {
@@ -404,7 +405,7 @@
     
     @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
     {
-        <a name="releasenotes" id="releasenotes"></a><h3>Release Notes</h3>
+        <a name="releasenotes" id="releasenotes"></a><h3 title="Nuspec reference: releaseNotes">Release Notes</h3>
         @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
     }
     <a name="versionhistory" id="versionhistory"></a><h3>Version History</h3>
