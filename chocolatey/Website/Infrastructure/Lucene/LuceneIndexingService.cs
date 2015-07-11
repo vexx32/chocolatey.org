@@ -1,4 +1,22 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -9,6 +27,8 @@ using System.Threading.Tasks;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
+using Lucene.Net.Store;
+using Directory = System.IO.Directory;
 
 namespace NuGetGallery
 {
@@ -50,17 +70,15 @@ namespace NuGetGallery
             if (_entitiesContext != null)
             {
                 var packages = GetPackages(_entitiesContext, lastWriteTime);
-                if (packages.Count > 0)
-                {
-                    AddPackages(packages, creatingIndex: lastWriteTime == null);
-                }
+                if (packages.Count > 0) AddPackages(packages, creatingIndex: lastWriteTime == null);
             }
             UpdateLastWriteTime();
         }
 
         protected internal virtual List<PackageIndexEntity> GetPackages(DbContext context, DateTime? lastIndexTime)
         {
-            string sql = @"SELECT p.[Key], p.PackageRegistrationKey, pr.Id, p.Title, p.Description, p.Tags, p.FlattenedAuthors as Authors, pr.DownloadCount,
+            string sql =
+                @"SELECT p.[Key], p.PackageRegistrationKey, pr.Id, p.Title, p.Description, p.Tags, p.FlattenedAuthors as Authors, pr.DownloadCount,
                                   p.IsLatestStable, p.IsLatest, p.Published
                               FROM Packages p JOIN PackageRegistrations pr on p.PackageRegistrationKey = pr.[Key]
                               WHERE ((p.IsLatest = 1) or (p.IsLatestStable = 1)) ";
@@ -70,13 +88,13 @@ namespace NuGetGallery
             {
                 // First time creation. Pull latest packages without filtering
                 parameters = new object[0];
-            }
-            else
+            } else
             {
                 // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
                 // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
                 // update independent of the package.
-                sql += " AND Exists (Select 1 from dbo.Packages iP where iP.LastUpdated > @UpdatedDate and iP.PackageRegistrationKey = p.PackageRegistrationKey) ";
+                sql +=
+                    " AND Exists (Select 1 from dbo.Packages iP where iP.LastUpdated > @UpdatedDate and iP.PackageRegistrationKey = p.PackageRegistrationKey) ";
                 parameters = new[] { new SqlParameter("UpdatedDate", lastIndexTime.Value) };
             }
             return context.Database.SqlQuery<PackageIndexEntity>(sql, parameters).ToList();
@@ -88,7 +106,9 @@ namespace NuGetGallery
             {
                 // If this is not the first time we're creating the index, clear any package registrations for packages we are going to updating.
                 var packagesToDelete = from packageRegistrationKey in packages.Select(p => p.PackageRegistrationKey).Distinct()
-                                       select new Term("PackageRegistrationKey", packageRegistrationKey.ToString(CultureInfo.InvariantCulture));
+                                       select
+                                           new Term(
+                                           "PackageRegistrationKey", packageRegistrationKey.ToString(CultureInfo.InvariantCulture));
                 indexWriter.DeleteDocuments(packagesToDelete.ToArray());
             }
 
@@ -121,7 +141,9 @@ namespace NuGetGallery
             // If an element does not have a Title, then add all the tokenized Id components as Title.
             // Lucene's StandardTokenizer does not tokenize items of the format a.b.c which does not play well with things like "xunit.net". 
             // We will feed it values that are already tokenized.
-            var titleTokens = String.IsNullOrEmpty(package.Title) ? tokenizedId : package.Title.Split(idSeparators, StringSplitOptions.RemoveEmptyEntries);
+            var titleTokens = String.IsNullOrEmpty(package.Title)
+                                  ? tokenizedId
+                                  : package.Title.Split(idSeparators, StringSplitOptions.RemoveEmptyEntries);
             foreach (var idToken in titleTokens)
             {
                 field = new Field("Title", idToken, Field.Store.NO, Field.Index.ANALYZED);
@@ -139,13 +161,21 @@ namespace NuGetGallery
 
             // Fields meant for filtering and sorting
             document.Add(new Field("Key", package.Key.ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
-            document.Add(new Field("PackageRegistrationKey", package.PackageRegistrationKey.ToString(CultureInfo.InvariantCulture), Field.Store.NO, Field.Index.NOT_ANALYZED));
+            document.Add(
+                new Field(
+                    "PackageRegistrationKey", package.PackageRegistrationKey.ToString(CultureInfo.InvariantCulture),
+                    Field.Store.NO, Field.Index.NOT_ANALYZED));
             document.Add(new Field("IsLatest", package.IsLatest.ToString(), Field.Store.NO, Field.Index.NOT_ANALYZED));
             document.Add(new Field("IsLatestStable", package.IsLatestStable.ToString(), Field.Store.NO, Field.Index.NOT_ANALYZED));
             document.Add(new Field("PublishedDate", package.Published.Ticks.ToString(), Field.Store.NO, Field.Index.NOT_ANALYZED));
-            document.Add(new Field("DownloadCount", package.DownloadCount.ToString(CultureInfo.InvariantCulture), Field.Store.NO, Field.Index.NOT_ANALYZED));
+            document.Add(
+                new Field(
+                    "DownloadCount", package.DownloadCount.ToString(CultureInfo.InvariantCulture), Field.Store.NO,
+                    Field.Index.NOT_ANALYZED));
             string displayName = String.IsNullOrEmpty(package.Title) ? package.Id : package.Title;
-            document.Add(new Field("DisplayName", displayName.ToLower(CultureInfo.CurrentCulture), Field.Store.NO, Field.Index.NOT_ANALYZED));
+            document.Add(
+                new Field(
+                    "DisplayName", displayName.ToLower(CultureInfo.CurrentCulture), Field.Store.NO, Field.Index.NOT_ANALYZED));
 
             indexWriter.AddDocument(document);
         }
@@ -156,24 +186,18 @@ namespace NuGetGallery
             {
                 lock (indexWriterLock)
                 {
-                    if (indexWriter == null)
-                    {
-                        EnsureIndexWriterCore(creatingIndex);
-                    }
+                    if (indexWriter == null) EnsureIndexWriterCore(creatingIndex);
                 }
             }
         }
 
         private static void EnsureIndexWriterCore(bool creatingIndex)
         {
-            if (!Directory.Exists(LuceneCommon.IndexDirectory))
-            {
-                Directory.CreateDirectory(LuceneCommon.IndexDirectory);
-            }
+            if (!Directory.Exists(LuceneCommon.IndexDirectory)) Directory.CreateDirectory(LuceneCommon.IndexDirectory);
 
             var analyzer = new StandardAnalyzer(LuceneCommon.LuceneVersion);
             var directoryInfo = new DirectoryInfo(LuceneCommon.IndexDirectory);
-            var directory = new Lucene.Net.Store.SimpleFSDirectory(directoryInfo);
+            var directory = new SimpleFSDirectory(directoryInfo);
             indexWriter = new IndexWriter(directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
         }
 
@@ -190,10 +214,7 @@ namespace NuGetGallery
 
         protected internal virtual DateTime? GetLastWriteTime()
         {
-            if (!File.Exists(LuceneCommon.IndexMetadataPath))
-            {
-                return null;
-            }
+            if (!File.Exists(LuceneCommon.IndexMetadataPath)) return null;
             return File.GetLastWriteTimeUtc(LuceneCommon.IndexMetadataPath);
         }
 
@@ -203,42 +224,32 @@ namespace NuGetGallery
             {
                 // Create the index and add a timestamp to it that specifies the time at which it was created.
                 File.WriteAllBytes(LuceneCommon.IndexMetadataPath, new byte[0]);
-            }
-            else
-            {
-                File.SetLastWriteTimeUtc(LuceneCommon.IndexMetadataPath, DateTime.UtcNow);
-            }
+            } else File.SetLastWriteTimeUtc(LuceneCommon.IndexMetadataPath, DateTime.UtcNow);
         }
 
         protected void UpdateIndexRefreshTime()
         {
-            if (File.Exists(LuceneCommon.IndexMetadataPath))
-            {
-                File.SetCreationTimeUtc(LuceneCommon.IndexMetadataPath, DateTime.UtcNow);
-            }
+            if (File.Exists(LuceneCommon.IndexMetadataPath)) File.SetCreationTimeUtc(LuceneCommon.IndexMetadataPath, DateTime.UtcNow);
         }
 
         internal static IEnumerable<string> TokenizeId(string term)
         {
-
             // First tokenize the result by id-separators. For e.g. tokenize SignalR.EventStream as SignalR and EventStream
             var tokens = term.Split(idSeparators, StringSplitOptions.RemoveEmptyEntries);
 
             // For each token, further attempt to tokenize camelcase values. e.g. .EventStream -> Event, Stream. 
-            var result = tokens.Concat(new[] { term })
-                               .Concat(tokens.SelectMany(CamelCaseTokenize))
-                               .Distinct(StringComparer.OrdinalIgnoreCase)
-                               .ToList();
+            var result =
+                tokens.Concat(new[] { term })
+                      .Concat(tokens.SelectMany(CamelCaseTokenize))
+                      .Distinct(StringComparer.OrdinalIgnoreCase)
+                      .ToList();
             return result;
         }
 
         private static IEnumerable<string> CamelCaseTokenize(string term)
         {
             const int MinTokenLength = 3;
-            if (term.Length < MinTokenLength)
-            {
-                yield break;
-            }
+            if (term.Length < MinTokenLength) yield break;
 
             int tokenEnd = term.Length;
             for (int i = term.Length - 1; i > 0; i--)

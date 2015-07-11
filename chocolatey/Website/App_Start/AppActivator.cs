@@ -1,28 +1,47 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DynamicDataEFCodeFirst;
 using Elmah;
 using Elmah.Contrib.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using NuGetGallery;
 using NuGetGallery.Jobs;
 using NuGetGallery.Migrations;
+using NuGetGallery.MvcOverrides;
 using StackExchange.Profiling;
 using StackExchange.Profiling.MVCHelpers;
+using WebActivator;
 using WebBackgrounder;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(NuGetGallery.AppActivator), "PreStart")]
-[assembly: WebActivator.PostApplicationStartMethod(typeof(NuGetGallery.AppActivator), "PostStart")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NuGetGallery.AppActivator), "Stop")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+[assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
+[assembly: ApplicationShutdownMethod(typeof(AppActivator), "Stop")]
 
 namespace NuGetGallery
 {
-    using System.Configuration;
-    using System.Data.Entity;
-    using MvcOverrides;
-
     public static class AppActivator
     {
         private static JobManager _jobManager;
@@ -64,10 +83,7 @@ namespace NuGetGallery
         {
             filters.Add(new ElmahHandleErrorAttribute());
 
-            if (ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
-            {
-                filters.Add(new RequireHttpsAppHarborAttribute());
-            }
+            if (ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase)) filters.Add(new RequireHttpsAppHarborAttribute());
         }
 
         //private static void SetCustomRouteHandler()
@@ -81,10 +97,10 @@ namespace NuGetGallery
 
         private static void BackgroundJobsPostStart()
         {
-            var jobs = new IJob[] { 
+            var jobs = new IJob[]
+            {
                 new UpdateStatisticsJob(TimeSpan.FromMinutes(5), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(5)),
-                new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)),
-                new LuceneIndexingJob(TimeSpan.FromMinutes(10), timeout: TimeSpan.FromMinutes(2)),
+                new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)), new LuceneIndexingJob(TimeSpan.FromMinutes(10), timeout: TimeSpan.FromMinutes(2)),
             };
             var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
             _jobManager = new JobManager(jobs, jobCoordinator)
@@ -111,7 +127,7 @@ namespace NuGetGallery
 
         private static void DynamicDataPostStart()
         {
-            DynamicDataEFCodeFirst.Registration.Register(RouteTable.Routes);
+            Registration.Register(RouteTable.Routes);
         }
 
         private static void MiniProfilerPreStart()
@@ -139,8 +155,7 @@ namespace NuGetGallery
                     bool stopProfiling;
                     var httpContext = HttpContext.Current;
 
-                    if (httpContext == null)
-                        stopProfiling = true;
+                    if (httpContext == null) stopProfiling = true;
                     else
                     {
                         // Temporarily removing until we figure out the hammering of request we saw.
@@ -151,8 +166,7 @@ namespace NuGetGallery
                         stopProfiling = !requestIsLocal;
                     }
 
-                    if (stopProfiling)
-                        MiniProfiler.Stop(true);
+                    if (stopProfiling) MiniProfiler.Stop(true);
                 };
 
                 context.EndRequest += (sender, e) => MiniProfiler.Stop();

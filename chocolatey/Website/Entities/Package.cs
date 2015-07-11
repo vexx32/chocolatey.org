@@ -1,4 +1,22 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,25 +44,25 @@ namespace NuGetGallery
         public virtual ICollection<PackageFile> Files { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string Copyright { get; set; }
         public DateTime Created { get; set; }
         public virtual ICollection<PackageDependency> Dependencies { get; set; }
-        
+
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed but *IS* used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed but *IS* used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string Description { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string ReleaseNotes { get; set; }
         public int DownloadCount { get; set; }
-        
+
         /// <remarks>
-        /// Is not a property that we support. Maintained for legacy reasons.
+        ///   Is not a property that we support. Maintained for legacy reasons.
         /// </remarks>
         public string ExternalPackageUrl { get; set; }
 
@@ -55,7 +73,7 @@ namespace NuGetGallery
         public string Hash { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string IconUrl { get; set; }
         public bool IsLatest { get; set; }
@@ -63,7 +81,7 @@ namespace NuGetGallery
         public DateTime LastUpdated { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string LicenseUrl { get; set; }
 
@@ -74,7 +92,7 @@ namespace NuGetGallery
         public long PackageFileSize { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string ProjectUrl { get; set; }
 
@@ -92,16 +110,16 @@ namespace NuGetGallery
 
         [MaxLength(400)]
         public string BugTrackerUrl { get; set; }
-        
+
         public bool RequiresLicenseAcceptance { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string Summary { get; set; }
 
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and *IS* used for searches, but is maintained via Lucene. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and *IS* used for searches, but is maintained via Lucene. Db column is nvarchar(max).
         /// </remarks>
         public string Tags { get; set; }
 
@@ -121,11 +139,11 @@ namespace NuGetGallery
             get { return Status.ToString(); }
             set
             {
-                if (value == null) Status = PackageStatusType.Unknown; 
+                if (value == null) Status = PackageStatusType.Unknown;
                 else Status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), value);
             }
-        } 
-        
+        }
+
         public PackageSubmittedStatusType SubmittedStatus { get; set; }
         [MaxLength(50)]
         [Column("SubmittedStatus")]
@@ -141,10 +159,10 @@ namespace NuGetGallery
         public DateTime? ReviewedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public virtual User ReviewedBy { get; set; }
-        public int? ReviewedById { get; set; } 
-        
+        public int? ReviewedById { get; set; }
+
         /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
         /// </remarks>
         public string ReviewComments { get; set; }
 

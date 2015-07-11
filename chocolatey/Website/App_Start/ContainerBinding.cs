@@ -1,18 +1,35 @@
+// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Mvc;
+using AnglicanGeek.MarkdownMailer;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.StorageClient;
+using SimpleInjector;
+
 namespace NuGetGallery
 {
-    using System;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Mail;
-    using System.Security.Principal;
-    using System.Web;
-    using System.Web.Hosting;
-    using System.Web.Mvc;
-    using AnglicanGeek.MarkdownMailer;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.StorageClient;
-    using SimpleInjector;
-
     /// <summary>
     ///   The main inversion container registration for the application. Look for other container bindings in client projects.
     /// </summary>
@@ -21,21 +38,22 @@ namespace NuGetGallery
         /// <summary>
         ///   Loads the module into the kernel.
         /// </summary>
-        public void RegisterComponents(SimpleInjector.Container container)
+        public void RegisterComponents(Container container)
         {
             IConfiguration configuration = new Configuration();
-            container.Register<IConfiguration>(() => configuration, Lifestyle.Singleton);
+            container.Register(() => configuration, Lifestyle.Singleton);
 
-            Lazy<GallerySetting> gallerySetting = new Lazy<GallerySetting>(() =>
-            {
-                using (var entitiesContext = new EntitiesContext())
+            var gallerySetting = new Lazy<GallerySetting>(
+                () =>
                 {
-                    var settingsRepo = new EntityRepository<GallerySetting>(entitiesContext);
-                    return settingsRepo.GetAll().FirstOrDefault();
-                }
-            });
+                    using (var entitiesContext = new EntitiesContext())
+                    {
+                        var settingsRepo = new EntityRepository<GallerySetting>(entitiesContext);
+                        return settingsRepo.GetAll().FirstOrDefault();
+                    }
+                });
 
-            container.Register<GallerySetting>(()=> gallerySetting.Value);
+            container.Register(() => gallerySetting.Value);
             //Bind<GallerySetting>().ToMethod(c => gallerySetting.Value);
 
             container.RegisterPerWebRequest<ISearchService, LuceneSearchService>();
@@ -61,46 +79,44 @@ namespace NuGetGallery
             container.RegisterPerWebRequest<IIndexingService, LuceneIndexingService>();
             container.RegisterPerWebRequest<INuGetExeDownloaderService, NuGetExeDownloaderService>();
 
-            Lazy<IMailSender> mailSenderThunk = new Lazy<IMailSender>(() =>
-            {
-                var settings = container.GetInstance<GallerySetting>();
-                if (settings.UseSmtp)
+            var mailSenderThunk = new Lazy<IMailSender>(
+                () =>
                 {
-                    var mailSenderConfiguration = new MailSenderConfiguration()
+                    var settings = container.GetInstance<GallerySetting>();
+                    if (settings.UseSmtp)
                     {
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        Host = settings.SmtpHost,
-                        Port = settings.SmtpPort,
-                        EnableSsl = configuration.SmtpEnableSsl,
-                    };
+                        var mailSenderConfiguration = new MailSenderConfiguration
+                        {
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            Host = settings.SmtpHost,
+                            Port = settings.SmtpPort,
+                            EnableSsl = configuration.SmtpEnableSsl,
+                        };
 
-                    if (!String.IsNullOrWhiteSpace(settings.SmtpUsername))
+                        if (!String.IsNullOrWhiteSpace(settings.SmtpUsername))
+                        {
+                            mailSenderConfiguration.UseDefaultCredentials = false;
+                            mailSenderConfiguration.Credentials = new NetworkCredential(settings.SmtpUsername, settings.SmtpPassword);
+                        }
+
+                        return new MailSender(mailSenderConfiguration);
+                    } else
                     {
-                        mailSenderConfiguration.UseDefaultCredentials = false;
-                        mailSenderConfiguration.Credentials = new NetworkCredential(
-                            settings.SmtpUsername,
-                            settings.SmtpPassword);
+                        var mailSenderConfiguration = new MailSenderConfiguration
+                        {
+                            DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                            PickupDirectoryLocation = HostingEnvironment.MapPath("~/App_Data/Mail")
+                        };
+
+                        return new MailSender(mailSenderConfiguration);
                     }
+                });
 
-                    return new NuGetGallery.MailSender(mailSenderConfiguration);
-                }
-                else
-                {
-                    var mailSenderConfiguration = new MailSenderConfiguration()
-                    {
-                        DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
-                        PickupDirectoryLocation = HostingEnvironment.MapPath("~/App_Data/Mail")
-                    };
-
-                    return new NuGetGallery.MailSender(mailSenderConfiguration);
-                }
-            });
-
-            container.Register<IMailSender>(()=> mailSenderThunk.Value,Lifestyle.Singleton);
+            container.Register(() => mailSenderThunk.Value, Lifestyle.Singleton);
 
             container.Register<IMessageService, MessageService>(Lifestyle.Singleton);
 
-            container.RegisterPerWebRequest<IPrincipal>(() => HttpContext.Current.User);
+            container.RegisterPerWebRequest(() => HttpContext.Current.User);
             //Bind<IPrincipal>().ToMethod(context => HttpContext.Current.User);
 
             switch (configuration.PackageStoreType)
@@ -111,11 +127,12 @@ namespace NuGetGallery
                     container.Register<IFileStorageService, FileSystemFileStorageService>(Lifestyle.Singleton);
                     break;
                 case PackageStoreType.AzureStorageBlob:
-                    container.Register<ICloudBlobClient>(() => new CloudBlobClientWrapper(new CloudBlobClient(
-                            new Uri(configuration.AzureStorageBlobUrl, UriKind.Absolute),
-                            new StorageCredentialsAccountAndKey(configuration.AzureStorageAccountName, configuration.AzureStorageAccessKey)
-                            ))
-                        ,Lifestyle.Singleton);
+                    container.Register<ICloudBlobClient>(
+                        () =>
+                        new CloudBlobClientWrapper(
+                            new CloudBlobClient(
+                                new Uri(configuration.AzureStorageBlobUrl, UriKind.Absolute), new StorageCredentialsAccountAndKey(configuration.AzureStorageAccountName, configuration.AzureStorageAccessKey))),
+                        Lifestyle.Singleton);
                     container.Register<IFileStorageService, CloudBlobFileStorageService>(Lifestyle.Singleton);
                     break;
                 case PackageStoreType.AmazonS3Storage:
@@ -152,8 +169,7 @@ namespace NuGetGallery
             RegisterChocolateySpecific(container);
         }
 
-
-        private void RegisterChocolateySpecific(SimpleInjector.Container container)
+        private void RegisterChocolateySpecific(Container container)
         {
             container.RegisterPerWebRequest<IUserSiteProfilesService, UserSiteProfilesService>();
             container.RegisterPerWebRequest<IEntityRepository<UserSiteProfile>, EntityRepository<UserSiteProfile>>();

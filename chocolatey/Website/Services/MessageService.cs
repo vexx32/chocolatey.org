@@ -1,14 +1,31 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
-using System.Web;
+using System.Text;
 using AnglicanGeek.MarkdownMailer;
+using Elmah;
 
 namespace NuGetGallery
 {
-    using System.Text;
-
     public class MessageService : IMessageService
     {
         private readonly IMailSender mailSender;
@@ -27,17 +44,17 @@ namespace NuGetGallery
                 mailSender.Send(mailMessage);
                 if (copySender)
                 {
-                    var senderNote = string.Format("You sent the following message via {0}:{1}{1}", settings.GalleryOwnerName,Environment.NewLine);
+                    var senderNote = string.Format(
+                        "You sent the following message via {0}:{1}{1}", settings.GalleryOwnerName, Environment.NewLine);
                     mailMessage.To.Clear();
                     mailMessage.Body = senderNote + mailMessage.Body;
                     mailMessage.To.Add(mailMessage.From);
                     mailSender.Send(mailMessage);
                 }
-            }
-            catch (SmtpException ex)
+            } catch (SmtpException ex)
             {
                 // Log but swallow the exception
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
         }
 
@@ -54,7 +71,8 @@ _Message sent from {5}_
 Current Maintainer(s): {7}
 Package Url: {6}
 ";
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 fromAddress.DisplayName,
                 fromAddress.Address,
@@ -67,16 +85,22 @@ Package Url: {6}
 
             using (var mailMessage = new MailMessage())
             {
-                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
+                mailMessage.Subject = String.Format(
+                    CultureInfo.CurrentCulture,
+                    subject,
+                    settings.GalleryOwnerName,
+                    package.PackageRegistration.Id,
+                    package.Version);
                 mailMessage.Body = body;
                 mailMessage.From = fromAddress;
 
                 mailMessage.To.Add(settings.GalleryOwnerEmail);
-                SendMessage(mailMessage,copySender);
+                SendMessage(mailMessage, copySender);
             }
-        } 
-        
-        public void ContactSiteAdmins(MailAddress fromAddress, Package package, string message,string packageUrl, bool copySender)
+        }
+
+        public void ContactSiteAdmins(
+            MailAddress fromAddress, Package package, string message, string packageUrl, bool copySender)
         {
             string subject = "[{0}] Contact Site Admins for Package '{1}' Version '{2}'";
             string body = @"_User {0} ({1}) is reporting on '{2}' version '{3}'. 
@@ -89,7 +113,8 @@ _Message sent from {5}_
 Current Maintainer(s): {7}
 Package Url: {6}
 ";
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 fromAddress.DisplayName,
                 fromAddress.Address,
@@ -98,19 +123,30 @@ Package Url: {6}
                 message,
                 settings.GalleryOwnerName,
                 packageUrl,
-                string.Join(", ",package.PackageRegistration.Owners.Select(x => x.Username)));
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)));
 
             using (var mailMessage = new MailMessage())
             {
-                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
+                mailMessage.Subject = String.Format(
+                    CultureInfo.CurrentCulture,
+                    subject,
+                    settings.GalleryOwnerName,
+                    package.PackageRegistration.Id,
+                    package.Version);
                 mailMessage.Body = body;
                 mailMessage.From = fromAddress;
                 mailMessage.To.Add(Configuration.ReadAppSettings("ModeratorEmail"));
-                SendMessage(mailMessage,copySender);
+                SendMessage(mailMessage, copySender);
             }
         }
 
-        public void SendContactOwnersMessage(MailAddress fromAddress, PackageRegistration packageRegistration, string message, string emailSettingsUrl, string packageUrl, bool copySender)
+        public void SendContactOwnersMessage(
+            MailAddress fromAddress,
+            PackageRegistration packageRegistration,
+            string message,
+            string emailSettingsUrl,
+            string packageUrl,
+            bool copySender)
         {
             string subject = "[{0}] Message for maintainers of the package '{1}'";
             string body = @"_User {0} &lt;{1}&gt; sends the following message to the maintainers of Package '{2}'._
@@ -130,7 +166,8 @@ Package comments: [http://chocolatey.org/packages/{2}#disqus](http://chocolatey.
     [change your email notification settings]({5}).
 </em>";
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 fromAddress.DisplayName,
                 fromAddress.Address,
@@ -149,14 +186,12 @@ Package comments: [http://chocolatey.org/packages/{2}#disqus](http://chocolatey.
                 mailMessage.From = fromAddress;
 
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
-                if (mailMessage.To.Any())
-                {
-                    SendMessage(mailMessage,copySender);
-                }
+                if (mailMessage.To.Any()) SendMessage(mailMessage, copySender);
             }
         }
 
-        public void SendCommentNotificationToMaintainers(PackageRegistration packageRegistration, CommentViewModel comment, string packageUrl)
+        public void SendCommentNotificationToMaintainers(
+            PackageRegistration packageRegistration, CommentViewModel comment, string packageUrl)
         {
             string body = @"Comment: {0}
 
@@ -170,10 +205,11 @@ Comment Url: {3}
             string subject = "[{0}] New disqus comment for maintainers of '{1}'";
             string disqusCommentUrl = string.Format("{0}#comment-{1}", packageUrl, comment.Id);
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 comment.Text,
-				packageRegistration.Id,
+                packageRegistration.Id,
                 packageUrl,
                 disqusCommentUrl,
                 GetDisqusInformationMessage());
@@ -187,16 +223,13 @@ Comment Url: {3}
                 mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
-                if (mailMessage.To.Any())
-                {
-                    SendMessage(mailMessage);
-                }
+                if (mailMessage.To.Any()) SendMessage(mailMessage);
             }
         }
 
-        private static void AddOwnersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage,bool requireEmail = false)
+        private static void AddOwnersToMailMessage(
+            PackageRegistration packageRegistration, MailMessage mailMessage, bool requireEmail = false)
         {
-
             foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllowed || requireEmail))
             {
                 mailMessage.To.Add(owner.ToMailAddress());
@@ -223,14 +256,16 @@ So we can be sure to contact you, please verify your email address and click the
 Thanks,
 The {0} Team";
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 settings.GalleryOwnerName,
                 confirmationUrl);
 
             using (var mailMessage = new MailMessage())
             {
-                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, "[{0}] Please verify your account.", settings.GalleryOwnerName);
+                mailMessage.Subject = String.Format(
+                    CultureInfo.CurrentCulture, "[{0}] Please verify your account.", settings.GalleryOwnerName);
                 mailMessage.Body = body;
                 mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
@@ -250,14 +285,16 @@ To verify your new email address, please click the following link:
 Thanks,
 The {0} Team";
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 settings.GalleryOwnerName,
                 confirmationUrl);
 
             using (var mailMessage = new MailMessage())
             {
-                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, "[{0}] Please verify your new email address.", settings.GalleryOwnerName);
+                mailMessage.Subject = String.Format(
+                    CultureInfo.CurrentCulture, "[{0}] Please verify your new email address.", settings.GalleryOwnerName);
                 mailMessage.Body = body;
                 mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
@@ -279,13 +316,15 @@ If you go into your account and set the email address to the same thing, it shou
 Thanks,
 The {0} Team";
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 settings.GalleryOwnerName,
                 oldEmailAddress,
                 user.EmailAddress);
 
-            string subject = String.Format(CultureInfo.CurrentCulture, "[{0}] Recent changes to your account.", settings.GalleryOwnerName);
+            string subject = String.Format(
+                CultureInfo.CurrentCulture, "[{0}] Recent changes to your account.", settings.GalleryOwnerName);
             using (
                 var mailMessage = new MailMessage())
             {
@@ -310,13 +349,15 @@ Click the following link within the next {0} hours to reset your password:
 Thanks,
 The {2} Team";
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 Constants.DefaultPasswordResetTokenExpirationHours,
                 resetPasswordUrl,
                 settings.GalleryOwnerName);
 
-            string subject = String.Format(CultureInfo.CurrentCulture, "[{0}] Please reset your password.", settings.GalleryOwnerName);
+            string subject = String.Format(
+                CultureInfo.CurrentCulture, "[{0}] Please reset your password.", settings.GalleryOwnerName);
             using (var mailMessage = new MailMessage())
             {
                 mailMessage.Subject = subject;
@@ -327,13 +368,10 @@ The {2} Team";
                 SendMessage(mailMessage);
             }
         }
-        
+
         public void SendPackageOwnerRequest(User fromUser, User toUser, PackageRegistration package, string confirmationUrl)
         {
-            if (!toUser.EmailAllowed)
-            {
-                return;
-            }
+            if (!toUser.EmailAllowed) return;
 
             string subject = "[{0}] The user '{1}' wants to add you as a maintainer of the package '{2}'.";
 
@@ -347,11 +385,13 @@ To accept this request and become a listed maintainer of the package, click the 
 Thanks,
 The {3} Team";
 
-            body = String.Format(CultureInfo.CurrentCulture, body, fromUser.Username, package.Id, confirmationUrl, settings.GalleryOwnerName);
+            body = String.Format(
+                CultureInfo.CurrentCulture, body, fromUser.Username, package.Id, confirmationUrl, settings.GalleryOwnerName);
 
             using (var mailMessage = new MailMessage())
             {
-                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, fromUser.Username, package.Id);
+                mailMessage.Subject = String.Format(
+                    CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, fromUser.Username, package.Id);
                 mailMessage.Body = body;
                 mailMessage.From = fromUser.ToMailAddress();
 
@@ -362,12 +402,9 @@ The {3} Team";
 
         public void SendPackageOwnerConfirmation(User fromUser, User toUser, PackageRegistration package)
         {
-            if (!toUser.EmailAllowed)
-            {
-                return;
-            }
-            var packageUrl = string.Format("{0}packages/{1}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.Id);
-          
+            if (!toUser.EmailAllowed) return;
+            var packageUrl = string.Format(
+                "{0}packages/{1}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.Id);
 
             string subject = "[{0}] The user '{1}' has added you as a maintainer of the package '{2}'.";
 
@@ -378,11 +415,13 @@ Package Url: {2}
 Thanks,
 The {3} Team";
 
-            body = String.Format(CultureInfo.CurrentCulture, body, fromUser.Username, package.Id, packageUrl, settings.GalleryOwnerName);
+            body = String.Format(
+                CultureInfo.CurrentCulture, body, fromUser.Username, package.Id, packageUrl, settings.GalleryOwnerName);
 
             using (var mailMessage = new MailMessage())
             {
-                mailMessage.Subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, fromUser.Username, package.Id);
+                mailMessage.Subject = String.Format(
+                    CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, fromUser.Username, package.Id);
                 mailMessage.Body = body;
                 mailMessage.From = fromUser.ToMailAddress();
 
@@ -391,41 +430,51 @@ The {3} Team";
             }
         }
 
-        public void SendPackageModerationEmail(Package package,string comments)
+        public void SendPackageModerationEmail(Package package, string comments)
         {
             string subject = "[{0}] Moderation for '{1}' v{2}";
-            var packageUrl = string.Format("{0}packages/{1}/{2}", EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")), package.PackageRegistration.Id, package.Version);
+            var packageUrl = string.Format(
+                "{0}packages/{1}/{2}",
+                EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
+                package.PackageRegistration.Id,
+                package.Version);
             string body = @"'{0}' is {3}{6}.
 {4}
 
 Package Url: {1} 
 Maintainer(s): {2}
 {5}
-";           
+";
 
-            body = String.Format(CultureInfo.CurrentCulture,
+            body = String.Format(
+                CultureInfo.CurrentCulture,
                 body,
                 package.PackageRegistration.Id,
                 packageUrl,
-                string.Join(", ",package.PackageRegistration.Owners.Select(x => x.Username)),
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)),
                 package.Status.GetDescriptionOrValue(),
-                GetModerationMessage(package,comments),
-                GetInformationForMaintainers(package,comments),
-                package.Status == PackageStatusType.Approved && !string.IsNullOrWhiteSpace(comments) ? " with comments" : string.Empty);
+                GetModerationMessage(package, comments),
+                GetInformationForMaintainers(package, comments),
+                package.Status == PackageStatusType.Approved && !string.IsNullOrWhiteSpace(comments)
+                    ? " with comments"
+                    : string.Empty);
 
-            subject = String.Format(CultureInfo.CurrentCulture, subject, settings.GalleryOwnerName, package.PackageRegistration.Id, package.Version);
+            subject = String.Format(
+                CultureInfo.CurrentCulture,
+                subject,
+                settings.GalleryOwnerName,
+                package.PackageRegistration.Id,
+                package.Version);
             using (var mailMessage = new MailMessage())
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(Configuration.ReadAppSettings("ModeratorEmail"), settings.GalleryOwnerName);
+                mailMessage.From = new MailAddress(
+                    Configuration.ReadAppSettings("ModeratorEmail"), settings.GalleryOwnerName);
 
-                AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail:true);
+                AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
-                if (mailMessage.To.Any())
-                {
-                    SendMessage(mailMessage);
-                }
+                if (mailMessage.To.Any()) SendMessage(mailMessage);
             }
         }
 
@@ -443,9 +492,7 @@ Maintainer(s): {2}
 
         private string GetInformationForMaintainers(Package package, string comments)
         {
-            if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments))
-            {
-                return @"
+            if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments)) return @"
 **NOTICE:** Currently we have a very large backlog (popularity is a double-edged sword) and are addressing it, but as a result moderation may take 
 upwards of two or more weeks until we resolve issues.
 
@@ -470,14 +517,10 @@ Things we are doing to help resolve the large backlog of moderation:
  * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
  * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
 ";
-            }
-            else if (package.Status == PackageStatusType.Submitted)
-            {
-                return @"
+            else if (package.Status == PackageStatusType.Submitted) return @"
 #### Maintainer Notes
 
  * If we've asked you to make changes, repush your updated package with the **_same_ version**.";
-            }
 
             return string.Empty;
         }
@@ -488,23 +531,25 @@ Things we are doing to help resolve the large backlog of moderation:
 
             if (!string.IsNullOrWhiteSpace(comments))
             {
-                message.AppendFormat("{0} left the following comment(s):{1}",package.ReviewedBy.Username, Environment.NewLine);
+                message.AppendFormat(
+                    "{0} left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
                 message.Append(Environment.NewLine + comments);
-            }
-            else if (package.Status == PackageStatusType.Rejected)
+            } else if (package.Status == PackageStatusType.Rejected)
             {
-                message.AppendFormat("The moderator left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
+                message.AppendFormat(
+                    "The moderator left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
                 message.Append(Environment.NewLine + package.ReviewComments);
             }
 
             switch (package.Status)
             {
-                case PackageStatusType.Submitted:
+                case PackageStatusType.Submitted :
                     break;
-                case PackageStatusType.Rejected:
-                case PackageStatusType.Approved:
-                case PackageStatusType.Exempted:
-                    message.AppendFormat("{3}{3}The package was {0} by moderator {1} on {2}.",
+                case PackageStatusType.Rejected :
+                case PackageStatusType.Approved :
+                case PackageStatusType.Exempted :
+                    message.AppendFormat(
+                        "{3}{3}The package was {0} by moderator {1} on {2}.",
                         package.Status.GetDescriptionOrValue().ToLower(),
                         package.ReviewedBy.Username,
                         package.ReviewedDate.GetValueOrDefault().ToShortDateString(),
@@ -518,10 +563,7 @@ Things we are doing to help resolve the large backlog of moderation:
         private static string EnsureTrailingSlash(string siteRoot)
         {
             if (string.IsNullOrWhiteSpace(siteRoot)) return string.Empty;
-            if (!siteRoot.EndsWith("/", StringComparison.Ordinal))
-            {
-                siteRoot = siteRoot + '/';
-            }
+            if (!siteRoot.EndsWith("/", StringComparison.Ordinal)) siteRoot = siteRoot + '/';
             return siteRoot;
         }
     }

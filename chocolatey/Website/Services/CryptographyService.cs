@@ -1,4 +1,22 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,7 +39,7 @@ namespace NuGetGallery
             {
                 hashBytes = hashAlgorithm.ComputeHash(input);
             }
-            
+
             var hash = Convert.ToBase64String(hashBytes);
             return hash;
         }
@@ -30,10 +48,7 @@ namespace NuGetGallery
             string input,
             string hashAlgorithmId)
         {
-            if (hashAlgorithmId.Equals(Constants.PBKDF2HashAlgorithmId, StringComparison.OrdinalIgnoreCase))
-            {
-                return Crypto.HashPassword(input);
-            }
+            if (hashAlgorithmId.Equals(Constants.PBKDF2HashAlgorithmId, StringComparison.OrdinalIgnoreCase)) return Crypto.HashPassword(input);
 
             return GenerateLegacySaltedHash(input, hashAlgorithmId);
         }
@@ -43,7 +58,9 @@ namespace NuGetGallery
             var saltBytes = new byte[SaltLengthInBytes];
 
             using (var cryptoProvider = new RNGCryptoServiceProvider())
+            {
                 cryptoProvider.GetNonZeroBytes(saltBytes);
+            }
 
             var textBytes = Encoding.Unicode.GetBytes(input);
 
@@ -67,8 +84,8 @@ namespace NuGetGallery
 
         public string GenerateToken()
         {
-            byte[] data = new byte[0x10];
-            
+            var data = new byte[0x10];
+
             using (var crypto = new RNGCryptoServiceProvider())
             {
                 crypto.GetBytes(data);
@@ -90,10 +107,7 @@ namespace NuGetGallery
             string input,
             string hashAlgorithmId)
         {
-            if (hashAlgorithmId.Equals(Constants.PBKDF2HashAlgorithmId, StringComparison.OrdinalIgnoreCase))
-            {
-                return Crypto.VerifyHashedPassword(hashedPassword: hash, password: input);
-            }
+            if (hashAlgorithmId.Equals(Constants.PBKDF2HashAlgorithmId, StringComparison.OrdinalIgnoreCase)) return Crypto.VerifyHashedPassword(hashedPassword: hash, password: input);
 
             return ValidateLegacySaltedHash(hash, input, hashAlgorithmId);
         }
@@ -118,8 +132,9 @@ namespace NuGetGallery
             }
 
             for (int i = 0; i < hashBytes.Length; i++)
-                if (!hashBytes[i].Equals(hashToValidateBytes[i]))
-                    return false;
+            {
+                if (!hashBytes[i].Equals(hashToValidateBytes[i])) return false;
+            }
 
             return true;
         }

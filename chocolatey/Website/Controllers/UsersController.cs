@@ -1,9 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Principal;
-using System.Web;
 using System.Web.Mvc;
 using NuGetGallery.MvcOverrides;
 
@@ -11,22 +27,16 @@ namespace NuGetGallery
 {
     public partial class UsersController : AppController
     {
-        readonly IUserService userService;
-        readonly IPackageService packageService;
-        readonly IMessageService messageService;
-        readonly GallerySetting settings;
-        readonly IPrincipal currentUser;
+        private readonly IUserService userService;
+        private readonly IPackageService packageService;
+        private readonly IMessageService messageService;
+        private readonly GallerySetting settings;
+        private readonly IPrincipal currentUser;
         private readonly IUserSiteProfilesService profilesService;
 
-        public UsersController(
-            IUserService userSvc,
-            IPackageService packageService,
-            IMessageService messageService,
-            GallerySetting settings,
-            IPrincipal currentUser,
-            IUserSiteProfilesService profilesService)
+        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, GallerySetting settings, IPrincipal currentUser, IUserSiteProfilesService profilesService)
         {
-            this.userService = userSvc;
+            userService = userSvc;
             this.packageService = packageService;
             this.messageService = messageService;
             this.settings = settings;
@@ -39,12 +49,13 @@ namespace NuGetGallery
         {
             var user = GetService<IUserByUsernameQuery>().Execute(Identity.Name);
             var curatedFeeds = GetService<ICuratedFeedsByManagerQuery>().Execute(user.Key);
-           
-            return View("~/Views/Users/Account.cshtml", new AccountViewModel
-            {
-                ApiKey = user.ApiKey.ToString(),
-                CuratedFeeds = curatedFeeds.Select(cf => cf.Name),
-            });
+
+            return View(
+                "~/Views/Users/Account.cshtml", new AccountViewModel
+                {
+                    ApiKey = user.ApiKey.ToString(),
+                    CuratedFeeds = curatedFeeds.Select(cf => cf.Name),
+                });
         }
 
         [Authorize, RequireHttpsAppHarbor]
@@ -53,10 +64,10 @@ namespace NuGetGallery
             var user = userService.FindByUsername(currentUser.Identity.Name);
             var profiles = profilesService.GetUserProfiles(user);
             var twitter = profiles.Where(x => x.Name == SiteProfileConstants.Twitter).Select(p => p.Url.Replace(SiteProfileConstants.TwitterProfilePrefix, string.Empty)).FirstOrDefault();
-            var github = profiles.Where(x => x.Name == SiteProfileConstants.Github).Select(p=> p.Url.Replace(SiteProfileConstants.GithubProfilePrefix, string.Empty)).FirstOrDefault();
-            var codeplex = profiles.Where(x => x.Name == SiteProfileConstants.Codeplex).Select(p=>p.Url.Replace(SiteProfileConstants.CodeplexProfilePrefix, string.Empty)).FirstOrDefault();
-            var stackExchange = profiles.Where(x => x.Name == SiteProfileConstants.StackExchange).Select(p=>p.Url).FirstOrDefault();
-            var homepage = profiles.Where(x => x.Name == SiteProfileConstants.Homepage).Select(p=>p.Url).FirstOrDefault();
+            var github = profiles.Where(x => x.Name == SiteProfileConstants.Github).Select(p => p.Url.Replace(SiteProfileConstants.GithubProfilePrefix, string.Empty)).FirstOrDefault();
+            var codeplex = profiles.Where(x => x.Name == SiteProfileConstants.Codeplex).Select(p => p.Url.Replace(SiteProfileConstants.CodeplexProfilePrefix, string.Empty)).FirstOrDefault();
+            var stackExchange = profiles.Where(x => x.Name == SiteProfileConstants.StackExchange).Select(p => p.Url).FirstOrDefault();
+            var homepage = profiles.Where(x => x.Name == SiteProfileConstants.Homepage).Select(p => p.Url).FirstOrDefault();
             var blogUrl = profiles.Where(x => x.Name == SiteProfileConstants.Blog).Select(p => p.Url).FirstOrDefault();
             var packagesRepo = profiles.Where(x => x.Name == SiteProfileConstants.PackagesRepository).Select(p => p.Url).FirstOrDefault();
             var packagesRepoAuto = profiles.Where(x => x.Name == SiteProfileConstants.PackagesRepositoryAuto).Select(p => p.Url).FirstOrDefault();
@@ -67,10 +78,10 @@ namespace NuGetGallery
                 EmailAllowed = user.EmailAllowed,
                 PendingNewEmailAddress = user.UnconfirmedEmailAddress,
                 TwitterUserName = twitter,
-                GithubUserName = github, 
-                CodeplexUserName = codeplex, 
-                StackExchangeUrl = stackExchange, 
-                HomepageUrl = homepage, 
+                GithubUserName = github,
+                CodeplexUserName = codeplex,
+                StackExchangeUrl = stackExchange,
+                HomepageUrl = homepage,
                 BlogUrl = blogUrl,
                 PackagesRepository = packagesRepo,
                 PackagesRepositoryAuto = packagesRepoAuto
@@ -78,32 +89,25 @@ namespace NuGetGallery
             return View("~/Views/Users/Edit.cshtml", model);
         }
 
-        [Authorize, HttpPost, RequireHttpsAppHarbor,ValidateAntiForgeryToken]
+        [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditProfileViewModel profile)
         {
             if (ModelState.IsValid)
             {
                 var user = userService.FindByUsername(currentUser.Identity.Name);
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
+                if (user == null) return HttpNotFound();
 
                 string existingConfirmationToken = user.EmailConfirmationToken;
                 try
                 {
                     userService.UpdateProfile(user, profile.EmailAddress, profile.EmailAllowed);
-                }
-                catch (EntityException ex)
+                } catch (EntityException ex)
                 {
                     ModelState.AddModelError(String.Empty, ex.Message);
                     return View("~/Views/Users/Edit.cshtml", profile);
                 }
 
-                if (existingConfirmationToken == user.EmailConfirmationToken)
-                {
-                    TempData["Message"] = "Account settings saved!";
-                }
+                if (existingConfirmationToken == user.EmailConfirmationToken) TempData["Message"] = "Account settings saved!";
                 else
                 {
                     TempData["Message"] = "Account settings saved! We sent a confirmation email to verify your new email. When you confirm the email address, it will take effect and we will forget the old one.";
@@ -112,9 +116,7 @@ namespace NuGetGallery
                     messageService.SendEmailChangeConfirmationNotice(new MailAddress(profile.EmailAddress, user.Username), confirmationUrl);
                 }
 
-
-                profilesService.SaveProfiles(user,profile);
-
+                profilesService.SaveProfiles(user, profile);
 
                 return RedirectToAction(MVC.Users.Account());
             }
@@ -132,18 +134,13 @@ namespace NuGetGallery
         {
             // TODO: consider client-side validation for unique username
 
-            if (!ModelState.IsValid)
-                return View("~/Views/Users/Register.cshtml");
+            if (!ModelState.IsValid) return View("~/Views/Users/Register.cshtml");
 
             User user;
             try
             {
-                user = userService.Create(
-                    request.Username,
-                    request.Password,
-                    request.EmailAddress);
-            }
-            catch (EntityException ex)
+                user = userService.Create(request.Username, request.Password, request.EmailAddress);
+            } catch (EntityException ex)
             {
                 ModelState.AddModelError(String.Empty, ex.Message);
                 return View("~/Views/Users/Register.cshtml");
@@ -160,13 +157,14 @@ namespace NuGetGallery
 
         public virtual ActionResult Thanks()
         {
-            if (settings.ConfirmEmailAddresses)
-            {
-                return View("~/Views/Users/Thanks.cshtml");
-            }
+            if (settings.ConfirmEmailAddresses) return View("~/Views/Users/Thanks.cshtml");
             else
             {
-                var model = new EmailConfirmationModel { SuccessfulConfirmation = true, ConfirmingNewAccount = true };
+                var model = new EmailConfirmationModel
+                {
+                    SuccessfulConfirmation = true,
+                    ConfirmingNewAccount = true
+                };
                 return View("~/Views/Users/Confirm.cshtml", model);
             }
         }
@@ -177,8 +175,7 @@ namespace NuGetGallery
             var user = userService.FindByUsername(currentUser.Identity.Name);
             var packages = packageService.FindPackagesByOwner(user);
 
-            var published = from p in packages
-                            group p by p.PackageRegistration.Id;
+            var published = from p in packages group p by p.PackageRegistration.Id;
 
             var model = new ManagePackagesViewModel
             {
@@ -186,7 +183,7 @@ namespace NuGetGallery
                            select new PackageViewModel(pr.First())
                            {
                                DownloadCount = pr.Sum(p => p.DownloadCount),
-                               Version = pr.Max(p=> p.Version),
+                               Version = pr.Max(p => p.Version),
                            },
             };
             return View("~/Views/Users/Packages.cshtml", model);
@@ -252,7 +249,7 @@ namespace NuGetGallery
         {
             ViewBag.Email = TempData["Email"];
             ViewBag.Expiration = Constants.DefaultPasswordResetTokenExpirationHours;
-            
+
             return View("~/Views/Users/PasswordSent.cshtml");
         }
 
@@ -277,15 +274,9 @@ namespace NuGetGallery
 
         public virtual ActionResult Confirm(string username, string token)
         {
-            if (String.IsNullOrEmpty(token))
-            {
-                return HttpNotFound();
-            }
+            if (String.IsNullOrEmpty(token)) return HttpNotFound();
             var user = userService.FindByUsername(username);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             string existingEmail = user.EmailAddress;
             var model = new EmailConfirmationModel
@@ -294,42 +285,23 @@ namespace NuGetGallery
                 SuccessfulConfirmation = userService.ConfirmEmailAddress(user, token)
             };
 
-            if (!model.ConfirmingNewAccount)
-            {
-                messageService.SendEmailChangeNoticeToPreviousEmailAddress(user, existingEmail);
-            }
+            if (!model.ConfirmingNewAccount) messageService.SendEmailChangeNoticeToPreviousEmailAddress(user, existingEmail);
             return View("~/Views/Users/Confirm.cshtml", model);
         }
 
         public virtual ActionResult Profiles(string username)
         {
             var user = userService.FindByUsername(username);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            var packages = (from p in packageService.FindPackagesByOwner(user)
-                            where p.Listed
-                            orderby p.Version descending
-                            group p by p.PackageRegistration.Id)
-                           .Select(c => new PackageViewModel(c.First()))
-                           .ToList();
-            
-            var packagesInModeration = (from p in packageService.FindPackagesByOwner(user)
-                            where p.Status == PackageStatusType.Submitted
-                            orderby p.Version descending
-                            group p by p.PackageRegistration.Id)
-                           .Select(c => new PackageViewModel(c.First()))
-                           .ToList();
-            
+            var packages = (from p in packageService.FindPackagesByOwner(user) where p.Listed orderby p.Version descending group p by p.PackageRegistration.Id).Select(c => new PackageViewModel(c.First())).ToList();
+
+            var packagesInModeration =
+                (from p in packageService.FindPackagesByOwner(user) where p.Status == PackageStatusType.Submitted orderby p.Version descending group p by p.PackageRegistration.Id).Select(
+                    c => new PackageViewModel(c.First())).ToList();
+
             //var userProfiles = profilesService.GetUserProfiles(user).ToList();
-            var userProfiles = (from p in profilesService.GetUserProfiles(user)
-                                orderby p.Name
-                                select p
-                                )
-                           .Select(c => new UserSiteProfileViewModel(c))
-                           .ToList();
+            var userProfiles = (from p in profilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new UserSiteProfileViewModel(c)).ToList();
 
             var model = new UserProfileModel
             {
@@ -353,20 +325,9 @@ namespace NuGetGallery
         [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, Authorize]
         public virtual ActionResult ChangePassword(PasswordChangeViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                if (!userService.ChangePassword(currentUser.Identity.Name, model.OldPassword, model.NewPassword))
-                {
-                    ModelState.AddModelError(
-                        "OldPassword",
-                        Strings.CurrentPasswordIncorrect);
-                }
-            }
+            if (ModelState.IsValid) if (!userService.ChangePassword(currentUser.Identity.Name, model.OldPassword, model.NewPassword)) ModelState.AddModelError("OldPassword", Strings.CurrentPasswordIncorrect);
 
-            if (!ModelState.IsValid)
-            {
-                return View("~/Views/Users/ChangePassword.cshtml", model);
-            }
+            if (!ModelState.IsValid) return View("~/Views/Users/ChangePassword.cshtml", model);
 
             return RedirectToAction(MVC.Users.PasswordChanged());
         }

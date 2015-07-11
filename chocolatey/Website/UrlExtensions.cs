@@ -1,11 +1,27 @@
-﻿using System.Web.Mvc;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 using System;
+using System.Web.Mvc;
+using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery
 {
-    using System.Text.RegularExpressions;
-    using MvcOverrides;
-
     public static class UrlExtensions
     {
         // Shorthand for current url
@@ -19,7 +35,8 @@ namespace NuGetGallery
             return url.RouteUrl(RouteName.Home);
         }
 
-        public static string PackageList(this UrlHelper url, int page, string sortOrder, string searchTerm, bool prerelease, bool moderatorQueue)
+        public static string PackageList(
+            this UrlHelper url, int page, string sortOrder, string searchTerm, bool prerelease, bool moderatorQueue)
         {
             return url.Action(MVC.Packages.ListPackages(searchTerm, sortOrder, page, prerelease, moderatorQueue));
         }
@@ -36,7 +53,13 @@ namespace NuGetGallery
 
         public static string Package(this UrlHelper url, string id, string version)
         {
-            return url.RouteUrl(RouteName.DisplayPackage, new { id, version });
+            return url.RouteUrl(
+                RouteName.DisplayPackage,
+                new
+                {
+                    id,
+                    version
+                });
         }
 
         public static string Package(this UrlHelper url, Package package)
@@ -64,10 +87,16 @@ namespace NuGetGallery
             string routeName = "v" + feedVersion + RouteName.DownloadPackage;
 
             string protocol = AppHarbor.IsSecureConnection(url.RequestContext.HttpContext) ? "https" : "http";
-            string returnUrl = url.RouteUrl(routeName, new { Id = id, Version = version }, protocol: protocol);
+            string returnUrl = url.RouteUrl(
+                routeName,
+                new
+                {
+                    Id = id,
+                    Version = version
+                },
+                protocol: protocol);
             //hack, replace removing port
             //return Regex.Replace(returnUrl, @"\:\d+\/", "/");
-
 
             // Ensure trailing slashes for versionless package URLs, as a fix for package filenames that look like known file extensions
             return version == null ? EnsureTrailingSlash(returnUrl) : returnUrl;
@@ -75,7 +104,12 @@ namespace NuGetGallery
 
         public static string LogOn(this UrlHelper url)
         {
-            return url.RouteUrl(RouteName.Authentication, new { action = "LogOn" });
+            return url.RouteUrl(
+                RouteName.Authentication,
+                new
+                {
+                    action = "LogOn"
+                });
         }
 
         public static string LogOff(this UrlHelper url)
@@ -85,7 +119,12 @@ namespace NuGetGallery
 
         public static string Search(this UrlHelper url, string searchTerm)
         {
-            return url.RouteUrl(RouteName.ListPackages, new { q = searchTerm });
+            return url.RouteUrl(
+                RouteName.ListPackages,
+                new
+                {
+                    q = searchTerm
+                });
         }
 
         public static string UploadPackage(this UrlHelper url)
@@ -108,9 +147,11 @@ namespace NuGetGallery
             return url.Action(MVC.Packages.ManagePackageOwners(package.Id, package.Version));
         }
 
-        public static string ConfirmationUrl(this UrlHelper url, ActionResult actionResult, string username, string token, string protocol)
+        public static string ConfirmationUrl(
+            this UrlHelper url, ActionResult actionResult, string username, string token, string protocol)
         {
-            return url.Action(actionResult.AddRouteValue("username", username).AddRouteValue("token", token), protocol: protocol);
+            return url.Action(
+                actionResult.AddRouteValue("username", username).AddRouteValue("token", token), protocol: protocol);
         }
 
         public static string VerifyPackage(this UrlHelper url)
@@ -120,10 +161,7 @@ namespace NuGetGallery
 
         internal static string EnsureTrailingSlash(string url)
         {
-            if (url != null && !url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
-            {
-                return url + '/';
-            }
+            if (url != null && !url.EndsWith("/", StringComparison.OrdinalIgnoreCase)) return url + '/';
 
             return url;
         }

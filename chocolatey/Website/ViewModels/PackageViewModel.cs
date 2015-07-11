@@ -1,11 +1,29 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace NuGetGallery
 {
-    using System.ComponentModel.DataAnnotations;
-
     public class PackageViewModel : IPackageVersionModel
     {
-        readonly Package package;
+        private readonly Package package;
 
         public PackageViewModel(Package package)
         {
@@ -31,27 +49,15 @@ namespace NuGetGallery
             Status = package.Status;
             SubmittedStatus = package.SubmittedStatus;
             ApprovedDate = package.ApprovedDate;
-            ReviewerUserName = package.ReviewedBy !=null ? package.ReviewedBy.Username : string.Empty;
+            ReviewerUserName = package.ReviewedBy != null ? package.ReviewedBy.Username : string.Empty;
             ReviewerEmailAddress = package.ReviewedBy != null ? package.ReviewedBy.EmailAddress : string.Empty;
             ReviewedDate = package.ReviewedDate;
             ReviewComments = package.ReviewComments;
         }
 
-        public string Id
-        {
-            get
-            {
-                return package.PackageRegistration.Id;
-            }
-        }
+        public string Id { get { return package.PackageRegistration.Id; } }
         public string Version { get; set; }
-        public string Title
-        {
-            get
-            {
-                return String.IsNullOrEmpty(package.Title) ? package.PackageRegistration.Id : package.Title;
-            }
-        }
+        public string Title { get { return String.IsNullOrEmpty(package.Title) ? package.PackageRegistration.Id : package.Title; } }
         public string Description { get; set; }
         public string ReleaseNotes { get; set; }
         public string IconUrl { get; set; }
@@ -80,13 +86,7 @@ namespace NuGetGallery
         public string ReviewComments { get; set; }
         public DateTime? ApprovedDate { get; set; }
 
-        public int TotalDownloadCount
-        {
-            get
-            {
-                return package.PackageRegistration.DownloadCount;
-            }
-        }
+        public int TotalDownloadCount { get { return package.PackageRegistration.DownloadCount; } }
 
         public bool IsCurrent(IPackageVersionModel current)
         {

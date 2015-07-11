@@ -1,10 +1,28 @@
-﻿using System.Collections.Generic;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace NuGetGallery
 {
-    [Bind(Include="Message,CopySender,Email,ConfirmedUser")]
+    [Bind(Include = "Message,CopySender,Email,ConfirmedUser")]
     public class ContactOwnersViewModel
     {
         public string PackageId { get; set; }
@@ -21,10 +39,11 @@ namespace NuGetGallery
         [Required(ErrorMessage = "Please enter your email address.")]
         [StringLength(4000)]
         [DataType(DataType.EmailAddress)]
-        [RegularExpression(@"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$", ErrorMessage = "This doesn't appear to be a valid email address.")]
+        [RegularExpression(
+            @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$"
+            , ErrorMessage = "This doesn't appear to be a valid email address.")]
         public string Email { get; set; }
 
         public bool ConfirmedUser { get; set; }
-
     }
 }

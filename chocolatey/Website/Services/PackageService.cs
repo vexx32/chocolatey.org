@@ -1,16 +1,34 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Transactions;
+using Elmah;
 using NuGet;
 using StackExchange.Profiling;
 
 namespace NuGetGallery
 {
-    using System.IO;
-
     public class PackageService : IPackageService
     {
         private readonly ICryptographyService cryptoSvc;
@@ -26,7 +44,6 @@ namespace NuGetGallery
         private readonly IIndexingService indexingSvc;
         private readonly IMessageService messageSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
-
 
         public PackageService(
             ICryptographyService cryptoSvc,
@@ -76,10 +93,7 @@ namespace NuGetGallery
                 }
             }
 
-            if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted)
-            {
-                NotifyForModeration(package, comments: string.Empty);
-            }
+            if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted) NotifyForModeration(package, comments: string.Empty);
 
             NotifyIndexingService();
 
@@ -90,10 +104,7 @@ namespace NuGetGallery
         {
             var package = FindPackageByIdAndVersion(id, version);
 
-            if (package == null)
-            {
-                throw new EntityException(Strings.PackageWithIdAndVersionNotFound, id, version);
-            }
+            if (package == null) throw new EntityException(Strings.PackageWithIdAndVersionNotFound, id, version);
 
             using (var tx = new TransactionScope())
             {
@@ -116,17 +127,14 @@ namespace NuGetGallery
         public virtual PackageRegistration FindPackageRegistrationById(string id)
         {
             return packageRegistrationRepo.GetAll()
-                .Include(pr => pr.Owners)
-                .Where(pr => pr.Id == id)
-                .SingleOrDefault();
+                                          .Include(pr => pr.Owners)
+                                          .Where(pr => pr.Id == id)
+                                          .SingleOrDefault();
         }
 
         public virtual Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease = true)
         {
-            if (String.IsNullOrWhiteSpace(id))
-            {
-                throw new ArgumentNullException("id");
-            }
+            if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("id");
 
             // Optimization: Everytime we look at a package we almost always want to see 
             // all the other packages with the same ID via the PackageRegistration property. 
@@ -146,26 +154,19 @@ namespace NuGetGallery
             Package package = null;
             if (version == null)
             {
-                if (allowPrerelease)
-                {
-                    package = packageVersions.FirstOrDefault(p => p.IsLatest);
-                }
-                else
-                {
-                    package = packageVersions.FirstOrDefault(p => p.IsLatestStable);
-                }
+                if (allowPrerelease) package = packageVersions.FirstOrDefault(p => p.IsLatest);
+                else package = packageVersions.FirstOrDefault(p => p.IsLatestStable);
 
                 // If we couldn't find a package marked as latest, then
                 // return the most recent one.
-                if (package == null)
-                {
-                    package = packageVersions.OrderByDescending(p => p.Version).FirstOrDefault();
-                }
-            }
-            else
+                if (package == null) package = packageVersions.OrderByDescending(p => p.Version).FirstOrDefault();
+            } else
             {
                 package = packageVersions
-                    .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && p.Version.Equals(version, StringComparison.OrdinalIgnoreCase))
+                    .Where(
+                        p =>
+                        p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase)
+                        && p.Version.Equals(version, StringComparison.OrdinalIgnoreCase))
                     .SingleOrDefault();
             }
             return package;
@@ -176,23 +177,23 @@ namespace NuGetGallery
             IQueryable<Package> packages = null;
 
             packages = packageRepo.GetAll()
-            .Include(x => x.PackageRegistration)
-            .Include(x => x.PackageRegistration.Owners)
-            .Where(p => p.Listed);
+                                  .Include(x => x.PackageRegistration)
+                                  .Include(x => x.PackageRegistration.Owners)
+                                  .Where(p => p.Listed);
 
-            return includePrerelease ? packages.Where(p => p.IsLatest) :
-                                       packages.Where(p => p.IsLatestStable);
+            return includePrerelease
+                       ? packages.Where(p => p.IsLatest)
+                       : packages.Where(p => p.IsLatestStable);
         }
 
         public IQueryable<Package> GetSubmittedPackages()
         {
             return packageRepo.GetAll()
-                    .Include(x => x.PackageRegistration)
-                    .Include(x => x.PackageRegistration.Owners)
-                    .Where(p => !p.IsPrerelease)
-                    .Where(p => p.StatusForDatabase == submittedStatus);
+                              .Include(x => x.PackageRegistration)
+                              .Include(x => x.PackageRegistration.Owners)
+                              .Where(p => !p.IsPrerelease)
+                              .Where(p => p.StatusForDatabase == submittedStatus);
         }
-
 
         public IEnumerable<Package> FindPackagesByOwner(User user)
         {
@@ -232,27 +233,27 @@ namespace NuGetGallery
         {
             using (MiniProfiler.Current.Step("Updating package stats"))
             {
-                packageStatsRepo.InsertOnCommit(new PackageStatistics
-                {
-                    // IMPORTANT: Timestamp is managed by the database.
+                packageStatsRepo.InsertOnCommit(
+                    new PackageStatistics
+                    {
+                        // IMPORTANT: Timestamp is managed by the database.
 
-                    // IMPORTANT: Until we understand privacy implications of storing IP Addresses thoroughly,
-                    // It's better to just not store them. Hence "unknown". - Phil Haack 10/6/2011
-                    IPAddress = "unknown",
-                    UserAgent = userAgent,
-                    Package = package
-                });
+                        // IMPORTANT: Until we understand privacy implications of storing IP Addresses thoroughly,
+                        // It's better to just not store them. Hence "unknown". - Phil Haack 10/6/2011
+                        IPAddress = "unknown",
+                        UserAgent = userAgent,
+                        Package = package
+                    });
 
                 packageStatsRepo.CommitChanges();
             }
         }
 
-        PackageRegistration CreateOrGetPackageRegistration(User currentUser, IPackage nugetPackage)
+        private PackageRegistration CreateOrGetPackageRegistration(User currentUser, IPackage nugetPackage)
         {
             var packageRegistration = FindPackageRegistrationById(nugetPackage.Id);
 
-            if (packageRegistration != null && !packageRegistration.Owners.Contains(currentUser))
-                throw new EntityException(Strings.PackageIdNotAvailable, nugetPackage.Id);
+            if (packageRegistration != null && !packageRegistration.Owners.Contains(currentUser)) throw new EntityException(Strings.PackageIdNotAvailable, nugetPackage.Id);
 
             if (packageRegistration == null)
             {
@@ -269,23 +270,29 @@ namespace NuGetGallery
             return packageRegistration;
         }
 
-        Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage)
+        private Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage)
         {
             var package = packageRegistration.Packages
-                .Where(pv => pv.Version == nugetPackage.Version.ToString())
-                .SingleOrDefault();
+                                             .Where(pv => pv.Version == nugetPackage.Version.ToString())
+                                             .SingleOrDefault();
 
             if (package != null)
             {
                 switch (package.Status)
                 {
-                    case PackageStatusType.Rejected:
-                        throw new EntityException(string.Format("This package has been {0} and can no longer be submitted.", package.Status.GetDescriptionOrValue().ToLower()));
-                    case PackageStatusType.Submitted:
+                    case PackageStatusType.Rejected :
+                        throw new EntityException(
+                            string.Format(
+                                "This package has been {0} and can no longer be submitted.",
+                                package.Status.GetDescriptionOrValue().ToLower()));
+                    case PackageStatusType.Submitted :
                         //continue on 
                         break;
-                    default:
-                        throw new EntityException("A package with identifier '{0}' and version '{1}' already exists.", packageRegistration.Id, package.Version);
+                    default :
+                        throw new EntityException(
+                            "A package with identifier '{0}' and version '{1}' already exists.",
+                            packageRegistration.Id,
+                            package.Version);
                 }
             }
 
@@ -293,10 +300,7 @@ namespace NuGetGallery
             var packageFileStream = nugetPackage.GetStream();
 
             //if new package versus updating an existing package.
-            if (package == null)
-            {
-                package = new Package();
-            }
+            if (package == null) package = new Package();
 
             package.Version = nugetPackage.Version.ToString();
             package.Description = nugetPackage.Description;
@@ -316,10 +320,7 @@ namespace NuGetGallery
             package.SubmittedStatus = PackageSubmittedStatusType.Ready;
             package.ApprovedDate = null;
 
-             if (package.ReviewedDate.HasValue)
-            {
-                package.SubmittedStatus = PackageSubmittedStatusType.Updated;
-            }
+            if (package.ReviewedDate.HasValue) package.SubmittedStatus = PackageSubmittedStatusType.Updated;
 
             //we don't moderate prereleases
             if (package.IsPrerelease)
@@ -339,59 +340,94 @@ namespace NuGetGallery
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
             package.ProjectUrl = nugetPackage.ProjectUrl == null ? string.Empty : nugetPackage.ProjectUrl.ToString();
 
-            package.ProjectSourceUrl = nugetPackage.ProjectSourceUrl == null ? string.Empty : nugetPackage.ProjectSourceUrl.ToString();
-            package.PackageSourceUrl = nugetPackage.PackageSourceUrl == null ? string.Empty : nugetPackage.PackageSourceUrl.ToString();
+            package.ProjectSourceUrl = nugetPackage.ProjectSourceUrl == null
+                                           ? string.Empty
+                                           : nugetPackage.ProjectSourceUrl.ToString();
+            package.PackageSourceUrl = nugetPackage.PackageSourceUrl == null
+                                           ? string.Empty
+                                           : nugetPackage.PackageSourceUrl.ToString();
             package.DocsUrl = nugetPackage.DocsUrl == null ? string.Empty : nugetPackage.DocsUrl.ToString();
-            package.MailingListUrl = nugetPackage.MailingListUrl == null ? string.Empty : nugetPackage.MailingListUrl.ToString();
+            package.MailingListUrl = nugetPackage.MailingListUrl == null
+                                         ? string.Empty
+                                         : nugetPackage.MailingListUrl.ToString();
             package.BugTrackerUrl = nugetPackage.BugTrackerUrl == null ? string.Empty : nugetPackage.BugTrackerUrl.ToString();
             package.Summary = nugetPackage.Summary ?? string.Empty;
             package.Tags = nugetPackage.Tags ?? string.Empty;
             package.Title = nugetPackage.Title ?? string.Empty;
 
-            foreach (var item in package.Authors.OrEmptyListIfNull().ToList()) packageAuthorRepo.DeleteOnCommit(item);
+            foreach (var item in package.Authors.OrEmptyListIfNull().ToList())
+            {
+                packageAuthorRepo.DeleteOnCommit(item);
+            }
             packageAuthorRepo.CommitChanges();
-            foreach (var author in nugetPackage.Authors) package.Authors.Add(new PackageAuthor { Name = author });
+            foreach (var author in nugetPackage.Authors)
+            {
+                package.Authors.Add(
+                    new PackageAuthor
+                    {
+                        Name = author
+                    });
+            }
 
-            foreach (var item in package.SupportedFrameworks.OrEmptyListIfNull().ToList()) packageFrameworksRepo.DeleteOnCommit(item);
+            foreach (var item in package.SupportedFrameworks.OrEmptyListIfNull().ToList())
+            {
+                packageFrameworksRepo.DeleteOnCommit(item);
+            }
             packageFrameworksRepo.CommitChanges();
             var supportedFrameworks = GetSupportedFrameworks(nugetPackage).Select(fn => fn.ToShortNameOrNull()).ToArray();
             if (!supportedFrameworks.AnySafe(sf => sf == null))
             {
                 foreach (var supportedFramework in supportedFrameworks)
                 {
-                    package.SupportedFrameworks.Add(new PackageFramework { TargetFramework = supportedFramework });
+                    package.SupportedFrameworks.Add(
+                        new PackageFramework
+                        {
+                            TargetFramework = supportedFramework
+                        });
                 }
             }
 
-            foreach (var item in package.Dependencies.OrEmptyListIfNull().ToList()) packageDependenciesRepo.DeleteOnCommit(item);
+            foreach (var item in package.Dependencies.OrEmptyListIfNull().ToList())
+            {
+                packageDependenciesRepo.DeleteOnCommit(item);
+            }
             packageDependenciesRepo.CommitChanges();
             foreach (var dependencySet in nugetPackage.DependencySets)
             {
                 if (dependencySet.Dependencies.Count == 0)
                 {
-
-                    package.Dependencies.Add(new PackageDependency
+                    package.Dependencies.Add(
+                        new PackageDependency
                         {
                             Id = null,
                             VersionSpec = null,
                             TargetFramework = dependencySet.TargetFramework.ToShortNameOrNull()
                         });
-                }
-                else
+                } else
                 {
-                    foreach (var dependency in dependencySet.Dependencies.Select(d => new { d.Id, d.VersionSpec, dependencySet.TargetFramework }))
-                    {
-                        package.Dependencies.Add(new PackageDependency
+                    foreach (var dependency in dependencySet.Dependencies.Select(
+                        d => new
                         {
-                            Id = dependency.Id,
-                            VersionSpec = dependency.VersionSpec == null ? null : dependency.VersionSpec.ToString(),
-                            TargetFramework = dependency.TargetFramework.ToShortNameOrNull()
-                        });
+                            d.Id,
+                            d.VersionSpec,
+                            dependencySet.TargetFramework
+                        }))
+                    {
+                        package.Dependencies.Add(
+                            new PackageDependency
+                            {
+                                Id = dependency.Id,
+                                VersionSpec = dependency.VersionSpec == null ? null : dependency.VersionSpec.ToString(),
+                                TargetFramework = dependency.TargetFramework.ToShortNameOrNull()
+                            });
                     }
                 }
             }
 
-            foreach (var item in package.Files.OrEmptyListIfNull().ToList()) packageFilesRepo.DeleteOnCommit(item);
+            foreach (var item in package.Files.OrEmptyListIfNull().ToList())
+            {
+                packageFilesRepo.DeleteOnCommit(item);
+            }
             packageFilesRepo.CommitChanges();
             foreach (var packageFile in nugetPackage.GetFiles().OrEmptyListIfNull())
             {
@@ -414,27 +450,28 @@ namespace NuGetGallery
 
                     if (extension != null)
                     {
-                        if (extensions.Contains(extension))
-                        {
-                            fileContent = packageFile.GetStream().ReadToEnd();
-                        }
+                        if (extensions.Contains(extension)) fileContent = packageFile.GetStream().ReadToEnd();
                         else if (extension.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
                         {
                             var bytes = packageFile.GetStream().ReadAllBytes();
-                            var md5Hash = BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "MD5"))).Replace("-", string.Empty);
-                            var sha1Hash = BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA1"))).Replace("-", string.Empty);
+                            var md5Hash =
+                                BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "MD5")))
+                                            .Replace("-", string.Empty);
+                            var sha1Hash =
+                                BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA1")))
+                                            .Replace("-", string.Empty);
 
                             fileContent = string.Format("md5: {0} | sha1: {1}", md5Hash, sha1Hash);
                         }
                     }
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     // Log but swallow the exception
-                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                 }
 
-                package.Files.Add(new PackageFile
+                package.Files.Add(
+                    new PackageFile
                     {
                         FilePath = filePath,
                         FileContent = fileContent,
@@ -452,63 +489,37 @@ namespace NuGetGallery
             return package.GetSupportedFrameworks();
         }
 
-        static void ValidateNuGetPackage(IPackage nugetPackage)
+        private static void ValidateNuGetPackage(IPackage nugetPackage)
         {
             // TODO: Change this to use DataAnnotations
-            if (nugetPackage.Id.Length > 128)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Id", "128");
-            if (nugetPackage.Authors != null && String.Join(",", nugetPackage.Authors.ToArray()).Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Authors", "4000");
-            if (nugetPackage.Copyright != null && nugetPackage.Copyright.Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Copyright", "4000");
-            if (nugetPackage.Description != null && nugetPackage.Description.Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Description", "4000");
-            if (nugetPackage.IconUrl != null && nugetPackage.IconUrl.ToString().Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "IconUrl", "4000");
-            if (nugetPackage.LicenseUrl != null && nugetPackage.LicenseUrl.ToString().Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "LicenseUrl", "4000");
-            if (nugetPackage.ProjectUrl != null && nugetPackage.ProjectUrl.ToString().Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "ProjectUrl", "4000");
-            if (nugetPackage.Summary != null && nugetPackage.Summary.Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Summary", "4000");
-            if (nugetPackage.Tags != null && nugetPackage.Tags.ToString().Length > 4000)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Tags", "4000");
-            if (nugetPackage.Title != null && nugetPackage.Title.Length > 256)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Title", "256");
+            if (nugetPackage.Id.Length > 128) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Id", "128");
+            if (nugetPackage.Authors != null && String.Join(",", nugetPackage.Authors.ToArray()).Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Authors", "4000");
+            if (nugetPackage.Copyright != null && nugetPackage.Copyright.Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Copyright", "4000");
+            if (nugetPackage.Description != null && nugetPackage.Description.Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Description", "4000");
+            if (nugetPackage.IconUrl != null && nugetPackage.IconUrl.ToString().Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "IconUrl", "4000");
+            if (nugetPackage.LicenseUrl != null && nugetPackage.LicenseUrl.ToString().Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "LicenseUrl", "4000");
+            if (nugetPackage.ProjectUrl != null && nugetPackage.ProjectUrl.ToString().Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "ProjectUrl", "4000");
+            if (nugetPackage.Summary != null && nugetPackage.Summary.Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Summary", "4000");
+            if (nugetPackage.Tags != null && nugetPackage.Tags.Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Tags", "4000");
+            if (nugetPackage.Title != null && nugetPackage.Title.Length > 256) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Title", "256");
 
-            if (nugetPackage.Version != null && nugetPackage.Version.ToString().Length > 64)
-            {
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Version", "64");
-            }
+            if (nugetPackage.Version != null && nugetPackage.Version.ToString().Length > 64) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Version", "64");
 
-            if (nugetPackage.Language != null && nugetPackage.Language.Length > 20)
-            {
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Language", "20");
-            }
+            if (nugetPackage.Language != null && nugetPackage.Language.Length > 20) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Language", "20");
 
             foreach (var dependency in nugetPackage.DependencySets.SelectMany(s => s.Dependencies))
             {
-                if (dependency.Id != null && dependency.Id.Length > 128)
-                {
-                    throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Dependency.Id", "128");
-                }
+                if (dependency.Id != null && dependency.Id.Length > 128) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Dependency.Id", "128");
 
-                if (dependency.VersionSpec != null && dependency.VersionSpec.ToString().Length > 256)
-                {
-                    throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Dependency.VersionSpec", "256");
-                }
+                if (dependency.VersionSpec != null && dependency.VersionSpec.ToString().Length > 256) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Dependency.VersionSpec", "256");
             }
 
-            if (nugetPackage.DependencySets != null && nugetPackage.DependencySets.Flatten().Length > Int16.MaxValue)
-                throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Dependencies", Int16.MaxValue);
+            if (nugetPackage.DependencySets != null && nugetPackage.DependencySets.Flatten().Length > Int16.MaxValue) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Dependencies", Int16.MaxValue);
         }
 
         private static void UpdateIsLatest(PackageRegistration packageRegistration)
         {
-            if (!packageRegistration.Packages.Any())
-            {
-                return;
-            }
+            if (!packageRegistration.Packages.Any()) return;
 
             // TODO: improve setting the latest bit; this is horrible. Trigger maybe? 
             foreach (var pv in packageRegistration.Packages.Where(p => p.IsLatest || p.IsLatestStable))
@@ -530,15 +541,15 @@ namespace NuGetGallery
                 {
                     // If the newest uploaded package is a prerelease package, we need to find an older package that is 
                     // a release version and set it to IsLatest.
-                    var latestReleasePackage = FindPackage(packageRegistration.Packages.Where(p => !p.IsPrerelease && p.Listed));
+                    var latestReleasePackage =
+                        FindPackage(packageRegistration.Packages.Where(p => !p.IsPrerelease && p.Listed));
                     if (latestReleasePackage != null)
                     {
                         // We could have no release packages
                         latestReleasePackage.IsLatestStable = true;
                         latestReleasePackage.LastUpdated = DateTime.UtcNow;
                     }
-                }
-                else
+                } else
                 {
                     // Only release versions are marked as IsLatestStable. 
                     latestPackage.IsLatestStable = true;
@@ -579,10 +590,7 @@ namespace NuGetGallery
             if (package == null) throw new ArgumentNullException("package");
             if (package.Listed) return;
 
-            if (!package.Listed && (package.IsLatestStable || package.IsLatest))
-            {
-                throw new InvalidOperationException("An unlisted package should never be latest or latest stable!");
-            }
+            if (!package.Listed && (package.IsLatestStable || package.IsLatest)) throw new InvalidOperationException("An unlisted package should never be latest or latest stable!");
 
             if (package.Status == PackageStatusType.Approved || package.Status == PackageStatusType.Exempted)
             {
@@ -595,16 +603,14 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
         }
 
-        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user, bool sendEmail)
+        public void ChangePackageStatus(
+            Package package, PackageStatusType status, string comments, User user, bool sendEmail)
         {
             if (package.Status == status && package.ReviewComments == comments) return;
 
             var now = DateTime.UtcNow;
 
-            if (package.Status == PackageStatusType.Submitted)
-            {
-                package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
-            }
+            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
 
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
@@ -614,15 +620,15 @@ namespace NuGetGallery
 
                 switch (package.Status)
                 {
-                    case PackageStatusType.Submitted:
-                    case PackageStatusType.Rejected:
+                    case PackageStatusType.Submitted :
+                    case PackageStatusType.Rejected :
                         package.Listed = false;
                         break;
-                    case PackageStatusType.Approved:
+                    case PackageStatusType.Approved :
                         package.ApprovedDate = now;
                         package.Listed = true;
                         break;
-                    case PackageStatusType.Exempted:
+                    case PackageStatusType.Exempted :
                         package.Listed = true;
                         break;
                 }
@@ -641,10 +647,7 @@ namespace NuGetGallery
             }
 
             packageRepo.CommitChanges();
-            if (sendEmail)
-            {
-                messageSvc.SendPackageModerationEmail(package, emailComments);
-            }
+            if (sendEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
 
             NotifyIndexingService();
         }
@@ -659,18 +662,16 @@ namespace NuGetGallery
 
             if (trustedPackage)
             {
-                var packagesToUpdate = package.PackageRegistration.Packages.Where(p => p.Status == PackageStatusType.Unknown || p.Status == PackageStatusType.Submitted).ToList();
+                var packagesToUpdate =
+                    package.PackageRegistration.Packages.Where(
+                        p => p.Status == PackageStatusType.Unknown || p.Status == PackageStatusType.Submitted).ToList();
 
                 if (packagesToUpdate.Count != 0)
                 {
-
                     var now = DateTime.UtcNow;
                     foreach (var trustedPkg in packagesToUpdate.OrEmptyListIfNull())
                     {
-                        if (trustedPkg.Status == PackageStatusType.Submitted)
-                        {
-                            trustedPkg.Listed = true;
-                        }
+                        if (trustedPkg.Status == PackageStatusType.Submitted) trustedPkg.Listed = true;
 
                         trustedPkg.Status = PackageStatusType.Approved;
                         trustedPkg.LastUpdated = now;
@@ -690,47 +691,29 @@ namespace NuGetGallery
         // TODO: Should probably be run in a transaction
         public void MarkPackageUnlisted(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-            if (!package.Listed)
-            {
-                return;
-            }
+            if (package == null) throw new ArgumentNullException("package");
+            if (!package.Listed) return;
 
             package.Listed = false;
             package.LastUpdated = DateTime.UtcNow;
 
-            if (package.IsLatest || package.IsLatestStable)
-            {
-                UpdateIsLatest(package.PackageRegistration);
-            }
+            if (package.IsLatest || package.IsLatestStable) UpdateIsLatest(package.PackageRegistration);
             packageRepo.CommitChanges();
         }
 
         private static Package FindPackage(IEnumerable<Package> packages, Func<Package, bool> predicate = null)
         {
-            if (predicate != null)
-            {
-                packages = packages.Where(predicate);
-            }
+            if (predicate != null) packages = packages.Where(predicate);
             SemanticVersion version = packages.Max(p => new SemanticVersion(p.Version));
 
-            if (version == null)
-            {
-                return null;
-            }
+            if (version == null) return null;
             return packages.First(pv => pv.Version.Equals(version.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
         public PackageOwnerRequest CreatePackageOwnerRequest(PackageRegistration package, User currentOwner, User newOwner)
         {
             var existingRequest = FindExistingPackageOwnerRequest(package, newOwner);
-            if (existingRequest != null)
-            {
-                return existingRequest;
-            }
+            if (existingRequest != null) return existingRequest;
 
             var newRequest = new PackageOwnerRequest
             {
@@ -748,25 +731,13 @@ namespace NuGetGallery
 
         public bool ConfirmPackageOwner(PackageRegistration package, User pendingOwner, string token)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
+            if (package == null) throw new ArgumentNullException("package");
 
-            if (pendingOwner == null)
-            {
-                throw new ArgumentNullException("pendingOwner");
-            }
+            if (pendingOwner == null) throw new ArgumentNullException("pendingOwner");
 
-            if (String.IsNullOrEmpty(token))
-            {
-                throw new ArgumentNullException("token");
-            }
+            if (String.IsNullOrEmpty(token)) throw new ArgumentNullException("token");
 
-            if (package.IsOwner(pendingOwner))
-            {
-                return true;
-            }
+            if (package.IsOwner(pendingOwner)) return true;
 
             var request = FindExistingPackageOwnerRequest(package, pendingOwner);
             if (request != null && request.ConfirmationCode == token)
@@ -794,6 +765,5 @@ namespace NuGetGallery
         {
             messageSvc.SendPackageModerationEmail(package, comments);
         }
-
     }
 }

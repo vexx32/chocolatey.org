@@ -1,4 +1,23 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -7,13 +26,12 @@ using System.Security.Principal;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
+using Elmah;
 using NuGet;
 using PoliteCaptcha;
 
 namespace NuGetGallery
 {
-    using System.Collections.Generic;
-
     public partial class PackagesController : Controller
     {
         // TODO: add support for URL-based package submission
@@ -30,14 +48,8 @@ namespace NuGetGallery
         public IConfiguration Configuration { get; set; }
 
         public PackagesController(
-            IPackageService packageSvc,
-            IUploadFileService uploadFileSvc,
-            IUserService userSvc,
-            IMessageService messageService,
-            ISearchService searchSvc,
-            IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
-            INuGetExeDownloaderService nugetExeDownloaderSvc,
-            IConfiguration configuration)
+            IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, ISearchService searchSvc, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
+            INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration configuration)
         {
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
@@ -46,7 +58,7 @@ namespace NuGetGallery
             this.searchSvc = searchSvc;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
             this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
-            this.Configuration = configuration;
+            Configuration = configuration;
         }
 
         [Authorize]
@@ -56,8 +68,7 @@ namespace NuGetGallery
 
             using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (existingUploadFile != null)
-                    return RedirectToRoute(RouteName.VerifyPackage);
+                if (existingUploadFile != null) return RedirectToRoute(RouteName.VerifyPackage);
             }
 
             return View("~/Views/Packages/UploadPackage.cshtml");
@@ -92,8 +103,7 @@ namespace NuGetGallery
                 {
                     nuGetPackage = ReadNuGetPackage(uploadStream);
                 }
-            }
-            catch
+            } catch
             {
                 ModelState.AddModelError(String.Empty, Strings.FailedToReadUploadFile);
                 return View("~/Views/Packages/UploadPackage.cshtml");
@@ -135,10 +145,7 @@ namespace NuGetGallery
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
 
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
@@ -146,42 +153,28 @@ namespace NuGetGallery
         [Authorize(Roles = "Admins, Moderators, Reviewers"), HttpPost]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
-            if (!ModelState.IsValid)
-            {
-                return DisplayPackage(id, version);
-            }
+            if (!ModelState.IsValid) return DisplayPackage(id, version);
 
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
 
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
 
-            if (!ModelState.IsValid)
-            {
-                return View("~/Views/Packages/DisplayPackage.cshtml", model);
-            }
+            if (!ModelState.IsValid) return View("~/Views/Packages/DisplayPackage.cshtml", model);
 
             var status = PackageStatusType.Unknown;
             try
             {
                 status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
-
                 // Log but swallow the exception
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
             //reviewers cannot change the current status
-            if (User.IsReviewer())
-            {
-                status = package.Status;
-            }
-            
+            if (User.IsReviewer()) status = package.Status;
+
             if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Unknown)
             {
                 ModelState.AddModelError(String.Empty, "A package cannot be moved into unknown status.");
@@ -219,10 +212,7 @@ namespace NuGetGallery
 
         public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = true, bool moderatorQueue = false)
         {
-            if (page < 1)
-            {
-                page = 1;
-            }
+            if (page < 1) page = 1;
 
             IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
@@ -233,9 +223,7 @@ namespace NuGetGallery
 
                 //This is going to be fun. Unknown status ones would be listed, but sometimes a few might slip through the cracks if a maintainer unlists a package.
                 // A user can just email us to catch those though.
-                packageVersions = packageVersions
-                    .Where(p => !p.IsPrerelease)
-                    .Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
+                packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
             }
 
             q = (q ?? "").Trim();
@@ -256,7 +244,7 @@ namespace NuGetGallery
             if (moderatorQueue)
             {
                 var submittedPackages = packageSvc.GetSubmittedPackages().ToList();
-                
+
                 var updatedStatus = PackageSubmittedStatusType.Updated.ToString();
                 var readyStatus = PackageSubmittedStatusType.Ready.ToString();
                 var waitingStatus = PackageSubmittedStatusType.Waiting.ToString();
@@ -264,34 +252,22 @@ namespace NuGetGallery
                 //var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
                 var resubmittedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == updatedStatus).OrderBy(p => p.Published).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
-                
+
                 var unreviewedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
-                
+
                 //var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
-            
-                packagesToShow = resubmittedPackages
-                    .Union(unreviewedPackages)
-                    .Union(waitingForMaintainerPackages);
+
+                packagesToShow = resubmittedPackages.Union(unreviewedPackages).Union(waitingForMaintainerPackages);
 
                 totalHits = packagesToShow.Count() + packageVersions.Count();
 
-                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count())
-                {
-                    packagesToShow = packagesToShow
-                   .Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
-                }
+                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
 
-                packagesToShow = packagesToShow
-                    .Skip(searchFilter.Skip)
-                    .Take(searchFilter.Take);
-            }
-            else
-            {
-                packagesToShow = searchSvc.Search(packageVersions, searchFilter, out totalHits).ToList();
-            }
+                packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
+            } else packagesToShow = searchSvc.Search(packageVersions, searchFilter, out totalHits).ToList();
 
             if (page == 1 && !packagesToShow.Any())
             {
@@ -299,18 +275,8 @@ namespace NuGetGallery
                 totalHits = 0;
             }
 
-            var viewModel = new PackageListViewModel(packagesToShow,
-                q,
-                sortOrder,
-                totalHits,
-                page - 1,
-                Constants.DefaultPackageListPageSize,
-                Url,
-                prerelease,
-                moderatorQueue,
-                updatedPackagesCount,
-                unreviewedPackagesCount,
-                waitingPackagesCount);
+            var viewModel = new PackageListViewModel(
+                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount);
 
             ViewBag.SearchTerm = q;
 
@@ -322,10 +288,7 @@ namespace NuGetGallery
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
 
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
 
             var model = new ReportAbuseViewModel
             {
@@ -336,10 +299,7 @@ namespace NuGetGallery
             if (Request.IsAuthenticated)
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
-                if (user.Confirmed)
-                {
-                    model.ConfirmedUser = true;
-                }
+                if (user.Confirmed) model.ConfirmedUser = true;
             }
 
             return View("~/Views/Packages/ReportAbuse.cshtml", model);
@@ -348,27 +308,17 @@ namespace NuGetGallery
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult ReportAbuse(string id, string version, ReportAbuseViewModel reportForm)
         {
-            if (!ModelState.IsValid)
-            {
-                return ReportAbuse(id, version);
-            }
+            if (!ModelState.IsValid) return ReportAbuse(id, version);
 
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
 
             MailAddress from = null;
             if (Request.IsAuthenticated)
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            }
-            else
-            {
-                from = new MailAddress(reportForm.Email);
-            }
+            } else from = new MailAddress(reportForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -383,10 +333,7 @@ namespace NuGetGallery
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
 
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
 
             var model = new ReportAbuseViewModel
             {
@@ -397,10 +344,7 @@ namespace NuGetGallery
             if (Request.IsAuthenticated)
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
-                if (user.Confirmed)
-                {
-                    model.ConfirmedUser = true;
-                }
+                if (user.Confirmed) model.ConfirmedUser = true;
             }
 
             return View("~/Views/Packages/ContactAdmins.cshtml", model);
@@ -409,27 +353,17 @@ namespace NuGetGallery
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult ContactAdmins(string id, string version, ReportAbuseViewModel reportForm)
         {
-            if (!ModelState.IsValid)
-            {
-                return ContactAdmins(id, version);
-            }
+            if (!ModelState.IsValid) return ContactAdmins(id, version);
 
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
 
             MailAddress from = null;
             if (Request.IsAuthenticated)
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            }
-            else
-            {
-                from = new MailAddress(reportForm.Email);
-            }
+            } else from = new MailAddress(reportForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -444,10 +378,7 @@ namespace NuGetGallery
         {
             var package = packageSvc.FindPackageRegistrationById(id);
 
-            if (package == null)
-            {
-                return PackageNotFound(id);
-            }
+            if (package == null) return PackageNotFound(id);
 
             var model = new ContactOwnersViewModel
             {
@@ -458,10 +389,7 @@ namespace NuGetGallery
             if (Request.IsAuthenticated)
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
-                if (user.Confirmed)
-                {
-                    model.ConfirmedUser = true;
-                }
+                if (user.Confirmed) model.ConfirmedUser = true;
             }
 
             return View("~/Views/Packages/ContactOwners.cshtml", model);
@@ -470,27 +398,17 @@ namespace NuGetGallery
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult ContactOwners(string id, ContactOwnersViewModel contactForm)
         {
-            if (!ModelState.IsValid)
-            {
-                return ContactOwners(id);
-            }
+            if (!ModelState.IsValid) return ContactOwners(id);
 
             var package = packageSvc.FindPackageRegistrationById(id);
-            if (package == null)
-            {
-                return PackageNotFound(id);
-            }
+            if (package == null) return PackageNotFound(id);
 
             MailAddress from = null;
             if (Request.IsAuthenticated)
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            }
-            else
-            {
-                from = new MailAddress(contactForm.Email);
-            }
+            } else from = new MailAddress(contactForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -509,10 +427,7 @@ namespace NuGetGallery
 
         private bool UserHasPackageChangePermissions(IPrincipal user, Package package)
         {
-            if (user != null && (package.IsOwner(user) || user.IsModerator()))
-            {
-                return true;
-            }
+            if (user != null && (package.IsOwner(user) || user.IsModerator())) return true;
 
             return false;
         }
@@ -521,15 +436,9 @@ namespace NuGetGallery
         public virtual ActionResult ManagePackageOwners(string id, string version)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
+            if (package == null) return PackageNotFound(id, version);
 
-            if (!UserHasPackageChangePermissions(HttpContext.User, package))
-            {
-                return new HttpStatusCodeResult(401, "Unauthorized");
-            }
+            if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
             var model = new ManagePackageOwnersViewModel(package, HttpContext.User);
 
@@ -551,23 +460,11 @@ namespace NuGetGallery
         internal virtual ActionResult Delete(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
-            if (!UserHasPackageChangePermissions(HttpContext.User, package))
-            {
-                return new HttpStatusCodeResult(401, "Unauthorized");
-            }
+            if (package == null) return PackageNotFound(id, version);
+            if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
-            if (!(listed ?? false))
-            {
-                packageSvc.MarkPackageUnlisted(package);
-            }
-            else
-            {
-                packageSvc.MarkPackageListed(package);
-            }
+            if (!(listed ?? false)) packageSvc.MarkPackageUnlisted(package);
+            else packageSvc.MarkPackageListed(package);
 
             return Redirect(urlFactory(package));
         }
@@ -587,27 +484,15 @@ namespace NuGetGallery
         [Authorize]
         public virtual ActionResult ConfirmOwner(string id, string username, string token)
         {
-            if (String.IsNullOrEmpty(token))
-            {
-                return HttpNotFound();
-            }
+            if (String.IsNullOrEmpty(token)) return HttpNotFound();
 
             var package = packageSvc.FindPackageRegistrationById(id);
-            if (package == null)
-            {
-                return HttpNotFound();
-            }
+            if (package == null) return HttpNotFound();
 
             var user = userSvc.FindByUsername(username);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
-            if (!String.Equals(user.Username, User.Identity.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                return new HttpStatusCodeResult(403);
-            }
+            if (!String.Equals(user.Username, User.Identity.Name, StringComparison.OrdinalIgnoreCase)) return new HttpStatusCodeResult(403);
 
             var model = new PackageOwnerConfirmationModel
             {
@@ -625,28 +510,16 @@ namespace NuGetGallery
 
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
-            if (!(listed ?? false))
-            {
-                packageSvc.MarkPackageUnlisted(package);
-            }
-            else
-            {
-                packageSvc.MarkPackageListed(package);
-            }
+            if (!(listed ?? false)) packageSvc.MarkPackageUnlisted(package);
+            else packageSvc.MarkPackageListed(package);
             return Redirect(urlFactory(package));
         }
 
         private ActionResult GetPackageOwnerActionFormResult(string id, string version)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
-            if (package == null)
-            {
-                return PackageNotFound(id, version);
-            }
-            if (!UserHasPackageChangePermissions(HttpContext.User, package))
-            {
-                return new HttpStatusCodeResult(401, "Unauthorized");
-            }
+            if (package == null) return PackageNotFound(id, version);
+            if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
             var model = new DisplayPackageViewModel(package);
             return View(model);
@@ -675,20 +548,21 @@ namespace NuGetGallery
                 package = ReadNuGetPackage(uploadFile);
             }
 
-            return View("~/Views/Packages/VerifyPackage.cshtml", new VerifyPackageViewModel
-            {
-                Id = package.Id,
-                Version = package.Version.ToStringSafe(),
-                Title = package.Title,
-                Summary = package.Summary,
-                Description = package.Description,
-                RequiresLicenseAcceptance = package.RequireLicenseAcceptance,
-                LicenseUrl = package.LicenseUrl.ToStringSafe(),
-                Tags = package.Tags,
-                ProjectUrl = package.ProjectUrl.ToStringSafe(),
-                Authors = package.Authors.Flatten(),
-                Listed = package.Listed
-            });
+            return View(
+                "~/Views/Packages/VerifyPackage.cshtml", new VerifyPackageViewModel
+                {
+                    Id = package.Id,
+                    Version = package.Version.ToStringSafe(),
+                    Title = package.Title,
+                    Summary = package.Summary,
+                    Description = package.Description,
+                    RequiresLicenseAcceptance = package.RequireLicenseAcceptance,
+                    LicenseUrl = package.LicenseUrl.ToStringSafe(),
+                    Tags = package.Tags,
+                    ProjectUrl = package.ProjectUrl.ToStringSafe(),
+                    Authors = package.Authors.Flatten(),
+                    Listed = package.Listed
+                });
         }
 
         [Authorize, HttpPost, ValidateAntiForgeryToken]
@@ -708,8 +582,7 @@ namespace NuGetGallery
             {
                 package = packageSvc.CreatePackage(nugetPackage, currentUser);
                 packageSvc.PublishPackage(package.PackageRegistration.Id, package.Version);
-                if (listed.HasValue && listed.Value == false)
-                    packageSvc.MarkPackageUnlisted(package);
+                if (listed.HasValue && listed.Value == false) packageSvc.MarkPackageUnlisted(package);
                 uploadFileSvc.DeleteUploadFile(currentUser.Key);
                 autoCuratedPackageCmd.Execute(package, nugetPackage);
                 tx.Complete();
@@ -721,8 +594,14 @@ namespace NuGetGallery
                 nugetExeDownloaderSvc.UpdateExecutable(nugetPackage);
             }
 
-            TempData["Message"] = string.Format("You have successfully created '{0}' version '{1}'. The package is now under review by the moderators and will show up once approved.", package.PackageRegistration.Id, package.Version);
-            return RedirectToRoute(RouteName.DisplayPackage, new { package.PackageRegistration.Id, package.Version });
+            TempData["Message"] = string.Format(
+                "You have successfully created '{0}' version '{1}'. The package is now under review by the moderators and will show up once approved.", package.PackageRegistration.Id, package.Version);
+            return RedirectToRoute(
+                RouteName.DisplayPackage, new
+                {
+                    package.PackageRegistration.Id,
+                    package.Version
+                });
         }
 
         [Authorize, HttpPost, ValidateAntiForgeryToken]
@@ -738,10 +617,7 @@ namespace NuGetGallery
         public virtual ActionResult NotifyMaintainersOfAddedComment(string packageId, CommentViewModel commentViewModel)
         {
             var package = packageSvc.FindPackageRegistrationById(packageId);
-            if (package == null)
-            {
-                return PackageNotFound(packageId);
-            }
+            if (package == null) return PackageNotFound(packageId);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -807,19 +683,13 @@ namespace NuGetGallery
 
         private static string EnsureTrailingSlash(string siteRoot)
         {
-            if (!siteRoot.EndsWith("/", StringComparison.Ordinal))
-            {
-                siteRoot = siteRoot + '/';
-            }
+            if (!siteRoot.EndsWith("/", StringComparison.Ordinal)) siteRoot = siteRoot + '/';
             return siteRoot;
         }
 
         private static string RemoveStartingSlash(string urlPath)
         {
-            if (urlPath.StartsWith("/"))
-            {
-                return urlPath.Substring(1);
-            }
+            if (urlPath.StartsWith("/")) return urlPath.Substring(1);
 
             return urlPath;
         }

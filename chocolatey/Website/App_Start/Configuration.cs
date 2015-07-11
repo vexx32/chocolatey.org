@@ -1,4 +1,22 @@
-﻿using System;
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// authors/contributors from ChocolateyGallery
+// at https://github.com/chocolatey/chocolatey.org,
+// and the authors/contributors of NuGetGallery 
+// at https://github.com/NuGet/NuGetGallery
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
@@ -22,123 +40,44 @@ namespace NuGetGallery
             return ReadAppSettings(key, value => value);
         }
 
-        public static T ReadAppSettings<T>(
-            string key,
-            Func<string, T> valueThunk)
+        public static T ReadAppSettings<T>(string key, Func<string, T> valueThunk)
         {
             if (!_configThunks.ContainsKey(key))
-                _configThunks.Add(key, new Lazy<object>(() =>
-                {
-                    var value = ConfigurationManager.AppSettings[string.Format("Gallery:{0}", key)];
-                    if (string.IsNullOrWhiteSpace(value))
-                        value = null;
-                    return valueThunk(value);
-                }));
+            {
+                _configThunks.Add(
+                    key, new Lazy<object>(
+                             () =>
+                             {
+                                 var value = ConfigurationManager.AppSettings[string.Format("Gallery:{0}", key)];
+                                 if (string.IsNullOrWhiteSpace(value)) value = null;
+                                 return valueThunk(value);
+                             }));
+            }
 
             return (T)_configThunks[key].Value;
         }
 
-        public string AzureStorageAccessKey
-        {
-            get
-            {
-                return ReadAppSettings("AzureStorageAccessKey");
-            }
-        }
+        public string AzureStorageAccessKey { get { return ReadAppSettings("AzureStorageAccessKey"); } }
 
-        public string AzureStorageAccountName
-        {
-            get
-            {
-                return ReadAppSettings("AzureStorageAccountName");
-            }
-        }
+        public string AzureStorageAccountName { get { return ReadAppSettings("AzureStorageAccountName"); } }
 
-        public string AzureStorageBlobUrl
-        {
-            get
-            {
-                return ReadAppSettings("AzureStorageBlobUrl");
-            }
-        }
+        public string AzureStorageBlobUrl { get { return ReadAppSettings("AzureStorageBlobUrl"); } }
 
-        public string FileStorageDirectory
-        {
-            get
-            {
-                return ReadAppSettings(
-                    "FileStorageDirectory",
-                    value => value ?? HttpContext.Current.Server.MapPath("~/App_Data/Files"));
-            }
-        }
+        public string FileStorageDirectory { get { return ReadAppSettings("FileStorageDirectory", value => value ?? HttpContext.Current.Server.MapPath("~/App_Data/Files")); } }
 
-        public PackageStoreType PackageStoreType
-        {
-            get
-            {
-                return ReadAppSettings(
-                    "PackageStoreType",
-                    value => (PackageStoreType)Enum.Parse(typeof(PackageStoreType), value ?? PackageStoreType.NotSpecified.ToString()));
-            }
-        }
+        public PackageStoreType PackageStoreType { get { return ReadAppSettings("PackageStoreType", value => (PackageStoreType)Enum.Parse(typeof(PackageStoreType), value ?? PackageStoreType.NotSpecified.ToString())); } }
 
-        public string AzureCdnHost
-        {
-            get
-            {
-                return ReadAppSettings("AzureCdnHost");
-            }
-        }
-		
-        public string S3Bucket
-        {
-            get
-            {
-                return ReadAppSettings<string>(
-                   "S3Bucket",
-                   (value) => value ?? string.Empty);
-            }
-        }
+        public string AzureCdnHost { get { return ReadAppSettings("AzureCdnHost"); } }
 
-        public string S3AccessKey
-        {
-            get
-            {
-                return ReadAppSettings<string>(
-                   "S3AccessKey",
-                   (value) => value ?? string.Empty);
-            }
-        }
+        public string S3Bucket { get { return ReadAppSettings("S3Bucket", (value) => value ?? string.Empty); } }
 
-        public string S3SecretKey
-        {
-            get
-            {
-                return ReadAppSettings<string>(
-                  "S3SecretKey",
-                  (value) => value ?? string.Empty);
-            }
-        }
+        public string S3AccessKey { get { return ReadAppSettings("S3AccessKey", (value) => value ?? string.Empty); } }
 
-        public bool SmtpEnableSsl
-        {
-            get
-            {
-                return ReadAppSettings<bool>(
-                 "SmtpEnableSsl",
-                 (value) => bool.Parse(value ?? bool.TrueString));
-            }
-        }
+        public string S3SecretKey { get { return ReadAppSettings("S3SecretKey", (value) => value ?? string.Empty); } }
 
-        public string ModerationEmail
-        {
-            get
-            {
-                return ReadAppSettings<string>(
-                    "ModerationEmail",
-                    (value) => value ?? string.Empty);
-            }
-        }
+        public bool SmtpEnableSsl { get { return ReadAppSettings("SmtpEnableSsl", (value) => bool.Parse(value ?? bool.TrueString)); } }
+
+        public string ModerationEmail { get { return ReadAppSettings("ModerationEmail", (value) => value ?? string.Empty); } }
 
         protected virtual string GetConfiguredSiteRoot()
         {
@@ -154,23 +93,18 @@ namespace NuGetGallery
         {
             return useHttps ? _httpsSiteRootThunk.Value : _httpSiteRootThunk.Value;
         }
-        
+
         private string GetHttpSiteRoot()
         {
             var request = GetCurrentRequest();
             string siteRoot;
-            
-            if (request.IsLocal)
-                siteRoot = request.Url.GetLeftPart(UriPartial.Authority) + '/';
-            else
-                siteRoot = GetConfiguredSiteRoot();
 
-            if (!siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                && !siteRoot.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException("The configured site root must start with either http:// or https://.");
+            if (request.IsLocal) siteRoot = request.Url.GetLeftPart(UriPartial.Authority) + '/';
+            else siteRoot = GetConfiguredSiteRoot();
 
-            if (siteRoot.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-                siteRoot = "http://" + siteRoot.Substring(8);
+            if (!siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !siteRoot.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("The configured site root must start with either http:// or https://.");
+
+            if (siteRoot.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) siteRoot = "http://" + siteRoot.Substring(8);
 
             return siteRoot;
         }
@@ -179,8 +113,7 @@ namespace NuGetGallery
         {
             var siteRoot = _httpSiteRootThunk.Value;
 
-            if (!siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException("The configured HTTP site root must start with http://.");
+            if (!siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("The configured HTTP site root must start with http://.");
 
             return "https://" + siteRoot.Substring(7);
         }
