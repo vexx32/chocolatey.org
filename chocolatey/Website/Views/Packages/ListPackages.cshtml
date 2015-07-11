@@ -52,7 +52,7 @@
             }
             
             <select name="prerelease" id="prerelease">
-                @ViewHelpers.Option("", "Stable Only", Model.IncludePrerelease)
+                @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
                 @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
             </select>
             
