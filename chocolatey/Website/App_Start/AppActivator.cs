@@ -86,7 +86,8 @@ namespace NuGetGallery
         {
             filters.Add(new ElmahHandleErrorAttribute());
 
-            if (ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase)) filters.Add(new RequireHttpsAppHarborAttribute());
+            if (ConfigurationManager.AppSettings.Get("ForceSSL")
+                                    .Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase)) filters.Add(new RequireHttpsAppHarborAttribute());
         }
 
         //private static void SetCustomRouteHandler()
@@ -102,8 +103,10 @@ namespace NuGetGallery
         {
             var jobs = new IJob[]
             {
-                new UpdateStatisticsJob(TimeSpan.FromMinutes(5), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(5)),
-                new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)), new LuceneIndexingJob(TimeSpan.FromMinutes(10), timeout: TimeSpan.FromMinutes(2)),
+                new UpdateStatisticsJob(
+                    TimeSpan.FromMinutes(5), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(5)),
+                new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)),
+                new LuceneIndexingJob(TimeSpan.FromMinutes(10), timeout: TimeSpan.FromMinutes(2)),
             };
             var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
             _jobManager = new JobManager(jobs, jobCoordinator)
@@ -144,7 +147,10 @@ namespace NuGetGallery
         {
             var copy = ViewEngines.Engines.ToList();
             ViewEngines.Engines.Clear();
-            foreach (var item in copy) ViewEngines.Engines.Add(new ProfilingViewEngine(item));
+            foreach (var item in copy)
+            {
+                ViewEngines.Engines.Add(new ProfilingViewEngine(item));
+            }
         }
 
         private class MiniProfilerStartupModule : IHttpModule
