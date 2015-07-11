@@ -18,6 +18,7 @@
 
 using System;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
@@ -73,7 +74,9 @@ namespace NuGetGallery
             Routes.RegisterRoutes(RouteTable.Routes);
 
 #if !DEBUG
-                Database.SetInitializer<EntitiesContext>(null);
+            Database.SetInitializer<EntitiesContext>(null);
+#else
+            var ensureImportsForRelease = Database.DefaultConnectionFactory;
 #endif
 
             ValueProviderFactories.Factories.Add(new HttpHeaderValueProviderFactory());
