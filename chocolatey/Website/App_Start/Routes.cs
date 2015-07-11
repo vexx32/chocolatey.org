@@ -17,7 +17,12 @@ namespace NuGetGallery
             routes.MapRoute(
                 RouteName.About,
                 "about",
-                new {controller = "Pages", Action="About"});
+                new {controller = "Pages", Action="About"}); 
+            
+            routes.MapRoute(
+                RouteName.InstallerBatchFile,
+                "installChocolatey.cmd",
+                new { controller = "Pages", Action = "InstallerBatchFile" });
  
             routes.MapRoute(
                 RouteName.Notice,
