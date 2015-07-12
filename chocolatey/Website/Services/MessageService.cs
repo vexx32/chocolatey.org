@@ -220,7 +220,7 @@ Comment Url: {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
+                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
@@ -481,6 +481,8 @@ Maintainer(s): {2}
         private string GetDisqusInformationMessage()
         {
             return @"
+## DO NOT REPLY TO THIS MESSAGE!
+
 ### Information for Maintainers
 
  * Disqus comments can be moderated.  As a result, you may not see the above comment on the package page until the comment is moderated.
