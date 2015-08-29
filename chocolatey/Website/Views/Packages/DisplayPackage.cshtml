@@ -137,7 +137,10 @@
 
     <div class="hgroup page-heading">
         <h1 title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">@Model.Title</h1>
-        <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
+        @if (Model.Status != PackageStatusType.Rejected)
+        {
+         <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
+        }
     </div>
     
     @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User) && !moderationRole)
