@@ -146,9 +146,9 @@
             change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
             that have been made to the package. There are also no guarantees that it will be approved.</div><br />
     }
-    @if ((!Model.IsLatestVersionAvailable || moderationRole) && Model.Status != PackageStatusType.Submitted && Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
+    @if (Model.Status != PackageStatusType.Submitted && Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
     {
-        <div class="message warning">There are versions of this package awaiting moderation.</div> <br />
+        <div class="message warning">There are versions of this package awaiting moderation. See Version History section.</div> <br />
     }
 
     @if (Model.Status == PackageStatusType.Rejected)
