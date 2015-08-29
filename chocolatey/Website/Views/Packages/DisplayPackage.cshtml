@@ -5,7 +5,8 @@
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
-    var markdownGenerator = new Markdown {
+    var markdownGenerator = new Markdown
+    {
         AutoHyperlink = true,
         AutoNewLines = true,
         //EncodeProblemUrlCharacters = true,
@@ -185,9 +186,10 @@
                 @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
             </div><br />
         }
-    } else if(maintainer && Model.Status != PackageStatusType.Rejected)
+    }
+    else if (maintainer && Model.Status != PackageStatusType.Rejected)
     {
-      if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
+        if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
             <div class="message"><p>Review Comments:</p>
                 @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
