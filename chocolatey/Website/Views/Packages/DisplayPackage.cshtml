@@ -150,7 +150,7 @@
         <div class="message warning">There are versions of this package awaiting moderation.</div> <br />
     }
 
-    @if (Model.IsOwner(User) && Model.Status == PackageStatusType.Rejected)
+    @if (Model.Status == PackageStatusType.Rejected)
     {
         <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s): 
             <br />
