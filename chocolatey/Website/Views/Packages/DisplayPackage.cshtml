@@ -304,26 +304,30 @@
     
     <a name="description" id="description" title="Nuspec reference: description"></a>
     @Html.Raw(markdownGenerator.Transform(Model.Description))
-
-    <p>To install @Model.Title, run the following command from the command line or from
-        PowerShell: </p>
-    <div class="nuget-badge">
-        <p><code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
-               @if (!Model.LatestVersion || !Model.Listed)
-               { <text> -version @Model.Version</text> }
-               @if (Model.Prerelease)
-               {<text> -pre </text>}</code></p>
-    </div>
     
-    <p>To upgrade @Model.Title, run the following command from the command line or from
+    @if (Model.Listed)
+    {
+        <p>To install @Model.Title, run the following command from the command line or from
         PowerShell: </p>
-    <div class="nuget-badge">
-        <p><code><span>C:\&gt; </span>choco upgrade @Model.Id.ToLower()
-               @if (!Model.LatestVersion || !Model.Listed)
-               { <text> -version @Model.Version</text> }
-               @if (Model.Prerelease)
-               {<text> -pre </text>}</code></p>
-    </div>
+        <div class="nuget-badge">
+            <p><code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
+                    @if (!Model.LatestVersion || !Model.Listed)
+                    { <text> -version @Model.Version</text> }
+                    @if (Model.Prerelease)
+                    {<text> -pre </text>}</code></p>
+        </div>
+    
+        <p>To upgrade @Model.Title, run the following command from the command line or from
+            PowerShell: </p>
+        <div class="nuget-badge">
+            <p><code><span>C:\&gt; </span>choco upgrade @Model.Id.ToLower()
+                    @if (!Model.LatestVersion || !Model.Listed)
+                    { <text> -version @Model.Version</text> }
+                    @if (Model.Prerelease)
+                    {<text> -pre </text>}</code></p>
+        </div>
+    }
+    
     
     <a name="files" id="files"></a><h3 title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</h3>
     <a onclick="if ($(this).text() == 'Hide') {$('#div-filessection').hide();$(this).text('Show');} else {$('#div-filessection').show();$(this).text('Hide');}">Hide</a>
