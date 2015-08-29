@@ -443,15 +443,23 @@ namespace NuGetGallery
                         extensions.Add("." + extension);
                     }
                 }
+                IList<string> checksumExtensions = new List<string>();
+                var checksumApprovedExtensions = Configuration.ReadAppSettings("PackageFileChecksumExtensions");
+                if (!string.IsNullOrWhiteSpace(checksumApprovedExtensions))
+                {
+                    foreach (var extension in checksumApprovedExtensions.Split(',', ';'))
+                    {
+                        checksumExtensions.Add("." + extension);
+                    }
+                }
 
                 try
                 {
                     var extension = Path.GetExtension(filePath);
-
                     if (extension != null)
                     {
-                        if (extensions.Contains(extension)) fileContent = packageFile.GetStream().ReadToEnd();
-                        else if (extension.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
+                        if (extensions.Contains(extension, StringComparer.InvariantCultureIgnoreCase)) fileContent = packageFile.GetStream().ReadToEnd();
+                        else if (checksumExtensions.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
                         {
                             var bytes = packageFile.GetStream().ReadAllBytes();
                             var md5Hash =
