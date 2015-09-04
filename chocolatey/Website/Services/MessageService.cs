@@ -325,15 +325,18 @@ The {0} Team";
 
             string subject = String.Format(
                 CultureInfo.CurrentCulture, "[{0}] Recent changes to your account.", settings.GalleryOwnerName);
-            using (
-                var mailMessage = new MailMessage())
-            {
-                mailMessage.Subject = subject;
-                mailMessage.Body = body;
-                mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
 
-                mailMessage.To.Add(new MailAddress(oldEmailAddress, user.Username));
-                SendMessage(mailMessage);
+            if (user.EmailAddress.ToStringSafe().Trim().ToLower() != oldEmailAddress.ToStringSafe().Trim().ToLower())
+            {
+                using (var mailMessage = new MailMessage())
+                {
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body;
+                    mailMessage.From = new MailAddress(settings.GalleryOwnerEmail, settings.GalleryOwnerName);
+
+                    mailMessage.To.Add(new MailAddress(oldEmailAddress, user.Username));
+                    SendMessage(mailMessage);
+                }
             }
         }
 
