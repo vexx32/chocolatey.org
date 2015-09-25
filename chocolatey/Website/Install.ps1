@@ -88,6 +88,8 @@ if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower()) -eq $false) {
   $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
 }
 
-# update chocolatey to the latest version
-#Write-Host "Updating chocolatey to the latest version"
-#cup chocolatey
+Write-Host 'Ensuring chocolatey.nupkg is in the lib folder'
+$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
+$nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
+if (![System.IO.Directory]::Exists($chocoPkgDir)) { [System.IO.Directory]::CreateDirectory($chocoPkgDir); }
+Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
