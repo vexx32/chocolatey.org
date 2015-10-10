@@ -71,6 +71,8 @@ namespace NuGetGallery
 
         public string S3Bucket { get { return ReadAppSettings("S3Bucket", (value) => value ?? string.Empty); } }
 
+        public string PackagesUrl { get { return ReadAppSettings("PackagesUrl", (value) => value ?? string.Empty); } }
+
         public string S3AccessKey { get { return ReadAppSettings("S3AccessKey", (value) => value ?? string.Empty); } }
 
         public string S3SecretKey { get { return ReadAppSettings("S3SecretKey", (value) => value ?? string.Empty); } }

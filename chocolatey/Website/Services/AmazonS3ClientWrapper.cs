@@ -27,6 +27,7 @@ namespace NuGetGallery
         private readonly string accessKeyId = "";
         private readonly string accessSecret = "";
         private readonly string bucketName = "";
+        private readonly string packagesUrl = "";
 
         public AmazonS3ClientWrapper(IConfiguration configuration)
         {
@@ -34,9 +35,11 @@ namespace NuGetGallery
             accessKeyId = configuration.S3AccessKey;
             accessSecret = configuration.S3SecretKey;
             bucketName = configuration.S3Bucket;
+            packagesUrl = configuration.PackagesUrl;
         }
 
         public string BucketName { get { return bucketName; } }
+        public string PackagesUrl { get { return packagesUrl; } }
 
         public AmazonS3 CreateInstance()
         {

@@ -46,7 +46,8 @@ namespace NuGetGallery
 
         public ActionResult CreateDownloadFileActionResult(
             string folderName,
-            string fileName)
+            string fileName,
+            bool useCache)
         {
             if (String.IsNullOrWhiteSpace(folderName)) throw new ArgumentNullException("folderName");
             if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException("fileName");
@@ -105,6 +106,11 @@ namespace NuGetGallery
             var path = BuildPath(configuration.FileStorageDirectory, folderName, fileName);
             if (fileSystemSvc.FileExists(path)) return fileSystemSvc.OpenRead(path);
             else return null;
+        }
+
+        public Stream GetFile(string folderName, string fileName, bool useCache)
+        {
+            return GetFile(folderName, fileName);
         }
 
         public void SaveFile(

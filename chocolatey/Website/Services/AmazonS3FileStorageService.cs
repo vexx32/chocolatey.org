@@ -18,6 +18,8 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -33,21 +35,29 @@ namespace NuGetGallery
             this.clientContext = clientContext;
         }
 
-        public ActionResult CreateDownloadFileActionResult(string folderName, string fileName)
+        public ActionResult CreateDownloadFileActionResult(string folderName, string fileName, bool useCache)
         {
             //folder ignored - packages stored in top level of S3 bucket
             if (String.IsNullOrWhiteSpace(folderName)) throw new ArgumentNullException("folderName");
             if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException("fileName");
 
-            var downloadLink = BuildPath(fileName);
+            var downloadLink = BuildPath(fileName, useCache);
 
             return new RedirectResult(downloadLink, false);
         }
 
-        public string BuildPath(string fileName)
+        public string BuildPath(string fileName, bool useCache)
         {
-            //string.IsNullOrEmpty(folderName) ? String.Empty : folderName + "/",
-            return string.Format("https://{0}.s3.amazonaws.com/{1}", clientContext.BucketName, fileName);
+            if (useCache && !string.IsNullOrWhiteSpace(clientContext.PackagesUrl))
+            {
+                return string.Format("{0}/{1}", clientContext.PackagesUrl, fileName);
+
+            }
+            else
+            {
+                //string.IsNullOrEmpty(folderName) ? String.Empty : folderName + "/",
+                return string.Format("https://{0}.s3.amazonaws.com/{1}", clientContext.BucketName, fileName);
+            }
         }
 
         private T WrapRequestInErrorHandler<T>(Func<T> func)
@@ -55,7 +65,8 @@ namespace NuGetGallery
             try
             {
                 return func.Invoke();
-            } catch (AmazonS3Exception amazonS3Exception)
+            }
+            catch (AmazonS3Exception amazonS3Exception)
             {
                 if (amazonS3Exception.ErrorCode != null
                     && (
@@ -108,30 +119,42 @@ namespace NuGetGallery
             return false;
         }
 
-        public Stream GetFile(string folderName, string fileName)
+        public Stream GetFile(string folderName, string fileName, bool useCache)
         {
             //folder ignored - packages stored on top level of S3 bucket
             if (String.IsNullOrWhiteSpace(folderName)) throw new ArgumentNullException("folderName");
             if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException("fileName");
 
-            var request = new GetObjectRequest();
-            request.WithBucketName(clientContext.BucketName);
-            request.WithKey(fileName);
-            request.WithTimeout((int)TimeSpan.FromMinutes(30).TotalMilliseconds);
-
-            using (AmazonS3 client = clientContext.CreateInstance())
+            if (useCache && !string.IsNullOrWhiteSpace(clientContext.PackagesUrl))
             {
-                try
-                {
-                    S3Response response = WrapRequestInErrorHandler(() => client.GetObject(request));
+                var url = new Uri(string.Format("{0}/{1}", clientContext.PackagesUrl, fileName));
+                WebRequest request = WebRequest.Create(url);
+                WebResponse response = request.GetResponse();
 
-                    if (response != null) return response.ResponseStream;
-                } catch (Exception)
+                return response.GetResponseStream();
+            }
+            else
+            {
+                var request = new GetObjectRequest();
+                request.WithBucketName(clientContext.BucketName);
+                request.WithKey(fileName);
+                request.WithTimeout((int)TimeSpan.FromMinutes(30).TotalMilliseconds);
+
+                using (AmazonS3 client = clientContext.CreateInstance())
                 {
-                    //hate swallowing an error
+                    try
+                    {
+                        S3Response response = WrapRequestInErrorHandler(() => client.GetObject(request));
+
+                        if (response != null) return response.ResponseStream;
+                    }
+                    catch (Exception)
+                    {
+                        //hate swallowing an error
+                    }
+
+                    return null;
                 }
-
-                return null;
             }
         }
 

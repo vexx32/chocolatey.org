@@ -23,6 +23,7 @@ namespace NuGetGallery
     public interface IAmazonS3Client
     {
         string BucketName { get; }
+        string PackagesUrl { get; }
         AmazonS3 CreateInstance();
     }
 }

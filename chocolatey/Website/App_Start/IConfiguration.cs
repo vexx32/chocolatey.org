@@ -30,6 +30,7 @@ namespace NuGetGallery
         string GetSiteRoot(bool useHttps);
 
         string S3Bucket { get; }
+        string PackagesUrl { get; }
         string S3AccessKey { get; }
         string S3SecretKey { get; }
         bool SmtpEnableSsl { get; }

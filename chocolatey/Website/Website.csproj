@@ -548,9 +548,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\CloudBlobContainerWrapper.cs">
       <Link>Services\CloudBlobContainerWrapper.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\CloudBlobFileStorageService.cs">
-      <Link>Services\CloudBlobFileStorageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\CloudBlobWrapper.cs">
       <Link>Services\CloudBlobWrapper.cs</Link>
     </Compile>
@@ -566,9 +563,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\ICloudBlobContainer.cs">
       <Link>Services\ICloudBlobContainer.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IFileStorageService.cs">
-      <Link>Services\IFileStorageService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\IIndexingService.cs">
       <Link>Services\IIndexingService.cs</Link>
     </Compile>
@@ -578,17 +572,11 @@
     <Compile Include="..\..\nugetgallery\Website\Services\ISearchService.cs">
       <Link>Services\ISearchService.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\NuGetExeDownloaderService.cs">
-      <Link>Services\NuGetExeDownloaderService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\PackageSearchResults.cs">
       <Link>Services\PackageSearchResults.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\IUploadFileService.cs">
       <Link>Services\IUploadFileService.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\PackageFileService.cs">
-      <Link>Services\PackageFileService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequireRemoteHttpsAttribute.cs">
       <Link>RequireRemoteHttpsAttribute.cs</Link>
@@ -598,9 +586,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\TestableStorageClientException.cs">
       <Link>Services\TestableStorageClientException.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\UploadFileService.cs">
-      <Link>Services\UploadFileService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\AccountViewModel.cs">
       <Link>ViewModels\AccountViewModel.cs</Link>
@@ -961,6 +946,11 @@
     <Compile Include="RssController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\CloudBlobFileStorageService.cs" />
+    <Compile Include="Services\IFileStorageService.cs" />
+    <Compile Include="Services\NuGetExeDownloaderService.cs" />
+    <Compile Include="Services\PackageFileService.cs" />
+    <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
