@@ -56,7 +56,7 @@ namespace NuGetGallery
             else
             {
                 //string.IsNullOrEmpty(folderName) ? String.Empty : folderName + "/",
-                return string.Format("https://{0}.s3.amazonaws.com/{1}", clientContext.BucketName, fileName);
+                return string.Format("https://s3.amazonaws.com/{0}/{1}", clientContext.BucketName, fileName);
             }
         }
 
