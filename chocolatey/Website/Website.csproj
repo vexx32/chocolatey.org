@@ -948,6 +948,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
+    <Compile Include="Entities\EntityRepository.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1033,9 +1034,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageAuthor.cs">
       <Link>Entities\PackageAuthor.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\EntityRepository.cs">
-      <Link>Entities\EntityRepository.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\DisplayPackageRequest.cs">
       <Link>RequestModels\DisplayPackageRequest.cs</Link>
