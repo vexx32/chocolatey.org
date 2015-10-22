@@ -24,8 +24,10 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using AnglicanGeek.MarkdownMailer;
+using Glav.CacheAdapter.Core.DependencyInjection;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using NugetGallery;
 using SimpleInjector;
 
 namespace NuGetGallery
@@ -55,6 +57,13 @@ namespace NuGetGallery
 
             container.Register(() => gallerySetting.Value);
             //Bind<GallerySetting>().ToMethod(c => gallerySetting.Value);
+
+            if (configuration.UseCaching)
+            {
+                var cacheProvider = AppServices.Cache;
+                Cache.InitializeWith(cacheProvider);
+                container.Register(() => cacheProvider, Lifestyle.Singleton);
+            }
 
             container.RegisterPerWebRequest<ISearchService, LuceneSearchService>();
 

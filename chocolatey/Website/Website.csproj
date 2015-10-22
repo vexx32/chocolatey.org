@@ -949,6 +949,7 @@
     </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="Entities\EntityRepository.cs" />
+    <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
