@@ -241,10 +241,7 @@ namespace NuGetGallery
                     new PackageStatistics
                     {
                         // IMPORTANT: Timestamp is managed by the database.
-
-                        // IMPORTANT: Until we understand privacy implications of storing IP Addresses thoroughly,
-                        // It's better to just not store them. Hence "unknown". - Phil Haack 10/6/2011
-                        IPAddress = "unknown",
+                        IPAddress = userHostAddress,
                         UserAgent = userAgent,
                         PackageKey = package.Key
                     });
