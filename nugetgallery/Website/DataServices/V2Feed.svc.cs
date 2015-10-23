@@ -22,8 +22,8 @@ namespace NuGetGallery
 
         }
 
-        public V2Feed(IEntitiesContext entities, IEntityRepository<Package> repo, IConfiguration configuration, ISearchService searchSvc)
-            : base(entities, repo, configuration, searchSvc)
+        public V2Feed(IEntitiesContext entities, IEntityRepository<Package> repo, IConfiguration configuration)
+            : base(entities, repo, configuration)
         {
 
         }
@@ -48,15 +48,22 @@ namespace NuGetGallery
         public IQueryable<V2FeedPackage> Search(string searchTerm, string targetFramework, bool includePrerelease)
         {
             var packages = PackageRepo.GetAll()
+                                      .Include(p => p.Authors)
                                       .Include(p => p.PackageRegistration)
                                       .Include(p => p.PackageRegistration.Owners)
                                       .Where(p => p.Listed);
 
-            return Cache.Get(string.Format("V2Feed-Search-{0}-{1}-{2}", searchTerm,targetFramework,includePrerelease), 
-                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
-                    () => SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot())
-                            .ToList().AsQueryable());
-
+              var packageVersions = Cache.Get(string.Format("V2Feed-Search-{0}", includePrerelease),
+                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                    () => includePrerelease
+                        ? packages.Where(p => p.IsLatest).ToList()
+                        : packages.Where(p => p.IsLatestStable).ToList()
+                    );
+            
+            return SearchCore(packageVersions.AsQueryable(), searchTerm, targetFramework, includePrerelease)
+                    .ToV2FeedPackageQuery(GetSiteRoot())
+                    .ToList()
+                    .AsQueryable();
 
             //return SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot());
         }

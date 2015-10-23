@@ -65,8 +65,6 @@ namespace NuGetGallery
                 container.Register(() => cacheProvider, Lifestyle.Singleton);
             }
 
-            container.RegisterPerWebRequest<ISearchService, LuceneSearchService>();
-
             container.RegisterPerWebRequest<IEntitiesContext>(() => new EntitiesContext());
             container.RegisterPerWebRequest<IEntityRepository<User>, EntityRepository<User>>();
             container.RegisterPerWebRequest<IEntityRepository<PackageRegistration>, EntityRepository<PackageRegistration>>();
@@ -85,7 +83,6 @@ namespace NuGetGallery
             container.Register<IFormsAuthenticationService, FormsAuthenticationService>(Lifestyle.Singleton);
 
             container.RegisterPerWebRequest<IControllerFactory, NuGetControllerFactory>();
-            container.RegisterPerWebRequest<IIndexingService, LuceneIndexingService>();
             container.RegisterPerWebRequest<INuGetExeDownloaderService, NuGetExeDownloaderService>();
 
             var mailSenderThunk = new Lazy<IMailSender>(

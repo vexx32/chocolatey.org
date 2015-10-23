@@ -78,9 +78,6 @@
     <Reference Include="Glav.CacheAdapter">
       <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Glav.CacheAdapter.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net">
-      <HintPath>..\..\packages\Lucene.Net.2.9.2.2\lib\net40\Lucene.Net.dll</HintPath>
-    </Reference>
     <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\MarkDownSharp\MarkdownSharp.dll</HintPath>
     </Reference>
@@ -316,21 +313,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\JsonNetResult.cs">
       <Link>Infrastructure\JsonNetResult.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneFileSystem.cs">
-      <Link>Infrastructure\Lucene\LuceneFileSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneCommon.cs">
-      <Link>Infrastructure\Lucene\LuceneCommon.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneIndexingJob.cs">
-      <Link>Infrastructure\Lucene\LuceneIndexingJob.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\PackageIndexEntity.cs">
-      <Link>Infrastructure\Lucene\PackageIndexEntity.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneSearchService.cs">
-      <Link>Infrastructure\Lucene\LuceneSearchService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\Jobs\WorkItemCleanupJob.cs">
       <Link>Infrastructure\Jobs\WorkItemCleanupJob.cs</Link>
@@ -578,14 +560,8 @@
     <Compile Include="..\..\nugetgallery\Website\Services\ICloudBlobContainer.cs">
       <Link>Services\ICloudBlobContainer.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IIndexingService.cs">
-      <Link>Services\IIndexingService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\INuGetExeDownloaderService.cs">
       <Link>Services\INuGetExeDownloaderService.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\ISearchService.cs">
-      <Link>Services\ISearchService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\PackageSearchResults.cs">
       <Link>Services\PackageSearchResults.cs</Link>
@@ -1088,7 +1064,6 @@
       <DependentUpon>V2SubmittedFeed.svc</DependentUpon>
     </Compile>
     <Compile Include="Entities\PackageSubmittedStatusType.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\SimpleInjectorContainerResolutionBehavior.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="Constants.cs" />

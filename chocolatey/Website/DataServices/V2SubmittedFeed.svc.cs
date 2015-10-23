@@ -35,7 +35,7 @@ namespace NuGetGallery
         {
         }
 
-        public V2SubmittedFeed(IEntitiesContext entities, IEntityRepository<Package> repo, IConfiguration configuration, ISearchService searchSvc) : base(entities, repo, configuration, searchSvc)
+        public V2SubmittedFeed(IEntitiesContext entities, IEntityRepository<Package> repo, IConfiguration configuration) : base(entities, repo, configuration)
         {
         }
 

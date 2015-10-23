@@ -42,7 +42,6 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageStatistics> packageStatsRepo;
         private readonly IPackageFileService packageFileSvc;
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
-        private readonly IIndexingService indexingSvc;
         private readonly IMessageService messageSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
 
@@ -53,7 +52,6 @@ namespace NuGetGallery
             IEntityRepository<PackageStatistics> packageStatsRepo,
             IPackageFileService packageFileSvc,
             IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository,
-            IIndexingService indexingSvc,
             IEntityRepository<PackageAuthor> packageAuthorRepo,
             IEntityRepository<PackageFramework> packageFrameworksRepo,
             IEntityRepository<PackageDependency> packageDependenciesRepo,
@@ -66,7 +64,6 @@ namespace NuGetGallery
             this.packageStatsRepo = packageStatsRepo;
             this.packageFileSvc = packageFileSvc;
             this.packageOwnerRequestRepository = packageOwnerRequestRepository;
-            this.indexingSvc = indexingSvc;
             this.packageAuthorRepo = packageAuthorRepo;
             this.packageFrameworksRepo = packageFrameworksRepo;
             this.packageDependenciesRepo = packageDependenciesRepo;
@@ -96,7 +93,6 @@ namespace NuGetGallery
 
             if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted) NotifyForModeration(package, comments: string.Empty);
 
-            NotifyIndexingService();
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
@@ -125,7 +121,6 @@ namespace NuGetGallery
                 tx.Complete();
             }
 
-            NotifyIndexingService();
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
@@ -218,9 +213,11 @@ namespace NuGetGallery
         {
             IQueryable<Package> packages = null;
 
+            // this is based on what is necessary for search. See Extensions.Search and the searchCriteria
             packages = packageRepo.GetAll()
-                                  .Include(x => x.PackageRegistration)
-                                  .Include(x => x.PackageRegistration.Owners)
+                                  .Include(p => p.Authors)
+                                  .Include(p => p.PackageRegistration)
+                                  .Include(p => p.PackageRegistration.Owners)
                                   .Where(p => p.Listed);
 
             return Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
@@ -740,7 +737,6 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
             if (sendEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
 
-            NotifyIndexingService();
             InvalidateCache(package.PackageRegistration);
         }
 
@@ -849,11 +845,6 @@ namespace NuGetGallery
             return (from request in packageOwnerRequestRepository.GetAll()
                     where request.PackageRegistrationKey == package.Key && request.NewOwnerKey == pendingOwner.Key
                     select request).FirstOrDefault();
-        }
-
-        private void NotifyIndexingService()
-        {
-            indexingSvc.UpdateIndex();
         }
 
         private void InvalidateCache(PackageRegistration package)
