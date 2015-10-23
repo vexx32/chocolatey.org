@@ -214,7 +214,7 @@ namespace NuGetGallery
         {
             if (page < 1) page = 1;
 
-            IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
+            IEnumerable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
 
             if (moderatorQueue)
@@ -267,7 +267,7 @@ namespace NuGetGallery
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-            } else packagesToShow = searchSvc.Search(packageVersions, searchFilter, out totalHits).ToList();
+            } else packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
 
             if (page == 1 && !packagesToShow.Any())
             {

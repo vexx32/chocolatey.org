@@ -176,7 +176,7 @@ namespace NuGetGallery
             return package;
         }
 
-        public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
+        public IEnumerable<Package> GetPackagesForListing(bool includePrerelease)
         {
             IQueryable<Package> packages = null;
 
@@ -186,8 +186,8 @@ namespace NuGetGallery
                                   .Where(p => p.Listed);
 
             return includePrerelease
-                       ? packages.Where(p => p.IsLatest)
-                       : packages.Where(p => p.IsLatestStable);
+                       ? packages.Where(p => p.IsLatest).ToList()
+                       : packages.Where(p => p.IsLatestStable).ToList();
         }
 
         public IQueryable<Package> GetSubmittedPackages()
