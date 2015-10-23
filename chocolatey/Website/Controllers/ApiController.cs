@@ -107,7 +107,7 @@ namespace NuGetGallery
             var packageToPush = ReadPackageFromRequest();
 
             // Ensure that the user can push packages for this partialId.
-            var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id);
+            var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id, useCache:false);
             if (packageRegistration != null)
             {
                 if (!packageRegistration.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
@@ -150,7 +150,7 @@ namespace NuGetGallery
             var user = userSvc.FindByApiKey(parsedApiKey);
             if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "delete"));
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
             if (!package.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "delete"));
@@ -168,7 +168,7 @@ namespace NuGetGallery
             var user = userSvc.FindByApiKey(parsedApiKey);
             if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "publish"));
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
             if (!package.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "publish"));
 

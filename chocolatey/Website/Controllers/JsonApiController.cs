@@ -48,7 +48,7 @@ namespace NuGetGallery
         [Authorize]
         public virtual object GetPackageOwners(string id, string version)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
             if (package == null)
             {
                 return new {
@@ -78,7 +78,7 @@ namespace NuGetGallery
 
         public object AddPackageOwner(string id, string username, bool addDirectly = false)
         {
-            var package = packageSvc.FindPackageRegistrationById(id);
+            var package = packageSvc.FindPackageRegistrationById(id, useCache:false);
             if (package == null)
             {
                 return new {
@@ -125,7 +125,7 @@ namespace NuGetGallery
 
         public object RemovePackageOwner(string id, string username)
         {
-            var package = packageSvc.FindPackageRegistrationById(id);
+            var package = packageSvc.FindPackageRegistrationById(id, useCache:false);
             if (package == null)
             {
                 return new {

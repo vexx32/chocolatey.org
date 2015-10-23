@@ -29,8 +29,10 @@ namespace NuGetGallery
         void DeletePackage(string id, string version);
 
         PackageRegistration FindPackageRegistrationById(string id);
+        PackageRegistration FindPackageRegistrationById(string id, bool useCache);
 
         Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease = true);
+        Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease, bool useCache = true);
 
         IEnumerable<Package> GetPackagesForListing(bool includePrerelease);
 

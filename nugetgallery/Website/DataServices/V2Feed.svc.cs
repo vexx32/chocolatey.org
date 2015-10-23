@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using NuGet;
+using NugetGallery;
 
 namespace NuGetGallery
 {
@@ -50,15 +51,30 @@ namespace NuGetGallery
                                       .Include(p => p.PackageRegistration)
                                       .Include(p => p.PackageRegistration.Owners)
                                       .Where(p => p.Listed);
-            return SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot());
+
+            return Cache.Get(string.Format("V2Feed-Search-{0}-{1}-{2}", searchTerm,targetFramework,includePrerelease), 
+                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+                    () => SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot())
+                            .ToList().AsQueryable());
+
+
+            //return SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot());
         }
 
         [WebGet]
         public IQueryable<V2FeedPackage> FindPackagesById(string id)
         {
-            return PackageRepo.GetAll().Include(p => p.PackageRegistration)
-                                       .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
-                                       .ToV2FeedPackageQuery(GetSiteRoot());
+            return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id), 
+                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+                    () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
+                            .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
+                            .ToV2FeedPackageQuery(GetSiteRoot())
+                            .ToList().AsQueryable());
+
+
+            //return PackageRepo.GetAll().Include(p => p.PackageRegistration)
+            //                           .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
+            //                           .ToV2FeedPackageQuery(GetSiteRoot());
         }
 
         [WebGet]
@@ -100,8 +116,13 @@ namespace NuGetGallery
                               .Include(p => p.SupportedFrameworks)
                               .Where(p => p.Listed && (includePrerelease || !p.IsPrerelease) && idValues.Contains(p.PackageRegistration.Id))
                               .OrderBy(p => p.PackageRegistration.Id);
-            return GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable()
-                                                                                                 .ToV2FeedPackageQuery(GetSiteRoot());
+
+            //GetUpdates(string packageIds, string versions, bool includePrerelease, bool includeAllVersions, string targetFrameworks
+            return Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}-{4}", idValues, versionValues, includePrerelease, includeAllVersions, targetFrameworkValues), 
+                             DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+                             () => GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot()).ToList().AsQueryable());
+
+            //return GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot());
         }
 
         private static IEnumerable<Package> GetUpdates(IEnumerable<Package> packages,

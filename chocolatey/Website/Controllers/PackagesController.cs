@@ -109,7 +109,7 @@ namespace NuGetGallery
                 return View("~/Views/Packages/UploadPackage.cshtml");
             }
 
-            var packageRegistration = packageSvc.FindPackageRegistrationById(nuGetPackage.Id);
+            var packageRegistration = packageSvc.FindPackageRegistrationById(nuGetPackage.Id, useCache: false);
             if (packageRegistration != null && !packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key))
             {
                 ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageIdNotAvailable, packageRegistration.Id));
@@ -155,7 +155,7 @@ namespace NuGetGallery
         {
             if (!ModelState.IsValid) return DisplayPackage(id, version);
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
@@ -198,7 +198,6 @@ namespace NuGetGallery
 
             var moderator = userSvc.FindByUsername(HttpContext.User.Identity.Name);
             packageSvc.ChangePackageStatus(package, status, comments, moderator, sendEmail);
-
             packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
 
             //grab updated package
@@ -459,7 +458,7 @@ namespace NuGetGallery
 
         internal virtual ActionResult Delete(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return PackageNotFound(id, version);
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
@@ -486,7 +485,7 @@ namespace NuGetGallery
         {
             if (String.IsNullOrEmpty(token)) return HttpNotFound();
 
-            var package = packageSvc.FindPackageRegistrationById(id);
+            var package = packageSvc.FindPackageRegistrationById(id, useCache:false);
             if (package == null) return HttpNotFound();
 
             var user = userSvc.FindByUsername(username);
@@ -505,7 +504,7 @@ namespace NuGetGallery
 
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
             if (package == null) return PackageNotFound(id, version);
 
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");

@@ -16,7 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Linq;
+using NugetGallery;
 
 namespace NuGetGallery
 {
@@ -43,7 +45,9 @@ namespace NuGetGallery
 
         public T Get(int key)
         {
-            return entities.Set<T>().Find(key);
+            return Cache.Get(string.Format("item-{0}-{1}", typeof(T).Name, key), 
+                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+                    () => entities.Set<T>().Find(key));
         }
 
         public IQueryable<T> GetAll()
