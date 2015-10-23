@@ -40,6 +40,22 @@ namespace NuGetGallery
     {
         public EntitiesContext() : base("NuGetGallery")
         {
+            InitializeCustomOptions();
+        }
+
+        /// <summary>
+        ///   Initializes the custom options.
+        /// </summary>
+        protected void InitializeCustomOptions()
+        {
+            // defaults for quick reference
+            //Configuration.LazyLoadingEnabled = true;
+            //Configuration.ProxyCreationEnabled = true;
+            //Configuration.AutoDetectChangesEnabled = true;
+            //Configuration.ValidateOnSaveEnabled = true;
+
+            Configuration.LazyLoadingEnabled = false;
+            //Configuration.ValidateOnSaveEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

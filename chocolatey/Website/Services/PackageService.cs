@@ -143,6 +143,10 @@ namespace NuGetGallery
             IEnumerable<Package> packagesQuery = packageRepo.GetAll()
                                                             .Include(p => p.Authors)
                                                             .Include(p => p.PackageRegistration)
+                                                            .Include(p => p.PackageRegistration.Owners)
+                                                            .Include(p => p.Files)
+                                                            .Include(p => p.Dependencies)
+                                                            .Include(p => p.SupportedFrameworks)
                                                             .Where(p => (p.PackageRegistration.Id == id));
             if (String.IsNullOrEmpty(version) && !allowPrerelease)
             {
