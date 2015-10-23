@@ -94,7 +94,6 @@ namespace NuGetGallery
             if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted) NotifyForModeration(package, comments: string.Empty);
 
             InvalidateCache(package.PackageRegistration);
-            Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
 
             return package;
@@ -122,7 +121,6 @@ namespace NuGetGallery
             }
 
             InvalidateCache(package.PackageRegistration);
-            Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
         }
 
@@ -225,11 +223,7 @@ namespace NuGetGallery
                     () => includePrerelease
                         ? packages.Where(p => p.IsLatest).ToList().Distinct(new PackageListingDistinctItemComparer())
                         : packages.Where(p => p.IsLatestStable).ToList().Distinct(new PackageListingDistinctItemComparer())
-                    );
-
-            //return includePrerelease
-            //           ? packages.Where(p => p.IsLatest).ToList()
-            //           : packages.Where(p => p.IsLatestStable).ToList();
+                   );
         }
 
         class PackageListingDistinctItemComparer : IEqualityComparer<Package>
@@ -850,8 +844,9 @@ namespace NuGetGallery
         private void InvalidateCache(PackageRegistration package)
         {
             Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id));
-            Cache.InvalidateCacheItem(string.Format("packageVersions-{0}-True", package.Id));
-            Cache.InvalidateCacheItem(string.Format("packageVersions-{0}-False", package.Id));
+            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id));
+            Cache.InvalidateCacheItem("packageVersions-True");
+            Cache.InvalidateCacheItem("packageVersions-False");
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
         }
 

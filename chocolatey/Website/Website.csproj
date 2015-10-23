@@ -285,11 +285,6 @@
       <Link>DataServices\V2CuratedFeed.svc.cs</Link>
       <DependentUpon>V2CuratedFeed.svc</DependentUpon>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V2Feed.svc.cs">
-      <Link>DataServices\V2Feed.svc.cs</Link>
-      <DependentUpon>V2Feed.svc</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\CuratedFeed.cs">
       <Link>Entities\CuratedFeed.cs</Link>
     </Compile>
@@ -917,6 +912,9 @@
     <Compile Include="CuratedPackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataServices\V2Feed.svc.cs">
+      <DependentUpon>V2Feed.svc</DependentUpon>
+    </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="Entities\EntityRepository.cs" />
     <Compile Include="Entities\PackageFramework.cs" />
@@ -1161,9 +1159,6 @@
     <Content Include="..\..\nugetgallery\Website\DataServices\V2CuratedFeed.svc">
       <Link>DataServices\V2CuratedFeed.svc</Link>
     </Content>
-    <Content Include="..\..\nugetgallery\Website\DataServices\V2Feed.svc">
-      <Link>DataServices\V2Feed.svc</Link>
-    </Content>
     <Content Include="..\..\nugetgallery\Website\DynamicData\Content\GridViewPager.ascx">
       <Link>DynamicData\Content\GridViewPager.ascx</Link>
     </Content>
@@ -1353,6 +1348,7 @@
     <Content Include="Content\SyntaxHighlighter\shThemeMDUltra.css" />
     <Content Include="Content\SyntaxHighlighter\shThemeMidnight.css" />
     <Content Include="Content\SyntaxHighlighter\shThemeRDark.css" />
+    <Content Include="DataServices\V2Feed.svc" />
     <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
