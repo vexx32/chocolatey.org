@@ -24,8 +24,10 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using AnglicanGeek.MarkdownMailer;
+using Glav.CacheAdapter.Core.DependencyInjection;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using NugetGallery;
 using SimpleInjector;
 
 namespace NuGetGallery
@@ -56,7 +58,12 @@ namespace NuGetGallery
             container.Register(() => gallerySetting.Value);
             //Bind<GallerySetting>().ToMethod(c => gallerySetting.Value);
 
-            container.RegisterPerWebRequest<ISearchService, LuceneSearchService>();
+            if (configuration.UseCaching)
+            {
+                var cacheProvider = AppServices.Cache;
+                Cache.InitializeWith(cacheProvider);
+                container.Register(() => cacheProvider, Lifestyle.Singleton);
+            }
 
             container.RegisterPerWebRequest<IEntitiesContext>(() => new EntitiesContext());
             container.RegisterPerWebRequest<IEntityRepository<User>, EntityRepository<User>>();
@@ -76,7 +83,6 @@ namespace NuGetGallery
             container.Register<IFormsAuthenticationService, FormsAuthenticationService>(Lifestyle.Singleton);
 
             container.RegisterPerWebRequest<IControllerFactory, NuGetControllerFactory>();
-            container.RegisterPerWebRequest<IIndexingService, LuceneIndexingService>();
             container.RegisterPerWebRequest<INuGetExeDownloaderService, NuGetExeDownloaderService>();
 
             var mailSenderThunk = new Lazy<IMailSender>(

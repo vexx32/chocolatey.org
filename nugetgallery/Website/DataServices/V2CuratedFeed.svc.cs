@@ -20,8 +20,8 @@ namespace NuGetGallery
 
         }
 
-        public V2CuratedFeed(IEntitiesContext entities, IEntityRepository<Package> repo, IConfiguration configuration, ISearchService searchSvc)
-            : base(entities, repo, configuration, searchSvc)
+        public V2CuratedFeed(IEntitiesContext entities, IEntityRepository<Package> repo, IConfiguration configuration)
+            : base(entities, repo, configuration)
         {
         }
 

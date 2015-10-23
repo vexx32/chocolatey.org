@@ -16,7 +16,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using WebBackgrounder;
 
 namespace NuGetGallery
@@ -36,7 +40,29 @@ namespace NuGetGallery
     {
         public EntitiesContext() : base("NuGetGallery")
         {
+            InitializeCustomOptions();
         }
+
+        /// <summary>
+        ///   Initializes the custom options.
+        /// </summary>
+        protected void InitializeCustomOptions()
+        {
+            // defaults for quick reference
+            //Configuration.LazyLoadingEnabled = true;
+            //Configuration.ProxyCreationEnabled = true;
+            //Configuration.AutoDetectChangesEnabled = true;
+            //Configuration.ValidateOnSaveEnabled = true;
+
+            Configuration.LazyLoadingEnabled = false;
+            //Configuration.ValidateOnSaveEnabled = false;
+            var adapter = this as IObjectContextAdapter;
+            if (adapter != null)
+            {
+                var objectContext = adapter.ObjectContext;
+                objectContext.CommandTimeout = 120; // value in seconds
+            }
+       }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -62,12 +88,7 @@ namespace NuGetGallery
                         .HasForeignKey(em => em.FromUserKey);
 
             modelBuilder.Entity<PackageRegistration>().HasKey(pr => pr.Key);
-
-            modelBuilder.Entity<PackageRegistration>()
-                        .HasMany<Package>(pr => pr.Packages)
-                        .WithRequired(p => p.PackageRegistration)
-                        .HasForeignKey(p => p.PackageRegistrationKey);
-
+            
             modelBuilder.Entity<PackageRegistration>()
                         .HasOptional<User>(e => e.TrustedBy)
                         .WithMany()
@@ -81,6 +102,11 @@ namespace NuGetGallery
                             c =>
                             c.ToTable("PackageRegistrationOwners").MapLeftKey("PackageRegistrationKey").MapRightKey("UserKey"));
 
+            modelBuilder.Entity<PackageRegistration>()
+                        .HasMany<Package>(pr => pr.Packages)
+                        .WithRequired(p => p.PackageRegistration)
+                        .HasForeignKey(p => p.PackageRegistrationKey);
+
             modelBuilder.Entity<Package>().HasKey(p => p.Key);
 
             modelBuilder.Entity<Package>()
@@ -93,10 +119,14 @@ namespace NuGetGallery
                         .WithRequired(ps => ps.Package)
                         .HasForeignKey(ps => ps.PackageKey);
 
+            modelBuilder.Entity<PackageStatistics>().HasKey(ps => ps.Key);
+
             modelBuilder.Entity<Package>()
                         .HasMany<PackageDependency>(p => p.Dependencies)
                         .WithRequired(pd => pd.Package)
                         .HasForeignKey(pd => pd.PackageKey);
+
+            modelBuilder.Entity<PackageDependency>().HasKey(pd => pd.Key);
 
             modelBuilder.Entity<Package>()
                         .HasOptional<User>(e => e.ReviewedBy)
@@ -106,10 +136,6 @@ namespace NuGetGallery
 
             modelBuilder.Entity<PackageAuthor>().HasKey(pa => pa.Key);
 
-            modelBuilder.Entity<PackageStatistics>().HasKey(ps => ps.Key);
-
-            modelBuilder.Entity<PackageDependency>().HasKey(pd => pd.Key);
-
             modelBuilder.Entity<GallerySetting>().HasKey(gs => gs.Key);
 
             modelBuilder.Entity<WorkItem>().HasKey(wi => wi.Id);
@@ -117,6 +143,7 @@ namespace NuGetGallery
             modelBuilder.Entity<PackageOwnerRequest>().HasKey(por => por.Key);
 
             modelBuilder.Entity<PackageFramework>().HasKey(pf => pf.Key);
+
             modelBuilder.Entity<CuratedFeed>().HasKey(cf => cf.Key);
 
             modelBuilder.Entity<CuratedFeed>()

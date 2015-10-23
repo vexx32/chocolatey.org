@@ -25,6 +25,7 @@ using System.Runtime.Versioning;
 using System.Transactions;
 using Elmah;
 using NuGet;
+using NugetGallery;
 using StackExchange.Profiling;
 
 namespace NuGetGallery
@@ -41,7 +42,6 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageStatistics> packageStatsRepo;
         private readonly IPackageFileService packageFileSvc;
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
-        private readonly IIndexingService indexingSvc;
         private readonly IMessageService messageSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
 
@@ -52,7 +52,6 @@ namespace NuGetGallery
             IEntityRepository<PackageStatistics> packageStatsRepo,
             IPackageFileService packageFileSvc,
             IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository,
-            IIndexingService indexingSvc,
             IEntityRepository<PackageAuthor> packageAuthorRepo,
             IEntityRepository<PackageFramework> packageFrameworksRepo,
             IEntityRepository<PackageDependency> packageDependenciesRepo,
@@ -65,7 +64,6 @@ namespace NuGetGallery
             this.packageStatsRepo = packageStatsRepo;
             this.packageFileSvc = packageFileSvc;
             this.packageOwnerRequestRepository = packageOwnerRequestRepository;
-            this.indexingSvc = indexingSvc;
             this.packageAuthorRepo = packageAuthorRepo;
             this.packageFrameworksRepo = packageFrameworksRepo;
             this.packageDependenciesRepo = packageDependenciesRepo;
@@ -95,14 +93,15 @@ namespace NuGetGallery
 
             if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted) NotifyForModeration(package, comments: string.Empty);
 
-            NotifyIndexingService();
+            InvalidateCache(package.PackageRegistration);
+            Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
 
             return package;
         }
 
         public void DeletePackage(string id, string version)
         {
-            var package = FindPackageByIdAndVersion(id, version);
+            var package = FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache: false);
 
             if (package == null) throw new EntityException(Strings.PackageWithIdAndVersionNotFound, id, version);
 
@@ -121,18 +120,42 @@ namespace NuGetGallery
                 tx.Complete();
             }
 
-            NotifyIndexingService();
+            InvalidateCache(package.PackageRegistration);
+            Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
         }
 
         public virtual PackageRegistration FindPackageRegistrationById(string id)
         {
+            return FindPackageRegistrationById(id, useCache: true);
+        }
+
+        public PackageRegistration FindPackageRegistrationById(string id, bool useCache)
+        {
+            if (useCache)
+            {
+                return Cache.Get(string.Format("packageregistration-{0}", id),
+                 DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                 () => packageRegistrationRepo.GetAll()
+                        .Include(pr => pr.Owners)
+                        .Include(pr => pr.Packages)
+                        .Where(pr => pr.Id == id)
+                        .SingleOrDefault());
+            } 
+
             return packageRegistrationRepo.GetAll()
-                                          .Include(pr => pr.Owners)
-                                          .Where(pr => pr.Id == id)
-                                          .SingleOrDefault();
+                    .Include(pr => pr.Owners)
+                    .Include(pr => pr.Packages)
+                    .Where(pr => pr.Id == id)
+                    .SingleOrDefault();
+         
         }
 
         public virtual Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease = true)
+        {
+            return FindPackageByIdAndVersion(id, version, allowPrerelease, useCache: true);
+        }
+
+        public virtual Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease, bool useCache = true)
         {
             if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("id");
 
@@ -140,17 +163,28 @@ namespace NuGetGallery
             // all the other packages with the same ID via the PackageRegistration property. 
             // This resulted in a gnarly query. 
             // Instead, we can always query for all packages with the ID.
+
             IEnumerable<Package> packagesQuery = packageRepo.GetAll()
                                                             .Include(p => p.Authors)
                                                             .Include(p => p.PackageRegistration)
+                                                            .Include(p => p.PackageRegistration.Owners)
+                                                            .Include(p => p.Files)
+                                                            .Include(p => p.Dependencies)
+                                                            .Include(p => p.SupportedFrameworks)
                                                             .Where(p => (p.PackageRegistration.Id == id));
             if (String.IsNullOrEmpty(version) && !allowPrerelease)
             {
                 // If there's a specific version given, don't bother filtering by prerelease. You could be asking for a prerelease package.
                 packagesQuery = packagesQuery.Where(p => !p.IsPrerelease);
             }
-            var packageVersions = packagesQuery.ToList();
 
+            var packageVersions = useCache
+                                      ? Cache.Get(
+                                          string.Format("packageVersions-{0}-{1}", id, allowPrerelease),
+                                          DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                                          () => packagesQuery.ToList())
+                                      : packagesQuery.ToList();
+            
             Package package = null;
             if (version == null)
             {
@@ -169,21 +203,40 @@ namespace NuGetGallery
                         && p.Version.Equals(version, StringComparison.OrdinalIgnoreCase))
                     .SingleOrDefault();
             }
+
             return package;
         }
 
-        public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
+        public IEnumerable<Package> GetPackagesForListing(bool includePrerelease)
         {
             IQueryable<Package> packages = null;
 
+            // this is based on what is necessary for search. See Extensions.Search and the searchCriteria
             packages = packageRepo.GetAll()
-                                  .Include(x => x.PackageRegistration)
-                                  .Include(x => x.PackageRegistration.Owners)
+                                  .Include(p => p.Authors)
+                                  .Include(p => p.PackageRegistration)
+                                  .Include(p => p.PackageRegistration.Owners)
                                   .Where(p => p.Listed);
 
-            return includePrerelease
-                       ? packages.Where(p => p.IsLatest)
-                       : packages.Where(p => p.IsLatestStable);
+            return Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
+                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                    () => includePrerelease
+                        ? packages.Where(p => p.IsLatest).ToList().Distinct(new PackageListingDistinctItemComparer())
+                        : packages.Where(p => p.IsLatestStable).ToList().Distinct(new PackageListingDistinctItemComparer())
+                   );
+        }
+
+        class PackageListingDistinctItemComparer : IEqualityComparer<Package>
+        {
+            public bool Equals(Package x, Package y)
+            {
+                return x.PackageRegistration.Id == y.PackageRegistration.Id;
+            }
+
+            public int GetHashCode(Package obj)
+            {
+                return obj.PackageRegistration.Id.GetHashCode();
+            }
         }
 
         public IQueryable<Package> GetSubmittedPackages()
@@ -197,20 +250,37 @@ namespace NuGetGallery
 
         public IEnumerable<Package> FindPackagesByOwner(User user)
         {
-            return (from pr in packageRegistrationRepo.GetAll()
-                    from u in pr.Owners
-                    where u.Username == user.Username
-                    from p in pr.Packages
-                    select p).Include(p => p.PackageRegistration).ToList();
+            return Cache.Get(string.Format("maintainerpackages-{0}", user.Username),
+                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                    () => (from pr in packageRegistrationRepo.GetAll()
+                           from u in pr.Owners
+                           where u.Username == user.Username
+                           from p in pr.Packages
+                           select p).Include(p => p.PackageRegistration).ToList());
+
+            //return (from pr in packageRegistrationRepo.GetAll()
+            //        from u in pr.Owners
+            //        where u.Username == user.Username
+            //        from p in pr.Packages
+            //        select p).Include(p => p.PackageRegistration).ToList();
         }
 
         public IEnumerable<Package> FindDependentPackages(Package package)
         {
             // Grab all candidates
-            var candidateDependents = (from p in packageRepo.GetAll()
-                                       from d in p.Dependencies
-                                       where d.Id == package.PackageRegistration.Id
-                                       select d).Include(pk => pk.Package.PackageRegistration).ToList();
+            var candidateDependents = Cache.Get(string.Format("dependentpackages-{0}", package.Key),
+                   DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                   () => (from p in packageRepo.GetAll()
+                          from d in p.Dependencies
+                          where d.Id == package.PackageRegistration.Id
+                          select d).Include(pk => pk.Package.PackageRegistration).ToList());
+
+            //var candidateDependents = (from p in packageRepo.GetAll()
+            //                           from d in p.Dependencies
+            //                           where d.Id == package.PackageRegistration.Id
+            //                           select d).Include(pk => pk.Package.PackageRegistration).ToList();
+
+
             // Now filter by version range.
             var packageVersion = new SemanticVersion(package.Version);
             var dependents = from d in candidateDependents
@@ -222,7 +292,7 @@ namespace NuGetGallery
 
         public void PublishPackage(string id, string version)
         {
-            var package = FindPackageByIdAndVersion(id, version);
+            var package = FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
 
             if (package == null) throw new EntityException(Strings.PackageWithIdAndVersionNotFound, id, version);
 
@@ -237,12 +307,9 @@ namespace NuGetGallery
                     new PackageStatistics
                     {
                         // IMPORTANT: Timestamp is managed by the database.
-
-                        // IMPORTANT: Until we understand privacy implications of storing IP Addresses thoroughly,
-                        // It's better to just not store them. Hence "unknown". - Phil Haack 10/6/2011
-                        IPAddress = "unknown",
+                        IPAddress = userHostAddress,
                         UserAgent = userAgent,
-                        Package = package
+                        PackageKey = package.Key
                     });
 
                 packageStatsRepo.CommitChanges();
@@ -251,7 +318,7 @@ namespace NuGetGallery
 
         private PackageRegistration CreateOrGetPackageRegistration(User currentUser, IPackage nugetPackage)
         {
-            var packageRegistration = FindPackageRegistrationById(nugetPackage.Id);
+            var packageRegistration = FindPackageRegistrationById(nugetPackage.Id, useCache:false);
 
             if (packageRegistration != null && !packageRegistration.Owners.Contains(currentUser)) throw new EntityException(Strings.PackageIdNotAvailable, nugetPackage.Id);
 
@@ -272,9 +339,7 @@ namespace NuGetGallery
 
         private Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage)
         {
-            var package = packageRegistration.Packages
-                                             .Where(pv => pv.Version == nugetPackage.Version.ToString())
-                                             .SingleOrDefault();
+            var package = FindPackageByIdAndVersion(packageRegistration.Id, nugetPackage.Version.ToString(), allowPrerelease:true, useCache:false);
 
             if (package != null)
             {
@@ -569,6 +634,7 @@ namespace NuGetGallery
         {
             package.Owners.Add(user);
             packageRepo.CommitChanges();
+            
 
             var request = FindExistingPackageOwnerRequest(package, user);
             if (request != null)
@@ -576,6 +642,8 @@ namespace NuGetGallery
                 packageOwnerRequestRepository.DeleteOnCommit(request);
                 packageOwnerRequestRepository.CommitChanges();
             }
+            Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
+            InvalidateCache(package);
         }
 
         public void RemovePackageOwner(PackageRegistration package, User user)
@@ -585,11 +653,17 @@ namespace NuGetGallery
             {
                 packageOwnerRequestRepository.DeleteOnCommit(pendingOwner);
                 packageOwnerRequestRepository.CommitChanges();
+
+                Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
+                InvalidateCache(package);
+
                 return;
             }
 
             package.Owners.Remove(user);
             packageRepo.CommitChanges();
+            Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
+            InvalidateCache(package);
         }
 
         // TODO: Should probably be run in a transaction
@@ -609,10 +683,10 @@ namespace NuGetGallery
             UpdateIsLatest(package.PackageRegistration);
 
             packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
         }
 
-        public void ChangePackageStatus(
-            Package package, PackageStatusType status, string comments, User user, bool sendEmail)
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user, bool sendEmail)
         {
             if (package.Status == status && package.ReviewComments == comments) return;
 
@@ -657,7 +731,7 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
             if (sendEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
 
-            NotifyIndexingService();
+            InvalidateCache(package.PackageRegistration);
         }
 
         public void ChangeTrustedStatus(Package package, bool trustedPackage, User user)
@@ -734,6 +808,9 @@ namespace NuGetGallery
 
             packageOwnerRequestRepository.InsertOnCommit(newRequest);
             packageOwnerRequestRepository.CommitChanges();
+            InvalidateCache(package);
+            Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", newOwner.Username));
+
             return newRequest;
         }
 
@@ -764,9 +841,14 @@ namespace NuGetGallery
                     select request).FirstOrDefault();
         }
 
-        private void NotifyIndexingService()
+        private void InvalidateCache(PackageRegistration package)
         {
-            indexingSvc.UpdateIndex();
+            Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id));
+            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id));
+            Cache.InvalidateCacheItem("V2Feed-Search");
+            Cache.InvalidateCacheItem("packageVersions-True");
+            Cache.InvalidateCacheItem("packageVersions-False");
+            Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
         }
 
         private void NotifyForModeration(Package package, string comments)

@@ -75,11 +75,17 @@
       <HintPath>..\..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Lucene.Net">
-      <HintPath>..\..\packages\Lucene.Net.2.9.2.2\lib\net40\Lucene.Net.dll</HintPath>
+    <Reference Include="Glav.CacheAdapter">
+      <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Glav.CacheAdapter.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\MarkDownSharp\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Caching.Client, Version=101.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Microsoft.ApplicationServer.Caching.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Caching.Core, Version=101.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Microsoft.ApplicationServer.Caching.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
@@ -92,6 +98,9 @@
     </Reference>
     <Reference Include="Microsoft.Data.OData.Contrib">
       <HintPath>..\..\packages\Microsoft.Data.OData.Contrib.5.0.1.50822\lib\net40\Microsoft.Data.OData.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.DistributedCache, Version=101.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Microsoft.Web.DistributedCache.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\..\packages\microsoft-web-helpers.1.15\lib\Microsoft.Web.Helpers.dll</HintPath>
@@ -106,6 +115,12 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.StorageClient, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WindowsAzure.Storage.1.6\lib\net35-full\Microsoft.WindowsAzure.StorageClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsFabric.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Microsoft.WindowsFabric.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glav.CacheAdapter.2.3\lib\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
     </Reference>
     <Reference Include="MiniProfiler">
       <HintPath>..\..\packages\MiniProfiler.2.0.0-rc1\lib\net40\MiniProfiler.dll</HintPath>
@@ -270,11 +285,6 @@
       <Link>DataServices\V2CuratedFeed.svc.cs</Link>
       <DependentUpon>V2CuratedFeed.svc</DependentUpon>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V2Feed.svc.cs">
-      <Link>DataServices\V2Feed.svc.cs</Link>
-      <DependentUpon>V2Feed.svc</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\CuratedFeed.cs">
       <Link>Entities\CuratedFeed.cs</Link>
     </Compile>
@@ -283,9 +293,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\GallerySetting.cs">
       <Link>Entities\GallerySetting.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageFramework.cs">
-      <Link>Entities\PackageFramework.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\HintAttribute.cs">
       <Link>Infrastructure\HintAttribute.cs</Link>
@@ -301,21 +308,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\JsonNetResult.cs">
       <Link>Infrastructure\JsonNetResult.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneFileSystem.cs">
-      <Link>Infrastructure\Lucene\LuceneFileSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneCommon.cs">
-      <Link>Infrastructure\Lucene\LuceneCommon.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneIndexingJob.cs">
-      <Link>Infrastructure\Lucene\LuceneIndexingJob.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\PackageIndexEntity.cs">
-      <Link>Infrastructure\Lucene\PackageIndexEntity.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneSearchService.cs">
-      <Link>Infrastructure\Lucene\LuceneSearchService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\Jobs\WorkItemCleanupJob.cs">
       <Link>Infrastructure\Jobs\WorkItemCleanupJob.cs</Link>
@@ -563,14 +555,8 @@
     <Compile Include="..\..\nugetgallery\Website\Services\ICloudBlobContainer.cs">
       <Link>Services\ICloudBlobContainer.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IIndexingService.cs">
-      <Link>Services\IIndexingService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\INuGetExeDownloaderService.cs">
       <Link>Services\INuGetExeDownloaderService.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\ISearchService.cs">
-      <Link>Services\ISearchService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\PackageSearchResults.cs">
       <Link>Services\PackageSearchResults.cs</Link>
@@ -902,9 +888,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageOwnerRequest.cs">
       <Link>Entities\PackageOwnerRequest.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageStatistics.cs">
-      <Link>Entities\PackageStatistics.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\Role.cs">
       <Link>Entities\Role.cs</Link>
     </Compile>
@@ -929,7 +912,14 @@
     <Compile Include="CuratedPackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataServices\V2Feed.svc.cs">
+      <DependentUpon>V2Feed.svc</DependentUpon>
+    </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
+    <Compile Include="Entities\EntityRepository.cs" />
+    <Compile Include="Entities\PackageFramework.cs" />
+    <Compile Include="Entities\PackageStatistics.cs" />
+    <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1016,9 +1006,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageAuthor.cs">
       <Link>Entities\PackageAuthor.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\EntityRepository.cs">
-      <Link>Entities\EntityRepository.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\DisplayPackageRequest.cs">
       <Link>RequestModels\DisplayPackageRequest.cs</Link>
     </Compile>
@@ -1075,7 +1062,6 @@
       <DependentUpon>V2SubmittedFeed.svc</DependentUpon>
     </Compile>
     <Compile Include="Entities\PackageSubmittedStatusType.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\SimpleInjectorContainerResolutionBehavior.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="Constants.cs" />
@@ -1172,9 +1158,6 @@
     </Content>
     <Content Include="..\..\nugetgallery\Website\DataServices\V2CuratedFeed.svc">
       <Link>DataServices\V2CuratedFeed.svc</Link>
-    </Content>
-    <Content Include="..\..\nugetgallery\Website\DataServices\V2Feed.svc">
-      <Link>DataServices\V2Feed.svc</Link>
     </Content>
     <Content Include="..\..\nugetgallery\Website\DynamicData\Content\GridViewPager.ascx">
       <Link>DynamicData\Content\GridViewPager.ascx</Link>
@@ -1365,6 +1348,7 @@
     <Content Include="Content\SyntaxHighlighter\shThemeMDUltra.css" />
     <Content Include="Content\SyntaxHighlighter\shThemeMidnight.css" />
     <Content Include="Content\SyntaxHighlighter\shThemeRDark.css" />
+    <Content Include="DataServices\V2Feed.svc" />
     <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />

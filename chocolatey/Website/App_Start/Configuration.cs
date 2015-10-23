@@ -68,7 +68,7 @@ namespace NuGetGallery
         public PackageStoreType PackageStoreType { get { return ReadAppSettings("PackageStoreType", value => (PackageStoreType)Enum.Parse(typeof(PackageStoreType), value ?? PackageStoreType.NotSpecified.ToString())); } }
 
         public string AzureCdnHost { get { return ReadAppSettings("AzureCdnHost"); } }
-
+        
         public string S3Bucket { get { return ReadAppSettings("S3Bucket", (value) => value ?? string.Empty); } }
 
         public string PackagesUrl { get { return ReadAppSettings("PackagesUrl", (value) => value ?? string.Empty); } }
@@ -80,6 +80,8 @@ namespace NuGetGallery
         public bool SmtpEnableSsl { get { return ReadAppSettings("SmtpEnableSsl", (value) => bool.Parse(value ?? bool.TrueString)); } }
 
         public string ModerationEmail { get { return ReadAppSettings("ModerationEmail", (value) => value ?? string.Empty); } }
+
+        public bool UseCaching { get { return ReadAppSettings("UseCaching", (value) => bool.Parse(value ?? bool.TrueString)); } } 
 
         protected virtual string GetConfiguredSiteRoot()
         {

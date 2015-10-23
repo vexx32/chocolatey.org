@@ -15,20 +15,18 @@ namespace NuGetGallery
             p => p.Description.Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> summaryCriteria = term =>
-            p => p.Summary.Contains(term);
+            p => p.Summary != null && p.Summary.Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> tagCriteria = term =>
-            p => p.Tags.Contains(term);
+            p => p.Tags != null && p.Tags.Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> authorCriteria = term =>
             p => p.Authors.Any(a => a.Name.Contains(term));
 
         private static Func<string, Expression<Func<Package, bool>>>[] searchCriteria = new[] { 
                 idCriteria, 
-                authorCriteria,
-                descriptionCriteria, 
-                summaryCriteria, 
-                tagCriteria 
+                descriptionCriteria,
+                summaryCriteria
         };
 
         public static IQueryable<Package> Search(this IQueryable<Package> source, string searchTerm)
@@ -43,11 +41,21 @@ namespace NuGetGallery
 
             // Build a list of expressions for each term
             var expressions = new List<LambdaExpression>();
-            foreach (var criteria in searchCriteria)
+            foreach (var term in terms)
             {
-                foreach (var term in terms)
+                if (term.StartsWith("author:"))
                 {
-                    expressions.Add(criteria(term));
+                    expressions.Add(authorCriteria(term.Replace("author:",string.Empty)));
+                }
+                else if (term.StartsWith("tag:"))
+                {
+                    expressions.Add(tagCriteria(term.Replace("tag:", string.Empty)));
+                } else
+                {
+                    foreach (var criteria in searchCriteria)
+                    {
+                        expressions.Add(criteria(term));
+                    }
                 }
             }
 

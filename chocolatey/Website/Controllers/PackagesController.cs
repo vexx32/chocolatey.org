@@ -42,20 +42,18 @@ namespace NuGetGallery
         private readonly IUploadFileService uploadFileSvc;
         private readonly IUserService userSvc;
         private readonly IMessageService messageService;
-        private readonly ISearchService searchSvc;
         private readonly IAutomaticallyCuratePackageCommand autoCuratedPackageCmd;
         private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
         public IConfiguration Configuration { get; set; }
 
         public PackagesController(
-            IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, ISearchService searchSvc, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
+            IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
             INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration configuration)
         {
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
             this.userSvc = userSvc;
             this.messageService = messageService;
-            this.searchSvc = searchSvc;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
             this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
             Configuration = configuration;
@@ -109,7 +107,7 @@ namespace NuGetGallery
                 return View("~/Views/Packages/UploadPackage.cshtml");
             }
 
-            var packageRegistration = packageSvc.FindPackageRegistrationById(nuGetPackage.Id);
+            var packageRegistration = packageSvc.FindPackageRegistrationById(nuGetPackage.Id, useCache: false);
             if (packageRegistration != null && !packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key))
             {
                 ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageIdNotAvailable, packageRegistration.Id));
@@ -155,7 +153,7 @@ namespace NuGetGallery
         {
             if (!ModelState.IsValid) return DisplayPackage(id, version);
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
@@ -198,7 +196,6 @@ namespace NuGetGallery
 
             var moderator = userSvc.FindByUsername(HttpContext.User.Identity.Name);
             packageSvc.ChangePackageStatus(package, status, comments, moderator, sendEmail);
-
             packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
 
             //grab updated package
@@ -214,7 +211,7 @@ namespace NuGetGallery
         {
             if (page < 1) page = 1;
 
-            IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
+            IEnumerable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
 
             if (moderatorQueue)
@@ -262,12 +259,64 @@ namespace NuGetGallery
 
                 packagesToShow = resubmittedPackages.Union(unreviewedPackages).Union(waitingForMaintainerPackages);
 
+                if (!string.IsNullOrWhiteSpace(q))
+                {
+                    packagesToShow = packagesToShow.AsQueryable().Search(q).ToList();
+                }
+
+                switch (searchFilter.SortProperty)
+                {
+                    case SortProperty.DisplayName:
+                        packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                        break;
+                    case SortProperty.Recent:
+                        packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                        break;
+                    default:
+                        //do not change the search order
+                        break;
+                }
+
                 totalHits = packagesToShow.Count() + packageVersions.Count();
 
-                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
+                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount));
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-            } else packagesToShow = searchSvc.Search(packageVersions, searchFilter, out totalHits).ToList();
+            } else
+            {
+                packagesToShow = string.IsNullOrWhiteSpace(q) ? packageVersions : packageVersions.AsQueryable().Search(q).ToList();
+
+                totalHits = packagesToShow.Count();
+
+                switch (searchFilter.SortProperty)
+                {
+                    case SortProperty.DisplayName:
+                        packagesToShow = packagesToShow.OrderBy(p => string.IsNullOrWhiteSpace(p.Title) ? p.PackageRegistration.Id : p.Title);
+                        break;
+                    case SortProperty.DownloadCount:
+                        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
+                        break;
+                    case SortProperty.Recent:
+                        packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                        break;
+                    case SortProperty.Relevance:
+                        //todo: address relevance
+                        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
+                        break;
+                }
+
+                if (searchFilter.Skip >= totalHits)
+                {
+                    searchFilter.Skip = 0;
+                }
+
+                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) searchFilter.Take = packagesToShow.Count() - searchFilter.Skip;
+               
+                packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
+                
+                //packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
+            }
+            
 
             if (page == 1 && !packagesToShow.Any())
             {
@@ -459,7 +508,7 @@ namespace NuGetGallery
 
         internal virtual ActionResult Delete(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return PackageNotFound(id, version);
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
@@ -486,7 +535,7 @@ namespace NuGetGallery
         {
             if (String.IsNullOrEmpty(token)) return HttpNotFound();
 
-            var package = packageSvc.FindPackageRegistrationById(id);
+            var package = packageSvc.FindPackageRegistrationById(id, useCache:false);
             if (package == null) return HttpNotFound();
 
             var user = userSvc.FindByUsername(username);
@@ -505,7 +554,7 @@ namespace NuGetGallery
 
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
             if (package == null) return PackageNotFound(id, version);
 
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");

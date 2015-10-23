@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
+using NugetGallery;
 
 namespace NuGetGallery
 {
@@ -39,7 +40,8 @@ namespace NuGetGallery
         public virtual ActionResult Feed(int? page, int? pageSize)
         {
             var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false));
-            IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(includePrerelease: false).OrderByDescending(p => p.Published);
+
+            IEnumerable<Package> packageVersions = packageSvc.GetPackagesForListing(includePrerelease: false).OrderByDescending(p => p.Published);
 
             if (page != null && pageSize != null)
             {
