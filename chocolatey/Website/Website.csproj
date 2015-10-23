@@ -302,9 +302,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\GallerySetting.cs">
       <Link>Entities\GallerySetting.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageFramework.cs">
-      <Link>Entities\PackageFramework.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\HintAttribute.cs">
       <Link>Infrastructure\HintAttribute.cs</Link>
     </Compile>
@@ -920,9 +917,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\PackageOwnerRequest.cs">
       <Link>Entities\PackageOwnerRequest.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageStatistics.cs">
-      <Link>Entities\PackageStatistics.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\Role.cs">
       <Link>Entities\Role.cs</Link>
     </Compile>
@@ -949,6 +943,8 @@
     </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="Entities\EntityRepository.cs" />
+    <Compile Include="Entities\PackageFramework.cs" />
+    <Compile Include="Entities\PackageStatistics.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
