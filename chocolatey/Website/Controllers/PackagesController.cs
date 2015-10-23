@@ -261,9 +261,27 @@ namespace NuGetGallery
 
                 packagesToShow = resubmittedPackages.Union(unreviewedPackages).Union(waitingForMaintainerPackages);
 
+                if (!string.IsNullOrWhiteSpace(q))
+                {
+                    packagesToShow = packagesToShow.AsQueryable().Search(q).ToList();
+                }
+
+                switch (searchFilter.SortProperty)
+                {
+                    case SortProperty.DisplayName:
+                        packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                        break;
+                    case SortProperty.Recent:
+                        packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                        break;
+                    default:
+                        //do not change the search order
+                        break;
+                }
+
                 totalHits = packagesToShow.Count() + packageVersions.Count();
 
-                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
+                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.DownloadCount));
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
             } else packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
