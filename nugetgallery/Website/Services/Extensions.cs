@@ -15,10 +15,10 @@ namespace NuGetGallery
             p => p.Description.Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> summaryCriteria = term =>
-            p => p.Summary.Contains(term);
+            p => p.Summary != null && p.Summary.Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> tagCriteria = term =>
-            p => p.Tags.Contains(term);
+            p => p.Tags != null && p.Tags.Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> authorCriteria = term =>
             p => p.Authors.Any(a => a.Name.Contains(term));
