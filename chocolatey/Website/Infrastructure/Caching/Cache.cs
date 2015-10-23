@@ -28,7 +28,7 @@ namespace NugetGallery
     {
         private static ICacheProvider _cacheProvider;
 
-        public const int DEFAULT_CACHE_TIME_MINUTES = 60;
+        public const int DEFAULT_CACHE_TIME_MINUTES = 180;
 
         /// <summary>
         ///   Initializes the cache provider for use by the application

@@ -845,6 +845,7 @@ namespace NuGetGallery
         {
             Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id));
             Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id));
+            Cache.InvalidateCacheItem("V2Feed-Search");
             Cache.InvalidateCacheItem("packageVersions-True");
             Cache.InvalidateCacheItem("packageVersions-False");
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));

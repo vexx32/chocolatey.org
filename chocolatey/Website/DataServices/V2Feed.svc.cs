@@ -53,11 +53,11 @@ namespace NuGetGallery
                                       .Include(p => p.PackageRegistration.Owners)
                                       .Where(p => p.Listed);
 
-            var packageVersions = Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
+
+            // this may not be the best idea over time.
+            var packageVersions = Cache.Get("V2Feed-Search",
                   DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
-                  () => includePrerelease
-                      ? packages.Where(p => p.IsLatest).ToList().Distinct(new PackageListingDistinctItemComparer())
-                      : packages.Where(p => p.IsLatestStable).ToList().Distinct(new PackageListingDistinctItemComparer())
+                  () => packages.ToList()
                   );
             
             return SearchCore(packageVersions.AsQueryable(), searchTerm, targetFramework, includePrerelease)
@@ -65,20 +65,10 @@ namespace NuGetGallery
                     .ToList()
                     .AsQueryable();
 
-            //return SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot());
-        }
-
-        class PackageListingDistinctItemComparer : IEqualityComparer<Package>
-        {
-            public bool Equals(Package x, Package y)
-            {
-                return x.PackageRegistration.Id == y.PackageRegistration.Id;
-            }
-
-            public int GetHashCode(Package obj)
-            {
-                return obj.PackageRegistration.Id.GetHashCode();
-            }
+            //return Cache.Get(string.Format("V2Feed-Search-{0}-{1}-{2}", searchTerm, targetFramework, includePrerelease),
+            //       DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+            //       () => SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot())
+            //               .ToList().AsQueryable());
         }
 
         [WebGet]
