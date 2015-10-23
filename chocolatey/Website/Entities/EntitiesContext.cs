@@ -56,7 +56,13 @@ namespace NuGetGallery
 
             Configuration.LazyLoadingEnabled = false;
             //Configuration.ValidateOnSaveEnabled = false;
-        }
+            var adapter = this as IObjectContextAdapter;
+            if (adapter != null)
+            {
+                var objectContext = adapter.ObjectContext;
+                objectContext.CommandTimeout = 120; // value in seconds
+            }
+       }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
