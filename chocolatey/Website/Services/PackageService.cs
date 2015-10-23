@@ -242,7 +242,7 @@ namespace NuGetGallery
                         // It's better to just not store them. Hence "unknown". - Phil Haack 10/6/2011
                         IPAddress = "unknown",
                         UserAgent = userAgent,
-                        Package = package
+                        PackageKey = package.Key
                     });
 
                 packageStatsRepo.CommitChanges();
