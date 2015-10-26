@@ -75,5 +75,15 @@ namespace NugetGallery
                 _cacheProvider.InvalidateCacheItem(cacheKey);
             }
         }
+
+        public static void ClearAll()
+        {
+            if (_cacheProvider != null)
+            {
+                //typeof (Cache).Log().Debug(() => "Erasing the cache for everything");
+
+                _cacheProvider.ClearAll();
+            }
+        }
     }
 }
