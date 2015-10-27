@@ -221,8 +221,8 @@ namespace NuGetGallery
             return Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
                     DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
                     () => includePrerelease
-                        ? packages.Where(p => p.IsLatest).ToList().Distinct(new PackageListingDistinctItemComparer())
-                        : packages.Where(p => p.IsLatestStable).ToList().Distinct(new PackageListingDistinctItemComparer())
+                        ? packages.Where(p => p.IsLatest).ToList().Distinct(new PackageListingDistinctItemComparer()).ToList()
+                        : packages.Where(p => p.IsLatestStable).ToList().Distinct(new PackageListingDistinctItemComparer()).ToList()
                    );
         }
 

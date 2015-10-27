@@ -1,6 +1,9 @@
 ﻿
+using System;
+
 namespace NuGetGallery
 {
+    [Serializable]
     public class AggregateStats
     {
         public long Downloads { get; set; }

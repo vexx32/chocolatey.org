@@ -74,13 +74,14 @@ namespace NuGetGallery
         [WebGet]
         public IQueryable<V2FeedPackage> FindPackagesById(string id)
         {
-            return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id), 
+            var packages = Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id), 
                     DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
                     () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
                             .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
                             .ToV2FeedPackageQuery(GetSiteRoot())
-                            .ToList().AsQueryable());
+                            .ToList());
 
+            return packages.AsQueryable();
 
             //return PackageRepo.GetAll().Include(p => p.PackageRegistration)
             //                           .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
@@ -128,10 +129,11 @@ namespace NuGetGallery
                               .OrderBy(p => p.PackageRegistration.Id);
 
             //GetUpdates(string packageIds, string versions, bool includePrerelease, bool includeAllVersions, string targetFrameworks
-            return Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}-{4}", idValues, versionValues, includePrerelease, includeAllVersions, targetFrameworkValues), 
+            var searchResults = Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}-{4}", idValues, versionValues, includePrerelease, includeAllVersions, targetFrameworkValues), 
                              DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
-                             () => GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot()).ToList().AsQueryable());
+                             () => GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot()).ToList());
 
+            return searchResults.AsQueryable();
             //return GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot());
         }
 
