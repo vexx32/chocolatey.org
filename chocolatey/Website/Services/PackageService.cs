@@ -221,23 +221,23 @@ namespace NuGetGallery
             return Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
                     DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
                     () => includePrerelease
-                        ? packages.Where(p => p.IsLatest).ToList().Distinct(new PackageListingDistinctItemComparer()).ToList()
-                        : packages.Where(p => p.IsLatestStable).ToList().Distinct(new PackageListingDistinctItemComparer()).ToList()
+                        ? packages.Where(p => p.IsLatest).ToList() //.Distinct(new PackageListingDistinctItemComparer())
+                        : packages.Where(p => p.IsLatestStable).ToList() //.Distinct(new PackageListingDistinctItemComparer())
                    );
         }
 
-        class PackageListingDistinctItemComparer : IEqualityComparer<Package>
-        {
-            public bool Equals(Package x, Package y)
-            {
-                return x.PackageRegistration.Id == y.PackageRegistration.Id;
-            }
+        //class PackageListingDistinctItemComparer : IEqualityComparer<Package>
+        //{
+        //    public bool Equals(Package x, Package y)
+        //    {
+        //        return x.PackageRegistration.Id == y.PackageRegistration.Id;
+        //    }
 
-            public int GetHashCode(Package obj)
-            {
-                return obj.PackageRegistration.Id.GetHashCode();
-            }
-        }
+        //    public int GetHashCode(Package obj)
+        //    {
+        //        return obj.PackageRegistration.Id.GetHashCode();
+        //    }
+        //}
 
         public IQueryable<Package> GetSubmittedPackages()
         {
