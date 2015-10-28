@@ -52,10 +52,6 @@ public static class MVC {
 
     public static NuGetGallery.AuthenticationController Authentication = new NuGetGallery.T4MVC_AuthenticationController();
 
-    public static NuGetGallery.CuratedFeedsController CuratedFeeds = new NuGetGallery.T4MVC_CuratedFeedsController();
-
-    public static NuGetGallery.CuratedPackagesController CuratedPackages = new NuGetGallery.T4MVC_CuratedPackagesController();
-
     public static NuGetGallery.JsonApiController JsonApi = new NuGetGallery.T4MVC_JsonApiController();
 
     public static NuGetGallery.PackagesController Packages = new NuGetGallery.T4MVC_PackagesController();

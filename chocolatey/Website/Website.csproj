@@ -272,12 +272,6 @@
     <Compile Include="..\..\nugetgallery\Website\Controllers\AppController.cs">
       <Link>Controllers\AppController.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Controllers\CuratedFeedsController.cs">
-      <Link>Controllers\CuratedFeedsController.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Controllers\CuratedPackagesController.cs">
-      <Link>Controllers\CuratedPackagesController.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\DataServices\CountInterceptor.cs">
       <Link>DataServices\CountInterceptor.cs</Link>
     </Compile>
@@ -287,22 +281,9 @@
     <Compile Include="..\..\nugetgallery\Website\DataServices\ODataRemoveVersionSorter.cs">
       <Link>DataServices\ODataRemoveVersionSorter.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V1FeedPackage.cs">
-      <Link>DataServices\V1FeedPackage.cs</Link>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V1Feed.svc.cs">
-      <Link>DataServices\V1Feed.svc.cs</Link>
-      <DependentUpon>V1Feed.svc</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\DataServices\FeedContext.cs">
       <Link>DataServices\FeedContext.cs</Link>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\DataServices\V2CuratedFeed.svc.cs">
-      <Link>DataServices\V2CuratedFeed.svc.cs</Link>
-      <DependentUpon>V2CuratedFeed.svc</DependentUpon>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\CuratedFeed.cs">
       <Link>Entities\CuratedFeed.cs</Link>
@@ -925,12 +906,6 @@
     <Compile Include="AuthenticationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="CuratedFeedsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CuratedPackagesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataServices\V2Feed.svc.cs">
       <DependentUpon>V2Feed.svc</DependentUpon>
     </Compile>
@@ -1172,12 +1147,6 @@
     <Compile Include="ViewModels\UserSiteProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\nugetgallery\Website\DataServices\V1Feed.svc">
-      <Link>DataServices\V1Feed.svc</Link>
-    </Content>
-    <Content Include="..\..\nugetgallery\Website\DataServices\V2CuratedFeed.svc">
-      <Link>DataServices\V2CuratedFeed.svc</Link>
-    </Content>
     <Content Include="..\..\nugetgallery\Website\DynamicData\Content\GridViewPager.ascx">
       <Link>DynamicData\Content\GridViewPager.ascx</Link>
     </Content>
@@ -1486,8 +1455,6 @@
     <Content Include="Views\Users\Thanks.cshtml" />
     <Content Include="Views\web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\CuratedFeeds\CuratedFeed.cshtml" />
-    <Content Include="Views\CuratedPackages\CreateCuratedPackageForm.cshtml" />
     <Content Include="Errors\404.cshtml" />
     <Content Include="Errors\ErrorLayout.cshtml" />
     <Content Include="Errors\_PageStart.cshtml" />
