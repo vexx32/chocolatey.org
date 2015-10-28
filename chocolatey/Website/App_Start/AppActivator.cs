@@ -121,19 +121,23 @@ namespace NuGetGallery
 
         private static void MiniProfilerPreStart()
         {
+#if DEBUG
             MiniProfilerEF.Initialize();
             DynamicModuleUtility.RegisterModule(typeof(MiniProfilerStartupModule));
             GlobalFilters.Filters.Add(new ProfilingActionFilter());
+#endif
         }
 
         private static void MiniProfilerPostStart()
         {
+#if DEBUG
             var copy = ViewEngines.Engines.ToList();
             ViewEngines.Engines.Clear();
             foreach (var item in copy)
             {
                 ViewEngines.Engines.Add(new ProfilingViewEngine(item));
             }
+#endif
         }
 
         private class MiniProfilerStartupModule : IHttpModule
