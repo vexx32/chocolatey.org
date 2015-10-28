@@ -9,19 +9,19 @@ namespace NuGetGallery
     {
         // Search criteria
         private static Func<string, Expression<Func<Package, bool>>> idCriteria = term =>
-            p => p.PackageRegistration.Id.Contains(term);
+            p => p.PackageRegistration.Id.ToLower().Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> descriptionCriteria = term =>
-            p => p.Description.Contains(term);
+            p => p.Description.ToLower().Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> summaryCriteria = term =>
-            p => p.Summary != null && p.Summary.Contains(term);
+            p => p.Summary != null && p.Summary.ToLower().Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> tagCriteria = term =>
-            p => p.Tags != null && p.Tags.Contains(term);
+            p => p.Tags != null && p.Tags.ToLower().Contains(term);
 
         private static Func<string, Expression<Func<Package, bool>>> authorCriteria = term =>
-            p => p.Authors.Any(a => a.Name.Contains(term));
+            p => p.Authors.Any(a => a.Name.ToLower().Contains(term));
 
         private static Func<string, Expression<Func<Package, bool>>>[] searchCriteria = new[] { 
                 idCriteria, 
@@ -43,18 +43,24 @@ namespace NuGetGallery
             var expressions = new List<LambdaExpression>();
             foreach (var term in terms)
             {
-                if (term.StartsWith("author:"))
+                var localSearchTerm = term.to_lower();
+
+                if (localSearchTerm.StartsWith("id:"))
                 {
-                    expressions.Add(authorCriteria(term.Replace("author:",string.Empty)));
+                    expressions.Add(idCriteria(localSearchTerm.Replace("id:", string.Empty)));
                 }
-                else if (term.StartsWith("tag:"))
+                if (localSearchTerm.StartsWith("author:"))
                 {
-                    expressions.Add(tagCriteria(term.Replace("tag:", string.Empty)));
+                    expressions.Add(authorCriteria(localSearchTerm.Replace("author:", string.Empty)));
+                }
+                else if (localSearchTerm.StartsWith("tag:"))
+                {
+                    expressions.Add(tagCriteria(localSearchTerm.Replace("tag:", string.Empty)));
                 } else
                 {
                     foreach (var criteria in searchCriteria)
                     {
-                        expressions.Add(criteria(term));
+                        expressions.Add(criteria(localSearchTerm));
                     }
                 }
             }
