@@ -24,7 +24,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using DynamicDataEFCodeFirst;
 using Elmah;
 using Elmah.Contrib.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -59,7 +58,6 @@ namespace NuGetGallery
             DbMigratorPostStart();
             BackgroundJobsPostStart();
             AppPostStart();
-            DynamicDataPostStart();
         }
 
         public static void Stop()
@@ -90,15 +88,6 @@ namespace NuGetGallery
                                     .Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase)) filters.Add(new RequireHttpsAppHarborAttribute());
         }
 
-        //private static void SetCustomRouteHandler()
-        //{
-        //     var routes = RouteTable.Routes.OfType<Route>().Where(x => x.RouteHandler is MvcRouteHandler);
-        //    foreach (var route in routes)
-        //    {
-        //        route.RouteHandler = new CustomMvcRouteHandler();
-        //    }
-        //}
-
         private static void BackgroundJobsPostStart()
         {
             var jobs = new IJob[]
@@ -128,11 +117,6 @@ namespace NuGetGallery
             // 'Invalid object name 'dbo.__MigrationHistory' to be thrown when the database is first created; 
             // it seems these can safely be ignored, and the database will still be created.
             dbMigrator.Update();
-        }
-
-        private static void DynamicDataPostStart()
-        {
-            Registration.Register(RouteTable.Routes);
         }
 
         private static void MiniProfilerPreStart()
