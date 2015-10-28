@@ -55,16 +55,28 @@ namespace NuGetGallery
 
 
             // this may not be the best idea over time.
-            var packageVersions = Cache.Get("V2Feed-Search",
-                  DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
-                  () => packages.ToList()
-                  );
-            
-            return SearchCore(packageVersions.AsQueryable(), searchTerm, targetFramework, includePrerelease)
-                    .ToV2FeedPackageQuery(GetSiteRoot())
-                    .ToList()
-                    .AsQueryable();
+            //var packageVersions = Cache.Get("V2Feed-Search",
+            //      DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+            //      () => packages.ToList()
+            //      );
 
+            //return SearchCore(packageVersions.AsQueryable(), searchTerm, targetFramework, includePrerelease)
+            //        .ToV2FeedPackageQuery(GetSiteRoot())
+            //        .ToList()
+            //        .AsQueryable();
+
+            var packageVersions = Cache.Get(string.Format("V2Feed-Search-{0}", searchTerm.to_lower()),
+                 DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                 () => SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot()).ToList()
+                 );
+
+            if (!includePrerelease)
+            {
+                return packageVersions.Where(p => !p.IsPrerelease).AsQueryable();
+            }
+
+            return packageVersions.AsQueryable();
+            
             //return Cache.Get(string.Format("V2Feed-Search-{0}-{1}-{2}", searchTerm, targetFramework, includePrerelease),
             //       DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
             //       () => SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot())
@@ -74,7 +86,7 @@ namespace NuGetGallery
         [WebGet]
         public IQueryable<V2FeedPackage> FindPackagesById(string id)
         {
-            return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id), 
+            return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()), 
                     DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
                     () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
                             .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
@@ -129,7 +141,7 @@ namespace NuGetGallery
                               .OrderBy(p => p.PackageRegistration.Id);
 
             //GetUpdates(string packageIds, string versions, bool includePrerelease, bool includeAllVersions, string targetFrameworks
-            return Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}-{4}", idValues, versionValues, includePrerelease, includeAllVersions, targetFrameworkValues), 
+            return Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}", string.Join("|", idValues).to_lower(), string.Join("|", versionValues).to_lower(), includePrerelease, includeAllVersions), 
                              DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
                              () => GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot()).ToList().AsQueryable());
 

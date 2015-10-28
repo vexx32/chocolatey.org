@@ -133,7 +133,7 @@ namespace NuGetGallery
         {
             if (useCache)
             {
-                return Cache.Get(string.Format("packageregistration-{0}", id),
+                return Cache.Get(string.Format("packageregistration-{0}", id.to_lower()),
                  DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
                  () => packageRegistrationRepo.GetAll()
                         .Include(pr => pr.Owners)
@@ -180,7 +180,7 @@ namespace NuGetGallery
 
             var packageVersions = useCache
                                       ? Cache.Get(
-                                          string.Format("packageVersions-{0}-{1}", id, allowPrerelease),
+                                          string.Format("packageVersions-{0}-{1}", id.to_lower(), allowPrerelease),
                                           DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
                                           () => packagesQuery.ToList())
                                       : packagesQuery.ToList();
@@ -844,9 +844,9 @@ namespace NuGetGallery
 
         private void InvalidateCache(PackageRegistration package)
         {
-            Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id));
-            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id));
-            Cache.InvalidateCacheItem("V2Feed-Search");
+            Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem("packageVersions-True");
             Cache.InvalidateCacheItem("packageVersions-False");
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
