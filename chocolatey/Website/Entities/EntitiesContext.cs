@@ -60,7 +60,7 @@ namespace NuGetGallery
             if (adapter != null)
             {
                 var objectContext = adapter.ObjectContext;
-                objectContext.CommandTimeout = 60; // value in seconds
+                objectContext.CommandTimeout = 90; // value in seconds
             }
        }
 
