@@ -781,6 +781,7 @@ namespace NuGetGallery
 
             if (package.IsLatest || package.IsLatestStable) UpdateIsLatest(package.PackageRegistration);
             packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
         }
 
         private static Package FindPackage(IEnumerable<Package> packages, Func<Package, bool> predicate = null)
