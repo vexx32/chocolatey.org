@@ -593,7 +593,12 @@ namespace NuGetGallery
             IPackage package;
             using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
-                if (uploadFile == null) return RedirectToRoute(RouteName.UploadPackage);
+                if (uploadFile == null)
+                {
+                    TempData["ErrorMessage"] = string.Format("Unable to find uploaded file for user '{0}'. Please try using choco.exe push instead.", currentUser.Username);
+                    return RedirectToRoute(RouteName.UploadPackage);
+                }
+                
                 package = ReadNuGetPackage(uploadFile);
             }
 

@@ -77,6 +77,10 @@
             @if (TempData.ContainsKey("Message"))
             {
                 <p class="message">@TempData["Message"]</p>
+            } 
+            @if (TempData.ContainsKey("ErrorMessage"))
+            {
+                <p class="message error">@TempData["ErrorMessage"]</p>
             }
             @RenderBody()
         </div>
