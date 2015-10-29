@@ -642,12 +642,6 @@ namespace NuGetGallery
                 tx.Complete();
             }
 
-            if (package.PackageRegistration.Id.Equals(Constants.NuGetCommandLinePackageId, StringComparison.OrdinalIgnoreCase) && package.IsLatestStable)
-            {
-                // If we're pushing a new stable version of NuGet.CommandLine, update the extracted executable.
-                nugetExeDownloaderSvc.UpdateExecutable(nugetPackage);
-            }
-
             TempData["Message"] = string.Format(
                 "You have successfully created '{0}' version '{1}'. The package is now under review by the moderators and will show up once approved.", package.PackageRegistration.Id, package.Version);
             return RedirectToRoute(
