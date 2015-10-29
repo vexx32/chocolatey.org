@@ -66,8 +66,8 @@ namespace NuGetGallery
             //        .AsQueryable();
 
             var packageVersions = Cache.Get(string.Format("V2Feed-Search-{0}", searchTerm.to_lower()),
-                 DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
-                 () => SearchCore(packages, searchTerm, targetFramework, includePrerelease).ToV2FeedPackageQuery(GetSiteRoot()).ToList()
+                   DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                   () => SearchCore(packages, searchTerm, targetFramework).ToV2FeedPackageQuery(GetSiteRoot()).ToList()
                  );
 
             if (!includePrerelease)

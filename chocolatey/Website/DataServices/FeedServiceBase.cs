@@ -138,9 +138,8 @@ namespace NuGetGallery
             return null;
         }
 
-        protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework, bool includePrerelease)
+        protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework)
         {
-            if (!includePrerelease) packages = packages.Where(p => !p.IsPrerelease);
             return packages.Search(searchTerm);
         }
        
