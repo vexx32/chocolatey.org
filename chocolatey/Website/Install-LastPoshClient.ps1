@@ -1,23 +1,27 @@
-# ==============================================================================
-# 
-# Fervent Coder Copyright 2011 - Present - Released under the Apache 2.0 License
-# 
-# Copyright 2007-2008 The Apache Software Foundation.
-#  
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
-# this file except in compliance with the License. You may obtain a copy of the 
-# License at 
+# =====================================================================
+# Copyright 2011 - Present RealDimensions Software, LLC, and the
+# original authors/contributors from ChocolateyGallery
+# at https://github.com/chocolatey/chocolatey.org
 #
-#     http://www.apache.org/licenses/LICENSE-2.0 
-# 
-# Unless required by applicable law or agreed to in writing, software distributed 
-# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
-# CONDITIONS OF ANY KIND, either express or implied. See the License for the 
-# specific language governing permissions and limitations under the License.
-# ==============================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# =====================================================================
 
-# variables
+# Environment Variables, specified as $env:NAME in PowerShell.exe and %NAME% in cmd.exe.
+# For explicit proxy, please set $env:chocolateyProxyLocation and optionally $env:chocolateyProxyUser and $env:chocolateyProxyPassword
+# To use built-in compression (no 7zip download), please set $env:chocolateyUseWindowsCompression = 'true'
+
 $url = "https://chocolatey.org/api/v2/package/chocolatey/0.9.8.33"
+
 if ($env:TEMP -eq $null) {
   $env:TEMP = Join-Path $env:SystemDrive 'temp'
 }
@@ -31,52 +35,84 @@ param (
   [string]$url,
   [string]$file
  )
-  Write-Host "Downloading $url to $file"
+  Write-Output "Downloading $url to $file"
   $downloader = new-object System.Net.WebClient
-  $downloader.Proxy.Credentials=[System.Net.CredentialCache]::DefaultNetworkCredentials;
+
+  $defaultCreds = [System.Net.CredentialCache]::DefaultCredentials
+  if ($defaultCreds -ne $null) {
+    $downloader.Credentials = $defaultCreds
+  }
+
+  # check if a proxy is required
+  $explicitProxy = $env:chocolateyProxyLocation
+  $explicitProxyUser = $env:chocolateyProxyUser
+  $explicitProxyPassword = $env:chocolateyProxyPassword
+  if ($explicitProxy -ne $null) {
+    # explicit proxy
+  $proxy = New-Object System.Net.WebProxy($explicitProxy, $true)
+  if ($explicitProxyPassword -ne $null) {
+    $passwd = ConvertTo-SecureString $explicitProxyPassword -AsPlainText -Force
+    $proxy.Credentials = New-Object System.Management.Automation.PSCredential ($explicitProxyUser, $passwd)
+  }
+
+  Write-Output "Using explicit proxy server '$explicitProxy'."
+    $downloader.Proxy = $proxy
+
+  } elseif (!$downloader.Proxy.IsBypassed($url))
+  {
+  # system proxy (pass through)
+    $creds = $defaultCreds
+    if ($creds -eq $null) {
+      Write-Debug "Default credentials were null. Attempting backup method"
+      $cred = get-credential
+      $creds = $cred.GetNetworkCredential();
+    }
+    $proxyaddress = $downloader.Proxy.GetProxy($url).Authority
+    Write-Output "Using system proxy server '$proxyaddress'."
+    $proxy = New-Object System.Net.WebProxy($proxyaddress)
+    $proxy.Credentials = $creds
+    $downloader.Proxy = $proxy
+  }
+
   $downloader.DownloadFile($url, $file)
 }
 
-# download the package
+# Download the Chocolatey package
 Download-File $url $file
 
-# download 7zip
-Write-Host "Download 7Zip commandline tool"
-$7zaExe = Join-Path $tempDir '7za.exe'
+# Determine unzipping method
+$unzipMethod = '7zip'
+if (![string]::IsNullOrEmpty($env:chocolateyUseWindowsCompression)){
+  Write-Output 'Using built in compression to unzip.'
+  $unzipMethod = 'builtin'
+}
 
-Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
+if ($unzipMethod -eq '7zip') {
+  # download 7zip
+  Write-Output "Download 7Zip commandline tool"
+  $7zaExe = Join-Path $tempDir '7za.exe'
+  Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
 
-# Github's Raw endpoint does not honor TLS and the .net 2.0 client will
-# not fall back to Ssl3 un like the newer .net4 clients. So .net2 will 
-# time out if we do not explicitly set the protocol to Ssl3
-#$currentProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-#try {
-#    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Ssl3
-#    Download-File 'https://github.com/chocolatey/chocolatey/blob/master/src/tools/7za.exe?raw=true' "$7zaExe"
-#}
-#catch {
-#    throw
-#}
-#finally {
-#    [System.Net.ServicePointManager]::SecurityProtocol = $currentProtocol
-#}
+  # unzip the package
+  Write-Output "Extracting $file to $tempDir..."
+  Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait -NoNewWindow
+} else {
+  # unzip the package
+  Write-Output "Extracting $file to $tempDir..."
+  $shellApplication = new-object -com shell.application
+  $zipPackage = $shellApplication.NameSpace($file)
+  $destinationFolder = $shellApplication.NameSpace($tempDir)
+  $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+}
 
-# unzip the package
-Write-Host "Extracting $file to $tempDir..."
-Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait -NoNewWindow
-#$shellApplication = new-object -com shell.application 
-#$zipPackage = $shellApplication.NameSpace($file) 
-#$destinationFolder = $shellApplication.NameSpace($tempDir) 
-#$destinationFolder.CopyHere($zipPackage.Items(),0x10)
-
-# call chocolatey install
-Write-Host "Installing chocolatey on this machine"
+# Call chocolatey install
+Write-Output "Installing chocolatey on this machine"
 $toolsFolder = Join-Path $tempDir "tools"
 $chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 
 & $chocInstallPS1
 
-write-host 'Ensuring chocolatey commands are on the path'
+Write-Output 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
 $chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName, [System.EnvironmentVariableTarget]::User)
 if ($chocoPath -eq $null -or $chocoPath -eq '') {
@@ -89,7 +125,7 @@ if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower()) -eq $false) {
   $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
 }
 
-Write-Host 'Ensuring chocolatey.nupkg is in the lib folder'
+Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 $chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
 $nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
 if (![System.IO.Directory]::Exists($chocoPkgDir)) { [System.IO.Directory]::CreateDirectory($chocoPkgDir); }
