@@ -172,18 +172,19 @@ namespace NuGetGallery
                                                             .Include(p => p.Dependencies)
                                                             .Include(p => p.SupportedFrameworks)
                                                             .Where(p => (p.PackageRegistration.Id == id));
+            
+            var packageVersions = useCache
+                            ? Cache.Get(
+                                string.Format("packageVersions-{0}", id.to_lower()),
+                                DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                                () => packagesQuery.ToList())
+                            : packagesQuery.ToList();
+
             if (String.IsNullOrEmpty(version) && !allowPrerelease)
             {
                 // If there's a specific version given, don't bother filtering by prerelease. You could be asking for a prerelease package.
-                packagesQuery = packagesQuery.Where(p => !p.IsPrerelease);
+                packageVersions = packageVersions.Where(p => !p.IsPrerelease).ToList();
             }
-
-            var packageVersions = useCache
-                                      ? Cache.Get(
-                                          string.Format("packageVersions-{0}-{1}", id.to_lower(), allowPrerelease),
-                                          DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
-                                          () => packagesQuery.ToList())
-                                      : packagesQuery.ToList();
             
             Package package = null;
             if (version == null)
