@@ -20,7 +20,7 @@
 # For explicit proxy, please set $env:chocolateyProxyLocation and optionally $env:chocolateyProxyUser and $env:chocolateyProxyPassword
 # To use built-in compression (no 7zip download), please set $env:chocolateyUseWindowsCompression = 'true'
 
-$url = "https://chocolatey.org/api/v2/package/chocolatey/0.9.8.33"
+$url = "https://packages.chocolatey.org/chocolatey.0.9.8.33.nupkg"
 
 if ($env:TEMP -eq $null) {
   $env:TEMP = Join-Path $env:SystemDrive 'temp'
