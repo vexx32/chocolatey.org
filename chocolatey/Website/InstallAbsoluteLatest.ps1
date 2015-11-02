@@ -126,7 +126,7 @@ $chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 
 Write-Output 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
-$chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName, [System.EnvironmentVariableTarget]::User)
+$chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName)
 if ($chocoPath -eq $null -or $chocoPath -eq '') {
   $chocoPath = 'C:\ProgramData\Chocolatey'
 }
