@@ -166,6 +166,22 @@ namespace NuGetGallery
         /// </remarks>
         public string ReviewComments { get; set; }
 
+        public PackageTestResultStatusType PackageTestResultStatus { get; set; }
+        [MaxLength(50)]
+        [Column("PackageTestResultStatus")]
+        public string PackageTestResultStatusForDatabase
+        {
+            get { return PackageTestResultStatus.ToString(); }
+            set
+            {
+                if (value == null) PackageTestResultStatus = PackageTestResultStatusType.Unknown;
+                else PackageTestResultStatus = (PackageTestResultStatusType)Enum.Parse(typeof(PackageTestResultStatusType), value);
+            }
+        }
+
+        [MaxLength(400)]
+        public string PackageTestResultUrl { get; set; }
+
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }
 
