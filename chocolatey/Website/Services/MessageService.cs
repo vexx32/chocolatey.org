@@ -518,7 +518,7 @@ Things we are doing to help resolve the large backlog of moderation:
 
  * Moderators typically review a package within about a week or less. 
  * If you have not heard anything within a week, please reply to this message and ask for status.
- * If the package is an urgent release (resolves security issues or CVEs), reach out to use immediately on Gitter at https://gitter.im/chocolatey/choco
+ * If the package is an urgent release (resolves security issues or CVEs), reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco
  * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
  * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
 ";
