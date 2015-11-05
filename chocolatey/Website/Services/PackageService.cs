@@ -397,6 +397,8 @@ namespace NuGetGallery
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
             package.SubmittedStatus = PackageSubmittedStatusType.Ready;
+            package.PackageTestResultStatus = PackageTestResultStatusType.Pending;
+            package.PackageTestResultUrl = string.Empty;
             package.ApprovedDate = null;
 
             if (package.ReviewedDate.HasValue) package.SubmittedStatus = PackageSubmittedStatusType.Updated;

@@ -65,6 +65,7 @@ namespace NuGetGallery
                         ReleaseNotes = p.ReleaseNotes,
                         PackageStatus = p.StatusForDatabase,
                         PackageSubmittedStatus = p.SubmittedStatusForDatabase,
+                        PackageTestResultStatus = p.PackageTestResultStatusForDatabase,
                         ReportAbuseUrl = siteRoot + "package/ReportAbuse/" + p.PackageRegistration.Id + "/" + p.Version,
                         RequireLicenseAcceptance = p.RequiresLicenseAcceptance,
                         Published = p.Listed ? p.Published : magicDateThatActuallyMeansUnpublishedBecauseOfLegacyDecisions,
@@ -74,7 +75,7 @@ namespace NuGetGallery
                         VersionDownloadCount = p.DownloadCount
                     });
         }
-
+    
         internal static IQueryable<TVal> WithoutVersionSort<TVal>(this IQueryable<TVal> feedQuery)
         {
             return feedQuery.InterceptWith(new ODataRemoveVersionSorter());
