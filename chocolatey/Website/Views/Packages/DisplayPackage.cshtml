@@ -145,8 +145,25 @@
         <h1 title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">@Model.Title</h1>
         @if (Model.Status != PackageStatusType.Rejected)
         {
-         <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
-        }
+            <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
+            <h2>
+            @switch (Model.PackageTestResultsStatus)
+            {
+                case PackageTestResultStatusType.Unknown :
+                    <img src="@Url.Content("~/content/images/grey_ball_48.png")" title="There are no package test results for this package" alt="There are no package test results for this package" />
+                    break;
+                case PackageTestResultStatusType.Pending :
+                    <img src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" />
+                    break;
+                case PackageTestResultStatusType.Failing :
+                    <a href="@Model.PackageTestResultsUrl"><img src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /></a>
+                    break;
+                case PackageTestResultStatusType.Passing :
+                    <a href="@Model.PackageTestResultsUrl"><img src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /></a>
+                    break;
+            }
+            </h2>
+        }       
     </div>
 
     @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User) && !moderationRole)

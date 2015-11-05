@@ -341,6 +341,13 @@ header.main {
         div.page-heading h2 {
             padding-left: 7px;
         }
+        
+        div.page-heading img {
+            display: inline;
+            width: 24px;
+            height: 24px;
+        }
+        
 
     /* Featured */
     .featured {
