@@ -870,6 +870,8 @@
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\changePassword.png" />
+    <Content Include="Content\Images\circle_green_small.png" />
+    <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
@@ -879,6 +881,8 @@
     <Content Include="Content\Images\errorPage.png" />
     <Content Include="Content\Images\github.jpg" />
     <Content Include="Content\Images\greenArrow.png" />
+    <Content Include="Content\Images\green_ball_48.png" />
+    <Content Include="Content\Images\grey_ball_48.png" />
     <Content Include="Content\Images\headerbackground.png" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
@@ -898,6 +902,7 @@
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
+    <Content Include="Content\Images\red_ball_48.png" />
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
@@ -909,6 +914,7 @@
     <Content Include="Content\Images\userIcon.png" />
     <Content Include="Content\Images\userIconWhite.png" />
     <Content Include="Content\Images\xmark.png" />
+    <Content Include="Content\Images\yellow_ball_48.png" />
     <Content Include="Content\Images\YourPackage.png" />
     <Content Include="Content\Site.css" />
     <Content Include="..\..\nugetgallery\Website\api\Web.config">
