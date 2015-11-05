@@ -621,6 +621,8 @@
     <Compile Include="Entities\EntityRepository.cs" />
     <Compile Include="Entities\PackageFramework.cs" />
     <Compile Include="Entities\PackageStatistics.cs" />
+    <Compile Include="Entities\PackageTestResults.cs" />
+    <Compile Include="Entities\PackageTestResultStatusType.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
