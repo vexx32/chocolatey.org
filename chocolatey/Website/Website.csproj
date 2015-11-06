@@ -78,6 +78,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Glav.CacheAdapter.4.0\lib\Glav.CacheAdapter.dll</HintPath>
     </Reference>
+    <Reference Include="ImageResizer">
+      <HintPath>..\..\packages\ImageResizer.3.4.3\lib\ImageResizer.dll</HintPath>
+    </Reference>
     <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\MarkDownSharp\MarkdownSharp.dll</HintPath>
     </Reference>
