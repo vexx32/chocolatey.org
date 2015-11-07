@@ -35,5 +35,6 @@ namespace NuGetGallery
         string S3SecretKey { get; }
         bool SmtpEnableSsl { get; }
         bool UseCaching { get; }
+        bool HostImages { get; }
     }
 }

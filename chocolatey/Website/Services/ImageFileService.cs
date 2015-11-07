@@ -44,6 +44,7 @@ namespace NuGetGallery
         /// <returns>The name of an image</returns>
         public string GetImage(string url, string packageId, string version)
         {
+            if (!_configuration.HostImages) return url;
             if (string.IsNullOrWhiteSpace(url)) return null;
             if (string.IsNullOrWhiteSpace(version)) version = "default";
 
