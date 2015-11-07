@@ -27,6 +27,10 @@ namespace NuGetGallery
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
+            routes.IgnoreRoute("{*Content}", new { imgs = @"(.*/)?Content(/.*)?" });
+            routes.IgnoreRoute("{*Scripts}", new { scripts = @"(.*/)?Scripts(/.*)?" });
+
             routes.MapRoute(RouteName.Home, "", MVC.Pages.Home());
 
             routes.MapRoute(
