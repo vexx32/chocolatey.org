@@ -20,6 +20,7 @@ namespace NuGetGallery
 {
     public interface IImageFileService
     {
-        string GetImage(string url, string packageId, string version);
+        string CacheAndGetImage(string url, string packageId, string version);
+        void DeleteCachedImage(string packageId, string version);
     }
 }

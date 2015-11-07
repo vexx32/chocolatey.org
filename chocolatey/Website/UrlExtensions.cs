@@ -173,7 +173,7 @@ namespace NuGetGallery
         {
             if (string.IsNullOrWhiteSpace(originalUrl)) return null;
 
-            var imagelocation = _imagesService.GetImage(originalUrl, packageId, version);
+            var imagelocation = _imagesService.CacheAndGetImage(originalUrl, packageId, version);
 
             if (string.IsNullOrWhiteSpace(imagelocation)) return originalUrl;
             

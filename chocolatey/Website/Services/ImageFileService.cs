@@ -42,7 +42,7 @@ namespace NuGetGallery
         /// <param name="packageId">The package id</param>
         /// <param name="version">The package version</param>
         /// <returns>The name of an image</returns>
-        public string GetImage(string url, string packageId, string version)
+        public string CacheAndGetImage(string url, string packageId, string version)
         {
             if (!_configuration.HostImages) return url;
             if (string.IsNullOrWhiteSpace(url)) return null;
@@ -66,12 +66,18 @@ namespace NuGetGallery
                 outputImage = ConvertImage(originalImage, outputImage, instructions);
             }
 
-            //if (!string.IsNullOrWhiteSpace(outputImage))
-            //{
-            //    outputImage = Path.GetFileName(outputImage);
-            //}
-
             return outputImage;
+        }
+
+        public void DeleteCachedImage(string packageId, string version)
+        {
+            var imagesFolder = Path.GetFullPath(Path.Combine(HttpContext.Current.Server.MapPath("~/content/"), Constants.PackageImagesFolderName));
+
+            var image = GetOutputImagePath(imagesFolder, Path.DirectorySeparatorChar, packageId, version, Constants.ImageExtension);
+            if (File.Exists(image)) File.Delete(image);  
+            
+            image = GetOutputImagePath(imagesFolder, Path.DirectorySeparatorChar, packageId, version, ".svg");
+            if (File.Exists(image)) File.Delete(image);
         }
 
         /// <summary>
