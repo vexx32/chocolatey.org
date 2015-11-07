@@ -16,13 +16,15 @@
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
 
+    var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
+    
     var moderator = User != null && User.IsModerator();
     var moderationRole = User != null && User.IsInAnyModerationRole();
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
 }
 @section SideColumn {
-    <img class="logo" src="@(Model.IconUrl ?? @Links.Content.Images.packageDefaultIcon_png)" alt="Icon for package @Model.Id" title="Icon for package @Model.Id | Nuspec reference: &lt;iconUrl&gt;@Model.IconUrl&lt;/iconurl&gt;" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
+    <img class="logo" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_png))" alt="Icon for package @Model.Id" title="Icon for package @Model.Id | Nuspec reference: &lt;iconUrl&gt;@Model.IconUrl&lt;/iconurl&gt;" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
     <div id="stats">
         <div class="stat">
             <p class="stat-number">@Model.TotalDownloadCount.ToString("n0")</p>
