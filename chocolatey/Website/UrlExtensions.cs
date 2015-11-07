@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System;
+using System.IO;
 using System.Web.Mvc;
 using NuGetGallery.MvcOverrides;
 
@@ -164,6 +165,19 @@ namespace NuGetGallery
             if (url != null && !url.EndsWith("/", StringComparison.OrdinalIgnoreCase)) return url + '/';
 
             return url;
+        }
+
+        private static readonly IImageFileService _imagesService = DependencyResolver.Current.GetService<IImageFileService>();
+
+        public static string ImageUrl(this UrlHelper url, string packageId, string version, string originalUrl)
+        {
+            if (string.IsNullOrWhiteSpace(originalUrl)) return null;
+
+            var imagelocation = _imagesService.CacheAndGetImage(originalUrl, packageId, version);
+
+            if (string.IsNullOrWhiteSpace(imagelocation)) return originalUrl;
+            
+            return string.Format("~/content/{0}/{1}",Constants.PackageImagesFolderName, Path.GetFileName(imagelocation));
         }
     }
 }

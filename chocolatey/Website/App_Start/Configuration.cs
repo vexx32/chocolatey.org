@@ -83,6 +83,8 @@ namespace NuGetGallery
 
         public bool UseCaching { get { return ReadAppSettings("UseCaching", (value) => bool.Parse(value ?? bool.TrueString)); } } 
 
+        public bool HostImages { get { return ReadAppSettings("HostImages", (value) => bool.Parse(value ?? bool.TrueString)); } } 
+
         protected virtual string GetConfiguredSiteRoot()
         {
             return ReadAppSettings("SiteRoot");

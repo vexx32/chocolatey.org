@@ -37,6 +37,9 @@ namespace NuGetGallery
         public const string PackagesFolderName = "packages";
         public const string DownloadsFolderName = "downloads";
 
+        public const string PackageImagesFolderName = "packageimages";
+        public const string ImageExtension = ".png";
+
         public const string PopularitySortOrder = "package-download-count";
         public const string RecentSortOrder = "package-created";
         public const string RelevanceSortOrder = "relevance";

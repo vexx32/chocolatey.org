@@ -18,23 +18,9 @@
 
 namespace NuGetGallery
 {
-    public interface IConfiguration
+    public interface IImageFileService
     {
-        string AzureStorageAccessKey { get; }
-        string AzureStorageAccountName { get; }
-        string AzureStorageBlobUrl { get; }
-        string FileStorageDirectory { get; }
-        string AzureCdnHost { get; }
-        PackageStoreType PackageStoreType { get; }
-
-        string GetSiteRoot(bool useHttps);
-
-        string S3Bucket { get; }
-        string PackagesUrl { get; }
-        string S3AccessKey { get; }
-        string S3SecretKey { get; }
-        bool SmtpEnableSsl { get; }
-        bool UseCaching { get; }
-        bool HostImages { get; }
+        string CacheAndGetImage(string url, string packageId, string version);
+        void DeleteCachedImage(string packageId, string version);
     }
 }

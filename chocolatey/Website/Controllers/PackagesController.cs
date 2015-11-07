@@ -43,19 +43,17 @@ namespace NuGetGallery
         private readonly IUserService userSvc;
         private readonly IMessageService messageService;
         private readonly IAutomaticallyCuratePackageCommand autoCuratedPackageCmd;
-        private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
         public IConfiguration Configuration { get; set; }
 
         public PackagesController(
             IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
-            INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration configuration)
+            IConfiguration configuration)
         {
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
             this.userSvc = userSvc;
             this.messageService = messageService;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
-            this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
             Configuration = configuration;
         }
 
@@ -145,6 +143,7 @@ namespace NuGetGallery
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
+            
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 

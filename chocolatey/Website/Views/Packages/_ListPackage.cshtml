@@ -1,6 +1,8 @@
 ﻿@model ListPackageItemViewModel
 @{
     var submittedStatus = Model.SubmittedStatus;
+    var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
+    
 }
 <section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
     @if (Model.Status == PackageStatusType.Submitted)
@@ -24,7 +26,7 @@
     }
     <div class="side">
         <a href="@Url.Package(Model)" title="View more about @Model.Title">
-            <img src="@(Model.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+            <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
         </a>
     </div>
     <div class="main">

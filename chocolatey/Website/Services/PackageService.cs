@@ -43,6 +43,7 @@ namespace NuGetGallery
         private readonly IPackageFileService packageFileSvc;
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
         private readonly IMessageService messageSvc;
+        private readonly IImageFileService imageFileSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
 
         public PackageService(
@@ -56,7 +57,8 @@ namespace NuGetGallery
             IEntityRepository<PackageFramework> packageFrameworksRepo,
             IEntityRepository<PackageDependency> packageDependenciesRepo,
             IEntityRepository<PackageFile> packageFilesRepo,
-            IMessageService messageSvc)
+            IMessageService messageSvc,
+            IImageFileService imageFileSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageRegistrationRepo = packageRegistrationRepo;
@@ -69,6 +71,7 @@ namespace NuGetGallery
             this.packageDependenciesRepo = packageDependenciesRepo;
             this.packageFilesRepo = packageFilesRepo;
             this.messageSvc = messageSvc;
+            this.imageFileSvc = imageFileSvc;
         }
 
         public Package CreatePackage(IPackage nugetPackage, User currentUser)
@@ -79,6 +82,16 @@ namespace NuGetGallery
 
             var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage);
             packageRegistration.Packages.Add(package);
+
+            try
+            {
+                imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
+                imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
 
             using (var tx = new TransactionScope())
             {

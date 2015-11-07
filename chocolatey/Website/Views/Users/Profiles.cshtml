@@ -72,6 +72,7 @@
     @foreach (var package in Model.PackagesModerationQueue)
     {
         var submittedStatus = "Reviewed, waiting for user action";
+       
         if (!package.ReviewedDate.HasValue)
         {
             submittedStatus = "Ready";
@@ -79,13 +80,14 @@
         else if (package.PublishedDate > package.ReviewedDate)
         {
             submittedStatus = "Updated";
-        } 
+        }
+        var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
         
         <li>
             <section class="package">
                 <div class="side">
                     <a href="@Url.Package(package.Id, package.Version)" title="View more about @package.Title">
-                        <img src="@(package.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                        <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
                     </a>
                 </div>
                 <div class="main">
@@ -125,11 +127,12 @@
 <ul id="searchResults">
     @foreach (var package in Model.Packages)
     {
+        var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
         <li>
             <section class="package">
                 <div class="side">
                     <a href="@Url.Package(package.Id)" title="View more about @package.Title">
-                        <img src="@(package.IconUrl ?? Links.Content.Images.packageDefaultIcon_50x50_png)" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                        <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
                     </a>
                 </div>
                 <div class="main">
