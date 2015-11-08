@@ -1,0 +1,79 @@
+﻿@model ListPackageVersionViewModel
+           
+@{
+    var displayed = Model.DisplayVersion;
+    var style = displayed ? "table-row" : "none";
+    var htmlClass = displayed ? "" : "versionTableRowMore";
+}
+
+<tr class="versionTableRow @htmlClass @if (Model.Package.LatestVersion)
+                           {
+                               <text>recommended </text>
+                           }" style="display: @style">
+    <td class="version" @if (Model.Package.LatestVersion)
+                        {
+                            <text>title="Latest Version"</text>
+                        }>
+        @if (!Model.Package.IsCurrent(Model.Package))
+        {
+            <a href="@Url.Package(Model.Package)">@Model.Package.Title @Model.Package.Version</a>
+        }
+        else
+        {
+            <span>@Model.Package.Title @Model.Package.Version</span>
+        }
+    </td>
+    <td>@Model.Package.DownloadCount
+    </td>
+    <td>@Model.Package.PublishedDate.ToString("D")
+    </td>
+    @if (Model.Package.IsOwner(User))
+    {
+        <td>
+            <a href="@Url.DeletePackage(Model.Package)" class="delete">@(Model.Package.Listed ? "yes" : "no")</a>
+        </td>
+    }
+    else
+    {
+        switch (Model.Package.Status)
+        {
+            case PackageStatusType.Submitted :
+                if (!Model.Package.ReviewedDate.HasValue || Model.Package.LastUpdated > Model.Package.ReviewedDate)
+                {
+                    <td>submitted</td>
+                }
+                else
+                {
+                    <td>waiting</td>
+                }
+                break;
+            case PackageStatusType.Approved :
+            case PackageStatusType.Exempted :
+                <td>@Model.Package.Status.GetDescriptionOrValue().ToLower()</td>
+                break;
+            default :
+                <td>&nbsp;</td>
+                break;
+        }
+    }
+    @if (Model.ModerationRole)
+    {
+        var divVersionId = "divVersion-" + Model.Package.Version.Replace(".", "-");
+        <td>
+            @if (!string.IsNullOrWhiteSpace(Model.Package.ReviewComments))
+            {
+                <a onclick=" if ($(this).text() == 'Hide') {$('#@divVersionId').hide();$(this).text('Show');} else {$('#@divVersionId').show();$(this).text('Hide');} ">
+                    Show</a>
+                <div id="@divVersionId">
+                    <br />
+                    @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments))
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                        $('#@divVersionId').hide();
+                    });
+                </script>
+            }
+        </td>
+    }
+</tr>

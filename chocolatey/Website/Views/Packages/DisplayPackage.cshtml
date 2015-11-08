@@ -17,11 +17,15 @@
     var statuses = Model.Status.GetEnumerationItems().ToList();
 
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
-    
+
     var moderator = User != null && User.IsModerator();
     var moderationRole = User != null && User.IsInAnyModerationRole();
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
-    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";    
+
+    var packageVersions = Model.PackageVersions.Count();
+    var packageVersionsDefaultDisplay = 10;
+
+    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";
 }
 @section SideColumn {
     <img class="logo" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_png))" alt="Icon for package @Model.Id" title="Icon for package @Model.Id | Nuspec reference: &lt;iconUrl&gt;@Model.IconUrl&lt;/iconurl&gt;" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
@@ -37,7 +41,7 @@
         <div class="stat">
             <p class="stat-number">@Model.PublishedDate.ToShortDateString()</p>
             <p class="stat-label">Last update</p>
-        </div> 
+        </div>
         @if (Model.Status == PackageStatusType.Submitted)
         {
             <div class="stat">
@@ -124,7 +128,7 @@
         <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
         latest version</a> of @Model.Title available. </p>
     }
-    
+
     @if (Model.IsInstallOrPortable)
     {
         <p class="app-or-tool-message">This is an installer (*.install) or a portable (*.portable)
@@ -135,7 +139,7 @@
             are deprecated in favor of *.install and *.portable, because the latter are more
             logical and understandable. </p>
     }
-    
+
 
     <div class="hgroup page-heading">
         <h1 title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">@Model.Title</h1>
@@ -144,10 +148,10 @@
          <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
         }
     </div>
-    
+
     @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User) && !moderationRole)
     {
-        <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can 
+        <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can
             change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
             that have been made to the package. There are also no guarantees that it will be approved.</div><br />
     }
@@ -158,7 +162,7 @@
 
     @if (Model.Status == PackageStatusType.Rejected)
     {
-        <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s): 
+        <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s):
             <br />
             @Html.Raw(markdownGenerator.Transform(Model.ReviewComments))
         </div> <br />
@@ -181,7 +185,7 @@
             You can see the package because you are one of its maintainers. To list the package
             again, <a href="@Url.DeletePackage(Model)">change its listing setting</a>. </p>
     }
-    
+
     @* Maintainers always see the review comments *@
     @if (Model.Status == PackageStatusType.Submitted && !moderationRole && !maintainer)
     {
@@ -206,17 +210,17 @@
     {
         <p class="message approved">This package was approved @reviewerComments on @Model.ApprovedDate.GetValueOrDefault().ToShortDateString().</p>
     }
-    
+
     @if (Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
         <p class="message error">This package was submitted prior to moderation and has not been approved. While it is likely safe for you, there is more risk involved.</p>
     }
-    
+
     @if (Model.Listed && Model.Status == PackageStatusType.Exempted)
     {
         <p class="message error">This package is exempt from moderation. While it is likely safe for you, there is more risk involved.</p>
     }
-    
+
     @if (moderationRole && !maintainer)
     {
         if (Model.Listed || Model.Status == PackageStatusType.Rejected)
@@ -240,7 +244,7 @@
                 <li>Check dependencies, make sure they are listed.</li>
                 <li>Check tags</li>
                 <li>Be Nice! :)</li>
-            </ul> 
+            </ul>
             @using (Html.BeginForm())
             {
                 <fieldset class="form">
@@ -249,7 +253,7 @@
                         @Html.TextAreaFor(m => m.ReviewComments, new { @cols = 80, @rows = 10 })
                         @Html.ValidationMessageFor(m => m.ReviewComments)
                         <span class="field-hint-message"></span>
-                    </div>  
+                    </div>
 
                     <div class="form-field">
                         @Html.LabelFor(m => m.Status)
@@ -268,14 +272,14 @@
                         <input id="SendEmail" name="SendEmail" type="checkbox" checked="checked" value="true">
                         <label for="SendEmail" class="for-checkbox">Send Email</label>
                     </div>
-                  
+
                     @Html.ValidationSummary(true)
                     <input type="submit" value="Save" title="Save Changes" />
-                    
-                   
+
+
                     <br /><br />
                     <a onclick="if ($(this).text() == 'Hide') {$('#div-trustedpackage').hide();$(this).text('Show Trusted Section');} else {$('#div-trustedpackage').show();$(this).text('Hide');}">Show Trusted Section</a>
-           
+
                     <div class="form-field" id="div-trustedpackage">
                         <ul>
                             <li>Trusted package ids are packages where we have built trust in the package maintainer(s).</li>
@@ -285,33 +289,33 @@
                             <li>Use with care.</li>
                             <li>Use "Save" above to make this change. You may want to uncheck Send Email.</li>
                         </ul>
-                        <br /> 
+                        <br />
                         @if (moderator)
                         {
                             @Html.EditorFor(m => m.IsTrusted)
                             <label for="IsTrusted" class="checkbox">
-                                Trust this package id? 
+                                Trust this package id?
                             </label>
                         }
                         else
                         {
                             <text>This package is trusted?</text> @Html.DisplayTextFor(m => m.IsTrusted)
                         }
-                    </div>  
-                </fieldset> 
+                    </div>
+                </fieldset>
             }
              <script type="text/javascript">
                 $(function () {
                     $('#div-trustedpackage').hide();
                 });
             </script>
-        
+
         </div>
     }
-    
+
     <a name="description" id="description" title="Nuspec reference: description"></a>
     @Html.Raw(markdownGenerator.Transform(Model.Description))
-    
+
     @if (Model.Listed)
     {
         <p>To install @Model.Title, run the following command from the command line or from
@@ -323,7 +327,7 @@
                     @if (Model.Prerelease)
                     {<text> -pre </text>}</code></p>
         </div>
-    
+
         <p>To upgrade @Model.Title, run the following command from the command line or from
             PowerShell: </p>
         <div class="nuget-badge">
@@ -334,11 +338,11 @@
                     {<text> -pre </text>}</code></p>
         </div>
     }
-    
-    
+
+
     <a name="files" id="files"></a><h3 title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</h3>
     <a onclick="if ($(this).text() == 'Hide') {$('#div-filessection').hide();$(this).text('Show');} else {$('#div-filessection').show();$(this).text('Hide');}">Hide</a>
-    <div id="div-filessection">     
+    <div id="div-filessection">
     @if (Model.Files.Any())
     {
         <ul>
@@ -386,7 +390,7 @@
         </ul>
     }
     </div>
-    
+
     @Html.Partial("_PackageDependencies", Model.Dependencies)
 
     <a name="maintainers" id="maintainers"></a><h3 title="Nuspec reference: owners | nuspec value not used on community feed | Specified as comma-separated">Maintainer(s)</h3>
@@ -413,7 +417,7 @@
             }
         </ul>
     }
-    
+
     @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
     {
         <a name="releasenotes" id="releasenotes"></a><h3 title="Nuspec reference: releaseNotes">Release Notes</h3>
@@ -440,95 +444,43 @@
                 }
                 else
                 {
-                  <th class="@(moderationRole ? "" : "last")">
-                       Status
+                    <th class="@(moderationRole ? "" : "last")">
+                        Status
                     </th>
-                }  
+                }
                 @if (moderationRole)
                 {
                     <th class="last">
                         Notes
-                    </th>            
+                    </th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (var packageVersion in Model.PackageVersions)
+            @foreach (var packageVersion in Model.PackageVersions.Take(packageVersions < packageVersionsDefaultDisplay ? packageVersions : packageVersionsDefaultDisplay))
             {
-                if (packageVersion.Listed || Model.IsOwner(User) || packageVersion.Status == PackageStatusType.Submitted)
-                {
-                    <tr class="versionTableRow @if (packageVersion.LatestVersion)
-                                               {<text>recommended </text>}">
-                        <td class="version" @if (packageVersion.LatestVersion)
-                                            {<text>title="Latest Version"</text>}>
-                            @if (!packageVersion.IsCurrent(Model))
-                            {
-                                <a href="@Url.Package(packageVersion)">@packageVersion.Title @packageVersion.Version</a>
-                            }
-                            else
-                            {
-                                <span>@packageVersion.Title @packageVersion.Version</span>
-                            }
-                        </td>
-                        <td>@packageVersion.DownloadCount
-                        </td>
-                        <td>@packageVersion.PublishedDate.ToString("D")
-                        </td>
-                        @if (Model.IsOwner(User))
-                        {
-                            <td>
-                                <a href="@Url.DeletePackage(packageVersion)" class="delete">@(packageVersion.Listed ? "yes" : "no")</a>
-                            </td>
-                        }
-                        else
-                        {
-                            switch (packageVersion.Status)
-                            {
-                                case PackageStatusType.Submitted:
-                                    if (!Model.ReviewedDate.HasValue || Model.LastUpdated > Model.ReviewedDate)
-                                    {
-                                        <td>submitted</td>
-                                    }
-                                    else
-                                    {
-                                        <td>waiting</td>
-                                    }
-                                    break;
-                                case PackageStatusType.Approved:
-                                case PackageStatusType.Exempted:
-                                    <td>@packageVersion.Status.GetDescriptionOrValue().ToLower()</td>
-                                   break;
-                                default:
-                                    <td>&nbsp;</td>
-                                   break;
-                            }
-                        }
-                        @if (moderationRole)
-                        {
-                            var divVersionId = "divVersion-" + packageVersion.Version.ToString().Replace(".", "-");
-                            <td>
-                                @if (!string.IsNullOrWhiteSpace(packageVersion.ReviewComments))
-                                {
-                                    <a onclick="if ($(this).text() == 'Hide') {$('#@divVersionId').hide();$(this).text('Show');} else {$('#@divVersionId').show();$(this).text('Hide');}">
-                                    Show</a>
-                                    <div id="@divVersionId">
-                                        <br />
-                                          @Html.Raw(markdownGenerator.Transform(packageVersion.ReviewComments))
-                                    </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#@divVersionId').hide();
-                                    });
-                                </script>    
-                                }
-                            </td>
-                        }
-                    </tr>
-                }
+                var packageVersionList = new ListPackageVersionViewModel(packageVersion,moderationRole,markdownGenerator,displayVersion:true);
+                @Html.Partial("_ListVersion", packageVersionList)
             }
         </tbody>
+        @if (packageVersions > packageVersionsDefaultDisplay)
+        {
+            <tbody>
+                @foreach (var packageVersion in Model.PackageVersions.Skip(packageVersionsDefaultDisplay))
+                {
+                    var packageVersionList = new ListPackageVersionViewModel(packageVersion, moderationRole, markdownGenerator, displayVersion: false);
+                    @Html.Partial("_ListVersion", packageVersionList)
+                }
+            </tbody>
+        }
     </table>
-      
+     @if (packageVersions > packageVersionsDefaultDisplay)
+     {
+         <a onclick="if ($(this).text() == 'Hide') {$('.versionTableRowMore').hide();$(this).text('Show More');} else {$('.versionTableRowMore').show();$(this).text('Hide');}">Show More</a>
+     }
+
+
+
 </div>
 <div class="package-page">
     <a name="discussion" id="discussion"></a><h3>Discussion for the @Model.Title Package</h3>

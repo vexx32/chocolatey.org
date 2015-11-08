@@ -851,6 +851,7 @@
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
+    <Compile Include="ViewModels\ListPackageVersionViewModel.cs" />
     <Compile Include="ViewModels\PackageListViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\ReportAbuseViewModel.cs" />
@@ -991,6 +992,7 @@
     <Content Include="App_Code\ViewHelpers.cshtml" />
     <Content Include="_app_offline.htm" />
     <Content Include="Views\Pages\Notice.cshtml" />
+    <Content Include="Views\Packages\_ListVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
