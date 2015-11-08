@@ -105,7 +105,7 @@ namespace NuGetGallery
                 const string filename = "filename=";
                 int index = header.LastIndexOf(filename, StringComparison.OrdinalIgnoreCase);
 
-                if (index > -1) fileName = header.Substring(index + filename.Length);
+                if (index > -1) fileName = header.Substring(index + filename.Length).Replace("\"",string.Empty);
                 var originalFilePath = Path.GetFullPath(Path.Combine(imagesFolder, "temp", string.Format("{0}.{1}.{2}", packageId, version, fileName)));
 
                 var originalDirectory = Path.GetDirectoryName(originalFilePath);
