@@ -526,6 +526,42 @@ Maintainer(s): {2}
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
             }
         }
+
+        public void SendPackageTestFailureMessage(Package package, string resultDetailsUrl)
+        {
+            string subject = string.Format("[{0}] Package Failure for '{1}' v{2}", 
+                settings.GalleryOwnerName,
+                package.PackageRegistration.Id,
+                package.Version);
+            var packageUrl = string.Format(
+                "{0}packages/{1}/{2}",
+                EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
+                package.PackageRegistration.Id,
+                package.Version);
+            string body = string.Format(@"'{0}' is failing package install/uninstall testing.
+
+Please see the test results link below for more details.
+
+Package Url: {1} 
+Test Results: {2}
+Maintainer(s): {3}
+",
+                package.PackageRegistration.Id,
+                packageUrl,
+                resultDetailsUrl,
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)));
+            
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
+
+                AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
+                if (mailMessage.To.Any()) SendMessage(mailMessage);
+            }
+        }
+
         private string GetDisqusInformationMessage()
         {
             return @"

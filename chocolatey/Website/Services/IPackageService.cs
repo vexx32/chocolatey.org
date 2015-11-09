@@ -61,5 +61,7 @@ namespace NuGetGallery
         void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus);
 
         void ChangeTrustedStatus(Package package, bool trustedPackage, User user);
+
+        void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter);
     }
 }

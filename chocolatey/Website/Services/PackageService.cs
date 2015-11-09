@@ -808,6 +808,36 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration);
         }
 
+        public void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter)
+        {
+            package.PackageTestResultUrl = resultDetailsUrl;
+            package.PackageTestResultStatus = PackageTestResultStatusType.Failing;
+            if (success) package.PackageTestResultStatus = PackageTestResultStatusType.Passing;
+
+            packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+
+            var testComments = string.Format("{0} has {1} testing.{2} Please visit {3} for details.",
+                package.PackageRegistration.Id,
+                success ? "passed" : "failed",
+                Environment.NewLine,
+                resultDetailsUrl
+                );
+
+            if (package.Status == PackageStatusType.Submitted)
+            {
+                testComments += success
+                                    ? string.Format("{0} This is an FYI only. There is no action you need to take.", Environment.NewLine)
+                                    : string.Format("{0} The package status will be changed and will be waiting on your next actions.", Environment.NewLine);
+
+                ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting);
+            }
+            else if (!success && package.Status != PackageStatusType.Submitted)
+            {
+                messageSvc.SendPackageTestFailureMessage(package, resultDetailsUrl);
+            }
+        }
+
         // TODO: Should probably be run in a transaction
         public void MarkPackageUnlisted(Package package)
         {
