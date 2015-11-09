@@ -99,7 +99,8 @@ namespace NuGetGallery
                 {
                     nuGetPackage = ReadNuGetPackage(uploadStream);
                 }
-            } catch
+            }
+            catch
             {
                 ModelState.AddModelError(String.Empty, Strings.FailedToReadUploadFile);
                 return View("~/Views/Packages/UploadPackage.cshtml");
@@ -143,7 +144,7 @@ namespace NuGetGallery
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
-            
+
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
@@ -286,7 +287,8 @@ namespace NuGetGallery
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount));
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-            } else
+            }
+            else
             {
                 packagesToShow = string.IsNullOrWhiteSpace(q) ? packageVersions : packageVersions.AsQueryable().Search(q).ToList();
 
@@ -315,12 +317,12 @@ namespace NuGetGallery
                 }
 
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) searchFilter.Take = packagesToShow.Count() - searchFilter.Skip;
-               
+
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-                
+
                 //packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
             }
-            
+
 
             if (page == 1 && !packagesToShow.Any())
             {
@@ -371,7 +373,8 @@ namespace NuGetGallery
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            } else from = new MailAddress(reportForm.Email);
+            }
+            else from = new MailAddress(reportForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -416,7 +419,8 @@ namespace NuGetGallery
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            } else from = new MailAddress(reportForm.Email);
+            }
+            else from = new MailAddress(reportForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -461,7 +465,8 @@ namespace NuGetGallery
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            } else from = new MailAddress(contactForm.Email);
+            }
+            else from = new MailAddress(contactForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -539,7 +544,7 @@ namespace NuGetGallery
         {
             if (String.IsNullOrEmpty(token)) return HttpNotFound();
 
-            var package = packageSvc.FindPackageRegistrationById(id, useCache:false);
+            var package = packageSvc.FindPackageRegistrationById(id, useCache: false);
             if (package == null) return HttpNotFound();
 
             var user = userSvc.FindByUsername(username);
@@ -558,7 +563,7 @@ namespace NuGetGallery
 
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return PackageNotFound(id, version);
 
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
@@ -602,7 +607,7 @@ namespace NuGetGallery
                     TempData["ErrorMessage"] = string.Format("Unable to find uploaded file for user '{0}'. Please try using choco.exe push instead.", currentUser.Username);
                     return RedirectToRoute(RouteName.UploadPackage);
                 }
-                
+
                 package = ReadNuGetPackage(uploadFile);
             }
 
