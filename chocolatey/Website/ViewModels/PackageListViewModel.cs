@@ -37,7 +37,8 @@ namespace NuGetGallery
             bool moderatorQueue,
             int updatedCount,
             int submittedCount,
-            int waitingCount)
+            int waitingCount,
+            int respondedCount)
         {
             // TODO: Implement actual sorting
             IEnumerable<ListPackageItemViewModel> items;
@@ -69,6 +70,7 @@ namespace NuGetGallery
             ModerationUpdatedPackageCount = updatedCount;
             ModerationSubmittedPackageCount = submittedCount;
             ModerationWaitingPackageCount = waitingCount;
+            ModerationRespondedPackageCount = respondedCount;
         }
 
         public int FirstResultIndex { get; set; }
@@ -96,5 +98,6 @@ namespace NuGetGallery
         public int ModerationUpdatedPackageCount { get; private set; }
         public int ModerationSubmittedPackageCount { get; private set; }
         public int ModerationWaitingPackageCount { get; private set; }
+        public int ModerationRespondedPackageCount { get; private set; }
     }
 }

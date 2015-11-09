@@ -233,6 +233,7 @@ namespace NuGetGallery
 
             int totalHits = 0;
             int updatedPackagesCount = 0;
+            int respondedPackagesCount = 0;
             int unreviewedPackagesCount = 0;
             int waitingPackagesCount = 0;
             var searchFilter = GetSearchFilter(q, sortOrder, page, prerelease);
@@ -242,12 +243,16 @@ namespace NuGetGallery
                 var submittedPackages = packageSvc.GetSubmittedPackages().ToList();
 
                 var updatedStatus = PackageSubmittedStatusType.Updated.ToString();
+                var respondedStatus = PackageSubmittedStatusType.Responded.ToString();
                 var readyStatus = PackageSubmittedStatusType.Ready.ToString();
                 var waitingStatus = PackageSubmittedStatusType.Waiting.ToString();
 
                 //var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
                 var resubmittedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == updatedStatus).OrderBy(p => p.Published).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
+
+                var respondedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == respondedStatus).OrderBy(p => p.LastUpdated).ToList();
+                respondedPackagesCount = respondedPackages.Count;
 
                 var unreviewedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
@@ -256,7 +261,7 @@ namespace NuGetGallery
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
 
-                packagesToShow = resubmittedPackages.Union(unreviewedPackages).Union(waitingForMaintainerPackages);
+                packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(waitingForMaintainerPackages);
 
                 if (!string.IsNullOrWhiteSpace(q))
                 {
@@ -324,7 +329,7 @@ namespace NuGetGallery
             }
 
             var viewModel = new PackageListViewModel(
-                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount);
+                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount, respondedPackagesCount);
 
             ViewBag.SearchTerm = q;
 

@@ -22,6 +22,7 @@ namespace NuGetGallery
     {
         Ready,
         Waiting,
+        Responded,
         Updated
     }
 }

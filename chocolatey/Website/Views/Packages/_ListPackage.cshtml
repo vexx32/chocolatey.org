@@ -17,7 +17,15 @@
                     <span class="updated">Updated</span>
                     @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                     break;
-               default:
+                case PackageSubmittedStatusType.Responded:
+                    <span class="responded">Responded</span>
+                     if (!string.IsNullOrWhiteSpace(Model.ReviewerEmailAddress))
+                     {
+                        @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)    
+                     }
+                    
+                    break;
+                default:
                     <span class="waiting">Waiting for Maintainer</span>
                     @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                     break;

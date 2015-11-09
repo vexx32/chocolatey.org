@@ -758,6 +758,10 @@ header.main {
         
         section.package.updated {
             background-color: #a2c1a2;
+        }      
+        
+        section.package.responded {
+            background-color: #a2c1a2;
         }
         
         section.package.waiting {
@@ -841,6 +845,10 @@ header.main {
          
          section.package .moderator-side .updated {
              color: #044604;             
+         }
+         
+         section.package .moderator-side .responded {
+             color: #a2c1a2;             
          }
          
          section.package .moderator-side .waiting {
