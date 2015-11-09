@@ -85,6 +85,7 @@ namespace NuGetGallery
 
             try
             {
+                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.",currentUser.Username), currentUser, package.ReviewedBy, false, package.SubmittedStatus);
                 imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
                 imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
             }
