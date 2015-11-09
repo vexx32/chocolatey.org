@@ -227,8 +227,7 @@ Comment Url: {3}
             }
         }
 
-        private static void AddOwnersToMailMessage(
-            PackageRegistration packageRegistration, MailMessage mailMessage, bool requireEmail = false)
+        private static void AddOwnersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage, bool requireEmail = false)
         {
             foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllowed || requireEmail))
             {
