@@ -184,6 +184,7 @@ namespace NuGetGallery
                                                             .Include(p => p.Files)
                                                             .Include(p => p.Dependencies)
                                                             .Include(p => p.SupportedFrameworks)
+                                                            .Include(p => p.ReviewedBy)
                                                             .Where(p => (p.PackageRegistration.Id == id));
             
             var packageVersions = useCache
