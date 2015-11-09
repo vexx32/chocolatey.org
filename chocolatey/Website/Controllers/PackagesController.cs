@@ -148,30 +148,50 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        [Authorize(Roles = "Admins, Moderators, Reviewers"), HttpPost]
+        [Authorize, HttpPost]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
             if (!ModelState.IsValid) return DisplayPackage(id, version);
+            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
 
+            var packageRegistration = package.PackageRegistration;
+            var isMaintainer = packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key);
+            var isModerationRole = User.IsInAnyModerationRole() && !isMaintainer;
+            var isModerator = User.IsModerator() && !isMaintainer;
+
+            if (packageRegistration != null && !isMaintainer && !isModerationRole)
+            {
+                ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "maintain"));
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
             if (!ModelState.IsValid) return View("~/Views/Packages/DisplayPackage.cshtml", model);
 
             var status = PackageStatusType.Unknown;
-            try
+            if (isMaintainer)
             {
-                status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
-            } catch (Exception ex)
+                status = package.Status;
+            }
+            else
             {
-                // Log but swallow the exception
-                ErrorSignal.FromCurrentContext().Raise(ex);
+                try
+                {
+                    status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
+                }
+                catch (Exception ex)
+                {
+                    // Log but swallow the exception
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                }
             }
 
-            //reviewers cannot change the current status
-            if (User.IsReviewer()) status = package.Status;
+            // maintainers and reviewers cannot change the current status
+            if (User.IsReviewer() || isMaintainer) status = package.Status;
 
             if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Unknown)
             {
@@ -191,12 +211,31 @@ namespace NuGetGallery
             }
 
             var comments = form["ReviewComments"];
+            var newComments = form["NewReviewComments"];
             bool sendEmail = form["SendEmail"] != null;
             bool trustedPackage = form["IsTrusted"] == "true,false";
+            bool maintainerReject = form["MaintainerReject"] == "true";
 
-            var moderator = userSvc.FindByUsername(HttpContext.User.Identity.Name);
-            packageSvc.ChangePackageStatus(package, status, comments, moderator, sendEmail);
-            packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
+            if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
+            {
+                ModelState.AddModelError(String.Empty, "In order to reject a package version, you must provide comments indicating why it is being rejected.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
+            if (isMaintainer && maintainerReject)
+            {
+                status = PackageStatusType.Rejected;
+            }
+
+            // could be null if no moderation has happened yet
+            var moderator = isModerationRole ? currentUser : package.ReviewedBy;
+
+            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, moderator, sendEmail, isModerationRole ? PackageSubmittedStatusType.Waiting : PackageSubmittedStatusType.Responded);
+
+            if (isModerator)
+            {
+                packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
+            }
 
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);

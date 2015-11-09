@@ -15,17 +15,19 @@
     };
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
-
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
-
-    var moderator = User != null && User.IsModerator();
-    var moderationRole = User != null && User.IsInAnyModerationRole();
-    var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
-
     var packageVersions = Model.PackageVersions.Count();
     var packageVersionsDefaultDisplay = 10;
 
+    var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
+    var moderator = User != null && User.IsModerator() && !maintainer;
+    var admin = User != null && User.IsAdmin() && !maintainer;
+    var moderationRole = User != null && User.IsInAnyModerationRole() && !maintainer;
+    var moderationRoleAndMaintaner = User != null && User.IsInAnyModerationRole() && maintainer;
+    var anyPackageRole = User != null && (moderationRole || maintainer);
+
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as a trusted package";
+
 }
 @section SideColumn {
     <img class="logo" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_png))" alt="Icon for package @Model.Id" title="Icon for package @Model.Id | Nuspec reference: &lt;iconUrl&gt;@Model.IconUrl&lt;/iconurl&gt;" onerror="this.src='@Links.Content.Images.packageDefaultIcon_png';" />
@@ -146,27 +148,28 @@
         @if (Model.Status != PackageStatusType.Rejected)
         {
             <h2 title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</h2>
-            <h2>
-            @switch (Model.PackageTestResultsStatus)
-            {
-                case PackageTestResultStatusType.Unknown :
-                    <img src="@Url.Content("~/content/images/grey_ball_48.png")" title="There are no package test results for this package" alt="There are no package test results for this package" />
+           
+        }
+        <h2>
+        @switch (Model.PackageTestResultsStatus)
+        {
+            case PackageTestResultStatusType.Unknown:
+                <img src="@Url.Content("~/content/images/grey_ball_48.png")" title="There are no package test results for this package" alt="There are no package test results for this package" />
+                        break;
+            case PackageTestResultStatusType.Pending:
+                <img src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" />
+                        break;
+            case PackageTestResultStatusType.Failing:
+                <a href="@Model.PackageTestResultsUrl"><img src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /></a>
+                        break;
+            case PackageTestResultStatusType.Passing:
+                <a href="@Model.PackageTestResultsUrl"><img src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /></a>
                     break;
-                case PackageTestResultStatusType.Pending :
-                    <img src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" />
-                    break;
-                case PackageTestResultStatusType.Failing :
-                    <a href="@Model.PackageTestResultsUrl"><img src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /></a>
-                    break;
-                case PackageTestResultStatusType.Passing :
-                    <a href="@Model.PackageTestResultsUrl"><img src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /></a>
-                    break;
-            }
-            </h2>
-        }       
+        }
+        </h2>
     </div>
 
-    @if (Model.Status == PackageStatusType.Submitted && !Model.IsOwner(User) && !moderationRole)
+    @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
     {
         <div class="message error">This version is in moderation and has not yet been approved. Be aware that this package version and its contents can
             change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
@@ -187,11 +190,11 @@
     else if (maintainer && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
     {
         <p class="message error">This package will remain unlisted until it has been approved by a moderator.
-            You can see the package because you are one of its maintainers. You should have received an email about moderation. You can respond to that email to correspond with the moderators. Moderators typically respond within one business day.
+            You can see the package because you are one of its maintainers. You should have received an email about moderation. If you need to update/respond to the package review, please do so in the form below. If you need to contact the moderators for other reasons, feel free to respond to the email you received.
             If you have not received that email, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.
         </p>
 
-        if (moderationRole && maintainer)
+        if (moderationRoleAndMaintaner)
         {
              <p class="message error">Since you are a maintainer of this package, you are not able to review it.</p>
         }
@@ -204,7 +207,7 @@
     }
 
     @* Maintainers always see the review comments *@
-    @if (Model.Status == PackageStatusType.Submitted && !moderationRole && !maintainer)
+    @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
     {
         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
@@ -213,7 +216,7 @@
             </div><br />
         }
     }
-    else if (maintainer && Model.Status != PackageStatusType.Rejected)
+    else if (anyPackageRole && Model.Status != PackageStatusType.Rejected)
     {
         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
@@ -238,7 +241,7 @@
         <p class="message error">This package is exempt from moderation. While it is likely safe for you, there is more risk involved.</p>
     }
 
-    @if (moderationRole && !maintainer)
+    @if (moderationRole || (maintainer && Model.Status != PackageStatusType.Approved))
     {
         if (Model.Listed || Model.Status == PackageStatusType.Rejected)
         {
@@ -250,25 +253,41 @@
             </script>
         }
         <div id="div-review" class="message review-instructions">
-            Instructions for review:
-            <ul>
-                <li>Reviewers/Moderators must follow requirements / guidelines at <a href="https://github.com/chocolatey/choco/wiki/Moderation">moderation</a>.
-                <li>Leave comments here (will be emailed unless box is unchecked).</li>
-                <li>**Please do not reject a package until the end of the conversation.**</li>
-                <li>Moderators: Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
-                <li>Check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li>
-                <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
-                <li>Check dependencies, make sure they are listed.</li>
-                <li>Check tags</li>
-                <li>Be Nice! :)</li>
-            </ul>
+            @if (moderationRole)
+            {
+                <text>Instructions for review:</text>
+                <ul>
+                    <li>Reviewers/Moderators must follow requirements / guidelines at <a href="https://github.com/chocolatey/choco/wiki/Moderation">moderation</a>.
+                    <li>Leave comments here (will be emailed unless box is unchecked).</li>
+                    <li>**Please do not reject a package until the end of the conversation.**</li>
+                    <li>Moderators: Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
+                    <li>Check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li>
+                    <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
+                    <li>Check dependencies, make sure they are listed.</li>
+                    <li>Check tags</li>
+                    <li>Be Nice! :)</li>
+                </ul>
+            } else
+            {
+                <ul>
+                    <li>You can respond to review comments here.</li>
+                    <li>You are also able to self-reject packages that may be out of date or incorrect.</li>
+                </ul>
+            }
+
             @using (Html.BeginForm())
             {
                 <fieldset class="form">
                     <div class="form-field">
-                        @Html.LabelFor(m => m.ReviewComments)
-                        @Html.TextAreaFor(m => m.ReviewComments, new { @cols = 80, @rows = 10 })
-                        @Html.ValidationMessageFor(m => m.ReviewComments)
+                        @if (admin && !string.IsNullOrWhiteSpace(Model.ReviewComments))
+                        {
+                            @Html.LabelFor(m => m.ReviewComments)
+                            @Html.TextAreaFor(m => m.ReviewComments, new { @cols = 80, @rows = 10 })
+                            @Html.ValidationMessageFor(m => m.ReviewComments)
+                        }
+                        @Html.LabelFor(m => m.NewReviewComments)
+                        @Html.TextAreaFor(m => m.NewReviewComments, new { @cols = 80, @rows = 10 })
+                        @Html.ValidationMessageFor(m => m.NewReviewComments)
                         <span class="field-hint-message"></span>
                     </div>
 
@@ -276,7 +295,7 @@
                         @Html.LabelFor(m => m.Status)
                         @if (moderator)
                         {
-                          @Html.DropDownListFor(m => m.Status, statuses)
+                            @Html.DropDownListFor(m => m.Status, statuses)
                         }
                         else
                         {
@@ -285,48 +304,65 @@
                         @Html.ValidationMessageFor(m => m.Status)
                         <span class="field-hint-message"></span>
                     </div>
-                    <div class="form-field">
-                        <input id="SendEmail" name="SendEmail" type="checkbox" checked="checked" value="true">
-                        <label for="SendEmail" class="for-checkbox">Send Email</label>
-                    </div>
+                     @if (moderationRole)
+                     {
+                         <div class="form-field">
+                             <input id="SendEmail" name="SendEmail" type="checkbox" checked="checked" value="true" />
+                             <label for="SendEmail" class="for-checkbox">Send Email</label>
+                         </div>
+                     }
+                     else
+                     {
+                          <div class="form-field">
+                            <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" />
+                            <label for="MaintainerReject" class="for-checkbox">Reject Package</label>
+                          </div>
+                     }
 
                     @Html.ValidationSummary(true)
                     <input type="submit" value="Save" title="Save Changes" />
 
-
+                    @if (moderationRole)
+                    {
                     <br /><br />
                     <a onclick="if ($(this).text() == 'Hide') {$('#div-trustedpackage').hide();$(this).text('Show Trusted Section');} else {$('#div-trustedpackage').show();$(this).text('Hide');}">Show Trusted Section</a>
 
-                    <div class="form-field" id="div-trustedpackage">
-                        <ul>
-                            <li>Trusted package ids are packages where we have built trust in the package maintainer(s).</li>
-                            <li>This usually happens after we have seen several iterations of a package without issues.</li>
-                            <li>All package *versions* submitted from now on will automatically be approved.</li>
-                            <li>This also happens when maintainer is the author of the software.</li>
-                            <li>Use with care.</li>
-                            <li>Use "Save" above to make this change. You may want to uncheck Send Email.</li>
-                        </ul>
-                        <br />
-                        @if (moderator)
-                        {
-                            @Html.EditorFor(m => m.IsTrusted)
-                            <label for="IsTrusted" class="checkbox">
-                                Trust this package id?
-                            </label>
-                        }
-                        else
-                        {
-                            <text>This package is trusted?</text> @Html.DisplayTextFor(m => m.IsTrusted)
-                        }
-                    </div>
+                        <div class="form-field" id="div-trustedpackage">
+                            <ul>
+                                <li>Trusted package ids are packages where we have built trust in the package maintainer(s).</li>
+                                <li>This usually happens after we have seen several iterations of a package without issues.</li>
+                                <li>All package *versions* submitted from now on will automatically be approved.</li>
+                                <li>This also happens when maintainer is also the author of the software.</li>
+                                @if (moderator)
+                                {
+                                    <li>Use with care.</li>
+                                    <li>Use "Save" above to make this change. You may want to uncheck Send Email.</li>
+                                }
+                            </ul>
+                            <br />
+                            @if (moderator)
+                            {
+                                @Html.EditorFor(m => m.IsTrusted)
+                                <label for="IsTrusted" class="checkbox">
+                                    Trust this package id?
+                                </label>
+                            }
+                            else
+                            {
+                                var trustedText = @Model.IsTrusted ? "is trusted" : "follows normal workflow";
+                            
+                                <text>This package</text> @trustedText<text>.</text>
+                            }
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#div-trustedpackage').hide();
+                            });
+                        </script>
+                    }       
+                           
                 </fieldset>
             }
-             <script type="text/javascript">
-                $(function () {
-                    $('#div-trustedpackage').hide();
-                });
-            </script>
-
         </div>
     }
 
@@ -440,6 +476,7 @@
         <a name="releasenotes" id="releasenotes"></a><h3 title="Nuspec reference: releaseNotes">Release Notes</h3>
         @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes))
     }
+
     <a name="versionhistory" id="versionhistory"></a><h3>Version History</h3>
     <table class="sexy-table">
         <thead>
@@ -476,7 +513,7 @@
         <tbody>
             @foreach (var packageVersion in Model.PackageVersions.Take(packageVersions < packageVersionsDefaultDisplay ? packageVersions : packageVersionsDefaultDisplay))
             {
-                var packageVersionList = new ListPackageVersionViewModel(packageVersion,moderationRole,markdownGenerator,displayVersion:true);
+                var packageVersionList = new ListPackageVersionViewModel(packageVersion, moderationRole, markdownGenerator, displayVersion: true);
                 @Html.Partial("_ListVersion", packageVersionList)
             }
         </tbody>

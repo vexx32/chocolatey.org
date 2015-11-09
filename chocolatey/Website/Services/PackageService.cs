@@ -703,13 +703,13 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration);
         }
 
-        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user, bool sendEmail)
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus)
         {
-            if (package.Status == status && package.ReviewComments == comments) return;
+            if (package.Status == status && package.ReviewComments == comments && string.IsNullOrWhiteSpace(newComments)) return;
 
             var now = DateTime.UtcNow;
 
-            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
+            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = submittedStatus;
 
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
@@ -735,18 +735,37 @@ namespace NuGetGallery
                 UpdateIsLatest(package.PackageRegistration);
             }
 
-            package.ReviewedDate = now;
-            package.ReviewedById = user.Key;
+            // reviewer could be null / if user is requesting the package rejected, update
+            if (user == reviewer || (status == PackageStatusType.Rejected && package.Status != PackageStatusType.Rejected))
+            {
+                package.ReviewedDate = now;
+                package.ReviewedById = user.Key;
+            }
 
-            string emailComments = string.Empty;
-            if (package.ReviewComments != comments && comments != null)
+            if (package.ReviewComments != comments && !string.IsNullOrWhiteSpace(comments))
             {
                 package.ReviewComments = comments;
-                emailComments = comments;
+            }
+
+            string emailComments = string.Empty;
+            
+            if (!string.IsNullOrWhiteSpace(newComments))
+            {
+                emailComments = newComments;
+                package.LastUpdated = now;
+                var commenter = user == reviewer ? "reviewer" : "maintainer";
+
+                package.ReviewComments += string.Format("{0}{0}#### {1} ({2}) on {3} UTC:{0}{4}", Environment.NewLine, user.Username, commenter, now.ToString("yyyyMMdd HH:mm:ss"), newComments);
             }
 
             packageRepo.CommitChanges();
-            if (sendEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
+            if (sendMaintainerEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
+
+            if (user != reviewer && reviewer != null)
+            {
+                messageSvc.SendPackageModerationReviewerEmail(package, emailComments, user);
+            }
+
 
             InvalidateCache(package.PackageRegistration);
         }
