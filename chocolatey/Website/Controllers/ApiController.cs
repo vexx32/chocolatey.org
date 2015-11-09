@@ -75,7 +75,7 @@ namespace NuGetGallery
             if (!String.IsNullOrEmpty(id))
             {
                 // If the partialId is present, then verify that the user has permission to push for the specific Id \ version combination.
-                var package = packageSvc.FindPackageByIdAndVersion(id, version);
+                var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
                 if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
                 if (!package.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));

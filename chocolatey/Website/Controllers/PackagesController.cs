@@ -198,7 +198,7 @@ namespace NuGetGallery
             packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
 
             //grab updated package
-            package = packageSvc.FindPackageByIdAndVersion(id, version);
+            package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             model = new DisplayPackageViewModel(package);
 
             TempData["Message"] = "Changes to package status have been saved.";

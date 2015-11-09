@@ -784,6 +784,7 @@ namespace NuGetGallery
             UpdateIsLatest(package.PackageRegistration);
 
             packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
         }
 
         // TODO: Should probably be run in a transaction
