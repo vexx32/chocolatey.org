@@ -513,7 +513,7 @@
         <tbody>
             @foreach (var packageVersion in Model.PackageVersions.Take(packageVersions < packageVersionsDefaultDisplay ? packageVersions : packageVersionsDefaultDisplay))
             {
-                var packageVersionList = new ListPackageVersionViewModel(packageVersion, moderationRole, markdownGenerator, displayVersion: true);
+                var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: true);
                 @Html.Partial("_ListVersion", packageVersionList)
             }
         </tbody>
@@ -522,7 +522,7 @@
             <tbody>
                 @foreach (var packageVersion in Model.PackageVersions.Skip(packageVersionsDefaultDisplay))
                 {
-                    var packageVersionList = new ListPackageVersionViewModel(packageVersion, moderationRole, markdownGenerator, displayVersion: false);
+                    var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: false);
                     @Html.Partial("_ListVersion", packageVersionList)
                 }
             </tbody>

@@ -14,7 +14,7 @@
                         {
                             <text>title="Latest Version"</text>
                         }>
-        @if (!Model.Package.IsCurrent(Model.Package))
+        @if (!Model.Package.IsCurrent(Model.CurrentPackageVersion))
         {
             <a href="@Url.Package(Model.Package)">@Model.Package.Title @Model.Package.Version</a>
         }
