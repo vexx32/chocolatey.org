@@ -758,7 +758,9 @@ namespace NuGetGallery
                 package.LastUpdated = now;
                 var commenter = user == reviewer ? "reviewer" : "maintainer";
 
-                package.ReviewComments += string.Format("{0}{0}#### {1} ({2}) on {3} UTC:{0}{4}", Environment.NewLine, user.Username, commenter, now.ToString("yyyyMMdd HH:mm:ss"), newComments);
+                if (!string.IsNullOrWhiteSpace(package.ReviewComments)) package.ReviewComments += string.Format("{0}{0}", Environment.NewLine);
+
+                package.ReviewComments += string.Format("#### '{0}' ({1}) on {2} +00:00:{3}{4}", user.Username, commenter, now.ToString("dd MMM yyyy HH:mm:ss"), Environment.NewLine, newComments);
             }
 
             packageRepo.CommitChanges();
@@ -768,7 +770,6 @@ namespace NuGetGallery
             {
                 messageSvc.SendPackageModerationReviewerEmail(package, emailComments, user);
             }
-
 
             InvalidateCache(package.PackageRegistration);
         }
