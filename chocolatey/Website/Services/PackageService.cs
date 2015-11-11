@@ -760,7 +760,7 @@ namespace NuGetGallery
 
                 if (!string.IsNullOrWhiteSpace(package.ReviewComments)) package.ReviewComments += string.Format("{0}{0}", Environment.NewLine);
 
-                package.ReviewComments += string.Format("#### '{0}' ({1}) on {2} +00:00:{3}{4}", user.Username, commenter, now.ToString("dd MMM yyyy HH:mm:ss"), Environment.NewLine, newComments);
+                package.ReviewComments += string.Format("#### {0} ({1}) on {2} +00:00:{3}{4}", user.Username, commenter, now.ToString("dd MMM yyyy HH:mm:ss"), Environment.NewLine, newComments);
             }
 
             packageRepo.CommitChanges();
