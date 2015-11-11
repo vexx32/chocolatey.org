@@ -311,12 +311,12 @@
                              <label for="SendEmail" class="for-checkbox">Send Email</label>
                          </div>
                      }
-                     else
+                     else if (Model.Status != PackageStatusType.Rejected)
                      {
                           <div class="form-field">
                             <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" />
                             <label for="MaintainerReject" class="for-checkbox">Reject Package</label>
-                          </div>
+                          </div> 
                      }
 
                     @Html.ValidationSummary(true)
