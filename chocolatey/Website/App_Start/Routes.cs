@@ -151,15 +151,6 @@ namespace NuGetGallery
                 });
 
             routes.MapRoute(
-                "v2CuratedFeeds" + RouteName.DownloadPackage, "api/v2/curated-feeds/package/{id}/{version}", MVC.Api.GetPackage(), defaults: new
-                {
-                    version = UrlParameter.Optional
-                }, constraints: new
-                {
-                    httpMethod = new HttpMethodConstraint("GET")
-                });
-
-            routes.MapRoute(
                 "v2" + RouteName.DownloadPackage, "api/v2/package/{id}/{version}", MVC.Api.GetPackage(), defaults: new
                 {
                     version = UrlParameter.Optional
@@ -186,11 +177,19 @@ namespace NuGetGallery
                     httpMethod = new HttpMethodConstraint("POST")
                 });
 
+            routes.MapServiceRoute(RouteName.V2ApiSubmittedFeed, "api/v2/submitted", typeof(V2SubmittedFeed));
+
+            routes.MapRoute(
+              "v2" + RouteName.TestPackageApi, "api/v2/test/{id}/{version}", MVC.Api.TestPackage(), defaults: null
+              , constraints: new
+              {
+                  httpMethod = new HttpMethodConstraint("POST")
+              }
+            );
+
             routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
 
             routes.MapRoute("v2PackageVersions", "api/v2/package-versions/{id}", MVC.Api.GetPackageVersions());
-
-            routes.MapServiceRoute(RouteName.V2ApiSubmittedFeed, "api/v2/submitted", typeof(V2SubmittedFeed));
 
             routes.MapServiceRoute(RouteName.V2ApiFeed, "api/v2/", typeof(V2Feed));
 

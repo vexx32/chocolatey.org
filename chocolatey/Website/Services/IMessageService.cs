@@ -42,5 +42,7 @@ namespace NuGetGallery
         void SendPackageOwnerRequest(User fromUser, User toUser, PackageRegistration package, string confirmationUrl);
         void SendPackageOwnerConfirmation(User fromUser, User toUser, PackageRegistration package);
         void SendPackageModerationEmail(Package package, string comments);
+        void SendPackageModerationReviewerEmail(Package package, string comments, User fromUser);
+        void SendPackageTestFailureMessage(Package package, string resultDetailsUrl);
     }
 }

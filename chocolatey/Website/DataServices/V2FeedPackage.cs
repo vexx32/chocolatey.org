@@ -60,6 +60,7 @@ namespace NuGetGallery
         public string ReleaseNotes { get; set; }
         public string PackageStatus { get; set; }
         public string PackageSubmittedStatus { get; set; }
+        public string PackageTestResultStatus { get; set; }
         public bool RequireLicenseAcceptance { get; set; }
         public string Summary { get; set; }
         public string Tags { get; set; }

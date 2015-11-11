@@ -46,11 +46,16 @@ namespace NuGetGallery
 
             Files = package.Files;
             DownloadCount = package.DownloadCount;
+
+            PackageTestResultsStatus = package.PackageTestResultStatus;
+            PackageTestResultsUrl = package.PackageTestResultUrl ?? string.Empty;
         }
 
         public DependencySetsViewModel Dependencies { get; set; }
         public IEnumerable<DisplayPackageViewModel> PackageVersions { get; set; }
         public string Copyright { get; set; }
+        public PackageTestResultStatusType PackageTestResultsStatus { get; set; }
+        public string PackageTestResultsUrl { get; set; }
 
         public bool IsLatestVersionAvailable
         {
@@ -79,6 +84,9 @@ namespace NuGetGallery
         }
 
         public IEnumerable<PackageFile> Files { get; private set; }
+
+        [Display(Name = "Add to Review Comments")]
+        public string NewReviewComments { get; set; }
 
         [Display(Name = "Trust this package id?")]
         public bool IsTrusted { get; private set; }

@@ -33,13 +33,15 @@ namespace NuGetGallery
         private readonly IUserService userSvc;
         private readonly IPackageFileService packageFileSvc;
         private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
+        private readonly GallerySetting settings;
 
-        public ApiController(IPackageService packageSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc)
+        public ApiController(IPackageService packageSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, GallerySetting settings)
         {
             this.packageSvc = packageSvc;
             this.packageFileSvc = packageFileSvc;
             this.userSvc = userSvc;
             this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
+            this.settings = settings;
         }
 
         [ActionName("GetPackageApi"), HttpGet]
@@ -75,7 +77,7 @@ namespace NuGetGallery
             if (!String.IsNullOrEmpty(id))
             {
                 // If the partialId is present, then verify that the user has permission to push for the specific Id \ version combination.
-                var package = packageSvc.FindPackageByIdAndVersion(id, version);
+                var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
                 if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
                 if (!package.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, string.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
@@ -210,5 +212,50 @@ namespace NuGetGallery
             var qry = GetService<IPackageVersionsQuery>();
             return new JsonNetResult(qry.Execute(id, includePrerelease).ToArray());
         }
+
+        [ActionName("TestPackageApi"), HttpGet]
+        public virtual ActionResult SubmitPackageTestResults(string id, string version)
+        {
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+            
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            
+            return new EmptyResult();
+        }       
+        
+        
+        [ActionName("TestPackageApi"), HttpPost]
+        public virtual ActionResult SubmitPackageTestResults(string apiKey, string id, string version, bool success, string resultDetailsUrl)
+        {
+            Guid parsedApiKey;
+            if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
+
+            var testReporterUser = userSvc.FindByApiKey(parsedApiKey);
+            if (testReporterUser == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submittestresults"));
+            // Only the package operations user can submit test results
+            if (testReporterUser.Key != settings.PackageOperationsUserKey) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submittestresults"));
+
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+
+            if (string.IsNullOrWhiteSpace(resultDetailsUrl))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting test results requires 'resultDetailsUrl' and 'success'.");
+            }
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            
+            packageSvc.ChangePackageTestStatus(package, success, resultDetailsUrl, testReporterUser);
+
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package test results have been updated.");
+        }
+
     }
 }

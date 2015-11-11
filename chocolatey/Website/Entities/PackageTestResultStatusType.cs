@@ -18,11 +18,11 @@
 
 namespace NuGetGallery
 {
-    public enum PackageSubmittedStatusType
+    public enum PackageTestResultStatusType
     {
-        Ready,
-        Waiting,
-        Responded,
-        Updated
+        Unknown,
+        Pending,
+        Failing,
+        Passing,
     }
 }

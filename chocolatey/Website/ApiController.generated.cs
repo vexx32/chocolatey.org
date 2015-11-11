@@ -72,6 +72,12 @@ namespace NuGetGallery {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult PublishPackage() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.PublishPackage);
+        }      
+        
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult TestPackage() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.TestPackage);
         }
 
         [NonAction]
@@ -121,7 +127,8 @@ namespace NuGetGallery {
 
             public readonly string PublishPackage = "PublishPackageApi";
 
-
+            public readonly string TestPackage = "TestPackageApi";
+            
             public readonly string GetPackageIds = "PackageIDs";
 
 

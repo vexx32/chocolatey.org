@@ -99,7 +99,8 @@ namespace NuGetGallery
                 {
                     nuGetPackage = ReadNuGetPackage(uploadStream);
                 }
-            } catch
+            }
+            catch
             {
                 ModelState.AddModelError(String.Empty, Strings.FailedToReadUploadFile);
                 return View("~/Views/Packages/UploadPackage.cshtml");
@@ -143,34 +144,54 @@ namespace NuGetGallery
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
-            
+
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        [Authorize(Roles = "Admins, Moderators, Reviewers"), HttpPost]
+        [Authorize, HttpPost]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
             if (!ModelState.IsValid) return DisplayPackage(id, version);
+            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
 
             if (package == null) return PackageNotFound(id, version);
             var model = new DisplayPackageViewModel(package);
 
+            var packageRegistration = package.PackageRegistration;
+            var isMaintainer = packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key);
+            var isModerationRole = User.IsInAnyModerationRole() && !isMaintainer;
+            var isModerator = User.IsModerator() && !isMaintainer;
+
+            if (packageRegistration != null && !isMaintainer && !isModerationRole)
+            {
+                ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "maintain"));
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
             if (!ModelState.IsValid) return View("~/Views/Packages/DisplayPackage.cshtml", model);
 
             var status = PackageStatusType.Unknown;
-            try
+            if (isMaintainer)
             {
-                status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
-            } catch (Exception ex)
+                status = package.Status;
+            }
+            else
             {
-                // Log but swallow the exception
-                ErrorSignal.FromCurrentContext().Raise(ex);
+                try
+                {
+                    status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
+                }
+                catch (Exception ex)
+                {
+                    // Log but swallow the exception
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                }
             }
 
-            //reviewers cannot change the current status
-            if (User.IsReviewer()) status = package.Status;
+            // maintainers and reviewers cannot change the current status
+            if (User.IsReviewer() || isMaintainer) status = package.Status;
 
             if (package.Status != PackageStatusType.Unknown && status == PackageStatusType.Unknown)
             {
@@ -190,15 +211,40 @@ namespace NuGetGallery
             }
 
             var comments = form["ReviewComments"];
+            var newComments = form["NewReviewComments"];
             bool sendEmail = form["SendEmail"] != null;
             bool trustedPackage = form["IsTrusted"] == "true,false";
+            bool maintainerReject = form["MaintainerReject"] == "true";
 
-            var moderator = userSvc.FindByUsername(HttpContext.User.Identity.Name);
-            packageSvc.ChangePackageStatus(package, status, comments, moderator, sendEmail);
-            packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
+            if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
+            {
+                ModelState.AddModelError(String.Empty, "In order to reject a package version, you must provide comments indicating why it is being rejected.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
+            if (isMaintainer && string.IsNullOrWhiteSpace(newComments))
+            {
+                ModelState.AddModelError(String.Empty, "You need to provide comments.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
+            if (isMaintainer && maintainerReject)
+            {
+                status = PackageStatusType.Rejected;
+            }
+
+            // could be null if no moderation has happened yet
+            var moderator = isModerationRole ? currentUser : package.ReviewedBy;
+
+            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, moderator, sendEmail, isModerationRole ? PackageSubmittedStatusType.Waiting : PackageSubmittedStatusType.Responded);
+
+            if (isModerator)
+            {
+                packageSvc.ChangeTrustedStatus(package, trustedPackage, moderator);
+            }
 
             //grab updated package
-            package = packageSvc.FindPackageByIdAndVersion(id, version);
+            package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             model = new DisplayPackageViewModel(package);
 
             TempData["Message"] = "Changes to package status have been saved.";
@@ -233,6 +279,7 @@ namespace NuGetGallery
 
             int totalHits = 0;
             int updatedPackagesCount = 0;
+            int respondedPackagesCount = 0;
             int unreviewedPackagesCount = 0;
             int waitingPackagesCount = 0;
             var searchFilter = GetSearchFilter(q, sortOrder, page, prerelease);
@@ -242,12 +289,16 @@ namespace NuGetGallery
                 var submittedPackages = packageSvc.GetSubmittedPackages().ToList();
 
                 var updatedStatus = PackageSubmittedStatusType.Updated.ToString();
+                var respondedStatus = PackageSubmittedStatusType.Responded.ToString();
                 var readyStatus = PackageSubmittedStatusType.Ready.ToString();
                 var waitingStatus = PackageSubmittedStatusType.Waiting.ToString();
 
                 //var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
                 var resubmittedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == updatedStatus).OrderBy(p => p.Published).ToList();
                 updatedPackagesCount = resubmittedPackages.Count;
+
+                var respondedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == respondedStatus).OrderBy(p => p.LastUpdated).ToList();
+                respondedPackagesCount = respondedPackages.Count;
 
                 var unreviewedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
@@ -256,7 +307,7 @@ namespace NuGetGallery
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
 
-                packagesToShow = resubmittedPackages.Union(unreviewedPackages).Union(waitingForMaintainerPackages);
+                packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(waitingForMaintainerPackages);
 
                 if (!string.IsNullOrWhiteSpace(q))
                 {
@@ -281,7 +332,8 @@ namespace NuGetGallery
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount));
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-            } else
+            }
+            else
             {
                 packagesToShow = string.IsNullOrWhiteSpace(q) ? packageVersions : packageVersions.AsQueryable().Search(q).ToList();
 
@@ -310,12 +362,12 @@ namespace NuGetGallery
                 }
 
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) searchFilter.Take = packagesToShow.Count() - searchFilter.Skip;
-               
+
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-                
+
                 //packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
             }
-            
+
 
             if (page == 1 && !packagesToShow.Any())
             {
@@ -324,7 +376,7 @@ namespace NuGetGallery
             }
 
             var viewModel = new PackageListViewModel(
-                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount);
+                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount, respondedPackagesCount);
 
             ViewBag.SearchTerm = q;
 
@@ -366,7 +418,8 @@ namespace NuGetGallery
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            } else from = new MailAddress(reportForm.Email);
+            }
+            else from = new MailAddress(reportForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -411,7 +464,8 @@ namespace NuGetGallery
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            } else from = new MailAddress(reportForm.Email);
+            }
+            else from = new MailAddress(reportForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -456,7 +510,8 @@ namespace NuGetGallery
             {
                 var user = userSvc.FindByUsername(HttpContext.User.Identity.Name);
                 from = user.ToMailAddress();
-            } else from = new MailAddress(contactForm.Email);
+            }
+            else from = new MailAddress(contactForm.Email);
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
 
@@ -534,7 +589,7 @@ namespace NuGetGallery
         {
             if (String.IsNullOrEmpty(token)) return HttpNotFound();
 
-            var package = packageSvc.FindPackageRegistrationById(id, useCache:false);
+            var package = packageSvc.FindPackageRegistrationById(id, useCache: false);
             if (package == null) return HttpNotFound();
 
             var user = userSvc.FindByUsername(username);
@@ -553,7 +608,7 @@ namespace NuGetGallery
 
         internal virtual ActionResult Edit(string id, string version, bool? listed, Func<Package, string> urlFactory)
         {
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return PackageNotFound(id, version);
 
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
@@ -597,7 +652,7 @@ namespace NuGetGallery
                     TempData["ErrorMessage"] = string.Format("Unable to find uploaded file for user '{0}'. Please try using choco.exe push instead.", currentUser.Username);
                     return RedirectToRoute(RouteName.UploadPackage);
                 }
-                
+
                 package = ReadNuGetPackage(uploadFile);
             }
 

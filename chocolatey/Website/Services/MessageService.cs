@@ -227,8 +227,7 @@ Comment Url: {3}
             }
         }
 
-        private static void AddOwnersToMailMessage(
-            PackageRegistration packageRegistration, MailMessage mailMessage, bool requireEmail = false)
+        private static void AddOwnersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage, bool requireEmail = false)
         {
             foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllowed || requireEmail))
             {
@@ -456,7 +455,7 @@ Maintainer(s): {2}
                 packageUrl,
                 string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)),
                 package.Status.GetDescriptionOrValue(),
-                GetModerationMessage(package, comments),
+                GetModerationMessage(package, comments, package.ReviewedBy),
                 GetInformationForMaintainers(package, comments),
                 package.Status == PackageStatusType.Approved && !string.IsNullOrWhiteSpace(comments)
                     ? " with comments"
@@ -472,11 +471,93 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(
-                    Configuration.ReadAppSettings("ModeratorEmail"), settings.GalleryOwnerName);
+                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
+                if (mailMessage.To.Any()) SendMessage(mailMessage);
+            }
+        }
+
+        public void SendPackageModerationReviewerEmail(Package package, string comments, User fromUser)
+        {
+            string subject = "[{0}] Moderation Response for '{1}' v{2}";
+            var packageUrl = string.Format(
+                "{0}packages/{1}/{2}",
+                EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
+                package.PackageRegistration.Id,
+                package.Version);
+            string body = @"'{0}' is {3}{5}.
+{4}
+
+Package Url: {1} 
+Maintainer(s): {2}
+";
+
+            body = String.Format(
+                CultureInfo.CurrentCulture,
+                body,
+                package.PackageRegistration.Id,
+                packageUrl,
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)),
+                package.Status.GetDescriptionOrValue(),
+                GetModerationMessage(package, comments, fromUser),
+                package.Status == PackageStatusType.Approved && !string.IsNullOrWhiteSpace(comments)
+                    ? " with comments"
+                    : string.Empty);
+
+            subject = String.Format(
+                CultureInfo.CurrentCulture,
+                subject,
+                settings.GalleryOwnerName,
+                package.PackageRegistration.Id,
+                package.Version);
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
+
+                if (package.ReviewedBy != null)
+                {
+                    mailMessage.To.Add(package.ReviewedBy.EmailAddress);
+                }
+                
+                if (mailMessage.To.Any()) SendMessage(mailMessage);
+            }
+        }
+
+        public void SendPackageTestFailureMessage(Package package, string resultDetailsUrl)
+        {
+            string subject = string.Format("[{0}] Package Failure for '{1}' v{2}", 
+                settings.GalleryOwnerName,
+                package.PackageRegistration.Id,
+                package.Version);
+            var packageUrl = string.Format(
+                "{0}packages/{1}/{2}",
+                EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
+                package.PackageRegistration.Id,
+                package.Version);
+            string body = string.Format(@"'{0}' is failing package install/uninstall testing.
+
+Please see the test results link below for more details.
+
+Package Url: {1} 
+Test Results: {2}
+Maintainer(s): {3}
+",
+                package.PackageRegistration.Id,
+                packageUrl,
+                resultDetailsUrl,
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)));
+            
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
+
+                AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
             }
         }
@@ -497,7 +578,7 @@ Maintainer(s): {2}
 
         private string GetInformationForMaintainers(Package package, string comments)
         {
-            if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments)) return @"
+            if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments)) return string.Format(@"
 **NOTICE:** Currently we have a very large backlog (popularity is a double-edged sword) and are addressing it, but as a result moderation may take 
 upwards of two or more weeks until we resolve issues.
 
@@ -512,16 +593,18 @@ Things we are doing to help resolve the large backlog of moderation:
 ### Information for Maintainers
 
  * If you have fixes, repush your package with the **same version**. This is allowed until approved.
- * Reply to this message with questions/comments. 
+ * If you have questions, please reach out to us at {0}.
+ * If you need to update or respond to package review information, please visit your package page and respond there. 
 
 #### Other Pertinent Information
 
  * Moderators typically review a package within about a week or less. 
- * If you have not heard anything within a week, please reply to this message and ask for status.
+ * If you have not heard anything within a week or two, please forward this email to {0} and ask for status.
  * If the package is an urgent release (resolves security issues or CVEs), reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco
  * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
  * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
-";
+",
+ Configuration.ReadAppSettings("ModeratorEmail"));
             else if (package.Status == PackageStatusType.Submitted) return @"
 #### Maintainer Notes
 
@@ -530,19 +613,20 @@ Things we are doing to help resolve the large backlog of moderation:
             return string.Empty;
         }
 
-        private string GetModerationMessage(Package package, string comments)
+        private string GetModerationMessage(Package package, string comments, User fromUser)
         {
             var message = new StringBuilder();
 
+            // fromUser could be null. If the package hasn't been reviewed yet it will be unless this message is being sent to the reviewer.
             if (!string.IsNullOrWhiteSpace(comments))
             {
                 message.AppendFormat(
-                    "{0} left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
+                    "{0} left the following comment(s):{1}", fromUser.Username, Environment.NewLine);
                 message.Append(Environment.NewLine + comments);
             } else if (package.Status == PackageStatusType.Rejected)
             {
                 message.AppendFormat(
-                    "The moderator left the following comment(s):{1}", package.ReviewedBy.Username, Environment.NewLine);
+                    "{0} left the following comment(s):{1}", fromUser.Username, Environment.NewLine);
                 message.Append(Environment.NewLine + package.ReviewComments);
             }
 
@@ -554,13 +638,18 @@ Things we are doing to help resolve the large backlog of moderation:
                 case PackageStatusType.Approved :
                 case PackageStatusType.Exempted :
                     message.AppendFormat(
-                        "{3}{3}The package was {0} by moderator {1} on {2}.",
+                        "{3}{3}The package was {0} by {1} on {2}.",
                         package.Status.GetDescriptionOrValue().ToLower(),
-                        package.ReviewedBy.Username,
+                        fromUser.Username,
                         package.ReviewedDate.GetValueOrDefault().ToShortDateString(),
                         Environment.NewLine);
                     break;
             }
+
+             message.AppendFormat(@"{0}## Attention - DO NOT REPLY TO THIS MESSAGE!
+ * If you need to update or respond to package review information, please login and visit your package page (listed below).
+ * You can also **self-reject packages that are no longer relevant**!",
+                Environment.NewLine);
 
             return message.ToString();
         }

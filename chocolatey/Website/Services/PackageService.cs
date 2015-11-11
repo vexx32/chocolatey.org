@@ -85,6 +85,7 @@ namespace NuGetGallery
 
             try
             {
+                ChangePackageStatus(package, package.Status, null, string.Empty, currentUser, package.ReviewedBy, false, package.SubmittedStatus);
                 imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
                 imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
             }
@@ -184,6 +185,7 @@ namespace NuGetGallery
                                                             .Include(p => p.Files)
                                                             .Include(p => p.Dependencies)
                                                             .Include(p => p.SupportedFrameworks)
+                                                            .Include(p => p.ReviewedBy)
                                                             .Where(p => (p.PackageRegistration.Id == id));
             
             var packageVersions = useCache
@@ -397,6 +399,8 @@ namespace NuGetGallery
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
             package.SubmittedStatus = PackageSubmittedStatusType.Ready;
+            package.PackageTestResultStatus = PackageTestResultStatusType.Pending;
+            package.PackageTestResultUrl = string.Empty;
             package.ApprovedDate = null;
 
             if (package.ReviewedDate.HasValue) package.SubmittedStatus = PackageSubmittedStatusType.Updated;
@@ -700,16 +704,18 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration);
         }
 
-        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, User user, bool sendEmail)
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus)
         {
-            if (package.Status == status && package.ReviewComments == comments) return;
+            if (package.Status == status && package.ReviewComments == comments && string.IsNullOrWhiteSpace(newComments)) return;
 
             var now = DateTime.UtcNow;
 
-            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Waiting;
+            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = submittedStatus;
 
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += string.Format("{0}",Environment.NewLine);
+                newComments += string.Format("Status Change - Changed status of package from '{0}' to '{1}'.", package.Status.GetDescriptionOrValue().to_lower(), status.GetDescriptionOrValue().to_lower());
                 package.Status = status;
                 package.ApprovedDate = null;
                 package.LastUpdated = now;
@@ -732,18 +738,38 @@ namespace NuGetGallery
                 UpdateIsLatest(package.PackageRegistration);
             }
 
-            package.ReviewedDate = now;
-            package.ReviewedById = user.Key;
+            // reviewer could be null / if user is requesting the package rejected, update
+            if (user == reviewer || (status == PackageStatusType.Rejected && package.Status != PackageStatusType.Rejected))
+            {
+                package.ReviewedDate = now;
+                package.ReviewedById = user.Key;
+            }
 
-            string emailComments = string.Empty;
-            if (package.ReviewComments != comments && comments != null)
+            if (package.ReviewComments != comments && !string.IsNullOrWhiteSpace(comments))
             {
                 package.ReviewComments = comments;
-                emailComments = comments;
+            }
+
+            string emailComments = string.Empty;
+            
+            if (!string.IsNullOrWhiteSpace(newComments))
+            {
+                emailComments = newComments;
+                package.LastUpdated = now;
+                var commenter = user == reviewer ? "reviewer" : "maintainer";
+
+                if (!string.IsNullOrWhiteSpace(package.ReviewComments)) package.ReviewComments += string.Format("{0}{0}", Environment.NewLine);
+
+                package.ReviewComments += string.Format("#### '{0}' ({1}) on {2} +00:00:{3}{4}", user.Username, commenter, now.ToString("dd MMM yyyy HH:mm:ss"), Environment.NewLine, newComments);
             }
 
             packageRepo.CommitChanges();
-            if (sendEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
+            if (sendMaintainerEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
+
+            if (user != reviewer && reviewer != null)
+            {
+                messageSvc.SendPackageModerationReviewerEmail(package, emailComments, user);
+            }
 
             InvalidateCache(package.PackageRegistration);
         }
@@ -782,6 +808,37 @@ namespace NuGetGallery
             UpdateIsLatest(package.PackageRegistration);
 
             packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+        }
+
+        public void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter)
+        {
+            package.PackageTestResultUrl = resultDetailsUrl;
+            package.PackageTestResultStatus = PackageTestResultStatusType.Failing;
+            if (success) package.PackageTestResultStatus = PackageTestResultStatusType.Passing;
+
+            packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+
+            var testComments = string.Format("{0} has {1} testing.{2} Please visit {3} for details.",
+                package.PackageRegistration.Id,
+                success ? "passed" : "failed",
+                Environment.NewLine,
+                resultDetailsUrl
+                );
+
+            if (package.Status == PackageStatusType.Submitted)
+            {
+                testComments += success
+                                    ? string.Format("{0} This is an FYI only. There is no action you need to take.", Environment.NewLine)
+                                    : string.Format("{0} The package status will be changed and will be waiting on your next actions.", Environment.NewLine);
+
+                ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting);
+            }
+            else if (!success && package.Status != PackageStatusType.Submitted)
+            {
+                messageSvc.SendPackageTestFailureMessage(package, resultDetailsUrl);
+            }
         }
 
         // TODO: Should probably be run in a transaction

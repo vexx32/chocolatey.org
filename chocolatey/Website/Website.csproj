@@ -290,9 +290,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\CuratedPackage.cs">
       <Link>Entities\CuratedPackage.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\GallerySetting.cs">
-      <Link>Entities\GallerySetting.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\HintAttribute.cs">
       <Link>Infrastructure\HintAttribute.cs</Link>
     </Compile>
@@ -619,8 +616,11 @@
     </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="Entities\EntityRepository.cs" />
+    <Compile Include="Entities\GallerySetting.cs" />
     <Compile Include="Entities\PackageFramework.cs" />
     <Compile Include="Entities\PackageStatistics.cs" />
+    <Compile Include="Entities\PackageTestResults.cs" />
+    <Compile Include="Entities\PackageTestResultStatusType.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -628,6 +628,14 @@
     <Compile Include="Migrations\201506131442550_Add-InformationUrls.cs" />
     <Compile Include="Migrations\201506131442550_Add-InformationUrls.Designer.cs">
       <DependentUpon>201506131442550_Add-InformationUrls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511050501056_TestResults.cs" />
+    <Compile Include="Migrations\201511050501056_TestResults.Designer.cs">
+      <DependentUpon>201511050501056_TestResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511091549239_AddPackageOperationsUserKey.cs" />
+    <Compile Include="Migrations\201511091549239_AddPackageOperationsUserKey.Designer.cs">
+      <DependentUpon>201511091549239_AddPackageOperationsUserKey.cs</DependentUpon>
     </Compile>
     <Compile Include="PackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -870,6 +878,8 @@
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\changePassword.png" />
+    <Content Include="Content\Images\circle_green_small.png" />
+    <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
@@ -879,6 +889,8 @@
     <Content Include="Content\Images\errorPage.png" />
     <Content Include="Content\Images\github.jpg" />
     <Content Include="Content\Images\greenArrow.png" />
+    <Content Include="Content\Images\green_ball_48.png" />
+    <Content Include="Content\Images\grey_ball_48.png" />
     <Content Include="Content\Images\headerbackground.png" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
@@ -898,6 +910,7 @@
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
+    <Content Include="Content\Images\red_ball_48.png" />
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
@@ -909,6 +922,7 @@
     <Content Include="Content\Images\userIcon.png" />
     <Content Include="Content\Images\userIconWhite.png" />
     <Content Include="Content\Images\xmark.png" />
+    <Content Include="Content\Images\yellow_ball_48.png" />
     <Content Include="Content\Images\YourPackage.png" />
     <Content Include="Content\Site.css" />
     <Content Include="..\..\nugetgallery\Website\api\Web.config">

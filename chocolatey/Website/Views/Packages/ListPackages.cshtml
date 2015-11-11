@@ -3,7 +3,7 @@
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Packages";
     var moderationQueue = !string.IsNullOrWhiteSpace(Model.ModeratorQueue) && Model.ModeratorQueue.Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
-    var moderationCount = Model.ModerationUpdatedPackageCount+ Model.ModerationSubmittedPackageCount + Model.ModerationWaitingPackageCount;
+    var moderationCount = Model.ModerationUpdatedPackageCount+ Model.ModerationSubmittedPackageCount + Model.ModerationWaitingPackageCount + Model.ModerationRespondedPackageCount;
     var unreviewedCount = Model.TotalCount - moderationCount;
 
     var moderationRole = User != null && User.IsInAnyModerationRole();
@@ -23,7 +23,7 @@
         if (moderationQueue)
         {
             <h1>@if (Model.TotalCount == 1) { <text>There is @moderationCount package in moderation</text> } else { <text>There are @moderationCount packages in moderation</text> }</h1>
-            <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
+            <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
         }
         else
         {
