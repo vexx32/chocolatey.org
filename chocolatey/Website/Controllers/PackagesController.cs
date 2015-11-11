@@ -222,6 +222,12 @@ namespace NuGetGallery
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
+            if (isMaintainer && string.IsNullOrWhiteSpace(newComments))
+            {
+                ModelState.AddModelError(String.Empty, "You need to provide comments.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
             if (isMaintainer && maintainerReject)
             {
                 status = PackageStatusType.Rejected;
