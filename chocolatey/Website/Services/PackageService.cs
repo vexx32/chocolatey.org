@@ -85,7 +85,7 @@ namespace NuGetGallery
 
             try
             {
-                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.",currentUser.Username), currentUser, package.ReviewedBy, false, package.SubmittedStatus);
+                ChangePackageStatus(package, package.Status, null, string.Empty, currentUser, package.ReviewedBy, false, package.SubmittedStatus);
                 imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
                 imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
             }
@@ -714,6 +714,8 @@ namespace NuGetGallery
 
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += string.Format("{0}",Environment.NewLine);
+                newComments += string.Format("Status Change - Changed status of package from '{0}' to '{1}'.", package.Status.GetDescriptionOrValue().to_lower(), status.GetDescriptionOrValue().to_lower());
                 package.Status = status;
                 package.ApprovedDate = null;
                 package.LastUpdated = now;
