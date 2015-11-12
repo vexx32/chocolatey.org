@@ -153,7 +153,15 @@ namespace NuGetGallery
                 var settings = new ResizeSettings();
                 if (instructions != null) settings = new ResizeSettings(instructions);
 
-                ImageBuilder.Current.Build(originalImagePath, outImagePath, settings, disposeSource: false);
+                try
+                {
+                    ImageBuilder.Current.Build(originalImagePath, outImagePath, settings, disposeSource: false);
+                }
+                catch (Exception)
+                {
+                    // we end up here when the downloaded file isn't an image, such as when HTML redirects are at play.
+                    return null;
+                }
             }
 
             return outImagePath;
