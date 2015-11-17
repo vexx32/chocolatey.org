@@ -311,7 +311,7 @@
                              <label for="SendEmail" class="for-checkbox">Send Email</label>
                          </div>
                      }
-                     else if (Model.Status != PackageStatusType.Rejected)
+                     else if (Model.Status == PackageStatusType.Submitted)
                      {
                           <div class="form-field">
                             <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" />
