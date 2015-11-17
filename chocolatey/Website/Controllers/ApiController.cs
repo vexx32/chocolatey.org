@@ -213,21 +213,6 @@ namespace NuGetGallery
             return new JsonNetResult(qry.Execute(id, includePrerelease).ToArray());
         }
 
-        [ActionName("TestPackageApi"), HttpGet]
-        public virtual ActionResult SubmitPackageTestResults(string id, string version)
-        {
-            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
-            {
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
-            }
-            
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
-            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
-            
-            return new EmptyResult();
-        }       
-        
-        
         [ActionName("TestPackageApi"), HttpPost]
         public virtual ActionResult SubmitPackageTestResults(string apiKey, string id, string version, bool success, string resultDetailsUrl)
         {
@@ -243,7 +228,7 @@ namespace NuGetGallery
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
             }
-
+          
             if (string.IsNullOrWhiteSpace(resultDetailsUrl))
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting test results requires 'resultDetailsUrl' and 'success'.");
