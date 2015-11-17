@@ -86,6 +86,7 @@ namespace NuGetGallery
         public IEnumerable<PackageFile> Files { get; private set; }
 
         [Display(Name = "Add to Review Comments")]
+        [StringLength(1000)]
         public string NewReviewComments { get; set; }
 
         [Display(Name = "Trust this package id?")]
