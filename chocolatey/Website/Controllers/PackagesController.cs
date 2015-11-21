@@ -215,6 +215,7 @@ namespace NuGetGallery
             bool sendEmail = form["SendEmail"] != null;
             bool trustedPackage = form["IsTrusted"] == "true,false";
             bool maintainerReject = form["MaintainerReject"] == "true";
+            bool rerunTests = form["RerunTests"] == "true";
 
             if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
             {
@@ -231,6 +232,11 @@ namespace NuGetGallery
             if (isMaintainer && maintainerReject)
             {
                 status = PackageStatusType.Rejected;
+            }
+
+            if (rerunTests)
+            {
+                packageSvc.ResetPackageTestStatus(package);
             }
 
             // could be null if no moderation has happened yet

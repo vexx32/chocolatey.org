@@ -304,20 +304,28 @@
                         @Html.ValidationMessageFor(m => m.Status)
                         <span class="field-hint-message"></span>
                     </div>
-                     @if (moderationRole)
-                     {
+                    @if (moderator)
+                    {
+                       <div class="form-field">
+                           <input id="RerunTests" name="RerunTests" type="checkbox" value="true" />
+                           <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun tests?</label>
+                       </div>
+                    }
+
+                    @if (moderationRole)
+                    {
                          <div class="form-field">
                              <input id="SendEmail" name="SendEmail" type="checkbox" checked="checked" value="true" />
                              <label for="SendEmail" class="for-checkbox">Send Email</label>
                          </div>
-                     }
-                     else if (Model.Status == PackageStatusType.Submitted)
-                     {
+                    }
+                    else if (Model.Status == PackageStatusType.Submitted)
+                    {
                           <div class="form-field">
                             <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" />
                             <label for="MaintainerReject" class="for-checkbox">Reject Package</label>
                           </div> 
-                     }
+                    }
 
                     @Html.ValidationSummary(true)
                     <input type="submit" value="Save" title="Save Changes" />

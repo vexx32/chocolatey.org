@@ -841,6 +841,13 @@ namespace NuGetGallery
             }
         }
 
+        public void ResetPackageTestStatus(Package package)
+        {
+            package.PackageTestResultStatus = PackageTestResultStatusType.Pending;
+            packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+        }
+
         // TODO: Should probably be run in a transaction
         public void MarkPackageUnlisted(Package package)
         {

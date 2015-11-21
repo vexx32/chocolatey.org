@@ -63,5 +63,7 @@ namespace NuGetGallery
         void ChangeTrustedStatus(Package package, bool trustedPackage, User user);
 
         void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter);
+
+        void ResetPackageTestStatus(Package package);
     }
 }
