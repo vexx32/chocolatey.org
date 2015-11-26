@@ -1,9 +1,9 @@
-# Chocolatey.org
+## Chocolatey.org
 
 http://chocolatey.org
 
 
-## CONTRIBUTING 
+## CONTRIBUTING
 **WIP**
 
 #### Leave items as they are in the nugetgallery folder
