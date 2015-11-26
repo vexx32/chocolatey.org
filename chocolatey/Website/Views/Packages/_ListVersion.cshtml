@@ -10,9 +10,9 @@
 {
 
 <tr class="versionTableRow @htmlClass @if (Model.Package.LatestVersion)
-                           {
+                                      {
                                <text>recommended </text>
-                           }" style="display: @style">
+                                      }" style="display: @style">
     <td class="version" @if (Model.Package.LatestVersion)
                         {
                             <text>title="Latest Version"</text>
@@ -40,7 +40,7 @@
     {
         switch (Model.Package.Status)
         {
-            case PackageStatusType.Submitted :
+            case PackageStatusType.Submitted:
                 if (!Model.Package.ReviewedDate.HasValue || Model.Package.LastUpdated > Model.Package.ReviewedDate)
                 {
                     <td>submitted</td>
@@ -50,13 +50,13 @@
                     <td>waiting</td>
                 }
                 break;
-            case PackageStatusType.Approved :
-            case PackageStatusType.Exempted :
+            case PackageStatusType.Approved:
+            case PackageStatusType.Exempted:
                 <td>@Model.Package.Status.GetDescriptionOrValue().ToLower()</td>
-                break;
-            default :
+               break;
+            default:
                 <td>&nbsp;</td>
-                break;
+               break;
         }
     }
     @if (Model.ModerationRole)
