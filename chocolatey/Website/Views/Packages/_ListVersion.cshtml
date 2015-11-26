@@ -6,6 +6,9 @@
     var htmlClass = displayed ? "" : "versionTableRowMore";
 }
 
+@if (Model.Package.Listed || Model.Package.IsOwner(User) || Model.Package.Status == PackageStatusType.Submitted)
+{
+
 <tr class="versionTableRow @htmlClass @if (Model.Package.LatestVersion)
                            {
                                <text>recommended </text>
@@ -77,3 +80,4 @@
         </td>
     }
 </tr>
+}
