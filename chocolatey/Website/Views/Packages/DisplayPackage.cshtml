@@ -205,7 +205,13 @@
             You can see the package because you are one of its maintainers. To list the package
             again, <a href="@Url.DeletePackage(Model)">change its listing setting</a>. </p>
     }
-
+    else if (!Model.Listed)
+    {
+        <p class="message warning">This package is unlisted and hidden from package listings.</p>
+    }
+    
+    
+    
     @* Maintainers always see the review comments *@
     @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
     {
@@ -267,7 +273,8 @@
                     <li>Check tags</li>
                     <li>Be Nice! :)</li>
                 </ul>
-            } else
+            }
+            else
             {
                 <ul>
                     <li>You can respond to review comments here.</li>
