@@ -85,7 +85,7 @@ namespace NuGetGallery
 
             try
             {
-                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, false, package.SubmittedStatus);
+                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, false, package.SubmittedStatus, assignReviewer: true);
                 imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
                 imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
             }
@@ -704,7 +704,7 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration);
         }
 
-        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus)
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer)
         {
             if (package.Status == status && package.ReviewComments == comments && string.IsNullOrWhiteSpace(newComments)) return;
 
@@ -740,7 +740,7 @@ namespace NuGetGallery
             }
 
             // reviewer could be null / if user is requesting the package rejected, update
-            if (user == reviewer || (status == PackageStatusType.Rejected && package.Status != PackageStatusType.Rejected))
+            if ((user == reviewer && assignReviewer) || (status == PackageStatusType.Rejected && package.Status != PackageStatusType.Rejected))
             {
                 package.ReviewedDate = now;
                 package.ReviewedById = user.Key;
@@ -836,7 +836,7 @@ namespace NuGetGallery
                                     ? string.Format("{0} This is an FYI only. There is no action you need to take.", Environment.NewLine)
                                     : string.Format("{0} The package status will be changed and will be waiting on your next actions.", Environment.NewLine);
 
-                ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting);
+                ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
             }
             else if (!success && package.Status != PackageStatusType.Submitted)
             {

@@ -242,7 +242,7 @@ namespace NuGetGallery
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;
 
-            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, moderator, sendEmail, isModerationRole ? PackageSubmittedStatusType.Waiting : PackageSubmittedStatusType.Responded);
+            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, moderator, sendEmail, isModerationRole ? PackageSubmittedStatusType.Waiting : PackageSubmittedStatusType.Responded, assignReviewer: true);
 
             if (isModerator)
             {
