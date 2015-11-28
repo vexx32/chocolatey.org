@@ -20,6 +20,18 @@ namespace NuGetGallery
 {
     public static class StringExtensions
     {
+        /// <summary>
+        ///   Gets a string representation unless input is null.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static string to_string(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+
+            return input;
+        }
+
         public static string to_lower(this string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return input;
