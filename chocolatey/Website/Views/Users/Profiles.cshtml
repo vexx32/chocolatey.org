@@ -68,20 +68,27 @@
 @if (Model.PackagesModerationQueue.Any())
 {
 <h2>Packages In Moderation</h2>
-<ul id="searchResults">
+<ul class="searchResults">
     @foreach (var package in Model.PackagesModerationQueue)
     {
         var submittedStatus = "Reviewed, waiting for user action";
        
-        if (!package.ReviewedDate.HasValue)
-        {
-            submittedStatus = "Ready";
-        }
-        else if (package.PublishedDate > package.ReviewedDate)
-        {
-            submittedStatus = "Updated";
-        }
-        var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
+         switch (package.SubmittedStatus)
+         {
+             case PackageSubmittedStatusType.Ready:
+                submittedStatus = "Ready";
+                break;
+             case PackageSubmittedStatusType.Updated:
+                submittedStatus = "Updated";
+                break;
+             case PackageSubmittedStatusType.Responded:
+                submittedStatus = "Responded";
+                break;
+             default:
+                break;
+         }
+
+         var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
         
         <li>
             <section class="package">
@@ -124,7 +131,7 @@
 
 
 <h2>Packages</h2>
-<ul id="searchResults">
+<ul class="searchResults">
     @foreach (var package in Model.Packages)
     {
         var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);

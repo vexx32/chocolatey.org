@@ -41,15 +41,20 @@
         switch (Model.Package.Status)
         {
             case PackageStatusType.Submitted:
-                if (!Model.Package.ReviewedDate.HasValue || Model.Package.LastUpdated > Model.Package.ReviewedDate)
-                {
-                    <td>submitted</td>
-                }
-                else
-                {
-                    <td>waiting</td>
-                }
-                break;
+                 switch (Model.Package.SubmittedStatus)
+                 {
+                     case PackageSubmittedStatusType.Waiting:
+                        <td>waiting</td>
+                        break;
+                     case PackageSubmittedStatusType.Responded:
+                        <td>responded</td>
+                        break;
+                     default:
+                        <td>submitted</td>
+                        break;
+                 }
+
+                 break;
             case PackageStatusType.Approved:
             case PackageStatusType.Exempted:
                 <td>@Model.Package.Status.GetDescriptionOrValue().ToLower()</td>
