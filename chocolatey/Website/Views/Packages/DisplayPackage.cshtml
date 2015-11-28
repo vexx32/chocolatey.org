@@ -394,7 +394,7 @@
         PowerShell: </p>
         <div class="nuget-badge">
             <p><code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
-                    @if (!Model.LatestVersion || !Model.Listed)
+                    @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                     { <text> -version @Model.Version</text> }
                     @if (Model.Prerelease)
                     {<text> -pre </text>}</code></p>
@@ -404,7 +404,7 @@
             PowerShell: </p>
         <div class="nuget-badge">
             <p><code><span>C:\&gt; </span>choco upgrade @Model.Id.ToLower()
-                    @if (!Model.LatestVersion || !Model.Listed)
+                    @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                     { <text> -version @Model.Version</text> }
                     @if (Model.Prerelease)
                     {<text> -pre </text>}</code></p>

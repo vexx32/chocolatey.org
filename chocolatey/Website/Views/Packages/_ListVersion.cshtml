@@ -9,11 +9,11 @@
 @if (Model.Package.Listed || Model.Package.IsOwner(User) || Model.Package.Status == PackageStatusType.Submitted)
 {
 
-<tr class="versionTableRow @htmlClass @if (Model.Package.LatestVersion)
+<tr class="versionTableRow @htmlClass @if (Model.Package.LatestStableVersion)
                                       {
                                <text>recommended </text>
                                       }" style="display: @style">
-    <td class="version" @if (Model.Package.LatestVersion)
+    <td class="version" @if (Model.Package.LatestStableVersion)
                         {
                             <text>title="Latest Version"</text>
                         }>
