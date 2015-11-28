@@ -69,7 +69,7 @@
             <div id="searchBox" role="search">
                 <form action="@Url.PackageList()" method="get">
                 <input name="q" id="searchBoxInput" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" autofocus />
-                <input id="searchBoxSubmit" type="submit" value=" " />
+                <input id="searchBoxSubmit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=" " />
                 </form>
             </div>
         </nav>
