@@ -96,7 +96,7 @@
                     <p>
                         @if (String.IsNullOrEmpty(package.ReviewComments))
                         {
-                            @Html.Raw(markdownGenerator.Transform(package.ReviewComments))
+                            @Html.Raw(markdownGenerator.Transform(package.ReviewComments.clean_markdown()))
                         }
                     </p>
                     
@@ -141,7 +141,7 @@
                     <p>
                         @if (String.IsNullOrEmpty(package.Description) || package.Description.Length < 350)
                         {
-                             @Html.Raw(markdownGenerator.Transform(package.Description))
+                             @Html.Raw(markdownGenerator.Transform(package.Description.clean_markdown()))
                         }
                         else
                         {

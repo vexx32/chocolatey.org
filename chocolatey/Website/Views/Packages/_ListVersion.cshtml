@@ -69,7 +69,7 @@
                     Show</a>
                 <div id="@divVersionId">
                     <br />
-                    @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments))
+                    @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments.clean_markdown()))
                 </div>
                 <script type="text/javascript">
                     $(function() {

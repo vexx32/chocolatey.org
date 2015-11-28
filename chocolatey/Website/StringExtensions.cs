@@ -26,5 +26,13 @@ namespace NuGetGallery
 
             return input.ToLower();
         }
+
+        public static string clean_markdown(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return input;
+
+            return input.Replace("<","&lt;").Replace(">","&gt;");
+        }
+
     }
 }
