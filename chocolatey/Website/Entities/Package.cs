@@ -183,6 +183,21 @@ namespace NuGetGallery
         public string PackageTestResultUrl { get; set; }
         public DateTime? PackageTestResultDate { get; set; }
 
+        public PackageAutomatedReviewResultStatusType PackageValidationResultStatus { get; set; }
+        [MaxLength(50)]
+        [Column("PackageValidationResultStatus")]
+        public string PackageValidationResultStatusForDatabase
+        {
+            get { return PackageValidationResultStatus.ToString(); }
+            set
+            {
+                if (value == null) PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Unknown;
+                else PackageValidationResultStatus = (PackageAutomatedReviewResultStatusType)Enum.Parse(typeof(PackageAutomatedReviewResultStatusType), value);
+            }
+        }
+        public DateTime? PackageValidationResultDate { get; set; }
+
+
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }
 
