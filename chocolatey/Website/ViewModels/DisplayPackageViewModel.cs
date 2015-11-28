@@ -54,7 +54,7 @@ namespace NuGetGallery
         public DependencySetsViewModel Dependencies { get; set; }
         public IEnumerable<DisplayPackageViewModel> PackageVersions { get; set; }
         public string Copyright { get; set; }
-        public PackageTestResultStatusType PackageTestResultsStatus { get; set; }
+        public PackageAutomatedReviewResultStatusType PackageTestResultsStatus { get; set; }
         public string PackageTestResultsUrl { get; set; }
 
         public bool IsLatestVersionAvailable

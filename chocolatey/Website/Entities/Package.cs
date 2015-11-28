@@ -166,7 +166,7 @@ namespace NuGetGallery
         /// </remarks>
         public string ReviewComments { get; set; }
 
-        public PackageTestResultStatusType PackageTestResultStatus { get; set; }
+        public PackageAutomatedReviewResultStatusType PackageTestResultStatus { get; set; }
         [MaxLength(50)]
         [Column("PackageTestResultStatus")]
         public string PackageTestResultStatusForDatabase
@@ -174,8 +174,8 @@ namespace NuGetGallery
             get { return PackageTestResultStatus.ToString(); }
             set
             {
-                if (value == null) PackageTestResultStatus = PackageTestResultStatusType.Unknown;
-                else PackageTestResultStatus = (PackageTestResultStatusType)Enum.Parse(typeof(PackageTestResultStatusType), value);
+                if (value == null) PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Unknown;
+                else PackageTestResultStatus = (PackageAutomatedReviewResultStatusType)Enum.Parse(typeof(PackageAutomatedReviewResultStatusType), value);
             }
         }
 

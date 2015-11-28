@@ -401,7 +401,7 @@ namespace NuGetGallery
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
             package.SubmittedStatus = PackageSubmittedStatusType.Ready;
-            package.PackageTestResultStatus = PackageTestResultStatusType.Pending;
+            package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             package.PackageTestResultUrl = string.Empty;
             package.ApprovedDate = null;
 
@@ -727,7 +727,7 @@ namespace NuGetGallery
                     case PackageStatusType.Submitted :
                     case PackageStatusType.Rejected :
                         package.Listed = false;
-                        if (package.PackageTestResultStatus == PackageTestResultStatusType.Pending) package.PackageTestResultStatus = PackageTestResultStatusType.Unknown;
+                        if (package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Pending) package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Unknown;
                         break;
                     case PackageStatusType.Approved :
                         package.ApprovedDate = now;
@@ -817,8 +817,8 @@ namespace NuGetGallery
         public void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter)
         {
             package.PackageTestResultUrl = resultDetailsUrl;
-            package.PackageTestResultStatus = PackageTestResultStatusType.Failing;
-            if (success) package.PackageTestResultStatus = PackageTestResultStatusType.Passing;
+            package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Failing;
+            if (success) package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Passing;
             // the date doesn't need to be exact
             package.PackageTestResultDate = DateTime.UtcNow;
 
@@ -848,7 +848,7 @@ namespace NuGetGallery
 
         public void ResetPackageTestStatus(Package package)
         {
-            package.PackageTestResultStatus = PackageTestResultStatusType.Pending;
+            package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
         }
