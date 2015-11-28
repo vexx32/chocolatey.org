@@ -402,6 +402,9 @@ namespace NuGetGallery
             package.Status = PackageStatusType.Submitted;
             package.SubmittedStatus = PackageSubmittedStatusType.Ready;
             package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
+            package.PackageTestResultDate = null;
+            package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
+            package.PackageValidationResultDate = null;
             package.PackageTestResultUrl = string.Empty;
             package.ApprovedDate = null;
 
