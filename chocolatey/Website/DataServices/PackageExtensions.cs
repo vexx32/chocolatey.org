@@ -31,12 +31,13 @@ namespace NuGetGallery
         public static IQueryable<V2FeedPackage> ToV2FeedPackageQuery(this IQueryable<Package> packages, string siteRoot)
         {
             siteRoot = EnsureTrailingSlash(siteRoot);
-            //var rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
+            var rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
             var approvedStatus = PackageStatusType.Approved.GetDescriptionOrValue();
 
             return packages
-                //.Where(p => !p.StatusForDatabase.Equals(rejectedStatus,StringComparison.InvariantCultureIgnoreCase))
-                .Include(p => p.PackageRegistration).WithoutNullPropagation().Select(
+                .Include(p => p.PackageRegistration).WithoutNullPropagation()
+                .Where(p => p.StatusForDatabase != rejectedStatus)
+                .Select(
                     p => new V2FeedPackage
                     {
                         Id = p.PackageRegistration.Id,
