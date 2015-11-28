@@ -725,6 +725,7 @@ namespace NuGetGallery
                     case PackageStatusType.Submitted :
                     case PackageStatusType.Rejected :
                         package.Listed = false;
+                        if (package.PackageTestResultStatus == PackageTestResultStatusType.Pending) package.PackageTestResultStatus = PackageTestResultStatusType.Unknown;
                         break;
                     case PackageStatusType.Approved :
                         package.ApprovedDate = now;
