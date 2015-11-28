@@ -17,6 +17,8 @@ namespace NuGetGallery
     {
         private const int FeedVersion = 2;
 
+        private const int DEFAULT_CACHE_TIME_MINUTES_V2FEED = 25;
+
         public V2Feed()
         {
 
@@ -66,7 +68,7 @@ namespace NuGetGallery
             //        .AsQueryable();
 
             var packageVersions = Cache.Get(string.Format("V2Feed-Search-{0}", searchTerm.to_lower()),
-                   DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                   DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_V2FEED),
                    () => SearchCore(packages, searchTerm, targetFramework).ToV2FeedPackageQuery(GetSiteRoot()).ToList()
                  );
 
@@ -86,8 +88,8 @@ namespace NuGetGallery
         [WebGet]
         public IQueryable<V2FeedPackage> FindPackagesById(string id)
         {
-            return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()), 
-                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+            return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
+                    DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_V2FEED), 
                     () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
                             .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
                             .ToV2FeedPackageQuery(GetSiteRoot())
@@ -141,8 +143,8 @@ namespace NuGetGallery
                               .OrderBy(p => p.PackageRegistration.Id);
 
             //GetUpdates(string packageIds, string versions, bool includePrerelease, bool includeAllVersions, string targetFrameworks
-            return Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}", string.Join("|", idValues).to_lower(), string.Join("|", versionValues).to_lower(), includePrerelease, includeAllVersions), 
-                             DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+            return Cache.Get(string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}", string.Join("|", idValues).to_lower(), string.Join("|", versionValues).to_lower(), includePrerelease, includeAllVersions),
+                             DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_V2FEED), 
                              () => GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot()).ToList().AsQueryable());
 
             //return searchResults.AsQueryable();
