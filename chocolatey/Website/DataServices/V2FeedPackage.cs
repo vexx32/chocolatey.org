@@ -57,10 +57,14 @@ namespace NuGetGallery
         public string MailingListUrl { get; set; }
         public string BugTrackerUrl { get; set; }
         public string ReportAbuseUrl { get; set; }
-        public string ReleaseNotes { get; set; }
+        public string ReleaseNotes { get; set; } 
+        public bool IsApproved { get; set; }
         public string PackageStatus { get; set; }
         public string PackageSubmittedStatus { get; set; }
         public string PackageTestResultStatus { get; set; }
+        public DateTime? PackageReviewedDate { get; set; }
+        public DateTime? PackageApprovedDate { get; set; }
+        public string PackageReviewer { get; set; }
         public bool RequireLicenseAcceptance { get; set; }
         public string Summary { get; set; }
         public string Tags { get; set; }
