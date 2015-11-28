@@ -730,7 +730,8 @@ namespace NuGetGallery
                     case PackageStatusType.Submitted :
                     case PackageStatusType.Rejected :
                         package.Listed = false;
-                        if (package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Pending) package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Unknown;
+                        if (package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Pending) package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Exempted;
+                        if (package.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending) package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Exempted;
                         break;
                     case PackageStatusType.Approved :
                         package.ApprovedDate = now;
