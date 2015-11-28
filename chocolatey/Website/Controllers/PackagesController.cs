@@ -258,7 +258,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = true, bool moderatorQueue = false)
+        public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false, bool moderatorQueue = false)
         {
             if (page < 1) page = 1;
 
