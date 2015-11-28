@@ -32,6 +32,8 @@ namespace NuGetGallery
         {
             siteRoot = EnsureTrailingSlash(siteRoot);
             //var rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
+            var approvedStatus = PackageStatusType.Approved.GetDescriptionOrValue();
+
             return packages
                 //.Where(p => !p.StatusForDatabase.Equals(rejectedStatus,StringComparison.InvariantCultureIgnoreCase))
                 .Include(p => p.PackageRegistration).WithoutNullPropagation().Select(
@@ -63,7 +65,7 @@ namespace NuGetGallery
                         MailingListUrl = p.MailingListUrl,
                         BugTrackerUrl = p.BugTrackerUrl,
                         ReleaseNotes = p.ReleaseNotes,
-                        IsApproved = p.StatusForDatabase != null && p.StatusForDatabase == "Approved",
+                        IsApproved = p.StatusForDatabase != null && p.StatusForDatabase == approvedStatus,
                         PackageStatus = p.StatusForDatabase,
                         PackageSubmittedStatus = p.SubmittedStatusForDatabase,
                         PackageTestResultStatus = p.PackageTestResultStatusForDatabase,
