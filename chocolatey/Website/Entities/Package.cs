@@ -181,6 +181,7 @@ namespace NuGetGallery
 
         [MaxLength(400)]
         public string PackageTestResultUrl { get; set; }
+        public DateTime? PackageTestResultDate { get; set; }
 
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }

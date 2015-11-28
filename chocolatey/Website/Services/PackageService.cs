@@ -817,6 +817,8 @@ namespace NuGetGallery
             package.PackageTestResultUrl = resultDetailsUrl;
             package.PackageTestResultStatus = PackageTestResultStatusType.Failing;
             if (success) package.PackageTestResultStatus = PackageTestResultStatusType.Passing;
+            // the date doesn't need to be exact
+            package.PackageTestResultDate = DateTime.UtcNow;
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);

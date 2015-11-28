@@ -637,6 +637,10 @@
     <Compile Include="Migrations\201511091549239_AddPackageOperationsUserKey.Designer.cs">
       <DependentUpon>201511091549239_AddPackageOperationsUserKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511281337511_RecordTestResult.cs" />
+    <Compile Include="Migrations\201511281337511_RecordTestResult.Designer.cs">
+      <DependentUpon>201511281337511_RecordTestResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="PackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
