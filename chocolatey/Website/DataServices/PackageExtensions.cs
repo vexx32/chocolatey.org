@@ -36,7 +36,7 @@ namespace NuGetGallery
 
             return packages
                 .Include(p => p.PackageRegistration).WithoutNullPropagation()
-                .Where(p => p.StatusForDatabase != rejectedStatus)
+                .Where(p => p.StatusForDatabase != rejectedStatus || p.StatusForDatabase == null)
                 .Select(
                     p => new V2FeedPackage
                     {

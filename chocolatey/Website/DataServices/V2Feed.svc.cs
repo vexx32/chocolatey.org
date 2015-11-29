@@ -93,7 +93,7 @@ namespace NuGetGallery
             return Cache.Get(string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
                     DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_V2FEED), 
                     () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
-                            .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && p.StatusForDatabase != rejectedStatus)
+                            .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && (p.StatusForDatabase != rejectedStatus || p.StatusForDatabase == null))
                             .ToV2FeedPackageQuery(GetSiteRoot())
                             .ToList().AsQueryable());
 
