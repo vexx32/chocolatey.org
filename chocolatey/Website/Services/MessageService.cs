@@ -617,14 +617,15 @@ Things we are doing to help resolve the large backlog of moderation:
         {
             var message = new StringBuilder();
 
-            // fromUser could be null. If the package hasn't been reviewed yet it will be unless this message is being sent to the reviewer.
             if (!string.IsNullOrWhiteSpace(comments))
             {
+                // fromUser could be null. If the package hasn't been reviewed yet it will be unless this message is being sent to the reviewer.
                 message.AppendFormat(
-                    "{0} left the following comment(s):{1}", fromUser.Username, Environment.NewLine);
+                    "{0} left the following comment(s):{1}", fromUser != null ? fromUser.Username : "The reviewer", Environment.NewLine);
                 message.Append(Environment.NewLine + comments);
             } else if (package.Status == PackageStatusType.Rejected)
             {
+                // fromUser will not be null here.
                 message.AppendFormat(
                     "{0} left the following comment(s):{1}", fromUser.Username, Environment.NewLine);
                 message.Append(Environment.NewLine + package.ReviewComments);
