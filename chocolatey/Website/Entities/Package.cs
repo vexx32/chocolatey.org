@@ -156,6 +156,10 @@ namespace NuGetGallery
                 else SubmittedStatus = (PackageSubmittedStatusType)Enum.Parse(typeof(PackageSubmittedStatusType), value);
             }
         }
+
+        public virtual User ReviewerAssigned { get; set; }
+        public int? ReviewerAssignedId { get; set; }
+
         public DateTime? ReviewedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public virtual User ReviewedBy { get; set; }
