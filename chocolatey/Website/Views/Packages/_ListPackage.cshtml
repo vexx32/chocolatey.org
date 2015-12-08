@@ -2,6 +2,21 @@
 @{
     var submittedStatus = Model.SubmittedStatus;
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
+
+    var ballImageUrl = "~/content/images/grey_ball_48.png";
+    switch (Model.PackageTestResultsStatus)
+    {
+         case PackageAutomatedReviewResultStatusType.Pending:
+            ballImageUrl ="~/content/images/yellow_ball_48.png";
+                break;
+         case PackageAutomatedReviewResultStatusType.Failing:
+            ballImageUrl = "~/content/images/red_ball_48.png";
+                break;
+         case PackageAutomatedReviewResultStatusType.Passing:
+            ballImageUrl = "~/content/images/green_ball_48.png";
+                break;
+     }
+    
     
 }
 <section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
@@ -46,7 +61,7 @@
                     @if (Model.Prerelease)
                     {<text> -pre </text>}</code>
             </div>
-            <h1><a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a></h1>
+            <h1><a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a> <img class="package-testing" src="@Url.Content(ballImageUrl)" title="Package testing. See package page for more details." alt="Package testing. See package page for more details." /> </h1>
             @*<pre>cinst @Model.Id</pre>*@
             <h2>By:</h2>
             <ul class="owners">
