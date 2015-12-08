@@ -620,7 +620,7 @@
     <Compile Include="Entities\PackageFramework.cs" />
     <Compile Include="Entities\PackageStatistics.cs" />
     <Compile Include="Entities\PackageTestResults.cs" />
-    <Compile Include="Entities\PackageTestResultStatusType.cs" />
+    <Compile Include="Entities\PackageAutomatedReviewResultStatusType.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -640,6 +640,14 @@
     <Compile Include="Migrations\201511281337511_RecordTestResult.cs" />
     <Compile Include="Migrations\201511281337511_RecordTestResult.Designer.cs">
       <DependentUpon>201511281337511_RecordTestResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511281714545_PackageValidationResults.cs" />
+    <Compile Include="Migrations\201511281714545_PackageValidationResults.Designer.cs">
+      <DependentUpon>201511281714545_PackageValidationResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512060515325_ModerationEnhancements.cs" />
+    <Compile Include="Migrations\201512060515325_ModerationEnhancements.Designer.cs">
+      <DependentUpon>201512060515325_ModerationEnhancements.cs</DependentUpon>
     </Compile>
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="PackagesController.generated.cs">

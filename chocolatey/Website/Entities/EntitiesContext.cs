@@ -88,13 +88,7 @@ namespace NuGetGallery
                         .HasForeignKey(em => em.FromUserKey);
 
             modelBuilder.Entity<PackageRegistration>().HasKey(pr => pr.Key);
-            
-            modelBuilder.Entity<PackageRegistration>()
-                        .HasOptional<User>(e => e.TrustedBy)
-                        .WithMany()
-                        .HasForeignKey(e => e.TrustedById)
-                        .WillCascadeOnDelete(false);
-
+        
             modelBuilder.Entity<PackageRegistration>()
                         .HasMany<User>(pr => pr.Owners)
                         .WithMany()
@@ -127,12 +121,6 @@ namespace NuGetGallery
                         .HasForeignKey(pd => pd.PackageKey);
 
             modelBuilder.Entity<PackageDependency>().HasKey(pd => pd.Key);
-
-            modelBuilder.Entity<Package>()
-                        .HasOptional<User>(e => e.ReviewedBy)
-                        .WithMany()
-                        .HasForeignKey(e => e.ReviewedById)
-                        .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PackageAuthor>().HasKey(pa => pa.Key);
 
@@ -172,6 +160,30 @@ namespace NuGetGallery
         protected void OnChocolateyModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserSiteProfile>().HasKey(e => e.Key);
+
+            modelBuilder.Entity<PackageRegistration>()
+                        .HasOptional<User>(e => e.TrustedBy)
+                        .WithMany()
+                        .HasForeignKey(e => e.TrustedById)
+                        .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PackageRegistration>()
+                        .HasOptional<User>(e => e.ExemptedFromVerificationBy)
+                        .WithMany()
+                        .HasForeignKey(e => e.ExemptedFromVerificationById)
+                        .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Package>()
+                        .HasOptional<User>(e => e.ReviewedBy)
+                        .WithMany()
+                        .HasForeignKey(e => e.ReviewedById)
+                        .WillCascadeOnDelete(false);  
+            
+            modelBuilder.Entity<Package>()
+                        .HasOptional<User>(e => e.ReviewerAssigned)
+                        .WithMany()
+                        .HasForeignKey(e => e.ReviewerAssignedId)
+                        .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Package>()
                         .HasMany<PackageFile>(p => p.Files)

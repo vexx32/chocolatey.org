@@ -192,8 +192,19 @@ namespace NuGetGallery
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
-                 );
-
+            );
+            
+            routes.MapRoute(
+                 "v2" + RouteName.ValidatePackageApi, 
+                 "api/v2/validate/{id}/{version}",
+                 MVC.Api.ValidatePackage(), 
+                 defaults: null,
+                 constraints: new
+                 {
+                    httpMethod = new HttpMethodConstraint("POST")
+                 }
+            );
+            
             routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
 
             routes.MapRoute("v2PackageVersions", "api/v2/package-versions/{id}", MVC.Api.GetPackageVersions());

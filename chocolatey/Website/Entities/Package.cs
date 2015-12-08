@@ -156,6 +156,10 @@ namespace NuGetGallery
                 else SubmittedStatus = (PackageSubmittedStatusType)Enum.Parse(typeof(PackageSubmittedStatusType), value);
             }
         }
+
+        public virtual User ReviewerAssigned { get; set; }
+        public int? ReviewerAssignedId { get; set; }
+
         public DateTime? ReviewedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public virtual User ReviewedBy { get; set; }
@@ -166,7 +170,7 @@ namespace NuGetGallery
         /// </remarks>
         public string ReviewComments { get; set; }
 
-        public PackageTestResultStatusType PackageTestResultStatus { get; set; }
+        public PackageAutomatedReviewResultStatusType PackageTestResultStatus { get; set; }
         [MaxLength(50)]
         [Column("PackageTestResultStatus")]
         public string PackageTestResultStatusForDatabase
@@ -174,14 +178,29 @@ namespace NuGetGallery
             get { return PackageTestResultStatus.ToString(); }
             set
             {
-                if (value == null) PackageTestResultStatus = PackageTestResultStatusType.Unknown;
-                else PackageTestResultStatus = (PackageTestResultStatusType)Enum.Parse(typeof(PackageTestResultStatusType), value);
+                if (value == null) PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Unknown;
+                else PackageTestResultStatus = (PackageAutomatedReviewResultStatusType)Enum.Parse(typeof(PackageAutomatedReviewResultStatusType), value);
             }
         }
 
         [MaxLength(400)]
         public string PackageTestResultUrl { get; set; }
         public DateTime? PackageTestResultDate { get; set; }
+
+        public PackageAutomatedReviewResultStatusType PackageValidationResultStatus { get; set; }
+        [MaxLength(50)]
+        [Column("PackageValidationResultStatus")]
+        public string PackageValidationResultStatusForDatabase
+        {
+            get { return PackageValidationResultStatus.ToString(); }
+            set
+            {
+                if (value == null) PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Unknown;
+                else PackageValidationResultStatus = (PackageAutomatedReviewResultStatusType)Enum.Parse(typeof(PackageAutomatedReviewResultStatusType), value);
+            }
+        }
+        public DateTime? PackageValidationResultDate { get; set; }
+
 
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }

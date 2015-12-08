@@ -37,9 +37,19 @@ namespace NuGetGallery
         public int DownloadCount { get; set; }
         public virtual ICollection<User> Owners { get; set; }
         public virtual ICollection<Package> Packages { get; set; }
+
         public bool IsTrusted { get; set; }
         public DateTime? TrustedDate { get; set; }
+        
         public virtual User TrustedBy { get; set; }
         public int? TrustedById { get; set; }
+        
+        public bool ExemptedFromVerification { get; set; }
+        [MaxLength(500)]
+        public string ExemptedFromVerificationReason { get; set; }
+        public DateTime? ExemptedFromVerificationDate { get; set; }
+
+        public virtual User ExemptedFromVerificationBy { get; set; }
+        public int? ExemptedFromVerificationById { get; set; }
     }
 }

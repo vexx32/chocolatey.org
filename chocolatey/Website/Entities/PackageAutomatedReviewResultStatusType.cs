@@ -18,11 +18,12 @@
 
 namespace NuGetGallery
 {
-    public enum PackageTestResultStatusType
+    public enum PackageAutomatedReviewResultStatusType
     {
         Unknown,
         Pending,
         Failing,
         Passing,
-    }
+        Exempted,
+    } 
 }

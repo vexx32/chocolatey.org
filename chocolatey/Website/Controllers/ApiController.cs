@@ -250,6 +250,39 @@ namespace NuGetGallery
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package test results have been updated.");
         }
+   
+        [ActionName("ValidatePackageApi"), HttpPost]
+        public virtual ActionResult SubmitPackageValidationResults(string apiKey, string id, string version, bool success, string validationComments)
+        {
+            Guid parsedApiKey;
+            if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
+
+            var testReporterUser = userSvc.FindByApiKey(parsedApiKey);
+            if (testReporterUser == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitvalidationresults"));
+            // Only the package operations user can submit test results
+            if (testReporterUser.Key != settings.PackageOperationsUserKey) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitvalidationresults"));
+
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+          
+            if (string.IsNullOrWhiteSpace(validationComments))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting validation results requires 'validationComments' and 'success'.");
+            }
+            
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+
+            package.PackageValidationResultDate = DateTime.UtcNow;
+            package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Failing;
+            if (success) package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Passing;
+
+            packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, validationComments, testReporterUser, testReporterUser, true, success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
+            
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
+        }
 
     }
 }

@@ -46,16 +46,11 @@ namespace NuGetGallery
 
             Files = package.Files;
             DownloadCount = package.DownloadCount;
-
-            PackageTestResultsStatus = package.PackageTestResultStatus;
-            PackageTestResultsUrl = package.PackageTestResultUrl ?? string.Empty;
         }
 
         public DependencySetsViewModel Dependencies { get; set; }
         public IEnumerable<DisplayPackageViewModel> PackageVersions { get; set; }
         public string Copyright { get; set; }
-        public PackageTestResultStatusType PackageTestResultsStatus { get; set; }
-        public string PackageTestResultsUrl { get; set; }
 
         public bool IsLatestVersionAvailable
         {
