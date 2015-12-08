@@ -359,6 +359,15 @@
                            <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun tests?</label>
                        </div>
                     }
+                    
+                    @if (moderator && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
+                    {
+                       <div class="form-field">
+                           <input id="OverrideValidation" name="OverrideValidation" type="checkbox" value="true" />
+                           <label for="OverrideValidation" class="for-checkbox" title="Override package validation failures and run tests.">Override validation errors?</label>
+                       </div>
+                    }
+
 
                     @if (moderationRole)
                     {
@@ -367,7 +376,7 @@
                              <label for="SendEmail" class="for-checkbox">Send Email</label>
                          </div>
                     }
-                    else if (Model.Status == PackageStatusType.Submitted && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
+                    else if (maintainer && Model.Status == PackageStatusType.Submitted && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
                     {
                           <div class="form-field">
                             <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" />

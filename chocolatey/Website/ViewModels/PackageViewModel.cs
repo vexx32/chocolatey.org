@@ -57,6 +57,7 @@ namespace NuGetGallery
             ReviewComments = package.ReviewComments;
             PackageTestResultsStatus = package.PackageTestResultStatus;
             PackageTestResultsUrl = package.PackageTestResultUrl ?? string.Empty;
+            PackageValidationResultStatus = package.PackageValidationResultStatus;
         }
 
         public string Id { get { return package.PackageRegistration.Id; } }
@@ -90,6 +91,7 @@ namespace NuGetGallery
         public string ReviewComments { get; set; }
         public PackageAutomatedReviewResultStatusType PackageTestResultsStatus { get; set; }
         public string PackageTestResultsUrl { get; set; }
+        public PackageAutomatedReviewResultStatusType PackageValidationResultStatus { get; set; }
         
         public DateTime? ApprovedDate { get; set; }
 
