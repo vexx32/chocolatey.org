@@ -342,7 +342,7 @@
                         @Html.ValidationMessageFor(m => m.Status)
                         <span class="field-hint-message"></span>
                     </div>
-                    @if (moderator)
+                    @if (moderator || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
                     {
                        <div class="form-field">
                            <input id="RerunTests" name="RerunTests" type="checkbox" value="true" />
