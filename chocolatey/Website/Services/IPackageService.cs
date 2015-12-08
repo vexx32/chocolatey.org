@@ -65,5 +65,7 @@ namespace NuGetGallery
         void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter);
 
         void ResetPackageTestStatus(Package package);
+
+        void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer);
     }
 }

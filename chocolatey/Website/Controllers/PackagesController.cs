@@ -215,7 +215,7 @@ namespace NuGetGallery
             bool sendEmail = form["SendEmail"] != null;
             bool trustedPackage = form["IsTrusted"] == "true,false";
             bool maintainerReject = form["MaintainerReject"] == "true";
-            bool rerunTests = form["RerunTests"] == "true";
+           
 
             if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
             {
@@ -229,11 +229,26 @@ namespace NuGetGallery
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
+
             if (isMaintainer && maintainerReject)
             {
                 status = PackageStatusType.Rejected;
             }
 
+            bool exemptVerfication = form["IsExemptedFromVerification"] == "true,false";
+            var exemptVerficationReason = form["ExemptedFromVerificationReason"];
+            if (exemptVerfication && string.IsNullOrWhiteSpace(exemptVerficationReason))
+            {
+                ModelState.AddModelError(String.Empty, "In order to exempt a package from automated testing, a reason should be specified.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
+            if (isModerationRole)
+            {
+                packageSvc.ExemptPackageFromTesting(package, exemptVerfication, exemptVerficationReason, currentUser);
+            }
+
+            bool rerunTests = form["RerunTests"] == "true";
             if (rerunTests)
             {
                 packageSvc.ResetPackageTestStatus(package);

@@ -401,10 +401,17 @@ namespace NuGetGallery
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
             package.SubmittedStatus = PackageSubmittedStatusType.Ready;
-            package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
-            package.PackageTestResultDate = null;
+
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             package.PackageValidationResultDate = null;
+            
+            package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
+            package.PackageTestResultDate = null;
+            if (packageRegistration.ExemptedFromVerification)
+            {
+                package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Exempted;
+            }
+            
             package.PackageTestResultUrl = string.Empty;
             package.ApprovedDate = null;
 
@@ -843,6 +850,9 @@ namespace NuGetGallery
                                     : string.Format("{0} The package status will be changed and will be waiting on your next actions.", Environment.NewLine);
 
                 ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
+
+                //todo: if the automated test review is successful, assign the reviewer at this time.
+                //for exempted packages, we'll need to assign the reviewer when the validation passes
             }
             else if (!success && package.Status != PackageStatusType.Submitted)
             {
@@ -854,6 +864,31 @@ namespace NuGetGallery
         {
             package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+        }
+
+        public void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer)
+        {
+            if (package.PackageRegistration.ExemptedFromVerification == exemptPackage) return;
+
+            var packagesToUpdate = package.PackageRegistration.Packages.Where(p => p.PackageTestResultStatus != PackageAutomatedReviewResultStatusType.Passing && p.PackageTestResultStatus != PackageAutomatedReviewResultStatusType.Unknown).ToList();
+
+            foreach (var packageVersion in packagesToUpdate.OrEmptyListIfNull())
+            {
+                // We go unknown because we don't know if the verifier is going to pick this up or not. Better not to leave it in a pending state.
+                packageVersion.PackageTestResultStatus = exemptPackage ? PackageAutomatedReviewResultStatusType.Exempted : PackageAutomatedReviewResultStatusType.Unknown; 
+            }
+
+            // this may not be a package in submitted status.
+            package.PackageTestResultStatus = exemptPackage ? PackageAutomatedReviewResultStatusType.Exempted : PackageAutomatedReviewResultStatusType.Unknown; 
+            var packageRegistration = package.PackageRegistration;
+            packageRegistration.ExemptedFromVerification = exemptPackage;
+            packageRegistration.ExemptedFromVerificationById = reviewer.Key;
+            packageRegistration.ExemptedFromVerificationDate = DateTime.UtcNow;
+            packageRegistration.ExemptedFromVerificationReason = reason;
+
+            packageRepo.CommitChanges();
+            packageRegistrationRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
         }
 

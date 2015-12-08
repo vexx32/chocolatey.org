@@ -49,6 +49,8 @@ namespace NuGetGallery
             Status = package.Status;
             SubmittedStatus = package.SubmittedStatus;
             ApprovedDate = package.ApprovedDate;
+            IsExemptedFromVerification = package.PackageRegistration.ExemptedFromVerification;
+            ExemptedFromVerificationReason = package.PackageRegistration.ExemptedFromVerificationReason;
             ReviewerUserName = package.ReviewedBy != null ? package.ReviewedBy.Username : string.Empty;
             ReviewerEmailAddress = package.ReviewedBy != null ? package.ReviewedBy.EmailAddress : string.Empty;
             ReviewedDate = package.ReviewedDate;
@@ -85,6 +87,11 @@ namespace NuGetGallery
         [Display(Name = "Review Comments")]
         public string ReviewComments { get; set; }
         public DateTime? ApprovedDate { get; set; }
+
+        public bool IsExemptedFromVerification { get; set; }
+        [Display(Name = "Exempted Reason")]
+        [StringLength(500)]
+        public string ExemptedFromVerificationReason { get; set; }
 
         public int TotalDownloadCount { get { return package.PackageRegistration.DownloadCount; } }
 
