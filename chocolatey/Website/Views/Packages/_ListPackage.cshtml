@@ -61,7 +61,7 @@
                     @if (Model.Prerelease)
                     {<text> -pre </text>}</code>
             </div>
-            <h1><a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a> <img class="package-testing" src="@Url.Content(ballImageUrl)" title="Package testing. See package page for more details." alt="Package testing. See package page for more details." /> </h1>
+            <h1><img class="package-testing" src="@Url.Content(ballImageUrl)" title="Package testing. See package page for more details." alt="Package testing. See package page for more details." /> <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a></h1>
             @*<pre>cinst @Model.Id</pre>*@
             <h2>By:</h2>
             <ul class="owners">
