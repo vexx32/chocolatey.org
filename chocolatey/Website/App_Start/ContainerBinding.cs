@@ -65,6 +65,7 @@ namespace NuGetGallery
                 container.Register(() => cacheProvider, Lifestyle.Singleton);
             }
 
+            container.RegisterPerWebRequest<ISearchService, LuceneSearchService>();
             container.RegisterPerWebRequest<IEntitiesContext>(() => new EntitiesContext());
             container.RegisterPerWebRequest<IEntityRepository<User>, EntityRepository<User>>();
             container.RegisterPerWebRequest<IEntityRepository<PackageRegistration>, EntityRepository<PackageRegistration>>();
@@ -80,6 +81,7 @@ namespace NuGetGallery
             container.RegisterPerWebRequest<IPackageService, PackageService>();
             container.RegisterPerWebRequest<ICryptographyService, CryptographyService>();
 
+            container.Register<IIndexingService, LuceneIndexingService>(Lifestyle.Singleton);
             container.Register<IFormsAuthenticationService, FormsAuthenticationService>(Lifestyle.Singleton);
 
             container.RegisterPerWebRequest<IControllerFactory, NuGetControllerFactory>();

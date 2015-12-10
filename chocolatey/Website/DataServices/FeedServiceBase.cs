@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data.Services;
 using System.Data.Services.Common;
 using System.Data.Services.Providers;
@@ -25,6 +26,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Data.OData.Query;
@@ -37,6 +39,9 @@ namespace NuGetGallery
     [ServiceBehavior(IncludeExceptionDetailInFaults = true, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public abstract class FeedServiceBase<TPackage> : DataService<FeedContext<TPackage>>, IDataServiceStreamProvider, IServiceProvider, IDataServicePagingProvider
     {
+        static readonly Regex packagesByIdPathRegexV1 = new Regex(@"/api/v1/Packages\(.*\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        static readonly Regex packagesByIdPathRegexV2 = new Regex(@"/api/v2/Packages\(.*\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         /// <summary>
         ///   Determines the maximum number of packages returned in a single page of an OData result.
         /// </summary>
@@ -48,18 +53,21 @@ namespace NuGetGallery
         private int _currentSkip;
         private object[] _continuationToken;
         private readonly Type _packageType;
+        private readonly ISearchService searchService;
+
 
         public FeedServiceBase()
             : this(
-                DependencyResolver.Current.GetService<IEntitiesContext>(), DependencyResolver.Current.GetService<IEntityRepository<Package>>(), DependencyResolver.Current.GetService<IConfiguration>())
+                DependencyResolver.Current.GetService<IEntitiesContext>(), DependencyResolver.Current.GetService<IEntityRepository<Package>>(), DependencyResolver.Current.GetService<IConfiguration>(), DependencyResolver.Current.GetService<ISearchService>())
         {
         }
 
-        protected FeedServiceBase(IEntitiesContext entities, IEntityRepository<Package> packageRepo, IConfiguration configuration)
+        protected FeedServiceBase(IEntitiesContext entities, IEntityRepository<Package> packageRepo, IConfiguration configuration, ISearchService searchService)
         {
             this.entities = entities;
             this.packageRepo = packageRepo;
             this.configuration = configuration;
+            this.searchService = searchService;
             _currentSkip = 0;
             _packageType = typeof(TPackage);
         }
@@ -70,7 +78,13 @@ namespace NuGetGallery
 
         protected IConfiguration Configuration { get { return configuration; } }
 
-        protected internal virtual HttpContextBase HttpContext { get { return httpContext ?? new HttpContextWrapper(System.Web.HttpContext.Current); } set { httpContext = value; } }
+        protected ISearchService SearchService { get { return searchService; } }
+
+        protected internal virtual HttpContextBase HttpContext
+        {
+            get { return httpContext ?? new HttpContextWrapper(System.Web.HttpContext.Current); } 
+            set { httpContext = value; }
+        }
 
         protected internal string SiteRoot
         {
@@ -129,20 +143,193 @@ namespace NuGetGallery
         public object GetService(Type serviceType)
         {
             if (serviceType == typeof(IDataServiceStreamProvider)) return this;
-            //todo rr 20150614 look at turning this on for custom data service paging 
-            //if (serviceType == typeof(IDataServicePagingProvider))
-            //{
-            //    return this;
-            //}
+            //if (serviceType == typeof(IDataServicePagingProvider)) return this;
 
             return null;
         }
 
         protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework)
         {
+            SearchFilter searchFilter;
+            // We can only use Lucene if the client queries for the latest versions (IsLatest \ IsLatestStable) versions of a package
+            // and specific sort orders that we have in the index.
+            if (TryReadSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, out searchFilter))
+            {
+                searchFilter.SearchTerm = searchTerm;
+                searchFilter.IncludePrerelease = true;
+
+                return GetResultsFromSearchService(packages, searchFilter);
+            }
+
+            Trace.WriteLine("Database hit");
+            
             return packages.Search(searchTerm);
         }
        
+         private IQueryable<Package> GetResultsFromSearchService(IQueryable<Package> packages, SearchFilter searchFilter)
+         {
+             int totalHits = 0;
+             var result = SearchService.Search(packages, searchFilter, out totalHits);
+ 
+             // For count queries, we can ask the SearchService to not filter the source results. This would avoid hitting the database and consequently make
+             // it very fast.
+             if (searchFilter.CountOnly)
+             {
+                 // At this point, we already know what the total count is. We can have it return this value very quickly without doing any SQL.
+                 return result.InterceptWith(new CountInterceptor(totalHits));
+             }
+ 
+             // For relevance search, Lucene returns us a paged\sorted list. OData tries to apply default ordering and Take \ Skip on top of this.
+             // We avoid it by yanking these expressions out of out the tree.
+             return result.InterceptWith(new DisregardODataInterceptor());
+         }
+
+         private static bool TryReadSearchFilter(bool allVersionsInIndex, string url, out SearchFilter searchFilter)
+         {
+             if (url == null)
+             {
+                 searchFilter = null;
+                 return false;
+             }
+
+             int indexOfQuestionMark = url.IndexOf('?');
+             if (indexOfQuestionMark == -1)
+             {
+                 searchFilter = null;
+                 return false;
+             }
+
+             string path = url.Substring(0, indexOfQuestionMark);
+             string query = url.Substring(indexOfQuestionMark + 1);
+
+             if (string.IsNullOrEmpty(query))
+             {
+                 searchFilter = null;
+                 return false;
+             }
+
+             searchFilter = new SearchFilter()
+             {
+                 // The way the default paging works is WCF attempts to read up to the MaxPageSize elements. If it finds as many, it'll assume there 
+                 // are more elements to be paged and generate a continuation link. Consequently we'll always ask to pull MaxPageSize elements so WCF generates the 
+                 // link for us and then allow it to do a Take on the results. Further down, we'll also parse $skiptoken as a custom IDataServicePagingProvider
+                 // sneakily injects the Skip value in the continuation token.
+                 Take = MaxPageSize,
+                 Skip = 0,
+                 CountOnly = path.EndsWith("$count", StringComparison.Ordinal)
+             };
+
+             string[] props = query.Split('&');
+
+             IDictionary<string, string> queryTerms = new Dictionary<string, string>();
+             foreach (string prop in props)
+             {
+                 string[] nameValue = prop.Split('=');
+                 if (nameValue.Length == 2)
+                 {
+                     queryTerms[nameValue[0]] = nameValue[1];
+                 }
+             }
+
+             // We'll only use the index if we the query searches for latest \ latest-stable packages
+
+
+             string filter;
+             if (queryTerms.TryGetValue("$filter", out filter))
+             {
+                 if (!(filter.Equals("IsLatestVersion", StringComparison.Ordinal) || filter.Equals("IsAbsoluteLatestVersion", StringComparison.Ordinal)))
+                 {
+                     searchFilter = null;
+                     return false;
+                 }
+             }
+             else if (!allVersionsInIndex)
+             {
+                 searchFilter = null;
+                 return false;
+             }
+
+             string skipStr;
+             if (queryTerms.TryGetValue("$skip", out skipStr))
+             {
+                 int skip;
+                 if (int.TryParse(skipStr, out skip))
+                 {
+                     searchFilter.Skip = skip;
+                 }
+             }
+
+             string topStr;
+             if (queryTerms.TryGetValue("$top", out topStr))
+             {
+                 int top;
+                 if (int.TryParse(topStr, out top))
+                 {
+                     searchFilter.Take = Math.Min(top, MaxPageSize);
+                 }
+             }
+
+             string skipTokenStr;
+             if (queryTerms.TryGetValue("$skiptoken", out skipTokenStr))
+             {
+                 var skipTokenParts = skipTokenStr.Split(',');
+                 if (skipTokenParts.Length == 3) // this means our custom IDataServicePagingProvider did its magic by sneaking the Skip value into the SkipToken
+                 {
+                     int skip;
+                     if (int.TryParse(skipTokenParts[2], out skip))
+                     {
+                         searchFilter.Skip = skip;
+                     }
+                 }
+             }
+
+             //  only certain orderBy clauses are supported from the Lucene search
+             string orderBy;
+             if (queryTerms.TryGetValue("$orderby", out orderBy))
+             {
+                 if (string.IsNullOrEmpty(orderBy))
+                 {
+                     searchFilter.SortProperty = SortProperty.Relevance;
+                 }
+                 else if (orderBy.StartsWith("DownloadCount", StringComparison.Ordinal))
+                 {
+                     searchFilter.SortProperty = SortProperty.DownloadCount;
+                 }
+                 else if (orderBy.StartsWith("Published", StringComparison.Ordinal))
+                 {
+                     searchFilter.SortProperty = SortProperty.Recent;
+                 }
+                 else if (orderBy.StartsWith("LastEdited", StringComparison.Ordinal))
+                 {
+                     searchFilter.SortProperty = SortProperty.Recent;
+                 }
+                 else if (orderBy.StartsWith("Id", StringComparison.Ordinal))
+                 {
+                     searchFilter.SortProperty = SortProperty.DisplayName;
+                 }
+                 else if (orderBy.StartsWith("concat", StringComparison.Ordinal))
+                 {
+                     searchFilter.SortProperty = SortProperty.DisplayName;
+
+                     if (orderBy.Contains("%20desc"))
+                     {
+                         searchFilter.SortDirection = SortDirection.Descending;
+                     }
+                 }
+                 else
+                 {
+                     searchFilter = null;
+                     return false;
+                 }
+             }
+             else
+             {
+                 searchFilter.SortProperty = SortProperty.Relevance;
+             }
+
+            return true;
+        }
+
         protected virtual bool UseHttps()
         {
             return AppHarbor.IsSecureConnection(HttpContext);
@@ -171,6 +358,40 @@ namespace NuGetGallery
         public object[] GetContinuationToken(IEnumerator enumerator)
         {
             return _continuationToken;
+        }
+
+
+        protected override void OnStartProcessingRequest(ProcessRequestArgs args)
+        {
+            base.OnStartProcessingRequest(args);
+
+            if (ShouldCacheOutput(HttpContext))
+            {
+                var cache = HttpContext.Response.Cache;
+                cache.SetCacheability(HttpCacheability.ServerAndPrivate);
+                cache.SetExpires(DateTime.UtcNow.AddMinutes(5));
+
+                cache.VaryByHeaders["Accept"] = true;
+                cache.VaryByHeaders["Accept-Charset"] = true;
+                cache.VaryByHeaders["Accept-Encoding"] = true;
+                cache.VaryByParams["*"] = true;
+
+                cache.SetValidUntilExpires(true);
+            }
+        }
+
+        private static bool ShouldCacheOutput(HttpContextBase context)
+        {
+            try
+            {
+                return context.Request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase)
+               && string.IsNullOrEmpty(context.Request.Url.Query)
+               && (packagesByIdPathRegexV2.IsMatch(context.Request.Path) || packagesByIdPathRegexV1.IsMatch(context.Request.Path));
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

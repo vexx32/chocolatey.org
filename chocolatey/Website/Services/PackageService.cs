@@ -44,6 +44,7 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
         private readonly IMessageService messageSvc;
         private readonly IImageFileService imageFileSvc;
+        private readonly IIndexingService indexingSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
 
         private const int DEFAULT_CACHE_TIME_MINUTES_PACKAGES = 180;
@@ -60,7 +61,8 @@ namespace NuGetGallery
             IEntityRepository<PackageDependency> packageDependenciesRepo,
             IEntityRepository<PackageFile> packageFilesRepo,
             IMessageService messageSvc,
-            IImageFileService imageFileSvc)
+            IImageFileService imageFileSvc,
+            IIndexingService indexingSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageRegistrationRepo = packageRegistrationRepo;
@@ -74,6 +76,7 @@ namespace NuGetGallery
             this.packageFilesRepo = packageFilesRepo;
             this.messageSvc = messageSvc;
             this.imageFileSvc = imageFileSvc;
+            this.indexingSvc = indexingSvc;
         }
 
         public Package CreatePackage(IPackage nugetPackage, User currentUser)
@@ -111,6 +114,7 @@ namespace NuGetGallery
 
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
+            NotifyIndexingService();
 
             return package;
         }
@@ -962,6 +966,11 @@ namespace NuGetGallery
             return (from request in packageOwnerRequestRepository.GetAll()
                     where request.PackageRegistrationKey == package.Key && request.NewOwnerKey == pendingOwner.Key
                     select request).FirstOrDefault();
+        }
+
+        private void NotifyIndexingService()
+        {
+            indexingSvc.UpdateIndex();
         }
 
         private void InvalidateCache(PackageRegistration package)

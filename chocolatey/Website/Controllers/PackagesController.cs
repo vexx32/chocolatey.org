@@ -43,11 +43,13 @@ namespace NuGetGallery
         private readonly IUserService userSvc;
         private readonly IMessageService messageService;
         private readonly IAutomaticallyCuratePackageCommand autoCuratedPackageCmd;
+        private readonly ISearchService searchSvc;
+
         public IConfiguration Configuration { get; set; }
 
         public PackagesController(
             IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
-            IConfiguration configuration)
+            IConfiguration configuration, ISearchService searchService)
         {
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
@@ -55,6 +57,7 @@ namespace NuGetGallery
             this.messageService = messageService;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
             Configuration = configuration;
+            this.searchSvc = searchService;
         }
 
         [Authorize]
@@ -356,37 +359,37 @@ namespace NuGetGallery
             }
             else
             {
-                packagesToShow = string.IsNullOrWhiteSpace(q) ? packageVersions : packageVersions.AsQueryable().Search(q).ToList();
+                //packagesToShow = string.IsNullOrWhiteSpace(q) ? packageVersions : packageVersions.AsQueryable().Search(q).ToList();
 
-                totalHits = packagesToShow.Count();
+                //totalHits = packagesToShow.Count();
 
-                switch (searchFilter.SortProperty)
-                {
-                    case SortProperty.DisplayName:
-                        packagesToShow = packagesToShow.OrderBy(p => string.IsNullOrWhiteSpace(p.Title) ? p.PackageRegistration.Id : p.Title);
-                        break;
-                    case SortProperty.DownloadCount:
-                        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
-                        break;
-                    case SortProperty.Recent:
-                        packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                        break;
-                    case SortProperty.Relevance:
-                        //todo: address relevance
-                        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
-                        break;
-                }
+                //switch (searchFilter.SortProperty)
+                //{
+                //    case SortProperty.DisplayName:
+                //        packagesToShow = packagesToShow.OrderBy(p => string.IsNullOrWhiteSpace(p.Title) ? p.PackageRegistration.Id : p.Title);
+                //        break;
+                //    case SortProperty.DownloadCount:
+                //        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
+                //        break;
+                //    case SortProperty.Recent:
+                //        packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                //        break;
+                //    case SortProperty.Relevance:
+                //        //todo: address relevance
+                //        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
+                //        break;
+                //}
 
-                if (searchFilter.Skip >= totalHits)
-                {
-                    searchFilter.Skip = 0;
-                }
+                //if (searchFilter.Skip >= totalHits)
+                //{
+                //    searchFilter.Skip = 0;
+                //}
 
-                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) searchFilter.Take = packagesToShow.Count() - searchFilter.Skip;
+                //if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) searchFilter.Take = packagesToShow.Count() - searchFilter.Skip;
 
-                packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
+                //packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
 
-                //packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
+                packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
             }
 
 
