@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
@@ -12,15 +14,19 @@ namespace NuGetGallery
 {
     public class LuceneSearchService : ISearchService
     {
+        private static readonly string[] FieldAliases = new[] { "Id", "Title", "Tag", "Tags", "Description", "Author", "Authors", "Owner", "Owners" };
+        private static readonly string[] Fields = new[] { "Id", "Title", "Tags", "Description", "Authors", "Owners" };
+        private Lucene.Net.Store.Directory _directory;
+
+        public LuceneSearchService()
+        {
+            _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
+        }
+
         public bool ContainsAllVersions { get { return false; } }
 
-        public IQueryable<Package> Search(IQueryable<Package> packages, SearchFilter searchFilter, out int totalHits)
+        public SearchResults Search(SearchFilter searchFilter)
         {
-            if (packages == null)
-            {
-                throw new ArgumentNullException("packages");
-            }
-
             if (searchFilter == null)
             {
                 throw new ArgumentNullException("searchFilter");
@@ -28,71 +34,162 @@ namespace NuGetGallery
 
             if (searchFilter.Skip < 0)
             {
-                throw new ArgumentOutOfRangeException("skip");
+                throw new ArgumentOutOfRangeException("searchFilter");
             }
 
             if (searchFilter.Take < 0)
             {
-                throw new ArgumentOutOfRangeException("take");
+                throw new ArgumentOutOfRangeException("searchFilter");
             }
 
-            // For the given search term, find the keys that match.
-            var keys = SearchCore(searchFilter, out totalHits);
-            if (keys.Count == 0 || searchFilter.CountOnly)
-            {
-                return Enumerable.Empty<Package>().AsQueryable();
-            }
-
-            // Query the source for each of the keys that need to be taken.
-            var results = packages.Where(p => keys.Contains(p.Key));
-
-            // When querying the database, these keys are returned in no particular order. We use the original order of queries
-            // and retrieve each of the packages from the result in the same order.
-            var lookup = results.ToDictionary(p => p.Key, p => p);
-
-            return keys.Select(key => LookupPackage(lookup, key))
-                       .Where(p => p != null)
-                       .AsQueryable();
+            return SearchCore(searchFilter);
         }
 
-        private static Package LookupPackage(Dictionary<int, Package> dict, int key)
+        private SearchResults SearchCore(SearchFilter searchFilter)
         {
-            Package package;
-            dict.TryGetValue(key, out package);
-            return package;
-        }
+            // Get index timestamp
+            DateTime timestamp = File.GetLastWriteTimeUtc(LuceneCommon.IndexMetadataPath);
 
-        private static IList<int> SearchCore(SearchFilter searchFilter, out int totalHits)
-        {
-            if (!Directory.Exists(LuceneCommon.IndexDirectory))
-            {
-                totalHits = 0;
-                return new int[0];
-            }
-
-            SortField sortField = GetSortField(searchFilter);
             int numRecords = searchFilter.Skip + searchFilter.Take;
 
-            using (var directory = new LuceneFileSystem(LuceneCommon.IndexDirectory))
+            var searcher = new IndexSearcher(_directory, readOnly: true);
+            var query = ParseQuery(searchFilter);
+
+            // If searching by relevance, boost scores by download count.
+            if (searchFilter.SortProperty == SortProperty.Relevance)
             {
-                var searcher = new IndexSearcher(directory, readOnly: true);
-                var query = ParseQuery(searchFilter);
-
-                var filterTerm = searchFilter.IncludePrerelease ? "IsLatest" : "IsLatestStable";
-                var termQuery = new TermQuery(new Term(filterTerm, Boolean.TrueString));
-                Filter filter = new QueryWrapperFilter(termQuery);
-                
-
-                var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(sortField));
-                var keys = results.ScoreDocs.Skip(searchFilter.Skip)
-                                            .Select(c => ParseKey(searcher.Doc(c.Doc).Get("Key")))
-                                            .ToList();
-
-                totalHits = results.TotalHits;
-                searcher.Dispose();
-
-                return keys;
+                var downloadCountBooster = new FieldScoreQuery("DownloadCount", FieldScoreQuery.Type.INT);
+                query = new CustomScoreQuery(query, downloadCountBooster);
             }
+
+            var filterTerm = searchFilter.IncludePrerelease ? "IsLatest" : "IsLatestStable";
+            Query filterQuery = new TermQuery(new Term(filterTerm, Boolean.TrueString));
+
+            Filter filter = new QueryWrapperFilter(filterQuery);
+            var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));
+
+            if (results.TotalHits == 0 || searchFilter.CountOnly)
+            {
+                return new SearchResults(results.TotalHits, timestamp);
+            }
+
+            var packages = results.ScoreDocs
+                                  .Skip(searchFilter.Skip)
+                                  .Select(sd => PackageFromDoc(searcher.Doc(sd.Doc)))
+                                  .ToList();
+
+            return new SearchResults(
+                results.TotalHits,
+                timestamp,
+                packages.AsQueryable());
+        }
+
+        private static Package PackageFromDoc(Document doc)
+        {
+            int downloadCount = Int32.Parse(doc.Get("DownloadCount"), CultureInfo.InvariantCulture);
+            int versionDownloadCount = Int32.Parse(doc.Get("VersionDownloadCount"), CultureInfo.InvariantCulture);
+            int key = Int32.Parse(doc.Get("Key"), CultureInfo.InvariantCulture);
+            int packageRegistrationKey = Int32.Parse(doc.Get("PackageRegistrationKey"), CultureInfo.InvariantCulture);
+            int packageSize = Int32.Parse(doc.Get("PackageFileSize"), CultureInfo.InvariantCulture);
+            bool isLatest = Boolean.Parse(doc.Get("IsLatest"));
+            bool isLatestStable = Boolean.Parse(doc.Get("IsLatestStable"));
+            bool isPrerelease = Boolean.Parse(doc.Get("IsPrerelease"));
+            bool requiresLicenseAcceptance = Boolean.Parse(doc.Get("RequiresLicenseAcceptance"));
+            DateTime created = DateTime.Parse(doc.Get("Created"), CultureInfo.InvariantCulture);
+            DateTime published = DateTime.Parse(doc.Get("Published"), CultureInfo.InvariantCulture);
+            DateTime lastUpdated = DateTime.Parse(doc.Get("LastUpdated"), CultureInfo.InvariantCulture);
+
+            DateTime? packageTestResultDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("PackageTestResultStatusDate"))) packageTestResultDate = DateTime.Parse(doc.Get("PackageTestResultStatusDate"), CultureInfo.InvariantCulture);
+             DateTime? packageValidationResultDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("PackageValidationResultDate"))) packageValidationResultDate = DateTime.Parse(doc.Get("PackageValidationResultDate"), CultureInfo.InvariantCulture);
+            DateTime? reviewedDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("PackageReviewedDate"))) reviewedDate = DateTime.Parse(doc.Get("PackageReviewedDate"), CultureInfo.InvariantCulture);
+            DateTime? approvedDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("PackageApprovedDate"))) approvedDate = DateTime.Parse(doc.Get("PackageApprovedDate"), CultureInfo.InvariantCulture);
+            
+
+            var owners = doc.Get("FlattenedOwners")
+                            .split_safe(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => new User { Username = o })
+                            .ToArray();
+            var frameworks =
+                doc.Get("JoinedSupportedFrameworks")
+                   .split_safe(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                   .Select(s => new PackageFramework { TargetFramework = s })
+                   .ToArray();
+            var dependencies =
+                doc.Get("FlattenedDependencies")
+                   .split_safe(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
+                   .Select(CreateDependency)
+                   .ToArray();
+
+            return new Package
+            {
+                Key = key,
+                PackageRegistrationKey = packageRegistrationKey,
+                PackageRegistration = new PackageRegistration
+                {
+                    Id = doc.Get("Id-Original"),
+                    DownloadCount = downloadCount,
+                    Key = packageRegistrationKey,
+                    Owners = owners
+                },
+                Version = doc.Get("Version"),
+                Title = doc.Get("Title"),
+                Summary = doc.Get("Summary"),
+                Description = doc.Get("Description"),
+                Tags = doc.Get("Tags"),
+                FlattenedAuthors = doc.Get("Authors"),
+                Copyright = doc.Get("Copyright"),
+                Created = created,
+                FlattenedDependencies = doc.Get("FlattenedDependencies"),
+                Dependencies = dependencies,
+                DownloadCount = versionDownloadCount,
+                IconUrl = doc.Get("IconUrl"),
+                IsLatest = isLatest,
+                IsLatestStable = isLatestStable,
+                IsPrerelease = isPrerelease,
+                Language = doc.Get("Language"),
+                LastUpdated = lastUpdated,
+                Published = published,
+                LicenseUrl = doc.Get("LicenseUrl"),
+                RequiresLicenseAcceptance = requiresLicenseAcceptance,
+                Hash = doc.Get("Hash"),
+                HashAlgorithm = doc.Get("HashAlgorithm"),
+                PackageFileSize = packageSize,
+                ProjectUrl = doc.Get("ProjectUrl"),
+                ReleaseNotes = doc.Get("ReleaseNotes"),
+
+                ProjectSourceUrl = doc.Get("ProjectSourceUrl"),
+                PackageSourceUrl = doc.Get("PackageSourceUrl"),
+                DocsUrl = doc.Get("DocsUrl"),
+                MailingListUrl = doc.Get("MailingListUrl"),
+                BugTrackerUrl = doc.Get("BugTrackerUrl"),
+                StatusForDatabase = doc.Get("PackageStatus"),
+                SubmittedStatusForDatabase = doc.Get("PackageSubmittedStatus"),
+                PackageTestResultStatusForDatabase = doc.Get("PackageTestResultStatus"),
+                PackageTestResultDate = packageTestResultDate,
+                PackageValidationResultStatusForDatabase = doc.Get("PackageValidationResultStatus"),
+                PackageValidationResultDate = packageValidationResultDate,
+                ReviewedDate = reviewedDate,
+                ApprovedDate = approvedDate,
+                ReviewedBy = new User { Username = doc.Get("PackageReviewer") }, 
+
+                SupportedFrameworks = frameworks,
+
+            };
+        }
+
+        private static PackageDependency CreateDependency(string s)
+        {
+            string[] parts = s.split_safe(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+            return new PackageDependency
+            {
+                Id = parts.Length > 0 ? parts[0] : null,
+                VersionSpec = parts.Length > 1 ? parts[1] : null,
+                TargetFramework = parts.Length > 2 ? parts[2] : null,
+            };
         }
 
         private static Query ParseQuery(SearchFilter searchFilter)
@@ -195,6 +292,7 @@ namespace NuGetGallery
                 case SortProperty.Recent:
                     return new SortField("PublishedDate", SortField.LONG, reverse: true);
             }
+
             return SortField.FIELD_SCORE;
         }
 

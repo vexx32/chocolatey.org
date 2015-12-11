@@ -280,6 +280,7 @@ namespace NuGetGallery
         public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false, bool moderatorQueue = false)
         {
             if (page < 1) page = 1;
+            q = (q ?? string.Empty).Trim();
 
             IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
@@ -360,15 +361,40 @@ namespace NuGetGallery
             }
             else
             {
-                packagesToShow = Cache.Get(string.Format("packageVersions-{0}-{1}-{2}-{3}-{4}",
-                        searchFilter.SearchTerm,
-                        searchFilter.IncludePrerelease,
-                        searchFilter.Skip,
-                        searchFilter.SortProperty.to_string(),
-                        searchFilter.SortDirection),
-                   DateTime.Now.AddSeconds(30),
-                   () => searchSvc.Search(packageVersions, searchFilter, out totalHits).ToList()
-                );
+                SearchResults results;
+
+                 // fetch most common query from cache to relieve load on the search service
+                if (string.IsNullOrEmpty(q) && page == 1)
+                {
+                    results = Cache.Get(
+                        string.Format(
+                            "searchResults-{0}-{1}-{2}-{3}-{4}",
+                            searchFilter.SearchTerm,
+                            searchFilter.IncludePrerelease,
+                            searchFilter.Skip,
+                            searchFilter.SortProperty.to_string(),
+                            searchFilter.SortDirection),
+                        DateTime.UtcNow.AddMinutes(10),
+                        () => searchSvc.Search(searchFilter));
+                  
+                }
+                else
+                {
+                     results = Cache.Get(
+                        string.Format(
+                            "searchResults-{0}-{1}-{2}-{3}-{4}",
+                            searchFilter.SearchTerm,
+                            searchFilter.IncludePrerelease,
+                            searchFilter.Skip,
+                            searchFilter.SortProperty.to_string(),
+                            searchFilter.SortDirection),
+                        DateTime.UtcNow.AddSeconds(30),
+                        () => searchSvc.Search(searchFilter));
+                }
+
+                totalHits = results.Hits;
+
+                packagesToShow = results.Data.ToList();
             }
             
             if (page == 1 && !packagesToShow.Any())
