@@ -142,6 +142,7 @@ namespace NuGetGallery
 
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
+            NotifyIndexingService(package);
         }
 
         public virtual PackageRegistration FindPackageRegistrationById(string id)
@@ -662,6 +663,7 @@ namespace NuGetGallery
             }
             Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
             InvalidateCache(package);
+            NotifyIndexingService(package.Packages.FirstOrDefault());
         }
 
         public void RemovePackageOwner(PackageRegistration package, User user)
@@ -673,7 +675,8 @@ namespace NuGetGallery
                 packageOwnerRequestRepository.CommitChanges();
 
                 Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
-                InvalidateCache(package);
+                InvalidateCache(package); 
+                NotifyIndexingService(package.Packages.FirstOrDefault());
 
                 return;
             }
@@ -682,6 +685,7 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
             Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
             InvalidateCache(package);
+            NotifyIndexingService(package.Packages.FirstOrDefault());
         }
 
         // TODO: Should probably be run in a transaction
@@ -702,6 +706,7 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
         }
 
         public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer)
@@ -774,6 +779,7 @@ namespace NuGetGallery
             }
 
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
         }
 
         public void ChangeTrustedStatus(Package package, bool trustedPackage, User user)
@@ -811,6 +817,7 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
         }
 
         public void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter)
@@ -823,6 +830,7 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
 
             var testComments = string.Format("{0} has {1} testing.{2} Please visit {3} for details.",
                 package.PackageRegistration.Id,
@@ -853,6 +861,7 @@ namespace NuGetGallery
             package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
         }
 
         public void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer)
@@ -878,6 +887,7 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
             packageRegistrationRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
         }
 
         // TODO: Should probably be run in a transaction
@@ -892,6 +902,7 @@ namespace NuGetGallery
             if (package.IsLatest || package.IsLatestStable) UpdateIsLatest(package.PackageRegistration);
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
         }
 
         private static Package FindPackage(IEnumerable<Package> packages, Func<Package, bool> predicate = null)
@@ -921,6 +932,7 @@ namespace NuGetGallery
             packageOwnerRequestRepository.CommitChanges();
             InvalidateCache(package);
             Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", newOwner.Username));
+            NotifyIndexingService(package.Packages.FirstOrDefault());
 
             return newRequest;
         }
@@ -954,7 +966,12 @@ namespace NuGetGallery
 
         private void NotifyIndexingService()
         {
-            indexingSvc.UpdateIndex();
+            indexingSvc.UpdateIndex(forceRefresh:true);
+        }
+
+        private void NotifyIndexingService(Package package)
+        {
+            indexingSvc.UpdatePackage(package);
         }
 
         private void InvalidateCache(PackageRegistration package)
