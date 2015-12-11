@@ -28,6 +28,7 @@ using System.Web;
 using System.Web.Mvc;
 using Elmah;
 using NuGet;
+using NugetGallery;
 using PoliteCaptcha;
 
 namespace NuGetGallery
@@ -43,11 +44,13 @@ namespace NuGetGallery
         private readonly IUserService userSvc;
         private readonly IMessageService messageService;
         private readonly IAutomaticallyCuratePackageCommand autoCuratedPackageCmd;
+        private readonly ISearchService searchSvc;
+
         public IConfiguration Configuration { get; set; }
 
         public PackagesController(
             IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
-            IConfiguration configuration)
+            IConfiguration configuration, ISearchService searchService)
         {
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
@@ -55,6 +58,7 @@ namespace NuGetGallery
             this.messageService = messageService;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
             Configuration = configuration;
+            this.searchSvc = searchService;
         }
 
         [Authorize]
@@ -276,8 +280,9 @@ namespace NuGetGallery
         public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false, bool moderatorQueue = false)
         {
             if (page < 1) page = 1;
+            q = (q ?? string.Empty).Trim();
 
-            IEnumerable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
+            IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
 
             if (moderatorQueue)
@@ -350,46 +355,48 @@ namespace NuGetGallery
 
                 totalHits = packagesToShow.Count() + packageVersions.Count();
 
-                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount));
+                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount).ToList());
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
             }
             else
             {
-                packagesToShow = string.IsNullOrWhiteSpace(q) ? packageVersions : packageVersions.AsQueryable().Search(q).ToList();
+                SearchResults results;
 
-                totalHits = packagesToShow.Count();
-
-                switch (searchFilter.SortProperty)
+                 // fetch most common query from cache to relieve load on the search service
+                if (string.IsNullOrEmpty(q) && page == 1)
                 {
-                    case SortProperty.DisplayName:
-                        packagesToShow = packagesToShow.OrderBy(p => string.IsNullOrWhiteSpace(p.Title) ? p.PackageRegistration.Id : p.Title);
-                        break;
-                    case SortProperty.DownloadCount:
-                        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
-                        break;
-                    case SortProperty.Recent:
-                        packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                        break;
-                    case SortProperty.Relevance:
-                        //todo: address relevance
-                        packagesToShow = packagesToShow.OrderByDescending(p => p.PackageRegistration.DownloadCount);
-                        break;
+                    results = Cache.Get(
+                        string.Format(
+                            "searchResults-{0}-{1}-{2}-{3}-{4}",
+                            searchFilter.SearchTerm,
+                            searchFilter.IncludePrerelease,
+                            searchFilter.Skip,
+                            searchFilter.SortProperty.to_string(),
+                            searchFilter.SortDirection),
+                        DateTime.UtcNow.AddMinutes(10),
+                        () => searchSvc.Search(searchFilter));
+                  
+                }
+                else
+                {
+                     results = Cache.Get(
+                        string.Format(
+                            "searchResults-{0}-{1}-{2}-{3}-{4}",
+                            searchFilter.SearchTerm,
+                            searchFilter.IncludePrerelease,
+                            searchFilter.Skip,
+                            searchFilter.SortProperty.to_string(),
+                            searchFilter.SortDirection),
+                        DateTime.UtcNow.AddSeconds(30),
+                        () => searchSvc.Search(searchFilter));
                 }
 
-                if (searchFilter.Skip >= totalHits)
-                {
-                    searchFilter.Skip = 0;
-                }
+                totalHits = results.Hits;
 
-                if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count()) searchFilter.Take = packagesToShow.Count() - searchFilter.Skip;
-
-                packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-
-                //packagesToShow = searchSvc.Search(packageVersions.AsQueryable(), searchFilter, out totalHits).ToList();
+                packagesToShow = results.Data.ToList();
             }
-
-
+            
             if (page == 1 && !packagesToShow.Any())
             {
                 // In the event the index wasn't updated, we may get an incorrect count. 

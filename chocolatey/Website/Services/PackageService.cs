@@ -44,6 +44,7 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
         private readonly IMessageService messageSvc;
         private readonly IImageFileService imageFileSvc;
+        private readonly IIndexingService indexingSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
 
         private const int DEFAULT_CACHE_TIME_MINUTES_PACKAGES = 180;
@@ -60,7 +61,8 @@ namespace NuGetGallery
             IEntityRepository<PackageDependency> packageDependenciesRepo,
             IEntityRepository<PackageFile> packageFilesRepo,
             IMessageService messageSvc,
-            IImageFileService imageFileSvc)
+            IImageFileService imageFileSvc,
+            IIndexingService indexingSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageRegistrationRepo = packageRegistrationRepo;
@@ -74,6 +76,7 @@ namespace NuGetGallery
             this.packageFilesRepo = packageFilesRepo;
             this.messageSvc = messageSvc;
             this.imageFileSvc = imageFileSvc;
+            this.indexingSvc = indexingSvc;
         }
 
         public Package CreatePackage(IPackage nugetPackage, User currentUser)
@@ -111,6 +114,7 @@ namespace NuGetGallery
 
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
+            NotifyIndexingService();
 
             return package;
         }
@@ -150,7 +154,7 @@ namespace NuGetGallery
             if (useCache)
             {
                 return Cache.Get(string.Format("packageregistration-{0}", id.to_lower()),
-                 DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                 DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                  () => packageRegistrationRepo.GetAll()
                         .Include(pr => pr.Owners)
                         .Include(pr => pr.Packages)
@@ -193,7 +197,7 @@ namespace NuGetGallery
             var packageVersions = useCache
                             ? Cache.Get(
                                 string.Format("packageVersions-{0}", id.to_lower()),
-                                DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                                DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                                 () => packagesQuery.ToList())
                             : packagesQuery.ToList();
 
@@ -225,7 +229,7 @@ namespace NuGetGallery
             return package;
         }
 
-        public IEnumerable<Package> GetPackagesForListing(bool includePrerelease)
+        public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
         {
             IQueryable<Package> packages = null;
 
@@ -236,26 +240,10 @@ namespace NuGetGallery
                                   .Include(p => p.PackageRegistration.Owners)
                                   .Where(p => p.Listed);
 
-            return Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
-                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
-                    () => includePrerelease
-                        ? packages.Where(p => p.IsLatest).ToList() //.Distinct(new PackageListingDistinctItemComparer())
-                        : packages.Where(p => p.IsLatestStable).ToList() //.Distinct(new PackageListingDistinctItemComparer())
-                   );
+            return includePrerelease
+                       ? packages.Where(p => p.IsLatest)
+                       : packages.Where(p => p.IsLatestStable);
         }
-
-        //class PackageListingDistinctItemComparer : IEqualityComparer<Package>
-        //{
-        //    public bool Equals(Package x, Package y)
-        //    {
-        //        return x.PackageRegistration.Id == y.PackageRegistration.Id;
-        //    }
-
-        //    public int GetHashCode(Package obj)
-        //    {
-        //        return obj.PackageRegistration.Id.GetHashCode();
-        //    }
-        //}
 
         public IQueryable<Package> GetSubmittedPackages()
         {
@@ -269,7 +257,7 @@ namespace NuGetGallery
         public IEnumerable<Package> FindPackagesByOwner(User user)
         {
             return Cache.Get(string.Format("maintainerpackages-{0}", user.Username),
-                    DateTime.Now.AddMinutes(30),
+                    DateTime.UtcNow.AddMinutes(30),
                     () => (from pr in packageRegistrationRepo.GetAll()
                            from u in pr.Owners
                            where u.Username == user.Username
@@ -287,7 +275,7 @@ namespace NuGetGallery
         {
             // Grab all candidates
             var candidateDependents = Cache.Get(string.Format("dependentpackages-{0}", package.Key),
-                   DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                   DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                    () => (from p in packageRepo.GetAll()
                           from d in p.Dependencies
                           where d.Id == package.PackageRegistration.Id
@@ -964,14 +952,17 @@ namespace NuGetGallery
                     select request).FirstOrDefault();
         }
 
+        private void NotifyIndexingService()
+        {
+            indexingSvc.UpdateIndex();
+        }
+
         private void InvalidateCache(PackageRegistration package)
         {
             Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem("packageVersions-True");
-            Cache.InvalidateCacheItem("packageVersions-False");
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
         }

@@ -16,6 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+
 namespace NuGetGallery
 {
     public static class StringExtensions
@@ -37,6 +39,23 @@ namespace NuGetGallery
             if (string.IsNullOrWhiteSpace(input)) return input;
 
             return input.ToLower();
+        }
+
+        public static string to_lower_invariant(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return input;
+
+            return input.ToLowerInvariant();
+        }
+
+        public static string[] split_safe(this string s, char[] separator, StringSplitOptions stringSplitOptions)
+        {
+            if (s == null)
+            {
+                return new string[0];
+            }
+
+            return s.Split(separator, stringSplitOptions);
         }
 
         public static string clean_markdown(this string input)

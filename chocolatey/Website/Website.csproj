@@ -78,8 +78,44 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\CacheAdapter\Glav.CacheAdapter.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="ImageResizer">
       <HintPath>..\..\packages\ImageResizer.3.4.3\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Analyzers">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Analyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Core">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Highlighter">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Highlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Memory">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Queries">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Queries.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Regex">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Regex.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SimpleFacetedSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Snowball">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SpellChecker">
+      <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\MarkDownSharp\MarkdownSharp.dll</HintPath>
@@ -554,6 +590,9 @@
     <Compile Include="..\..\nugetgallery\Website\Services\INuGetExeDownloaderService.cs">
       <Link>Services\INuGetExeDownloaderService.cs</Link>
     </Compile>
+    <Compile Include="..\..\nugetgallery\Website\Services\ISearchService.cs">
+      <Link>Services\ISearchService.cs</Link>
+    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\PackageSearchResults.cs">
       <Link>Services\PackageSearchResults.cs</Link>
     </Compile>
@@ -562,9 +601,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequireRemoteHttpsAttribute.cs">
       <Link>RequireRemoteHttpsAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\SearchFilter.cs">
-      <Link>Services\SearchFilter.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\TestableStorageClientException.cs">
       <Link>Services\TestableStorageClientException.cs</Link>
@@ -622,6 +658,13 @@
     <Compile Include="Entities\PackageTestResults.cs" />
     <Compile Include="Entities\PackageAutomatedReviewResultStatusType.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneCommon.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneFileSystem.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneSearchService.cs" />
+    <Compile Include="Infrastructure\Lucene\PackageIndexEntity.cs" />
+    <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -662,9 +705,12 @@
     <Compile Include="Services\CloudBlobFileStorageService.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IImageFileService.cs" />
+    <Compile Include="Services\IIndexingService.cs" />
     <Compile Include="Services\ImageFileService.cs" />
     <Compile Include="Services\NuGetExeDownloaderService.cs" />
     <Compile Include="Services\PackageFileService.cs" />
+    <Compile Include="Services\SearchFilter.cs" />
+    <Compile Include="Services\SearchResults.cs" />
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1015,7 +1061,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Code\ViewHelpers.cshtml" />
     <Content Include="_app_offline.htm" />
     <Content Include="Views\Pages\Notice.cshtml" />
