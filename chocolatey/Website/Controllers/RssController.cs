@@ -41,7 +41,10 @@ namespace NuGetGallery
         {
             var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false));
 
-            IEnumerable<Package> packageVersions = packageSvc.GetPackagesForListing(includePrerelease: false).OrderByDescending(p => p.Published);
+            IEnumerable<Package> packageVersions = Cache.Get(string.Format("packageVersions-False"),
+                   DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                   () => packageSvc.GetPackagesForListing(includePrerelease: false).OrderByDescending(p => p.Published).ToList()
+            );
 
             if (page != null && pageSize != null)
             {
@@ -85,14 +88,5 @@ namespace NuGetGallery
             if (!siteRoot.EndsWith("/", StringComparison.Ordinal)) siteRoot = siteRoot + '/';
             return siteRoot;
         }
-
-        //private IEnumerable<Package> GetPackagesFromRepo()
-        //{
-        //    var packages = PackageRepo.GetAll().Where(p => p.Listed);
-        //    //packages = packages.Where(p => !p.IsPrerelease);
-        //    //packages.OrderByDescending(p => p.Published);
-
-        //    return packages;
-        //}
     }
 }

@@ -229,7 +229,7 @@ namespace NuGetGallery
             return package;
         }
 
-        public IEnumerable<Package> GetPackagesForListing(bool includePrerelease)
+        public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
         {
             IQueryable<Package> packages = null;
 
@@ -240,26 +240,10 @@ namespace NuGetGallery
                                   .Include(p => p.PackageRegistration.Owners)
                                   .Where(p => p.Listed);
 
-            return Cache.Get(string.Format("packageVersions-{0}", includePrerelease),
-                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
-                    () => includePrerelease
-                        ? packages.Where(p => p.IsLatest).ToList() //.Distinct(new PackageListingDistinctItemComparer())
-                        : packages.Where(p => p.IsLatestStable).ToList() //.Distinct(new PackageListingDistinctItemComparer())
-                   );
+            return includePrerelease
+                       ? packages.Where(p => p.IsLatest)
+                       : packages.Where(p => p.IsLatestStable);
         }
-
-        //class PackageListingDistinctItemComparer : IEqualityComparer<Package>
-        //{
-        //    public bool Equals(Package x, Package y)
-        //    {
-        //        return x.PackageRegistration.Id == y.PackageRegistration.Id;
-        //    }
-
-        //    public int GetHashCode(Package obj)
-        //    {
-        //        return obj.PackageRegistration.Id.GetHashCode();
-        //    }
-        //}
 
         public IQueryable<Package> GetSubmittedPackages()
         {
@@ -979,8 +963,6 @@ namespace NuGetGallery
             Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem("packageVersions-True");
-            Cache.InvalidateCacheItem("packageVersions-False");
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
         }

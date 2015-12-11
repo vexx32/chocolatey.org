@@ -34,7 +34,7 @@ namespace NuGetGallery
         Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease = true);
         Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease, bool useCache = true);
 
-        IEnumerable<Package> GetPackagesForListing(bool includePrerelease);
+        IQueryable<Package> GetPackagesForListing(bool includePrerelease);
 
         IQueryable<Package> GetSubmittedPackages();
 
