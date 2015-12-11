@@ -151,7 +151,7 @@ namespace NuGetGallery
 
             return NugetGallery.Cache.Get(
                 string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
-                DateTime.Now.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
+                DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
                 () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
                                  .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && (p.StatusForDatabase != rejectedStatus || p.StatusForDatabase == null))
                                  .ToV2FeedPackageQuery(GetSiteRoot())
@@ -203,7 +203,7 @@ namespace NuGetGallery
             return
                 NugetGallery.Cache.Get(
                     string.Format("V2Feed-GetUpdates-{0}-{1}-{2}-{3}", string.Join("|", idValues).to_lower(), string.Join("|", versionValues).to_lower(), includePrerelease, includeAllVersions),
-                    DateTime.Now.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
+                    DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
                     () => GetUpdates(packages, versionLookup, targetFrameworkValues, includeAllVersions).AsQueryable().ToV2FeedPackageQuery(GetSiteRoot()).ToList().AsQueryable());
 
             //return searchResults.AsQueryable();

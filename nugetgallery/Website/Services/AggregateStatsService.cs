@@ -9,7 +9,7 @@ namespace NuGetGallery
         public AggregateStats GetAggregateStats()
         {
             return Cache.Get("aggregatestats",
-                    DateTime.Now.AddMinutes(5),
+                    DateTime.UtcNow.AddMinutes(5),
                     () =>
                     {
                         using (var dbContext = new EntitiesContext())

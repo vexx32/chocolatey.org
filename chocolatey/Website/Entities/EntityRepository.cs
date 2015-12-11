@@ -45,8 +45,8 @@ namespace NuGetGallery
 
         public T Get(int key)
         {
-            return Cache.Get(string.Format("item-{0}-{1}", typeof(T).Name, key), 
-                    DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
+            return Cache.Get(string.Format("item-{0}-{1}", typeof(T).Name, key),
+                    DateTime.UtcNow.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
                     () => entities.Set<T>().Find(key));
         }
 

@@ -154,7 +154,7 @@ namespace NuGetGallery
             if (useCache)
             {
                 return Cache.Get(string.Format("packageregistration-{0}", id.to_lower()),
-                 DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                 DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                  () => packageRegistrationRepo.GetAll()
                         .Include(pr => pr.Owners)
                         .Include(pr => pr.Packages)
@@ -197,7 +197,7 @@ namespace NuGetGallery
             var packageVersions = useCache
                             ? Cache.Get(
                                 string.Format("packageVersions-{0}", id.to_lower()),
-                                DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                                DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                                 () => packagesQuery.ToList())
                             : packagesQuery.ToList();
 
@@ -257,7 +257,7 @@ namespace NuGetGallery
         public IEnumerable<Package> FindPackagesByOwner(User user)
         {
             return Cache.Get(string.Format("maintainerpackages-{0}", user.Username),
-                    DateTime.Now.AddMinutes(30),
+                    DateTime.UtcNow.AddMinutes(30),
                     () => (from pr in packageRegistrationRepo.GetAll()
                            from u in pr.Owners
                            where u.Username == user.Username
@@ -275,7 +275,7 @@ namespace NuGetGallery
         {
             // Grab all candidates
             var candidateDependents = Cache.Get(string.Format("dependentpackages-{0}", package.Key),
-                   DateTime.Now.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                   DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                    () => (from p in packageRepo.GetAll()
                           from d in p.Dependencies
                           where d.Id == package.PackageRegistration.Id

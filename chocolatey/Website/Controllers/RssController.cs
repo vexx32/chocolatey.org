@@ -42,7 +42,7 @@ namespace NuGetGallery
             var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false));
 
             IEnumerable<Package> packageVersions = Cache.Get(string.Format("packageVersions-False"),
-                   DateTime.Now.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                   DateTime.UtcNow.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
                    () => packageSvc.GetPackagesForListing(includePrerelease: false).OrderByDescending(p => p.Published).ToList()
             );
 
@@ -70,10 +70,10 @@ namespace NuGetGallery
             try
             {
                 var mostRecentPackage = packageVersions.FirstOrDefault();
-                feed.LastUpdatedTime = mostRecentPackage == null ? DateTime.Now : mostRecentPackage.Published;
+                feed.LastUpdatedTime = mostRecentPackage == null ? DateTime.UtcNow : mostRecentPackage.Published;
             } catch (Exception)
             {
-                feed.LastUpdatedTime = DateTime.Now;
+                feed.LastUpdatedTime = DateTime.UtcNow;
             }
 
             feed.Items = items;
