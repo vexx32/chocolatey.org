@@ -36,6 +36,7 @@ namespace NuGetGallery
             {
                 return obj.ToString();
             }
+
             return String.Empty;
         }
 
