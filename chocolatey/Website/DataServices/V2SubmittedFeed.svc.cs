@@ -56,7 +56,7 @@ namespace NuGetGallery
         public IQueryable<V2FeedPackage> Search(string searchTerm, string targetFramework, bool includePrerelease)
         {
             var packages = PackageRepo.GetAll().Where(p => p.StatusForDatabase == PackageStatusType.Submitted.GetDescriptionOrValue());
-            var packageVersions = SearchCore(packages, searchTerm, targetFramework).ToV2FeedPackageQuery(GetSiteRoot()).ToList();
+            var packageVersions = SearchCore(packages, searchTerm, targetFramework, includePrerelease, SearchFilter.Empty()).ToV2FeedPackageQuery(GetSiteRoot()).ToList();
 
             if (!includePrerelease)
             {

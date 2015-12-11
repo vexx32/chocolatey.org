@@ -90,6 +90,7 @@ namespace NuGetGallery
 
                 totalHits = results.TotalHits;
                 searcher.Dispose();
+
                 return keys;
             }
         }
@@ -118,27 +119,52 @@ namespace NuGetGallery
             wildCardQuery.Boost = 0.5f;
 
             // Escape the entire term we use for exact searches.
-            var escapedSearchTerm = Escape(searchFilter.SearchTerm);
+            var escapedSearchTerm = Escape(searchFilter.SearchTerm).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
+
+            bool searchLimiter = false;
+            bool onlySearchById = false;
+            bool onlySearchByAuthor = false;
+            bool onlySearchByTag = false;
+
             var exactIdQuery = new TermQuery(new Term("Id-Exact", escapedSearchTerm));
             exactIdQuery.Boost = 2.5f;
             var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + escapedSearchTerm + "*"));
 
             foreach (var term in GetSearchTerms(searchFilter.SearchTerm))
             {
-                var termQuery = queryParser.Parse(term);
+                var localTerm = term.to_lower_invariant();
+                onlySearchById = localTerm.StartsWith("id\\:");
+                onlySearchByAuthor = localTerm.StartsWith("author\\:");
+                onlySearchByTag = localTerm.StartsWith("tag\\:");
+                if (onlySearchById || onlySearchByAuthor || onlySearchByTag) searchLimiter = true; 
+                
+                localTerm = term.Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
+                var termQuery = queryParser.Parse(localTerm);
                 conjuctionQuery.Add(termQuery, Occur.MUST);
                 disjunctionQuery.Add(termQuery, Occur.SHOULD);
 
                 foreach (var field in fields)
                 {
-                    var wildCardTermQuery = new WildcardQuery(new Term(field, term + "*"));
-                    wildCardTermQuery.Boost = 0.7f;
+                    if (onlySearchById && field != "Id") continue;
+                    if (onlySearchByAuthor && field != "Author") continue;
+                    if (onlySearchByTag && field != "Tags") continue;
+
+                    var wildCardTermQuery = new WildcardQuery(new Term(field, localTerm + "*"));
+                    wildCardTermQuery.Boost = searchLimiter ? 2.5f : 0.7f;
                     wildCardQuery.Add(wildCardTermQuery, Occur.SHOULD);
                 }
             }
             
             // Create an OR of all the queries that we have
             var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, wildCardIdQuery, conjuctionQuery, disjunctionQuery, wildCardQuery });
+
+            if (onlySearchById)
+            {
+                combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, wildCardIdQuery, wildCardQuery });
+            } else if (onlySearchByAuthor || onlySearchByTag)
+            {
+                combinedQuery = conjuctionQuery.Combine(new Query[] { wildCardQuery });
+            }
             
             if (searchFilter.SortProperty == SortProperty.Relevance)
             {
@@ -146,6 +172,7 @@ namespace NuGetGallery
                 var downloadCountBooster = new FieldScoreQuery("DownloadCount", FieldScoreQuery.Type.INT);
                 return new CustomScoreQuery(combinedQuery, downloadCountBooster);
             }
+
             return combinedQuery;
         }
 
@@ -173,7 +200,7 @@ namespace NuGetGallery
 
         private static string Escape(string term)
         {
-            return QueryParser.Escape(term).ToLowerInvariant();
+            return QueryParser.Escape(term).to_lower_invariant();
         }
 
         private static int ParseKey(string value)

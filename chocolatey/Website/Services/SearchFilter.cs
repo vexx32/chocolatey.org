@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace NuGetGallery
 {
     public class SearchFilter
@@ -21,6 +23,25 @@ namespace NuGetGallery
         public bool CountOnly { get; set; }
 
         public bool IncludeAllVersions { get; set; }
+
+        public IDictionary<string, string> QueryTerms { get; set; }
+        public bool IsValid { get; set; }
+        public SearchFilterInvalidReason FilterInvalidReason { get; set; }
+
+        public static SearchFilter Empty()
+        {
+            return new SearchFilter
+            {
+                IsValid = false,
+                FilterInvalidReason = SearchFilterInvalidReason.Unknown,
+            };
+        }
+    }
+
+    public enum SearchFilterInvalidReason
+    {
+        Unknown,
+        DueToAllVersionsRequested
     }
 
     public enum SortProperty

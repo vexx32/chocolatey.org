@@ -347,12 +347,6 @@
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\Jobs\UpdateStatisticsJob.cs">
       <Link>Infrastructure\Jobs\UpdateStatisticsJob.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\LuceneIndexingJob.cs">
-      <Link>Infrastructure\Lucene\LuceneIndexingJob.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Infrastructure\Lucene\PackageIndexEntity.cs">
-      <Link>Infrastructure\Lucene\PackageIndexEntity.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Migrations\201110060711357_Initial.cs">
       <Link>Migrations\201110060711357_Initial.cs</Link>
     </Compile>
@@ -593,9 +587,6 @@
     <Compile Include="..\..\nugetgallery\Website\Services\ICloudBlobContainer.cs">
       <Link>Services\ICloudBlobContainer.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IIndexingService.cs">
-      <Link>Services\IIndexingService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\INuGetExeDownloaderService.cs">
       <Link>Services\INuGetExeDownloaderService.cs</Link>
     </Compile>
@@ -669,8 +660,11 @@
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneCommon.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneFileSystem.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingService.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneSearchService.cs" />
+    <Compile Include="Infrastructure\Lucene\PackageIndexEntity.cs" />
+    <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="JsonApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -711,6 +705,7 @@
     <Compile Include="Services\CloudBlobFileStorageService.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IImageFileService.cs" />
+    <Compile Include="Services\IIndexingService.cs" />
     <Compile Include="Services\ImageFileService.cs" />
     <Compile Include="Services\NuGetExeDownloaderService.cs" />
     <Compile Include="Services\PackageFileService.cs" />

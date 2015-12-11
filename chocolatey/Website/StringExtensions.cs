@@ -39,6 +39,13 @@ namespace NuGetGallery
             return input.ToLower();
         }
 
+        public static string to_lower_invariant(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return input;
+
+            return input.ToLowerInvariant();
+        }
+
         public static string clean_markdown(this string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return input;

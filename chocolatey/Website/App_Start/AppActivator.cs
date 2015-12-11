@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -90,13 +91,17 @@ namespace NuGetGallery
 
         private static void BackgroundJobsPostStart()
         {
-            var jobs = new IJob[]
+            var jobs = new List<IJob>();
+            var indexer = DependencyResolver.Current.GetService<IIndexingService>();
+          
+            if (indexer != null)
             {
-                new UpdateStatisticsJob(
-                    TimeSpan.FromMinutes(5), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(5)),
-                new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)),
-                new LuceneIndexingJob(TimeSpan.FromMinutes(5), timeout: TimeSpan.FromMinutes(2)),
-            };
+                indexer.RegisterBackgroundJobs(jobs);
+            }
+
+            jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(5), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(5)));
+            jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
+
             var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
             _jobManager = new JobManager(jobs, jobCoordinator)
             {

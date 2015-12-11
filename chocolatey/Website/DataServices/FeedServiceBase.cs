@@ -29,8 +29,6 @@ using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Data.OData.Query;
-using Microsoft.Data.OData.Query.SyntacticAst;
 using NuGetGallery.MvcOverrides;
 using QueryInterceptor;
 
@@ -53,7 +51,7 @@ namespace NuGetGallery
         private int _currentSkip;
         private object[] _continuationToken;
         private readonly Type _packageType;
-        private readonly ISearchService searchService;
+        protected readonly ISearchService searchService;
 
 
         public FeedServiceBase()
@@ -143,26 +141,36 @@ namespace NuGetGallery
         public object GetService(Type serviceType)
         {
             if (serviceType == typeof(IDataServiceStreamProvider)) return this;
-            //if (serviceType == typeof(IDataServicePagingProvider)) return this;
+            if (serviceType == typeof(IDataServicePagingProvider)) return this;
 
             return null;
         }
 
-        protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework)
+        protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework, bool includePrerelease, SearchFilter searchFilter)
         {
-            SearchFilter searchFilter;
+            // we don't allow an empty search for all versions.
+            if (searchFilter.FilterInvalidReason == SearchFilterInvalidReason.DueToAllVersionsRequested && string.IsNullOrWhiteSpace(searchFilter.SearchTerm))
+            {
+                searchFilter.IsValid = true;
+            }
+
             // We can only use Lucene if the client queries for the latest versions (IsLatest \ IsLatestStable) versions of a package
             // and specific sort orders that we have in the index.
-            if (TryReadSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, out searchFilter))
+            if (searchFilter.IsValid)
             {
                 searchFilter.SearchTerm = searchTerm;
-                searchFilter.IncludePrerelease = true;
-
+                searchFilter.IncludePrerelease = includePrerelease;
+                
                 return GetResultsFromSearchService(packages, searchFilter);
             }
 
             Trace.WriteLine("Database hit");
-            
+
+            if (!includePrerelease)
+            {
+                packages = packages.Where(p => !p.IsPrerelease);
+            }
+
             return packages.Search(searchTerm);
         }
        
@@ -184,19 +192,17 @@ namespace NuGetGallery
              return result.InterceptWith(new DisregardODataInterceptor());
          }
 
-         private static bool TryReadSearchFilter(bool allVersionsInIndex, string url, out SearchFilter searchFilter)
+         protected static SearchFilter GetSearchFilter(bool allVersionsInIndex, string url)
          {
              if (url == null)
              {
-                 searchFilter = null;
-                 return false;
+                 return SearchFilter.Empty();
              }
 
              int indexOfQuestionMark = url.IndexOf('?');
              if (indexOfQuestionMark == -1)
              {
-                 searchFilter = null;
-                 return false;
+                 return SearchFilter.Empty();
              }
 
              string path = url.Substring(0, indexOfQuestionMark);
@@ -204,11 +210,10 @@ namespace NuGetGallery
 
              if (string.IsNullOrEmpty(query))
              {
-                 searchFilter = null;
-                 return false;
+                 return SearchFilter.Empty();
              }
 
-             searchFilter = new SearchFilter()
+             var searchFilter = new SearchFilter()
              {
                  // The way the default paging works is WCF attempts to read up to the MaxPageSize elements. If it finds as many, it'll assume there 
                  // are more elements to be paged and generate a continuation link. Consequently we'll always ask to pull MaxPageSize elements so WCF generates the 
@@ -216,7 +221,8 @@ namespace NuGetGallery
                  // sneakily injects the Skip value in the continuation token.
                  Take = MaxPageSize,
                  Skip = 0,
-                 CountOnly = path.EndsWith("$count", StringComparison.Ordinal)
+                 CountOnly = path.EndsWith("$count", StringComparison.Ordinal),
+                 IsValid = true,
              };
 
              string[] props = query.Split('&');
@@ -232,21 +238,19 @@ namespace NuGetGallery
              }
 
              // We'll only use the index if we the query searches for latest \ latest-stable packages
-
-
              string filter;
              if (queryTerms.TryGetValue("$filter", out filter))
              {
                  if (!(filter.Equals("IsLatestVersion", StringComparison.Ordinal) || filter.Equals("IsAbsoluteLatestVersion", StringComparison.Ordinal)))
                  {
-                     searchFilter = null;
-                     return false;
+                     searchFilter.IsValid = false;
+                     searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
                  }
              }
              else if (!allVersionsInIndex)
              {
-                 searchFilter = null;
-                 return false;
+                 searchFilter.IsValid = false;
+                 searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
              }
 
              string skipStr;
@@ -318,8 +322,7 @@ namespace NuGetGallery
                  }
                  else
                  {
-                     searchFilter = null;
-                     return false;
+                     searchFilter.IsValid = false;
                  }
              }
              else
@@ -327,7 +330,7 @@ namespace NuGetGallery
                  searchFilter.SortProperty = SortProperty.Relevance;
              }
 
-            return true;
+            return searchFilter;
         }
 
         protected virtual bool UseHttps()
@@ -359,7 +362,6 @@ namespace NuGetGallery
         {
             return _continuationToken;
         }
-
 
         protected override void OnStartProcessingRequest(ProcessRequestArgs args)
         {
