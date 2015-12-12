@@ -432,15 +432,15 @@ The {3} Team";
             }
         }
 
-        public void SendPackageModerationEmail(Package package, string comments)
+        public void SendPackageModerationEmail(Package package, string comments, string subjectComment, User fromUser)
         {
-            string subject = "[{0}] Moderation for '{1}' v{2}";
+            string subject = "[{0}] {1} v{2} Moderation{3}";
             var packageUrl = string.Format(
                 "{0}packages/{1}/{2}",
                 EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
                 package.PackageRegistration.Id,
                 package.Version);
-            string body = @"'{0}' is {3}{6}.
+            string body = @"'{0}' is {3}.
 {4}
 
 Package Url: {1} 
@@ -455,18 +455,19 @@ Maintainer(s): {2}
                 packageUrl,
                 string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)),
                 package.Status.GetDescriptionOrValue(),
-                GetModerationMessage(package, comments, package.ReviewedBy),
-                GetInformationForMaintainers(package, comments),
-                package.Status == PackageStatusType.Approved && !string.IsNullOrWhiteSpace(comments)
-                    ? " with comments"
-                    : string.Empty);
+                GetModerationMessage(package, comments, fromUser),
+                GetInformationForMaintainers(package, comments)
+            );
 
             subject = String.Format(
                 CultureInfo.CurrentCulture,
                 subject,
                 settings.GalleryOwnerName,
                 package.PackageRegistration.Id,
-                package.Version);
+                package.Version,
+                !string.IsNullOrWhiteSpace(subjectComment) ? " - " + subjectComment.to_string() : string.Empty
+            );
+            
             using (var mailMessage = new MailMessage())
             {
                 mailMessage.Subject = subject;
@@ -481,7 +482,7 @@ Maintainer(s): {2}
 
         public void SendPackageModerationReviewerEmail(Package package, string comments, User fromUser)
         {
-            string subject = "[{0}] Moderation Response for '{1}' v{2}";
+            string subject = "[{0}] {1} v{2} - Moderation Review Response";
             var packageUrl = string.Format(
                 "{0}packages/{1}/{2}",
                 EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
@@ -529,7 +530,7 @@ Maintainer(s): {2}
 
         public void SendPackageTestFailureMessage(Package package, string resultDetailsUrl)
         {
-            string subject = string.Format("[{0}] Package Failure for '{1}' v{2}", 
+            string subject = string.Format("[{0}] {1} v{2} - Failed Automated Testing", 
                 settings.GalleryOwnerName,
                 package.PackageRegistration.Id,
                 package.Version);
@@ -538,7 +539,11 @@ Maintainer(s): {2}
                 EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
                 package.PackageRegistration.Id,
                 package.Version);
-            string body = string.Format(@"'{0}' is failing package install/uninstall testing.
+            string body = string.Format(@"The latest version of '{0}' is failing automatic package install/uninstall testing.
+
+* Automated package testing on the latest version will occur from time to time. 
+* Please contact site admins if package needs to be exempted from testing (e.g. package installs specific drivers).
+* Automated testing can also fail when a package is not completely silent.
 
 Please see the test results link below for more details.
 

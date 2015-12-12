@@ -22,6 +22,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
+using System.Text;
 using System.Transactions;
 using Elmah;
 using NuGet;
@@ -46,6 +47,8 @@ namespace NuGetGallery
         private readonly IImageFileService imageFileSvc;
         private readonly IIndexingService indexingSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
+        private const string TESTING_PASSED_MESSAGE = "has passed automated testing";
+        private const string TESTING_FAILED_MESSAGE = "has failed automated testing";
 
         private const int DEFAULT_CACHE_TIME_MINUTES_PACKAGES = 180;
 
@@ -90,7 +93,7 @@ namespace NuGetGallery
 
             try
             {
-                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, false, package.SubmittedStatus, assignReviewer: true);
+                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, sendMaintainerEmail: false, submittedStatus: package.SubmittedStatus, assignReviewer: false);
                 imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
                 imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
             }
@@ -709,18 +712,31 @@ namespace NuGetGallery
             NotifyIndexingService(package);
         }
 
-        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer)
+        public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newReviewComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer)
         {
-            if (package.Status == status && package.ReviewComments == comments && string.IsNullOrWhiteSpace(newComments)) return;
+            // no changes
+            if (package.Status == status 
+                && package.ReviewComments == comments 
+                && string.IsNullOrWhiteSpace(newReviewComments) 
+                && package.SubmittedStatus == submittedStatus) return;
 
             var now = DateTime.UtcNow;
 
-            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = submittedStatus;
+            var statusChanged = false;
+            var submittedStatusChanged = false;
+            var newReviewCommentsOriginallyEmpty = string.IsNullOrWhiteSpace(newReviewComments);
+
+            if (package.Status == PackageStatusType.Submitted && package.SubmittedStatus != submittedStatus)
+            {
+                submittedStatusChanged = true;
+                package.SubmittedStatus = submittedStatus;
+            }
 
             if (package.Status != status && status != PackageStatusType.Unknown)
             {
-                if (!string.IsNullOrWhiteSpace(newComments)) newComments += string.Format("{0}",Environment.NewLine);
-                newComments += string.Format("Status Change - Changed status of package from '{0}' to '{1}'.", package.Status.GetDescriptionOrValue().to_lower(), status.GetDescriptionOrValue().to_lower());
+                statusChanged = true;
+                if (!string.IsNullOrWhiteSpace(newReviewComments)) newReviewComments += string.Format("{0}",Environment.NewLine);
+                newReviewComments += string.Format("Status Change - Changed status of package from '{0}' to '{1}'.", package.Status.GetDescriptionOrValue().to_lower(), status.GetDescriptionOrValue().to_lower());
                 package.Status = status;
                 package.ApprovedDate = null;
                 package.LastUpdated = now;
@@ -746,7 +762,9 @@ namespace NuGetGallery
             }
 
             // reviewer could be null / if user is requesting the package rejected, update
-            if ((user == reviewer && assignReviewer) || (status == PackageStatusType.Rejected && package.Status != PackageStatusType.Rejected))
+            // assign the reviewer if the user is a reviewer and the status is staying 
+            // submitted, or the status is changing
+            if (assignReviewer && ((user == reviewer && status == PackageStatusType.Submitted) || (statusChanged && status != PackageStatusType.Submitted)))
             {
                 package.ReviewedDate = now;
                 package.ReviewedById = user.Key;
@@ -757,29 +775,72 @@ namespace NuGetGallery
                 package.ReviewComments = comments;
             }
 
-            string emailComments = string.Empty;
-            
-            if (!string.IsNullOrWhiteSpace(newComments))
+            if (!string.IsNullOrWhiteSpace(newReviewComments))
             {
-                emailComments = newComments;
                 package.LastUpdated = now;
                 var commenter = user == reviewer ? "reviewer" : "maintainer";
 
                 if (!string.IsNullOrWhiteSpace(package.ReviewComments)) package.ReviewComments += string.Format("{0}{0}", Environment.NewLine);
 
-                package.ReviewComments += string.Format("#### {0} ({1}) on {2} +00:00:{3}{4}", user.Username, commenter, now.ToString("dd MMM yyyy HH:mm:ss"), Environment.NewLine, newComments);
+                package.ReviewComments += string.Format("#### {0} ({1}) on {2} +00:00:{3}{4}", user.Username, commenter, now.ToString("dd MMM yyyy HH:mm:ss"), Environment.NewLine, newReviewComments);
             }
 
             packageRepo.CommitChanges();
-            if (sendMaintainerEmail) messageSvc.SendPackageModerationEmail(package, emailComments);
 
-            if (user != reviewer && reviewer != null)
-            {
-                messageSvc.SendPackageModerationReviewerEmail(package, emailComments, user);
-            }
+            SendMaintainerEmail(package, newReviewComments, user, sendMaintainerEmail, statusChanged, submittedStatusChanged, newReviewCommentsOriginallyEmpty);
+            SendReviewerEmail(package, newReviewComments, user, reviewer);
 
             InvalidateCache(package.PackageRegistration);
             NotifyIndexingService(package);
+        }
+
+        private void SendMaintainerEmail(Package package, string reviewComments, User user, bool sendMaintainerEmail, bool statusChanged, bool submittedStatusChanged, bool reviewCommentsIsOnlyStatusChange)
+        {
+            if (!sendMaintainerEmail || string.IsNullOrWhiteSpace(reviewComments)) return;
+
+            var subject = string.Empty;
+            
+            if (reviewComments.Contains(TESTING_PASSED_MESSAGE))
+            {
+                subject = "Passed Verification Testing";
+            } 
+            else if (reviewComments.Contains(TESTING_FAILED_MESSAGE))
+            {
+                subject = "Action Required - Failed Verification Testing";
+            }
+            else if (statusChanged)
+            {
+                subject = "{0}".format_with(package.Status.GetDescriptionOrValue());
+            }
+            else if (submittedStatusChanged)
+            {
+                switch (package.SubmittedStatus)
+                {
+                    case PackageSubmittedStatusType.Waiting:
+                        subject = "Action Required - Review Requirements";
+                        break;
+                }
+            }
+
+            if (package.Status == PackageStatusType.Approved && statusChanged && !reviewCommentsIsOnlyStatusChange)
+            {
+                if (reviewComments != "some statement") subject += " With Review Comments";
+            }
+
+            if (string.IsNullOrWhiteSpace(subject))
+            {
+                subject = "Review Comments";
+            }
+
+            messageSvc.SendPackageModerationEmail(package, reviewComments, subject, user);
+        }
+
+        private void SendReviewerEmail(Package package, string reviewComments, User user, User reviewer)
+        {
+            if (user != reviewer && reviewer != null)
+            {
+                messageSvc.SendPackageModerationReviewerEmail(package, reviewComments, user);
+            }
         }
 
         public void ChangeTrustedStatus(Package package, bool trustedPackage, User user)
@@ -832,9 +893,9 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration);
             NotifyIndexingService(package);
 
-            var testComments = string.Format("{0} has {1} testing.{2} Please visit {3} for details.",
+            var testComments = string.Format("{0} {1}.{2} Please visit {3} for details.",
                 package.PackageRegistration.Id,
-                success ? "passed" : "failed",
+                success ? TESTING_PASSED_MESSAGE : TESTING_FAILED_MESSAGE,
                 Environment.NewLine,
                 resultDetailsUrl
                 );
@@ -843,7 +904,11 @@ namespace NuGetGallery
             {
                 testComments += success
                                     ? string.Format("{0} This is an FYI only. There is no action you need to take.", Environment.NewLine)
-                                    : string.Format("{0} The package status will be changed and will be waiting on your next actions.", Environment.NewLine);
+                                    : string.Format(@"{0} The package status will be changed and will be waiting on your next actions.
+
+* Please contact site admins if package needs to be exempted from testing (e.g. package installs specific drivers).
+* Automated testing can also fail when a package is not completely silent or has pop ups (AutoHotKey can assist here). 
+* A package that cannot be made completely unattended should have the notSilent tag.", Environment.NewLine);
 
                 ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
 
@@ -986,7 +1051,7 @@ namespace NuGetGallery
 
         private void NotifyForModeration(Package package, string comments)
         {
-            messageSvc.SendPackageModerationEmail(package, comments);
+            messageSvc.SendPackageModerationEmail(package, comments, "Submitted for Moderation Review", null);
         }
     }
 }

@@ -216,10 +216,10 @@ namespace NuGetGallery
 
             var comments = form["ReviewComments"];
             var newComments = form["NewReviewComments"];
-            bool sendEmail = form["SendEmail"] != null;
+            bool sendMaintainerEmail = form["SendEmail"] == "true";
             bool trustedPackage = form["IsTrusted"] == "true,false";
             bool maintainerReject = form["MaintainerReject"] == "true";
-           
+            bool changeSubmittedStatus = form["ChangeSubmittedStatus"] == "true";
 
             if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
             {
@@ -232,7 +232,6 @@ namespace NuGetGallery
                 ModelState.AddModelError(String.Empty, "You need to provide comments.");
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
-
 
             if (isMaintainer && maintainerReject)
             {
@@ -257,11 +256,19 @@ namespace NuGetGallery
             {
                 packageSvc.ResetPackageTestStatus(package);
             }
-
+            
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;
 
-            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, moderator, sendEmail, isModerationRole ? PackageSubmittedStatusType.Waiting : PackageSubmittedStatusType.Responded, assignReviewer: true);
+            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, 
+                moderator, sendMaintainerEmail, 
+                isModerationRole ? 
+                    changeSubmittedStatus ? 
+                        PackageSubmittedStatusType.Waiting 
+                        : package.SubmittedStatus 
+                    : PackageSubmittedStatusType.Responded, 
+                    assignReviewer: true
+            );
 
             if (isModerator)
             {

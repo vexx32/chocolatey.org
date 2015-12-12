@@ -58,7 +58,7 @@ namespace NuGetGallery
 
         void MarkPackageListed(Package package);
 
-        void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer);
+        void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newReviewComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer);
 
         void ChangeTrustedStatus(Package package, bool trustedPackage, User user);
 

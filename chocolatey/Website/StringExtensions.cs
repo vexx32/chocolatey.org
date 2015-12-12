@@ -23,6 +23,26 @@ namespace NuGetGallery
     public static class StringExtensions
     {
         /// <summary>
+        ///   Formats string with the formatting passed in. This is a shortcut to string.Format().
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="formatting">The formatting.</param>
+        /// <returns>A formatted string.</returns>
+        public static string format_with(this string input, params object[] formatting)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+
+            try
+            {
+                return string.Format(input, formatting);
+            }
+            catch (Exception)
+            {
+                return input;
+            }
+        }
+
+        /// <summary>
         ///   Gets a string representation unless input is null.
         /// </summary>
         /// <param name="input">The input.</param>
