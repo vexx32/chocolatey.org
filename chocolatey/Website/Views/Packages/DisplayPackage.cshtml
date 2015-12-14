@@ -376,7 +376,7 @@
                          </div> 
                          <div class="form-field">
                              <input id="ChangeSubmittedStatus" name="ChangeSubmittedStatus" type="checkbox" checked="checked" value="true" />
-                             <label for="ChangeSubmittedStatus" class="for-checkbox" title="If just rerunning tests or leaving a non-flagging comment (e.g. not requiring changes by the maintainer(s)), uncheck this box.">Change Submitted Status</label>
+                             <label for="ChangeSubmittedStatus" class="for-checkbox" title="If just rerunning tests or leaving a non-flagging comment (e.g. not requiring changes by the maintainer(s)), uncheck this box.">Change Submitted Status (Require maintainer to make changes if leaving as Submitted)</label>
                          </div>
                     }
                     else if (maintainer && Model.Status == PackageStatusType.Submitted && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
