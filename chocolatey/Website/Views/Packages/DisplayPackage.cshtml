@@ -379,8 +379,8 @@
                     else if (maintainer && Model.Status == PackageStatusType.Submitted && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
                     {
                           <div class="form-field">
-                            <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" />
-                            <label for="MaintainerReject" class="for-checkbox">Reject Package</label>
+                            <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" onclick="if (this.checked) { return confirm('Are you sure? It is not normal to reject a package.'); }" />
+                            <label for="MaintainerReject" class="for-checkbox" title="If the download link is always the same and you have some older versions under review, the older versions can be rejected without issue. Under normal circumstances this should not be used.">Reject Package? Not for normal scenarios or obsoletion</label>
                           </div> 
                     }
 
