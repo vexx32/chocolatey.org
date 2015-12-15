@@ -214,6 +214,20 @@ namespace NuGetGallery
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
+            var reviewedPlusOneHour = package.ReviewedDate.GetValueOrDefault().AddHours(1);
+            if (!User.IsAdmin() 
+                && package.Status != status 
+                && reviewedPlusOneHour < DateTime.UtcNow 
+                && (package.Status == PackageStatusType.Approved 
+                                      || package.Status == PackageStatusType.Exempted 
+                                      || package.Status == PackageStatusType.Rejected
+                   )
+                )
+            {
+                ModelState.AddModelError(String.Empty, "Only an admin can move a package from approved/exempt/rejected after one hour of status change. Please reach out on Gitter or use contact site admins link in the left side bar.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
             var comments = form["ReviewComments"];
             var newComments = form["NewReviewComments"];
             bool sendMaintainerEmail = form["SendEmail"] == "true";
