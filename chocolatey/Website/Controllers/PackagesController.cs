@@ -255,6 +255,8 @@ namespace NuGetGallery
             if (rerunTests)
             {
                 packageSvc.ResetPackageTestStatus(package);
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Auto Verification Change - Verification tests have been set to rerun.";
             }
             
             // could be null if no moderation has happened yet
