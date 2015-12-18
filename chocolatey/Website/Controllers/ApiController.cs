@@ -277,9 +277,19 @@ namespace NuGetGallery
 
             package.PackageValidationResultDate = DateTime.UtcNow;
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Failing;
-            if (success) package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Passing;
 
-            packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, validationComments, testReporterUser, testReporterUser, true, success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
+            var message = "{0} has failed automated validation.".format_with(package.PackageRegistration.Id);
+            if (success)
+            {
+                package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Passing;
+                message = "{0} has passed automated validation.".format_with(package.PackageRegistration.Id);
+            }
+
+            //todo:remove this in January
+            message += "{0}We are permanently fixing our backlog issues and we want to apologize that it has taken so long - please see http://goo.gl/aYqJy0 {0}".format_with(Environment.NewLine);
+            message += "{0}{1}".format_with(Environment.NewLine, validationComments);
+
+            packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, true, success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
             
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
