@@ -1,4 +1,5 @@
-﻿@using NuGetGallery;
+﻿@using System.Configuration
+@using NuGetGallery;
 @using StackExchange.Profiling
 @{
     var noticeText = @"We have introduced measures to reduce our backlog and permanently keep it low - <a href='http://codebetter.com/robreynolds/2015/12/18/chocolatey-community-state-of-union/'>Rob's Update</a> | <a href='/notice'>More...</a>
@@ -34,8 +35,14 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.6.2.min.js")"></script>
 
     @MiniProfiler.RenderIncludes()
-    @ViewHelpers.AnalyticsScript()
-    @* @Microsoft.Web.Helpers.Analytics.GetGoogleHtml("UA-2743882-12")*@
+    @{
+        var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
+     }
+    @if (propertyId != null)
+    {
+        @Analytics.GetGoogleHtml(propertyId)
+    }
+
     @RenderSection("TopScripts", required: false)
 </head>
 <body>

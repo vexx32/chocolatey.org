@@ -85,12 +85,3 @@
     }
     @gravatarHtml
 }
-
-
-
-@helper AnalyticsScript() {
-    var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
-    if (propertyId != null) {
-        @Analytics.GetGoogleHtml(propertyId);
-    }
-}
