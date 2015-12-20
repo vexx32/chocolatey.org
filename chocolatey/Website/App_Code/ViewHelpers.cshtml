@@ -1,4 +1,4 @@
-﻿ @* Generator: MvcHelper Namespace: NuGetGallery*@
+﻿@* Generator: MvcHelper Namespace: NuGetGallery*@
 
 @using System.Configuration
 @using System.Linq;
@@ -86,16 +86,7 @@
     @gravatarHtml
 }
 
-@helper ReleaseTag(){
-    string sha = System.Configuration.ConfigurationManager.AppSettings["Gallery:ReleaseSha"];
-    string time = System.Configuration.ConfigurationManager.AppSettings["Gallery:ReleaseTime"];
-    if(!String.IsNullOrEmpty(sha) && !String.IsNullOrEmpty(time)){
-    <p id="releaseTag">
-        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@sha" title="View the commit.">@sha.Substring(0,10)</a>
-        at @time. <span style="display: none">You are on @System.Environment.MachineName.</span>
-    </p>
-    }
-}
+
 
 @helper AnalyticsScript() {
     var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];

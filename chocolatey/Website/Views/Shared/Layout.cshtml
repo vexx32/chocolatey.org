@@ -151,7 +151,13 @@
 
                     <br />
                     &copy; 2011 - @DateTime.UtcNow.Year RealDimensions Software, LLC. </p>
-                @ViewHelpers.ReleaseTag()
+                    @{
+                        string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
+                        string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
+                    }
+                    <p id="releaseTag">
+                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0,10)</a>. You are on @worker.
+                    </p>
             </div>
             <div class="supporters">
                 Site made possible by the following sponsors:
