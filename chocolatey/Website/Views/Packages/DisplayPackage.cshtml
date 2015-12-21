@@ -376,7 +376,7 @@
                              <label for="ChangeSubmittedStatus" class="for-checkbox" title="If just rerunning tests or leaving a non-flagging comment (e.g. not requiring changes by the maintainer(s)), uncheck this box.">If Submitted status, require maintainer to make changes?</label>
                          </div>
                     }
-                    else if (maintainer && Model.Status == PackageStatusType.Submitted && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
+                    else if (maintainer && Model.Status == PackageStatusType.Submitted && (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing || Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing))
                     {
                           <div class="form-field">
                             <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" onclick="if (this.checked) { return confirm('Are you sure? It is not normal to reject a package.'); }" />
