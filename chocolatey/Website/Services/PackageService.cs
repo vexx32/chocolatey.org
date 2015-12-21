@@ -906,9 +906,10 @@ namespace NuGetGallery
                                     ? string.Format("{0} This is an FYI only. There is no action you need to take.", Environment.NewLine)
                                     : string.Format(@"{0} The package status will be changed and will be waiting on your next actions.
 
-* Please contact site admins if package needs to be exempted from testing (e.g. package installs specific drivers).
-* Automated testing can also fail when a package is not completely silent or has pop ups (AutoHotKey can assist here). 
-* A package that cannot be made completely unattended should have the notSilent tag.", Environment.NewLine);
+* Please log in and leave a review comment if you need the verifier rerun for the existing version (or for other possible concerns).
+* If the verifier is [incompatible with the package](https://github.com/chocolatey/package-verifier/wiki), please contact site admins if package needs to bypass testing (e.g. package installs specific drivers).
+* Automated testing can also fail when a package is not completely silent or has pop ups ([AutoHotKey](https://chocolatey.org/packages/autohotkey.portable) can assist - a great example is the [VeraCrypt package](https://chocolatey.org/packages/veracrypt/1.16#files)). 
+* A package that cannot be made completely unattended should have the notSilent tag. Note that this must be approved by moderators.", Environment.NewLine);
 
                 ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
 
