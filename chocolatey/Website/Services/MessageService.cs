@@ -654,7 +654,7 @@ Things we are doing to help resolve the large backlog of moderation:
 
              message.AppendFormat(@"{0}## Attention - DO NOT REPLY TO THIS MESSAGE!
  * If you need to update or respond to package review information, please login and visit your package page (listed below).
- * You can also **self-reject packages that are no longer relevant**!",
+ * You can also **self-reject packages that are no longer relevant**! See [self-reject](https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-self-reject-a-package) for more information.",
                 Environment.NewLine);
 
             return message.ToString();
