@@ -669,7 +669,7 @@
     <ul class="authors">
         @foreach (var author in Model.Authors)
         {
-            <li><a href="@Url.Search(author.Name)" title="Search for @author.Name">@author.Name</a></li>
+            <li>@markdownGenerator.Transform(@author.Name.clean_markdown())</li>
         }
     </ul>
     @if (!String.IsNullOrEmpty(Model.Copyright))
