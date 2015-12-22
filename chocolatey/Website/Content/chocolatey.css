@@ -16,6 +16,18 @@
     width: 560px;
 }
 
+.nuspec
+{
+    background-color: #fff7c4;
+    color: #ff9600;
+    border: solid 1px;
+    font-size: 0.9em;
+    padding: 10px;
+    overflow: visible;
+    display: block;
+    width: 1080px;
+}
+
 .review-instructions {
     background-color: #e3fbf9;
     color: #000000;

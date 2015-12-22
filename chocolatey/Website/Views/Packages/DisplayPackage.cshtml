@@ -26,6 +26,8 @@
     var moderationRoleAndMaintaner = User != null && User.IsInAnyModerationRole() && maintainer;
     var anyPackageRole = User != null && (moderationRole || maintainer);
 
+    var expandForModeration = Model.Status == PackageStatusType.Submitted && moderationRole;
+
     var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as <a href=\"https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-a-trusted-package\">a trusted package</a>";
 
     if (Model.Status == PackageStatusType.Rejected && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending)
@@ -286,6 +288,97 @@
     {
         <p class="message error">This package is exempt from moderation. While it is likely safe for you, there is more risk involved.</p>
     }
+    
+    @if (expandForModeration)
+    {
+        <pre class="nuspec">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!-- This is not exact, it's only based on what is stored about the package --&gt;
+&lt;!-- description and releaseNotes left out for brevity --&gt;
+&lt;package&gt;
+  &lt;metadata&gt;
+    &lt;id&gt;@Model.Id&lt;/id&gt;
+@if (!string.IsNullOrWhiteSpace(@Model.Title))
+{
+    <text>&lt;title&gt;@Model.Title&lt;/title&gt;</text>    
+}
+    &lt;version&gt;@Model.Version.to_string()&lt;/version&gt;
+@if (Model.Authors.AnySafe())
+{
+    var authors = new System.Text.StringBuilder();
+    foreach (var author in Model.Authors.OrEmptyListIfNull())
+    {
+        authors.Append(", " + author.Name.to_string().Trim());
+    }
+    if (authors.Length > 0) {authors.Remove(0, 2);}
+
+    <text>&lt;authors&gt;@authors.to_string()&lt;/authors&gt;</text> 
+}
+    &lt;owners&gt;NOTE: Original specified maintainers not included on site&lt;/owners&gt;
+@if (!string.IsNullOrWhiteSpace(@Model.Description))
+{
+    <text>&lt;description&gt;NOTE: Included, see below&lt;/description&gt;</text> 
+}
+@if (!string.IsNullOrWhiteSpace(@Model.ProjectUrl))
+{
+    <text>&lt;projectUrl&gt;@Model.ProjectUrl&lt;/projectUrl&gt;</text> 
+}
+@if (@Model.Tags.AnySafe())
+{
+    var tags = new System.Text.StringBuilder();
+    foreach (var tag in Model.Tags.OrEmptyListIfNull())
+    {
+        tags.Append(" " + tag.to_string().Trim());
+    }
+    if (tags.Length > 0) { tags.Remove(0, 1); }
+
+    <text>&lt;tags&gt;@tags.to_string()&lt;/tags&gt;</text>
+}   
+@if (!string.IsNullOrWhiteSpace(@Model.Copyright))
+{
+    <text>&lt;copyright&gt;@Model.Copyright&lt;/copyright&gt;</text> 
+}
+@if (!string.IsNullOrWhiteSpace(@Model.LicenseUrl))
+{
+    <text>&lt;licenseUrl&gt;@Model.LicenseUrl&lt;/licenseUrl&gt; 
+    &lt;requireLicenseAcceptance&gt;NOTE:Original specified maintainers not included on site&lt;/requireLicenseAcceptance&gt;</text>
+}
+@if (!string.IsNullOrWhiteSpace(@Model.IconUrl))
+{
+    <text>&lt;iconUrl&gt;@Model.IconUrl&lt;/iconUrl&gt;</text> 
+}
+@if (Model.Dependencies.DependencySets.Any())
+{
+    <text>&lt;dependencies&gt;NOTE: Included, see below&lt;/dependencies&gt;</text> 
+}
+@if (!string.IsNullOrWhiteSpace(@Model.ReleaseNotes))
+{
+    <text>&lt;releaseNotes&gt;NOTE: Included, see below&lt;/releaseNotes&gt;</text> 
+}
+@if (!string.IsNullOrWhiteSpace(@Model.ProjectSourceUrl))
+{
+    <text>&lt;projectSourceUrl&gt;@Model.ProjectSourceUrl&lt;/projectSourceUrl&gt;</text> 
+}
+@if (!string.IsNullOrWhiteSpace(@Model.DocsUrl))
+{
+    <text>&lt;docsUrl&gt;@Model.DocsUrl&lt;/docsUrl&gt;</text> 
+}   
+@if (!string.IsNullOrWhiteSpace(@Model.MailingListUrl))
+{
+    <text>&lt;mailingListUrl&gt;@Model.MailingListUrl&lt;/mailingListUrl&gt;</text> 
+}   
+@if (!string.IsNullOrWhiteSpace(@Model.BugTrackerUrl))
+{
+    <text>&lt;bugTrackerUrl&gt;@Model.BugTrackerUrl&lt;/bugTrackerUrl&gt;</text> 
+}    
+@if (!string.IsNullOrWhiteSpace(@Model.PackageSourceUrl))
+{
+    <text>&lt;packageSourceUrl&gt;@Model.PackageSourceUrl&lt;/packageSourceUrl&gt;</text> 
+} 
+  &lt;/metadata&gt;
+&lt;/package&gt;
+        </pre>
+    }
 
     @if (moderationRole || (maintainer && Model.Status != PackageStatusType.Approved))
     {
@@ -514,8 +607,17 @@
                     @if (!string.IsNullOrWhiteSpace(file.FileContent))
                     {
                         var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-");
-                        <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">
-                        Show</a>
+                        if (expandForModeration)
+                        {
+                            <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Hide</a>
+                            <script type="text/javascript">
+                                $('#@fileDivId').show()
+                            </script>
+                        }
+                        else
+                        {
+                             <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Show</a>
+                        }
                         <br />
                         <div id="@fileDivId" class="package-file-content">
                             @{ var shBrush = "";
@@ -540,6 +642,12 @@
                             }
                             <pre class="brush: @shBrush">@file.FileContent</pre>
                         </div>
+                        if (expandForModeration)
+                        {
+                            <script type="text/javascript">
+                                $('#@fileDivId').show()
+                            </script>
+                        }
                     }
                 </li>
             }
