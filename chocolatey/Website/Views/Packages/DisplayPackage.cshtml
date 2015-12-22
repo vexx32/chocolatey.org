@@ -131,6 +131,7 @@
                 <li><a href="@Model.PackageSourceUrl" title="See the package source. Nuspec reference: &lt;packageSourceUrl&gt;@Model.PackageSourceUrl&lt;/packageSourceUrl&gt;">
                 Package Source</a></li>
             }
+            <li><a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">Package outdated?</a></li>
             <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
             <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Moderators">
             Contact Site Admins</a></li>
