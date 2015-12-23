@@ -669,7 +669,7 @@
     <ul class="authors">
         @foreach (var author in Model.Authors)
         {
-            <li>@Html.Raw(markdownGenerator.Transform(@author.Name.clean_markdown()))</li>
+            <li>@author.Name.clean_markdown()</li>
         }
     </ul>
     @if (!String.IsNullOrEmpty(Model.Copyright))
