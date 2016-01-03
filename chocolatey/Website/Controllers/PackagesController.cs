@@ -28,6 +28,7 @@ using System.Web;
 using System.Web.Mvc;
 using Elmah;
 using NuGet;
+using NuGetGallery.MvcOverrides;
 using NugetGallery;
 using PoliteCaptcha;
 
@@ -47,6 +48,11 @@ namespace NuGetGallery
         private readonly ISearchService searchSvc;
 
         public IConfiguration Configuration { get; set; }
+
+        protected virtual bool UseHttps()
+        {
+            return AppHarbor.IsSecureConnection(HttpContext);
+        }
 
         public PackagesController(
             IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
@@ -472,7 +478,7 @@ namespace NuGetGallery
             }
             else from = new MailAddress(reportForm.Email);
 
-            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
             messageService.ReportAbuse(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
@@ -518,7 +524,7 @@ namespace NuGetGallery
             }
             else from = new MailAddress(reportForm.Email);
 
-            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
             messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
 
@@ -564,7 +570,7 @@ namespace NuGetGallery
             }
             else from = new MailAddress(contactForm.Email);
 
-            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
             messageService.SendContactOwnersMessage(from, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl, contactForm.CopySender);
 
@@ -772,7 +778,7 @@ namespace NuGetGallery
             var package = packageSvc.FindPackageRegistrationById(packageId);
             if (package == null) return PackageNotFound(packageId);
 
-            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false)) + RemoveStartingSlash(Url.Package(package));
+            var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
             messageService.SendCommentNotificationToMaintainers(package, commentViewModel, packageUrl);
 

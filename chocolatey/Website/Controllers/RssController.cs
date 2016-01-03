@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
+using NuGetGallery.MvcOverrides;
 using NugetGallery;
 
 namespace NuGetGallery
@@ -39,7 +40,7 @@ namespace NuGetGallery
         [ActionName("feed.rss")]
         public virtual ActionResult Feed(int? page, int? pageSize)
         {
-            var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(useHttps: false));
+            var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(AppHarbor.IsSecureConnection(HttpContext)));
 
             IEnumerable<Package> packageVersions = Cache.Get(string.Format("packageVersions-False"),
                    DateTime.UtcNow.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
