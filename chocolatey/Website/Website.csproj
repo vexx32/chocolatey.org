@@ -975,6 +975,8 @@
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\trash.png" />
+    <Content Include="Content\Images\turbo-logo.png" />
+    <Content Include="Content\Images\Turbo-on-Red.png" />
     <Content Include="Content\Images\twitter.png" />
     <Content Include="Content\Images\uploadPackage.png" />
     <Content Include="Content\Images\userGraphic.png" />

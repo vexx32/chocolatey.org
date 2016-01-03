@@ -108,7 +108,7 @@
             float: left;
             text-align: center;
             padding: 10px;
-            width: 170px;
+            width: 130px;
         }
 
             footer#footer ul.supporters li a {
@@ -136,6 +136,19 @@
 #appharbor-logo
 {
     background: url(../Content/Images/appharbor-logo.png) no-repeat;
+    height: 60px;
+    display: block;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0px;
+    width: 60px;
+    vertical-align: bottom;
+}
+
+#turbo-logo
+{
+    background: url(../Content/Images/turbo-logo.png) no-repeat;
     height: 60px;
     display: block;
     margin-top: 0px;
