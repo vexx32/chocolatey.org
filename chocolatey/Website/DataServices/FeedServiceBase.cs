@@ -141,7 +141,7 @@ namespace NuGetGallery
         public object GetService(Type serviceType)
         {
             if (serviceType == typeof(IDataServiceStreamProvider)) return this;
-            // FindPackagesById needs to be using the SearchFilter for this to work
+            // At the very least FindPackagesById needs to be using the SearchFilter for this to work
             //if (serviceType == typeof(IDataServicePagingProvider)) return this;
 
             return null;
