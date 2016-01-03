@@ -150,7 +150,7 @@ namespace NuGetGallery
         protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework, bool includePrerelease, SearchFilter searchFilter)
         {
             // we don't allow an empty search for all versions.
-            if (searchFilter.FilterInvalidReason == SearchFilterInvalidReason.DueToAllVersionsRequested && string.IsNullOrWhiteSpace(searchFilter.SearchTerm))
+            if (searchFilter.FilterInvalidReason == SearchFilterInvalidReason.DueToAllVersionsRequested && string.IsNullOrWhiteSpace(searchTerm))
             {
                 searchFilter.IsValid = true;
             }
@@ -261,7 +261,14 @@ namespace NuGetGallery
                  {
                      searchFilter.Skip = skip;
                  }
-             }
+             } 
+             
+             //comes out as 'searchterm' instead of searchterm
+             //string searchTerm;
+             //if (queryTerms.TryGetValue("searchTerm", out searchTerm))
+             //{
+             //   searchFilter.SearchTerm = searchTerm;
+             //}
 
              string topStr;
              if (queryTerms.TryGetValue("$top", out topStr))
