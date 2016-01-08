@@ -1,5 +1,7 @@
 ﻿@model ListPackageItemViewModel
 @{
+    var isSubmitted = Model.Status == PackageStatusType.Submitted;
+    
     var submittedStatus = Model.SubmittedStatus;
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
 
@@ -17,10 +19,9 @@
                 break;
      }
     
-    
 }
 <section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
-    @if (Model.Status == PackageStatusType.Submitted)
+    @if (isSubmitted)
     {
         <div class="moderator-side">
             @switch (submittedStatus)
@@ -72,13 +73,32 @@
         </header>
 
         <p>
-            @if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 350) {
-                @Model.Description
+            @if (isSubmitted)
+            {
+                <span>Published: @Model.PublishedDate.ToShortDateString()</span>
+                if (Model.ReviewedDate.HasValue)
+                {
+                    <br />
+                    <span>Reviewed: @Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</span>
+                }
+                if (!string.IsNullOrWhiteSpace(Model.ReviewerUserName))
+                {
+                    <br />
+                    <span>Reviewer: @Model.ReviewerUserName</span>
+                }
             }
             else
             {
-                @Model.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(Model)">More information</a>
+                if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 350)
+                {
+                    @Model.Description
+                }
+                else
+                {
+                    @Model.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(Model)">More information</a>
+                }
             }
+           
         </p>
 
         <footer>
