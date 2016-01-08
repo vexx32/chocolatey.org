@@ -656,7 +656,14 @@
     else
     {
         <ul>
-            <li>Either there are no files or this package was submitted prior to inspecting packages for file content (July 2014). You can download and unzip the package or use <a href="https://chocolatey.org/packages/NugetPackageExplorer">Nuget Package Explorer</a> to see the contents.</li>
+            @if (@Model.PublishedDate < new DateTime(2014, 7, 25))
+            {
+                <li>This package was created prior to July 2014 - when package content started being included on the site. You can download and unzip the package or use <a href="https://chocolatey.org/packages/NugetPackageExplorer">Nuget Package Explorer</a> to see the contents.</li>
+            }
+            else
+            {
+                <li>This package has no content.</li>
+            }
         </ul>
     }
     </div>
