@@ -43,14 +43,11 @@
         <input type="hidden" name="q" value="@Model.SearchTerm" />
 
         <div class="form-field">
-            @if (moderationRole)
-            {
-                <select name="moderatorQueue" id="moderatorQueue">
-                    @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
-                    @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
-                </select>
-            }
-            
+            <select name="moderatorQueue" id="moderatorQueue">
+                @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
+                @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
+            </select>
+
             <select name="prerelease" id="prerelease">
                 @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
                 @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
