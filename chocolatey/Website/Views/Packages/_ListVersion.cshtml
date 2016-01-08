@@ -36,34 +36,34 @@
             <a href="@Url.DeletePackage(Model.Package)" class="delete">@(Model.Package.Listed ? "yes" : "no")</a>
         </td>
     }
-    else
+    
+    @switch (Model.Package.Status)
     {
-        switch (Model.Package.Status)
-        {
-            case PackageStatusType.Submitted:
-                 switch (Model.Package.SubmittedStatus)
-                 {
-                     case PackageSubmittedStatusType.Waiting:
-                        <td>waiting</td>
-                        break;
-                     case PackageSubmittedStatusType.Responded:
-                        <td>responded</td>
-                        break;
-                     default:
-                        <td>submitted</td>
-                        break;
-                 }
+        case PackageStatusType.Submitted:
+                switch (Model.Package.SubmittedStatus)
+                {
+                    case PackageSubmittedStatusType.Waiting:
+                    <td>waiting</td>
+                    break;
+                    case PackageSubmittedStatusType.Responded:
+                    <td>responded</td>
+                    break;
+                    default:
+                    <td>submitted</td>
+                    break;
+                }
 
-                 break;
-            case PackageStatusType.Approved:
-            case PackageStatusType.Exempted:
-                <td>@Model.Package.Status.GetDescriptionOrValue().ToLower()</td>
-               break;
-            default:
-                <td>&nbsp;</td>
-               break;
-        }
+                break;
+        case PackageStatusType.Approved:
+        case PackageStatusType.Rejected:
+        case PackageStatusType.Exempted:
+            <td>@Model.Package.Status.GetDescriptionOrValue().ToLower()</td>
+            break;
+        default:
+            <td>&nbsp;</td>
+            break;
     }
+    
     @if (Model.ModerationRole)
     {
         var divVersionId = "divVersion-" + Model.Package.Version.Replace(".", "-");
