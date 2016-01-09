@@ -392,7 +392,7 @@ namespace NuGetGallery
             package.IsPrerelease = !nugetPackage.IsReleaseVersion();
             package.Listed = false;
             package.Status = PackageStatusType.Submitted;
-            package.SubmittedStatus = PackageSubmittedStatusType.Ready;
+            package.SubmittedStatus = PackageSubmittedStatusType.Pending;
 
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             package.PackageValidationResultDate = null;
@@ -410,18 +410,18 @@ namespace NuGetGallery
             if (package.ReviewedDate.HasValue) package.SubmittedStatus = PackageSubmittedStatusType.Updated;
 
             //we don't moderate prereleases
-            if (package.IsPrerelease)
-            {
-                package.Listed = true;
-                package.Status = PackageStatusType.Exempted;
-            }
-            if (packageRegistration.IsTrusted)
-            {
-                package.Listed = true;
-                package.Status = PackageStatusType.Approved;
-                package.ReviewedDate = now;
-                package.ApprovedDate = now;
-            }
+            //if (package.IsPrerelease)
+            //{
+            //    package.Listed = true;
+            //    package.Status = PackageStatusType.Exempted;
+            //}
+            //if (packageRegistration.IsTrusted)
+            //{
+            //    package.Listed = true;
+            //    package.Status = PackageStatusType.Approved;
+            //    package.ReviewedDate = now;
+            //    package.ApprovedDate = now;
+            //}
 
             package.IconUrl = nugetPackage.IconUrl == null ? string.Empty : nugetPackage.IconUrl.ToString();
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
@@ -881,6 +881,47 @@ namespace NuGetGallery
             NotifyIndexingService(package);
         }
 
+        public void UpdateSubmittedStatusAfterAutomatedReviews(Package package)
+        {
+            var now = DateTime.UtcNow;
+
+            var passingVerification = (package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Passing 
+                                       || package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Exempted);
+            var passingValidation = (package.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing
+                                     || package.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted);
+
+            if (passingValidation && passingVerification && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
+            {
+                package.SubmittedStatus = PackageSubmittedStatusType.Ready;
+            }
+           
+            if (package.PackageTestResultDate.HasValue && package.PackageValidationResultDate.HasValue)
+            {
+                //we don't moderate prereleases
+                if (package.IsPrerelease)
+                {
+                    package.Listed = true;
+                    package.Status = PackageStatusType.Exempted;
+                }
+
+                // GH-308 eventually a trusted package will need to pass both validation and verification.
+                if (package.PackageRegistration.IsTrusted)
+                {
+                    package.Listed = true;
+                    package.Status = PackageStatusType.Approved;
+                    package.ReviewedDate = now;
+                    package.ApprovedDate = now;
+                }
+
+                UpdateIsLatest(package.PackageRegistration);
+
+                if (package.IsPrerelease || package.PackageRegistration.IsTrusted)
+                {
+                    messageSvc.SendPackageModerationEmail(package, null, "Finished Moderation Review", null);
+                }
+            }
+        }
+
         public void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter)
         {
             package.PackageTestResultUrl = resultDetailsUrl;
@@ -888,6 +929,8 @@ namespace NuGetGallery
             if (success) package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Passing;
             // the date doesn't need to be exact
             package.PackageTestResultDate = DateTime.UtcNow;
+
+            UpdateSubmittedStatusAfterAutomatedReviews(package);
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);

@@ -622,6 +622,16 @@ Things we are doing to help resolve the large backlog of moderation:
         {
             var message = new StringBuilder();
 
+            if (package.IsPrerelease && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
+            {
+                message.AppendFormat("**NOTE**: This version is a prerelease and prerelease versions are exempted from human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two typically run within 1-2 hours after the package has pushed. We'll send you a message when it is listed.{0}",Environment.NewLine);
+            }
+            if (package.PackageRegistration.IsTrusted && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
+            {
+                message.AppendFormat("**NOTE**: This package is trusted and bypasses human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two typically run within 1-2 hours after the package has pushed. We'll send you a message when it is listed.{0}", Environment.NewLine);
+                message.AppendFormat("**NOTE**: Starting in March, trusted packages must also pass both validation and verification for automatic approval. Otherwise the package verion will be held for fixes. More details will be provided in an email to all package maintainers sometime in January.{0}", Environment.NewLine);
+            }
+
             if (!string.IsNullOrWhiteSpace(comments))
             {
                 // fromUser could be null. If the package hasn't been reviewed yet it will be unless this message is being sent to the reviewer.
@@ -646,7 +656,7 @@ Things we are doing to help resolve the large backlog of moderation:
                     message.AppendFormat(
                         "{3}{3}The package was {0} by {1} on {2}.",
                         package.Status.GetDescriptionOrValue().ToLower(),
-                        fromUser.Username,
+                        fromUser != null ? fromUser.Username : "The reviewer",
                         package.ReviewedDate.GetValueOrDefault().ToShortDateString(),
                         Environment.NewLine);
                     break;

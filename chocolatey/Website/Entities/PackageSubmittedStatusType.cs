@@ -20,6 +20,7 @@ namespace NuGetGallery
 {
     public enum PackageSubmittedStatusType
     {
+        Pending,
         Ready,
         Waiting,
         Responded,

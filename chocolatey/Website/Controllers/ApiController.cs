@@ -287,8 +287,10 @@ namespace NuGetGallery
 
             message += "{0}{1}".format_with(Environment.NewLine, validationComments);
 
+            packageSvc.UpdateSubmittedStatusAfterAutomatedReviews(package);
+
             packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
-            
+
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
 
