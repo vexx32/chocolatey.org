@@ -647,7 +647,7 @@ For urgent issues (including packages that are security releases), please reach 
                     message.AppendFormat(
                         "{3}{3}The package was {0} by {1} on {2}.",
                         package.Status.GetDescriptionOrValue().ToLower(),
-                        fromUser != null ? fromUser.Username : "The reviewer",
+                        fromUser != null ? fromUser.Username : "the reviewer",
                         package.ReviewedDate.GetValueOrDefault().ToShortDateString(),
                         Environment.NewLine);
                     break;
