@@ -26,6 +26,9 @@
         <div class="moderator-side">
             @switch (submittedStatus)
             {
+                case PackageSubmittedStatusType.Pending:
+                    <span class="ready">Pending Automated Review</span>
+                    break;
                 case PackageSubmittedStatusType.Ready:
                     <span class="ready">Ready</span>
                     break;

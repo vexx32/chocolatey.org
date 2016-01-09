@@ -42,8 +42,11 @@
         case PackageStatusType.Submitted:
             switch (Model.SubmittedStatus)
             {
+                case PackageSubmittedStatusType.Pending:
+                    packageStatus = "Pending automated review";
+                    break;   
                 case PackageSubmittedStatusType.Ready:
-                    packageStatus = "Submitted, ready for review";
+                    packageStatus = "Ready for review";
                     break;    
                 case PackageSubmittedStatusType.Waiting:
                     packageStatus = "Waiting for Maintainer to take corrective action";

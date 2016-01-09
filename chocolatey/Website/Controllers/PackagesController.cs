@@ -346,6 +346,7 @@ namespace NuGetGallery
                 var updatedStatus = PackageSubmittedStatusType.Updated.ToString();
                 var respondedStatus = PackageSubmittedStatusType.Responded.ToString();
                 var readyStatus = PackageSubmittedStatusType.Ready.ToString();
+                var pendingStatus = PackageSubmittedStatusType.Pending.ToString();
                 var waitingStatus = PackageSubmittedStatusType.Waiting.ToString();
 
                 //var resubmittedPackages = submittedPackages.Where(p => p.ReviewedDate.HasValue && p.Published > p.ReviewedDate).OrderBy(p => p.Published).ToList();
@@ -355,14 +356,17 @@ namespace NuGetGallery
                 var respondedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == respondedStatus).OrderBy(p => p.LastUpdated).ToList();
                 respondedPackagesCount = respondedPackages.Count;
 
-                var unreviewedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
+                var unreviewedPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount = unreviewedPackages.Count;
+
+                var pendingAutoReviewPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == pendingStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
+                unreviewedPackagesCount += pendingAutoReviewPackages.Count;
 
                 //var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
 
-                packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(waitingForMaintainerPackages);
+                packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(pendingAutoReviewPackages).Union(waitingForMaintainerPackages);
 
                 if (!string.IsNullOrWhiteSpace(q))
                 {
