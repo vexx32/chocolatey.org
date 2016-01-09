@@ -615,11 +615,11 @@ For urgent issues (including packages that are security releases), please reach 
 
             if (package.IsPrerelease && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
             {
-                message.AppendFormat("**NOTE**: This version is a prerelease and prerelease versions are exempted from human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two typically run within 1-2 hours after the package has pushed. We'll send you a message when it is listed.{0}",Environment.NewLine);
+                message.AppendFormat("**NOTE**: This version is a prerelease and prerelease versions are exempted from human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two are typically finished within 1-2 hours or less after the package has pushed, depending on the verifier queue. We'll send you a message when it is listed. If you haven't received a message within 6 hours, please contact us for further investigation.{0}",Environment.NewLine);
             }
             if (package.PackageRegistration.IsTrusted && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
             {
-                message.AppendFormat("**NOTE**: This package is trusted and bypasses human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two typically run within 1-2 hours after the package has pushed. We'll send you a message when it is listed.{0}", Environment.NewLine);
+                message.AppendFormat("**NOTE**: This package is trusted and bypasses human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two are typically finished within 1-2 hours or less after the package has pushed, depending on the verifier queue. We'll send you a message when it is listed. If you haven't received a message within 6 hours, please contact us for further investigation.{0}", Environment.NewLine);
                 message.AppendFormat("**NOTE**: Starting in March **trusted packages will be held for approval until they pass both validation and verification**. This will give maintainers a chance to fix bad package versions prior to becoming immutable. More details will be provided in an email to all package maintainers sometime in January.{0}", Environment.NewLine);
             }
 
