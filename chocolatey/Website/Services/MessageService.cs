@@ -620,7 +620,7 @@ For urgent issues (including packages that are security releases), please reach 
             if (package.PackageRegistration.IsTrusted && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
             {
                 message.AppendFormat("**NOTE**: This package is trusted and bypasses human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two typically run within 1-2 hours after the package has pushed. We'll send you a message when it is listed.{0}", Environment.NewLine);
-                message.AppendFormat("**NOTE**: Starting in March, trusted packages must also pass both validation and verification for automatic approval. Otherwise the package verion will be held for fixes. More details will be provided in an email to all package maintainers sometime in January.{0}", Environment.NewLine);
+                message.AppendFormat("**NOTE**: Starting in March **trusted packages will be held for approval until they pass both validation and verification**. This will give maintainers a chance to fix bad package versions prior to becoming immutable. More details will be provided in an email to all package maintainers sometime in January.{0}", Environment.NewLine);
             }
 
             if (!string.IsNullOrWhiteSpace(comments))
