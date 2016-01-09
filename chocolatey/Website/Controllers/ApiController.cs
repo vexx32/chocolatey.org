@@ -285,8 +285,6 @@ namespace NuGetGallery
                 message = "{0} has passed automated validation.".format_with(package.PackageRegistration.Id);
             }
 
-            //todo:remove this in January
-            message += "{0}NOTICE: We are permanently fixing our backlog issues and we want to apologize that it has taken so long - please see http://goo.gl/aYqJy0. {0}".format_with(Environment.NewLine);
             message += "{0}{1}".format_with(Environment.NewLine, validationComments);
 
             packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
