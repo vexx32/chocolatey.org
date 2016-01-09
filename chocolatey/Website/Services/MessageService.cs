@@ -584,27 +584,18 @@ Maintainer(s): {3}
         private string GetInformationForMaintainers(Package package, string comments)
         {
             if (package.Status == PackageStatusType.Submitted && string.IsNullOrWhiteSpace(comments)) return string.Format(@"
-**NOTICE:** Currently we have a very large backlog (popularity is a double-edged sword) and are addressing it, but as a result moderation may take 
-upwards of two or more weeks until we resolve issues.
-
 For urgent issues (including packages that are security releases), please reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco 
-
-Things we are doing to help resolve the large backlog of moderation:
-
- * Adding in a service to automatically verify the install and uninstall of packages.
- * Adding some auto-moderation for things a computer can check in a package.
- * Adding more moderators
 
 ### Information for Maintainers
 
- * If you have fixes, repush your package with the **same version**. This is allowed until approved.
- * If you have questions, please reach out to us at {0}.
- * If you need to update or respond to package review information, please visit your package page and respond there. 
+* If you have fixes, repush your package with the ***exact*** **same version** (unless the change we requested was based on an incorrect version). This is allowed until approved.
+* If you need to update or respond to package review information, please visit your package page and respond there (you may need to login first).  
+* If you have questions, please reach out to us at {0}.
 
 #### Other Pertinent Information
 
- * Moderators typically review a package within about a week or less. 
- * If you have not heard anything within a week or two, please forward this email to {0} and ask for status.
+ * Moderators typically review a package within about a week or less. Many times you may find it to be faster.
+ * If you have not heard anything within a week or two, please respond in the review comments on the package page (login first) and ask for status.
  * If the package is an urgent release (resolves security issues or CVEs), reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco
  * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
  * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
@@ -613,7 +604,7 @@ Things we are doing to help resolve the large backlog of moderation:
             else if (package.Status == PackageStatusType.Submitted) return @"
 #### Maintainer Notes
 
- * If we've asked you to make changes, repush your updated package with the **_same_ version**.";
+ * If we've asked you to make changes, repush your updated package with the ***exact*** **_same_ version** (unless the change we requested was based on an incorrect version).";
 
             return string.Empty;
         }
