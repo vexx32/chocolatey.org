@@ -60,6 +60,8 @@
             }
             break;
     }
+
+    var packageFileMayNotBeUpdatedYetOnCdn = Model.PublishedDate.AddMinutes(31) > DateTime.UtcNow;
     
 }
 @section SideColumn {
@@ -144,7 +146,9 @@
             Report Abuse</a></li>
 
             <li><a href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file.">
-            Download</a></li>
+            Download</a>  @if (packageFileMayNotBeUpdatedYetOnCdn) {
+                <text>(See CDN warning)</text>
+            }</li>
             @if (maintainer || moderator)
             {
                 <li><a href="@Url.EditPackage(Model)">Edit Package</a></li>
@@ -163,6 +167,11 @@
     {
         <p class="not-latest-message">This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">
         latest version</a> of @Model.Title available. </p>
+    }
+    
+    @if (packageFileMayNotBeUpdatedYetOnCdn)
+    {
+        <p class="message error">WARNING! The package (the *.nupkg file) is subject to a CDN with a 30 minute timeout. If you have pushed an updated version, please wait for more than 30 minutes before attempting to install from the site.</p>
     }
 
     @if (Model.IsInstallOrPortable)
