@@ -904,7 +904,7 @@ namespace NuGetGallery
                     package.Status = PackageStatusType.Exempted;
                 }
 
-                // GH-308 eventually a trusted package will need to pass both validation and verification.
+                //todo: https://github.com/chocolatey/chocolatey.org/issues/308 trusted packages will need to pass both validation and verification starting in March 2016.
                 if (package.PackageRegistration.IsTrusted)
                 {
                     package.Listed = true;
@@ -930,11 +930,7 @@ namespace NuGetGallery
             // the date doesn't need to be exact
             package.PackageTestResultDate = DateTime.UtcNow;
 
-            UpdateSubmittedStatusAfterAutomatedReviews(package);
-
             packageRepo.CommitChanges();
-            InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
 
             var testComments = string.Format("{0} {1}.{2} Please visit {3} for details.",
                 package.PackageRegistration.Id,
@@ -943,10 +939,15 @@ namespace NuGetGallery
                 resultDetailsUrl
                 );
 
+            //todo: https://github.com/chocolatey/chocolatey.org/issues/308 will subject trusted packages to holding starting in March 2016.
+            var bypassHolding = (package.IsPrerelease || package.PackageRegistration.IsTrusted);
+
+            var testCommentsAdditional = bypassHolding ? "This package is prerelease/trusted, which means it automatically is approved (even if it fails currently). Trusted packages will be held starting in March to provide an opportunity to fix a broken package." : string.Empty;
+
             if (package.Status == PackageStatusType.Submitted)
             {
-                testComments += success
-                                    ? string.Format("{0} This is an FYI only. There is no action you need to take.", Environment.NewLine)
+              testComments += success || bypassHolding
+                                    ? string.Format("{0} This is an FYI only. There is no action you need to take. {1}", Environment.NewLine, testCommentsAdditional)
                                     : string.Format(@"{0} The package status will be changed and will be waiting on your next actions.
 
 * **NEW!** We have a [test environment](https://github.com/chocolatey/chocolatey-test-environment) for you to replicate the testing we do. This can be used at any time to test packages! See https://github.com/chocolatey/chocolatey-test-environment
@@ -955,12 +956,19 @@ namespace NuGetGallery
 * Automated testing can also fail when a package is not completely silent or has pop ups ([AutoHotKey](https://chocolatey.org/packages/autohotkey.portable) can assist - a great example is the [VeraCrypt package](https://chocolatey.org/packages/veracrypt/1.16#files)). 
 * A package that cannot be made completely unattended should have the notSilent tag. Note that this must be approved by moderators.", Environment.NewLine);
 
-                ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
+              ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success || bypassHolding ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
             }
             else if (!success && package.Status != PackageStatusType.Submitted)
             {
                 messageSvc.SendPackageTestFailureMessage(package, resultDetailsUrl);
             }
+
+            UpdateSubmittedStatusAfterAutomatedReviews(package);
+
+            packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
+
         }
 
         public void ResetPackageTestStatus(Package package)
