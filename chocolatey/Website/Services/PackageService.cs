@@ -897,7 +897,7 @@ namespace NuGetGallery
            
             if (package.PackageTestResultDate.HasValue && package.PackageValidationResultDate.HasValue)
             {
-                //we don't moderate prereleases
+                //we don't do human moderation for prereleases
                 if (package.IsPrerelease)
                 {
                     package.Listed = true;
@@ -955,9 +955,6 @@ namespace NuGetGallery
 * A package that cannot be made completely unattended should have the notSilent tag. Note that this must be approved by moderators.", Environment.NewLine);
 
                 ChangePackageStatus(package, package.Status, package.ReviewComments, testComments, testReporter, testReporter, true, success? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
-
-                //todo: if the automated test review is successful, assign the reviewer at this time.
-                //for exempted packages, we'll need to assign the reviewer when the validation passes
             }
             else if (!success && package.Status != PackageStatusType.Submitted)
             {
