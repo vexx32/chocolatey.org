@@ -917,7 +917,7 @@ namespace NuGetGallery
 
                 if (package.IsPrerelease || package.PackageRegistration.IsTrusted)
                 {
-                    messageSvc.SendPackageModerationEmail(package, null, "Finished Moderation Review", null);
+                    messageSvc.SendPackageModerationEmail(package, null, "Finished Automated Moderation Review", null);
                 }
             }
         }
