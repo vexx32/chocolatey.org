@@ -539,7 +539,7 @@ Maintainer(s): {2}
                 EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
                 package.PackageRegistration.Id,
                 package.Version);
-            string body = string.Format(@"The latest version of '{0}' is failing automatic package install/uninstall testing.
+            string body = string.Format(@"{0} (v{4} - likely the current latest version) is failing automatic package install/uninstall testing.
 
 * Automated package testing on the latest version will occur from time to time. 
 * Please contact site admins if package needs to be exempted from testing (e.g. package installs specific drivers).
@@ -554,7 +554,8 @@ Maintainer(s): {3}
                 package.PackageRegistration.Id,
                 packageUrl,
                 resultDetailsUrl,
-                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)));
+                string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)),
+                package.Version);
             
             using (var mailMessage = new MailMessage())
             {
