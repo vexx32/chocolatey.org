@@ -101,8 +101,10 @@ namespace NuGetGallery
 
             DateTime? packageTestResultDate = null;
             if (!string.IsNullOrEmpty(doc.Get("PackageTestResultStatusDate"))) packageTestResultDate = DateTime.Parse(doc.Get("PackageTestResultStatusDate"), CultureInfo.InvariantCulture);
-             DateTime? packageValidationResultDate = null;
+            DateTime? packageValidationResultDate = null;
             if (!string.IsNullOrEmpty(doc.Get("PackageValidationResultDate"))) packageValidationResultDate = DateTime.Parse(doc.Get("PackageValidationResultDate"), CultureInfo.InvariantCulture);
+            DateTime? packageCleanupResultDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("PackageCleanupResultDate"))) packageCleanupResultDate = DateTime.Parse(doc.Get("PackageCleanupResultDate"), CultureInfo.InvariantCulture);
             DateTime? reviewedDate = null;
             if (!string.IsNullOrEmpty(doc.Get("PackageReviewedDate"))) reviewedDate = DateTime.Parse(doc.Get("PackageReviewedDate"), CultureInfo.InvariantCulture);
             DateTime? approvedDate = null;
@@ -172,6 +174,7 @@ namespace NuGetGallery
                 PackageTestResultDate = packageTestResultDate,
                 PackageValidationResultStatusForDatabase = doc.Get("PackageValidationResultStatus"),
                 PackageValidationResultDate = packageValidationResultDate,
+                PackageCleanupResultDate = packageCleanupResultDate,
                 ReviewedDate = reviewedDate,
                 ApprovedDate = approvedDate,
                 ReviewedBy = new User { Username = doc.Get("PackageReviewer") }, 

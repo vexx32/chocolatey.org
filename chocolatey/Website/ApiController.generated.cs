@@ -89,6 +89,13 @@ namespace NuGetGallery {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult CleanupPackage()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.CleanupPackage);
+        }
+
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult GetPackageIds() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.GetPackageIds);
         }
@@ -139,7 +146,10 @@ namespace NuGetGallery {
 
 
             public readonly string ValidatePackage = "ValidatePackageApi";
-            
+
+
+            public readonly string CleanupPackage = "CleanupPackageApi";
+
 
             public readonly string GetPackageIds = "PackageIDs";
 

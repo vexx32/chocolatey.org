@@ -692,6 +692,10 @@
     <Compile Include="Migrations\201512060515325_ModerationEnhancements.Designer.cs">
       <DependentUpon>201512060515325_ModerationEnhancements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601130410412_PackageCleanupResultDate.cs" />
+    <Compile Include="Migrations\201601130410412_PackageCleanupResultDate.Designer.cs">
+      <DependentUpon>201601130410412_PackageCleanupResultDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="PackagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>

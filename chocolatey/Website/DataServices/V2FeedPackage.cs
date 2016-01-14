@@ -75,6 +75,7 @@ namespace NuGetGallery
         public DateTime? PackageTestResultStatusDate { get; set; } 
         public string PackageValidationResultStatus { get; set; }
         public DateTime? PackageValidationResultDate { get; set; }
+        public DateTime? PackageCleanupResultDate { get; set; }
         public DateTime? PackageReviewedDate { get; set; }
         public DateTime? PackageApprovedDate { get; set; }
         public string PackageReviewer { get; set; }

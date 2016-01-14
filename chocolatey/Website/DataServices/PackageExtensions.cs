@@ -73,6 +73,7 @@ namespace NuGetGallery
                         PackageTestResultStatusDate = p.PackageTestResultDate,
                         PackageValidationResultStatus = p.PackageValidationResultStatusForDatabase,
                         PackageValidationResultDate = p.PackageValidationResultDate,
+                        PackageCleanupResultDate = p.PackageCleanupResultDate,
                         PackageReviewedDate = p.ReviewedDate,
                         PackageApprovedDate = p.ApprovedDate,
                         PackageReviewer = p.ReviewedBy != null ? p.ReviewedBy.Username : null,

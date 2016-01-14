@@ -292,6 +292,37 @@ namespace NuGetGallery
             packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
+        } 
+        
+        [ActionName("CleanupPackageApi"), HttpPost]
+        public virtual ActionResult SubmitPackageCleanupResults(string apiKey, string id, string version, bool reject, string cleanupComments)
+        {
+            Guid parsedApiKey;
+            if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
+
+            var testReporterUser = userSvc.FindByApiKey(parsedApiKey);
+            if (testReporterUser == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitcleanupresults"));
+            // Only the package operations user can submit test results
+            if (testReporterUser.Key != settings.PackageOperationsUserKey) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitcleanupresults"));
+
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+
+            if (string.IsNullOrWhiteSpace(cleanupComments))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting cleanup results requires 'cleanupComments' and 'reject'.");
+            }
+            
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+
+            if (!package.PackageCleanupResultDate.HasValue) package.PackageCleanupResultDate = DateTime.UtcNow;
+           
+            packageSvc.ChangePackageStatus(package, reject ? PackageStatusType.Rejected : package.Status, package.ReviewComments, cleanupComments, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: package.SubmittedStatus, assignReviewer: false);
+
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
 
     }
