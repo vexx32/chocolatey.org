@@ -201,6 +201,8 @@ namespace NuGetGallery
         }
         public DateTime? PackageValidationResultDate { get; set; }
 
+        public DateTime? PackageCleanupResultDate { get; set; }
+
 
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }

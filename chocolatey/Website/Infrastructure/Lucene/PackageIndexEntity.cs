@@ -146,10 +146,12 @@ namespace NuGetGallery
             document.Add(new Field("BugTrackerUrl", Package.BugTrackerUrl.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageStatus", Package.Status.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageSubmittedStatus", Package.SubmittedStatus.to_string(), Field.Store.YES, Field.Index.NO));
+
             document.Add(new Field("PackageTestResultStatus", Package.PackageTestResultStatus.to_string(), Field.Store.YES, Field.Index.NO));
             if (Package.PackageTestResultDate.HasValue) document.Add(new Field("PackageTestResultStatusDate", Package.PackageTestResultDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageValidationResultStatus", Package.PackageValidationResultStatus.to_string(), Field.Store.YES, Field.Index.NO));
             if (Package.PackageValidationResultDate.HasValue) document.Add(new Field("PackageValidationResultDate", Package.PackageValidationResultDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
+            if (Package.PackageCleanupResultDate.HasValue) document.Add(new Field("PackageCleanupResultDate", Package.PackageCleanupResultDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
             if (Package.ReviewedDate.HasValue) document.Add(new Field("PackageReviewedDate", Package.ReviewedDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
             if (Package.ApprovedDate.HasValue) document.Add(new Field("PackageApprovedDate", Package.ApprovedDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
             var reviewedByUserName = string.Empty;
@@ -175,7 +177,7 @@ namespace NuGetGallery
 
             string displayName = String.IsNullOrEmpty(Package.Title) ? Package.PackageRegistration.Id : Package.Title;
             document.Add(new Field("DisplayName", displayName.ToLower(CultureInfo.CurrentCulture), Field.Store.NO, Field.Index.NOT_ANALYZED));
-           
+          
             return document;
         }
 

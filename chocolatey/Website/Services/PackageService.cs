@@ -396,7 +396,8 @@ namespace NuGetGallery
 
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             package.PackageValidationResultDate = null;
-            
+            package.PackageCleanupResultDate = null;
+
             package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             package.PackageTestResultDate = null;
             if (packageRegistration.ExemptedFromVerification)
