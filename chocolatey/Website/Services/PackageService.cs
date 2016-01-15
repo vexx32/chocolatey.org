@@ -753,6 +753,7 @@ namespace NuGetGallery
                     case PackageStatusType.Approved :
                         package.ApprovedDate = now;
                         package.Listed = true;
+                        package.PackageCleanupResultDate = null;
                         break;
                     case PackageStatusType.Exempted :
                         package.Listed = true;
