@@ -933,7 +933,7 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
 
-            var testComments = string.Format("{0} {1}.{2} Please visit {3} for details.",
+            var testComments = string.Format("{0} {1}.{2} This is not the only check that is performed so check the package page to ensure a 'Ready' status.{2} Please visit {3} for details.",
                 package.PackageRegistration.Id,
                 success ? TESTING_PASSED_MESSAGE : TESTING_FAILED_MESSAGE,
                 Environment.NewLine,
