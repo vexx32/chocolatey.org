@@ -6,6 +6,9 @@
         update(data, currData, 'UniquePackages');
         update(data, currData, 'Downloads');
         update(data, currData, 'TotalPackages');
+        update(data, currData, 'PackagesReadyForReviewModeration');
+        update(data, currData, 'TotalPackagesInModeration');
+        update(data, currData, 'AverageModerationWaitTimeHours');
     });
     setTimeout(function () { getStats(currData); }, 30000);
 }
