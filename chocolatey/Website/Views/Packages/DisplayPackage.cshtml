@@ -231,9 +231,9 @@
         </div>
         <br />
     }
-    @if (Model.Status != PackageStatusType.Submitted && Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
+    @if (Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
     {
-        <div class="message warning">There are versions of this package awaiting moderation. See the <a href="#versionhistory">Version History section</a> below.</div> <br />
+        <div class="message warning">There are versions of this package awaiting moderation @(Model.Status == PackageStatusType.Submitted ? "(possibly just this one)" : string.Empty). See the <a href="#versionhistory">Version History section</a> below.</div> <br />
     }  
     
     @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted)
