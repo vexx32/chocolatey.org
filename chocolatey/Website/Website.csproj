@@ -563,9 +563,6 @@
     <Compile Include="..\..\nugetgallery\Website\RequestModels\ModifyCuratedPackageRequest.cs">
       <Link>RequestModels\ModifyCuratedPackageRequest.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\AggregateStatsService.cs">
-      <Link>Services\AggregateStatsService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Services\CloudBlobClientWrapper.cs">
       <Link>Services\CloudBlobClientWrapper.cs</Link>
     </Compile>
@@ -607,9 +604,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\AccountViewModel.cs">
       <Link>ViewModels\AccountViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\AggregateStats.cs">
-      <Link>ViewModels\AggregateStats.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\CuratedFeedViewModel.cs">
       <Link>ViewModels\CuratedFeedViewModel.cs</Link>
@@ -706,6 +700,7 @@
     <Compile Include="RssController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AggregateStatsService.cs" />
     <Compile Include="Services\CloudBlobFileStorageService.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IImageFileService.cs" />
@@ -918,6 +913,7 @@
     <Compile Include="UsersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AggregateStats.cs" />
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\ContactOwnersViewModel.cs" />
     <Compile Include="ViewModels\DisplayPackageViewModel.cs" />
