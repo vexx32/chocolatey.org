@@ -814,14 +814,9 @@ namespace NuGetGallery
             {
                 subject = "{0}".format_with(package.Status.GetDescriptionOrValue());
             }
-            else if (submittedStatusChanged)
+            else if (package.SubmittedStatus == PackageSubmittedStatusType.Waiting)
             {
-                switch (package.SubmittedStatus)
-                {
-                    case PackageSubmittedStatusType.Waiting:
-                        subject = "Action Required - Review Requirements";
-                        break;
-                }
+                subject = "Action Required - Review Comments";
             }
 
             if (package.Status == PackageStatusType.Approved && statusChanged && !reviewCommentsIsOnlyStatusChange)
