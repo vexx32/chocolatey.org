@@ -174,22 +174,6 @@
         <p class="message error">WARNING! The package (the *.nupkg file) is subject to a CDN with a 30 minute timeout. If you have pushed an updated version, please wait for more than 30 minutes before attempting to install from the site.</p>
     }
 
-    @if (Model.IsInstallOrPortable)
-    {
-        <div class="app-or-tool-message">This package is likely a meta/virtual (*) or an installer (*.install) or portable (*.portable) application package. 
-          <ul>
-            <li>Meta/virtual (*) - has a dependency on the *.install or the *.portable package - it is provided for discoverability and for other packages to take a dependency on.</li>
-            <li>Portable (*.portable/*.commandline (deprecated naming convention)/*.tool (deprecated naming convention)) - usually zips or archives that require no administrative access to install.</li>
-            <li>Install (*.install/*.app (deprecated naming convention)) - uses native installers, usually requires administrative access to install.</li>
-          </ul>
-          
-          Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
-            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-autohotkeyinstall-portable-ie-autohotkeyportable-and--ie-autohotkey">
-            this kind of package</a>. 
-        </div>
-    }
-
-
     <div class="hgroup page-heading">
         <h1 title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">@Model.Title</h1>
         @if (Model.Status != PackageStatusType.Rejected)
@@ -221,6 +205,21 @@
         }
         </h2>
     </div>
+    
+    @if (Model.IsInstallOrPortable)
+    {
+        <div class="app-or-tool-message">This package is likely a meta/virtual (*) or an installer (*.install) or portable (*.portable) application package. 
+          <ul>
+            <li>Meta/virtual (*) - has a dependency on the *.install or the *.portable package - it is provided for discoverability and for other packages to take a dependency on.</li>
+            <li>Portable (*.portable/*.commandline (deprecated naming convention)/*.tool (deprecated naming convention)) - usually zips or archives that require no administrative access to install.</li>
+            <li>Install (*.install/*.app (deprecated naming convention)) - uses native installers, usually requires administrative access to install.</li>
+          </ul>
+          
+          Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
+            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-autohotkeyinstall-portable-ie-autohotkeyportable-and--ie-autohotkey">
+            this kind of package</a>. 
+        </div>
+    }
 
     @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
     {
