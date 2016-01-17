@@ -220,9 +220,16 @@
 
     @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
     {
-        <div class="message error">This version is in <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-moderation">moderation</a> and has not yet been approved. Be aware that this package version and its contents can
-            change until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
-            that have been made to the package. There are also no guarantees that it will be approved. See <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-install-a-package-version-under-moderation">How to install package version under moderation</a> for more information.</div><br />
+        <div class="message error">This version is in <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-moderation">moderation</a> and has not yet been approved. This means it doesn't show up under normal search. 
+          <ul>
+            <li>Until approved, you should consider this package version unsafe - it could do very bad things to your system (it probably doesn't but you have been warned, that's why we have moderation).</li>
+            <li>This package version can change wildly over the course of moderation until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
+          that have been made to the package. Until approved, you should consider that this package version doesn't even exist.</li>
+            <li>You cannot install this package under normal scenarios. See <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-install-a-package-version-under-moderation">How to install package version under moderation</a> for more information.</li>
+            <li>There are also no guarantees that it will be approved.</li>
+          </ul>
+        </div>
+        <br />
     }
     @if (Model.Status != PackageStatusType.Submitted && Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
     {
@@ -261,7 +268,7 @@
             You can see the package because you are one of its maintainers. To list the package
             again, <a href="@Url.DeletePackage(Model)">change its listing setting</a> (does not apply to unapproved packages).</p>
     }
-    else if (!Model.Listed)
+    else if (!Model.Listed && Model.Status != PackageStatusType.Submitted)
     {
         <p class="message warning">This package is unlisted and hidden from package listings.</p>
     }
