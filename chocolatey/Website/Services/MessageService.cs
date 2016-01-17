@@ -575,10 +575,10 @@ Maintainer(s): {3}
 
 ### Information for Maintainers
 
- * Disqus comments can be moderated.  As a result, you may not see the above comment on the package page until the comment is moderated.
- * If the comment seems legitimate, i.e. not a spam comment, you can take action straight away.
- * You will not be able to reply to the Disqus Comment until it is moderated.
- * You are encouraged to reply directly to the Disqus Comment when required action is taken.
+ * Disqus comments can be moderated. As a result, you may not see the above comment on the package page until the comment is moderated by a site admin.
+ * If the comment is not subject to moderation (no urls or from a commenter with a low rep), you can take action straight away.
+ * You will not be able to reply to the Disqus comment until it has been approved by a site admin. Site admins typically review Disqus pending comments about once a week. If you need them to take action sooner, please use the contact site admins link from the package page.
+ * You are encouraged to reply directly to the Disqus comment when required action is taken.
 ";
         }
 
