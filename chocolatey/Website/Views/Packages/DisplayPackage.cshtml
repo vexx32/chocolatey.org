@@ -176,13 +176,17 @@
 
     @if (Model.IsInstallOrPortable)
     {
-        <p class="app-or-tool-message">This is an installer (*.install) or a portable (*.portable)
-            application package. Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
-            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-gitinstall-portable-ie-gitportable-and--ie-git">
-            this kind of package</a>. Note that the suffix *.app is a synonym for *.install.
-            Similarly, *.commandline and *.tool mean the same as *.portable. But these suffixes
-            are deprecated in favor of *.install and *.portable, because the latter are more
-            logical and understandable. </p>
+        <div class="app-or-tool-message">This package is likely a meta/virtual (*) or an installer (*.install) or portable (*.portable) application package. 
+          <ul>
+            <li>Meta/virtual (*) - has a dependency on the *.install or the *.portable package - it is provided for discoverability and for other packages to take a dependency on.</li>
+            <li>Portable (*.portable/*.commandline (deprecated naming convention)/*.tool (deprecated naming convention)) - usually zips or archives that require no administrative access to install.</li>
+            <li>Install (*.install/*.app (deprecated naming convention)) - uses native installers, usually requires administrative access to install.</li>
+          </ul>
+          
+          Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
+            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-autohotkeyinstall-portable-ie-autohotkeyportable-and--ie-autohotkey">
+            this kind of package</a>. 
+        </div>
     }
 
 

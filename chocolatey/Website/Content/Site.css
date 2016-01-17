@@ -146,6 +146,7 @@ nav, section { display: block; }
     -moz-border-radius:  5px 5px 5px 5px;
     -webkit-border-radius:  5px 5px 5px 5px;
     font-size: 1.1em;
+    text-align: left;
 }
 
 /* Header */

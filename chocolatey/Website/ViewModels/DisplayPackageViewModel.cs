@@ -16,8 +16,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using NuGet;
 
@@ -70,11 +72,24 @@ namespace NuGetGallery
         {
             get
             {
-                return Id.EndsWith(".install")
-                       || Id.EndsWith(".portable")
-                       || Id.EndsWith(".app")
-                       || Id.EndsWith(".tool")
-                       || Id.EndsWith(".commandline");
+                if (Id.EndsWith(".install", ignoreCase: true, culture: CultureInfo.InvariantCulture)
+                    || Id.EndsWith(".portable", ignoreCase:true, culture: CultureInfo.InvariantCulture)
+                    || Id.EndsWith(".app", ignoreCase: true, culture: CultureInfo.InvariantCulture)
+                    || Id.EndsWith(".tool", ignoreCase: true, culture: CultureInfo.InvariantCulture)
+                    || Id.EndsWith(".commandline", ignoreCase: true, culture: CultureInfo.InvariantCulture)
+                ) return true;
+
+                return Dependencies.DependencySets.AnySafe(dependencySet =>
+                {
+                    var id = Id.to_lower();
+                    return dependencySet.Value.Any(d =>
+                        d.Id.Equals("{0}.install".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                        || d.Id.Equals("{0}.portable".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                        || d.Id.Equals("{0}.app".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                        || d.Id.Equals("{0}.tool".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                        || d.Id.Equals("{0}.commandline".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                    );
+                });
             }
         }
 
