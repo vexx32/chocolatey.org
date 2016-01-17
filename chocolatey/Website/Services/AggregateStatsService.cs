@@ -21,7 +21,7 @@ namespace NuGetGallery
 	(Select COUNT([Key]) From PackageRegistrations pr Where Exists (select 1 from Packages p where p.PackageRegistrationKey = pr.[Key] and p.Listed = 1)) AS UniquePackages,
 	(Select COUNT([Key]) From Packages Where Listed = 1) AS TotalPackages,
 	(Select SUM(DownloadCount) From Packages) AS DownloadCount,
-	(Select COUNT([Key]) From [dbo].[Packages] Where [Status] = 'Submitted' AND SubmittedStatus <> 'Waiting') AS PackagesReadyForReview,
+	(Select COUNT([Key]) From [dbo].[Packages] Where [Status] = 'Submitted' And SubmittedStatus <> 'Waiting') AS PackagesReadyForReview,
 	(Select COUNT([Key]) From [dbo].[Packages] Where [Status] = 'Submitted') AS AllPackagesUnderModeration,
 	(Select AVG(DATEDIFF(hour,Created,ApprovedDate)) From dbo.Packages Where [Status] = 'Approved' And ReviewedById is Not Null And Created >= DATEADD(DAY, -14, GETDATE())) AS AverageModerationWaitTime
 ";
