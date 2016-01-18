@@ -26,23 +26,34 @@
 
 <section class="aggstats">
   <span class="stat">
-    <span id="UniquePackages" class="num"></span> unique packages
+    <span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>unique packages
   </span>
   <span class="stat">
     <span id="Downloads" class="num"></span>total downloads
   </span>
   <span class="stat">
-    <span id="TotalPackages" class="num"></span>total packages
+    <span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span>total packages
   </span>
 </section>
 <section class="aggstats">
     <span class="stat">
-        <span id="AverageModerationWaitTimeHours" class="num"></span> average moderation approval wait time (hours)
+      <span id="GoodPackages" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-verifier">known good packages</a>
     </span>
     <span class="stat">
-        <span id="PackagesReadyForReviewModeration" class="num"></span>packages ready for moderation
+        <span id="UpToDatePackages" class="num" title="This is a start towards understanding up to date packages"></span>packages updated in last 4 months
     </span>
     <span class="stat">
+        <span id="OlderThanOneYearPackages" class="num" title="Packages that have not had an update in over a year"></span>packages older than a year
+    </span>
+</section>
+<section class="aggstats">
+    <span class="stat" title="This is approval time from last submission time of a good version that has no findings to approval time">
+        <span id="AverageModerationWaitTimeHours" class="num"></span>average moderation approval wait time (hours)
+    </span>
+    <span class="stat" title="Packages ready for a moderator to review">
+        <span id="PackagesReadyForReviewModeration" class="num"></span>packages ready for moderation review
+    </span>
+    <span class="stat" title="All packages under moderation, includes packages that are waiting for a mainter to fix something">
         <span id="TotalPackagesInModeration" class="num"></span>total packages under moderation
     </span>
 </section>

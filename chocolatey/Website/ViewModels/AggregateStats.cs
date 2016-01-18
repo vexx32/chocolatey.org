@@ -17,5 +17,11 @@ namespace NuGetGallery
         public int TotalPackagesInModeration { get; set; }
 
         public int AverageModerationWaitTimeHours { get; set; }
+
+        public int GoodPackages { get; set; }
+
+        public int UpToDatePackages { get; set; }
+
+        public int OlderThanOneYearPackages { get; set; }
     }
 }

@@ -9,6 +9,9 @@
         update(data, currData, 'PackagesReadyForReviewModeration');
         update(data, currData, 'TotalPackagesInModeration');
         update(data, currData, 'AverageModerationWaitTimeHours');
+        update(data, currData, 'GoodPackages');
+        update(data, currData, 'UpToDatePackages');
+        update(data, currData, 'OlderThanOneYearPackages');
     });
     setTimeout(function () { getStats(currData); }, 30000);
 }

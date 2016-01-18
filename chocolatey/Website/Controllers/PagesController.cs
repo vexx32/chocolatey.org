@@ -93,7 +93,10 @@ SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
                     TotalPackages = stats.TotalPackages.ToString("n0"),
                     PackagesReadyForReviewModeration = stats.PackagesReadyForReviewModeration.ToString("n0"),
                     TotalPackagesInModeration = stats.TotalPackagesInModeration.ToString("n0"),
-                    AverageModerationWaitTimeHours = stats.AverageModerationWaitTimeHours.ToString("n0")
+                    AverageModerationWaitTimeHours = stats.AverageModerationWaitTimeHours.ToString("n0"),
+                    GoodPackages = stats.GoodPackages.ToString("n0"),
+                    UpToDatePackages = stats.UpToDatePackages.ToString("n0"),
+                    OlderThanOneYearPackages = stats.OlderThanOneYearPackages.ToString("n0")
                 }, JsonRequestBehavior.AllowGet);
         }
     }
