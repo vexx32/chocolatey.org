@@ -241,6 +241,12 @@ namespace NuGetGallery
             bool maintainerReject = form["MaintainerReject"] == "true";
             bool changeSubmittedStatus = form["ChangeSubmittedStatus"] == "true";
 
+            if (comments != package.ReviewComments)
+            {
+                ModelState.AddModelError(String.Empty, "New comments have been added, please reload.");
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
+
             if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
             {
                 ModelState.AddModelError(String.Empty, "In order to reject a package version, you must provide comments indicating why it is being rejected.");
