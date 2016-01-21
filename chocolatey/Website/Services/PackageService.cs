@@ -891,8 +891,10 @@ namespace NuGetGallery
             {
                 package.SubmittedStatus = PackageSubmittedStatusType.Ready;
             }
-           
-            if (package.PackageTestResultDate.HasValue && package.PackageValidationResultDate.HasValue)
+
+            var skipsVerification = package.PackageRegistration.ExemptedFromVerification;
+
+            if ((package.PackageTestResultDate.HasValue || skipsVerification) && package.PackageValidationResultDate.HasValue)
             {
                 //we don't do human moderation for prereleases
                 if (package.IsPrerelease)
