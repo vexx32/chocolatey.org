@@ -241,11 +241,11 @@ namespace NuGetGallery
             bool maintainerReject = form["MaintainerReject"] == "true";
             bool changeSubmittedStatus = form["ChangeSubmittedStatus"] == "true";
 
-            if (comments != package.ReviewComments)
-            {
-                ModelState.AddModelError(String.Empty, "New comments have been added, please reload.");
-                return View("~/Views/Packages/DisplayPackage.cshtml", model);
-            }
+            //if (comments != package.ReviewComments)
+            //{
+            //    ModelState.AddModelError(String.Empty, "New comments have been added, please reload.");
+            //    return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            //}
 
             if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
             {
@@ -288,7 +288,7 @@ namespace NuGetGallery
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;
 
-            packageSvc.ChangePackageStatus(package, status, comments, newComments, currentUser, 
+            packageSvc.ChangePackageStatus(package, status, package.ReviewComments, newComments, currentUser, 
                 moderator, sendMaintainerEmail, 
                 isModerationRole ? 
                     changeSubmittedStatus ? 
