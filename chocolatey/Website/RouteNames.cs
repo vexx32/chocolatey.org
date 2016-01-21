@@ -50,6 +50,7 @@ namespace NuGetGallery
         public const string TestPackageApi = "TestPackageApi";
         public const string ValidatePackageApi = "ValidatePackageApi";
         public const string CleanupPackageApi = "CleanupPackageApi";
+        public const string DownloadCachePackageApi = "DownloadCachePackageApi";
         public const string UserAction = "UserAction";
         public const string PasswordReset = "PasswordReset";
         public const string NewSubmission = "NewSubmission";
