@@ -33,6 +33,7 @@ namespace NuGetGallery
             siteRoot = EnsureTrailingSlash(siteRoot);
             var rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
             var approvedStatus = PackageStatusType.Approved.GetDescriptionOrValue();
+            var cacheAvailableStatus = PackageDownloadCacheStatusType.Available.GetDescriptionOrValue();
 
             return packages
                 .Include(p => p.PackageRegistration).WithoutNullPropagation()
@@ -69,6 +70,7 @@ namespace NuGetGallery
                         IsApproved = p.StatusForDatabase != null && p.StatusForDatabase == approvedStatus,
                         PackageStatus = p.StatusForDatabase,
                         PackageSubmittedStatus = p.SubmittedStatusForDatabase,
+                        PackageTestResultUrl = p.PackageTestResultUrl,
                         PackageTestResultStatus = p.PackageTestResultStatusForDatabase,
                         PackageTestResultStatusDate = p.PackageTestResultDate,
                         PackageValidationResultStatus = p.PackageValidationResultStatusForDatabase,
@@ -83,7 +85,11 @@ namespace NuGetGallery
                         Summary = p.Summary,
                         Tags = p.Tags,
                         Title = p.Title,
-                        VersionDownloadCount = p.DownloadCount
+                        VersionDownloadCount = p.DownloadCount,  
+                        IsDownloadCacheAvailable = p.DownloadCacheStatusForDatabase != null && p.DownloadCacheStatusForDatabase == cacheAvailableStatus,
+                        DownloadCacheStatus = p.DownloadCacheStatusForDatabase,
+                        DownloadCacheDate = p.DownloadCacheDate,
+                        DownloadCache = p.DownloadCache
                     });
         }
     

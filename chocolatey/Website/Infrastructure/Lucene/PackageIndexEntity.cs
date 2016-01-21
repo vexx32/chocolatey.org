@@ -147,6 +147,7 @@ namespace NuGetGallery
             document.Add(new Field("PackageStatus", Package.Status.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageSubmittedStatus", Package.SubmittedStatus.to_string(), Field.Store.YES, Field.Index.NO));
 
+            document.Add(new Field("PackageTestResultUrl", Package.PackageTestResultUrl.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageTestResultStatus", Package.PackageTestResultStatus.to_string(), Field.Store.YES, Field.Index.NO));
             if (Package.PackageTestResultDate.HasValue) document.Add(new Field("PackageTestResultStatusDate", Package.PackageTestResultDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageValidationResultStatus", Package.PackageValidationResultStatus.to_string(), Field.Store.YES, Field.Index.NO));
@@ -160,6 +161,9 @@ namespace NuGetGallery
                 reviewedByUserName = Package.ReviewedBy.Username;  
             }
             document.Add(new Field("PackageReviewer", reviewedByUserName, Field.Store.YES, Field.Index.NO));
+            document.Add(new Field("DownloadCacheStatus", Package.DownloadCacheStatus.to_string(), Field.Store.YES, Field.Index.NO));
+            if (Package.DownloadCacheDate.HasValue) document.Add(new Field("DownloadCacheDate", Package.DownloadCacheDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
+            document.Add(new Field("DownloadCache", Package.DownloadCache.to_string(), Field.Store.YES, Field.Index.NO));
 
             if (Package.PackageRegistration.Owners.AnySafe())
             {

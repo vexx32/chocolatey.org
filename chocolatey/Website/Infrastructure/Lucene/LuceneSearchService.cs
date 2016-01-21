@@ -109,7 +109,8 @@ namespace NuGetGallery
             if (!string.IsNullOrEmpty(doc.Get("PackageReviewedDate"))) reviewedDate = DateTime.Parse(doc.Get("PackageReviewedDate"), CultureInfo.InvariantCulture);
             DateTime? approvedDate = null;
             if (!string.IsNullOrEmpty(doc.Get("PackageApprovedDate"))) approvedDate = DateTime.Parse(doc.Get("PackageApprovedDate"), CultureInfo.InvariantCulture);
-            
+            DateTime? downloadCacheDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("DownloadCacheDate"))) downloadCacheDate = DateTime.Parse(doc.Get("DownloadCacheDate"), CultureInfo.InvariantCulture);
 
             var owners = doc.Get("FlattenedOwners")
                             .split_safe(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
@@ -170,6 +171,7 @@ namespace NuGetGallery
                 BugTrackerUrl = doc.Get("BugTrackerUrl"),
                 StatusForDatabase = doc.Get("PackageStatus"),
                 SubmittedStatusForDatabase = doc.Get("PackageSubmittedStatus"),
+                PackageTestResultUrl = doc.Get("PackageTestResultUrl"),
                 PackageTestResultStatusForDatabase = doc.Get("PackageTestResultStatus"),
                 PackageTestResultDate = packageTestResultDate,
                 PackageValidationResultStatusForDatabase = doc.Get("PackageValidationResultStatus"),
@@ -178,6 +180,9 @@ namespace NuGetGallery
                 ReviewedDate = reviewedDate,
                 ApprovedDate = approvedDate,
                 ReviewedBy = new User { Username = doc.Get("PackageReviewer") }, 
+                DownloadCacheStatusForDatabase = doc.Get("DownloadCacheStatus"),
+                DownloadCacheDate = downloadCacheDate,
+                DownloadCache = doc.Get("DownloadCache"),
 
                 SupportedFrameworks = frameworks,
 

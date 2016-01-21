@@ -203,6 +203,23 @@ namespace NuGetGallery
 
         public DateTime? PackageCleanupResultDate { get; set; }
 
+        public PackageDownloadCacheStatusType DownloadCacheStatus { get; set; }
+        [MaxLength(50)]
+        [Column("DownloadCacheStatus")]
+        public string DownloadCacheStatusForDatabase
+        {
+            get { return DownloadCacheStatus.ToString(); }
+            set
+            {
+                if (value == null) DownloadCacheStatus = PackageDownloadCacheStatusType.Unknown;
+                else DownloadCacheStatus = (PackageDownloadCacheStatusType)Enum.Parse(typeof(PackageDownloadCacheStatusType), value);
+            }
+        }
+        public DateTime? DownloadCacheDate { get; set; }
+        /// <remarks>
+        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
+        /// </remarks>
+        public string DownloadCache { get; set; }
 
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }

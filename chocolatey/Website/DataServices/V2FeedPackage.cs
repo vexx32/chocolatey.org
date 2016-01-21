@@ -71,6 +71,7 @@ namespace NuGetGallery
         public bool IsApproved { get; set; }
         public string PackageStatus { get; set; }
         public string PackageSubmittedStatus { get; set; }
+        public string PackageTestResultUrl { get; set; }
         public string PackageTestResultStatus { get; set; }
         public DateTime? PackageTestResultStatusDate { get; set; } 
         public string PackageValidationResultStatus { get; set; }
@@ -79,5 +80,10 @@ namespace NuGetGallery
         public DateTime? PackageReviewedDate { get; set; }
         public DateTime? PackageApprovedDate { get; set; }
         public string PackageReviewer { get; set; }
+        public bool IsDownloadCacheAvailable { get; set; }
+        public string DownloadCacheStatus { get; set; }
+        public DateTime? DownloadCacheDate { get; set; }
+        public string DownloadCache { get; set; }
+
     }
 }
