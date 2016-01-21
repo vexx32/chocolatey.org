@@ -68,6 +68,12 @@ namespace NuGetGallery
 
         void ResetPackageTestStatus(Package package);
 
+        /// <summary>
+        /// Saves minor package changes. Do not call this is you are listing or unlisting a package.
+        /// </summary>
+        /// <param name="package">The package.</param>
+        void SaveMinorPackageChanges(Package package);
+
         void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer);
     }
 }

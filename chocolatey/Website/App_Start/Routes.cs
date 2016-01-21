@@ -214,6 +214,17 @@ namespace NuGetGallery
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
+            );   
+            
+            routes.MapRoute(
+                 "v2" + RouteName.DownloadCachePackageApi,
+                 "api/v2/cache/{id}/{version}",
+                 MVC.Api.DownloadCachePackage(), 
+                 defaults: null,
+                 constraints: new
+                 {
+                    httpMethod = new HttpMethodConstraint("POST")
+                 }
             );
             
             routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());

@@ -647,6 +647,7 @@
     <Compile Include="DataServices\V2FeedPackage.cs" />
     <Compile Include="Entities\EntityRepository.cs" />
     <Compile Include="Entities\GallerySetting.cs" />
+    <Compile Include="Entities\PackageDownloadCacheStatusType.cs" />
     <Compile Include="Entities\PackageFramework.cs" />
     <Compile Include="Entities\PackageStatistics.cs" />
     <Compile Include="Entities\PackageTestResults.cs" />
@@ -689,6 +690,10 @@
     <Compile Include="Migrations\201601130410412_PackageCleanupResultDate.cs" />
     <Compile Include="Migrations\201601130410412_PackageCleanupResultDate.Designer.cs">
       <DependentUpon>201601130410412_PackageCleanupResultDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601212108511_DownloadCacheInformation.cs" />
+    <Compile Include="Migrations\201601212108511_DownloadCacheInformation.Designer.cs">
+      <DependentUpon>201601212108511_DownloadCacheInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="PackagesController.generated.cs">

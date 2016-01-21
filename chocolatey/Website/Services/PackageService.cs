@@ -978,6 +978,13 @@ namespace NuGetGallery
             NotifyIndexingService(package);
         }
 
+        public void SaveMinorPackageChanges(Package package)
+        {
+            packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
+        }
+
         public void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer)
         {
             if (package.PackageRegistration.ExemptedFromVerification == exemptPackage) return;

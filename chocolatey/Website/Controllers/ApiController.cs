@@ -325,5 +325,38 @@ namespace NuGetGallery
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
 
+        [ActionName("DownloadCachePackageApi"), HttpPost]
+        public virtual ActionResult SubmitPackageDownloadCacheResults(string apiKey, string id, string version, bool cached, string cacheData)
+        {
+            Guid parsedApiKey;
+            if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
+
+            var testReporterUser = userSvc.FindByApiKey(parsedApiKey);
+            if (testReporterUser == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitcacheresults"));
+            // Only the package operations user can submit test results
+            if (testReporterUser.Key != settings.PackageOperationsUserKey) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitcacheresults"));
+
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+
+            if (cached && string.IsNullOrWhiteSpace(cacheData))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting cache with 'cached'=true requires 'cacheData'.");
+            }
+            
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+
+            package.DownloadCacheDate = DateTime.UtcNow;
+            package.DownloadCacheStatus = cached ? PackageDownloadCacheStatusType.Available : PackageDownloadCacheStatusType.Checked;
+            if (!string.IsNullOrWhiteSpace(cacheData)) package.DownloadCache = cacheData;
+
+            packageSvc.SaveMinorPackageChanges(package);
+
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
+        }
+
     }
 }
