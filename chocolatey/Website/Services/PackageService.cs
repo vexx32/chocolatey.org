@@ -557,7 +557,15 @@ namespace NuGetGallery
                                 BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA1")))
                                             .Replace("-", string.Empty);
 
-                            fileContent = string.Format("md5: {0} | sha1: {1}", md5Hash, sha1Hash);
+                            var sha256Hash =
+                               BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA256")))
+                                           .Replace("-", string.Empty);
+  
+                            var sha512Hash =
+                               BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA512")))
+                                           .Replace("-", string.Empty);
+
+                            fileContent = string.Format("md5: {0} | sha1: {1} | sha256: {2} | sha512: {3}", md5Hash, sha1Hash, sha256Hash, sha512Hash);
                         }
                     }
                 } catch (Exception ex)
