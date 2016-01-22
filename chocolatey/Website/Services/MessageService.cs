@@ -542,7 +542,8 @@ Maintainer(s): {2}
             string body = string.Format(@"{0} (v{4} - likely the current latest version) is failing automatic package install/uninstall testing.
 
 * Automated package testing on the latest version will occur from time to time. 
-* Please contact site admins if package needs to be exempted from testing (e.g. package installs specific drivers).
+* If the verifier is [incompatible with the package](https://github.com/chocolatey/package-verifier/wiki), please contact site admins if package needs to bypass testing (e.g. package installs specific drivers).
+* **NEW!** We have a [test environment](https://github.com/chocolatey/chocolatey-test-environment) for you to replicate the testing we do. This can be used at any time to test packages! See https://github.com/chocolatey/chocolatey-test-environment
 * Automated testing can also fail when a package is not completely silent.
 
 Please see the test results link below for more details.
