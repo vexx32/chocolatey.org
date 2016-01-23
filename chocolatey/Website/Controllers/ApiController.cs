@@ -326,7 +326,7 @@ namespace NuGetGallery
         }
 
         [ActionName("DownloadCachePackageApi"), HttpPost]
-        public virtual ActionResult SubmitPackageDownloadCacheResults(string apiKey, string id, string version, bool cached, string cacheData)
+        public virtual ActionResult SubmitPackageDownloadCacheResults(string apiKey, string id, string version, string cacheStatus, string cacheData)
         {
             Guid parsedApiKey;
             if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
@@ -341,16 +341,32 @@ namespace NuGetGallery
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
             }
 
+            PackageDownloadCacheStatusType downloadCacheStatus;
+            try
+            {
+                Enum.TryParse(cacheStatus, true, out downloadCacheStatus);
+            }
+            catch (Exception)
+            {
+                downloadCacheStatus = PackageDownloadCacheStatusType.Unknown;
+            }
+
+            if (downloadCacheStatus == PackageDownloadCacheStatusType.Unknown)
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "'cacheStatus' must be passed as 'Available', 'Checked', or 'Investigate'.");
+            }
+
+            var cached = downloadCacheStatus == PackageDownloadCacheStatusType.Available;
             if (cached && string.IsNullOrWhiteSpace(cacheData))
             {
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting cache with 'cached'=true requires 'cacheData'.");
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting cache with 'cacheStatus'='Available' requires 'cacheData'.");
             }
             
             var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
             package.DownloadCacheDate = DateTime.UtcNow;
-            package.DownloadCacheStatus = cached ? PackageDownloadCacheStatusType.Available : PackageDownloadCacheStatusType.Checked;
+            package.DownloadCacheStatus = downloadCacheStatus;
             if (!string.IsNullOrWhiteSpace(cacheData)) package.DownloadCache = cacheData;
 
             packageSvc.SaveMinorPackageChanges(package);

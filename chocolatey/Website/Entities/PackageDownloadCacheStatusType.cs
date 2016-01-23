@@ -23,6 +23,7 @@ namespace NuGetGallery
         Unknown,
         Checked,
         Available,
+        Investigate,
         Exempted,
     }
 }
