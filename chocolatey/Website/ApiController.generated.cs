@@ -98,7 +98,7 @@ namespace NuGetGallery {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DownloadCachePackage()
         {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.CleanupPackage);
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DownloadCachePackage);
         }
 
         [NonAction]
@@ -156,6 +156,9 @@ namespace NuGetGallery {
 
 
             public readonly string CleanupPackage = "CleanupPackageApi";
+
+
+            public readonly string DownloadCachePackage = "DownloadCachePackageApi";
 
 
             public readonly string GetPackageIds = "PackageIDs";
