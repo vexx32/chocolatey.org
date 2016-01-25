@@ -206,7 +206,13 @@
         </h2>
     </div>
     
-    @if (Model.IsInstallOrPortable)
+     @if (Model.IsDownloadCacheAvailable)
+      {
+          <div class="message approved">Private cached downloads available for licensed users. Never experience 404 breakages again! <a href="https://github.com/chocolatey/choco/wiki/PackageDownloadCache">Learn more...</a></div>
+          <br />
+      }
+
+  @if (Model.IsInstallOrPortable)
     {
         <div class="app-or-tool-message">This package is likely a meta/virtual (*) or an installer (*.install) or portable (*.portable) application package. 
           <ul>

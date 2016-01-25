@@ -58,6 +58,7 @@ namespace NuGetGallery
             PackageTestResultsStatus = package.PackageTestResultStatus;
             PackageTestResultsUrl = package.PackageTestResultUrl ?? string.Empty;
             PackageValidationResultStatus = package.PackageValidationResultStatus;
+            IsDownloadCacheAvailable = package.DownloadCacheStatus == PackageDownloadCacheStatusType.Available;
         }
 
         public string Id { get { return package.PackageRegistration.Id; } }
@@ -92,6 +93,8 @@ namespace NuGetGallery
         public PackageAutomatedReviewResultStatusType PackageTestResultsStatus { get; set; }
         public string PackageTestResultsUrl { get; set; }
         public PackageAutomatedReviewResultStatusType PackageValidationResultStatus { get; set; }
+
+        public bool IsDownloadCacheAvailable { get; set; }
         
         public DateTime? ApprovedDate { get; set; }
 
