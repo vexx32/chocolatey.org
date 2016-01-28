@@ -659,11 +659,19 @@
                                     break;
                                 case ".xml":
                                 case ".config":
+                                case ".nuspec":
                                     shBrush = "xml";
                                     break;
                                 case ".js":
                                 case ".json":
                                     shBrush = "js";
+                                    break;
+                                case ".template":
+                                    shBrush = "plain";
+                                    if (file.FilePath.EndsWith(".nuspec.template"))
+                                    {
+                                        shBrush = "xml";
+                                    }
                                     break;
                                 default:
                                     shBrush = "plain";
