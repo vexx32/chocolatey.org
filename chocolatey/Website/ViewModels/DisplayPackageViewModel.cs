@@ -82,12 +82,14 @@ namespace NuGetGallery
                 return Dependencies.DependencySets.AnySafe(dependencySet =>
                 {
                     var id = Id.to_lower();
-                    return dependencySet.Value.Any(d =>
-                        d.Id.Equals("{0}.install".format_with(id), StringComparison.InvariantCultureIgnoreCase)
-                        || d.Id.Equals("{0}.portable".format_with(id), StringComparison.InvariantCultureIgnoreCase)
-                        || d.Id.Equals("{0}.app".format_with(id), StringComparison.InvariantCultureIgnoreCase)
-                        || d.Id.Equals("{0}.tool".format_with(id), StringComparison.InvariantCultureIgnoreCase)
-                        || d.Id.Equals("{0}.commandline".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                    return dependencySet.Value.AnySafe(d =>
+                        d != null && ( 
+                            d.Id.Equals("{0}.install".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                            || d.Id.Equals("{0}.portable".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                            || d.Id.Equals("{0}.app".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                            || d.Id.Equals("{0}.tool".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                            || d.Id.Equals("{0}.commandline".format_with(id), StringComparison.InvariantCultureIgnoreCase)
+                        )
                     );
                 });
             }
