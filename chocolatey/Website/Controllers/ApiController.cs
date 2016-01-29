@@ -320,7 +320,7 @@ namespace NuGetGallery
 
             if (!package.PackageCleanupResultDate.HasValue) package.PackageCleanupResultDate = DateTime.UtcNow;
            
-            packageSvc.ChangePackageStatus(package, reject ? PackageStatusType.Rejected : package.Status, package.ReviewComments, cleanupComments, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: package.SubmittedStatus, assignReviewer: false);
+            packageSvc.ChangePackageStatus(package, reject ? PackageStatusType.Rejected : package.Status, package.ReviewComments, cleanupComments, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: package.SubmittedStatus, assignReviewer: reject);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
