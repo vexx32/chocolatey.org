@@ -2,7 +2,6 @@
 
 http://chocolatey.org
 
-
 ## CONTRIBUTING
 **WIP**
 
