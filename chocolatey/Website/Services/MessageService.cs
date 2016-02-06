@@ -441,12 +441,32 @@ The {3} Team";
                 package.PackageRegistration.Id,
                 package.Version);
             string body = @"'{0}' is {3}.
-{4}
+{6}{4}
 
 Package Url: {1} 
 Maintainer(s): {2}
 {5}
 ";
+            bool submitted = package.Status == PackageStatusType.Submitted;
+            var tldrText = "Current status = ";
+            switch (package.SubmittedStatus)
+            {
+                case PackageSubmittedStatusType.Pending:
+                     tldrText += "Pending automated review";
+                    break;   
+                case PackageSubmittedStatusType.Ready:
+                     tldrText += "Ready for review";
+                    break;    
+                case PackageSubmittedStatusType.Waiting:
+                     tldrText += "Waiting for Maintainer to take corrective action";
+                    break;
+                case PackageSubmittedStatusType.Responded:
+                     tldrText += "Maintainer responded, waiting for review/Maintainer update";
+                    break;
+                case PackageSubmittedStatusType.Updated:
+                     tldrText += "Maintainer updated, waiting for Reviewer";
+                    break;
+            }
 
             body = String.Format(
                 CultureInfo.CurrentCulture,
@@ -456,7 +476,8 @@ Maintainer(s): {2}
                 string.Join(", ", package.PackageRegistration.Owners.Select(x => x.Username)),
                 package.Status.GetDescriptionOrValue(),
                 GetModerationMessage(package, comments, fromUser),
-                GetInformationForMaintainers(package, comments)
+                GetInformationForMaintainers(package, comments),
+                submitted ? "{0}{1}{1}".format_with(tldrText,Environment.NewLine) : string.Empty
             );
 
             subject = String.Format(
