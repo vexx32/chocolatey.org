@@ -51,10 +51,10 @@
         <span id="AverageModerationWaitTimeHours" class="num"></span>average moderation approval wait time (hours)
     </span>
     <span class="stat" title="Packages ready for a moderator to review">
-        <span id="PackagesReadyForReviewModeration" class="num"></span>packages ready for moderation review
+        <span id="PackagesReadyForReviewModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">packages ready for moderation review</a>
     </span>
     <span class="stat" title="All packages under moderation, includes packages that are waiting for a mainter to fix something">
-        <span id="TotalPackagesInModeration" class="num"></span>total packages under moderation
+        <span id="TotalPackagesInModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">total packages under moderation</a>
     </span>
 </section>
 
