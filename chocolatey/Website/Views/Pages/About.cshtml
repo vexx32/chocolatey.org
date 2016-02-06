@@ -45,12 +45,22 @@
         over 20 years of experience in writing fast, efficient and secure websites.
     </p>
     <p>
-        Package moderation and package signing are planned to increase the security of the
+        Package moderation was implemented in October 2014. Every version of a package that 
+        comes through goes through at least two forms of automated review. If the package
+        is not a trusted package, then a human must check over what is not easy for a
+        computer to find to ensure that the packages are not doing anything malicious, but
+        installing the software they state they are installing. Moderation does not check
+        that the software that the package installs is free of crapware (at least not as 
+        of February 2016).
+    </p>
+    <p>
+        Future security enhancements like package signing are planned to increase the security of the
         community feed. Bear with us, this is going to take time to get into place. The
         plan is that a moderator would review and sign off on a package with a cryptographic
         key. Users of Chocolatey would only need to trust moderators. As moderators are
         shifted, updates of Chocolatey will reflect this. There will also be an out of band
-        way for users to trust a new maintainer.
+        way for users to trust a new maintainer. <br />
+        For other security enhancements, please see <a href="https://github.com/chocolatey/choco/wiki/Security#chocolateyorg-the-community-feed">Security and the community feed</a>.
     </p>
     <p>
         The repository for issues/enhancements/requests for Chocolatey.org at <a href="https://github.com/chocolatey/chocolatey.org">
@@ -72,11 +82,11 @@
         if not sooner.
     </p>
     <p>
-        The repository for issues/enhancements/requests for Chocolatey at <a href="https://github.com/chocolatey/chocolatey">
+        The repository for issues/enhancements/requests for Chocolatey at <a href="https://github.com/chocolatey/choco">
         GitHub Chocolatey</a>
         <br />
         <span>Note that broken packages should be reported back to package maintainers,
-        not to the client repository. </span>
+        not to the client repository or on the mailing list. For more information, see <a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">the triage process</a>.</span>
     </p>
 </article>
 <article class="about">
@@ -85,7 +95,7 @@
         <strong>What is the difference between Chocolatey and NuGet?</strong> NuGet is for
         development libraries, Chocolatey is a binary machine package manager. Typically
         you can think of it like this: <strong><em>"You use NuGet to get 3rd party libraries
-        that you use to build the applications/tools that you host on Chocolatey."</em></strong>
+        that you use to build the tools and applications that you host on Chocolatey."</em></strong>
     </p>
     <p>
         <strong>How do I contact the Chocolatey group?</strong> The best way to do this
@@ -99,38 +109,62 @@
     <p>
         <strong>Why is my software listed here? I haven't given anyone distribution permission!</strong>
         Many times the way Chocolatey works is to use PowerShell to download the package
-        from the official distribution point, this way no distribution rules are broken.
+        from the official distribution point, this way no distribution rights are violated.
         This is not always the case so feel free to reach out to the site administrators
         (the email address is chocolateywebadmin at google groups dot com) if you do have
-        questions.
+        questions. Also see <a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess#are-you-a-software-vendor">Software vendor</a> 
+        for more details.
     </p>
     <p>
         <strong>I am the owner of software listed here and would like to maintain the package.</strong>
         That's awesome to hear! The way this works out is to use the contact site admins
         link on the package page and we will handle reaching out to the current maintainers
-        for you.
+        for you. Also see <a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess#are-you-a-software-vendor">Software vendor</a> 
+        for more details.
     </p>
     <p>
         <strong>How do I know if I can trust the community feed (the packages on this site?)</strong>
-        Until we have package moderation in place, the answer is that you can't trust the
-        packages here. If you require trust (e.g. most organizations require this), you
+        Even with moderation in place, the answer is that you can't fully trust the
+        packages here. They are created by community members and although moderated to 
+        determine that they are installing the software the package is based on and that
+        the package itself doesn't do anything malicious, it makes no guarantees about 
+        the underlying software that is installed. In some cases package maintainers do
+        not implement checksums on the downloads, so there is also not a guarantee that what
+        the original maintainers/moderators expected for you to get is what you get. 
+        We will make checksums a requirement in the future to combat this, but for now you should
+        be somewhat careful about placing full trust in something you cannot control.<br /><br />
+
+        If you require trust (e.g. most organizations require this), you
         should have an internal feed with vetted packages using internal resources. You
         should always decide whether you trust the maintainer(s) of the package, and even
         then you may want to inspect the package prior to installing. You can inspect packages
-        easily with <a href="https://chocolatey.org/packages/nugetpackageexplorer">nuget
-        package explorer</a> or by clicking download on the package page (and then treating
-        the nupkg as a zip archive).
+        easily by clicking download on the package page (and then treating
+        the nupkg file as a zip archive).
+    </p>
+    <p>
+      <strong>I'm an organization wanting to use Chocolatey.</strong>
+      Awesome! Many organizations use Chocolatey, but the caveat is that they don't use the packages 
+      you will find on this site because they have a low tolerance for breakages, and require a higher 
+      trust and control over packages.<br /><br />
+      Quite a few community folks use the packages on this site, which is a feed of packages provided and 
+      maintained by the community (it is also known as the community feed). Packages on the community 
+      feed usually download software from official distribution points. When software owners move 
+      download locations or other breakages occur because of the internet, the package is broken until 
+      the new location is specified in an updated version of the package.<br /><br />
+      For folks in the community that are not using Chocolatey for production purposes, it is fine to 
+      use the community feed. For organizations that have a low tolerance for breakages and require a 
+      higher level of security, control, and trust, a self-hosted Chocolatey server is the recommended 
+      option. This guarantees that your installs, upgrades, and uninstalls will always work every 
+      time. This gives you complete control over what software gets installed. Also because you are 
+      vetting newer versions, you control when those newer versions are available for upgrade.<br /><br />
+      
+      See <a href="https://github.com/chocolatey/choco/wiki/How-To-Host-Feed">Hosting your own internal server</a> 
+      (it has non-Windows options as well).
     </p>
     <p>
         <strong>There is a package that has is broken, needs updating or something else.</strong>
-        Please use the contact maintainers link to let them know. Many packages also have
-        github repositories where the maintainers keep the packages. If you go to a maintainer's
-        profile (linked from package page, click on maintainer), their profiles will many
-        times include the link to the github repository where they keep their packages.
-        If contacting the maintainer or filing a Pull Request doesn't get the package updated
-        within a certain amount of time, there are steps we can take to TOS a package. This
-        is known as the <a title="Package Triage Process" href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">
-        Package Triage Process</a>.
+        Please read over the <a title="Package Triage Process" href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">
+        Package Triage Process</a> for details.
     </p>
     <p>
         <strong>Who <em>owns</em> Chocolatey?</strong> The copyright for Chocolatey belongs
@@ -139,9 +173,9 @@
         in which they are built for.
     </p>
     <p>
-        <strong>Are there plans to offer a pro version of Chocolatey?</strong> Yes! Ultimately
-        there are some things that we want to offer that are not free to us, so we can't
-        offer them for free. We believe these things are important for the community, so
+        <strong>Are there plans to offer a pro/business version of Chocolatey?</strong> Yes! 
+        Ultimately there are some things that we want to offer that are not free to us, so we 
+        can't offer them for free. We believe these things are important for the community, so
         we want to offer an even more stable and safe experience.
     </p>
     <p>

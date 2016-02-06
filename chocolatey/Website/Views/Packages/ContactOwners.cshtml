@@ -6,22 +6,24 @@
 
 <h1 class="page-heading">Contact the Maintainers of <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
 @if (Model.Owners.Any()) {
-    <h3>Is there a problem with the installation of the package?</h3>
-    <ul>
-        <li>Provide the output of your installation command or a link to a gist with it. Please add '-debug' to your command when reporting as most maintainers will ask for the debugging output.</li>
-    </ul>
-
     <p class="message">
         By submitting this form, you agree to <em>disclose your email address</em> 
         to the package maintainers listed below so they can reply to you.
     </p>
-    <p class="warning">
-        Do not share sensitive information with this form. <br />
-        Do not use "&lt;" or "&gt;" with this form - it will not submit correctly.
+    <p class="message warning">
+      Do not share sensitive information with this form. <br />
+      Do not use "&lt;" or "&gt;" with this form - it will not submit correctly.
     </p>
+    <div class="message error">
+        Is the package broken? and/or outdated?
+     <ul>
+       <li>First, please read over <a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess#package-is-broken">the package is broken / outdated</a>.</li>
+       <li>Provide a link to a gist with the output of running your command. Please add '-debug -verbose' to your command when reporting as most maintainers will ask for the debugging output.</li>
+    </ul>
+    </div>
     
-    using (Html.BeginForm())
-    {
+  using (Html.BeginForm())
+  {
         <fieldset class="form">
             <legend>Contact Maintainers</legend>
             @Html.AntiForgeryToken()
@@ -53,7 +55,7 @@
              @Html.SpamPreventionFields()
             <input type="submit" value="Send" title="Send your message to the maintainers of '@Model.PackageId'" />
         </fieldset>
-    }
+  }
 
 }
 else
