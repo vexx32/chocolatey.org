@@ -901,7 +901,6 @@ namespace NuGetGallery
             }
 
             var skipsVerification = package.PackageRegistration.ExemptedFromVerification;
-
             if ((package.PackageTestResultDate.HasValue || skipsVerification) && package.PackageValidationResultDate.HasValue)
             {
                 //we don't do human moderation for prereleases
@@ -981,6 +980,7 @@ namespace NuGetGallery
         public void ResetPackageTestStatus(Package package)
         {
             package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
+            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Pending;
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
             NotifyIndexingService(package);
