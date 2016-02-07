@@ -735,6 +735,14 @@ namespace NuGetGallery
             var submittedStatusChanged = false;
             var newReviewCommentsOriginallyEmpty = string.IsNullOrWhiteSpace(newReviewComments);
 
+            if (package.Status == PackageStatusType.Rejected && status == PackageStatusType.Submitted)
+            {
+                // unrejecting, provide another 15 days
+                if (package.PackageCleanupResultDate.HasValue) package.PackageCleanupResultDate = DateTime.UtcNow;
+                //todo: Set back to ready status?
+                //if (package.SubmittedStatus == PackageSubmittedStatusType.Waiting && submittedStatus == package.SubmittedStatus)
+            }
+
             if (package.Status == PackageStatusType.Submitted && package.SubmittedStatus != submittedStatus)
             {
                 submittedStatusChanged = true;
