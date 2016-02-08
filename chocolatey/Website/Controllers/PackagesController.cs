@@ -347,7 +347,7 @@ namespace NuGetGallery
 
             if (moderatorQueue)
             {
-                var submittedPackages = packageSvc.GetSubmittedPackages().ToList();
+                var submittedPackages = packageSvc.GetSubmittedPackages(useCache: !Request.IsAuthenticated).ToList();
 
                 var updatedStatus = PackageSubmittedStatusType.Updated.ToString();
                 var respondedStatus = PackageSubmittedStatusType.Responded.ToString();

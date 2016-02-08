@@ -36,7 +36,7 @@ namespace NuGetGallery
 
         IQueryable<Package> GetPackagesForListing(bool includePrerelease);
 
-        IQueryable<Package> GetSubmittedPackages();
+        IEnumerable<Package> GetSubmittedPackages(bool useCache);
 
         void PublishPackage(string id, string version);
 

@@ -249,13 +249,22 @@ namespace NuGetGallery
                        : packages.Where(p => p.IsLatestStable);
         }
 
-        public IQueryable<Package> GetSubmittedPackages()
+        public IEnumerable<Package> GetSubmittedPackages(bool useCache)
         {
-            return packageRepo.GetAll()
-                              .Include(x => x.PackageRegistration)
-                              .Include(x => x.PackageRegistration.Owners)
-                              .Where(p => !p.IsPrerelease)
-                              .Where(p => p.StatusForDatabase == submittedStatus);
+            var packagesQuery = packageRepo.GetAll()
+                                    .Include(p => p.Authors)
+                                    .Include(x => x.PackageRegistration)
+                                    .Include(x => x.PackageRegistration.Owners)
+                                    .Where(p => !p.IsPrerelease)
+                                    .Where(p => p.StatusForDatabase == submittedStatus);
+
+            return useCache ? Cache.Get(
+                        "submittedPackages",
+                        DateTime.UtcNow.AddMinutes(5),
+                        () => packagesQuery.ToList())
+                    : packagesQuery.ToList();
+
+
         }
 
         public IEnumerable<Package> FindPackagesByOwner(User user)
