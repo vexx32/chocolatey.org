@@ -974,8 +974,9 @@ namespace NuGetGallery
                                     : string.Format(@"{0} The package status will be changed and will be waiting on your next actions.
 
 * **NEW!** We have a [test environment](https://github.com/chocolatey/chocolatey-test-environment) for you to replicate the testing we do. This can be used at any time to test packages! See https://github.com/chocolatey/chocolatey-test-environment
-* Please log in and leave a review comment if you need the verifier rerun for the existing version (or for other possible concerns).
-* If the verifier is [incompatible with the package](https://github.com/chocolatey/package-verifier/wiki), please contact site admins if package needs to bypass testing (e.g. package installs specific drivers).
+* Please log in and leave a review comment if you have questions and/or comments.
+* If you see the verifier needs to rerun testing against the package without resubmitting (a issue in the test results), you can do that on the package page in the review section.
+* If the verifier is [incompatible with the package](https://github.com/chocolatey/package-verifier/wiki), please log in and leave a review comment if the package needs to bypass testing (e.g. package installs specific drivers).
 * Automated testing can also fail when a package is not completely silent or has pop ups ([AutoHotKey](https://chocolatey.org/packages/autohotkey.portable) can assist - a great example is the [VeraCrypt package](https://chocolatey.org/packages/veracrypt/1.16#files)). 
 * A package that cannot be made completely unattended should have the notSilent tag. Note that this must be approved by moderators.", Environment.NewLine);
 
