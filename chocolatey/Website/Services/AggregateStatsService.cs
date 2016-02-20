@@ -23,7 +23,7 @@ namespace NuGetGallery
   (Select SUM(DownloadCount) From Packages) AS DownloadCount,
   (Select COUNT([Key]) From [dbo].[Packages] Where [Status] = 'Submitted' And SubmittedStatus <> 'Waiting') AS PackagesReadyForReview,
   (Select COUNT([Key]) From [dbo].[Packages] Where [Status] = 'Submitted') AS AllPackagesUnderModeration,
-  (Select AVG(DATEDIFF(HOUR, Created, ApprovedDate)) From dbo.Packages Where [Status] = 'Approved' And ReviewedById is Not Null And Created >= DATEADD(DAY, -14, GETUTCDATE())) AS AverageModerationWaitTime,
+  (Select AVG(DATEDIFF(HOUR, Created, ApprovedDate)) From dbo.Packages Where [Status] = 'Approved' And ReviewedById is Not Null And Created >= DATEADD(DAY, -30, GETUTCDATE())) AS AverageModerationWaitTime,
   (Select COUNT([Key]) From [dbo].[Packages] Where IsLatestStable = 1 And PackageTestResultStatus = 'Passing') AS GoodPackages,
   (Select COUNT([Key]) From [dbo].[Packages] Where IsLatest = 1 And Created >= DATEADD(MONTH, -4, GETUTCDATE())) AS UpToDatePackages,
   (Select COUNT([Key]) From [dbo].[Packages] Where IsLatest = 1 And Created < DATEADD(YEAR, -1, GETUTCDATE())) AS OlderThanOneYearPackages
