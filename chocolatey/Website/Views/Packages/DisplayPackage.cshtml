@@ -25,6 +25,7 @@
     var moderationRole = User != null && User.IsInAnyModerationRole() && !maintainer;
     var moderationRoleAndMaintaner = User != null && User.IsInAnyModerationRole() && maintainer;
     var anyPackageRole = User != null && (moderationRole || maintainer);
+    var hasPreviousExistingVersions = Model.PackageVersions.AnySafe(pv => pv.Listed && !pv.Prerelease);
 
     var expandForModeration = Model.Status == PackageStatusType.Submitted && moderationRole;
 
@@ -339,10 +340,19 @@
                 <ul>
                     <li>Reviewers/Moderators must follow review process at <a href="https://github.com/chocolatey/choco/wiki/Moderation#reviewer--moderator-process">moderation</a>.
                     <li>**Please do not reject a package until the end of the conversation.**</li>
-                    <li>Moderators: Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
-                    <li>For new, unapproved packages only: check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li>
                     <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
-                    <li>Check dependencies, make sure they are listed.</li>
+                    @if (Model.Status == PackageStatusType.Approved || Model.Status == PackageStatusType.Exempted)
+                    {
+                      <li>Moderators: Be very careful about moving a package from approved/exempt into submitted status. A package may be repushed when in this status (no matter how many downloads).</li>
+                    }
+                    @if (Model.Dependencies.DependencySets.Any())
+                    {
+                      <li>Check dependencies, make sure they are listed.</li>
+                    }
+                    @if (!hasPreviousExistingVersions)
+                    {
+                      <li>NOTE! This is a brand new package with no previous existing versions (prereleases do not count): check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li> 
+                    }
                     <li>Check tags</li>
                     <li>Be Nice! :)</li>
                 </ul>
