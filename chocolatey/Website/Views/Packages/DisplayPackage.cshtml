@@ -653,65 +653,66 @@
   }
     @if (Model.Files.Any())
     {
+        var random = new Random();
         <ul>
-            @foreach (var file in Model.Files)
-            {
-                <li>@file.FilePath
-                    @if (!string.IsNullOrWhiteSpace(file.FileContent))
+          @foreach (var file in Model.Files)
+          {
+              <li>@file.FilePath
+                @if (!string.IsNullOrWhiteSpace(file.FileContent))
+                {
+                    var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-").Replace(" ", string.Empty) + "-" + random.Next();
+                    if (expandForModeration)
                     {
-                        var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-");
-                        if (expandForModeration)
-                        {
-                            <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Hide</a>
-                            <script type="text/javascript">
-                                $('#@fileDivId').show()
-                            </script>
-                        }
-                        else
-                        {
-                             <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Show</a>
-                        }
-                        <br />
-                        <div id="@fileDivId" class="package-file-content">
-                            @{ var shBrush = "";
-                            }
-                            @switch (Path.GetExtension(file.FilePath))
-                            {
-                                case ".ps1":
-                                case ".psm1":
-                                    shBrush = "ps";
-                                    break;
-                                case ".xml":
-                                case ".config":
-                                case ".nuspec":
-                                    shBrush = "xml";
-                                    break;
-                                case ".js":
-                                case ".json":
-                                    shBrush = "js";
-                                    break;
-                                case ".template":
-                                    shBrush = "plain";
-                                    if (file.FilePath.EndsWith(".nuspec.template"))
-                                    {
-                                        shBrush = "xml";
-                                    }
-                                    break;
-                                default:
-                                    shBrush = "plain";
-                                    break;
-                            }
-                            <pre class="brush: @shBrush">@file.FileContent</pre>
-                        </div>
-                        if (expandForModeration)
-                        {
-                            <script type="text/javascript">
-                                $('#@fileDivId').show()
-                            </script>
-                        }
+                        <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Hide</a>
+                        <script type="text/javascript">
+                          $('#@fileDivId').show()
+                        </script>
                     }
-                </li>
-            }
+                    else
+                    {
+                        <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Show</a>
+                    }
+                    <br />
+                    <div id="@fileDivId" class="package-file-content">
+                      @{ var shBrush = "";
+                      }
+                      @switch (Path.GetExtension(file.FilePath))
+                      {
+                          case ".ps1":
+                          case ".psm1":
+                              shBrush = "ps";
+                              break;
+                          case ".xml":
+                          case ".config":
+                          case ".nuspec":
+                              shBrush = "xml";
+                              break;
+                          case ".js":
+                          case ".json":
+                              shBrush = "js";
+                              break;
+                          case ".template":
+                              shBrush = "plain";
+                              if (file.FilePath.EndsWith(".nuspec.template"))
+                              {
+                                  shBrush = "xml";
+                              }
+                              break;
+                          default:
+                              shBrush = "plain";
+                              break;
+                      }
+                      <pre class="brush: @shBrush">@file.FileContent</pre>
+                    </div>
+                    if (expandForModeration)
+                    {
+                        <script type="text/javascript">
+                          $('#@fileDivId').show()
+                        </script>
+                    }
+                }
+              </li>
+          }
         </ul>
     }
     else
