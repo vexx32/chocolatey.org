@@ -322,11 +322,18 @@
     }
     
 
-    @if (moderationRole || (maintainer && Model.Status != PackageStatusType.Approved))
+    @if (anyPackageRole)
     {
         if (Model.Listed || Model.Status == PackageStatusType.Rejected)
         {
-        <p class="message review-instructions">Review Package <a onclick="if ($(this).text() == 'Hide') {$('#div-review').hide();$(this).text('Show');} else {$('#div-review').show();$(this).text('Hide');}">Show</a></p>
+        <p class="message review-instructions"> @if (Model.Status == PackageStatusType.Approved)
+                                                {
+                                                  <text> Package Communication / Package Test Rerun</text>
+                                                }
+                                                else
+                                                {
+                                                  <text>Package Review</text>
+                                                } <a onclick="if ($(this).text() == 'Hide') {$('#div-review').hide();$(this).text('Show');} else {$('#div-review').show();$(this).text('Hide');}">Show</a></p>
             <script type="text/javascript">
                 $(function() {
                     $('#div-review').hide();
@@ -360,8 +367,13 @@
             else
             {
                 <ul>
-                    <li>You can respond to review comments here.</li>
-                    <li>You are also able to self-reject packages that may be out of date or incorrect (if the verifier fails the install). See <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-self-reject-a-package">self-reject</a> for more information.</li>
+                  <li>You can respond to review comments here.</li>
+                  
+                  @if (Model.Status == PackageStatusType.Submitted)
+                  {
+                     <li>You are also able to self-reject packages that may be out of date or incorrect (if the verifier fails the install). See <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-self-reject-a-package">self-reject</a> for more information.</li>
+                  }
+                 
                 </ul>
             }
 
