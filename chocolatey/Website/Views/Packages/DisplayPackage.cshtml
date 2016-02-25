@@ -563,10 +563,13 @@
     <div id="div-filessection">
     @if (expandForModeration)
     {
+        var nuspecId = @Model.Id + "-nuspec";
         <ul>
-          <li>@Model.Id<span>.nuspec</span>
-      
-        <pre class="brush: xml">
+          <li>@Model.Id<span>.nuspec</span> 
+            <a onclick="if ($(this).text() == 'Hide') {$('#@nuspecId').hide();$(this).text('Show');} else {$('#@nuspecId').show();$(this).text('Hide');}">Hide</a>
+            <br />
+            <div id="@nuspecId" class="package-file-content">    
+              <pre class="brush: xml">
 &lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!-- This is not exact, it's only based on what is stored about the package --&gt;
 &lt;!-- description and releaseNotes left out for brevity --&gt;
@@ -589,12 +592,12 @@
 }
 @if (Model.Authors.AnySafe())
 {
-  var authors = new System.Text.StringBuilder();
-  foreach (var author in Model.Authors.OrEmptyListIfNull())
-  {
-    authors.Append(", " + author.Name.to_string().Trim());
-  }
-  if (authors.Length > 0) { authors.Remove(0, 2); }
+    var authors = new System.Text.StringBuilder();
+    foreach (var author in Model.Authors.OrEmptyListIfNull())
+    {
+        authors.Append(", " + author.Name.to_string().Trim());
+    }
+    if (authors.Length > 0) { authors.Remove(0, 2); }
 
     <text>&lt;authors&gt;@authors.to_string()&lt;/authors&gt;</text> 
 }
@@ -634,12 +637,12 @@
     &lt;summary&gt;NOTE: Not in model&lt;/summary&gt;
 @if (@Model.Tags.AnySafe())
 {
-  var tags = new System.Text.StringBuilder();
-  foreach (var tag in Model.Tags.OrEmptyListIfNull())
-  {
-    tags.Append(" " + tag.to_string().Trim());
-  }
-  if (tags.Length > 0) { tags.Remove(0, 1); }
+    var tags = new System.Text.StringBuilder();
+    foreach (var tag in Model.Tags.OrEmptyListIfNull())
+    {
+        tags.Append(" " + tag.to_string().Trim());
+    }
+    if (tags.Length > 0) { tags.Remove(0, 1); }
 
     <text>&lt;tags&gt;@tags.to_string()&lt;/tags&gt;</text>
 }   
@@ -658,8 +661,11 @@
 }
   &lt;/metadata&gt;
 &lt;/package&gt;
-        </pre>
-    
+          </pre>
+          <script type="text/javascript">
+            $('#@nuspecId').show()
+          </script>
+        </div>
       </li>
     </ul>    
   }
@@ -676,9 +682,6 @@
                     if (expandForModeration)
                     {
                         <a onclick="if ($(this).text() == 'Hide') {$('#@fileDivId').hide();$(this).text('Show');} else {$('#@fileDivId').show();$(this).text('Hide');}">Hide</a>
-                        <script type="text/javascript">
-                          $('#@fileDivId').show()
-                        </script>
                     }
                     else
                     {
