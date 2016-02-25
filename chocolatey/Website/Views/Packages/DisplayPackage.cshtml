@@ -563,7 +563,7 @@
     <div id="div-filessection">
     @if (expandForModeration)
     {
-        var nuspecId = @Model.Id + "-nuspec";
+        var nuspecId = @Model.Id.Replace(".","-") + "-nuspec";
         <ul>
           <li>@Model.Id<span>.nuspec</span> 
             <a onclick="if ($(this).text() == 'Hide') {$('#@nuspecId').hide();$(this).text('Show');} else {$('#@nuspecId').show();$(this).text('Hide');}">Hide</a>
