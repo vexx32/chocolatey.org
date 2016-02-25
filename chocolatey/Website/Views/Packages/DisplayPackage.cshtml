@@ -459,7 +459,7 @@
                             }
                             else
                             {
-                                var trustedText = @Model.IsTrusted ? "is trusted" : "follows normal workflow";
+                              var trustedText = @Model.IsTrusted ? "is trusted" : "follows normal workflow";
                             
                                 <text>This package</text> @trustedText<text>.</text>
                             }
@@ -501,7 +501,7 @@
                             }
                             else
                             {
-                                var testInformation = @Model.IsExemptedFromVerification ? "skips automatic verification (testing)" : "follows normal workflow";
+                              var testInformation = @Model.IsExemptedFromVerification ? "skips automatic verification (testing)" : "follows normal workflow";
                                 
                                 <text>This package</text> @testInformation<text>.</text>
                                 
@@ -717,17 +717,17 @@
     else
     {
         <ul>
-            @if (@Model.PublishedDate < new DateTime(2014, 7, 25))
-            {
-                <li>This package was created prior to July 2014 - when package content started being included on the site. You can download and unzip the package or use <a href="https://chocolatey.org/packages/NugetPackageExplorer">Nuget Package Explorer</a> to see the contents.</li>
-            }
-            else
-            {
-                <li>This package has no content.</li>
-            }
+          @if (@Model.PublishedDate < new DateTime(2014, 7, 25))
+          {
+              <li>This package was created prior to July 2014 - when package content started being included on the site. You can download and unzip the package or use <a href="https://chocolatey.org/packages/NugetPackageExplorer">Nuget Package Explorer</a> to see the contents.</li>
+          }
+          else
+          {
+              <li>This package has no content.</li>
+          }
         </ul>
     }
-    </div>
+  </div>
 
     @Html.Partial("_PackageDependencies", Model.Dependencies)
 
@@ -795,7 +795,7 @@
         <tbody>
             @foreach (var packageVersion in Model.PackageVersions.Take(packageVersions < packageVersionsDefaultDisplay ? packageVersions : packageVersionsDefaultDisplay))
             {
-                var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: true);
+              var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: true);
                 @Html.Partial("_ListVersion", packageVersionList)
             }
         </tbody>
@@ -804,7 +804,7 @@
             <tbody>
                 @foreach (var packageVersion in Model.PackageVersions.Skip(packageVersionsDefaultDisplay))
                 {
-                    var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: false);
+                  var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: false);
                     @Html.Partial("_ListVersion", packageVersionList)
                 }
             </tbody>
@@ -839,10 +839,10 @@
         </ul>
     </p>
     @{
-        var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
-        var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
-        bool forceSsl = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["ForceSSL"]);
-        var commentPostUrl = (forceSsl ? "https" : Request.Url.Scheme) + "://" + Request.Url.Authority + @Url.Package(Model.Id) + "/notify-comment";
+      var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
+      var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
+      bool forceSsl = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["ForceSSL"]);
+      var commentPostUrl = (forceSsl ? "https" : Request.Url.Scheme) + "://" + Request.Url.Authority + @Url.Package(Model.Id) + "/notify-comment";
     }
 	<a name="disqus"></a>
     <div id="disqus_thread">
