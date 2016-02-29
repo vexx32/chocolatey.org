@@ -14,5 +14,6 @@ namespace NuGetGallery
         public string GalleryOwnerEmail { get; set; }
         public bool ConfirmEmailAddresses { get; set; }
         public int PackageOperationsUserKey { get; set; }
+        public string ScanResultsKey { get; set; }
     }
 }

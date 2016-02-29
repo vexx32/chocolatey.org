@@ -221,6 +221,20 @@ namespace NuGetGallery
         /// </remarks>
         public string DownloadCache { get; set; }
 
+        public PackageScanStatusType PackageScanStatus { get; set; }
+        [MaxLength(50)]
+        [Column("PackageScanStatus")]
+        public string PackageScanStatusForDatabase
+        {
+            get { return PackageScanStatus.ToString(); }
+            set
+            {
+                if (value == null) PackageScanStatus = PackageScanStatusType.Unknown;
+                else PackageScanStatus = (PackageScanStatusType)Enum.Parse(typeof(PackageScanStatusType), value);
+            }
+        }
+        public DateTime? PackageScanResultDate { get; set; }
+
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }
 

@@ -89,7 +89,9 @@ namespace NuGetGallery
                         IsDownloadCacheAvailable = p.DownloadCacheStatusForDatabase != null && p.DownloadCacheStatusForDatabase == cacheAvailableStatus,
                         DownloadCacheStatus = p.DownloadCacheStatusForDatabase,
                         DownloadCacheDate = p.DownloadCacheDate,
-                        DownloadCache = p.DownloadCache
+                        DownloadCache = p.DownloadCache,
+                        PackageScanStatus = p.PackageScanStatusForDatabase,
+                        PackageScanResultDate = p.PackageScanResultDate
                     });
         }
     

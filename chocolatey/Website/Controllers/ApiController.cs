@@ -17,10 +17,12 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
 using NuGet;
@@ -30,14 +32,16 @@ namespace NuGetGallery
     public partial class ApiController : AppController
     {
         private readonly IPackageService packageSvc;
+        private readonly IScanService scanSvc;
         private readonly IUserService userSvc;
         private readonly IPackageFileService packageFileSvc;
         private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
         private readonly GallerySetting settings;
 
-        public ApiController(IPackageService packageSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, GallerySetting settings)
+        public ApiController(IPackageService packageSvc, IScanService scanSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, GallerySetting settings)
         {
             this.packageSvc = packageSvc;
+            this.scanSvc = scanSvc;
             this.packageFileSvc = packageFileSvc;
             this.userSvc = userSvc;
             this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
@@ -374,5 +378,86 @@ namespace NuGetGallery
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
 
+        [ActionName("ScanPackageApi"), HttpGet]
+        public virtual ActionResult GetScanResults(string scanResultsKey, string id, string version, string sha256Checksum)
+        {
+            if (string.IsNullOrWhiteSpace(scanResultsKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, scanResultsKey));
+            if (string.IsNullOrWhiteSpace(sha256Checksum)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, sha256Checksum));
+
+            if (settings.ScanResultsKey.to_lower() != scanResultsKey.to_lower())
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, "The specified key does not provide the authority to get scan results for packages");
+            }
+
+            var results = scanSvc.GetResults(id, version, sha256Checksum);
+
+            var scanResults = new List<PackageScanResult>();
+            foreach (var result in results.OrEmptyListIfNull())
+            {
+                scanResults.Add(new PackageScanResult
+                {
+                    FileName = result.FileName,
+                    Sha256Checksum = result.Sha256Checksum,
+                    Positives = result.Positives.to_string(),
+                    TotalScans = result.TotalScans.to_string(),
+                    ScanDetailsUrl = result.ScanDetailsUrl,
+                    ScanData = result.ScanData,
+                    ScanDate = result.ScanDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture),
+                });
+            }
+
+            return new JsonNetResult(scanResults.ToArray());
+        }
+
+        [ActionName("ScanPackageApi"), HttpPost]
+        public virtual ActionResult SubmitPackageScanResults(string apiKey, string id, string version, string scanStatus, ICollection<PackageScanResult> scanResults)
+        {
+            Guid parsedApiKey;
+            if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
+
+            var testReporterUser = userSvc.FindByApiKey(parsedApiKey);
+            if (testReporterUser == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitscanresults"));
+            // Only the package operations user can submit results
+            if (testReporterUser.Key != settings.PackageOperationsUserKey) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitscanresults"));
+
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+
+            PackageScanStatusType packageScanStatus;
+            try
+            {
+                Enum.TryParse(scanStatus, true, out packageScanStatus);
+            }
+            catch (Exception)
+            {
+                packageScanStatus = PackageScanStatusType.Unknown;
+            }
+
+            if (packageScanStatus == PackageScanStatusType.Unknown)
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "'scanStatus' must be passed as 'NotFlagged', 'Flagged', or 'Investigate'.");
+            }
+
+            if (!scanResults.Any())
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "You must submit data with results.");
+            }
+            
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+
+            foreach (var result in scanResults)
+            {
+                scanSvc.SaveOrUpdateResults(id, version, result);
+            }
+            
+            package.PackageScanResultDate = DateTime.UtcNow;
+            package.PackageScanStatus = packageScanStatus;
+            packageSvc.SaveMinorPackageChanges(package);
+
+            return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package scan results have been updated.");
+        }
     }
 }

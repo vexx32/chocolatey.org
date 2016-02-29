@@ -68,6 +68,8 @@ namespace NuGetGallery
 
         private static void AppPostStart()
         {
+            ModelBinders.Binders.Add(typeof(PackageScanResult), new BaseModelBinder<PackageScanResult>());
+
             RegisterGlobalFilters(GlobalFilters.Filters);
 
             Routes.RegisterRoutes(RouteTable.Routes);
