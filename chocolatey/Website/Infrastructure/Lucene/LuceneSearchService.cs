@@ -111,7 +111,9 @@ namespace NuGetGallery
             if (!string.IsNullOrEmpty(doc.Get("PackageApprovedDate"))) approvedDate = DateTime.Parse(doc.Get("PackageApprovedDate"), CultureInfo.InvariantCulture);
             DateTime? downloadCacheDate = null;
             if (!string.IsNullOrEmpty(doc.Get("DownloadCacheDate"))) downloadCacheDate = DateTime.Parse(doc.Get("DownloadCacheDate"), CultureInfo.InvariantCulture);
-
+            DateTime? packageScanResultDate = null;
+            if (!string.IsNullOrEmpty(doc.Get("PackageScanResultDate"))) packageScanResultDate = DateTime.Parse(doc.Get("PackageScanResultDate"), CultureInfo.InvariantCulture);
+    
             var owners = doc.Get("FlattenedOwners")
                             .split_safe(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                             .Select(o => new User { Username = o })
@@ -183,9 +185,10 @@ namespace NuGetGallery
                 DownloadCacheStatusForDatabase = doc.Get("DownloadCacheStatus"),
                 DownloadCacheDate = downloadCacheDate,
                 DownloadCache = doc.Get("DownloadCache"),
+                PackageScanStatusForDatabase = doc.Get("PackageScanStatus"),
+                PackageScanResultDate = packageScanResultDate,
 
                 SupportedFrameworks = frameworks,
-
             };
         }
 

@@ -191,6 +191,16 @@ namespace NuGetGallery
                         .HasForeignKey(pf => pf.PackageKey);
 
             modelBuilder.Entity<PackageFile>().HasKey(pa => pa.Key);
+           
+            modelBuilder.Entity<ScanResult>().HasKey(sr => sr.Key);
+
+            modelBuilder.Entity<ScanResult>()
+                     .HasMany<Package>(pr => pr.Packages)
+                     .WithMany()
+                     .Map(
+                         c =>
+                         c.ToTable("PackageScanResults").MapLeftKey("ScanResultKey").MapRightKey("PackageKey"));
+
         }
     }
 }

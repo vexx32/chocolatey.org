@@ -182,6 +182,8 @@ namespace NuGetGallery
             container.RegisterPerWebRequest<IUserSiteProfilesService, UserSiteProfilesService>();
             container.RegisterPerWebRequest<IEntityRepository<UserSiteProfile>, EntityRepository<UserSiteProfile>>();
             container.Register<IImageFileService, ImageFileService>(Lifestyle.Singleton);
+            container.RegisterPerWebRequest<IEntityRepository<ScanResult>, EntityRepository<ScanResult>>();
+            container.RegisterPerWebRequest<IScanService, ScanService>();
         }
     }
 }

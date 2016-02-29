@@ -179,10 +179,6 @@ namespace NuGetGallery
 
             routes.MapServiceRoute(RouteName.V2ApiSubmittedFeed, "api/v2/submitted", typeof(V2SubmittedFeed));
 
-            //routes.MapRoute("v2" + RouteName.TestPackageApi, "api/v2/test/{id}/{version}",
-            //     new {controller = "Api", action = "TestPackageApi"}
-            //     );
-
             routes.MapRoute(
                  "v2" + RouteName.TestPackageApi, 
                  "api/v2/test/{id}/{version}", 
@@ -225,6 +221,13 @@ namespace NuGetGallery
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
+            ); 
+            
+            routes.MapRoute(
+                 "v2" + RouteName.ScanPackageApi,
+                 "api/v2/scan/{id}/{version}",
+                 MVC.Api.ScanPackage(), 
+                 defaults: null
             );
             
             routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());

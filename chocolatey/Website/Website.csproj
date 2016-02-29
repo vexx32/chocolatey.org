@@ -641,17 +641,23 @@
     <Compile Include="AuthenticationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\IScanService.cs" />
+    <Compile Include="Services\ScanService.cs" />
     <Compile Include="DataServices\V2Feed.svc.cs">
       <DependentUpon>V2Feed.svc</DependentUpon>
     </Compile>
     <Compile Include="DataServices\V2FeedPackage.cs" />
+    <Compile Include="MvcOverrides\BaseModelBinder.cs" />
     <Compile Include="Entities\EntityRepository.cs" />
     <Compile Include="Entities\GallerySetting.cs" />
     <Compile Include="Entities\PackageDownloadCacheStatusType.cs" />
     <Compile Include="Entities\PackageFramework.cs" />
+    <Compile Include="Entities\PackageScanResult.cs" />
+    <Compile Include="Entities\PackageScanStatusType.cs" />
     <Compile Include="Entities\PackageStatistics.cs" />
     <Compile Include="Entities\PackageTestResults.cs" />
     <Compile Include="Entities\PackageAutomatedReviewResultStatusType.cs" />
+    <Compile Include="Entities\ScanResult.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneCommon.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneFileSystem.cs" />
@@ -694,6 +700,10 @@
     <Compile Include="Migrations\201601212108511_DownloadCacheInformation.cs" />
     <Compile Include="Migrations\201601212108511_DownloadCacheInformation.Designer.cs">
       <DependentUpon>201601212108511_DownloadCacheInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602281953097_AddScanInformation.cs" />
+    <Compile Include="Migrations\201602281953097_AddScanInformation.Designer.cs">
+      <DependentUpon>201602281953097_AddScanInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="PackagesController.generated.cs">

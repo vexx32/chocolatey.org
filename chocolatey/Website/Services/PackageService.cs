@@ -403,6 +403,9 @@ namespace NuGetGallery
             package.Status = PackageStatusType.Submitted;
             package.SubmittedStatus = PackageSubmittedStatusType.Pending;
 
+            package.DownloadCacheStatus = PackageDownloadCacheStatusType.Unknown;
+            package.PackageScanStatus = PackageScanStatusType.Unknown;
+
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             package.PackageValidationResultDate = null;
             package.PackageCleanupResultDate = null;

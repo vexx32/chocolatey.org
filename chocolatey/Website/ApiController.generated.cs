@@ -99,6 +99,13 @@ namespace NuGetGallery {
         public System.Web.Mvc.ActionResult DownloadCachePackage()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DownloadCachePackage);
+        } 
+        
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ScanPackage()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ScanPackage);
         }
 
         [NonAction]
@@ -159,6 +166,9 @@ namespace NuGetGallery {
 
 
             public readonly string DownloadCachePackage = "DownloadCachePackageApi";
+
+
+            public readonly string ScanPackage = "ScanPackageApi";
 
 
             public readonly string GetPackageIds = "PackageIDs";
