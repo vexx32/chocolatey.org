@@ -440,7 +440,7 @@ namespace NuGetGallery
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "'scanStatus' must be passed as 'NotFlagged', 'Flagged', or 'Investigate'.");
             }
 
-            if (!scanResults.Any())
+            if (packageScanStatus != PackageScanStatusType.Investigate && !scanResults.Any())
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "You must submit data with results.");
             }
