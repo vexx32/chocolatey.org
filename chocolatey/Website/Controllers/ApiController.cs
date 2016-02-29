@@ -448,11 +448,11 @@ namespace NuGetGallery
             var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
-            foreach (var result in scanResults)
+            foreach (var result in scanResults.OrEmptyListIfNull())
             {
                 scanSvc.SaveOrUpdateResults(id, version, result);
             }
-            
+
             package.PackageScanResultDate = DateTime.UtcNow;
             package.PackageScanStatus = packageScanStatus;
             packageSvc.SaveMinorPackageChanges(package);
