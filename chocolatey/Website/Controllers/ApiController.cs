@@ -439,7 +439,7 @@ namespace NuGetGallery
 
             if (packageScanStatus == PackageScanStatusType.Unknown)
             {
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "'scanStatus' must be passed as 'NotFlagged', 'Flagged', or 'Investigate'.");
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "'scanStatus' must be passed as 'NotFlagged', 'Flagged', 'Exempted', or 'Investigate'.");
             }
 
             if (packageScanStatus != PackageScanStatusType.Investigate && !scanResults.Any())
