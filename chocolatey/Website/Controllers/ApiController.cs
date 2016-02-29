@@ -113,7 +113,7 @@ namespace NuGetGallery
             var packageToPush = ReadPackageFromRequest();
 
             // Ensure that the user can push packages for this partialId.
-            var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id, useCache:false);
+            var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id, useCache: false);
             if (packageRegistration != null)
             {
                 if (!packageRegistration.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
@@ -139,7 +139,8 @@ namespace NuGetGallery
             try
             {
                 packageSvc.CreatePackage(packageToPush, user);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}", ex.Message));
             }
@@ -198,7 +199,8 @@ namespace NuGetGallery
             {
                 // If we're using the newer API, the package stream is sent as a file.
                 stream = Request.Files[0].InputStream;
-            } else stream = Request.InputStream;
+            }
+            else stream = Request.InputStream;
 
             return new ZipPackage(stream);
         }
@@ -232,7 +234,7 @@ namespace NuGetGallery
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
             }
-          
+
             if (string.IsNullOrWhiteSpace(resultDetailsUrl))
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting test results requires 'resultDetailsUrl' and 'success'.");
@@ -247,14 +249,14 @@ namespace NuGetGallery
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting test results requires 'resultDetailsUrl' to be a Url.");
             }
 
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
-            
+
             packageSvc.ChangePackageTestStatus(package, success, resultDetailsUrl, testReporterUser);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package test results have been updated.");
         }
-   
+
         [ActionName("ValidatePackageApi"), HttpPost]
         public virtual ActionResult SubmitPackageValidationResults(string apiKey, string id, string version, bool success, string validationComments)
         {
@@ -270,13 +272,13 @@ namespace NuGetGallery
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
             }
-          
+
             if (string.IsNullOrWhiteSpace(validationComments))
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting validation results requires 'validationComments' and 'success'.");
             }
-            
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
             package.PackageValidationResultDate = DateTime.UtcNow;
@@ -296,8 +298,8 @@ namespace NuGetGallery
             packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: success ? package.SubmittedStatus : PackageSubmittedStatusType.Waiting, assignReviewer: false);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
-        } 
-        
+        }
+
         [ActionName("CleanupPackageApi"), HttpPost]
         public virtual ActionResult SubmitPackageCleanupResults(string apiKey, string id, string version, bool reject, string cleanupComments)
         {
@@ -318,12 +320,12 @@ namespace NuGetGallery
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting cleanup results requires 'cleanupComments' and 'reject'.");
             }
-            
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
             if (!package.PackageCleanupResultDate.HasValue) package.PackageCleanupResultDate = DateTime.UtcNow;
-           
+
             packageSvc.ChangePackageStatus(package, reject ? PackageStatusType.Rejected : package.Status, package.ReviewComments, cleanupComments, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: package.SubmittedStatus, assignReviewer: reject);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
@@ -365,8 +367,8 @@ namespace NuGetGallery
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Submitting cache with 'cacheStatus'='Available' requires 'cacheData'.");
             }
-            
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
             package.DownloadCacheDate = DateTime.UtcNow;
@@ -444,8 +446,8 @@ namespace NuGetGallery
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "You must submit data with results.");
             }
-            
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
+
+            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
             foreach (var result in scanResults.OrEmptyListIfNull())
