@@ -381,12 +381,12 @@ namespace NuGetGallery
         }
 
         [ActionName("ScanPackageApi"), HttpGet]
-        public virtual ActionResult GetScanResults(string scanResultsKey, string id, string version, string sha256Checksum)
+        public virtual ActionResult GetScanResults(string apiKey, string id, string version, string sha256Checksum)
         {
-            if (string.IsNullOrWhiteSpace(scanResultsKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, scanResultsKey));
-            if (string.IsNullOrWhiteSpace(sha256Checksum)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, sha256Checksum));
+            if (string.IsNullOrWhiteSpace(apiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
+            if (string.IsNullOrWhiteSpace(sha256Checksum)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Sha256Checksum is required.");
 
-            if (settings.ScanResultsKey.to_lower() != scanResultsKey.to_lower())
+            if (settings.ScanResultsKey.to_lower() != apiKey.to_lower())
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, "The specified key does not provide the authority to get scan results for packages");
             }
