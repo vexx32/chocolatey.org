@@ -384,26 +384,32 @@ namespace NuGetGallery
         public virtual ActionResult GetScanResults(string apiKey, string id, string version, string sha256Checksum)
         {
             if (string.IsNullOrWhiteSpace(apiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
-            if (string.IsNullOrWhiteSpace(sha256Checksum)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Sha256Checksum is required.");
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+   
+            // if (string.IsNullOrWhiteSpace(sha256Checksum)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "Sha256Checksum is required.");
 
             if (settings.ScanResultsKey.to_lower() != apiKey.to_lower())
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, "The specified key does not provide the authority to get scan results for packages");
             }
 
+            var scanResults = new List<PackageScanResult>();
+
             var results = scanSvc.GetResults(id, version, sha256Checksum);
 
-            var scanResults = new List<PackageScanResult>();
             foreach (var result in results.OrEmptyListIfNull())
             {
                 scanResults.Add(new PackageScanResult
                 {
-                    FileName = result.FileName,
-                    Sha256Checksum = result.Sha256Checksum,
+                    FileName = result.FileName.to_string(),
+                    Sha256Checksum = result.Sha256Checksum.to_string(),
                     Positives = result.Positives.to_string(),
                     TotalScans = result.TotalScans.to_string(),
-                    ScanDetailsUrl = result.ScanDetailsUrl,
-                    ScanData = result.ScanData,
+                    ScanDetailsUrl = result.ScanDetailsUrl.to_string(),
+                    ScanData = result.ScanData.to_string(),
                     ScanDate = result.ScanDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture),
                 });
             }
@@ -414,6 +420,11 @@ namespace NuGetGallery
         [ActionName("ScanPackageApi"), HttpPost]
         public virtual ActionResult SubmitPackageScanResults(string apiKey, string id, string version, string scanStatus, ICollection<PackageScanResult> scanResults)
         {
+            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
+            }
+
             Guid parsedApiKey;
             if (!Guid.TryParse(apiKey, out parsedApiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));
 
@@ -422,15 +433,12 @@ namespace NuGetGallery
             // Only the package operations user can submit results
             if (testReporterUser.Key != settings.PackageOperationsUserKey) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "submitscanresults"));
 
-            if (String.IsNullOrEmpty(id) || String.IsNullOrEmpty(version))
-            {
-                return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
-            }
+            if (string.IsNullOrWhiteSpace(scanStatus)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, "scanStatus is required.");
 
             PackageScanStatusType packageScanStatus;
             try
             {
-                Enum.TryParse(scanStatus, true, out packageScanStatus);
+                Enum.TryParse(scanStatus.to_string(), true, out packageScanStatus);
             }
             catch (Exception)
             {
@@ -452,7 +460,7 @@ namespace NuGetGallery
 
             foreach (var result in scanResults.OrEmptyListIfNull())
             {
-                scanSvc.SaveOrUpdateResults(id, version, result);
+                scanSvc.SaveOrUpdateResults(result, package);
             }
 
             package.PackageScanResultDate = DateTime.UtcNow;

@@ -22,7 +22,7 @@ namespace NuGetGallery
 {
     public interface IScanService
     {
-        void SaveOrUpdateResults(string id, string version, PackageScanResult result);
+        void SaveOrUpdateResults(PackageScanResult result, Package package);
         IEnumerable<ScanResult> GetResults(string id, string version, string sha256Checksum);
     }
 }

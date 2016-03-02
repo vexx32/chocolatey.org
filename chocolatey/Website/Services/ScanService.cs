@@ -34,7 +34,7 @@ namespace NuGetGallery
             _scanRepository = scanRepository;
         }
 
-        public void SaveOrUpdateResults(string id, string version, PackageScanResult result)
+        public void SaveOrUpdateResults(PackageScanResult result, Package package)
         {
             var scanResult = _scanRepository.GetAll()
                 .Include(pr => pr.Packages)
@@ -46,29 +46,27 @@ namespace NuGetGallery
                 _scanRepository.InsertOnCommit(scanResult);
             }
 
-            scanResult.Sha256Checksum = result.Sha256Checksum;
-            scanResult.FileName = result.FileName;
-            scanResult.ScanData = result.ScanData;
-            scanResult.ScanDetailsUrl = result.ScanDetailsUrl;
+            scanResult.Sha256Checksum = result.Sha256Checksum.to_string();
+            scanResult.FileName = result.FileName.to_string();
+            scanResult.ScanData = result.ScanData.to_string();
+            scanResult.ScanDetailsUrl = result.ScanDetailsUrl.to_string();
 
             int positives = 0;
-            int.TryParse(result.Positives, out positives);
+            int.TryParse(result.Positives.to_string(), out positives);
             scanResult.Positives = positives;
 
             int totalScans = 0;
-            int.TryParse(result.TotalScans, out totalScans);
+            int.TryParse(result.TotalScans.to_string(), out totalScans);
             scanResult.TotalScans = totalScans;
 
             var scanDate = DateTime.MinValue;
-            DateTime.TryParse(result.ScanDate, out scanDate);
+            DateTime.TryParse(result.ScanDate.to_string(), out scanDate);
             if (scanDate != DateTime.MinValue)
             {
                 scanResult.ScanDate = scanDate;
             }
 
-            var package = _packageService.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
-
-            var existingPackage = scanResult.Packages.FirstOrDefault(p => p.Version == version && p.PackageRegistration.Id == id);
+            var existingPackage =  scanResult.Packages.FirstOrDefault(p => p.Version == package.Version && p.PackageRegistration.Id == package.PackageRegistration.Id);
             if (existingPackage == null)
             {
                 scanResult.Packages.Add(package);
@@ -85,17 +83,15 @@ namespace NuGetGallery
             {
                 return _scanRepository.GetAll().Where(s => s.Sha256Checksum == sha256Checksum).ToList();
             }
-            else
+            
+            if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(version))
             {
-                if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(version))
-                {
-                    var package = _packageService.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
-                    if (package == null) return new List<ScanResult>();
-                    var exitingResults = _scanRepository.GetAll()
-                        .Include(s => s.Packages);
+                var package = _packageService.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
+                if (package == null) return new List<ScanResult>();
+                var exitingResults = _scanRepository.GetAll()
+                    .Include(s => s.Packages);
 
-                    return exitingResults.Where(s => s.Packages.Contains(package));
-                }
+                return exitingResults.Where(s => s.Packages.Contains(package)).ToList();
             }
 
             return new List<ScanResult>();
