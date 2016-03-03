@@ -9,7 +9,7 @@
         update(data, currData, 'PackagesReadyForReviewModeration');
         update(data, currData, 'TotalPackagesInModeration');
         update(data, currData, 'AverageModerationWaitTimeHours');
-        update(data, currData, 'GoodPackages');
+        update(data, currData, 'PackagesPassingVerification');
         update(data, currData, 'UpToDatePackages');
         update(data, currData, 'OlderThanOneYearPackages');
     });
