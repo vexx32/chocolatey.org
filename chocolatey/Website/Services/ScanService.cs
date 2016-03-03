@@ -66,13 +66,13 @@ namespace NuGetGallery
                 scanResult.ScanDate = scanDate;
             }
 
-            var existingPackage = scanResult.Packages
-                .DefaultIfEmpty(new Package())
-                .SingleOrDefault(
-                p => p.Version == package.Version 
-                && p.PackageRegistration.Id == package.PackageRegistration.Id
-                );
-            if (existingPackage == null || existingPackage == new Package())
+            var packageLinked = false;
+            foreach (var existingPackage in scanResult.Packages.OrEmptyListIfNull())
+            {
+                if (package.Key == existingPackage.Key) packageLinked = true;
+            }
+
+            if (!packageLinked)
             {
                 scanResult.Packages.Add(package);
             }
