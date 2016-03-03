@@ -66,8 +66,13 @@ namespace NuGetGallery
                 scanResult.ScanDate = scanDate;
             }
 
-            var existingPackage =  scanResult.Packages.FirstOrDefault(p => p.Version == package.Version && p.PackageRegistration.Id == package.PackageRegistration.Id);
-            if (existingPackage == null)
+            var existingPackage = scanResult.Packages
+                .DefaultIfEmpty(new Package())
+                .SingleOrDefault(
+                p => p.Version == package.Version 
+                && p.PackageRegistration.Id == package.PackageRegistration.Id
+                );
+            if (existingPackage == null || existingPackage == new Package())
             {
                 scanResult.Packages.Add(package);
             }
@@ -83,7 +88,7 @@ namespace NuGetGallery
             {
                 return _scanRepository.GetAll().Where(s => s.Sha256Checksum == sha256Checksum).ToList();
             }
-            
+
             if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(version))
             {
                 var package = _packageService.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
