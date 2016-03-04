@@ -45,7 +45,7 @@ namespace NuGetGallery
   (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where [IsLatestStable] = 1 And PackageValidationResultStatus = 'Passing') AS PackagesPassingValidation,
   (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where [IsLatestStable] = 1 And PackageValidationResultStatus = 'Failing') AS PackagesFailingValidation,
   (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where [IsLatestStable] = 1 And DownloadCacheDate Is Not Null) AS PackagesCached,
-  (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where DownloadCacheStatus = 'Available' And DownloadCacheDate Is Not Null) AS TotalPackagesCached,
+  (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where DownloadCacheDate Is Not Null) AS TotalPackagesCached,
   (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where [IsLatestStable] = 1 And DownloadCacheStatus = 'Available') AS PackagesCachedAvailable,
   (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where DownloadCacheStatus = 'Available') AS TotalPackagesCachedAvailable,
   (Select COUNT([Key]) From [dbo].[Packages] With (NOLOCK) Where [IsLatestStable] = 1 And DownloadCacheStatus = 'Investigate') AS PackagesCachedInvestigate,
