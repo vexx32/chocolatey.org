@@ -27,12 +27,12 @@ namespace NuGetGallery
 {
     public class DisplayPackageViewModel : ListPackageItemViewModel
     {
-        public DisplayPackageViewModel(Package package)
-            : this(package, false)
+        public DisplayPackageViewModel(Package package, IEnumerable<ScanResult> scanResults)
+            : this(package, scanResults, false)
         {
         }
 
-        public DisplayPackageViewModel(Package package, bool isVersionHistory)
+        public DisplayPackageViewModel(Package package, IEnumerable<ScanResult> scanResults, bool isVersionHistory)
             : base(package)
         {
             Copyright = package.Copyright;
@@ -41,12 +41,13 @@ namespace NuGetGallery
                 Dependencies = new DependencySetsViewModel(package.Dependencies);
                 PackageVersions = from p in package.PackageRegistration.Packages.ToList()
                                   orderby new SemanticVersion(p.Version) descending
-                                  select new DisplayPackageViewModel(p, isVersionHistory: true);
+                                  select new DisplayPackageViewModel(p, null, isVersionHistory: true);
             }
 
             IsTrusted = package.PackageRegistration.IsTrusted;
 
             Files = package.Files;
+            ScanResults = scanResults;
             DownloadCount = package.DownloadCount;
         }
 
@@ -96,6 +97,7 @@ namespace NuGetGallery
         }
 
         public IEnumerable<PackageFile> Files { get; private set; }
+        public IEnumerable<ScanResult> ScanResults { get; private set; }
 
         [Display(Name = "Add to Review Comments")]
         [StringLength(1000)]

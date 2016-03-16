@@ -75,5 +75,7 @@ namespace NuGetGallery
         void SaveMinorPackageChanges(Package package);
 
         void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer);
+
+        IEnumerable<ScanResult> GetPackageScanResults(string id, string version, bool useCache = true);
     }
 }

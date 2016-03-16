@@ -31,6 +31,7 @@ namespace NuGetGallery
             Dependencies = new HashSet<PackageDependency>();
             SupportedFrameworks = new HashSet<PackageFramework>();
             Files = new HashSet<PackageFile>();
+           // PackageScanResults = new HashSet<ScanResult>();
             Listed = true;
         }
 
@@ -234,6 +235,7 @@ namespace NuGetGallery
             }
         }
         public DateTime? PackageScanResultDate { get; set; }
+        //public virtual ICollection<ScanResult> PackageScanResults { get; set; }
 
         public bool IsPrerelease { get; set; }
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }

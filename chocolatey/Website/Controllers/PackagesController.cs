@@ -153,8 +153,9 @@ namespace NuGetGallery
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
 
             if (package == null) return PackageNotFound(id, version);
-            var model = new DisplayPackageViewModel(package);
 
+            var scanResults = packageSvc.GetPackageScanResults(id, version);
+            var model = new DisplayPackageViewModel(package, scanResults);
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
@@ -167,7 +168,8 @@ namespace NuGetGallery
             var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
 
             if (package == null) return PackageNotFound(id, version);
-            var model = new DisplayPackageViewModel(package);
+            var scanResults = packageSvc.GetPackageScanResults(id, version,useCache:false);
+            var model = new DisplayPackageViewModel(package, scanResults);
 
             var packageRegistration = package.PackageRegistration;
             var isMaintainer = packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key);
@@ -314,7 +316,8 @@ namespace NuGetGallery
 
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
-            model = new DisplayPackageViewModel(package);
+            scanResults = packageSvc.GetPackageScanResults(id, version, useCache:false);
+            model = new DisplayPackageViewModel(package, scanResults);
 
             TempData["Message"] = "Changes to package status have been saved.";
 
@@ -700,7 +703,7 @@ namespace NuGetGallery
             if (package == null) return PackageNotFound(id, version);
             if (!UserHasPackageChangePermissions(HttpContext.User, package)) return new HttpStatusCodeResult(401, "Unauthorized");
 
-            var model = new DisplayPackageViewModel(package);
+            var model = new DisplayPackageViewModel(package, null);
             return View(model);
         }
 

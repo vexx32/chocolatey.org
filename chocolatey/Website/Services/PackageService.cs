@@ -40,6 +40,7 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageFramework> packageFrameworksRepo;
         private readonly IEntityRepository<PackageDependency> packageDependenciesRepo;
         private readonly IEntityRepository<PackageFile> packageFilesRepo;
+        private readonly IEntityRepository<ScanResult> scanResultRepo;
         private readonly IEntityRepository<PackageStatistics> packageStatsRepo;
         private readonly IPackageFileService packageFileSvc;
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
@@ -63,6 +64,7 @@ namespace NuGetGallery
             IEntityRepository<PackageFramework> packageFrameworksRepo,
             IEntityRepository<PackageDependency> packageDependenciesRepo,
             IEntityRepository<PackageFile> packageFilesRepo,
+            IEntityRepository<ScanResult> scanResultRepo, 
             IMessageService messageSvc,
             IImageFileService imageFileSvc,
             IIndexingService indexingSvc)
@@ -77,6 +79,7 @@ namespace NuGetGallery
             this.packageFrameworksRepo = packageFrameworksRepo;
             this.packageDependenciesRepo = packageDependenciesRepo;
             this.packageFilesRepo = packageFilesRepo;
+            this.scanResultRepo = scanResultRepo;
             this.messageSvc = messageSvc;
             this.imageFileSvc = imageFileSvc;
             this.indexingSvc = indexingSvc;
@@ -193,6 +196,7 @@ namespace NuGetGallery
                                                             .Include(p => p.PackageRegistration)
                                                             .Include(p => p.PackageRegistration.Owners)
                                                             .Include(p => p.Files)
+                                                            //.Include(p => p.PackageScanResults)
                                                             .Include(p => p.Dependencies)
                                                             .Include(p => p.SupportedFrameworks)
                                                             .Include(p => p.ReviewedBy)
@@ -231,6 +235,22 @@ namespace NuGetGallery
             }
 
             return package;
+        }
+
+        public IEnumerable<ScanResult> GetPackageScanResults(string id, string version, bool useCache = true)
+        {
+            var packageScanResults = scanResultRepo.GetAll()
+                .Include(s => s.Packages)
+                .Where(s => s.Packages.Any(p => p.PackageRegistration.Id == id && p.Version == version));
+
+            var scanResults = useCache
+                           ? Cache.Get(
+                               string.Format("packageScans-{0}-{1}", id.to_lower(), version.to_lower()),
+                               DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                               () => packageScanResults.ToList())
+                           : packageScanResults.ToList();
+            
+            return scanResults;
         }
 
         public IQueryable<Package> GetPackagesForListing(bool includePrerelease)

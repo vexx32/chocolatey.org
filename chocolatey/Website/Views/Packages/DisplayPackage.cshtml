@@ -751,8 +751,29 @@
         </ul>
     }
   </div>
+  
+  @if (anyPackageRole)
+  {
+      <a name="virus" id="virus"></a><h3 title="Virus Scan Results">Virus Scan Results</h3>
+      <ul>
+    @if (Model.ScanResults.AnySafe())
+    {
+        foreach (var fileScan in Model.ScanResults.OrEmptyListIfNull())
+        {
+            <li><a title="full sha256: @fileScan.Sha256Checksum" href="@fileScan.ScanDetailsUrl">@fileScan.FileName (@fileScan.Sha256Checksum.Substring(0,12))</a> 
+                @if (anyPackageRole)
+                {
+                  <text>-</text> @fileScan.Positives<text>/</text>@fileScan.TotalScans
+                }
+              </li>
+        }
+      } else {
+        <li>No results available for this package.</li>
+      }     
+     </ul>
+  }
 
-    @Html.Partial("_PackageDependencies", Model.Dependencies)
+  @Html.Partial("_PackageDependencies", Model.Dependencies)
 
     <a name="maintainers" id="maintainers"></a><h3 title="Nuspec reference: owners | nuspec value not used on community feed | Specified as comma-separated">Maintainer(s)</h3>
     @ViewHelpers.OwnersGravatar(Model.Owners, 32, Url)

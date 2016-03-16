@@ -194,13 +194,13 @@ namespace NuGetGallery
            
             modelBuilder.Entity<ScanResult>().HasKey(sr => sr.Key);
 
+            //.WithMany(p => p.PackageScanResults)
             modelBuilder.Entity<ScanResult>()
-                     .HasMany<Package>(pr => pr.Packages)
+                     .HasMany<Package>(s => s.Packages)
                      .WithMany()
                      .Map(
                          c =>
                          c.ToTable("PackageScanResults").MapLeftKey("ScanResultKey").MapRightKey("PackageKey"));
-
         }
     }
 }
