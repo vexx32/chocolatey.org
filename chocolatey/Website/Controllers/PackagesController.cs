@@ -284,6 +284,15 @@ namespace NuGetGallery
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
                 newComments += "Auto Verification Change - Verification tests have been set to rerun.";
             }
+
+            bool rerunVirusScanner = form["RerunVirusScanner"] == "true";
+            if (rerunVirusScanner)
+            {
+                package.PackageScanStatus = PackageScanStatusType.Unknown;
+                packageSvc.SaveMinorPackageChanges(package);
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Virus Scanner has ben set to rerun";
+            }
             
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;

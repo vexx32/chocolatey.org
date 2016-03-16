@@ -421,6 +421,13 @@
                            <label for="OverrideValidation" class="for-checkbox" title="Override package validation failures and run tests.">Override validation errors?</label>
                        </div>
                     }
+                    @if (admin)
+                    {
+                       <div class="form-field">
+                           <input id="RerunVirusScanner" name="RerunVirusScanner" type="checkbox" value="true" />
+                           <label for="RerunVirusScanner" class="for-checkbox" title="Rerun virus scanner to get latest reports.">Rerun virus scanner?</label>
+                       </div>
+                    }
 
                     @if (moderationRole)
                     {
