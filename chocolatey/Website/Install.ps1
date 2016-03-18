@@ -23,12 +23,18 @@
 # NOTE: $env:chocolateyDownloadUrl does not work with $env:chocolateyVersion.
 # To use built-in compression (no 7zip download), please set $env:chocolateyUseWindowsCompression = 'true'
 
-$url = "https://packages.chocolatey.org/chocolatey.0.9.9.11.nupkg"
+$url = "https://chocolatey.org/api/v2/package/chocolatey/"
+# introduced when there were performance issues - kept around in case we 
+# run into them again.
+#$url = "https://packages.chocolatey.org/chocolatey.0.9.9.12.nupkg"
 
 $chocolateyVersion = $env:chocolateyVersion
 if (![string]::IsNullOrEmpty($chocolateyVersion)){
   Write-Output "Downloading specific version of Chocolatey: $chocolateyVersion"
-  $url = "https://packages.chocolatey.org/chocolatey.$chocolateyVersion.nupkg"
+  $url = "https://chocolatey.org/api/v2/package/chocolatey/$chocolateyVersion"
+  # introduced when there were performance issues - kept around in case we 
+  # run into them again.
+  #$url = "https://packages.chocolatey.org/chocolatey.$chocolateyVersion.nupkg"
 }
 
 $chocolateyDownloadUrl = $env:chocolateyDownloadUrl
