@@ -303,8 +303,8 @@ namespace NuGetGallery
             {
                 jobs.Add(
                     new LuceneIndexingJob(
-                        frequence: TimeSpan.FromMinutes(5),
-                        timeout: TimeSpan.FromMinutes(2),
+                        frequence: TimeSpan.FromMinutes(6),
+                        timeout: TimeSpan.FromMinutes(5),
                         indexingService: this));
             }
         }

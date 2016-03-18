@@ -101,7 +101,7 @@ namespace NuGetGallery
                 indexer.RegisterBackgroundJobs(jobs);
             }
 
-            jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(5), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(5)));
+            jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
             jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
 
             var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
