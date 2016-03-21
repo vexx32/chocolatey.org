@@ -19,11 +19,11 @@
 # Environment Variables, specified as $env:NAME in PowerShell.exe and %NAME% in cmd.exe.
 # For explicit proxy, please set $env:chocolateyProxyLocation and optionally $env:chocolateyProxyUser and $env:chocolateyProxyPassword
 # For an explicit version of Chocolatey, please set $env:chocolateyVersion = 'versionnumber'
-# To target a different url for chocolatey.nupkg, please set $env:chocolateyDownloadUrl = 'full url to nupkg file' 
+# To target a different url for chocolatey.nupkg, please set $env:chocolateyDownloadUrl = 'full url to nupkg file'
 # NOTE: $env:chocolateyDownloadUrl does not work with $env:chocolateyVersion.
 # To use built-in compression (no 7zip download), please set $env:chocolateyUseWindowsCompression = 'true'
 
-$url = "https://packages.chocolatey.org/chocolatey.0.9.9.11.nupkg"
+$url = "https://packages.chocolatey.org/chocolatey.0.9.9.12.nupkg"
 
 $chocolateyVersion = $env:chocolateyVersion
 if (![string]::IsNullOrEmpty($chocolateyVersion)){
