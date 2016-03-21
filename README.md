@@ -3,7 +3,7 @@
 http://chocolatey.org
 
 ## CONTRIBUTING
-**WIP**
+**WIP **
 
 #### Leave items as they are in the nugetgallery folder
 
