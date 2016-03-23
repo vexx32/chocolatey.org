@@ -154,7 +154,7 @@ namespace NuGetGallery
 
             if (package == null) return PackageNotFound(id, version);
 
-            var scanResults = packageSvc.GetPackageScanResults(id, version);
+            var scanResults = packageSvc.GetPackageScanResults(id, package.Version);
             var model = new DisplayPackageViewModel(package, scanResults);
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
