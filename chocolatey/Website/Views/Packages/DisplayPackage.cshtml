@@ -753,27 +753,32 @@
   </div>
   
   
-    <a name="virus" id="virus"></a><h3 title="Virus Scan Results">Virus Scan Results</h3>
-    <ul>
+  <a name="virus" id="virus"></a><h3 title="Virus Scan Results">Virus Scan Results</h3>
     @if (Model.ScanResults.AnySafe())
     {
-        foreach (var fileScan in Model.ScanResults.OrEmptyListIfNull())
-        {
-            <li><a title="full sha256: @fileScan.Sha256Checksum" href="@fileScan.ScanDetailsUrl">@fileScan.FileName (@fileScan.Sha256Checksum.Substring(0,12))</a> 
-                @if (User != null)
-                {
-                  <text>-</text> @fileScan.Positives<text>/</text>@fileScan.TotalScans
-                } else {
-                  <text>- Log in for number of positives / </text> @fileScan.TotalScans
-                }
-            </li>
-        }
+        <ul>
+          @foreach (var fileScan in Model.ScanResults.OrEmptyListIfNull())
+          {
+          <li><a title="full sha256: @fileScan.Sha256Checksum" href="@fileScan.ScanDetailsUrl">@fileScan.FileName (@fileScan.Sha256Checksum.Substring(0,12))</a> 
+            @if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                <text>-</text> @fileScan.Positives<text>/</text>@fileScan.TotalScans
+            } else {
+                <text>- ## / </text> @fileScan.TotalScans <text> - Log in to see number of positives</text>
+            }
+          </li>
+          }
+        </ul>
+        <p class="message warning" style="font-size: 1em;">In cases where actual malware is found, the packages are subject to removal. Software sometimes has false positives. Moderators do not necessarily validate the safety of the underlying software, only that a package retrieves software from the official distribution point and/or validate embedded software against official distribution point (where distribution rights allow redistribution).<br />
+          <br />
+          Chocolatey Professional provides <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1518468">runtime protection</a> from possible malware.
+        </p>
     }
     else
     {
-        <li>No results available for this package - Due to a <a href="https://github.com/chocolatey/chocolatey.org/issues/372">minor issue</a>, this may also show up if the url doesn't contain the package version. Click on another version (in version history) and then click on this version again.</li>
+        <p class="message" style="font-size: 1em;">No results available for this package. We are building up results for older packages over time so expect to see results. If this is a new package, it should have results within a day or two.</p>
     }     
-    </ul>
+    
   
 
   @Html.Partial("_PackageDependencies", Model.Dependencies)
