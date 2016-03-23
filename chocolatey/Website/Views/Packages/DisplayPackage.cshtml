@@ -752,26 +752,29 @@
     }
   </div>
   
-  @if (anyPackageRole)
-  {
-      <a name="virus" id="virus"></a><h3 title="Virus Scan Results">Virus Scan Results</h3>
-      <ul>
+  
+    <a name="virus" id="virus"></a><h3 title="Virus Scan Results">Virus Scan Results</h3>
+    <ul>
     @if (Model.ScanResults.AnySafe())
     {
         foreach (var fileScan in Model.ScanResults.OrEmptyListIfNull())
         {
             <li><a title="full sha256: @fileScan.Sha256Checksum" href="@fileScan.ScanDetailsUrl">@fileScan.FileName (@fileScan.Sha256Checksum.Substring(0,12))</a> 
-                @if (anyPackageRole)
+                @if (User != null)
                 {
                   <text>-</text> @fileScan.Positives<text>/</text>@fileScan.TotalScans
+                } else {
+                  <text>- Log in for number of positives / </text> @fileScan.TotalScans
                 }
-              </li>
+            </li>
         }
-      } else {
-        <li>No results available for this package.</li>
-      }     
-     </ul>
-  }
+    }
+    else
+    {
+        <li>No results available for this package - Due to a <a href="https://github.com/chocolatey/chocolatey.org/issues/372">minor issue</a>, this may also show up if the url doesn't contain the package version. Click on another version (in version history) and then click on this version again.</li>
+    }     
+    </ul>
+  
 
   @Html.Partial("_PackageDependencies", Model.Dependencies)
 
