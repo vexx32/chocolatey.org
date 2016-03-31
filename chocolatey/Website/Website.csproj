@@ -1025,6 +1025,7 @@
     <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
+    <Content Include="googled7980ca724c3d811.html" />
     <Content Include="Install-LastPoshClient.ps1" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

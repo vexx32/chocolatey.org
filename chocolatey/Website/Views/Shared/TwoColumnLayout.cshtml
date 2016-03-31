@@ -12,6 +12,10 @@
 
 <div class="clear-fix"><!--Sad Panda--></div>
 
+@section ExtraHeaders {
+    @RenderSection("ExtraHeaders", required: false)
+}
+
 @section BottomScripts {
     @RenderSection("BottomScripts", required: false)
 }
