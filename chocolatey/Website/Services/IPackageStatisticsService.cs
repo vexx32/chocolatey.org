@@ -16,24 +16,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Xml.Serialization;
-
 namespace NuGetGallery
 {
-    // IMPORTANT:   Removed the TimeStamp column from this class because 
-    //              it's completely tracked by the database layer. Don't
-    //              add it back! :) It will be created by the migration.
-    [Serializable]
-    public class PackageStatistics : IEntity
+    public interface IPackageStatisticsService
     {
-        public int Key { get; set; }
-
-        [XmlIgnore]
-        public Package Package { get; set; }
-        public int PackageKey { get; set; }
-
-        public string IPAddress { get; set; }
-        public string UserAgent { get; set; }
+        void RecordPackageDownloadStatistics(int packageKey, string userHostAddress, string userAgent);
     }
 }

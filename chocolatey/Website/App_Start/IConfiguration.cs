@@ -26,6 +26,7 @@ namespace NuGetGallery
         string FileStorageDirectory { get; }
         string AzureCdnHost { get; }
         PackageStoreType PackageStoreType { get; }
+        PackageStatisticsStoreType PackageStatisticsStoreType { get; }
 
         string GetSiteRoot(bool useHttps);
 
@@ -33,6 +34,7 @@ namespace NuGetGallery
         string PackagesUrl { get; }
         string S3AccessKey { get; }
         string S3SecretKey { get; }
+        string SqsServiceUrl { get; }
         bool SmtpEnableSsl { get; }
         bool UseCaching { get; }
         bool HostImages { get; }

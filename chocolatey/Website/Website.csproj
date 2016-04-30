@@ -638,10 +638,16 @@
     <Compile Include="ApiController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="App_Start\PackageStatisticsServiceType.cs" />
     <Compile Include="AuthenticationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AmazonSqsClientWrapper.cs" />
+    <Compile Include="Services\AmazonSqsPackageStatisticsService.cs" />
+    <Compile Include="Services\DatabasePackageStatisticsService.cs" />
+    <Compile Include="Services\IAmazonSqsClient.cs" />
     <Compile Include="Services\IScanService.cs" />
+    <Compile Include="Services\IPackageStatisticsService.cs" />
     <Compile Include="Services\ScanService.cs" />
     <Compile Include="DataServices\V2Feed.svc.cs">
       <DependentUpon>V2Feed.svc</DependentUpon>

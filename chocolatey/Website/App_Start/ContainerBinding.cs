@@ -108,7 +108,8 @@ namespace NuGetGallery
                         }
 
                         return new MailSender(mailSenderConfiguration);
-                    } else
+                    }
+                    else
                     {
                         var mailSenderConfiguration = new MailSenderConfiguration
                         {
@@ -146,6 +147,17 @@ namespace NuGetGallery
                 case PackageStoreType.AmazonS3Storage:
                     container.Register<IAmazonS3Client, AmazonS3ClientWrapper>(Lifestyle.Singleton);
                     container.Register<IFileStorageService, AmazonS3FileStorageService>(Lifestyle.Singleton);
+                    break;
+            }
+
+            switch (configuration.PackageStatisticsStoreType)
+            {
+                case PackageStatisticsStoreType.AmazonSqs:
+                    container.Register<IAmazonSqsClient, AmazonSqsClientWrapper>(Lifestyle.Singleton);
+                    container.Register<IPackageStatisticsService, AmazonSqsPackageStatisticsService>(Lifestyle.Singleton);
+                    break;
+                default:
+                    container.Register<IPackageStatisticsService, DatabasePackageStatisticsService>(Lifestyle.Singleton);
                     break;
             }
 

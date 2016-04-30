@@ -22,7 +22,6 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
-using System.Text;
 using System.Transactions;
 using Elmah;
 using NuGet;
@@ -41,12 +40,12 @@ namespace NuGetGallery
         private readonly IEntityRepository<PackageDependency> packageDependenciesRepo;
         private readonly IEntityRepository<PackageFile> packageFilesRepo;
         private readonly IEntityRepository<ScanResult> scanResultRepo;
-        private readonly IEntityRepository<PackageStatistics> packageStatsRepo;
         private readonly IPackageFileService packageFileSvc;
         private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
         private readonly IMessageService messageSvc;
         private readonly IImageFileService imageFileSvc;
         private readonly IIndexingService indexingSvc;
+        private readonly IPackageStatisticsService packageStatsSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
         private const string TESTING_PASSED_MESSAGE = "has passed automated testing";
         private const string TESTING_FAILED_MESSAGE = "has failed automated testing";
@@ -57,7 +56,6 @@ namespace NuGetGallery
             ICryptographyService cryptoSvc,
             IEntityRepository<PackageRegistration> packageRegistrationRepo,
             IEntityRepository<Package> packageRepo,
-            IEntityRepository<PackageStatistics> packageStatsRepo,
             IPackageFileService packageFileSvc,
             IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository,
             IEntityRepository<PackageAuthor> packageAuthorRepo,
@@ -67,12 +65,12 @@ namespace NuGetGallery
             IEntityRepository<ScanResult> scanResultRepo, 
             IMessageService messageSvc,
             IImageFileService imageFileSvc,
-            IIndexingService indexingSvc)
+            IIndexingService indexingSvc,
+            IPackageStatisticsService packageStatsSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageRegistrationRepo = packageRegistrationRepo;
             this.packageRepo = packageRepo;
-            this.packageStatsRepo = packageStatsRepo;
             this.packageFileSvc = packageFileSvc;
             this.packageOwnerRequestRepository = packageOwnerRequestRepository;
             this.packageAuthorRepo = packageAuthorRepo;
@@ -83,6 +81,7 @@ namespace NuGetGallery
             this.messageSvc = messageSvc;
             this.imageFileSvc = imageFileSvc;
             this.indexingSvc = indexingSvc;
+            this.packageStatsSvc = packageStatsSvc;
         }
 
         public Package CreatePackage(IPackage nugetPackage, User currentUser)
@@ -342,16 +341,15 @@ namespace NuGetGallery
         {
             using (MiniProfiler.Current.Step("Updating package stats"))
             {
-                packageStatsRepo.InsertOnCommit(
-                    new PackageStatistics
-                    {
-                        // IMPORTANT: Timestamp is managed by the database.
-                        IPAddress = userHostAddress,
-                        UserAgent = userAgent,
-                        PackageKey = package.Key
-                    });
-
-                packageStatsRepo.CommitChanges();
+                try
+                {
+                    packageStatsSvc.RecordPackageDownloadStatistics(package.Key, userHostAddress, userAgent);
+                }
+                catch (Exception ex)
+                {
+                    // Log but swallow the exception
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                }
             }
         }
 
