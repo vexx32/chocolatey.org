@@ -726,6 +726,7 @@
     <Compile Include="Services\SearchFilter.cs" />
     <Compile Include="Services\SearchResults.cs" />
     <Compile Include="Services\UploadFileService.cs" />
+    <Compile Include="XmlExtensions.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
