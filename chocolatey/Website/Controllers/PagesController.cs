@@ -57,6 +57,11 @@ namespace NuGetGallery
             return View("~/Views/Pages/Privacy.cshtml");
         }
 
+        public virtual ActionResult Pricing()
+        {
+            return View("~/Views/Pages/Pricing.cshtml");
+        }
+
         //public ActionResult Install()
         //{
         //    return File(Url.Content("~/installChocolatey.ps1"), "text/plain");

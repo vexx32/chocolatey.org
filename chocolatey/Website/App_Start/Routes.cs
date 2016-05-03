@@ -52,6 +52,13 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "Notice"
+                }); 
+            
+            routes.MapRoute(
+                RouteName.Pricing, "pricing", new
+                {
+                    controller = "Pages",
+                    Action = "Pricing"
                 });
 
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());

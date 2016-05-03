@@ -34,6 +34,7 @@ namespace NuGetGallery
         public const string About = "About";
         public const string InstallerBatchFile = "Installer-BatchFile";
         public const string Notice = "Notice";
+        public const string Pricing = "Pricing";
         public const string Stats = "Stats";
         public const string Policies = "Policies";
         public const string ListPackages = "ListPackages";
