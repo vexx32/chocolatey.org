@@ -6,7 +6,7 @@ obj
 App_Data
 *.results.xml
 /packages
-/chocolatey/Website/RequestReduce
+/chocolatey/Website/cassette-cache/
 /chocolatey/Website/Content/packageimages
 _AzurePackage
 *.sln.docstates

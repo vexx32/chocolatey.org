@@ -2,6 +2,7 @@
 @{
     ViewBag.Tab = "Packages";
     var moderator = User != null && User.IsModerator();
+    Bundles.Reference("Scripts/manageowners");
 }
 
 
@@ -53,7 +54,6 @@
 
 
 @section bottomScripts {
-<script src="@Url.Content("~/Scripts/knockout-latest.js")"></script>
 <script src="@Url.Content("~/json/JsonApi?json")"></script>
 <script>
     $(function () {

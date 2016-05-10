@@ -1,7 +1,8 @@
 ﻿@using NuGetGallery;
 @model SignInRequest
 @{
-    ViewBag.Title = "Log On";
+  ViewBag.Title = "Log On";
+  Bundles.Reference("Scripts/validation");
 }
 
 <h1>Log On</h1>
@@ -35,9 +36,4 @@
         <input type="submit" value="Log On" title="Log On" />
         @Html.ActionLink("Lost your Password?", "ForgotPassword", "Users")
     </fieldset>
-}
-
-@section BottomScripts {
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
 }

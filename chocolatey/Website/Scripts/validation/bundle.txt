@@ -1,0 +1,5 @@
+jquery.validate.js
+jquery.validate.unobtrusive.js
+MicrosoftAjax.js
+MicrosoftMvcAjax.js
+MicrosoftMvcValidation.js

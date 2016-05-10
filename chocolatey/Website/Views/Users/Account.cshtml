@@ -1,6 +1,7 @@
 ﻿@model AccountViewModel
 @{
     ViewBag.Tab = "Contribute";
+    Bundles.Reference("Scripts/ZeroClipboard");
 }
 
 <h1 class="page-heading">My Account</h1>
@@ -88,7 +89,6 @@ choco push MyPackage.1.0.nupkg
 </section>
 
 @section BottomScripts {
-    <script type="text/javascript" src="@Url.Content("~/Scripts/ZeroClipboard.js")"></script>
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -97,7 +97,7 @@ choco push MyPackage.1.0.nupkg
                 return false;
             });
 
-            ZeroClipboard.setMoviePath('@Url.Content("~/Scripts/ZeroClipboard.swf")');
+            ZeroClipboard.setMoviePath('@Url.Content("~/Scripts/ZeroClipboard/ZeroClipboard.swf")');
             var clip = new ZeroClipboard.Client();
             clip.setText('@HttpUtility.JavaScriptStringEncode(Model.ApiKey.ToString())');
             clip.setHandCursor(true);
