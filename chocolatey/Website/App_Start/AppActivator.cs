@@ -70,8 +70,12 @@ namespace NuGetGallery
         {
             ModelBinders.Binders.Add(typeof(PackageScanResult), new BaseModelBinder<PackageScanResult>());
 
-            RegisterGlobalFilters(GlobalFilters.Filters);
 
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new CSharpRazorViewEngine());
+
+            RegisterGlobalFilters(GlobalFilters.Filters);
+            
             Routes.RegisterRoutes(RouteTable.Routes);
 
 #if !DEBUG
