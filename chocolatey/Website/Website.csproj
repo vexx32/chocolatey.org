@@ -1099,6 +1099,9 @@
     <Content Include="Scripts\SyntaxHighlighter\shBrushXml.js" />
     <Content Include="Scripts\SyntaxHighlighter\shCore.js" />
     <Content Include="Scripts\SyntaxHighlighter\shLegacy.js" />
+    <Content Include="Scripts\validation\MicrosoftAjax.js" />
+    <Content Include="Scripts\validation\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\validation\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\ZeroClipboard\bundle.txt" />
     <Content Include="Scripts\ZeroClipboard\ZeroClipboard.js" />
     <Content Include="Scripts\ZeroClipboard\ZeroClipboard.swf" />
@@ -1217,6 +1220,7 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <Import Project="$(SolutionDir)\packages\RazorGenerator.MsBuild.*\tools\RazorGenerator.targets" />
+  <Import Project="$(ProjectDirectory)Cassette.targets" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
@@ -1227,6 +1231,6 @@
     <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <Target Name="Bundle" AfterTargets="Build">
-    <Exec Command="&quot;$(msbuildtoolspath)\msbuild.exe&quot; $(ProjectDirectory)cassette.targets /p:OutputPath=$(OutputPath) /t:Bundle /nr:false" />
+    <Exec Command="&quot;$(msbuildtoolspath)\msbuild.exe&quot; $(ProjectDirectory)cassette.targets /p:OutputPath=$(OutputPath) /p:WebProjectOutputDir=$(WebProjectOutputDir) /t:Bundle /nr:false" />
   </Target>
 </Project>
