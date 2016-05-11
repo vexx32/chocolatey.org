@@ -70,6 +70,7 @@
     </Reference>
     <Reference Include="Cassette.MSBuild">
       <HintPath>..\..\packages\Cassette.MSBuild.2.4.2\lib\net40\Cassette.MSBuild.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Cassette.Views">
       <HintPath>..\..\packages\Cassette.Views.2.4.2\lib\net40\Cassette.Views.dll</HintPath>
