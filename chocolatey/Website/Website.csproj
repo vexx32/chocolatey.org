@@ -659,6 +659,7 @@
     <Compile Include="AuthenticationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
     <Compile Include="Infrastructure\CSharpRazorViewEngine.cs" />
     <Compile Include="Services\AmazonSqsClientWrapper.cs" />
@@ -975,27 +976,42 @@
     </EmbeddedResource>
     <Content Include="7za.exe" />
     <Content Include="Content\chocolatey.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Images\404.png" />
+    <Content Include="Content\Images\404.svg" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
+    <Content Include="Content\Images\appharbor_logo.png" />
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
+    <Content Include="Content\Images\dep-graph.svg" />
     <Content Include="Content\Images\download.png" />
     <Content Include="Content\Images\editIcon.png" />
     <Content Include="Content\Images\editProfile.png" />
     <Content Include="Content\Images\errorPage.png" />
+    <Content Include="Content\Images\gene.svg" />
+    <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
     <Content Include="Content\Images\greenArrow.png" />
     <Content Include="Content\Images\green_ball_48.png" />
     <Content Include="Content\Images\grey_ball_48.png" />
+    <Content Include="Content\Images\gui.png" />
     <Content Include="Content\Images\headerbackground.png" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
     <Content Include="Content\Images\inputBackground.png" />
+    <Content Include="Content\Images\integration_points.png" />
     <Content Include="Content\Images\invalidBG.png" />
+    <Content Include="Content\Images\just-type-logo.svg" />
+    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\logo2.svg" />
+    <Content Include="Content\Images\logo_3.svg" />
+    <Content Include="Content\Images\logo_small.svg" />
+    <Content Include="Content\Images\logo_square.svg" />
     <Content Include="Content\Images\managePackages.png" />
     <Content Include="Content\Images\mine.png" />
     <Content Include="Content\Images\navbackground.png" />
@@ -1007,6 +1023,7 @@
     <Content Include="Content\Images\packageDefaultIcon.png" />
     <Content Include="Content\Images\packageOwnerActionIcons.png" />
     <Content Include="Content\Images\packagesDefaultIcon.png" />
+    <Content Include="Content\Images\rd_logo.png" />
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
@@ -1018,6 +1035,7 @@
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
     <Content Include="Content\Images\Turbo-on-Red.png" />
+    <Content Include="Content\Images\turbo_logo.png" />
     <Content Include="Content\Images\twitter.png" />
     <Content Include="Content\Images\uploadPackage.png" />
     <Content Include="Content\Images\userGraphic.png" />
@@ -1030,6 +1048,7 @@
     <Content Include="..\..\nugetgallery\Website\api\Web.config">
       <Link>api\Web.config</Link>
     </Content>
+    <Content Include="Content\style.css" />
     <Content Include="Content\SyntaxHighlighter\shCore.css" />
     <Content Include="Content\SyntaxHighlighter\shCoreDefault.css" />
     <Content Include="Content\SyntaxHighlighter\shCoreDjango.css" />
@@ -1054,6 +1073,11 @@
     <Content Include="googled7980ca724c3d811.html" />
     <Content Include="Install-LastPoshClient.ps1" />
     <None Include="Cassette.targets" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1065,6 +1089,7 @@
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-ui-1.9.1.custom.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
     <Content Include="Scripts\validation\bundle.txt" />
     <Content Include="Scripts\validation\jquery.validate.js" />
@@ -1121,6 +1146,21 @@
     <Content Include="Views\Pages\Notice.cshtml" />
     <Content Include="Views\Packages\_ListVersion.cshtml" />
     <Content Include="Views\Pages\Pricing.cshtml" />
+    <Content Include="Views\Shared\OldLayout.cshtml" />
+    <Content Include="Views\Pages\Business.cshtml" />
+    <Content Include="Views\Pages\Company.cshtml" />
+    <Content Include="Views\Pages\ContactUs.cshtml" />
+    <Content Include="Views\Pages\FAQ.cshtml" />
+    <Content Include="Views\Pages\Install.cshtml" />
+    <Content Include="Views\Pages\Media.cshtml" />
+    <Content Include="Views\Pages\Newsletter.cshtml" />
+    <Content Include="Views\Pages\Partner.cshtml" />
+    <Content Include="Views\Pages\Press.cshtml" />
+    <Content Include="Views\Pages\ReportIssue.cshtml" />
+    <Content Include="Views\Pages\Security.cshtml" />
+    <Content Include="Views\Pages\Support.cshtml" />
+    <Content Include="Views\Pages\Kickstarter.cshtml" />
+    <Content Include="Views\Documentation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

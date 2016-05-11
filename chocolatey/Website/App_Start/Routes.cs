@@ -32,20 +32,20 @@ namespace NuGetGallery
             routes.IgnoreRoute("{*Scripts}", new { scripts = @"(.*/)?Scripts(/.*)?" });
 
             routes.MapRoute(RouteName.Home, "", MVC.Pages.Home());
-
-            routes.MapRoute(
-                RouteName.About, "about", new
-                {
-                    controller = "Pages",
-                    Action = "About"
-                });
-
+        
             routes.MapRoute(
                 RouteName.InstallerBatchFile, "installChocolatey.cmd", new
                 {
                     controller = "Pages",
                     Action = "InstallerBatchFile"
                 });
+
+            routes.MapRoute(
+               RouteName.About, "about", new
+               {
+                   controller = "Pages",
+                   Action = "About"
+               });
 
             routes.MapRoute(
                 RouteName.Notice, "notice", new
@@ -59,6 +59,118 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "Pricing"
+                });
+
+            routes.MapRoute(
+                RouteName.Install, "install", new
+                {
+                    controller = "Documentation",
+                    Action = "Install"
+                });
+
+            routes.MapRoute(
+                RouteName.Business, "business", new
+                {
+                    controller = "Pages",
+                    Action = "Business"
+                });
+
+            routes.MapRoute(
+                RouteName.FAQ, "faq", new
+                {
+                    controller = "Documentation",
+                    Action = "FAQ"
+                });   
+            
+            routes.MapRoute(
+                RouteName.Kickstarter, "kickstarter", new
+                {
+                    controller = "Pages",
+                    Action = "Kickstarter"
+                });    
+            
+            routes.MapRoute(
+                RouteName.Terms, "terms", new
+                {
+                    controller = "Pages",
+                    Action = "Terms"
+                });
+
+            routes.MapRoute(
+                RouteName.Privacy, "privacy", new
+                {
+                    controller = "Pages",
+                    Action = "Privacy"
+                });     
+            
+            routes.MapRoute(
+                RouteName.Newsletter, "newsletter", new
+                {
+                    controller = "Pages",
+                    Action = "Newsletter"
+                });
+            
+            routes.MapRoute(
+                RouteName.Media, "media", new
+                {
+                    controller = "Pages",
+                    Action = "Media"
+                });  
+            
+            routes.MapRoute(
+                RouteName.Company, "company", new
+                {
+                    controller = "Pages",
+                    Action = "Company"
+                });  
+            
+            routes.MapRoute(
+                RouteName.ContactUs, "contact", new
+                {
+                    controller = "Pages",
+                    Action = "ContactUs"
+                });    
+            
+            routes.MapRoute(
+                RouteName.Support, "support", new
+                {
+                    controller = "Pages",
+                    Action = "Support"
+                });
+           
+            routes.MapRoute(
+                RouteName.ReportIssue, "bugs", new
+                {
+                    controller = "Pages",
+                    Action = "ReportIssue"
+                });    
+        
+            routes.MapRoute(
+                RouteName.Press, "press", new
+                {
+                    controller = "Pages",
+                    Action = "Press"
+                });  
+        
+            routes.MapRoute(
+                RouteName.Partner, "partner", new
+                {
+                    controller = "Pages",
+                    Action = "Partner"
+                });    
+        
+            routes.MapRoute(
+                RouteName.Security, "security", new
+                {
+                    controller = "Documentation",
+                    Action = "Security"
+                });
+
+            routes.MapRoute(
+                RouteName.Documentation, "docs/{action}", new
+                {
+                    controller = "Documentation",
+                    Action = "Index"
                 });
 
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());

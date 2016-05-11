@@ -1,0 +1,220 @@
+﻿@using System.Configuration
+@using NuGetGallery;
+@using StackExchange.Profiling
+@{
+
+  var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
+
+    if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string) ViewData[Constants.ReturnUrlViewDataKey]))
+    {
+        if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
+        {
+            TempData[Constants.ReturnUrlViewDataKey] = Request.RawUrl;
+        }
+        else
+        {
+            TempData.Add(Constants.ReturnUrlViewDataKey, Request.RawUrl);
+        }
+    }
+
+
+    //css
+    Bundles.Reference("Content/site.css");
+    Bundles.Reference("Content/chocolatey.css");
+    //js
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/header", "header");
+}
+<!DOCTYPE html>
+<html lang="en" class="static ">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chocolatey Gallery @(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : "| " + ViewBag.Title)
+  </title>
+    @Bundles.RenderStylesheets()
+    @RenderSection("css", required: false)
+ 
+    @*<link href="@Url.Content("~/Content/site.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/chocolatey.css")" rel="stylesheet" />*@
+    <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+    <link rel="nuget" type="application/atom+xml" title="Chocolatey" href="http://www.chocolatey.org/api/v2" />
+    <link rel="search" type="application/opensearchdescription+xml" href="@Url.Content("~/opensearch.xml")" title="Chocolatey Search">
+  
+    @RenderSection("ExtraHeaders", required: false)
+    @Bundles.RenderScripts("header")
+    
+    @MiniProfiler.RenderIncludes()
+    @{
+        var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
+     }
+    @if (propertyId != null)
+    {
+        @Analytics.GetGoogleHtml(propertyId)
+    }
+
+    @RenderSection("TopScripts", required: false)
+</head>
+<body>
+    <div id="content-wrapper">
+        <header class="main">
+            <div id="logo">
+                <a href="@Url.Home()">Chocolatey Gallery</a>
+            </div>
+            <div id="header-right">
+                <div class="notices">@Html.Raw(noticeText)</div>
+                @Html.Partial(MVC.Shared.Views.UserDisplay)
+            </div>
+        </header>
+        <nav class="main">
+            <ul id="menu">
+                @{
+                    var homeClass = ViewBag.Tab == "Home" ? "current" : "";
+                    var aboutClass = ViewBag.Tab == "About" ? "current" : "";
+                    var packagesClass = ViewBag.Tab == "Packages" ? "current" : "";
+                    var uploadClass = ViewBag.Tab == "Upload" ? "current" : "";
+                }
+                <li class="@homeClass"><a href="@Url.Home()">Home</a></li>
+                <li class="@aboutClass"><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
+                <li class="@packagesClass"><a href="@Url.PackageList()">Packages</a></li>
+                <li class="@uploadClass"><a href="@Url.UploadPackage()" class="upload">Upload</a></li>
+                <li><a href="https://github.com/chocolatey/choco/wiki">Docs*</a></li>
+                <li><a href="https://github.com/chocolatey/choco">Project*</a></li>
+                <li><a href="http://groups.google.com/group/chocolatey">Forum*</a></li>
+                <li><a href="http://cafepress.com/chocolatey">Shop*</a></li>
+            </ul>
+            <div id="searchBox" role="search">
+                <form action="@Url.PackageList()" method="get">
+                <input name="q" id="searchBoxInput" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" autofocus />
+                <input id="searchBoxSubmit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=" " />
+                </form>
+            </div>
+        </nav>
+        <div id="body" role="main">
+            @if (TempData.ContainsKey("Message"))
+            {
+                <p class="message">@TempData["Message"]</p>
+            } 
+            @if (TempData.ContainsKey("ErrorMessage"))
+            {
+                <p class="message error">@TempData["ErrorMessage"]</p>
+            }
+            @RenderBody()
+        </div>
+    </div>
+    <div id="layout-footer" class="group">
+        <footer id="footer">
+            <ul class="recommended">
+                <li><a name="newsletter" id="newsletter">Sign up for the Newsletter!</a>
+                    <p>Be the first to know about upcoming features, security releases, and news about Chocolatey.</p>
+                </li>
+                <li> <!-- Begin MailChimp Signup Form -->
+                    <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet"
+                        type="text/css">
+                    <style type="text/css">
+                        #mc_embed_signup
+                        {
+                            font: 12px Helvetica,Arial,sans-serif;
+                            width: 160px;
+                        }
+                        #mc_embed_signup input.email { min-width: 150px;}
+                        /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+                    </style>
+                    <div id="mc_embed_signup">
+                        <form action="//chocolatey.us8.list-manage.com/subscribe/post?u=86a6d80146a0da7f2223712e4&amp;id=73b018498d"
+                        method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+                        target="_blank" novalidate>
+                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Your e-mail address"
+                            required />
+                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                        <div style="position: absolute; left: -5000px;">
+                            <input type="text" name="b_86a6d80146a0da7f2223712e4_73b018498d" tabindex="-1" value="">
+                        </div>
+                        <div class="clear">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"
+                                class="button" /></div>
+                        </form>
+                    </div>
+                    <!--End mc_embed_signup-->
+                </li>
+                <li><a href="http://groups.google.com/group/chocolatey">Discussion</a>
+                    <p>Find a possible bug? Got a feature request? Get involved in the discussion!</p>
+                </li>
+                <li><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs">FAQ</a>
+                    <p>Read the Frequently Asked Questions about Chocolatey.</p>
+                </li>
+            </ul>
+            <div class="donate">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="E8ZPVL5PNTABW">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                    border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
+                    width="1" height="1">
+                </form>
+            </div>
+            <div class="newsletter">
+            </div>
+            <div class="license">
+                <p><a href="https://twitter.com/chocolateynuget" class="twitter-follow-button" data-show-count="true"
+                data-width="250px" data-lang="en">Follow @@chocolateynuget</a> <a href="https://twitter.com/share"
+                class="twitter-share-button" data-hashtags="chocolatey" data-lang="en">Tweet</a>
+
+                    <script type="text/javascript">
+                        !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");
+                    </script>
+
+                    <br />
+                    &copy; 2011 - @DateTime.UtcNow.Year RealDimensions Software, LLC. </p>
+                    @{
+                        string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
+                        string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
+                    }
+                    <p id="releaseTag">
+                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0,10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
+                    </p>
+            </div>
+            <div class="supporters">
+                Site made possible by the following sponsors:
+                <ul class="supporters">
+                    <li></li>
+                    <li><a href="http://codingutopia.com">RealDimensions</a> <a id="realdimensions-logo"
+                    href="http://codingutopia.com"></a></li>
+                    <li><a href="https://appharbor.com">AppHarbor</a> <a id="appharbor-logo" href="https://appharbor.com">
+                    </a></li>
+                    <li><a href="https://turbo.net">Turbo.net</a> <a id="turbo-logo" href="https://turbo.net">
+                    </a></li>
+                    <li></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+  @Bundles.RenderScripts()
+  @RenderSection("BottomScripts", required: false)
+  @if (!string.IsNullOrWhiteSpace(noticeText))
+    {
+        <style media="screen" type="text/css">
+            @@-webkit-keyframes fade {
+              0% { background:#dedede; }
+              20% { background:@@notices; }
+              30% { background:@@notices; }
+              90% { background:lighten( @@notices, 20% ); }
+            }
+            @@keyframes fade {
+              0% { background:#dedede; }
+              20% { background:@@notices; }
+              30% { background:@@notices; }
+              90% { background:lighten( @@notices, 20% ); }
+            }
+        </style>
+    }
+    <script>
+        ((window.gitter = {}).chat = {}).options = {
+            room: 'chocolatey/chocolatey.org'
+        };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+</body>
+</html>

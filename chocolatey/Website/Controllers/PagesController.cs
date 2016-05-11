@@ -61,11 +61,56 @@ namespace NuGetGallery
         {
             return View("~/Views/Pages/Pricing.cshtml");
         }
+        
+        public ActionResult Business()
+        {
+            return View("~/Views/Pages/Business.cshtml");
+        }
 
-        //public ActionResult Install()
-        //{
-        //    return File(Url.Content("~/installChocolatey.ps1"), "text/plain");
-        //}
+        public ActionResult Kickstarter()
+        {
+            return View("~/Views/Pages/Kickstarter.cshtml");
+        }
+
+        public ActionResult Newsletter()
+        {
+            return View("~/Views/Pages/Newsletter.cshtml");
+        }
+
+        public ActionResult Media()
+        {
+            return View("~/Views/Pages/Media.cshtml");
+        }
+
+        public ActionResult Company()
+        {
+            return View("~/Views/Pages/Company.cshtml");
+        }
+
+        public ActionResult ContactUs()
+        {
+            return View("~/Views/Pages/ContactUs.cshtml");
+        }
+
+        public ActionResult Support()
+        {
+            return View("~/Views/Pages/Support.cshtml");
+        }
+
+        public ActionResult ReportIssue()
+        {
+            return View("~/Views/Pages/ReportIssue.cshtml");
+        }
+
+        public ActionResult Press()
+        {
+            return View("~/Views/Pages/Press.cshtml");
+        }
+
+        public ActionResult Partner()
+        {
+            return View("~/Views/Pages/Partner.cshtml");
+        }
 
         public FileResult InstallerBatchFile()
         {
