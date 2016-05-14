@@ -104,13 +104,6 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
-                RouteName.Newsletter, "newsletter", new
-                {
-                    controller = "Pages",
-                    Action = "Newsletter"
-                });
-            
-            routes.MapRouteSeo(
                 RouteName.Media, "media", new
                 {
                     controller = "Pages",

@@ -43,7 +43,6 @@ namespace NuGetGallery
         public const string Kickstarter = "Kickstarter";
         public const string Terms = "Terms";
         public const string Privacy = "Privacy";
-        public const string Newsletter = "Newsletter";
         public const string Security = "Security";
         public const string Media = "Media";
         public const string Company = "Company";
