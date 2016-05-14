@@ -662,6 +662,10 @@
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
     <Compile Include="Infrastructure\CSharpRazorViewEngine.cs" />
+    <Compile Include="Infrastructure\Routing\HyphenatedRouteHandler.cs" />
+    <Compile Include="Infrastructure\Routing\SeoRoute.cs" />
+    <Compile Include="RouteAreaCollectionExtensions.cs" />
+    <Compile Include="RouteCollectionExtensions.cs" />
     <Compile Include="Services\AmazonSqsClientWrapper.cs" />
     <Compile Include="Services\AmazonSqsPackageStatisticsService.cs" />
     <Compile Include="Services\DatabasePackageStatisticsService.cs" />
