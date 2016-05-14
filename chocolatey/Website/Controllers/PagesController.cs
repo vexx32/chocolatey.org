@@ -117,6 +117,11 @@ namespace NuGetGallery
             return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/Layout.cshtml");
         }
 
+        public ActionResult FAQ()
+        {
+            return View("~/Views/Documentation/FAQ.cshtml","~/Views/Shared/Layout.cshtml");
+        }
+
         public ActionResult Security()
         {
             return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/Layout.cshtml");

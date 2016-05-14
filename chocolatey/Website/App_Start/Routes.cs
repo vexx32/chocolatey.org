@@ -78,9 +78,8 @@ namespace NuGetGallery
             routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
-                    controller = "Documentation",
-                    Action = "Documentation",
-                    DocName = "FAQ"
+                    controller = "Pages",
+                    Action = "FAQ"
                 });
 
             routes.MapRouteSeo(
