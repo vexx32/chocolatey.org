@@ -20,7 +20,7 @@ using System.Web.Mvc;
 
 namespace NuGetGallery.Controllers
 {
-    public class DocumentationController : Controller
+    public class DocumentationController : AppController
     { 
         
         private readonly IFileSystemService _fileSystem;
