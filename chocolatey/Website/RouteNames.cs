@@ -39,7 +39,7 @@ namespace NuGetGallery
         public const string Install = "Install";
         public const string Business = "Business";
         public const string FAQ = "FAQ";
-        public const string Documentation = "Documentation";
+        public const string Docs = "Docs";
         public const string Kickstarter = "Kickstarter";
         public const string Terms = "Terms";
         public const string Privacy = "Privacy";

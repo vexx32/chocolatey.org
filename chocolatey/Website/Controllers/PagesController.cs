@@ -112,6 +112,16 @@ namespace NuGetGallery
             return View("~/Views/Pages/Partner.cshtml");
         }
 
+        public ActionResult Install()
+        {
+            return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/Layout.cshtml");
+        }
+
+        public ActionResult Security()
+        {
+            return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/Layout.cshtml");
+        }
+
         public FileResult InstallerBatchFile()
         {
             const string batchFile = @"@echo off

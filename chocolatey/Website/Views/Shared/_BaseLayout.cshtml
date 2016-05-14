@@ -1,0 +1,54 @@
+﻿@using System.Configuration
+@using NuGetGallery;
+@using StackExchange.Profiling
+@{
+    var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
+
+    if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string)ViewData[Constants.ReturnUrlViewDataKey]))
+    {
+        if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
+        {
+            TempData[Constants.ReturnUrlViewDataKey] = Request.RawUrl;
+        }
+        else
+        {
+            TempData.Add(Constants.ReturnUrlViewDataKey, Request.RawUrl);
+        }
+    }
+
+    //css
+    //Bundles.Reference("Content/style.css");
+    //Bundles.Reference("Content/site.css");
+    //Bundles.Reference("Content/chocolatey.css");
+    //js
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/header", "header");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+        Chocolatey @(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : "| " + ViewBag.Title)
+    </title>
+    @Bundles.RenderStylesheets()
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" />
+    @RenderSection("css", required: false)
+    <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+    <link rel="nuget" type="application/atom+xml" title="Chocolatey" href="http://www.chocolatey.org/api/v2" />
+    <link rel="search" type="application/opensearchdescription+xml" href="@Url.Content("~/opensearch.xml")" title="Chocolatey Search" />
+    @RenderSection("ExtraHeaders", required: false)
+    @Bundles.RenderScripts("header")
+    @MiniProfiler.RenderIncludes()
+    @{
+        var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
+    }
+    @if (propertyId != null)
+    {
+        @Analytics.GetGoogleHtml(propertyId)
+    }
+    @RenderSection("TopScripts", required: false)
+</head>
+    @RenderBody()
+</html>

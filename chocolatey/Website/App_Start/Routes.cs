@@ -31,151 +31,157 @@ namespace NuGetGallery
             routes.IgnoreRoute("{*Content}", new { imgs = @"(.*/)?Content(/.*)?" });
             routes.IgnoreRoute("{*Scripts}", new { scripts = @"(.*/)?Scripts(/.*)?" });
 
-            routes.MapRoute(RouteName.Home, "", MVC.Pages.Home());
+            routes.MapRouteSeo(RouteName.Home, "", MVC.Pages.Home());
         
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.InstallerBatchFile, "installChocolatey.cmd", new
                 {
                     controller = "Pages",
                     Action = "InstallerBatchFile"
                 });
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                RouteName.About, "about", new
                {
                    controller = "Pages",
                    Action = "About"
                });
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Notice, "notice", new
                 {
                     controller = "Pages",
                     Action = "Notice"
                 }); 
             
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Pricing, "pricing", new
                 {
                     controller = "Pages",
                     Action = "Pricing"
                 });
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Install, "install", new
                 {
-                    controller = "Documentation",
+                    controller = "Pages",
                     Action = "Install"
                 });
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Business, "business", new
                 {
                     controller = "Pages",
                     Action = "Business"
                 });
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
                     controller = "Documentation",
-                    Action = "FAQ"
-                });   
-            
-            routes.MapRoute(
+                    Action = "Documentation",
+                    DocName = "FAQ"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Kickstarter, "kickstarter", new
                 {
                     controller = "Pages",
                     Action = "Kickstarter"
-                });    
-            
-            routes.MapRoute(
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Terms, "terms", new
                 {
                     controller = "Pages",
                     Action = "Terms"
                 });
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Privacy, "privacy", new
                 {
                     controller = "Pages",
                     Action = "Privacy"
-                });     
-            
-            routes.MapRoute(
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Newsletter, "newsletter", new
                 {
                     controller = "Pages",
                     Action = "Newsletter"
                 });
             
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Media, "media", new
                 {
                     controller = "Pages",
                     Action = "Media"
                 });  
             
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Company, "company", new
                 {
                     controller = "Pages",
                     Action = "Company"
                 });  
             
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.ContactUs, "contact", new
                 {
                     controller = "Pages",
                     Action = "ContactUs"
                 });    
             
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
                     controller = "Pages",
                     Action = "Support"
                 });
            
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.ReportIssue, "bugs", new
                 {
                     controller = "Pages",
                     Action = "ReportIssue"
                 });    
         
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Press, "press", new
                 {
                     controller = "Pages",
                     Action = "Press"
                 });  
         
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Partner, "partner", new
                 {
                     controller = "Pages",
                     Action = "Partner"
                 });    
         
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Security, "security", new
                 {
-                    controller = "Documentation",
+                    controller = "Pages",
                     Action = "Security"
                 });
+            
+            //routes.MapRouteSeo(
+            //   RouteName.DocsIndex,
+            //   "docs",
+            //   new { controller = "Documentation", action = "Index" }
+            //   );
 
-            routes.MapRoute(
-                RouteName.Documentation, "docs/{action}", new
-                {
-                    controller = "Documentation",
-                    Action = "Index"
-                });
+            routes.MapRouteSeo(
+                RouteName.Docs,
+                "docs/{docName}",
+                new { controller = "Documentation", action = "Documentation", docName = "Index" }
+                );
+            
+            routes.MapRouteSeo(RouteName.Stats, "stats", MVC.Pages.Stats());
 
-            routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
-
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 "rss feed", "feed.rss", new
                 {
                     controller = "RSS",
@@ -184,24 +190,24 @@ namespace NuGetGallery
 
             routes.Add(new JsonRoute("json/{controller}"));
 
-            routes.MapRoute(RouteName.Policies, "policies/{action}", MVC.Pages.Terms());
+            routes.MapRouteSeo(RouteName.Policies, "policies/{action}", MVC.Pages.Terms());
 
-            var packageListRoute = routes.MapRoute(RouteName.ListPackages, "packages", MVC.Packages.ListPackages());
+            var packageListRoute = routes.MapRouteSeo(RouteName.ListPackages, "packages", MVC.Packages.ListPackages());
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.NotifyComment, "packages/{packageId}/notify-comment", new
                 {
                     controller = MVC.Packages.Name,
                     action = "NotifyMaintainersOfAddedComment"
                 });
 
-            var uploadPackageRoute = routes.MapRoute(RouteName.UploadPackage, "packages/upload", MVC.Packages.UploadPackage());
+            var uploadPackageRoute = routes.MapRouteSeo(RouteName.UploadPackage, "packages/upload", MVC.Packages.UploadPackage());
 
-            routes.MapRoute(RouteName.VerifyPackage, "packages/verify-upload", MVC.Packages.VerifyPackage());
+            routes.MapRouteSeo(RouteName.VerifyPackage, "packages/verify-upload", MVC.Packages.VerifyPackage());
 
-            routes.MapRoute(RouteName.CancelUpload, "packages/cancel-upload", MVC.Packages.CancelUpload());
+            routes.MapRouteSeo(RouteName.CancelUpload, "packages/cancel-upload", MVC.Packages.CancelUpload());
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.PackageOwnerConfirmation, "packages/{id}/owners/{username}/confirm/{token}", new
                 {
                     controller = MVC.Packages.Name,
@@ -216,7 +222,7 @@ namespace NuGetGallery
                     version = new VersionRouteConstraint()
                 });
 
-            var packageVersionActionRoute = routes.MapRoute(
+            var packageVersionActionRoute = routes.MapRouteSeo(
                 RouteName.PackageVersionAction, "packages/{id}/{version}/{action}", new
                 {
                     controller = MVC.Packages.Name
@@ -225,28 +231,28 @@ namespace NuGetGallery
                     version = new VersionRouteConstraint()
                 });
 
-            var packageActionRoute = routes.MapRoute(
+            var packageActionRoute = routes.MapRouteSeo(
                 RouteName.PackageAction, "packages/{id}/{action}", new
                 {
                     controller = MVC.Packages.Name
                 });
 
-            var resendRoute = routes.MapRoute("ResendConfirmation", "account/ResendConfirmation", MVC.Users.ResendConfirmation());
+            var resendRoute = routes.MapRouteSeo("ResendConfirmation", "account/ResendConfirmation", MVC.Users.ResendConfirmation());
 
             //Redirecting v1 Confirmation Route
-            routes.Redirect(r => r.MapRoute("v1Confirmation", "Users/Account/ChallengeEmail")).To(resendRoute);
+            routes.Redirect(r => r.MapRouteSeo("v1Confirmation", "Users/Account/ChallengeEmail")).To(resendRoute);
 
-            routes.MapRoute(
+            routes.MapRouteSeo(
                 RouteName.Authentication, "users/account/{action}", new
                 {
                     controller = MVC.Authentication.Name
                 });
 
-            routes.MapRoute(RouteName.Profile, "profiles/{username}", MVC.Users.Profiles());
+            routes.MapRouteSeo(RouteName.Profile, "profiles/{username}", MVC.Users.Profiles());
 
-            routes.MapRoute(RouteName.PasswordReset, "account/{action}/{username}/{token}", MVC.Users.ResetPassword());
+            routes.MapRouteSeo(RouteName.PasswordReset, "account/{action}/{username}/{token}", MVC.Users.ResetPassword());
 
-            routes.MapRoute(RouteName.Account, "account/{action}", MVC.Users.Account());
+            routes.MapRouteSeo(RouteName.Account, "account/{action}", MVC.Users.Account());
 
             routes.MapRoute(
                 "site" + RouteName.DownloadPackage, "packages/{id}/{version}/DownloadPackage", MVC.Api.GetPackage(), defaults: new
@@ -258,8 +264,8 @@ namespace NuGetGallery
                 });
             
             // V1 Routes
-            routes.MapRoute("v1Legacy" + RouteName.PushPackageApi, "PackageFiles/{apiKey}/nupkg", MVC.Api.CreatePackagePost());
-            routes.MapRoute("v1Legacy" + RouteName.PublishPackageApi, "PublishedPackages/Publish", MVC.Api.PublishPackage());
+            routes.MapRouteSeo("v1Legacy" + RouteName.PushPackageApi, "PackageFiles/{apiKey}/nupkg", MVC.Api.CreatePackagePost());
+            routes.MapRouteSeo("v1Legacy" + RouteName.PublishPackageApi, "PublishedPackages/Publish", MVC.Api.PublishPackage());
 
             // V2 routes
             routes.MapRoute(
@@ -349,15 +355,15 @@ namespace NuGetGallery
                  defaults: null
             );
             
-            routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
+            routes.MapRouteSeo("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
 
-            routes.MapRoute("v2PackageVersions", "api/v2/package-versions/{id}", MVC.Api.GetPackageVersions());
+            routes.MapRouteSeo("v2PackageVersions", "api/v2/package-versions/{id}", MVC.Api.GetPackageVersions());
 
             routes.MapServiceRoute(RouteName.V2ApiFeed, "api/v2/", typeof(V2Feed));
 
             // Redirected Legacy Routes
 
-            routes.Redirect(r => r.MapRoute("ReportAbuse", "Package/ReportAbuse/{id}/{version}", MVC.Packages.ReportAbuse()), permanent: true).To(packageVersionActionRoute);
+            routes.Redirect(r => r.MapRouteSeo("ReportAbuse", "Package/ReportAbuse/{id}/{version}", MVC.Packages.ReportAbuse()), permanent: true).To(packageVersionActionRoute);
 
             routes.Redirect(
                 r => r.MapRoute(
@@ -370,18 +376,18 @@ namespace NuGetGallery
 
             // TODO: this route looks broken as there is no EditPackage action
             //routes.Redirect(
-            //    r => r.MapRoute(
+            //    r => r.MapRouteSeo(
             //        "EditPackage",
             //        "Package/Edit/{id}/{version}",
             //        new { controller = PackagesController.ControllerName, action = "EditPackage" }),
             //    permanent: true).To(packageVersionActionRoute);
 
-            routes.Redirect(r => r.MapRoute(RouteName.ListPackages, "List/Packages", MVC.Packages.ListPackages()), permanent: true).To(packageListRoute);
+            routes.Redirect(r => r.MapRouteSeo(RouteName.ListPackages, "List/Packages", MVC.Packages.ListPackages()), permanent: true).To(packageListRoute);
 
-            routes.Redirect(r => r.MapRoute(RouteName.DisplayPackage, "List/Packages/{id}/{version}", MVC.Packages.DisplayPackage().AddRouteValue("version", UrlParameter.Optional)), permanent: true)
+            routes.Redirect(r => r.MapRouteSeo(RouteName.DisplayPackage, "List/Packages/{id}/{version}", MVC.Packages.DisplayPackage().AddRouteValue("version", UrlParameter.Optional)), permanent: true)
                   .To(packageDisplayRoute);
 
-            routes.Redirect(r => r.MapRoute(RouteName.NewSubmission, "Contribute/NewSubmission", MVC.Packages.UploadPackage()), permanent: true).To(uploadPackageRoute);
+            routes.Redirect(r => r.MapRouteSeo(RouteName.NewSubmission, "Contribute/NewSubmission", MVC.Packages.UploadPackage()), permanent: true).To(uploadPackageRoute);
         }
     }
 }

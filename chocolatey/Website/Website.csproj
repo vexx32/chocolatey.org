@@ -1165,6 +1165,9 @@
     <Content Include="Views\Pages\Support.cshtml" />
     <Content Include="Views\Pages\Kickstarter.cshtml" />
     <Content Include="Views\Documentation\Index.cshtml" />
+    <Content Include="Views\Shared\_BaseLayout.cshtml" />
+    <Content Include="Views\Documentation\_Layout.cshtml" />
+    <Content Include="Views\Documentation\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

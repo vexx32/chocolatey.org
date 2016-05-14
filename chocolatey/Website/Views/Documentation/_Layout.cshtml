@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+@section css
+{
+    @RenderSection("css", required: false)
+}
+
+@section ExtraHeaders
+{
+    @RenderSection("ExtraHeaders", required: false)
+}
+
+@section TopScripts
+{
+    @RenderSection("TopScripts", required: false)
+}
+<body class="bg-one">
+    <main class="docs">
+        <aside>
+            <a class="logo" href="@Url.Home()">
+                <img class=" hide-on-small" alt="Logo" src="@Url.Content("~/content/images/logo_square.svg")">
+            </a>
+
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Home"})">Home</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Why"})">Why Chocolatey?</a></li>
+                <li><a href="https://github.com/chocolatey/chocolatey/wiki">Choco 0.9.8.x &amp; below</a></li>
+            </ul>
+            <p><strong>General</strong></p>
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "ReleaseNotes"})">Release Notes</a></li>
+                <li><a href="https://github.com/chocolatey/choco/blob/master/README.md#submitting-issues">Submitting Issues</a></li>
+                <li><a href="https://github.com/chocolatey/choco/blob/master/CONTRIBUTING.md">Contributing</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "faq"})">FAQs</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Security"})">Security</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Moderation"})">Chocolatey.org Moderation</a></li>
+                <li><a href="PackageTriageProcess#are-you-a-software-vendor">Software Vendor?</a></li>
+            </ul>
+            <p><strong>Usage</strong></p>
+            <p><a href="GettingStarted#how-does-chocolatey-work">How does choco work?</a></p>
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "installation"})">How to install</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Uninstallation"})">How to uninstall</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "GettingStarted"})">Getting Started</a></li>
+                <li><a href="Proxy-Settings-for-Chocolatey">Proxy Settings</a></li>
+                <li>
+                    <strong>Commands:</strong><ul>
+                        <li><a href="CommandsReference#how-to-pass-options--switches">Passing args to choco</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsReference"})">Complete Reference</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsList"})">List / Search </a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsInstall"})">Install</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsPin"})">Pin</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsOutdated"})">Outdated</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsUpgrade"})">Upgrade</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsUninstall"})">Uninstall</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsConfig"})">Config</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsSources"})">Source / Sources</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsFeature"})">Feature</a></li>
+                        <li>See other commands related to creating packages below</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Creating Packages</strong></p>
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CreatePackages"})">Create Packages</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CreatePackagesQuickStart"})">Quick Start</a></li>
+                <li>
+                    <strong>Commands:</strong><ul>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsNew"})">New</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsPack"})">Pack</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsApiKey"})">Apikey</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "CommandsPush"})">Push</a></li>
+                    </ul>
+                </li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "HelpersReference"})">Function and Variable Reference</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "AutomaticPackages"})">Automatic Packages</a></li>
+            </ul>
+            <p><strong>How To&#39;s</strong></p>
+            <ul>
+                <li><a href="Proxy-Settings-for-Chocolatey">Use Chocolatey w/Proxy Server</a></li>
+                <li><a href="How-To-Change-Cache">Change Download Cache Location aka Don&#39;t use TEMP for downloads</a></li>
+                <li><a href="How-To-Install-Upgrade-Package-Without-Scripts">Install/Upgrade a Package w/out running install scripts</a></li>
+                <li><a href="How-To-Create-Custom-Package-Templates">Create Custom Package Templates</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "PackageTriageProcess"})">Request Package Fixes/Updates</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "PackageTriageProcess"})">Request Package</a></li>
+                <li><a href="PackageTriageProcess#i-want-to-take-overhelp-with-package-maintenance-for-my-software">Maintain Packages for My Software</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "PackageTriageProcess"})">Become a Maintainer</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "PackageMantainerHandover"})">Take Over Package Maintenance Exclusively</a></li>
+                <li><a href="How-To-Parse-PackageParameters-Argument">Parse Package Parameters</a></li>
+                <li><a href="How-To-Mount-An-Iso-In-Chocolatey-Package">Mount Iso</a></li>
+                <li><a href="How-To-Deprecate-A-Chocolatey-Package">Deprecate a Package</a></li>
+                <li><a href="How-To-Host-Feed">Host Your Own Server</a></li>
+            </ul>
+            <p><strong>Use Cases</strong></p>
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "DevelopmentEnvironmentSetup"})">Development Environment</a></li>
+                <li><a href="Hosting-Chocolatey-Packages-on-MyGet">Host on MyGet</a></li>
+            </ul>
+            <p><strong>Learning Resources</strong></p>
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Resources"})">Resources</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Videos"})">Videos</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Presentations"})">Presentations</a></li>
+            </ul>
+            <p><strong>Other</strong></p>
+            <ul>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Why"})">Why Chocolatey?</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Legal"})">Legal</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "History"})">History</a></li>
+            </ul>
+        </aside>
+
+        @RenderBody()
+    </main>
+</body>
