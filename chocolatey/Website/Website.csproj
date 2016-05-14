@@ -1154,14 +1154,14 @@
     <Content Include="Views\Pages\Business.cshtml" />
     <Content Include="Views\Pages\Company.cshtml" />
     <Content Include="Views\Pages\ContactUs.cshtml" />
-    <Content Include="Views\Pages\FAQ.cshtml" />
-    <Content Include="Views\Pages\Install.cshtml" />
+    <Content Include="Views\Documentation\FAQ.cshtml" />
+    <Content Include="Views\Documentation\Installation.cshtml" />
     <Content Include="Views\Pages\Media.cshtml" />
     <Content Include="Views\Pages\Newsletter.cshtml" />
     <Content Include="Views\Pages\Partner.cshtml" />
     <Content Include="Views\Pages\Press.cshtml" />
     <Content Include="Views\Pages\ReportIssue.cshtml" />
-    <Content Include="Views\Pages\Security.cshtml" />
+    <Content Include="Views\Documentation\Security.cshtml" />
     <Content Include="Views\Pages\Support.cshtml" />
     <Content Include="Views\Pages\Kickstarter.cshtml" />
     <Content Include="Views\Documentation\Index.cshtml" />
