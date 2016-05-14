@@ -37,6 +37,11 @@ namespace NuGetGallery
             return View("~/Views/Pages/Home.cshtml");
         }
 
+        public virtual ActionResult Features()
+        {
+            return View("~/Views/Pages/Features.cshtml");
+        }
+
         public virtual ActionResult About()
         {
             return View("~/Views/Pages/About.cshtml");

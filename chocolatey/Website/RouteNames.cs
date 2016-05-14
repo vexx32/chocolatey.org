@@ -32,6 +32,7 @@ namespace NuGetGallery
         public const string DownloadNuGetExe = "DownloadNuGetExe";
         public const string Home = "Home";
         public const string About = "About";
+        public const string Features = "Features";
         public const string InstallerBatchFile = "Installer-BatchFile";
         public const string Notice = "Notice";
         public const string Pricing = "Pricing";

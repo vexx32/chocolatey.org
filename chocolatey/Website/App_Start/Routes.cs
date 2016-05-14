@@ -41,6 +41,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+               RouteName.Features, "features", new
+               {
+                   controller = "Pages",
+                   Action = "Features"
+               });          
+            
+            routes.MapRouteSeo(
                RouteName.About, "about", new
                {
                    controller = "Pages",
