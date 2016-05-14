@@ -45,13 +45,7 @@
                 <li><a class="bold m-l--s" href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a></li>
                 <li><a class="bold m-l--s" href="@Url.RouteUrl(RouteName.FAQ)">FAQ</a></li>
                 <li><a class="bold m-l--s" href="@Url.RouteUrl(RouteName.Docs, new { docName = "Index" })">Docs</a></li>
-                <li>
-                    <div class="m-l inline-block">
-                        <div class="small button-bar inline-block line-height-small">
-                            <a class="button" href="#">Login</a><a class="button" href="#">Signup</a>
-                        </div>
-                    </div>
-                </li>
+                <li>@Html.Partial(MVC.Shared.Views.UserDisplay)</li>
             </ul>
         </nav>
     </header>
