@@ -1,0 +1,31 @@
+@{
+    ViewBag.Title = "";
+}
+
+<article>
+  <h1 id="install-chocolateypath">Install-ChocolateyPath</h1>
+<p>This puts a directory on the PATH environment variable. This is used when the application/tool is not being linked by Chocolatey (not in the lib folder).</p>
+<p><strong>NOTE:</strong> This command will assert UAC/Admin privileges on the machine if $pathType == &#39;Machine&#39;.</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="lang-powershell">Install-ChocolateyPath $pathToInstall $pathType
+</code></pre>
+<h2 id="examples">Examples</h2>
+<pre><code class="lang-powershell">Install-ChocolateyPath &quot;$env:SystemDrive\tools\gittfs&quot;
+Install-ChocolateyPath &quot;$env:SystemDrive\Program Files\MySQL\MySQL Server 5.5\bin&quot; `
+ &#39;Machine&#39;
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li><p><code>-pathToInstall</code></p>
+<p>  This is a directory that you want to add to the PATH environment variable.</p>
+<p>  Example: <code>&quot;$env:SystemDrive\tools\gittfs&quot;</code></p>
+</li>
+<li><p><code>-pathType</code> <em>(optional)</em></p>
+<p>  Pick only one : &#39;User&#39; or &#39;Machine&#39;</p>
+<p>  Example: <code>&#39;User&#39;</code> or <code>&#39;Machine&#39;</code></p>
+<p>  Defaults to <code>&#39;User&#39;</code></p>
+</li>
+</ul>
+<p><a href="HelpersReference">Function Reference</a></p>
+
+</article>

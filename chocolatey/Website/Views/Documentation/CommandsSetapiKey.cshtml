@@ -1,0 +1,85 @@
+@{
+    ViewBag.Title = "";
+}
+
+<article>
+  <h1 id="apikey-command-choco-setapikey-">ApiKey Command (choco setapiKey)</h1>
+<p>This lists api keys that are set or sets an api key for a particular<br> source so it doesn&#39;t need to be specified every time.</p>
+<p>Anything that doesn&#39;t contain source and key will list api keys.</p>
+<h2 id="usage">Usage</h2>
+<pre><code>choco apikey [&lt;options/switches&gt;]
+choco setapikey [&lt;options/switches&gt;]
+</code></pre><h2 id="examples">Examples</h2>
+<pre><code>choco apikey
+choco apikey -s&quot;https://somewhere/out/there&quot;
+choco apikey -s&quot;https://somewhere/out/there/&quot; -k=&quot;value&quot;
+choco apikey -s&quot;https://chocolatey.org/&quot; -k=&quot;123-123123-123&quot;
+</code></pre><h2 id="connecting-to-chocolatey-org">Connecting to Chocolatey.org</h2>
+<p>In order to save your API key for <a href="https://chocolatey.org/">https://chocolatey.org/</a>, 
+ log in (or register, confirm and then log in) to
+ <a href="https://chocolatey.org/">https://chocolatey.org/</a>, go to <a href="https://chocolatey.org/account">https://chocolatey.org/account</a>, 
+ copy the API Key, and then use it in the following command:</p>
+<pre><code>choco apikey -k &lt;your key here&gt; -s https://chocolatey.org/
+</code></pre><h2 id="options-and-switches">Options and Switches</h2>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are
+ running a command like install that allows installing multiple
+ packages, and you use <code>--version=1.0.0</code>, it is going to look for and
+ try to install version 1.0.0 of every package passed. So please split
+ out multiple package calls when wanting to pass specific options.</p>
+<p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
+<pre><code>
+ -?, --help, -h
+     Prints out the help menu.
+
+ -d, --debug
+     Debug - Run in Debug Mode.
+
+ -v, --verbose
+     Verbose - See verbose messaging.
+
+     --acceptlicense, --accept-license
+     AcceptLicense - Accept license dialogs automatically.
+
+ -y, --yes, --confirm
+     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+       Implies --accept-license
+
+ -f, --force
+     Force - force the behavior
+
+     --noop, --whatif, --what-if
+     NoOp - Don&#39;t actually do anything.
+
+ -r, --limitoutput, --limit-output
+     LimitOutput - Limit the output to essential information
+
+     --execution-timeout=VALUE
+     CommandExecutionTimeoutSeconds - Override the default execution timeout 
+       in the configuration of 2700 seconds.
+
+ -c, --cache, --cachelocation, --cache-location=VALUE
+     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+       in chocolatey.config file.
+
+     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
+     AllowUnofficialBuild - When not using the official build you must set 
+       this flag for choco to continue.
+
+     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
+     FailOnStandardError - Fail on standard error output (stderr), typically 
+       received when running external commands during install providers. This 
+       overrides the feature failOnStandardError.
+
+     --use-system-powershell
+     UseSystemPowerShell - Execute PowerShell using an external process 
+       instead of the built-in PowerShell host. Available in 0.9.10+.
+
+ -s, --source=VALUE
+     Source [REQUIRED] - The source location for the key
+
+ -k, --key, --apikey, --api-key=VALUE
+     ApiKey - The api key for the source.
+</code></pre><p><a href="CommandsReference">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco setapiKey -h</code>. </p>
+
+</article>

@@ -1,0 +1,261 @@
+@{
+    ViewBag.Title = "";
+}
+
+<article>
+  <h1 id="install-chocolateyinstallpackage">Install-ChocolateyInstallPackage</h1>
+<p>Installs software into &quot;Programs and Features&quot;. Use
+Install-ChocolateyPackage when software must be downloaded first.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="lang-powershell">Install-ChocolateyInstallPackage `
+  -PackageName &lt;String&gt; `
+  [-FileType &lt;String&gt;] `
+  [-SilentArgs &lt;String&gt;] `
+  -File &lt;String&gt; `
+  [-ValidExitCodes &lt;Object&gt;] `
+  [-UseOnlyPackageSilentArguments] [&lt;CommonParameters&gt;]
+</code></pre>
+<h2 id="description">Description</h2>
+<p>This will run an installer (local file) on your machine.</p>
+<h2 id="notes">Notes</h2>
+<p>If you are embedding files into a package, ensure that you have the
+rights to redistribute those files if you are sharing this package
+publicly (like on the <a href="https://chocolatey.org/packages">community feed</a>). Otherwise, please use
+Install-ChocolateyPackage to download those resources from their
+official distribution points.</p>
+<p>This is a native installer wrapper function. A &quot;true&quot; package will
+contain all the run time files and not an installer. That could come
+pre-zipped and require unzipping in a PowerShell script. Chocolatey
+works best when the packages contain the software it is managing. Most
+software in the Windows world comes as installers and Chocolatey
+understands how to work with that, hence this wrapper function.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<h3 id="-packagename-string-">-PackageName &lt;String&gt;</h3>
+<p>The name of the package - while this is an arbitrary value, it&#39;s
+recommended that it matches the package id.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-filetype-string-">-FileType [&lt;String&gt;]</h3>
+<p>This is the extension of the file. This can be &#39;exe&#39;, &#39;msi&#39;, or &#39;msu&#39;.
+Licensed versions of Chocolatey use this to automatically determine
+silent arguments. If this is not provided, Chocolatey will
+automatically determine this using the downloaded file&#39;s extension.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td>installerType, installType</td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td>exe</td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-silentargs-string-">-SilentArgs [&lt;String&gt;]</h3>
+<p>OPTIONAL - These are the parameters to pass to the native installer.
+Licensed versions of Chocolatey will automatically determine the
+installer type and merge the arguments with what is provided here.</p>
+<p>Try any of the to get the silent installer -
+<code>/s /S /q /Q /quiet /silent /SILENT /VERYSILENT</code>. With msi it is always
+<code>/quiet</code>. Please pass it in still but it will be overridden by
+Chocolatey to <code>/quiet</code>. If you don&#39;t pass anything it could invoke the
+installer with out any arguments. That means a nonsilent installer.</p>
+<p>Please include the <code>notSilent</code> tag in your Chocolatey package if you
+are not setting up a silent package. Please note that if you are
+submitting to the <a href="https://chocolatey.org/packages">community repository</a>, it is nearly a requirement for
+the package to be completely unattended.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-file-string-">-File &lt;String&gt;</h3>
+<p>Full file path to native installer to run. If embedding in the package,
+you can get it to the path with
+<code>&quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\\INSTALLER_FILE&quot;</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-validexitcodes-object-">-ValidExitCodes [&lt;Object&gt;]</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td>@(0)</td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-useonlypackagesilentarguments">-UseOnlyPackageSilentArguments</h3>
+<p>Do not allow choco to provide/merge additional silent arguments and
+only use the ones available with the package. Available in 0.9.10+.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td>useOnlyPackageSilentArgs</td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-commonparameters-">&lt;CommonParameters&gt;</h3>
+<p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
+<h2 id="examples">Examples</h2>
+<p> <strong>EXAMPLE 1</strong></p>
+<pre><code class="lang-powershell">Install-ChocolateyInstallPackage &#39;__NAME__&#39; &#39;EXE_OR_MSI&#39; &#39;SILENT_ARGS&#39; &#39;FilePath&#39;
+</code></pre>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="HelpersInstallChocolateyPackage">Install-ChocolateyPackage</a></li>
+</ul>
+<p><a href="HelpersReference">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyInstallPackage -Full</code>.</p>
+
+</article>

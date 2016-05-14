@@ -1,0 +1,19 @@
+@{
+    ViewBag.Title = "";
+}
+<article>
+    <h1 id="legalities-and-distributions">Legalities and Distributions</h1>
+    <h3 id="what-you-need-to-know">What you need to know</h3>
+    <h2 id="package-license-acceptance-terms">Package License Acceptance Terms</h2>
+    <p>The act of running Chocolatey to install a package constitutes acceptance of the license for the application, executable(s), or other artifacts that are brought to your machine as a result of a Chocolatey install. This acceptance occurs whether you know the license terms or not. It is suggested that you read and understand the license terms of any package you plan to install prior to installation through Chocolatey. If you do not accept the license of a package you are installing, please uninstall it and any artifacts that end up on your machine as a result of the install.</p>
+    <h2 id="waiver-of-responsibility">Waiver of Responsibility</h2>
+    <p>The use of Chocolatey means that an individual using Chocolatey assumes the responsibility for any changes (including any damages of any sort) that occur to the system as a result of using Chocolatey. This does not supercede the verbage or enforcement of the license for Chocolatey (currently Apache 2.0), it is only noted here that you are waiving any rights to collect damages by your use of Chocolatey. It is recommended you read the license (<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>) to gain a full understanding (especially section 8. Limitation of Liability) prior to using Chocolatey.</p>
+    <h2 id="distributions">Distributions</h2>
+    <p>Most Chocolatey packages on the community feed (<a href="https://chocolatey.org/packages">https://chocolatey.org/packages</a> aka dot org) do not contain actual software distributions, only instructions for getting distributions (in PowerShell).  In a nutshell, the instructions are:</p>
+    <ul>
+        <li>Download a distribution from remote location, most likely the published download location</li>
+        <li>Run an installer (possibly in silent mode)</li>
+    </ul>
+    <p>Because this is no different than what a human would do, and b/c a human kicks off this process, it&#39;s reasonable to determine that there is no violation of distribution rights.</p>
+    <p>In the cases where you would package the actual software in the package, please ensure you have distribution rights. Any package that is found on the community feed not in compliance will be removed immediately. If you requested special permission to embed the software, make sure a copy of that permission is also in the package. If you are a software vendor that needs to report a violation, please see <a href="PackageTriageProcess#the-package-is-violating-distribution-rights">a package is violating distribution rights</a>.</p>
+</article>

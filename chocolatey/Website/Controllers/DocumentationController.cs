@@ -33,7 +33,6 @@ namespace NuGetGallery.Controllers
         public ActionResult Documentation(string docName)
         {
             docName = docName.Replace("-", "");
-
             var fileExists = _fileSystem.FileExists(Server.MapPath("~/Views/Documentation/{0}.cshtml".format_with(docName)));
 
             if (fileExists)

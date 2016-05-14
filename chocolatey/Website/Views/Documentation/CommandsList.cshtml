@@ -1,0 +1,160 @@
+@{
+    ViewBag.Title = "";
+}
+
+<article>
+  <h1 id="list-search-command-choco-list-">List/Search Command (choco list)</h1>
+<p>Chocolatey will perform a search for a package local or remote. Some 
+ may prefer to use <a href="Commandslist"><code>clist</code></a> as a shortcut for <a href="Commandslist"><code>choco list</code></a>.</p>
+<p><strong>NOTE:</strong> 100% compatible with older Chocolatey client (0.9.8.x and below) 
+ with options and switches. In most cases you can still pass options 
+ and switches  with one dash (<code>-</code>). For more details, see 
+ <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+<h2 id="usage">Usage</h2>
+<pre><code>choco search &lt;filter&gt; [&lt;options/switches&gt;]
+choco list &lt;filter&gt; [&lt;options/switches&gt;]
+clist &lt;filter&gt; [&lt;options/switches&gt;]
+</code></pre><h2 id="examples">Examples</h2>
+<pre><code>choco list --local-only
+choco list -li
+choco list -lai
+choco list --page=0 --page-size=25
+choco search git
+choco search git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
+choco search bob -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass
+</code></pre><h2 id="see-it-in-action">See It In Action</h2>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_search.gif" alt="choco search"></p>
+<h2 id="alternative-sources">Alternative Sources</h2>
+<p>Available in 0.9.10+.</p>
+<h3 id="webpi">WebPI</h3>
+<p>This specifies the source is Web PI (Web Platform Installer) and that 
+ we are searching for a WebPI product, such as IISExpress. If you do 
+ not have the Web PI command line installed, it will install that first 
+ and then perform the search requested.
+ e.g. <code>choco list --source webpi</code></p>
+<h3 id="windows-features">Windows Features</h3>
+<p>This specifies that the source is a Windows Feature and we should 
+ install via the Deployment Image Servicing and Management tool (DISM) 
+ on the local machine.
+ e.g. <code>choco list --source windowsfeatures</code></p>
+<h2 id="options-and-switches">Options and Switches</h2>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are
+ running a command like install that allows installing multiple
+ packages, and you use <code>--version=1.0.0</code>, it is going to look for and
+ try to install version 1.0.0 of every package passed. So please split
+ out multiple package calls when wanting to pass specific options.</p>
+<p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
+<pre><code>
+ -?, --help, -h
+     Prints out the help menu.
+
+ -d, --debug
+     Debug - Run in Debug Mode.
+
+ -v, --verbose
+     Verbose - See verbose messaging.
+
+     --acceptlicense, --accept-license
+     AcceptLicense - Accept license dialogs automatically.
+
+ -y, --yes, --confirm
+     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+       Implies --accept-license
+
+ -f, --force
+     Force - force the behavior
+
+     --noop, --whatif, --what-if
+     NoOp - Don&#39;t actually do anything.
+
+ -r, --limitoutput, --limit-output
+     LimitOutput - Limit the output to essential information
+
+     --execution-timeout=VALUE
+     CommandExecutionTimeoutSeconds - Override the default execution timeout 
+       in the configuration of 2700 seconds.
+
+ -c, --cache, --cachelocation, --cache-location=VALUE
+     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+       in chocolatey.config file.
+
+     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
+     AllowUnofficialBuild - When not using the official build you must set 
+       this flag for choco to continue.
+
+     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
+     FailOnStandardError - Fail on standard error output (stderr), typically 
+       received when running external commands during install providers. This 
+       overrides the feature failOnStandardError.
+
+     --use-system-powershell
+     UseSystemPowerShell - Execute PowerShell using an external process 
+       instead of the built-in PowerShell host. Available in 0.9.10+.
+
+ -s, --source=VALUE
+     Source - Source location for install. Can include special &#39;webpi&#39;. 
+       Defaults to sources.
+
+ -l, --lo, --localonly, --local-only
+     LocalOnly - Only search against local machine items.
+
+     --pre, --prerelease
+     Prerelease - Include Prereleases? Defaults to false.
+
+ -i, --includeprograms, --include-programs
+     IncludePrograms - Used in conjunction with LocalOnly, filters out apps 
+       chocolatey has listed as packages and includes those in the list. 
+       Defaults to false.
+
+ -a, --all, --allversions, --all-versions
+     AllVersions - include results from all versions.
+
+ -u, --user=VALUE
+     User - used with authenticated feeds. Defaults to empty.
+
+ -p, --password=VALUE
+     Password - the user&#39;s password to the source. Defaults to empty.
+
+     --page=VALUE
+     Page - the &#39;page&#39; of results to return. Defaults to return all results. 
+       Available in 0.9.10+.
+
+     --page-size=VALUE
+     Page Size - the amount of package results to return per page. Defaults 
+       to 25. Available in 0.9.10+.
+
+ -e, --exact
+     Exact - Only return packages with this exact name. Available in 0.9.10+.
+
+     --by-id-only
+     ByIdOnly - Only return packages where the id contains the search filter. 
+       Available in 0.9.10+.
+
+     --id-starts-with
+     IdStartsWith - Only return packages where the id starts with the search 
+       filter. Available in 0.9.10+.
+
+     --order-by-popularity
+     OrderByPopularity - Sort by package results by popularity. Available in 
+       0.9.10+.
+
+     --approved-only
+     ApprovedOnly - Only return approved packages - this option will filter 
+       out results not from the [community repository](https://chocolatey.org/packages). Available in 0.9.10+.
+
+     --download-cache, --download-cache-only
+     DownloadCacheAvailable - Only return packages that have a download cache 
+       available - this option will filter out results not from the community 
+       repository. Available in 0.9.10+.
+
+     --not-broken
+     NotBroken - Only return packages that are not failing testing - this 
+       option only filters out failing results from the [community feed](https://chocolatey.org/packages). It will 
+       not filter against other sources. Available in 0.9.10+.
+
+     --detail, --detailed
+     Detailed - Alias for verbose. Available in 0.9.10+.
+</code></pre><p><a href="CommandsReference">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco list -h</code>. </p>
+
+</article>

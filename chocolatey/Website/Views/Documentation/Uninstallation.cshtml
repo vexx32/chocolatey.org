@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Uninstallation of Chocolatey";
+}
+
+<article>
+  <h2 id="uninstalling-chocolatey">Uninstalling Chocolatey</h2>
+<p>Should you decide you don&#39;t like Chocolatey, you can uninstall it simply by removing the folder (and the environment variable(s) that it creates).  Since it is not actually installed on your system, you don&#39;t have to worry that it cluttered up your registry (the applications that you installed with Chocolatey or manually, now that&#39;s a different story).</p>
+<h3 id="folder">Folder</h3>
+<ul>
+<li>C:\Chocolatey - for Chocolatey version &lt; <code>0.9.8.27</code></li>
+<li>C:\ProgramData\chocolatey &gt; <code>0.9.8.27</code></li>
+</ul>
+<p><strong>NOTE:</strong> If you upgraded from <code>0.9.8.26</code> to <code>0.9.8.27</code> it is likely that <code>Chocolatey</code> is installed at C:\Chocolatey, which was the default prior to <code>0.9.8.27</code>.  If you did a fresh install of Chocolatey at version <code>0.9.8.27</code> then the installation folder will be <code>C:\ProgramData\Chocolatey</code></p>
+<h3 id="user-environment-variables">User Environment Variables</h3>
+<ul>
+<li>ChocolateyInstall</li>
+</ul>
+
+</article>

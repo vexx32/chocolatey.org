@@ -1,0 +1,38 @@
+@{
+    ViewBag.Title = "";
+}
+
+<article>
+  <h1 id="update-sessionenvironment">Update-SessionEnvironment</h1>
+<p>Updates the environment variables of the current powershell session with
+any environment variable changes that may have occured during a
+Chocolatey package install.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="lang-powershell">Update-SessionEnvironment
+</code></pre>
+<h2 id="description">Description</h2>
+<p>When Chocolatey installs a package, the package author may add or change
+certain environment variables that will affect how the application runs
+or how it is accessed. Often, these changes are not visible to the
+current PowerShell session. This means the user needs to open a new
+PowerShell session before these settings take effect which can render
+the installed application nonfunctional until that time.</p>
+<p>Use the Update-SessionEnvironment command to refresh the current
+PowerShell session with all environment settings possibly performed by
+Chocolatey package installs.</p>
+<h2 id="notes">Notes</h2>
+<p>This method is also added to the user&#39;s PowerShell profile as
+<code>refreshenv</code>. When called as <code>refreshenv</code>, the method will provide
+additional output.</p>
+<p>Preserves <code>PSModulePath</code> as set by the process starting in 0.9.10.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<p><a href="HelpersReference">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Update-SessionEnvironment -Full</code>.</p>
+
+</article>

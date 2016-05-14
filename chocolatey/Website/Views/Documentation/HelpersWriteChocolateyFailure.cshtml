@@ -1,0 +1,99 @@
+@{
+    ViewBag.Title = "";
+}
+
+<article>
+  <h1 id="write-chocolateyfailure">Write-ChocolateyFailure</h1>
+<p>DEPRECATED - DO NOT USE.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="lang-powershell">Write-ChocolateyFailure `
+  [-PackageName &lt;String&gt;] `
+  [-FailureMessage &lt;String&gt;]
+</code></pre>
+<h2 id="description">Description</h2>
+<p>Throws the error message as an error.</p>
+<h2 id="notes">Notes</h2>
+<p>This has been deprecated and is no longer useful as of 0.9.9. Instead
+please just use <code>throw $_.Exception</code> when catching errors. Although
+try/catch is no longer necessary unless you want to do some error
+handling.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<h3 id="-packagename-string-">-PackageName [&lt;String&gt;]</h3>
+<p>The name of the package - while this is an arbitrary value, it&#39;s
+recommended that it matches the package id.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-failuremessage-string-">-FailureMessage [&lt;String&gt;]</h3>
+<p>The message to throw an error with.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr>
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr>
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="HelpersWriteChocolateySuccess">Write-ChocolateySuccess</a></li>
+</ul>
+<p><a href="HelpersReference">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Write-ChocolateyFailure -Full</code>.</p>
+
+</article>
