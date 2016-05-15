@@ -134,22 +134,23 @@
                 </ul>
             </div>
             <div class="feature-sections__column text-center bg-statistics p-t--l p-b">
+              <div>
+                
+                <div class="inline-block m-b stat-number bg-two">
+                  <div class="huge-number stat"><span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>/<span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span></div>
+                  <small>unique packages / total packages</small>
+                </div>
+              </div>
                 <div>
                     <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number">3,974</div>
-                        <small>Unique packages</small>
+                        <div class="huge-number stat"><span id="Downloads" class="num"></span></div>
+                        <small>total downloads</small>
                     </div>
                 </div>
                 <div>
                     <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number">40,528,346</div>
-                        <small>Total downloads</small>
-                    </div>
-                </div>
-                <div>
-                    <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number">3,086</div>
-                        <small>Known good packages</small>
+                        <div class="huge-number"><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></div>
+                        <small><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-verifier">Known good packages</a></small>
                     </div>
                 </div>
             </div>
@@ -158,30 +159,10 @@
 </div>
 @*
     <section class="featured">
-        <div>
-            <h1>Let's get Chocolatey!</h1>
-            <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
-            <h2>Easy Install!</h2>
-            <p style="vertical-align:bottom;font-size:18px">
-                To install chocolatey now, open an <strong><em>administrative</em></strong> cmd.exe command prompt and paste the text from the box below and press enter (or click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />).
-                For <strong><em>administrative</em></strong> PowerShell copy the second box (<input type="button" id="copyButtonPS" class="copy-button" title="Copy To Clipboard" />) (Ensure Get-ExecutionPolicy is at least Bypass).
-                If you need to install as a non-administrator or want more advanced options, see <span><a href="https://github.com/chocolatey/choco/wiki/Installation">Advanced</a></span>.
-            </p>
-        </div>
         <img src="@Url.Content("~/content/images/hero.png")" alt="Chocolatey install of Git (cinst git). Chocolatey benefits: 1. Sort of like yum or apt-get but for Windows; 2. Global silent installer; 3. Supports multiple package feeds, including private!; 4. Feeds can be local file/folder shares!; 5. NuGet Infrastructure + PowerShell Delivery" />
     </section>
 
-    <section class="release">
-         <h2>What's New?</h2>
-         There have been numerous changes recently, from PowerShell tab completion, to virus scanning packages, to a new logo! Here are a few high level items.
-           <ul>
-             <li>Chocolatey For Business / Chocolatey Professional <a href="https://chocolatey.eventbrite.com">available now with features you need!</a></li>
-             <li>Chocolatey has a <a href="http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/">new logo!</a></li>
-             <li>The 0.9.10 series is coming and it is going to be awesome! <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1527031">Learn more...</a>. View the <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">CHANGELOG</a>.</li>
-             <li>Chocolatey is 5 years old! <a href="http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/">Read more...</a></li>
-             <li>Be sure to watch for improvements to Chocolatey.org coming soon!</li>
-           </ul>
-    </section>
+
     <section class="aggstats">
       <span class="stat">
         <span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>unique packages
