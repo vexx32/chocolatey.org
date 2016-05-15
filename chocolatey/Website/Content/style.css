@@ -2500,7 +2500,7 @@ img{ max-width: 100%; }
 
 
 .slogan{
-  padding: 1em;
+  /*padding: 1em;*/
   text-align: center;
   font-weight: normal;
 }
@@ -2999,7 +2999,7 @@ pre code{
 }
 
 .docs > aside{
-  width: 30%;
+  width: 25%;
   background: #202F3C;
   color: #fff;
   padding-bottom: 2em;
@@ -3026,8 +3026,15 @@ pre code{
   left: -.9em;
 }
 
+main > article{
+  width: 95%;
+  left: 30%;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
 .docs > article{
-  width: 70%;
+  width: 80%;
   left: 30%;
   padding-top: 3em !important;
   padding-left: 2em !important;

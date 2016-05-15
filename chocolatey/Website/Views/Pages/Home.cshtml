@@ -7,267 +7,263 @@
 }
 
 <section>
-  <h1 class="huge slogan p-t m-b">The <strong>package manager</strong> for Windows</h1>
-  @*<h2  class="slogan p-b m-b">Software Management. Automated.</h2>*@
+    <h1 class="huge slogan p-t">The <strong>package manager</strong> for Windows</h1>
+    <h2 class="slogan p-b--l"><strong>Chocolatey</strong> - Software Management. Automated.</h2>
 </section>
-
+@*<section class="release">
+        <h2>What's New?</h2>
+        There have been numerous changes recently, from PowerShell tab completion, to virus scanning packages, to a new logo! Here are a few high level items.
+        <ul>
+            <li>Chocolatey For Business / Chocolatey Professional <a href="https://chocolatey.eventbrite.com">available now with features you need!</a></li>
+            <li>Chocolatey has a <a href="http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/">new logo!</a></li>
+            <li>The 0.9.10 series is coming and it is going to be awesome! <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1527031">Learn more...</a>. View the <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">CHANGELOG</a>.</li>
+            <li>Chocolatey is 5 years old! <a href="http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/">Read more...</a></li>
+            <li>Be sure to watch for improvements to Chocolatey.org coming soon!</li>
+        </ul>
+    </section>*@
 <div class="feature-sections">
-  <section class="clearfix p-l p-r container-wide p-b--l">
-    <div class="feature-sections__column">
-      <h2>The sane way to manage software on Windows</h2>
-      <ul class="check-list m-t">
-        <li>Chocolatey can easily manage all aspects of Windows software whether installation, configuration, upgrade, or uninstallation.</li>
-        <li>Works with binaries and existing installer technologies like MSI, NSIS, InnoSetup, etc.</li>
-        <li>Chocolatey can download resources from file shares, http, and ftp locations, but it works best when the software a package represents is embedded in the package files.</li>
-        <li>Optionally use PowerShell to provide automated software management instructions and Chocolatey’s module with awesome functions that really speed up the packaging process!</li>
-      </ul>
+    <section class="clearfix p-l p-r container-wide p-b">
+        <div class="feature-sections__column">
+            <h2>The sane way to manage software on Windows</h2>
+            <ul class="check-list m-t">
+                <li>Chocolatey can easily manage all aspects of Windows software whether installation, configuration, upgrade, or uninstallation.</li>
+                <li>Works with binaries and existing installer technologies like MSI, NSIS, InnoSetup, etc.</li>
+                <li>Chocolatey can download resources from file shares, http, and ftp locations, but it works best when the software a package represents is embedded in the package files.</li>
+                <li>Optionally use PowerShell to provide automated software management instructions and Chocolatey’s module with awesome functions that really speed up the packaging process!</li>
+            </ul>
+        </div>
+        <div class="feature-sections__column">
+            <div class="terminal-container">
+                <div class="terminal-chrome">
+                    <div class="terminal-chrome-top">
+                        <div class="terminal-chrome__minimise"></div>
+                        <div class="terminal-chrome__maximise"></div>
+                        <div class="terminal-chrome__close">&times;</div>
+                    </div>
+                    <div class="terminal-content terminal-content--min-height">
+                        choco <span data-animate="install nodejs,uninstall flashplayer,search docker,info docker">install nodejs</span><span class="terminal-cursor"></span>
+                    </div>
+                </div>
+            </div>
+            <a class="h3 m-t--l button install-button" href="@Url.RouteUrl(RouteName.Install)">
+                <span class="m-r--s icon-download"></span>
+                <strong>Install Chocolatey Now</strong>
+            </a>
+        </div>
+    </section>
+    <div class="bg-two p-t--l p-b--l">
+        <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+            <div class="feature-sections__column right">
+                <h2>Trusted by Business</h2>
+                <ul class="check-list m-t">
+                    <li>Businesses are building and hosting their own packages that are reliable and repeatable so they can fully trust and control the process.</li>
+                    <li>Businesses trusting Chocolatey for production purposes do not use the packages found on this site (the community package repository). <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "community-packages-disclaimer" })">Find out why</a>.</li>
+                    <li>Chocolatey integrates with your favorite configuration manager like SCCM, Puppet, or Chef.</li>
+                    <li>When businesses need more features than they can find in the Open Source version of Chocolatey, they turn to <a href="@Url.RouteUrl(RouteName.Business)">Chocolatey for Business</a>.</li>
+                </ul>
+            </div>
+            <div class="feature-sections__column">
+                <img src="@Url.Content("~/content/images/integration_points.png")" />
+            </div>
+        </section>
     </div>
-    <div class="feature-sections__column">
-      <div class="terminal-container">
-        <div class="terminal-chrome">
-          <div class="terminal-chrome-top">
-            <div class="terminal-chrome__minimise"></div>
-            <div class="terminal-chrome__maximise"></div>
-            <div class="terminal-chrome__close">&times;</div>
-          </div>
-          <div class="terminal-content terminal-content--min-height">
-            choco <span data-animate="install nodejs,uninstall flashplayer,search python">install nodejs</span><span class="terminal-cursor"></span>
-          </div>
-        </div>
-      </div>
-      <a class="h3 m-t--l button install-button" href="@Url.RouteUrl(RouteName.Install)">
-        <span class="m-r--s icon-download"></span>
-        <strong>Install Chocolatey Now</strong>
-      </a>
+    <div class="bg-three p-t--l p-b--l">
+        <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+            <div class="feature-sections__column">
+                <h2>Official Chocolatey tools</h2>
+                <ul class="check-list m-t">
+                    <li>The CLI client, choco.exe, was designed with security in mind. Know you are using Chocolatey from a trusted source when you are using the official Chocolatey clients.</li>
+                    <li>Use choco.exe to install, upgrade, uninstall, publish and search for packages (and much more).</li>
+                    <li>choco.exe has tab completion and excellent inline help.</li>
+                    <li>Use <a href="@Url.Package("ChocolateyGUI")" title="A visual of ChocolateyGUI">Chocolatey GUI</a> when you need a visual representation of packages.</li>
+                </ul>
+            </div>
+            <div class="feature-sections__column">
+                <div class="gui-mock">
+                    <div class="gui-mock__top">
+                    </div>
+                    <ul>
+                        <li>
+                            <span class="gui-mock__icon"></span>
+                            <span class="gui-mock__install">Install</span>
+                        </li>
+                        <li>
+                            <span class="gui-mock__icon"></span>
+                            <span class="gui-mock__install">Install</span>
+                        </li>
+                        <li>
+                            <span class="gui-mock__icon"></span>
+                            <span class="gui-mock__install">Install</span>
+                        </li>
+                        <li>
+                            <span class="gui-mock__icon"></span>
+                            <span class="gui-mock__install">Install</span>
+                        </li>
+                        <li>
+                            <span class="gui-mock__icon"></span>
+                            <span class="gui-mock__install">Install</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>
-  </section>
-
-  <div class="bg-two p-t--l p-b--l">
-    <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-      <div class="feature-sections__column right">
-        <h2>Trusted by Business</h2>
-        <ul class="check-list m-t">
-          <li>Businesses are building and hosting their own packages that are reliable and repeatable so they can fully trust and control the process.</li>
-          <li>Businesses trusting Chocolatey for production purposes do not use the packages found on this site (the community package repository). <a href="#">Find out why</a>.</li>
-          <li>Chocolatey integrates with your favorite configuration manager like SCCM, Puppet, or Chef.</li>
-          <li>When businesses need more features than they can find in the Open Source version of Chocolatey, they turn to <a href="@Url.RouteUrl(RouteName.Business)">Chocolatey for Business</a>.</li>
-        </ul>
-      </div>
-      <div class="feature-sections__column">
-        <img src="@Url.Content("~/content/images/integration_points.png")"/>
-      </div>
-    </section>
-  </div>
-
-  <div class="bg-three p-t--l p-b--l">
-    <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-      <div class="feature-sections__column">
-        <h2>Official Chocolatey tools</h2>
-        <ul class="check-list m-t">
-          <li>The CLI client, choco.exe, was designed with security in mind. Know you are using Chocolatey from a trusted source when you are using the official Chocolatey clients.</li>
-          <li>Use choco.exe to install, upgrade, uninstall, publish and search for packages (and much more).</li>
-          <li>choco.exe has tab completion and excellent inline help.</li>
-          <li>Use [Chocolatey GUI](link to GUI package) when you need a visual representation of packages.</li>
-        </ul>
-      </div>
-      <div class="feature-sections__column">
-        <div class="gui-mock">
-          <div class="gui-mock__top">
-          </div>
-          <ul>
-            <li>
-              <span class="gui-mock__icon"></span>
-              <span class="gui-mock__install">Install</span>
-            </li>
-            <li>
-              <span class="gui-mock__icon"></span>
-              <span class="gui-mock__install">Install</span>
-            </li>
-            <li>
-              <span class="gui-mock__icon"></span>
-              <span class="gui-mock__install">Install</span>
-            </li>
-            <li>
-              <span class="gui-mock__icon"></span>
-              <span class="gui-mock__install">Install</span>
-            </li>
-            <li>
-              <span class="gui-mock__icon"></span>
-              <span class="gui-mock__install">Install</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="bg-two">
-    <section class="clearfix p-l p-r container-wide gene-bg">
-      <div class="feature-sections__column right p-t--l p-b--l">
-        <h2>Packages are independent deployment artifacts</h2>
-        <ul class="check-list m-t">
-          <li>Chocolatey packages are not just fancy zip files, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
-          <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
-          <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
-        </ul>
-      </div>
-      <div class="feature-sections__column no-padding">
-      </div>
-    </section>
-  </div>
-
-  <div class="bg-three">
-    <section class="clearfix p-l p-r container-wide">
-      <div class="feature-sections__column m-t p-t--l p-b--l">
-        <h2>Choose from thousands of community packages</h2>
-        <ul class="check-list m-t">
-          <li>Chocolatey.org has the largest online registry of Windows packages.</li>
-          <li>Package submissions go through a rigorous moderation review process.</li>
-          <li>The packages in the community repository are automatically scanned for viruses.</li>
-          <li>The community repository has a strict policy on malicious and pirated software.</li>
-        </ul>
-      </div>
-
-      <div class="feature-sections__column text-center bg-statistics p-t--l p-b">
-        <div>
-          <div class="inline-block m-b stat-number bg-two">
-            <div class="huge-number">3,974</div>
-            <small>Unique packages</small>
-          </div>
-        </div>
-
-        <div>
-          <div class="inline-block m-b stat-number bg-two">
-            <div class="huge-number">40,528,346</div>
-            <small>Total downloads</small>
-          </div>
-        </div>
-
-        <div>
-          <div class="inline-block m-b stat-number bg-two">
-            <div class="huge-number">3,086</div>
-            <small>Known good packages</small>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+    <div class="bg-two">
+        <section class="clearfix p-l p-r container-wide gene-bg">
+            <div class="feature-sections__column right p-t--l p-b--l">
+                <h2>Packages are independent deployment artifacts</h2>
+                <ul class="check-list m-t">
+                    <li>Chocolatey packages are not just fancy zip files with PowerShell, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
+                    <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
+                    <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
+                </ul>
+            </div>
+            <div class="feature-sections__column no-padding">
+            </div>
+        </section>
+    </div>
+    <div class="bg-three">
+        <section class="clearfix p-l p-r container-wide">
+            <div class="feature-sections__column m-t p-t--l p-b--l">
+                <h2>Choose from thousands of community packages</h2>
+                <ul class="check-list m-t">
+                    <li>Chocolatey.org has the largest online registry of Windows packages.</li>
+                    <li>Package submissions go through a rigorous moderation review process.</li>
+                    <li>The packages in the community repository are automatically scanned for viruses.</li>
+                    <li>The community repository has a strict policy on malicious and pirated software.</li>
+                </ul>
+            </div>
+            <div class="feature-sections__column text-center bg-statistics p-t--l p-b">
+                <div>
+                    <div class="inline-block m-b stat-number bg-two">
+                        <div class="huge-number">3,974</div>
+                        <small>Unique packages</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="inline-block m-b stat-number bg-two">
+                        <div class="huge-number">40,528,346</div>
+                        <small>Total downloads</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="inline-block m-b stat-number bg-two">
+                        <div class="huge-number">3,086</div>
+                        <small>Known good packages</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 @*
-<section class="featured">
-    <div>
-        <h1>Let's get Chocolatey!</h1>
-        <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
-        <h2>Easy Install!</h2>
-        <p style="vertical-align:bottom;font-size:18px">
-            To install chocolatey now, open an <strong><em>administrative</em></strong> cmd.exe command prompt and paste the text from the box below and press enter (or click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />).
-            For <strong><em>administrative</em></strong> PowerShell copy the second box (<input type="button" id="copyButtonPS" class="copy-button" title="Copy To Clipboard" />) (Ensure Get-ExecutionPolicy is at least Bypass).
-            If you need to install as a non-administrator or want more advanced options, see <span><a href="https://github.com/chocolatey/choco/wiki/Installation">Advanced</a></span>.
-        </p>
-    </div>
-    <img src="@Url.Content("~/content/images/hero.png")" alt="Chocolatey install of Git (cinst git). Chocolatey benefits: 1. Sort of like yum or apt-get but for Windows; 2. Global silent installer; 3. Supports multiple package feeds, including private!; 4. Feeds can be local file/folder shares!; 5. NuGet Infrastructure + PowerShell Delivery" />
-</section>
-<div class="nuget-badge">
-    <p>
-        <code><span>C:\&gt;</span> @@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</code>
-    </p>
-    <p>
-        <code><span>PS:\&gt;</span>iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))</code>
-    </p>
-</div>
-<section class="release">
-     <h2>What's New?</h2>
-     There have been numerous changes recently, from PowerShell tab completion, to virus scanning packages, to a new logo! Here are a few high level items.
-       <ul>
-         <li>Chocolatey For Business / Chocolatey Professional <a href="https://chocolatey.eventbrite.com">available now with features you need!</a></li>
-         <li>Chocolatey has a <a href="http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/">new logo!</a></li>
-         <li>The 0.9.10 series is coming and it is going to be awesome! <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1527031">Learn more...</a>. View the <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">CHANGELOG</a>.</li>
-         <li>Chocolatey is 5 years old! <a href="http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/">Read more...</a></li>
-         <li>Be sure to watch for improvements to Chocolatey.org coming soon!</li>
-       </ul> 
-</section>
-<section class="aggstats">
-  <span class="stat">
-    <span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>unique packages
-  </span>
-  <span class="stat">
-    <span id="Downloads" class="num"></span>total downloads
-  </span>
-  <span class="stat">
-    <span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span>total packages
-  </span>
-</section>
-<section class="aggstats">
-    <span class="stat">
-      <span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-verifier">known good packages</a>
-    </span>
-    <span class="stat">
-        <span id="UpToDatePackages" class="num" title="This is a start towards understanding up to date packages"></span>packages updated in last 4 months
-    </span>
-    <span class="stat">
-        <span id="OlderThanOneYearPackages" class="num" title="Packages that have not had an update in over a year"></span>packages older than a year
-    </span>
-</section>
-<section class="aggstats">
-    <span class="stat" title="This is approval time from last submission time of a good version that has no findings to approval time over the last 30 days.">
-        <span id="AverageModerationWaitTimeHours" class="num"></span>average moderation approval wait time (hours)
-    </span>
-    <span class="stat" title="Packages ready for a moderator to review">
-        <span id="PackagesReadyForReviewModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">packages ready for moderation review</a>
-    </span>
-    <span class="stat" title="All packages under moderation, includes packages that are waiting for a mainter to fix something">
-        <span id="TotalPackagesInModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">total packages under moderation</a>
-    </span>
-</section>
+    <section class="featured">
+        <div>
+            <h1>Let's get Chocolatey!</h1>
+            <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
+            <h2>Easy Install!</h2>
+            <p style="vertical-align:bottom;font-size:18px">
+                To install chocolatey now, open an <strong><em>administrative</em></strong> cmd.exe command prompt and paste the text from the box below and press enter (or click <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />).
+                For <strong><em>administrative</em></strong> PowerShell copy the second box (<input type="button" id="copyButtonPS" class="copy-button" title="Copy To Clipboard" />) (Ensure Get-ExecutionPolicy is at least Bypass).
+                If you need to install as a non-administrator or want more advanced options, see <span><a href="https://github.com/chocolatey/choco/wiki/Installation">Advanced</a></span>.
+            </p>
+        </div>
+        <img src="@Url.Content("~/content/images/hero.png")" alt="Chocolatey install of Git (cinst git). Chocolatey benefits: 1. Sort of like yum or apt-get but for Windows; 2. Global silent installer; 3. Supports multiple package feeds, including private!; 4. Feeds can be local file/folder shares!; 5. NuGet Infrastructure + PowerShell Delivery" />
+    </section>
 
-<section class="release">
-     <h2>Chocolatey v0.9.9 Released!</h2>
-     <p>
-         The latest version of Chocolatey uses the new choco.exe C# client. <strong>There are a few breaking changes you need to be aware of.</strong>
-        If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="https://github.com/chocolatey/choco/wiki/ReleaseNotes">release notes</a>.
-        <em>chocolatey upgrade (cup)</em> to get the latest version of chocolatey&nbsp;– <a href="https://github.com/chocolatey/choco/wiki/ReleaseNotes">More information?</a>
-     </p>
-</section>
-<section class="info">
-    <h3>About</h3>
-    <p>When you use chocolatey to install applications/tools, nearly all you need to do is type one line and let it finish the rest! <a href="@Url.RouteUrl(RouteName.About)">Learn more</a>.
-    Where did Chocolatey get it's name? What exactly is chocolatey anyway? Learn more on the <a href="https://github.com/chocolatey/choco/wiki">Wiki</a>!</p>
+    <section class="release">
+         <h2>What's New?</h2>
+         There have been numerous changes recently, from PowerShell tab completion, to virus scanning packages, to a new logo! Here are a few high level items.
+           <ul>
+             <li>Chocolatey For Business / Chocolatey Professional <a href="https://chocolatey.eventbrite.com">available now with features you need!</a></li>
+             <li>Chocolatey has a <a href="http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/">new logo!</a></li>
+             <li>The 0.9.10 series is coming and it is going to be awesome! <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1527031">Learn more...</a>. View the <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">CHANGELOG</a>.</li>
+             <li>Chocolatey is 5 years old! <a href="http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/">Read more...</a></li>
+             <li>Be sure to watch for improvements to Chocolatey.org coming soon!</li>
+           </ul>
+    </section>
+    <section class="aggstats">
+      <span class="stat">
+        <span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>unique packages
+      </span>
+      <span class="stat">
+        <span id="Downloads" class="num"></span>total downloads
+      </span>
+      <span class="stat">
+        <span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span>total packages
+      </span>
+    </section>
+    <section class="aggstats">
+        <span class="stat">
+          <span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-verifier">known good packages</a>
+        </span>
+        <span class="stat">
+            <span id="UpToDatePackages" class="num" title="This is a start towards understanding up to date packages"></span>packages updated in last 4 months
+        </span>
+        <span class="stat">
+            <span id="OlderThanOneYearPackages" class="num" title="Packages that have not had an update in over a year"></span>packages older than a year
+        </span>
+    </section>
+    <section class="aggstats">
+        <span class="stat" title="This is approval time from last submission time of a good version that has no findings to approval time over the last 30 days.">
+            <span id="AverageModerationWaitTimeHours" class="num"></span>average moderation approval wait time (hours)
+        </span>
+        <span class="stat" title="Packages ready for a moderator to review">
+            <span id="PackagesReadyForReviewModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">packages ready for moderation review</a>
+        </span>
+        <span class="stat" title="All packages under moderation, includes packages that are waiting for a mainter to fix something">
+            <span id="TotalPackagesInModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">total packages under moderation</a>
+        </span>
+    </section>
 
-    <h3>Videos</h3>
-    <p>Watch <a href="http://bit.ly/chocolateyVideo">Chocolatey in action.</a></p>
+    <section class="release">
+         <h2>Chocolatey v0.9.9 Released!</h2>
+         <p>
+             The latest version of Chocolatey uses the new choco.exe C# client. <strong>There are a few breaking changes you need to be aware of.</strong>
+            If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="https://github.com/chocolatey/choco/wiki/ReleaseNotes">release notes</a>.
+            <em>chocolatey upgrade (cup)</em> to get the latest version of chocolatey&nbsp;– <a href="https://github.com/chocolatey/choco/wiki/ReleaseNotes">More information?</a>
+         </p>
+    </section>
+    <section class="info">
+        <h3>About</h3>
+        <p>When you use chocolatey to install applications/tools, nearly all you need to do is type one line and let it finish the rest! <a href="@Url.RouteUrl(RouteName.About)">Learn more</a>.
+        Where did Chocolatey get it's name? What exactly is chocolatey anyway? Learn more on the <a href="https://github.com/chocolatey/choco/wiki">Wiki</a>!</p>
 
-    <h3>Packages Missing? Want to contribute?</h3>
-    <p>You can develop your own packages and share them via the Chocolatey Gallery. Read the documentation for more details on
-    <a title="Creating and submitting a package" href="https://github.com/chocolatey/choco/wiki/CreatePackages">how to
-    create and publish a package</a>.</p>
+        <h3>Videos</h3>
+        <p>Watch <a href="http://bit.ly/chocolateyVideo">Chocolatey in action.</a></p>
 
-    <h3>Package Issues?</h3>
-    <p>If you find something wrong with a package or the package is out of date and you would like it updated, please use the contact maintainers link on the package page. For follow up procedures, please see the <a title="Package Triage Process" href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">Package Triage Process</a>.</p>
-</section>*@
+        <h3>Packages Missing? Want to contribute?</h3>
+        <p>You can develop your own packages and share them via the Chocolatey Gallery. Read the documentation for more details on
+        <a title="Creating and submitting a package" href="https://github.com/chocolatey/choco/wiki/CreatePackages">how to
+        create and publish a package</a>.</p>
+
+        <h3>Package Issues?</h3>
+        <p>If you find something wrong with a package or the package is out of date and you would like it updated, please use the contact maintainers link on the package page. For follow up procedures, please see the <a title="Package Triage Process" href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">Package Triage Process</a>.</p>
+    </section>*@
 
 @section BottomScripts
 {
-    <script type="text/javascript" >
+    <script type="text/javascript">
         $(getStats);
     </script>
-   @* <script type="text/javascript">
+    @* <script type="text/javascript">
 
-        $(document).ready(function () {
-            ZeroClipboard.setMoviePath('@Url.Content("~/Scripts/ZeroClipboard/ZeroClipboard.swf")');
-            var clip = new ZeroClipboard.Client();
-            clip.setText('@@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin');
-            clip.setHandCursor(true);
-            clip.glue('copyButton');
+            $(document).ready(function () {
+                ZeroClipboard.setMoviePath('@Url.Content("~/Scripts/ZeroClipboard/ZeroClipboard.swf")');
+                var clip = new ZeroClipboard.Client();
+                clip.setText('@@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin');
+                clip.setHandCursor(true);
+                clip.glue('copyButton');
 
-            var clipPS = new ZeroClipboard.Client();
-            clipPS.setText('iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))');
-            clipPS.setHandCursor(true);
-            clipPS.glue('copyButtonPS');
+                var clipPS = new ZeroClipboard.Client();
+                clipPS.setText('iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))');
+                clipPS.setHandCursor(true);
+                clipPS.glue('copyButtonPS');
 
-            $(window).resize(function () {
-                clip.reposition();
-                clipPS.reposition();
+                $(window).resize(function () {
+                    clip.reposition();
+                    clipPS.reposition();
+                });
             });
-        });
-    </script>*@
+        </script>*@
 }
