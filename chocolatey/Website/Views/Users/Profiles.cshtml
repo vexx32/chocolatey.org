@@ -146,13 +146,9 @@
                     <h1><a href="@Url.Package(package.Id)">@package.Title</a></h1>
                 
                     <p>
-                        @if (String.IsNullOrEmpty(package.Description) || package.Description.Length < 350)
+                        @if (!string.IsNullOrEmpty(package.Summary))
                         {
-                             @Html.Raw(markdownGenerator.Transform(package.Description.clean_markdown()))
-                        }
-                        else
-                        {
-                            @package.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(package)">More information</a>
+                             @Html.Raw(markdownGenerator.Transform(package.Summary.clean_markdown()))
                         }
                     </p>
 

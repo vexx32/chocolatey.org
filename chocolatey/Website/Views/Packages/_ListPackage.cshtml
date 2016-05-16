@@ -92,6 +92,12 @@
             }
             else
             {
+                @*if (!string.IsNullOrEmpty(Model.Summary))
+                    {
+                        @Model.Summary
+                    }
+                    else
+                    {*@
                 if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 350)
                 {
                     @Model.Description
@@ -99,7 +105,9 @@
                 else
                 {
                     @Model.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(Model)">More information</a>
+
                 }
+                @*}*@
             }
            
         </p>
