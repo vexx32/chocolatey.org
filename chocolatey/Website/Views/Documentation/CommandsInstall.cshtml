@@ -1,113 +1,149 @@
+﻿td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
 @{
-    ViewBag.Title = "";
+  ViewBag.Title = "CommandsInstall";
 }
 
 <article>
-  <h1 id="install-command-choco-install-">Install Command (choco install)</h1>
-<p>Installs a package or a list of packages (sometimes specified as a
- packages.config). Some may prefer to use <code>cinst</code> as a shortcut for 
- <a href="Commandsinstall"><code>choco install</code></a>.</p>
-<p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)
- with options and switches. Add <code>-y</code> for previous behavior with no 
- prompt. In most cases you can still pass options and switches with one
- dash (<code>-</code>). For more details, see <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+<h1 id="install-command-choco-install">Install Command (choco install)</h1>
+<p>Installs a package or a list of packages (sometimes specified as a<br />
+packages.config). Some may prefer to use <code>cinst</code> as a shortcut for<br />
+<a href="Commandsinstall"><code>choco install</code></a>.</p>
+<p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)<br />
+with options and switches. Add <code>-y</code> for previous behavior with no<br />
+prompt. In most cases you can still pass options and switches with one<br />
+dash (<code>-</code>). For more details, see <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
 <pre><code>choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
-cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
-</code></pre><p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to install 
- all packages from a custom feed. Will not work with Chocolatey default 
- feed. THIS IS NOT YET REIMPLEMENTED.</p>
-<p><strong>NOTE:</strong> Any package name ending with .config is considered a 
- &#39;packages.config&#39; file. Please see <a href="https://bit.ly/packages_config">https://bit.ly/packages_config</a></p>
+cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
+<p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to install<br />
+all packages from a custom feed. Will not work with Chocolatey default<br />
+feed. THIS IS NOT YET REIMPLEMENTED.</p>
+<p><strong>NOTE:</strong> Any package name ending with .config is considered a<br />
+&quot;˜packages.config&#39; file. Please see <a href="https://bit.ly/packages_config" class="uri">https://bit.ly/packages_config</a></p>
 <h2 id="examples">Examples</h2>
 <pre><code>choco install sysinternals
-choco install notepadplusplus googlechrome atom 7zip 
+choco install notepadplusplus googlechrome atom 7zip
 choco install notepadplusplus --force --force-dependencies
 choco install notepadplusplus googlechrome atom 7zip -dvfy
 choco install git --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; -y
 choco install nodejs.install --version 0.10.35
 choco install git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
-choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass
-</code></pre><p>Choco can also install directly from a nuspec/nupkg file. This aids in 
- testing packages:</p>
+choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
+<p>Choco can also install directly from a nuspec/nupkg file. This aids in<br />
+testing packages:</p>
 <pre><code>choco install &lt;path/to/nuspec&gt;
-choco install &lt;path/to/nupkg&gt;
-</code></pre><p>Install multiple versions of a package using -m (AllowMultiple versions)</p>
+choco install &lt;path/to/nupkg&gt;</code></pre>
+<p>Install multiple versions of a package using -m (AllowMultiple versions)</p>
 <pre><code>choco install ruby --version 1.9.3.55100 -my
 choco install ruby --version 2.0.0.59800 -my
-choco install ruby --version 2.1.5 -my
-</code></pre><p>What is <code>-my</code>? See option bundling in <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> 
- (<code>choco -?</code>).</p>
-<p><strong>NOTE:</strong> All of these will add to PATH variable. We&#39;ll be adding a special 
- option to not allow PATH changes. Until then you will need to manually 
- go modify Path to just one Ruby and then use something like uru
- (<a href="https://bitbucket.org/jonforums/uru">https://bitbucket.org/jonforums/uru</a>) or pik 
- (<a href="https://chocolatey.org/packages/pik">https://chocolatey.org/packages/pik</a>) to switch between versions.</p>
+choco install ruby --version 2.1.5 -my</code></pre>
+<p>What is <code>-my</code>? See option bundling in <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a><br />
+(<code>choco -?</code>).</p>
+<p><strong>NOTE:</strong> All of these will add to PATH variable. We&#39;ll be adding a special<br />
+option to not allow PATH changes. Until then you will need to manually<br />
+go modify Path to just one Ruby and then use something like uru<br />
+(<a href="https://bitbucket.org/jonforums/uru" class="uri">https://bitbucket.org/jonforums/uru</a>) or pik<br />
+(<a href="https://chocolatey.org/packages/pik" class="uri">https://chocolatey.org/packages/pik</a>) to switch between versions.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
-<p>Chocolatey FOSS install showing tab completion and <code>refreshenv</code> (a way 
- to update environment variables without restarting the shell).</p>
-<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install.gif" alt="FOSS install in action"></p>
-<p><a href="https://bit.ly/choco_pro_business">Chocolatey Professional</a> showing private download cache and virus scan 
- protection.</p>
-<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/chocopro_install_stopped.gif" alt="Pro install in action"></p>
-<h2 id="packages-config">Packages.config</h2>
+<p>Chocolatey FOSS install showing tab completion and <code>refreshenv</code> (a way<br />
+to update environment variables without restarting the shell).</p>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install.gif" alt="FOSS install in action" /></p>
+<p><a href="https://bit.ly/choco_pro_business">Chocolatey Professional</a> showing private download cache and virus scan<br />
+protection.</p>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/chocopro_install_stopped.gif" alt="Pro install in action" /></p>
+<h2 id="packages.config">Packages.config</h2>
 <p>Alternative to PackageName. This is a list of packages in an xml manifest for Chocolatey to install. This is like the packages.config that NuGet uses except it also adds other options and switches. This can also be the path to the packages.config file if it is not in the current working directory.</p>
 <p><strong>NOTE:</strong> The filename is only required to end in .config, the name is not required to be packages.config.</p>
-<pre><code class="lang-xml">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-    &lt;packages&gt;
-      &lt;package id=&quot;apackage&quot; /&gt;
-      &lt;package id=&quot;anotherPackage&quot; version=&quot;1.1&quot; /&gt;
-      &lt;package id=&quot;chocolateytestpackage&quot; version=&quot;0.1&quot; source=&quot;somelocation&quot; /&gt;
-      &lt;package id=&quot;alloptions&quot; version=&quot;0.1.1&quot;
-               source=&quot;https://somewhere/api/v2/&quot; installArguments=&quot;&quot;
-               packageParameters=&quot;&quot; forceX86=&quot;false&quot; allowMultipleVersions=&quot;false&quot;
-               ignoreDependencies=&quot;false&quot;
-               /&gt;
-    &lt;/packages&gt;
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;utf-8&quot;<span class="kw">?&gt;</span>
+    <span class="kw">&lt;packages&gt;</span>
+      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;apackage&quot;</span> <span class="kw">/&gt;</span>
+      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;anotherPackage&quot;</span><span class="ot"> version=</span><span class="st">&quot;1.1&quot;</span> <span class="kw">/&gt;</span>
+      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;chocolateytestpackage&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.1&quot;</span><span class="ot"> source=</span><span class="st">&quot;somelocation&quot;</span> <span class="kw">/&gt;</span>
+      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;alloptions&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.1.1&quot;</span>
+<span class="ot">               source=</span><span class="st">&quot;https://somewhere/api/v2/&quot;</span><span class="ot"> installArguments=</span><span class="st">&quot;&quot;</span>
+<span class="ot">               packageParameters=</span><span class="st">&quot;&quot;</span><span class="ot"> forceX86=</span><span class="st">&quot;false&quot;</span><span class="ot"> allowMultipleVersions=</span><span class="st">&quot;false&quot;</span>
+<span class="ot">               ignoreDependencies=</span><span class="st">&quot;false&quot;</span>
+               <span class="kw">/&gt;</span>
+    <span class="kw">&lt;/packages&gt;</span></code></pre></div>
 <h2 id="alternative-sources">Alternative Sources</h2>
 <p>Available in 0.9.10+.</p>
 <h3 id="ruby">Ruby</h3>
-<p>This specifies the source is Ruby Gems and that we are installing a 
- gem. If you do not have ruby installed prior to running this command, 
- the command will install that first. 
- e.g. <code>choco install compass -source ruby</code></p>
+<p>This specifies the source is Ruby Gems and that we are installing a<br />
+gem. If you do not have ruby installed prior to running this command,<br />
+the command will install that first.<br />
+e.g. <code>choco install compass -source ruby</code></p>
 <h3 id="webpi">WebPI</h3>
-<p>This specifies the source is Web PI (Web Platform Installer) and that 
- we are installing a WebPI product, such as IISExpress. If you do not 
- have the Web PI command line installed, it will install that first and
- then the product requested. 
- e.g. <code>choco install IISExpress --source webpi</code></p>
+<p>This specifies the source is Web PI (Web Platform Installer) and that<br />
+we are installing a WebPI product, such as IISExpress. If you do not<br />
+have the Web PI command line installed, it will install that first and<br />
+then the product requested.<br />
+e.g. <code>choco install IISExpress --source webpi</code></p>
 <h3 id="cygwin">Cygwin</h3>
-<p>This specifies the source is Cygwin and that we are installing a cygwin
- package, such as bash. If you do not have Cygwin installed, it will 
- install that first and then the product requested. 
- e.g. <code>choco install bash --source cygwin</code></p>
+<p>This specifies the source is Cygwin and that we are installing a cygwin<br />
+package, such as bash. If you do not have Cygwin installed, it will<br />
+install that first and then the product requested.<br />
+e.g. <code>choco install bash --source cygwin</code></p>
 <h3 id="python">Python</h3>
-<p>This specifies the source is Python and that we are installing a python
- package, such as Sphinx. If you do not have easy_install and Python 
- installed, it will install those first and then the product requested. 
- e.g. <code>choco install sphinx --source python</code></p>
+<p>This specifies the source is Python and that we are installing a python<br />
+package, such as Sphinx. If you do not have easy_install and Python<br />
+installed, it will install those first and then the product requested.<br />
+e.g. <code>choco install sphinx --source python</code></p>
 <h3 id="windows-features">Windows Features</h3>
-<p>This specifies that the source is a Windows Feature and we should 
- install via the Deployment Image Servicing and Management tool (DISM) 
- on the local machine. 
- e.g. <code>choco install IIS-WebServerRole --source windowsfeatures</code></p>
+<p>This specifies that the source is a Windows Feature and we should<br />
+install via the Deployment Image Servicing and Management tool (DISM)<br />
+on the local machine.<br />
+e.g. <code>choco install IIS-WebServerRole --source windowsfeatures</code></p>
 <h2 id="resources">Resources</h2>
 <ul>
-<li>How-To: A complete example of how you can use the PackageParameters argument 
-when creating a Chocolatey Package can be seen at
-<a href="https://github.com/chocolatey/choco/wiki/How-To-Parse-PackageParameters-Argument">https://github.com/chocolatey/choco/wiki/How-To-Parse-PackageParameters-Argument</a></li>
-<li>One may want to override the default installation directory of a 
-piece of software. See 
-<a href="https://github.com/chocolatey/choco/wiki/GettingStarted#overriding-default-install-directory-or-other-advanced-install-concepts">https://github.com/chocolatey/choco/wiki/GettingStarted#overriding-default-install-directory-or-other-advanced-install-concepts</a>.</li>
+<li>How-To: A complete example of how you can use the PackageParameters argument<br />
+when creating a Chocolatey Package can be seen at<br />
+<a href="https://github.com/chocolatey/choco/wiki/How-To-Parse-PackageParameters-Argument" class="uri">https://github.com/chocolatey/choco/wiki/How-To-Parse-PackageParameters-Argument</a></li>
+<li>One may want to override the default installation directory of a<br />
+piece of software. See<br />
+<a href="https://github.com/chocolatey/choco/wiki/GettingStarted#overriding-default-install-directory-or-other-advanced-install-concepts" class="uri">https://github.com/chocolatey/choco/wiki/GettingStarted#overriding-default-install-directory-or-other-advanced-install-concepts</a>.</li>
 </ul>
 <h2 id="options-and-switches">Options and Switches</h2>
-<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are
- running a command like install that allows installing multiple
- packages, and you use <code>--version=1.0.0</code>, it is going to look for and
- try to install version 1.0.0 of every package passed. So please split
- out multiple package calls when wanting to pass specific options.</p>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
+running a command like install that allows installing multiple<br />
+packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
+try to install version 1.0.0 of every package passed. So please split<br />
+out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
 <pre><code>
 
@@ -125,7 +161,7 @@ piece of software. See
      AcceptLicense - Accept license dialogs automatically.
 
  -y, --yes, --confirm
-     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+     Confirm all prompts - Chooses affirmative answer instead of prompting.
        Implies --accept-license
 
  -f, --force
@@ -138,29 +174,29 @@ piece of software. See
      LimitOutput - Limit the output to essential information
 
      --execution-timeout=VALUE
-     CommandExecutionTimeoutSeconds - Override the default execution timeout 
+     CommandExecutionTimeoutSeconds - Override the default execution timeout
        in the configuration of 2700 seconds.
 
  -c, --cache, --cachelocation, --cache-location=VALUE
-     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+     CacheLocation - Location for download cache, defaults to %TEMP% or value
        in chocolatey.config file.
 
      --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
-     AllowUnofficialBuild - When not using the official build you must set 
+     AllowUnofficialBuild - When not using the official build you must set
        this flag for choco to continue.
 
      --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
-     FailOnStandardError - Fail on standard error output (stderr), typically 
-       received when running external commands during install providers. This 
+     FailOnStandardError - Fail on standard error output (stderr), typically
+       received when running external commands during install providers. This
        overrides the feature failOnStandardError.
 
      --use-system-powershell
-     UseSystemPowerShell - Execute PowerShell using an external process 
+     UseSystemPowerShell - Execute PowerShell using an external process
        instead of the built-in PowerShell host. Available in 0.9.10+.
 
  -s, --source=VALUE
-     Source - The source to find the package(s) to install. Special sources 
-       include: ruby, webpi, cygwin, windowsfeatures, and python. Defaults to 
+     Source - The source to find the package(s) to install. Special sources
+       include: ruby, webpi, cygwin, windowsfeatures, and python. Defaults to
        default feeds.
 
      --version=VALUE
@@ -170,39 +206,39 @@ piece of software. See
      Prerelease - Include Prereleases? Defaults to false.
 
      --x86, --forcex86
-     ForceX86 - Force x86 (32bit) installation on 64 bit systems. Defaults to 
+     ForceX86 - Force x86 (32bit) installation on 64 bit systems. Defaults to
        false.
 
      --ia, --installargs, --installarguments, --install-arguments=VALUE
-     InstallArguments - Install Arguments to pass to the native installer in 
+     InstallArguments - Install Arguments to pass to the native installer in
        the package. Defaults to unspecified.
 
  -o, --override, --overrideargs, --overridearguments, --override-arguments
-     OverrideArguments - Should install arguments be used exclusively without 
+     OverrideArguments - Should install arguments be used exclusively without
        appending to current package passed arguments? Defaults to false.
 
      --notsilent, --not-silent
      NotSilent - Do not install this silently. Defaults to false.
 
      --params, --parameters, --pkgparameters, --packageparameters, --package-parameters=VALUE
-     PackageParameters - Parameters to pass to the package. Defaults to 
+     PackageParameters - Parameters to pass to the package. Defaults to
        unspecified.
 
      --allowdowngrade, --allow-downgrade
-     AllowDowngrade - Should an attempt at downgrading be allowed? Defaults 
+     AllowDowngrade - Should an attempt at downgrading be allowed? Defaults
        to false.
 
  -m, --sxs, --sidebyside, --side-by-side, --allowmultiple, --allow-multiple, --allowmultipleversions, --allow-multiple-versions
-     AllowMultipleVersions - Should multiple versions of a package be 
+     AllowMultipleVersions - Should multiple versions of a package be
        installed? Defaults to false.
 
  -i, --ignoredependencies, --ignore-dependencies
-     IgnoreDependencies - Ignore dependencies when installing package(s). 
+     IgnoreDependencies - Ignore dependencies when installing package(s).
        Defaults to false.
 
  -x, --forcedependencies, --force-dependencies
-     ForceDependencies - Force dependencies to be reinstalled when force 
-       installing package(s). Must be used in conjunction with --force. 
+     ForceDependencies - Force dependencies to be reinstalled when force
+       installing package(s). Must be used in conjunction with --force.
        Defaults to false.
 
  -n, --skippowershell, --skip-powershell, --skipscripts, --skip-scripts, --skip-automation-scripts
@@ -215,30 +251,30 @@ piece of software. See
      Password - the user&#39;s password to the source. Defaults to empty.
 
      --ignorechecksum, --ignore-checksum, --ignorechecksums, --ignore-checksums
-     IgnoreChecksums - Ignore checksums provided by the package. Available in 
+     IgnoreChecksums - Ignore checksums provided by the package. Available in
        0.9.9.9+.
 
      --ignorepackagecodes, --ignorepackageexitcodes, --ignore-package-codes, --ignore-package-exit-codes
      IgnorePackageExitCodes - Exit with a 0 for success and 1 for non-succes-
-       s, no matter what package scripts provide for exit codes. Overrides the 
+       s, no matter what package scripts provide for exit codes. Overrides the
        default feature &#39;usePackageExitCodes&#39; set to &#39;True&#39;. Available in 0.-
        9.10+.
 
      --usepackagecodes, --usepackageexitcodes, --use-package-codes, --use-package-exit-codes
-     UsePackageExitCodes - Package scripts can provide exit codes. Use those 
-       for choco&#39;s exit code when non-zero (this value can come from a 
-       dependency package). Chocolatey defines valid exit codes as 0, 1605, 
-       1614, 1641, 3010.  Overrides the default feature &#39;usePackageExitCodes&#39; 
+     UsePackageExitCodes - Package scripts can provide exit codes. Use those
+       for choco&#39;s exit code when non-zero (this value can come from a
+       dependency package). Chocolatey defines valid exit codes as 0, 1605,
+       1614, 1641, 3010.  Overrides the default feature &#39;usePackageExitCodes&#39;
        set to &#39;True&#39;. Available in 0.9.10+.
 
      --sdc, --skipdownloadcache, --skip-download-cache
-     Skip Download Cache - Use the original download distribution even if a 
-       private distribution download cache is available for a package. 
+     Skip Download Cache - Use the original download even if a
+       private CDN cache is available for a package.
        Overrides the default feature &#39;downloadCache&#39; set to &#39;True&#39;.
 
      --dc, --downloadcache, --download-cache, --use-download-cache
-     Use Download Cache - Use private distribution download cache if 
-       available for a package. Overrides the default feature &#39;downloadCache&#39; 
+     Use Download Cache - Use private CDN cache if
+       available for a package. Overrides the default feature &#39;downloadCache&#39;
        set to &#39;True&#39;.
 
      --svc, --skipvirus, --skip-virus, --skipviruscheck, --skip-virus-check
@@ -246,14 +282,14 @@ piece of software. See
        n. Overrides the default feature &#39;virusCheck&#39; set to &#39;True&#39;.
 
      --virus, --viruscheck, --virus-check
-     Virus Check - check downloaded files for viruses. Override the default 
+     Virus Check - check downloaded files for viruses. Override the default
        feature &#39;virusCheck&#39; set to &#39;True&#39;.
 
      --viruspositivesmin, --virus-positives-minimum=VALUE
-     Virus Check Minimum Scan Result Positives - the minimum number of scan 
-       result positives required to flag a package. Overrides the default 
+     Virus Check Minimum Scan Result Positives - the minimum number of scan
+       result positives required to flag a package. Overrides the default
        configuration value &#39;virusCheckMinimumPositives&#39; set to &#39;5&#39;.
-</code></pre><p><a href="CommandsReference">Command Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco install -h</code>. </p>
-
+</code></pre>
+<p><a href="CommandsReference">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco install -h</code>.</p>
 </article>

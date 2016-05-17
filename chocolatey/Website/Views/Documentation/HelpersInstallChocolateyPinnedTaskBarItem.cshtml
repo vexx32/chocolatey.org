@@ -1,25 +1,21 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "HelpersInstallChocolateyPinnedTaskBarItem";
 }
 
 <article>
-  <h2 id="install-chocolateypinnedtaskbaritem">Install-ChocolateyPinnedTaskBarItem</h2>
+<h2 id="install-chocolateypinnedtaskbaritem">Install-ChocolateyPinnedTaskBarItem</h2>
 <p>Creates an item in the task bar linking to the provided path.</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="lang-powershell">Install-ChocolateyPinnedTaskBarItem `
- &quot;${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe&quot;
-</code></pre>
+<pre class="powershell"><code>Install-ChocolateyPinnedTaskBarItem `
+ &quot;${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe&quot;</code></pre>
 <h2 id="examples">Examples</h2>
-<pre><code class="lang-powershell">Install-ChocolateyPinnedTaskBarItem `
- &quot;${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe&quot;
-</code></pre>
+<pre class="powershell"><code>Install-ChocolateyPinnedTaskBarItem `
+ &quot;${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe&quot;</code></pre>
 <p>This will create a Visual Studio task bar icon.</p>
 <h2 id="parameters">Parameters</h2>
 <ul>
 <li><p><code>-targetFilePath</code></p>
-<p>  The path to the application that should be launched when clicking on the task bar icon.</p>
-</li>
+<p>The path to the application that should be launched when clicking on the task bar icon.</p></li>
 </ul>
 <p><a href="HelpersReference">Function Reference</a></p>
-
 </article>

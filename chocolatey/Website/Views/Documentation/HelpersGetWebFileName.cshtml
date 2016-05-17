@@ -1,0 +1,145 @@
+﻿@{
+  ViewBag.Title = "HelpersGetWebFileName";
+}
+
+<article>
+<h1 id="get-webfilename">Get-WebFileName</h1>
+<p>Gets the original file name from a url. Used by Get-WebFile to determine<br />
+the original file name for a file.</p>
+<h2 id="syntax">Syntax</h2>
+<pre class="powershell"><code>Get-WebFileName `
+  [-Url &lt;String&gt;] `
+  -DefaultName &lt;String&gt; `
+  [-UserAgent &lt;Object&gt;] [&lt;CommonParameters&gt;]</code></pre>
+<h2 id="description">Description</h2>
+<p>Uses several techniques to determine the original file name of the file<br />
+based on the url for the file.</p>
+<h2 id="notes">Notes</h2>
+<p>Available in 0.9.10+.<br />
+Falls back to DefaultName when the name cannot be determined.</p>
+<p>Chocolatey works best when the packages contain the software it is<br />
+managing and doesn&#39;t require downloads. However most software in the<br />
+Windows world requires redistribution rights and when sharing packages<br />
+publicly (like on the <a href="https://chocolatey.org/packages">community feed</a>), maintainers may not have those<br />
+aforementioned rights. Chocolatey understands how to work with that,<br />
+hence this function. You are not subject to this limitation with<br />
+internal packages.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<h3 id="url">-Url [\<String\>]</h3>
+<p>This is the url to a file that will be possibly downloaded.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="defaultname">-DefaultName \<String\></h3>
+<p>The name of the file to use when not able to determine the file name<br />
+from the url response.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>true</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="useragent">-UserAgent [\<Object\>]</h3>
+<p>The user agent to use as part of the request. Defaults to &quot;˜chocolatey<br />
+command line&#39;.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>chocolatey command line</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="section">\<CommonParameters\></h3>
+<p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
+<h2 id="examples">Examples</h2>
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="powershell"><code>Get-WebFileName -Url $url -DefaultName $originalFileName
+</code></pre>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="HelpersGetWebHeaders">Get-WebHeaders</a></li>
+<li><a href="HelpersGetChocolateyWebFile">Get-ChocolateyWebFile</a></li>
+</ul>
+<p><a href="HelpersReference">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-WebFileName -Full</code>.</p>
+</article>

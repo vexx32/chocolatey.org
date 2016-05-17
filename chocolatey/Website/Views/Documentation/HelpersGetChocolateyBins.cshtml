@@ -1,15 +1,14 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "HelpersGetChocolateyBins";
 }
 
 <article>
-  <h1 id="get-chocolateybins">Get-ChocolateyBins</h1>
+<h1 id="get-chocolateybins">Get-ChocolateyBins</h1>
 <p>Creates batch files for all executables in <code>$packageFolder</code> in the Chocolatey bin folder (usually C:\ProgramData\Chocolatey\bin)</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="lang-powershell">Get-ChocolateyBins $packageFolder
-</code></pre>
+<pre class="powershell"><code>Get-ChocolateyBins $packageFolder</code></pre>
 <h2 id="examples">Examples</h2>
-<pre><code class="lang-powershell">$installDir = Split-Path -Parent (Get-ItemProperty ` 
+<pre class="powershell"><code>$installDir = Split-Path -Parent (Get-ItemProperty ` 
 HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Vim UninstallString).UninstallString
 # special batch files we want to create
 $diffExeIgnore = Join-Path $installDir &quot;diff.exe.ignore&quot;
@@ -18,15 +17,12 @@ $gvimExeGui = Join-Path $installDir &quot;gvim.exe.gui&quot;
 
 New-Item $diffExeIgnore,$uninstallExeIgnore,$gvimExeGui `
  -Type File -Force | Out-Null Get-ChocolateyBins $installDir
-Remove-Item $diffExeIgnore,$uninstallExeIgnore,$gvimExeGui
-</code></pre>
+Remove-Item $diffExeIgnore,$uninstallExeIgnore,$gvimExeGui</code></pre>
 <h2 id="parameters">Parameters</h2>
 <ul>
 <li><p><code>-packageFolder</code></p>
-<p>  This is the name of the folder to search for executables in.</p>
-<p>  Example: <code>&#39;c:\program files (x86)\vim\vim73\&#39;</code></p>
-</li>
+<p>This is the name of the folder to search for executables in.</p>
+<p>Example: <code>'c:\program files (x86)\vim\vim73\'</code></p></li>
 </ul>
 <p><a href="HelpersReference">Function Reference</a></p>
-
 </article>

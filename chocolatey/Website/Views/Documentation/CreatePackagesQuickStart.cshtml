@@ -1,83 +1,69 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "CreatePackagesQuickStart";
 }
 
 <article>
-  <h2 id="creating-chocolatey-packages-tl-dr-version">Creating Chocolatey Packages - TL;DR version</h2>
+<h2 id="creating-chocolatey-packages---tldr-version">Creating Chocolatey Packages - TL;DR version</h2>
 <p>Here&#39;s a TL;DR quick start version of the package creating tutorial. Follow these steps to create a simple package.</p>
 <p><strong>Problem?</strong> Read the detailed version: <a href="CreatePackages">Creating Chocolatey Packages</a></p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>You have Chocolatey installed.</li>
 <li>You&#39;ve read <a href="GettingStarted#what-are-chocolatey-packages">What are Chocolatey Packages?</a> first.</li>
-<li>You know how a package works<ul>
+<li>You know how a package works</li>
 <li>A package contains a <code>nuspec</code> file. This defines the package. (<a href="http://docs.nuget.org/docs/reference/nuspec-reference">Docs</a>) (<a href="https://github.com/chocolatey/chocolateytemplates/blob/master/_templates/chocolatey/__NAME__.nuspec">Example</a>)</li>
 <li>A package may contain embedded software.</li>
 <li>A package may contain an installation script. This can be <a href="CreatePackagesQuickStart#examples">very simple</a>.</li>
 </ul>
-</li>
-</ul>
 <h2 id="quick-start-guide">Quick start guide</h2>
 <ul>
-<li><strong>Generate new package</strong>:<ul>
+<li><strong>Generate new package</strong>:</li>
 <li><code>choco new -h</code> will get you started seeing options available to you.</li>
 <li>Once you figured out all of your options, you should move forward with generating your template.</li>
-</ul>
-</li>
-<li><strong>Edit template</strong> using common sense<ul>
+<li><strong>Edit template</strong> using common sense</li>
 <li><code>cd package-name</code></li>
 <li>Edit the <code>package-name.nuspec</code> configuration file.</li>
-<li>Edit the <code>./tools/chocolateyInstall.ps1</code> install script.<ul>
+<li>Edit the <code>./tools/chocolateyInstall.ps1</code> install script.
+<ul>
 <li>Make sure you figure out the installer&#39;s silent mode. Use <a href="http://unattended.sourceforge.net/installers.php">Universal Silent Switch Finder</a>, which is available as a Choco package: <code>choco install ussf</code></li>
-</ul>
-</li>
-<li>You <strong>must</strong> save your files with <em>UTF-8</em> character encoding without BOM. (<a href="https://github.com/chocolatey/choco/wiki/CreatePackages#character-encoding">Details</a>)</li>
-</ul>
-</li>
-<li><strong>Build the package</strong><ul>
+</ul></li>
+<li>You <strong>must</strong> save your files with <em>UTF–8</em> character encoding without BOM. (<a href="https://github.com/chocolatey/choco/wiki/CreatePackages#character-encoding">Details</a>)</li>
+<li><strong>Build the package</strong></li>
 <li>Still in package directory</li>
-<li><code>choco pack</code><ul>
-<li>&quot;Successfully created package-name.1.1.0.nupkg&quot;</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Test the package</strong><ul>
+<li><code>choco pack</code>
+<ul>
+<li>&quot;Successfully created package-name.1.1.0.nupkg&quot;</li>
+</ul></li>
+<li><strong>Test the package</strong></li>
 <li><strong>Testing should probably be done on a Virtual Machine</strong></li>
-<li>In your package directory, use:<ul>
+<li>In your package directory, use:
+<ul>
 <li><code>choco install package-name -s &quot;$pwd&quot; -f</code> - powershell</li>
-<li><code>choco install package-name -s &#39;%cd%&#39; -f</code> - everywhere else</li>
-</ul>
-</li>
-<li>Otherwise, use the full path:<ul>
-<li><code>choco install package-name -source &#39;c:\path\to\Package\&#39; -f</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Push the package</strong> to the Chocolatey community feed repository:<ul>
-<li>Get a Chocolatey account:<ul>
-<li><a href="https://chocolatey.org/account/Register">https://chocolatey.org/account/Register</a></li>
-</ul>
-</li>
-<li>Copy the API key <a href="https://chocolatey.org/account">from your Chocolatey account</a>.</li>
+<li><code>choco install package-name -s '%cd%' -f</code> - everywhere else</li>
+</ul></li>
+<li>Otherwise, use the full path:
+<ul>
+<li><code>choco install package-name -source 'c:\path\to\Package\' -f</code></li>
+</ul></li>
+<li><strong>Push the package</strong> to the Chocolatey community feed repository:</li>
+<li>Get a Chocolatey account:
+<ul>
+<li><a href="<a href="https://chocolatey.org/account/Register" class="uri">https://chocolatey.org/account/Register</a>"><a href="https://chocolatey.org/account/Register" class="uri">https://chocolatey.org/account/Register</a></a></li>
+</ul></li>
+<li>Copy the API key <a href="<a href="https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>">from your Chocolatey account</a>.</li>
 <li><code>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
 <li><code>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
 </ul>
-</li>
-</ul>
 <h2 id="common-mistakes">Common Mistakes</h2>
 <ul>
-<li><strong>NuSpec</strong><ul>
-<li><strong>id</strong> is the package name and should meet the following criteria:<ul>
+<li><strong>NuSpec</strong></li>
+<li><strong>id</strong> is the package name and should meet the following criteria:
+<ul>
 <li>should contain no spaces and weird characters.</li>
 <li>should be lowercase.</li>
 <li>should separate spaces in the software name with <code>-</code> e.g. <code>classic-shell</code>. Yes, we realize there are a lot of older packages not following this convention.</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>version</strong> is a dot-separated identifier containing a maximum of 4 numbers. e.g. <em>1.0</em> or <em>2.4.0.16</em> - except for prerelease packages</li>
-</ul>
-</li>
 </ul>
 <h2 id="environmental-variables">Environmental Variables</h2>
 <ul>
@@ -87,31 +73,28 @@
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Here are some simple examples.</p>
-<h3 id="chocolateyinstall-ps1-for-exe-installer">chocolateyInstall.ps1 for .exe installer</h3>
-<pre><code class="lang-powershell">$name = &#39;Package Name&#39;
+<h3 id="chocolateyinstall.ps1-for-.exe-installer">chocolateyInstall.ps1 for .exe installer</h3>
+<pre class="powershell"><code>$name = &#39;Package Name&#39;
 $installerType = &#39;exe&#39;
 $url  = &#39;http://path/to/download/installer.exe&#39;
 $silentArgs = &#39;/VERYSILENT&#39;
 
-Install-ChocolateyPackage $name $installerType $silentArgs $url
-</code></pre>
+Install-ChocolateyPackage $name $installerType $silentArgs $url</code></pre>
 <p><strong>NOTE:</strong> You have to figure out the command line switch to make the installer silent, e.g. <strong>/VERYSILENT</strong>. This changes from installer to installer.</p>
-<h3 id="chocolateyinstall-ps1-for-msi-installer">chocolateyInstall.ps1 for .msi installer</h3>
+<h3 id="chocolateyinstall.ps1-for-.msi-installer">chocolateyInstall.ps1 for .msi installer</h3>
 <p><strong>NOTE:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It&#39;s best to work with the widest compatibility of systems out there.</p>
-<pre><code class="lang-powershell">$packageName = &#39;Package Name&#39;
+<pre class="powershell"><code>$packageName = &#39;Package Name&#39;
 $installerType = &#39;msi&#39;
 $url = &#39;http://path/to/download/installer_x86.msi&#39;
 $url64 = &#39;http://path/to/download/installer_x64.msi&#39;
 $silentArgs = &#39;/quiet&#39;
 $validExitCodes = @@(0,3010)
 
-Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes
-</code></pre>
+Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes</code></pre>
 <h3 id="parsing-package-parameters">Parsing Package Parameters</h3>
 <p>For a complete example of how you can use the PackageParameters argument of the <code>choco install</code> command, see this <a href="How-To-Parse-PackageParameters-Argument">How-To</a>.</p>
 <h2 id="tips">Tips</h2>
 <ul>
 <li>If you cannot find the installer silent mode, you can try an old tool called <a href="http://www.softpedia.com/progDownload/Universal-Silent-Switch-Finder-Download-180984.html">Universal Silent Switch Finder 1.5.0.0</a> - <code>choco install ussf</code>.</li>
 </ul>
-
 </article>

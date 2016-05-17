@@ -1,0 +1,68 @@
+﻿@{
+  ViewBag.Title = "FeaturesPrivateCdn";
+}
+
+<article>
+<h1 id="private-cdn-download-cache-licensed-users-only">Private CDN Download Cache (Licensed Users Only)</h1>
+<p>Chocolatey offers a private CDN cache of download content for paying customers. The internet is unpredictable and sometimes sites go down, the cache ensures that the packages on the community repository are not broken by issues with the internet. We lovingly call this the &quot;No more 404s feature&quot;.</p>
+<p>We do this by caching a copy of the content on our private CDN. This content also gets virus checked and checksummed to verify that it matches what was originally intended by package maintainers and moderators for you to receive.</p>
+<h2 id="important-information-for-software-vendors">Important Information for Software Vendors</h2>
+<p>When our customers download content from you, we may cache a copy of that content on our private CDN to ensure that later our licensed customers will be able to access that content again. This allows predictable and reliable installations of packages. Like most CDNs, no changes are made, we are simply ensuring the content stays available for our private customers. We are not modifying, selling, renting, leasing, lending, or sub-licensing this content in any way.</p>
+<p>This private content cache is <strong><em>only</em></strong> available as a service for our paying customers.</p>
+<p>If you have questions or <strong>prefer to opt out</strong>, please contact us &lt;a href=&quot;<script type="text/javascript">
+<!--
+h='';a='&#64;';n='&#x63;&#104;&#x6f;&#x63;&#x6f;&#108;&#x61;&#116;&#x65;&#x79;&#x77;&#x65;&#98;&#x61;&#100;&#x6d;&#x69;&#110;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x63;&#104;&#x6f;&#x63;&#x6f;&#108;&#x61;&#116;&#x65;&#x79;&#x77;&#x65;&#98;&#x61;&#100;&#x6d;&#x69;&#110;'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x63;&#104;&#x6f;&#x63;&#x6f;&#108;&#x61;&#116;&#x65;&#x79;&#x77;&#x65;&#98;&#x61;&#100;&#x6d;&#x69;&#110;&#32;&#40;&#x63;&#104;&#x6f;&#x63;&#x6f;&#108;&#x61;&#116;&#x65;&#x79;&#x77;&#x65;&#98;&#x61;&#100;&#x6d;&#x69;&#110;&#32;&#x61;&#116;&#32;&#x29;</noscript> at googlegroups dot com?subject=[Insert Your Software Name Here] - Chocolatey Community Feed Caching&amp;body=Please fill in details of your request (remember to include the package page url, and the software name). Please remember to change the to address to a valid email address.&quot;&gt;here</a> (vendor requests only please).</p>
+<h2 id="usage">Usage</h2>
+<p>This is mostly automatic, but in case the feature is turned off, you may turn it on by setting the feature <code>downloadCache</code> (<code>choco feature enable -n downloadCache</code>).</p>
+<p>To see if a package has content cached on the CDN, you can run <code>choco info packagename</code> and it will give you detailed information pertaining to a package.</p>
+<p><img src="images/choco_info_cached.png" alt="choco info packagename" /></p>
+<p>When you install, you will see a message similar to the following when the cached content is used:</p>
+<p><img src="images/choco_install_cached.png" alt="Pro install with CDN cache" /></p>
+<h2 id="see-it-in-action">See It In Action</h2>
+<p><img src="images/gifs/chocopro_install_stopped.gif" alt="Pro install in action" /></p>
+<h2 id="options-and-switches">Options and Switches</h2>
+<p>The following options are added to install and upgrade commands.</p>
+<pre><code>     --sdc, --skipdownloadcache, --skip-download-cache
+     Skip Download Cache - Use the original download even if a
+       private CDN cache is available for a package.
+       Overrides the default feature &#39;downloadCache&#39; set to &#39;True&#39;. Available
+       in 0.9.10+. Licensed versions only.
+
+     --dc, --downloadcache, --download-cache, --use-download-cache
+     Use Download Cache - Use private CDN cache if
+       available for a package. Overrides the default feature &#39;downloadCache&#39;
+       set to &#39;True&#39;. Available in 0.9.10+. Licensed versions only.</code></pre>
+<h2 id="faq">FAQ</h2>
+<h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
+<p>You must have a licensed version of Chocolatey. Professional is a personal, named license that costs about the price of a lunch outing per month and comes with several other features.</p>
+<h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
+<p>When you install packages from the community repository and a private cache becomes available, it will use that cache automatically. You don&#39;t have to do anything additional.</p>
+<h3 id="how-do-i-turn-this-feature-on">How do I turn this feature on?</h3>
+<ul>
+<li>Globally - <code>choco feature enable -n downloadCache</code></li>
+<li>Per command - use the switch <code>--use-download-cache</code> with install/upgrade commands.</li>
+</ul>
+<h3 id="how-do-i-turn-this-feature-off">How do I turn this feature off?</h3>
+<ul>
+<li>Globally - <code>choco feature disable -n downloadCache</code></li>
+<li>Per command - use the switch <code>--skip-download-cache</code> with install/upgrade commands.</li>
+</ul>
+<h3 id="is-the-content-modified">Is the content modified?</h3>
+<p>No, this is the original content as it would have been downloaded.</p>
+<h3 id="is-the-content-publicly-available">Is the content publicly available?</h3>
+<p>No, this is a private CDN cache available only for licensed customers.</p>
+<h3 id="why-isnt-a-cache-available-for-x-package">Why isn&#39;t a cache available for x package?</h3>
+<p>There are a variety of factors that go into suitability for a package.</p>
+<ul>
+<li>If the software vendor has opted out, there will be no cache for a package that uses that software.</li>
+<li>If the package doesn&#39;t actually download anything, there will be no cache.</li>
+<li>If the package downloads resources, but not in the recommended way, there may not be a cache available.</li>
+</ul>
+<h3 id="does-this-grant-me-a-license-to-the-software">Does this grant me a license to the software?</h3>
+<p>No, you still need to work with the software vendor to obtain a license, if required.</p>
+<h3 id="im-a-vendor-and-wish-to-opt-out.">I&#39;m a vendor and wish to opt out.</h3>
+<p>Please see <a href="#important-information-for-software-vendors">important information for software vendors</a>.</p>
+</article>

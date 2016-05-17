@@ -1,9 +1,46 @@
+﻿td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
 @{
-    ViewBag.Title = "";
+  ViewBag.Title = "HelpersReference";
 }
 
 <article>
-  <h1 id="chocolatey-package-functions-aka-helpers-reference">Chocolatey Package Functions aka Helpers Reference</h1>
+<h1 id="chocolatey-package-functions-aka-helpers-reference">Chocolatey Package Functions aka Helpers Reference</h1>
 <h2 id="main-functions">Main Functions</h2>
 <p>These functions call other functions and many times may be the only thing you need in your <a href="ChocolateyInstallPS1">chocolateyInstall.ps1 file</a>.</p>
 <ul>
@@ -14,8 +51,8 @@
 </ul>
 <h2 id="error-success-functions">Error / Success Functions</h2>
 <ul>
-<li><a href="HelpersWriteChocolateySuccess">Write-ChocolateySuccess</a>  - <strong>DEPRECATED</strong></li>
-<li><a href="HelpersWriteChocolateyFailure">Write-ChocolateyFailure</a>  - <strong>DEPRECATED</strong></li>
+<li><a href="HelpersWriteChocolateySuccess">Write-ChocolateySuccess</a> - <strong>DEPRECATED</strong></li>
+<li><a href="HelpersWriteChocolateyFailure">Write-ChocolateyFailure</a> - <strong>DEPRECATED</strong></li>
 </ul>
 <p>You really don&#39;t need a try catch with chocolatey powershell files anymore.</p>
 <h2 id="more-functions">More Functions</h2>
@@ -47,92 +84,57 @@
 <li><a href="HelpersInstallChocolateyShortcut">Install-ChocolateyShortcut</a> - v0.9.9+</li>
 <li><a href="HelpersUpdateSessionEnvironment">Update-SessionEnvironment</a></li>
 </ul>
-<h2 id="complete-list-alphabetical-order-">Complete List (alphabetical order)</h2>
+<h2 id="complete-list-alphabetical-order">Complete List (alphabetical order)</h2>
 <ul>
-<li><p><strong>Get-BinRoot</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-BinRoot.ps1">src</a>]  - this is a horribly named function that doesn&#39;t do what new folks think it does. It gets you the <code>tools</code> root folder, which by default is set to <code>c:\tools</code>, not the <code>$env:ChocolateyInstall\bin</code> folder. </p>
-</li>
-<li><p><strong>Get-CheckSumValid</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-CheckSumValid.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-ChocolateyUnzip</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-ChocolateyUnzip.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-ChocolateyWebFile</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-ChocolateyWebFile.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-EnvironmentVariable</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-EnvironmentVariable.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-EnvironmentVariableNames</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-EnvironmentVariableNames.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-FtpFile</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-FtpFile.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-ProcessorBits</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-ProcessorBits.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-UACEnabled</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-UACEnabled.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-VirusCheckValid</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-VirusCheckValid.ps1">src</a>]
-:warning: not implemented!</p>
-</li>
-<li><p><strong>Get-WebFile</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-WebFile.ps1">src</a>]</p>
-</li>
-<li><p><strong>Get-WebHeaders</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-WebHeaders.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyDesktopLink</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyDesktopLink.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyEnvironmentVariable</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyEnvironmentVariable.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyExplorerMenuItem</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyExplorerMenuItem.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyFileAssociation</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyFileAssociation.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyInstallPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyInstallPackage.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPackage.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyPath</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPath.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyPinnedTaskBarItem</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPinnedTaskBarItem.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyPowershellCommand</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPowershellCommand.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyShortcut</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyShortcut.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyVsixPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyVsixPackage.ps1">src</a>]</p>
-</li>
-<li><p><strong>Install-ChocolateyZipPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyZipPackage.ps1">src</a>]</p>
-</li>
-<li><p><strong>Set-EnvironmentVariable</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Set-EnvironmentVariable.ps1">src</a>]</p>
-</li>
-<li><p><strong>Start-ChocolateyProcessAsAdmin</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Start-ChocolateyProcessAsAdmin.ps1">src</a>]</p>
-</li>
-<li><p><strong>Test-ProcessAdminRights</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Test-ProcessAdminRights.ps1">src</a>]</p>
-</li>
-<li><p><strong>Uninstall-ChocolateyPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Uninstall-ChocolateyPackage.ps1">src</a>]</p>
-</li>
-<li><p><strong>Uninstall-ChocolateyZipPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/UnInstall-ChocolateyZipPackage.ps1">src</a>]</p>
-</li>
-<li><p><strong>Update-SessionEnvironment</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Update-SessionEnvironment.ps1">src</a>]</p>
-</li>
-<li><p><strong>Write-ChocolateyFailure</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Write-ChocolateyFailure.ps1">src</a>]</p>
-</li>
-<li><p><strong>Write-ChocolateySuccess</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Write-ChocolateySuccess.ps1">src</a>]</p>
-</li>
-<li><p><strong>Write-FileUpdateLog</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Write-FileUpdateLog.ps1">src</a>]</p>
-</li>
+<li><p><strong>Get-BinRoot</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-BinRoot.ps1">src</a>] - this is a horribly named function that doesn&#39;t do what new folks think it does. It gets you the <code>tools</code> root folder, which by default is set to <code>c:\tools</code>, not the <code>$env:ChocolateyInstall\bin</code> folder.</p></li>
+<li><p><strong>Get-CheckSumValid</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-CheckSumValid.ps1">src</a>]</p></li>
+<li><p><strong>Get-ChocolateyUnzip</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-ChocolateyUnzip.ps1">src</a>]</p></li>
+<li><p><strong>Get-ChocolateyWebFile</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-ChocolateyWebFile.ps1">src</a>]</p></li>
+<li><p><strong>Get-EnvironmentVariable</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-EnvironmentVariable.ps1">src</a>]</p></li>
+<li><strong>Get-EnvironmentVariableNames</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-EnvironmentVariableNames.ps1">src</a>]</li>
+<li><p><strong>Get-FtpFile</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-FtpFile.ps1">src</a>]</p></li>
+<li><p><strong>Get-ProcessorBits</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-ProcessorBits.ps1">src</a>]</p></li>
+<li><p><strong>Get-UACEnabled</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-UACEnabled.ps1">src</a>]</p></li>
+<li><p><strong>Get-VirusCheckValid</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-VirusCheckValid.ps1">src</a>]<br />
+âš ï¸ not implemented!</p></li>
+<li><p><strong>Get-WebFile</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-WebFile.ps1">src</a>]</p></li>
+<li><p><strong>Get-WebHeaders</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Get-WebHeaders.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyDesktopLink</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyDesktopLink.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyEnvironmentVariable</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyEnvironmentVariable.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyExplorerMenuItem</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyExplorerMenuItem.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyFileAssociation</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyFileAssociation.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyInstallPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyInstallPackage.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPackage.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyPath</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPath.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyPinnedTaskBarItem</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPinnedTaskBarItem.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyPowershellCommand</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyPowershellCommand.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyShortcut</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyShortcut.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyVsixPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyVsixPackage.ps1">src</a>]</p></li>
+<li><p><strong>Install-ChocolateyZipPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Install-ChocolateyZipPackage.ps1">src</a>]</p></li>
+<li><p><strong>Set-EnvironmentVariable</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Set-EnvironmentVariable.ps1">src</a>]</p></li>
+<li><p><strong>Start-ChocolateyProcessAsAdmin</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Start-ChocolateyProcessAsAdmin.ps1">src</a>]</p></li>
+<li><p><strong>Test-ProcessAdminRights</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Test-ProcessAdminRights.ps1">src</a>]</p></li>
+<li><p><strong>Uninstall-ChocolateyPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Uninstall-ChocolateyPackage.ps1">src</a>]</p></li>
+<li><p><strong>Uninstall-ChocolateyZipPackage</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/UnInstall-ChocolateyZipPackage.ps1">src</a>]</p></li>
+<li><p><strong>Update-SessionEnvironment</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Update-SessionEnvironment.ps1">src</a>]</p></li>
+<li><p><strong>Write-ChocolateyFailure</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Write-ChocolateyFailure.ps1">src</a>]</p></li>
+<li><p><strong>Write-ChocolateySuccess</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Write-ChocolateySuccess.ps1">src</a>]</p></li>
+<li><p><strong>Write-FileUpdateLog</strong> [<a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/functions/Write-FileUpdateLog.ps1">src</a>]</p></li>
 </ul>
 <h2 id="variables">Variables</h2>
 <p>There are also a number of environment variables providing access to some values from the nuspec and other information that may be useful. They are accessed via <code>$env:variableName</code>.</p>
 <ul>
 <li><strong>chocolateyPackageFolder</strong> = the folder where Chocolatey has downloaded and extracted the NuGet package, typically <code>C:\ProgramData\chocolatey\lib\packageName</code>.</li>
-<li><strong>chocolateyPackageName</strong> (since 0.9.9) = The package name, which is equivalent to the <code>&lt;id&gt;</code> tag in the nuspec </li>
+<li><strong>chocolateyPackageName</strong> (since 0.9.9) = The package name, which is equivalent to the <code>&lt;id&gt;</code> tag in the nuspec</li>
 <li><strong>chocolateyPackageVersion</strong> (since 0.9.9) = The package version, which is equivalent to the <code>&lt;version&gt;</code> tag in the nuspec</li>
 </ul>
 <p><code>chocolateyPackageVersion</code> may be particularly useful, since that would allow you in some cases to create packages for new releases of the updated software by only changing the <code>&lt;version&gt;</code> in the nuspec and not having to touch the <code>chocolateyInstall.ps1</code> at all. An example of this:</p>
 <pre><code>$url = &quot;http://www.thesoftware.com/downloads/thesoftware-$env:chocolateyPackageVersion.zip&quot;
 
-Install-ChocolateyZipPackage &#39;$env:chocolateyPackageName&#39; $url $binRoot
-</code></pre><p>Remember, if you want to use <code>chocolateyPackageName</code> or <code>chocolateyPackageVersion</code> you should declare a dependency on Chocolatey 0.9.9 in the nuspec</p>
-<pre><code class="lang-xml">&lt;dependencies&gt;
-  &lt;!-- Chocolatey 0.9.9 required in order to access the chocolateyPackageName and chocolateyPackageVersion environment variables --&gt;
-  &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.9&quot; /&gt;
-&lt;/dependencies&gt;
-</code></pre>
-
+Install-ChocolateyZipPackage &#39;$env:chocolateyPackageName&#39; $url $binRoot</code></pre>
+<p>Remember, if you want to use <code>chocolateyPackageName</code> or <code>chocolateyPackageVersion</code> you should declare a dependency on Chocolatey 0.9.9 in the nuspec</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependencies&gt;</span>
+  <span class="co">&lt;!-- Chocolatey 0.9.9 required in order to access the chocolateyPackageName and chocolateyPackageVersion environment variables --&gt;</span>
+  <span class="kw">&lt;dependency</span><span class="ot"> id=</span><span class="st">&quot;chocolatey&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.9.9&quot;</span> <span class="kw">/&gt;</span>
+<span class="kw">&lt;/dependencies&gt;</span></code></pre></div>
 </article>

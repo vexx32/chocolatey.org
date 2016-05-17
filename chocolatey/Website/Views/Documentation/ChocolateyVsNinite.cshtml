@@ -1,9 +1,9 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "ChocolateyVsNinite";
 }
 
 <article>
-  <h2 id="chocolatey-vs-ninite">Chocolatey vs Ninite</h2>
+<h2 id="chocolatey-vs-ninite">Chocolatey vs Ninite</h2>
 <p>A lot of folks out there are always wanting to point out that there is Ninite when someone mentions Chocolatey. That is fine, Ninite works but it only has like 90+ things you can install. They are limited by what Ninite can rebundle and redistribute. Both are solid solutions in their own right, but you need to understand the needs and what the two solutions provide to really make a choice on them.</p>
 <h2 id="package-management-approach">Package Management Approach</h2>
 <h3 id="ninite">Ninite</h3>
@@ -20,7 +20,7 @@
 <h3 id="chocolatey">Chocolatey</h3>
 <ul>
 <li>Main purpose: Chocolatey is a global PowerShell execution engine that knows about a packaging format.</li>
-<li>Decentralized with a central &quot;official&quot; community package repository.</li>
+<li>Decentralized with a central &quot;official&quot; community package repository.</li>
 <li>Multiple sources including private sources.</li>
 <li>Packages are created by the community and reviewed by moderators.</li>
 <li>Allows for community contributions.</li>
@@ -31,7 +31,7 @@
 <li>Integration with other package managers (ruby, python, WebPI, cygwin, more coming)</li>
 <li>Able to be used without needing administrative permissions (almost all tool packages are non-admin)</li>
 </ul>
-<h4 id="packaging-solution-needs-that-brought-about-chocolatey-in-the-first-place-">Packaging solution needs (that brought about chocolatey in the first place)</h4>
+<h4 id="packaging-solution-needs-that-brought-about-chocolatey-in-the-first-place">Packaging solution needs (that brought about chocolatey in the first place)</h4>
 <ul>
 <li>Good CLI that is simple to use</li>
 <li>Main repository that takes packages contributions from the community (and is being maintained)</li>
@@ -44,52 +44,51 @@
 <li>Installation of multiple packages with one command</li>
 <li>Script setup of environments</li>
 </ul>
-<h2 id="chocolatey-and-ninite-compare-and-contrast">Chocolatey and  Ninite : Compare and Contrast</h2>
-<h3 id="interfaces-">Interfaces:</h3>
+<h2 id="chocolatey-and-ninite-compare-and-contrast">Chocolatey and Ninite : Compare and Contrast</h2>
+<h3 id="interfaces">Interfaces:</h3>
 <ul>
 <li>Ninite - choose apps from a website, download installer just for those apps. Pay for the pro version and use the command line.</li>
 <li>Chocolatey - open a command line. Install app with <code>cinst appname</code>. Lather rinse repeat.</li>
 </ul>
-<h3 id="packages-">Packages:</h3>
+<h3 id="packages">Packages:</h3>
 <ul>
 <li>Ninite - closed, only items available are what Ninite staff choose to make available.</li>
 <li>Chocolatey - community packages on a central server</li>
 </ul>
-<h3 id="package-sources-">Package sources:</h3>
+<h3 id="package-sources">Package sources:</h3>
 <ul>
 <li>Ninite - one at Ninite.com</li>
 <li>Chocolatey - central one at chocolatey.org, create and use public/private sources (folder, network share, odata feed like nuget.org, [chocolatey.org] and/or myget.org)</li>
 <li>Chocolatey (revisited) - cinst bash -source cygwin | cinst gemcutter -source ruby | cinst sphynx -source python | cinst IISExpress -source webpi</li>
 </ul>
-<h3 id="creating-packages-">Creating packages:</h3>
+<h3 id="creating-packages">Creating packages:</h3>
 <ul>
 <li>Ninite - no</li>
-<li>Chocolatey - yes and stupid simple. Take a look at [github.com] and keep in mind that it is one line call to a PowerShell function to install many apps. Consider windirstat is:
-<code>Install-ChocolateyPackage &#39;windirstat&#39; &#39;exe&#39; &#39;/S&#39; &#39;windirstat.info/wds_current_setup.exe&#39;</code></li>
+<li>Chocolatey - yes and stupid simple. Take a look at [github.com] and keep in mind that it is one line call to a PowerShell function to install many apps. Consider windirstat is:<br />
+<code>Install-ChocolateyPackage 'windirstat' 'exe' '/S' 'windirstat.info/wds_current_setup.exe'</code></li>
 </ul>
-<h3 id="available-packages-">Available packages:</h3>
+<h3 id="available-packages">Available packages:</h3>
 <ul>
 <li>Ninite - Handled by Ninite staff, so there&#39;s less chance of anything being broken.</li>
 <li>Chocolatey - Handled by the community, reviewed by moderators. Possibility of breakages.</li>
 </ul>
-<h3 id="package-updates-">Package updates:</h3>
+<h3 id="package-updates">Package updates:</h3>
 <ul>
 <li>Both suffer from keeping packages up to date.</li>
 </ul>
-<h3 id="package-dependencies-">Package dependencies:</h3>
+<h3 id="package-dependencies">Package dependencies:</h3>
 <ul>
 <li>Ninite - not really</li>
 <li>Chocolatey - Yes! Install Git Extensions, it makes sure Git is also installed.</li>
 </ul>
-<h3 id="versioning-upgrades-">Versioning/upgrades:</h3>
+<h3 id="versioningupgrades">Versioning/upgrades:</h3>
 <ul>
 <li>Ninite - sort of, you just rerun the installer every once in awhile</li>
-<li>Chocolatey - Yes. Consider &#39;cup all&#39;.</li>
+<li>Chocolatey - Yes. Consider &quot;˜cup all&#39;.</li>
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <p>Ninite is a solid solution if you don&#39;t mind not being able to script it and only install the applications that it has listed on the Ninite page. You are, however, guaranteed that you have everything you need to install sheerly by having the Ninite Installer. In that way it is better than Chocolatey, which most packages require access to the internet to download installers that do not have distribution rights with them (Ninite does not incur this extra point of failure).</p>
 <p>Chocolatey has 600% more packages than Ninite and a community that is driving to continually make it better. If you need to get to older versions of packages, many of the packages on Chocolatey.org allow for this. What Chocolatey lacks in the guarantee that Ninite provides, it makes up for in features and options. Chocolatey can provide packages for non-free products, have multiple sources and folks can script the installations. Chocolatey is more than just an installer and with that does not require administrative privileges to use.</p>
 <p>Both solutions suffer from the issue of having the most up-to-date packages available, it&#39;s just that Chocolatey is more transparent about it.</p>
 <p>Whether you use Chocolatey or Ninite, consider that the two answer the same question differently and that is okay. They can live in harmony with each other and at some point Chocolatey may offer Ninite as package source.</p>
-
 </article>

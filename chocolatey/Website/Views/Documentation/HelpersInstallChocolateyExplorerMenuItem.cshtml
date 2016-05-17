@@ -1,29 +1,28 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "HelpersInstallChocolateyExplorerMenuItem";
 }
 
 <article>
-  <h1 id="install-chocolateyexplorermenuitem">Install-ChocolateyExplorerMenuItem</h1>
-<p>Creates a windows explorer context menu item that can be associated with
+<h1 id="install-chocolateyexplorermenuitem">Install-ChocolateyExplorerMenuItem</h1>
+<p>Creates a windows explorer context menu item that can be associated with<br />
 a command</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="lang-powershell">Install-ChocolateyExplorerMenuItem `
+<pre class="powershell"><code>Install-ChocolateyExplorerMenuItem `
   [-MenuKey &lt;String&gt;] `
   [-MenuLabel &lt;String&gt;] `
   [-Command &lt;String&gt;] `
-  [-Type &lt;String&gt;]
-</code></pre>
+  [-Type &lt;String&gt;]</code></pre>
 <h2 id="description">Description</h2>
-<p>Install-ChocolateyExplorerMenuItem can add an entry in the context menu
-of Windows Explorer. The menu item is given a text label and a command.
-The command can be any command accepted on the windows command line. The
+<p>Install-ChocolateyExplorerMenuItem can add an entry in the context menu<br />
+of Windows Explorer. The menu item is given a text label and a command.<br />
+The command can be any command accepted on the windows command line. The<br />
 menu item can be applied to either folder items or file items.</p>
-<p>Because this command accesses and edits the root class registry node, it
+<p>Because this command accesses and edits the root class registry node, it<br />
 will be elevated to admin.</p>
 <h2 id="notes">Notes</h2>
 <p>This command will assert UAC/Admin privileges on the machine.</p>
-<p>Chocolatey will automatically add the path of the file or folder clicked
-to the command. This is done simply by appending a %1 to the end of the
+<p>Chocolatey will automatically add the path of the file or folder clicked<br />
+to the command. This is done simply by appending a %1 to the end of the<br />
 command.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
@@ -32,155 +31,152 @@ command.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="-menukey-string-">-MenuKey [&lt;String&gt;]</h3>
+<h3 id="menukey">-MenuKey [\<String\>]</h3>
 <p>A unique string to identify this menu item in the registry</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Property</th>
 <th>Value</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Aliases</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Required?</td>
 <td>false</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Position?</td>
 <td>1</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Default Value</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Accept Pipeline Input?</td>
 <td>false</td>
 </tr>
 </tbody>
 </table>
-<h3 id="-menulabel-string-">-MenuLabel [&lt;String&gt;]</h3>
+<h3 id="menulabel">-MenuLabel [\<String\>]</h3>
 <p>The string that will be displayed in the context menu</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Property</th>
 <th>Value</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Aliases</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Required?</td>
 <td>false</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Position?</td>
 <td>2</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Default Value</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Accept Pipeline Input?</td>
 <td>false</td>
 </tr>
 </tbody>
 </table>
-<h3 id="-command-string-">-Command [&lt;String&gt;]</h3>
-<p>A command line command that will be invoked when the menu item is
+<h3 id="command">-Command [\<String\>]</h3>
+<p>A command line command that will be invoked when the menu item is<br />
 selected</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Property</th>
 <th>Value</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Aliases</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Required?</td>
 <td>false</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Position?</td>
 <td>3</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Default Value</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Accept Pipeline Input?</td>
 <td>false</td>
 </tr>
 </tbody>
 </table>
-<h3 id="-type-string-">-Type [&lt;String&gt;]</h3>
+<h3 id="type">-Type [\<String\>]</h3>
 <p>Specifies if the menu item should be applied to a folder or a file</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Property</th>
 <th>Value</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Aliases</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Required?</td>
 <td>false</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Position?</td>
 <td>4</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Default Value</td>
 <td>file</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Accept Pipeline Input?</td>
 <td>false</td>
 </tr>
 </tbody>
 </table>
 <h2 id="examples">Examples</h2>
-<p> <strong>EXAMPLE 1</strong></p>
-<pre><code class="lang-powershell">
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="powershell"><code>
 # This will create a context menu item in Windows Explorer when any file
 # is right clicked. The menu item will appear with the text &quot;Open with
 # Sublime Text 2&quot; and will invoke sublime text 2 when selected.
 $sublimeDir = (Get-ChildItem $env:ALLUSERSPROFILE\chocolatey\lib\sublimetext* | select $_.last)
 $sublimeExe = &quot;$sublimeDir\tools\sublime_text.exe&quot;
-Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe
-</code></pre>
+Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="lang-powershell">
+<pre class="powershell"><code>
 # This will create a context menu item in Windows Explorer when any
 # folder is right clicked. The menu item will appear with the text
 # &quot;Open with Sublime Text 2&quot; and will invoke sublime text 2 when selected.
 $sublimeDir = (Get-ChildItem $env:ALLUSERSPROFILE\chocolatey\lib\sublimetext* | select $_.last)
 $sublimeExe = &quot;$sublimeDir\tools\sublime_text.exe&quot;
-Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe &quot;directory&quot;
-</code></pre>
+Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe &quot;directory&quot;</code></pre>
 <p><a href="HelpersReference">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyExplorerMenuItem -Full</code>.</p>
-
 </article>

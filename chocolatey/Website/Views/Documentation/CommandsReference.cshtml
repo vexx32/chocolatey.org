@@ -1,9 +1,46 @@
+﻿td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
 @{
-    ViewBag.Title = "";
+  ViewBag.Title = "CommandsReference";
 }
 
 <article>
-  <h1 id="command-reference">Command Reference</h1>
+<h1 id="command-reference">Command Reference</h1>
 <p>This is a listing of all of the different things you can pass to choco.</p>
 <h2 id="commands">Commands</h2>
 <ul>
@@ -17,7 +54,7 @@
 <li><a href="CommandsUninstall">uninstall</a> - uninstalls a package</li>
 <li>help - <strong>REMOVED</strong> - use <code>-h</code> on any command.</li>
 </ul>
-<h2 id="commands-intermediate-to-advanced-">Commands (intermediate to advanced)</h2>
+<h2 id="commands-intermediate-to-advanced">Commands (intermediate to advanced)</h2>
 <ul>
 <li><a href="CommandsConfig">config</a> - Retrieve and configure config file settings</li>
 <li><a href="CommandsSources">source / sources</a> - view and configure default sources</li>
@@ -26,93 +63,91 @@
 </ul>
 <h2 id="package-creation-commands">Package Creation Commands</h2>
 <ul>
-<li><a href="CommandsNew">new</a> -  generates files necessary for a Chocolatey package from a template</li>
+<li><a href="CommandsNew">new</a> - generates files necessary for a Chocolatey package from a template</li>
 <li><a href="CommandsPack">pack</a> - packages up a nuspec to a compiled nupkg</li>
 <li><a href="CommandsPush">push</a> - pushes a compiled nupkg</li>
 </ul>
 <h2 id="see-help-menu-in-action">See Help Menu In Action</h2>
-<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action"></p>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action" /></p>
 <h2 id="default-options-and-switches">Default Options and Switches</h2>
-<pre><code class="lang-sh">
- -?, --help, -h
-     Prints out the help menu.
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">
+ <span class="kw">-?</span>, --help, -h
+     <span class="kw">Prints</span> out the help menu.
 
- -d, --debug
-     Debug - Run in Debug Mode.
+ <span class="kw">-d</span>, --debug
+     <span class="kw">Debug</span> - Run in Debug Mode.
 
- -v, --verbose
-     Verbose - See verbose messaging.
+ <span class="kw">-v</span>, --verbose
+     <span class="kw">Verbose</span> - See verbose messaging.
 
-     --acceptlicense, --accept-license
-     AcceptLicense - Accept license dialogs automatically.
+     <span class="kw">--acceptlicense</span>, --accept-license
+     <span class="kw">AcceptLicense</span> - Accept license dialogs automatically.
 
- -y, --yes, --confirm
-     Confirm all prompts - Chooses affirmative answer instead of prompting. 
-       Implies --accept-license
+ <span class="kw">-y</span>, --yes, --confirm
+     <span class="kw">Confirm</span> all prompts - Chooses affirmative answer instead of prompting. 
+       <span class="kw">Implies</span> --accept-license
 
- -f, --force
-     Force - force the behavior
+ <span class="kw">-f</span>, --force
+     <span class="kw">Force</span> - force the behavior
 
-     --noop, --whatif, --what-if
-     NoOp - Don&#39;t actually do anything.
+     <span class="kw">--noop</span>, --whatif, --what-if
+     <span class="kw">NoOp</span> - Don<span class="st">&#39;t actually do anything.</span>
 
- -r, --limitoutput, --limit-output
-     LimitOutput - Limit the output to essential information
+<span class="st"> -r, --limitoutput, --limit-output</span>
+<span class="st">     LimitOutput - Limit the output to essential information</span>
 
-     --execution-timeout=VALUE
-     CommandExecutionTimeoutSeconds - Override the default execution timeout 
-       in the configuration of 2700 seconds.
+<span class="st">     --execution-timeout=VALUE</span>
+<span class="st">     CommandExecutionTimeoutSeconds - Override the default execution timeout </span>
+<span class="st">       in the configuration of 2700 seconds.</span>
 
- -c, --cache, --cachelocation, --cache-location=VALUE
-     CacheLocation - Location for download cache, defaults to %TEMP% or value 
-       in chocolatey.config file.
+<span class="st"> -c, --cache, --cachelocation, --cache-location=VALUE</span>
+<span class="st">     CacheLocation - Location for download cache, defaults to %TEMP% or value </span>
+<span class="st">       in chocolatey.config file.</span>
 
-     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
-     AllowUnofficialBuild - When not using the official build you must set 
-       this flag for choco to continue.
+<span class="st">     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build</span>
+<span class="st">     AllowUnofficialBuild - When not using the official build you must set </span>
+<span class="st">       this flag for choco to continue.</span>
 
-     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
-     FailOnStandardError - Fail on standard error output (stderr), typically 
-       received when running external commands during install providers. This 
-       overrides the feature failOnStandardError.
+<span class="st">     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output</span>
+<span class="st">     FailOnStandardError - Fail on standard error output (stderr), typically </span>
+<span class="st">       received when running external commands during install providers. This </span>
+<span class="st">       overrides the feature failOnStandardError.</span>
 
-     --use-system-powershell
-     UseSystemPowerShell - Execute PowerShell using an external process 
-       instead of the built-in PowerShell host. Available in 0.9.10+.
-</code></pre>
+<span class="st">     --use-system-powershell</span>
+<span class="st">     UseSystemPowerShell - Execute PowerShell using an external process </span>
+<span class="st">       instead of the built-in PowerShell host. Available in 0.9.10+.</span></code></pre></div>
 <h2 id="how-to-pass-options-switches">How To Pass Options / Switches</h2>
 <p>You can pass options and switches in the following ways:</p>
 <ul>
-<li>Unless stated otherwise, an option/switch should only be passed one
+<li>Unless stated otherwise, an option/switch should only be passed one<br />
 time. Otherwise you may find weird/non-supported behavior.</li>
 <li><code>-</code>, <code>/</code>, or <code>--</code> (one character switches should not use <code>--</code>)</li>
-<li><strong>Option Bundling / Bundled Options</strong>: One character switches can be
-bundled. e.g. <code>-d</code> (debug), <code>-f</code> (force), <code>-v</code> (verbose), and <code>-y</code>
+<li><strong>Option Bundling / Bundled Options</strong>: One character switches can be<br />
+bundled. e.g. <code>-d</code> (debug), <code>-f</code> (force), <code>-v</code> (verbose), and <code>-y</code><br />
 (confirm yes) can be bundled as <code>-dfvy</code>.</li>
-<li><strong>NOTE:</strong> If <code>debug</code> or <code>verbose</code> are bundled with local options
-(not the global ones above), some logging may not show up until after
+<li><strong>NOTE:</strong> If <code>debug</code> or <code>verbose</code> are bundled with local options<br />
+(not the global ones above), some logging may not show up until after<br />
 the local options are parsed.</li>
-<li><strong>Use Equals</strong>: You can also include or not include an equals sign
+<li><strong>Use Equals</strong>: You can also include or not include an equals sign<br />
 <code>=</code> between options and values.</li>
-<li><strong>Quote Values</strong>: When you need to quote an entire argument, such as
-when using spaces, please use a combination of double quotes and
-apostrophes (<code>&quot;&#39;value&#39;&quot;</code>). In cmd.exe you can just use double quotes
-(<code>&quot;value&quot;</code>) but in powershell.exe you should use backticks
-(<code>`&quot;value`&quot;</code>) or apostrophes (<code>&#39;value&#39;</code>). Using the combination
-allows for both shells to work without issue, except for when the next
+<li><strong>Quote Values</strong>: When you need to quote an entire argument, such as<br />
+when using spaces, please use a combination of double quotes and<br />
+apostrophes (<code>&quot;'value'&quot;</code>). In cmd.exe you can just use double quotes<br />
+(<code>&quot;value&quot;</code>) but in powershell.exe you should use backticks<br />
+(<code>`&quot;value`&quot;</code>) or apostrophes (<code>'value'</code>). Using the combination<br />
+allows for both shells to work without issue, except for when the next<br />
 section applies.</li>
-<li><strong>Pass quotes in arguments</strong>: When you need to pass quoted values to
-to something like a native installer, you are in for a world of fun. In
-cmd.exe you must pass it like this: <code>-ia &quot;/yo=&quot;&quot;Spaces spaces&quot;&quot;&quot;</code>. In
-PowerShell.exe, you must pass it like this: <code>-ia &#39;/yo=&quot;&quot;Spaces spaces&quot;&quot;&#39;</code>.
-No other combination will work. In PowerShell.exe if you are on version
-v3+, you can try <code>--%</code> before <code>-ia</code> to just pass the args through as is,
+<li><strong>Pass quotes in arguments</strong>: When you need to pass quoted values to<br />
+to something like a native installer, you are in for a world of fun. In<br />
+cmd.exe you must pass it like this: <code>-ia &quot;/yo=&quot;&quot;Spaces spaces&quot;&quot;&quot;</code>. In<br />
+PowerShell.exe, you must pass it like this: <code>-ia '/yo=&quot;&quot;Spaces spaces&quot;&quot;'</code>.<br />
+No other combination will work. In PowerShell.exe if you are on version<br />
+v3+, you can try <code>--%</code> before <code>-ia</code> to just pass the args through as is,<br />
 which means it should not require any special workarounds.</li>
-<li>Options and switches apply to all items passed, so if you are
-installing multiple packages, and you use <code>--version=1.0.0</code>, choco
-is going to look for and try to install version 1.0.0 of every
-package passed. So please split out multiple package calls when
+<li>Options and switches apply to all items passed, so if you are<br />
+installing multiple packages, and you use <code>--version=1.0.0</code>, choco<br />
+is going to look for and try to install version 1.0.0 of every<br />
+package passed. So please split out multiple package calls when<br />
 wanting to pass specific options.</li>
 </ul>
-
 </article>

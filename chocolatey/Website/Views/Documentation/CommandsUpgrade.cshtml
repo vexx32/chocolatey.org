@@ -1,41 +1,41 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "CommandsUpgrade";
 }
 
 <article>
-  <h1 id="upgrade-command-choco-upgrade-">Upgrade Command (choco upgrade)</h1>
-<p>Upgrades a package or a list of packages. Some may prefer to use <code>cup</code> 
- as a shortcut for <a href="Commandsupgrade"><code>choco upgrade</code></a>. If you do not have a package
- installed, upgrade will install it.</p>
-<p><strong>NOTE:</strong> 100% compatible with older Chocolatey client (0.9.8.x and below) 
- with options and switches. Add <code>-y</code> for previous behavior with no 
- prompt. In most cases you can still pass options and switches with one
- dash (<code>-</code>). For more details, see <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+<h1 id="upgrade-command-choco-upgrade">Upgrade Command (choco upgrade)</h1>
+<p>Upgrades a package or a list of packages. Some may prefer to use <code>cup</code><br />
+as a shortcut for <a href="Commandsupgrade"><code>choco upgrade</code></a>. If you do not have a package<br />
+installed, upgrade will install it.</p>
+<p><strong>NOTE:</strong> 100% compatible with older Chocolatey client (0.9.8.x and below)<br />
+with options and switches. Add <code>-y</code> for previous behavior with no<br />
+prompt. In most cases you can still pass options and switches with one<br />
+dash (<code>-</code>). For more details, see <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
 <pre><code>choco upgrade &lt;pkg|all&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
-cup &lt;pkg|all&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
-</code></pre><p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to upgrade
- all currently installed packages.</p>
-<p>Skip upgrading certain packages with <a href="Commandspin"><code>choco pin</code></a> or with the option 
- <code>--except</code>.</p>
+cup &lt;pkg|all&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
+<p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to upgrade<br />
+all currently installed packages.</p>
+<p>Skip upgrading certain packages with <a href="Commandspin"><code>choco pin</code></a> or with the option<br />
+<code>--except</code>.</p>
 <h2 id="examples">Examples</h2>
 <pre><code>choco upgrade chocolatey
-choco upgrade notepadplusplus googlechrome atom 7zip 
+choco upgrade notepadplusplus googlechrome atom 7zip
 choco upgrade notepadplusplus googlechrome atom 7zip -dvfy
 choco upgrade git --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; -y
 choco upgrade nodejs.install --version 0.10.35
 choco upgrade git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
 choco upgrade git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass
 choco upgrade all
-choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;
-</code></pre><h2 id="see-it-in-action">See It In Action</h2>
-<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_upgrade.gif" alt="choco upgrade"></p>
+choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;</code></pre>
+<h2 id="see-it-in-action">See It In Action</h2>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_upgrade.gif" alt="choco upgrade" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
-<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are
- running a command like install that allows installing multiple
- packages, and you use <code>--version=1.0.0</code>, it is going to look for and
- try to install version 1.0.0 of every package passed. So please split
- out multiple package calls when wanting to pass specific options.</p>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
+running a command like install that allows installing multiple<br />
+packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
+try to install version 1.0.0 of every package passed. So please split<br />
+out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
 <pre><code>
 
@@ -53,7 +53,7 @@ choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;
      AcceptLicense - Accept license dialogs automatically.
 
  -y, --yes, --confirm
-     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+     Confirm all prompts - Chooses affirmative answer instead of prompting.
        Implies --accept-license
 
  -f, --force
@@ -66,29 +66,29 @@ choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;
      LimitOutput - Limit the output to essential information
 
      --execution-timeout=VALUE
-     CommandExecutionTimeoutSeconds - Override the default execution timeout 
+     CommandExecutionTimeoutSeconds - Override the default execution timeout
        in the configuration of 2700 seconds.
 
  -c, --cache, --cachelocation, --cache-location=VALUE
-     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+     CacheLocation - Location for download cache, defaults to %TEMP% or value
        in chocolatey.config file.
 
      --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
-     AllowUnofficialBuild - When not using the official build you must set 
+     AllowUnofficialBuild - When not using the official build you must set
        this flag for choco to continue.
 
      --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
-     FailOnStandardError - Fail on standard error output (stderr), typically 
-       received when running external commands during install providers. This 
+     FailOnStandardError - Fail on standard error output (stderr), typically
+       received when running external commands during install providers. This
        overrides the feature failOnStandardError.
 
      --use-system-powershell
-     UseSystemPowerShell - Execute PowerShell using an external process 
+     UseSystemPowerShell - Execute PowerShell using an external process
        instead of the built-in PowerShell host. Available in 0.9.10+.
 
  -s, --source=VALUE
-     Source - The source to find the package(s) to install. Special sources 
-       include: ruby, webpi, cygwin, windowsfeatures, and python. Defaults to 
+     Source - The source to find the package(s) to install. Special sources
+       include: ruby, webpi, cygwin, windowsfeatures, and python. Defaults to
        default feeds.
 
      --version=VALUE
@@ -98,45 +98,45 @@ choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;
      Prerelease - Include Prereleases? Defaults to false.
 
      --x86, --forcex86
-     ForceX86 - Force x86 (32bit) installation on 64 bit systems. Defaults to 
+     ForceX86 - Force x86 (32bit) installation on 64 bit systems. Defaults to
        false.
 
      --ia, --installargs, --installarguments, --install-arguments=VALUE
-     InstallArguments - Install Arguments to pass to the native installer in 
+     InstallArguments - Install Arguments to pass to the native installer in
        the package. Defaults to unspecified.
 
  -o, --override, --overrideargs, --overridearguments, --override-arguments
-     OverrideArguments - Should install arguments be used exclusively without 
+     OverrideArguments - Should install arguments be used exclusively without
        appending to current package passed arguments? Defaults to false.
 
      --notsilent, --not-silent
      NotSilent - Do not install this silently. Defaults to false.
 
      --params, --parameters, --pkgparameters, --packageparameters, --package-parameters=VALUE
-     PackageParameters - Parameters to pass to the package. Defaults to 
+     PackageParameters - Parameters to pass to the package. Defaults to
        unspecified.
 
      --allowdowngrade, --allow-downgrade
-     AllowDowngrade - Should an attempt at downgrading be allowed? Defaults 
+     AllowDowngrade - Should an attempt at downgrading be allowed? Defaults
        to false.
 
  -m, --sxs, --sidebyside, --side-by-side, --allowmultiple, --allow-multiple, --allowmultipleversions, --allow-multiple-versions
-     AllowMultipleVersions - Should multiple versions of a package be 
+     AllowMultipleVersions - Should multiple versions of a package be
        installed? Defaults to false.
 
  -i, --ignoredependencies, --ignore-dependencies
-     IgnoreDependencies - Ignore dependencies when upgrading package(s). 
+     IgnoreDependencies - Ignore dependencies when upgrading package(s).
        Defaults to false.
 
  -n, --skippowershell, --skip-powershell, --skipscripts, --skip-scripts, --skip-automation-scripts
      Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.
 
      --failonunfound, --fail-on-unfound
-     Fail On Unfound Packages - If a package is not found in feeds specified, 
+     Fail On Unfound Packages - If a package is not found in feeds specified,
        fail instead of warn.
 
      --failonnotinstalled, --fail-on-not-installed
-     Fail On Non-installed Packages - If a package is not already intalled, 
+     Fail On Non-installed Packages - If a package is not already intalled,
        fail instead of installing.
 
  -u, --user=VALUE
@@ -146,34 +146,34 @@ choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;
      Password - the user&#39;s password to the source. Defaults to empty.
 
      --ignorechecksum, --ignore-checksum, --ignorechecksums, --ignore-checksums
-     IgnoreChecksums - Ignore checksums provided by the package. Available in 
+     IgnoreChecksums - Ignore checksums provided by the package. Available in
        0.9.9.9+.
 
      --ignorepackagecodes, --ignorepackageexitcodes, --ignore-package-codes, --ignore-package-exit-codes
      IgnorePackageExitCodes - Exit with a 0 for success and 1 for non-succes-
-       s, no matter what package scripts provide for exit codes. Overrides the 
+       s, no matter what package scripts provide for exit codes. Overrides the
        default feature &#39;usePackageExitCodes&#39; set to &#39;True&#39;. Available in 0.-
        9.10+.
 
      --usepackagecodes, --usepackageexitcodes, --use-package-codes, --use-package-exit-codes
-     UsePackageExitCodes - Package scripts can provide exit codes. Use those 
-       for choco&#39;s exit code when non-zero (this value can come from a 
-       dependency package). Chocolatey defines valid exit codes as 0, 1605, 
-       1614, 1641, 3010. Overrides the default feature &#39;usePackageExitCodes&#39; 
+     UsePackageExitCodes - Package scripts can provide exit codes. Use those
+       for choco&#39;s exit code when non-zero (this value can come from a
+       dependency package). Chocolatey defines valid exit codes as 0, 1605,
+       1614, 1641, 3010. Overrides the default feature &#39;usePackageExitCodes&#39;
        set to &#39;True&#39;. Available in 0.9.10+.
 
      --except=VALUE
-     Except - a comma-separated list of package names that should not be 
+     Except - a comma-separated list of package names that should not be
        upgraded when upgrading &#39;all&#39;. Defaults to empty. Available in 0.9.10+.
 
      --sdc, --skipdownloadcache, --skip-download-cache
-     Skip Download Cache - Use the original download distribution even if a 
-       private distribution download cache is available for a package. 
+     Skip Download Cache - Use the original download even if a
+       private CDN cache is available for a package.
        Overrides the default feature &#39;downloadCache&#39; set to &#39;True&#39;.
 
      --dc, --downloadcache, --download-cache, --use-download-cache
-     Use Download Cache - Use private distribution download cache if 
-       available for a package. Overrides the default feature &#39;downloadCache&#39; 
+     Use Download Cache - Use private CDN cache if
+       available for a package. Overrides the default feature &#39;downloadCache&#39;
        set to &#39;True&#39;.
 
      --svc, --skipvirus, --skip-virus, --skipviruscheck, --skip-virus-check
@@ -181,14 +181,14 @@ choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;
        n. Overrides the default feature &#39;virusCheck&#39; set to &#39;True&#39;.
 
      --virus, --viruscheck, --virus-check
-     Virus Check - check downloaded files for viruses. Override the default 
+     Virus Check - check downloaded files for viruses. Override the default
        feature &#39;virusCheck&#39; set to &#39;True&#39;.
 
      --viruspositivesmin, --virus-positives-minimum=VALUE
-     Virus Check Minimum Scan Result Positives - the minimum number of scan 
-       result positives required to flag a package. Overrides the default 
+     Virus Check Minimum Scan Result Positives - the minimum number of scan
+       result positives required to flag a package. Overrides the default
        configuration value &#39;virusCheckMinimumPositives&#39; set to &#39;5&#39;.
-</code></pre><p><a href="CommandsReference">Command Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco upgrade -h</code>. </p>
-
+</code></pre>
+<p><a href="CommandsReference">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco upgrade -h</code>.</p>
 </article>

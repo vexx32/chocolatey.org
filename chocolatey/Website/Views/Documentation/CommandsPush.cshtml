@@ -1,48 +1,46 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "CommandsPush";
 }
 
 <article>
-  <h1 id="push-command-choco-push-">Push Command (choco push)</h1>
-<p>Chocolatey will attempt to push a compiled nupkg to a package feed. 
- Some may prefer to use <code>cpush</code> as a shortcut for <code>choco push</code>.</p>
-<p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)
- with options and switches. Default push location is deprecated and 
- will be removed by v1. In most cases you can still pass options and 
- switches with one dash (<code>-</code>). For more details, see 
- <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
-<p>A feed can be a local folder, a file share, the <a href="https://chocolatey.org/packages">community feed</a> 
- (<a href="https://chocolatey.org/">https://chocolatey.org/</a>), or a custom/private feed. For web
- feeds, it has a requirement that it implements the proper OData
- endpoints required for NuGet packages.</p>
+<h1 id="push-command-choco-push">Push Command (choco push)</h1>
+<p>Chocolatey will attempt to push a compiled nupkg to a package feed.<br />
+Some may prefer to use <code>cpush</code> as a shortcut for <code>choco push</code>.</p>
+<p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)<br />
+with options and switches. Default push location is deprecated and<br />
+will be removed by v1. In most cases you can still pass options and<br />
+switches with one dash (<code>-</code>). For more details, see<br />
+<a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+<p>A feed can be a local folder, a file share, the <a href="https://chocolatey.org/packages">community feed</a><br />
+(<a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a>), or a custom/private feed. For web<br />
+feeds, it has a requirement that it implements the proper OData<br />
+endpoints required for NuGet packages.</p>
 <h2 id="usage">Usage</h2>
 <pre><code>choco push [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]
-cpush [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]
-</code></pre><p><strong>NOTE:</strong> If there is more than one nupkg file in the folder, the command 
- will require specifying the path to the file.</p>
+cpush [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]</code></pre>
+<p><strong>NOTE:</strong> If there is more than one nupkg file in the folder, the command<br />
+will require specifying the path to the file.</p>
 <h2 id="examples">Examples</h2>
 <pre><code>choco push --source https://chocolatey.org/
 choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -t 500
-choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;
-</code></pre><h2 id="troubleshooting">Troubleshooting</h2>
-<p>To use this command, you must have your API key saved for the community
- feed (chocolatey.org) or the source you want to push to. Or you can 
- explicitly pass the apikey to the command. See <a href="Commandsapikey"><code>apikey</code></a> command help 
- for instructions on saving your key:</p>
-<pre><code>choco apikey -?
-</code></pre><p>A common error is <code>Failed to process request. &#39;The specified API key 
- does not provide the authority to push packages.&#39; The remote server 
- returned an error: (403) Forbidden..</code> This means the package already 
- exists with a different user (API key). The package could be unlisted. 
- You can verify by going to <a href="https://chocolatey.org/packages/packageName">https://chocolatey.org/packages/packageName</a>. 
- Please contact the administrators of <a href="https://chocolatey.org/">https://chocolatey.org/</a> if you see this 
- and you don&#39;t see a good reason for it.</p>
+choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>To use this command, you must have your API key saved for the community<br />
+feed (chocolatey.org) or the source you want to push to. Or you can<br />
+explicitly pass the apikey to the command. See <a href="Commandsapikey"><code>apikey</code></a> command help<br />
+for instructions on saving your key:</p>
+<pre><code>choco apikey -?</code></pre>
+<p>A common error is <code>Failed to process request. 'The specified API key   does not provide the authority to push packages.' The remote server   returned an error: (403) Forbidden..</code> This means the package already<br />
+exists with a different user (API key). The package could be unlisted.<br />
+You can verify by going to <a href="https://chocolatey.org/packages/packageName" class="uri">https://chocolatey.org/packages/packageName</a>.<br />
+Please contact the administrators of <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> if you see this<br />
+and you don&#39;t see a good reason for it.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
-<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are
- running a command like install that allows installing multiple
- packages, and you use <code>--version=1.0.0</code>, it is going to look for and
- try to install version 1.0.0 of every package passed. So please split
- out multiple package calls when wanting to pass specific options.</p>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
+running a command like install that allows installing multiple<br />
+packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
+try to install version 1.0.0 of every package passed. So please split<br />
+out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
 <pre><code>
  -?, --help, -h
@@ -103,7 +101,7 @@ choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;
  -t, --timeout=VALUE
      Timeout (in seconds) - The time to allow a package push to occur before 
        timing out. Defaults to 300 seconds (5 minutes).
-</code></pre><p><a href="CommandsReference">Command Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco push -h</code>. </p>
-
+</code></pre>
+<p><a href="CommandsReference">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco push -h</code>.</p>
 </article>

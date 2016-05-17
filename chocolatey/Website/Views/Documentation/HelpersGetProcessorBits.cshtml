@@ -1,0 +1,27 @@
+﻿@{
+  ViewBag.Title = "HelpersGetProcessorBits";
+}
+
+<article>
+<h1 id="get-processorbits">Get-ProcessorBits</h1>
+<p>Get the system architecture address width.</p>
+<h2 id="syntax">Syntax</h2>
+<pre class="powershell"><code>Get-ProcessorBits `
+  [-Compare &lt;Object&gt;]</code></pre>
+<h2 id="description">Description</h2>
+<p>This will return the system architecture address width (probably 32 or<br />
+64 bit). If you pass a comparison, it will return true or false instead<br />
+of {<code>32</code>|<code>64</code>}.</p>
+<h2 id="notes">Notes</h2>
+<p>When your installation script has to know what architecture it is run<br />
+on, this simple function comes in handy.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<p><a href="HelpersReference">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-ProcessorBits -Full</code>.</p>
+</article>

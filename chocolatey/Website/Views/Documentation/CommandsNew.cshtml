@@ -1,36 +1,36 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "CommandsNew";
 }
 
 <article>
-  <h1 id="new-command-choco-new-">New Command (choco new)</h1>
+<h1 id="new-command-choco-new">New Command (choco new)</h1>
 <p>Chocolatey will generate package specification files for a new package.</p>
 <h2 id="usage">Usage</h2>
-<pre><code>choco new &lt;name&gt; [&lt;options/switches&gt;] [&lt;property=value&gt; &lt;propertyN=valueN&gt;]
-</code></pre><p>Possible properties to pass:
-    packageversion
-    maintainername
-    maintainerrepo
-    installertype
-    url
-    url64
-    silentargs</p>
-<p><strong>NOTE:</strong> Starting in 0.9.10, you can pass arbitrary property value pairs 
- through to templates. This really unlocks your ability to create 
- packages automatically!</p>
-<p><strong>NOTE:</strong> <a href="https://bit.ly/choco_pro_business">Chocolatey for Business</a> can create complete packages by just 
- pointing the new command to native installers! </p>
+<pre><code>choco new &lt;name&gt; [&lt;options/switches&gt;] [&lt;property=value&gt; &lt;propertyN=valueN&gt;]</code></pre>
+<p>Possible properties to pass:<br />
+packageversion<br />
+maintainername<br />
+maintainerrepo<br />
+installertype<br />
+url<br />
+url64<br />
+silentargs</p>
+<p><strong>NOTE:</strong> Starting in 0.9.10, you can pass arbitrary property value pairs<br />
+through to templates. This really unlocks your ability to create<br />
+packages automatically!</p>
+<p><strong>NOTE:</strong> <a href="https://bit.ly/choco_pro_business">Chocolatey for Business</a> can create complete packages by just<br />
+pointing the new command to native installers!</p>
 <h2 id="examples">Examples</h2>
 <pre><code>choco new bob
 choco new bob -a --version 1.2.0 maintainername=&quot;&#39;This guy&#39;&quot;
 choco new bob silentargs=&quot;&#39;/S&#39;&quot; url=&quot;&#39;https://somewhere/out/there.msi&#39;&quot;
-choco new bob --outputdirectory Packages
-</code></pre><h2 id="options-and-switches">Options and Switches</h2>
-<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are
- running a command like install that allows installing multiple
- packages, and you use <code>--version=1.0.0</code>, it is going to look for and
- try to install version 1.0.0 of every package passed. So please split
- out multiple package calls when wanting to pass specific options.</p>
+choco new bob --outputdirectory Packages</code></pre>
+<h2 id="options-and-switches">Options and Switches</h2>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
+running a command like install that allows installing multiple<br />
+packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
+try to install version 1.0.0 of every package passed. So please split<br />
+out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
 <pre><code>
  -?, --help, -h
@@ -104,7 +104,7 @@ choco new bob --outputdirectory Packages
      OutputDirectory - Specifies the directory for the created Chocolatey 
        package file. If not specified, uses the current directory. Available in 
        0.9.10+.
-</code></pre><p><a href="CommandsReference">Command Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco new -h</code>. </p>
-
+</code></pre>
+<p><a href="CommandsReference">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco new -h</code>.</p>
 </article>

@@ -1,19 +1,18 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "HelpersGetEnvironmentVariableNames";
 }
 
 <article>
-  <h1 id="get-environmentvariablenames">Get-EnvironmentVariableNames</h1>
+<h1 id="get-environmentvariablenames">Get-EnvironmentVariableNames</h1>
 <p>Gets all environment variable names.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="lang-powershell">Get-EnvironmentVariableNames `
-  [-Scope {Process | User | Machine}]
-</code></pre>
+<pre class="powershell"><code>Get-EnvironmentVariableNames `
+  [-Scope {Process | User | Machine}]</code></pre>
 <h2 id="description">Description</h2>
-<p>Provides a list of environment variable names based on the scope. This
+<p>Provides a list of environment variable names based on the scope. This<br />
 can be used to loop through the list and generate names.</p>
 <h2 id="notes">Notes</h2>
-<p>Process dumps the current environment variable names in memory /
+<p>Process dumps the current environment variable names in memory /<br />
 session. The other scopes refer to the registry values.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
@@ -23,8 +22,8 @@ session. The other scopes refer to the registry values.</p>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
 <h2 id="examples">Examples</h2>
-<p> <strong>EXAMPLE 1</strong></p>
-<pre><code class="lang-powershell">Get-EnvironmentVariableNames -Scope Machine
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="powershell"><code>Get-EnvironmentVariableNames -Scope Machine
 </code></pre>
 <h2 id="links">Links</h2>
 <ul>
@@ -33,5 +32,4 @@ session. The other scopes refer to the registry values.</p>
 </ul>
 <p><a href="HelpersReference">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-EnvironmentVariableNames -Full</code>.</p>
-
 </article>

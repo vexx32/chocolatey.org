@@ -1,20 +1,19 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "HelpersWriteChocolateySuccess";
 }
 
 <article>
-  <h1 id="write-chocolateysuccess">Write-ChocolateySuccess</h1>
+<h1 id="write-chocolateysuccess">Write-ChocolateySuccess</h1>
 <p>DEPRECATED - DO NOT USE.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="lang-powershell">Write-ChocolateySuccess `
-  [-PackageName &lt;String&gt;]
-</code></pre>
+<pre class="powershell"><code>Write-ChocolateySuccess `
+  [-PackageName &lt;String&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Writes a success message for a package.</p>
 <h2 id="notes">Notes</h2>
-<p>This has been deprecated and is no longer useful as of 0.9.9. Instead
-please just use <code>throw $_.Exception</code> when catching errors. Although
-try/catch is no longer necessary unless you want to do some error
+<p>This has been deprecated and is no longer useful as of 0.9.9. Instead<br />
+please just use <code>throw $_.Exception</code> when catching errors. Although<br />
+try/catch is no longer necessary unless you want to do some error<br />
 handling.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
@@ -29,5 +28,4 @@ handling.</p>
 </ul>
 <p><a href="HelpersReference">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Write-ChocolateySuccess -Full</code>.</p>
-
 </article>
