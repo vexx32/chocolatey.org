@@ -18,11 +18,11 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x6
 <h2 id="usage">Usage</h2>
 <p>This is mostly automatic, but in case the feature is turned off, you may turn it on by setting the feature <code>downloadCache</code> (<code>choco feature enable -n downloadCache</code>).</p>
 <p>To see if a package has content cached on the CDN, you can run <code>choco info packagename</code> and it will give you detailed information pertaining to a package.</p>
-<p><img src="images/choco_info_cached.png" alt="choco info packagename" /></p>
+<p><img src="@Url.Content("~/content/images/docs/choco_info_cached.png")" alt="choco info packagename" /></p>
 <p>When you install, you will see a message similar to the following when the cached content is used:</p>
-<p><img src="images/choco_install_cached.png" alt="Pro install with CDN cache" /></p>
+<p><img src="@Url.Content("~/content/images/docs/choco_install_cached.png")" alt="Pro install with CDN cache" /></p>
 <h2 id="see-it-in-action">See It In Action</h2>
-<p><img src="images/gifs/chocopro_install_stopped.gif" alt="Pro install in action" /></p>
+<p><img src="@Url.Content("~/content/images/docs/gifs/chocopro_install_stopped.gif")" alt="Pro install in action" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p>The following options are added to install and upgrade commands.</p>
 <pre><code>     --sdc, --skipdownloadcache, --skip-download-cache

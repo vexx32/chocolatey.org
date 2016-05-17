@@ -7,9 +7,9 @@
 <p>We are pleased to offer runtime malware protection for our licensed customers! Virus checking is available in two flavors - VirusTotal and Generic malware verification.</p>
 <h2 id="usage">Usage</h2>
 <p>When a binary is not flagged:<br />
-<img src="images/virus_scan_normal.png" alt="Virus scan pass" /></p>
+<img src="@Url.Content("~/content/images/docs/virus_scan_normal.png")" alt="Virus scan pass" /></p>
 <p>When a binary is flagged:<br />
-<img src="images/virus_scan_flagged.png" alt="Virus scan failure" /></p>
+<img src="@Url.Content("~/content/images/docs/virus_scan_flagged.png")" alt="Virus scan failure" /></p>
 <h3 id="virustotal">VirusTotal</h3>
 <p>We&#39;ve teamed up with the amazing <a href="https://virustotal.com/">VirusTotal</a> to offer a second opinion to your built-in anti-virus solution. When your packages download content from the internet, Chocolatey Professional will automatically check the executables prior to running any content. If a certain number of positives have been identified (configurable), Chocolatey will fail the install automatically (but can be overridden).</p>
 <p>VirusTotal scans binaries against over 50 different anti-virus scanners. Chocolatey will use the information based on sending a SHA256 checksum of the binary to VirusTotal and determining what the scans have determined.</p>
@@ -41,7 +41,7 @@ Then you will get the same benefit of runtime virus checking as an added benefit
 <p>In <code>genericVirusScannerArgs</code>, these are the arguments that Chocolatey will pass to the AV console. Chocolatey will automatically replace <code><a href="File">File</a></code> with the full path to the binary that it is scanning.</p>
 <p>In <code>genericVirusScannerValidExitCodes</code>, these are exit codes that indicate that a binary is okay. This defaults to <code>0</code>, but you can configure this with as many exit codes as necessary by adding them to the configuration as comma separated values.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
-<p><img src="images/gifs/chocopro_install_stopped.gif" alt="Pro install in action" /></p>
+<p><img src="@Url.Content("~/content/images/docs/gifs/chocopro_install_stopped.gif")" alt="Pro install in action" /></p>
 <h2 id="options-and-switches">Options And Switches</h2>
 <p>The following options are added to install and upgrade commands.</p>
 <pre><code>    --svc, --skipvirus, --skip-virus, --skipviruscheck, --skip-virus-check

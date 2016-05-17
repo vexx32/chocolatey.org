@@ -1,19 +1,19 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "How-To-Install-Upgrade-Package-Without-Scripts";
 }
 
 <article>
-  <h1 id="how-to-install-or-upgrade-a-package-without-running-scripts">How To Install or Upgrade a Package Without Running Scripts</h1>
-<p>So you&#39;ve updated your applications manually or through some other means or you want to make Chocolatey aware of some previously installed applications without actually running the installation scripts.  </p>
+<h1 id="how-to-install-or-upgrade-a-package-without-running-scripts">How To Install or Upgrade a Package Without Running Scripts</h1>
+<p>So you&#39;ve updated your applications manually or through some other means or you want to make Chocolatey aware of some previously installed applications without actually running the installation scripts.</p>
 <p><strong>NOTE</strong>: This is considered an advanced scenario - make sure you read and understand everything here before trying it. You may mess something up if you don&#39;t understand the full implication of what you are doing.</p>
 <h2 id="installing-a-package-without-running-install-script">Installing a Package Without Running Install Script</h2>
-<p>The first thing to understand is that in most instances when you want to bring Chocolatey knowledgeable about an already installed application, if there is a version match out there (wherever your sources point), then this process is so much better. </p>
+<p>The first thing to understand is that in most instances when you want to bring Chocolatey knowledgeable about an already installed application, if there is a version match out there (wherever your sources point), then this process is so much better.</p>
 <p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it).</p>
 <p>However if you are sold on skipping the automation scripts and tricking Chocolatey into believing that a script is installed.</p>
-<p>If you wonder over to <a href="CommandsInstall#options-and-switches">install switches</a> you will see </p>
+<p>If you wonder over to <a href="CommandsInstall#options-and-switches">install switches</a> you will see</p>
 <pre><code>-n, --skippowershell, --skip-powershell
-  Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.
-</code></pre><p>This switch is going to be very important for you. Now we will go through some scenarios to help you make the best decision.</p>
+  Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.</code></pre>
+<p>This switch is going to be very important for you. Now we will go through some scenarios to help you make the best decision.</p>
 <h3 id="community-feed-has-a-package-with-your-version">Community Feed has a package with your version</h3>
 <p>Consider the following scenario:</p>
 <ul>
@@ -37,7 +37,7 @@
 <ul>
 <li>You have Firefox version 2.0.0 installed.</li>
 <li>You do not have a package installed for Firefox.</li>
-<li>You see Chocolatey.org (the community feed) has a latest version of Firefox 1.8.0 (package id is firefox). </li>
+<li>You see Chocolatey.org (the community feed) has a latest version of Firefox 1.8.0 (package id is firefox).</li>
 <li>There is no newer version than this available.</li>
 </ul>
 <p>Your command could be:</p>
@@ -45,7 +45,7 @@
 <p><strong>Recommendation</strong>: Ask the maintainer to update the package. Don&#39;t allow choco to know about an older version of a package. If the maintainer provides an update of 1.9.0 without also providing an update at or above your currently installed version, running upgrade later may put your installed software down to the version that is installed by the package. This is definitely not a situation you want to be in.</p>
 <p>Additional thoughts: You could install the older version of the package (with the <code>-n</code> argument) and promptly <a href="CommandsPin">pin</a> that version until the newer version is available. If you don&#39;t already have the package installed though, it&#39;s better to wait for the newer version to become available.</p>
 <h2 id="upgrade-a-package-without-running-scripts">Upgrade a Package Without Running Scripts</h2>
-<h3 id="application-is-self-updating-like-google-chrome-">Application is self-updating (like Google Chrome)</h3>
+<h3 id="application-is-self-updating-like-google-chrome">Application is self-updating (like Google Chrome)</h3>
 <p>Consider the following scenario:</p>
 <ul>
 <li>You have installed Google Chrome from Chocolatey.org (package id is googlechrome)</li>
@@ -78,6 +78,5 @@
 <p>See <a href="#community-feed-has-a-package-older-than-your-version">Community Feed has a version older than your version</a> - substitute <code>upgrade</code> for <code>install</code> if you must. Follow the recommendation.</p>
 <p><strong>Additional Recommendation</strong>: You may also want to bump it to 1.8.0 using the skip argument (<code>-n</code>) and then promptly <a href="CommandsPin">pin</a> the package until a newer version is available.</p>
 <pre><code>choco upgrade firefox -n -y --version 1.8.0
-choco pin firefox
-</code></pre>
+choco pin firefox</code></pre>
 </article>

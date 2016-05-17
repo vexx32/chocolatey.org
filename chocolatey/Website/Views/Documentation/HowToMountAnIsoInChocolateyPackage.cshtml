@@ -1,16 +1,16 @@
-@{
-    ViewBag.Title = "";
+﻿@{
+  ViewBag.Title = "How-To-Mount-An-Iso-In-Chocolatey-Package";
 }
 
 <article>
-  <h2 id="the-problem">The Problem</h2>
-<p>Almost all Chocolatey Packages download a file from the internet, and then directly work with this file.  This can be an EXE or an MSI, whose location is passed directly into the <code>Install-ChocolateyPackage</code> Helper method, or a zip file passed into the <code>Install-ChocolateyZipPackage</code> Helper method.</p>
-<p>However, there are times when using a file directly is not an option.  From time to time, it is necessary to use an ISO file within your Chocolatey Package.  In later versions of the Windows Operating System, PowerShell provides the ability to mount this ISO file directly using the <code>Mount-DiskImage</code> cmdlet.  However, in earlier versions of Windows, this is not possible.</p>
+<h2 id="the-problem">The Problem</h2>
+<p>Almost all Chocolatey Packages download a file from the internet, and then directly work with this file. This can be an EXE or an MSI, whose location is passed directly into the <code>Install-ChocolateyPackage</code> Helper method, or a zip file passed into the <code>Install-ChocolateyZipPackage</code> Helper method.</p>
+<p>However, there are times when using a file directly is not an option. From time to time, it is necessary to use an ISO file within your Chocolatey Package. In later versions of the Windows Operating System, PowerShell provides the ability to mount this ISO file directly using the <code>Mount-DiskImage</code> cmdlet. However, in earlier versions of Windows, this is not possible.</p>
 <p>In order to maintain backwards compatibility with older Operating Systems, when using an ISO file, you should use a single method that works everywhere.</p>
 <h2 id="the-solution">The Solution</h2>
-<p>ImDisk Virtual Disk Driver (imdisk) is a software package that allows an ISO file to be mounted, but more importantly, it works for Windows NT/2000/XP/Vista/7/8/8.1 or Windows Server 2003/2008/2012 (so basically, everything!).  That means that you can use one, common, method, for mounting ISO files when required within your Chocolatey Packages.</p>
+<p>ImDisk Virtual Disk Driver (imdisk) is a software package that allows an ISO file to be mounted, but more importantly, it works for Windows NT/2000/XP/Vista/7/8/8.1 or Windows Server 2003/2008/2012 (so basically, everything!). That means that you can use one, common, method, for mounting ISO files when required within your Chocolatey Packages.</p>
 <h2 id="code-sample">Code Sample</h2>
-<pre><code class="lang-powershell">
+<pre class="powershell"><code>
 # First, download the ISO file from the internet (NOTE: you could equally use a locally stored ISO)
 Get-ChocolateyWebFile &#39;WindowsSDK2008&#39; &quot;$env:temp\winsdk2008.iso&quot; &#39;http://download.microsoft.com/download/f/e/6/fe6eb291-e187-4b06-ad78-bb45d066c30f/6.0.6001.18000.367-KRMSDK_EN.iso&#39;
 
@@ -24,5 +24,4 @@ Install-ChocolateyInstallPackage &#39;WindowsSDK2008&#39; &#39;exe&#39; &#39;/q&
 imdisk -d -m w:
 </code></pre>
 <p><strong>NOTE:</strong> Code sample was taken from this <a href="https://chocolatey.org/packages/WindowsSDK2008/6.0.6001">package</a>, thanks to <a href="https://chocolatey.org/profiles/dave42">dave42</a> for sharing</p>
-
 </article>

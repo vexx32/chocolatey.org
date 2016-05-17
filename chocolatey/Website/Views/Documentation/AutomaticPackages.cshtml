@@ -39,15 +39,15 @@ objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0
 <li>Save the following Ketarin template somewhere: <a href="https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml" class="uri">https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml</a></li>
 <li>Open Ketarin. Choose <code>File</code> –&gt; <code>Settings</code>.</li>
 <li>On the <strong>General Tab</strong> we are going to add the Version Column for all jobs. Click <code>Add...</code>, then put <code>Version</code> in Column name and <code>{version}</code> in Column value.<br />
-<img src="images/chocopkgup/KetarinShowCustomField.png" title="Ketarin Custom Field Setup" alt="Ketarin Settings Custom" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinShowCustomField.png")" title="Ketarin Custom Field Setup" alt="Ketarin Settings Custom" /></li>
 <li>Click <strong>[OK]</strong>. This should add it to the list of Custom Columns.</li>
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
-<img src="images/chocopkgup/KetarinSettings.png" title="Ketarin Settings" alt="Ketarin Settings" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text:</p>
 <pre class="cmd"><code>chocopkgup /p {appname} /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
 REM /disablepush</code></pre></li>
 <li>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
-<img src="images/chocopkgup/KetarinCustomCommand.png" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></li>
 <li>Click Okay.</li>
 <li><p>Note the commented out <code>/disablepush</code>. This is so you can create a few packages and test that everything is working well before actually pushing those packages up to chocolatey. You may want to add that switch to the main command above it. Add it as the first parameter after <code>chocopkgup</code> so that none of the other commands conflict.</p></li>
 </ol>
@@ -60,14 +60,14 @@ REM /disablepush</code></pre></li>
 <li>Answer the questions. This will create a new job for Ketarin to check.</li>
 <li>One important thing to keep in mind is that <strong>the name of the job needs to match the name of the package folder exactly.</strong></li>
 <li>Right click on that new job and select <code>Edit</code>. Take a look at the following:<br />
-<img src="images/chocopkgup/KetarinMain.png" title="Ketarin Job Main" alt="Ketarin Job Main" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinMain.png")" title="Ketarin Job Main" alt="Ketarin Job Main" /></li>
 <li>Set the URL appropriately. I would shy away from FileHippo for now, the URL has been known to change and if you upload that as the download url in a chocolatey packages, it won&#39;t work very well.</li>
 <li>Click on <code>Variables</code> on the right of URL<br />
-<img src="images/chocopkgup/KetarinSetVariables.png" title="Ketarin Job Variables" alt="Ketarin Job Variables" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinSetVariables.png")" title="Ketarin Job Variables" alt="Ketarin Job Variables" /></li>
 <li>On the left side you should see a variable for <strong>version</strong> and one for <strong>url64</strong>. Click on <strong>version</strong>.</li>
 <li>Choose the appropriate method for you. Here I&#39;ve chosen <strong>Content from URL (start/end)</strong>.</li>
 <li>Enter the URL for versioning information.<br />
-<img src="images/chocopkgup/KetarinVariables.png" title="Ketarin Job Variables" alt="Ketarin Job Variables" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinVariables.png")" title="Ketarin Job Variables" alt="Ketarin Job Variables" /></li>
 <li>In the contents itself, highlight enough good information before a version to be able to select it uniquely during updates (but not so much it doesn&#39;t work every time as the page changes). Click on <strong>Use selection as start</strong>.</li>
 <li>Now observe that it didn&#39;t jump back too far.</li>
 <li>Do the same with the ending part, keeping in mind that this side doesn&#39;t need to be too much because it is found AFTER the start. Once selected click on <strong>Use selection as end</strong>.</li>
@@ -81,12 +81,12 @@ REM /disablepush</code></pre></li>
 <p>In whichever job the meta package points to, you should add a command to that like you did for the settings for all jobs in ketarin.</p>
 <ol>
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
-<img src="images/chocopkgup/KetarinJobSettings.png" title="Ketarin Settings" alt="Ketarin Settings" /></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinJobSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text (replace <code>name</code> with the actual name of the meta package folder):</p>
 <pre class="cmd"><code>chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
 REM /disablepush</code></pre></li>
 <li><p>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
-<img src="images/chocopkgup/KetarinCustomCommand.png" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></p></li>
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></p></li>
 </ol>
 <h3 id="testing-ketarinchocopkgup">Testing Ketarin/ChocoPkgUp:</h3>
 <ol>
