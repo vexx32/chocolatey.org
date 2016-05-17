@@ -39,7 +39,7 @@ function Fix-MarkdownConversion($text) {
 Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.md | %{
   $docName = [System.IO.Path]::GetFileNameWithoutExtension($_)
   #$htmlFileName = "docgen\$docName.cshtml"
-  $htmlFileName = "chocolatey\Website\Views\Documentation\$docName.cshtml"
+  $htmlFileName = "chocolatey\Website\Views\Documentation\$($docName.Replace(`"-`", `"`")).cshtml"
 
   & pandoc.exe --from markdown_github+simple_tables+native_spans+native_divs+multiline_tables --to html5 --old-dashes -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
 
