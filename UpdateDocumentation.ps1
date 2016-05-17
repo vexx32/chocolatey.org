@@ -47,3 +47,5 @@ Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.
     Select -Index (13..$($fileContent.count -3)) | 
     Set-Content $htmlFileName -Force -Encoding UTF8
 }
+# copy the images
+Copy-Item "choco.wiki\images\*" "chocolatey\Website\content\images\docs" -Force -Recurse
