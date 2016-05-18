@@ -2999,7 +2999,7 @@ pre code{
 }
 
 .docs > aside{
-  width: 25%;
+  width: 20%;
   background: #202F3C;
   color: #fff;
   padding-bottom: 2em;
@@ -3035,7 +3035,7 @@ main > article{
 
 .docs > article{
   width: 80%;
-  left: 30%;
+  left: 20%;
   padding-top: 3em !important;
   padding-left: 2em !important;
 }
