@@ -3,7 +3,7 @@
 try {
   Get-Command pandoc | Out-Null
 } catch {
-  Write-Warning "Please install pandoc - choco install pandoc -y"
+  Write-Warning "Please install Pandoc - choco install pandoc -y"
   exit 1
 }
 
@@ -37,22 +37,32 @@ function Fix-MarkdownConversion($text) {
 }
 
 function Convert-ImageUrls($text) {
-
   $text = $text -replace 'img\ssrc="images\/([^"]+)"', 'img src="@Url.Content("~/content/images/docs/$1")"'
 
   Write-Output $text
 }
 
+function Get-FirstLine($text) {
+  $lineNumber = ($text | Select-String -pattern '@{' -SimpleMatch | Select -First 1).LineNumber
+  
+  Write-Output $lineNumber
+}
 
 Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.md | %{
   $docName = [System.IO.Path]::GetFileNameWithoutExtension($_)
   #$htmlFileName = "docgen\$docName.cshtml"
   $htmlFileName = "chocolatey\Website\Views\Documentation\$($docName.Replace(`"-`", `"`")).cshtml"
 
-  & pandoc.exe --from markdown_github+simple_tables+native_spans+native_divs+multiline_tables --to html5 --old-dashes -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
+  #+simple_tables+native_spans+native_divs+multiline_tables
+  & pandoc.exe --from markdown_github --to html5 --old-dashes -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
 
-  ($fileContent = Convert-ImageUrls (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName)))) |
-    Select -Index (13..$($fileContent.count -3)) |
+  $fileContent = Convert-ImageUrls (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName)))
+  $firstLine = Get-FirstLine($fileContent)
+  $firstLine -= 1
+  Write-Debug "Line number is $firstLine"
+  #[int]$firstLine = 13
+  $fileContent | 
+    Select -Index ($firstLine..$($fileContent.count -3)) |
     Set-Content $htmlFileName -Force -Encoding UTF8
 }
 
