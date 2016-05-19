@@ -2102,7 +2102,8 @@ ul, header, main, h1, h2, h3, h4, h5{
   margin: 0;
 }
 
-main{
+main
+{
 }
 
 .container-wide{
@@ -3243,3 +3244,226 @@ a.choco-404:hover{
 .gene-bg .feature-sections__column{
   background: rgba(32, 47, 60, 0.5);
 }
+
+fieldset.form {
+        border: none;
+        clear: both;
+        padding: 0;
+    }
+    
+        fieldset.form legend {
+            display: none;
+        }
+        
+        .form-field {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+            .form-field label {
+                color: #52a4ca;
+                display: block;
+                font-size: 1.25em;
+                margin-bottom: 5px;
+            }
+            
+            .form-field label.checkbox {
+                display: inline;
+            }
+            
+            .form-field select {
+                color: #7f8c7d;
+                font-size: 1.25em;
+                padding: 2px;
+            }
+            
+            .form-field textarea,
+            .form-field input[type="text"],
+            .form-field input[type="file"],
+            .form-field input[type="password"] {
+                background: #fff url("../content/images/inputBackground.png") repeat-x;
+                border: solid 1px #ccc;
+                color: #7f8c7d;
+                font-size: 1.25em;
+                padding: 5px 0 5px 10px;
+                width: 300px;
+                vertical-align: middle;
+            }
+            
+            .form-field textarea {
+                font-size: 1em;
+                height: 200px;
+                padding-top: 5px;
+            }
+            
+            
+            .form-field input[data-val-required],
+            .form-field textarea[data-val-required] {
+                border-left: solid 5px #caa452; 
+            }
+            
+            .form-field input[type="checkbox"]
+            {
+                border-left: none;
+            }
+            
+            .form-field input.input-validation-error,
+            .form-field textarea.input-validation-error {
+                border-left: solid 5px #ca5252;
+            }
+            
+            /* flyout Text */
+            .field-hint-message,
+            .field-validation-error {
+                font-size: 1em;
+                left: 330px;
+                line-height: 1.2em;
+                padding: 5px;
+                position: absolute;
+                top: 30px;
+                width: 400px;
+                z-index: 550;
+            }
+            
+            .field-hint-message {
+                display: none;
+                background-color: #eff7fa;
+                border: solid 1px #52a4ca;
+                
+            }
+            
+            .field-validation-error {
+                display: block;
+                background-color: #fbe3e4;
+                border: solid 1px #c13a3f;
+            }
+            
+            .form-field input:focus ~ .field-hint-message {
+                display: block;
+            }
+            
+            input:focus ~ .field-validation-error ~ .field-hint-message {
+                display: none;
+            }
+            
+        .form input[type="submit"] {
+            background-color: #aa8545;
+            background-image: -ms-linear-gradient(top, #aa8545 0%, #836737 100%);
+            background-image: -o-linear-gradient(top, #aa8545 0%, #836737 100%);
+            background-image: -webkit-linear-gradient(top, #aa8545 0%, #836737 100%);
+            background-image: linear-gradient(top, #aa8545 0%, #836737 100%);
+            border: solid 1px #836737;
+            box-shadow: inset 0px 0px 1px rgba(255,255,255,1), 1px 1px 1px rgba(0,0,0,0.3);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.25em;
+            font-weight: 500;
+            text-decoration: none;
+            width: 100px;
+            margin: 0 10px 0 0;
+        }
+        
+        .form input[type="submit"]:hover { 
+            background-color: #307A25;
+            background-image: -ms-linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+            background-image: -o-linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+            background-image: -webkit-linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+            background-image: linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+            border-color: #307A25;
+        }
+        
+        .form a.cancel {
+            font-size: 1.25em;
+        }
+        
+        .form input:focus  {
+            outline: none;
+        }
+        
+        .form img {
+            margin: 15px 0;
+            display: block;
+        }
+        
+        .validation-summary-errors,
+        .field-validation-error {
+            color: #c13a3f;
+        }
+        
+        .validation-summary-errors {
+            font-size: 1.25em;
+            font-weight: 600;
+        }
+        
+.PoliteCaptcha.editor-field .field-validation-error {
+    position: static;
+    width: 300px;
+}
+
+/* To fix alignment of generated reCAPTCHA table */
+.PoliteCaptcha.editor-field table {
+    margin-left: -3px !important;
+}
+
+   /* Sexy Table */
+    .sexy-table {
+        border-collapse: collapse;
+        font-size: 1.1em;
+    }
+
+        /* header */
+        .sexy-table thead tr {
+            border-bottom: solid 1px #333;
+        }
+        
+        .sexy-table th {
+            font-size: 1.25em;
+            font-weight: normal;
+            padding: 5px 15px 0px 0px;
+            text-align:left;
+        }
+        
+        /* actions */
+        .sexy-table th.actions {
+            text-indent: -9999px;
+        }
+
+        .sexy-table td.actions {
+            width: 30px;
+        }
+
+        /* body */
+        .sexy-table tbody tr {
+            margin-bottom: 10px;
+        }
+        
+        .sexy-table tbody tr:hover {
+            background-color: #f4f5f6;
+        }
+        
+        .sexy-table tbody tr.recommended {
+            font-weight: 800;
+        }
+        
+        
+            .sexy-table tbody td {
+                padding: 5px 25px 5px 0;
+            }
+            
+            .sexy-table tbody td.actions {
+                padding: 2px 5px;
+            }
+        
+        /* footer */    
+        .sexy-table tfoot {
+            border-bottom: solid 1px #333;
+            font-weight: 600;
+        }
+        
+             .sexy-table tfoot td {
+                padding: 3px 0;
+             }
+             
+             .sexy-table tfoot tr {
+                border-top: 2px solid #333;
+             }
