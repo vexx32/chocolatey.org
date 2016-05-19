@@ -1295,6 +1295,7 @@
     <Content Include="Views\Documentation\HelpersGetWebFileName.cshtml" />
     <Content Include="Views\Documentation\FeaturesInfrastructureAutomation.cshtml" />
     <Content Include="Views\Documentation\FeaturesInstallDirectoryOverride.cshtml" />
+    <Content Include="Views\Packages\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

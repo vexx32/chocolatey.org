@@ -5,25 +5,25 @@
 
   var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
 
-    if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string) ViewData[Constants.ReturnUrlViewDataKey]))
+  if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string)ViewData[Constants.ReturnUrlViewDataKey]))
+  {
+    if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
     {
-        if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
-        {
-            TempData[Constants.ReturnUrlViewDataKey] = Request.RawUrl;
-        }
-        else
-        {
-            TempData.Add(Constants.ReturnUrlViewDataKey, Request.RawUrl);
-        }
+      TempData[Constants.ReturnUrlViewDataKey] = Request.RawUrl;
     }
+    else
+    {
+      TempData.Add(Constants.ReturnUrlViewDataKey, Request.RawUrl);
+    }
+  }
 
 
-    //css
-    Bundles.Reference("Content/site.css");
-    Bundles.Reference("Content/chocolatey.css");
-    //js
-    Bundles.Reference("Scripts");
-    Bundles.Reference("Scripts/header", "header");
+  //css
+  Bundles.Reference("Content/site.css");
+  Bundles.Reference("Content/chocolatey.css");
+  //js
+  Bundles.Reference("Scripts");
+  Bundles.Reference("Scripts/header", "header");
 }
 <!DOCTYPE html>
 <html lang="en" class="static ">
@@ -46,7 +46,7 @@
     
     @MiniProfiler.RenderIncludes()
     @{
-        var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
+      var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
      }
     @if (propertyId != null)
     {
@@ -63,22 +63,35 @@
             </div>
             <div id="header-right">
                 <div class="notices">@Html.Raw(noticeText)</div>
-                @Html.Partial(MVC.Shared.Views.UserDisplay)
+                <div class="user-display">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <span class="welcome"><a href="@Url.LogOn()">Log On</a></span>
+                    <a href="@Url.Action(MVC.Users.Register())" class="register">Register</a>
+                }
+                else
+                {
+                    <span class="welcome"><a href="@Url.Action(MVC.Users.Account())">@User.Identity.Name</a></span>
+                    <span class="user-actions">
+                        <a href="@Url.LogOff()">Log Off</a>
+                    </span>
+                }
+        </div>
             </div>
         </header>
         <nav class="main">
             <ul id="menu">
                 @{
-                    var homeClass = ViewBag.Tab == "Home" ? "current" : "";
-                    var aboutClass = ViewBag.Tab == "About" ? "current" : "";
-                    var packagesClass = ViewBag.Tab == "Packages" ? "current" : "";
-                    var uploadClass = ViewBag.Tab == "Upload" ? "current" : "";
+                  var homeClass = ViewBag.Tab == "Home" ? "current" : "";
+                  var aboutClass = ViewBag.Tab == "About" ? "current" : "";
+                  var packagesClass = ViewBag.Tab == "Packages" ? "current" : "";
+                  var uploadClass = ViewBag.Tab == "Upload" ? "current" : "";
                 }
                 <li class="@homeClass"><a href="@Url.Home()">Home</a></li>
                 <li class="@aboutClass"><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
                 <li class="@packagesClass"><a href="@Url.PackageList()">Packages</a></li>
                 <li class="@uploadClass"><a href="@Url.UploadPackage()" class="upload">Upload</a></li>
-                <li><a href="https://github.com/chocolatey/choco/wiki">Docs*</a></li>
+                <li><a href="@Url.UploadPackage()">Docs</a></li>
                 <li><a href="https://github.com/chocolatey/choco">Project*</a></li>
                 <li><a href="http://groups.google.com/group/chocolatey">Forum*</a></li>
                 <li><a href="http://cafepress.com/chocolatey">Shop*</a></li>
@@ -169,11 +182,11 @@
                     <br />
                     &copy; 2011 - @DateTime.UtcNow.Year RealDimensions Software, LLC. </p>
                     @{
-                        string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
-                        string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
+                      string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
+                      string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
                     }
                     <p id="releaseTag">
-                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0,10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
+                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
                     </p>
             </div>
             <div class="supporters">
@@ -194,7 +207,7 @@
   @Bundles.RenderScripts()
   @RenderSection("BottomScripts", required: false)
   @if (!string.IsNullOrWhiteSpace(noticeText))
-    {
+  {
         <style media="screen" type="text/css">
             @@-webkit-keyframes fade {
               0% { background:#dedede; }
@@ -209,7 +222,7 @@
               90% { background:lighten( @@notices, 20% ); }
             }
         </style>
-    }
+  }
     <script>
         ((window.gitter = {}).chat = {}).options = {
             room: 'chocolatey/chocolatey.org'

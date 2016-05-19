@@ -23,14 +23,14 @@
 
 <div class="p">
     <div class="block full-width m-t p-b clearfix p">
-        <div class="m-b h3">
+       @* <div class="m-b h3">
             <div class="package-search m-r border-radius">
                 <form class="p full-width" action="@Url.PackageList()" method="get">
                     <input name="q" id="search" type="search" class="p full-width" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search community packages..." value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" />
                     <input id="searchBoxSubmit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=" " />
                 </form>
             </div>
-        </div>
+        </div>*@
         <div class="flex">
             <span class="p-r text-orange"><span class="icon-warning huge"></span></span>
             <p class="no-margin">Your use of the packages on this site means you understand they are not to be used for organizational or production purposes and they are not supported or guaranteed in any way. For more details why, <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "community-packages-disclaimer" })">please read the disclaimer.</a></p>
