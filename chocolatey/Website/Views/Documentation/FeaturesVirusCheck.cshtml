@@ -3,7 +3,7 @@
 }
 
 <article>
-<h1 id="runtime-malware-protection-virus-scanning-licensed-users-only">Runtime Malware Protection / Virus Scanning (Licensed Users Only)</h1>
+<h1 id="runtime-malware-protection-virus-scanning-licensed-editions-only">Runtime Malware Protection / Virus Scanning (Licensed Editions Only)</h1>
 <p>We are pleased to offer runtime malware protection for our licensed customers! Virus checking is available in two flavors - VirusTotal and Generic malware verification.</p>
 <h2 id="usage">Usage</h2>
 <p>When a binary is not flagged:<br />
@@ -33,12 +33,12 @@ Then you will get the same benefit of runtime virus checking as an added benefit
 <ul>
 <li><code>choco config set virusScannerType Generic</code></li>
 <li><code>choco config set genericVirusScannerPath &quot;full path to av command line&quot;</code></li>
-<li><code>choco config set genericVirusScannerArgs &quot;<a href="File">File</a>&quot;</code></li>
+<li><code>choco config set genericVirusScannerArgs &quot;[[File]]&quot;</code></li>
 <li><code>choco config set genericVirusScannerValidExitCodes &quot;0, ##&quot;</code></li>
 <li><code>choco feature enable -n virusCheck</code></li>
 </ul>
 <p>The <code>genericVirusScannerPath</code> should be the full path to the anti-virus command line executable. What we are looking for is the command line interface to the scanner.</p>
-<p>In <code>genericVirusScannerArgs</code>, these are the arguments that Chocolatey will pass to the AV console. Chocolatey will automatically replace <code><a href="File">File</a></code> with the full path to the binary that it is scanning.</p>
+<p>In <code>genericVirusScannerArgs</code>, these are the arguments that Chocolatey will pass to the AV console. Chocolatey will automatically replace <code>[[File]]</code> with the full path to the binary that it is scanning.</p>
 <p>In <code>genericVirusScannerValidExitCodes</code>, these are exit codes that indicate that a binary is okay. This defaults to <code>0</code>, but you can configure this with as many exit codes as necessary by adding them to the configuration as comma separated values.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p><img src="@Url.Content("~/content/images/docs/gifs/chocopro_install_stopped.gif")" alt="Pro install in action" /></p>
@@ -61,6 +61,8 @@ Then you will get the same benefit of runtime virus checking as an added benefit
        value &#39;virusCheckMinimumPositives&#39; set to &#39;5&#39;. Available in 0.9.10+.
        Licensed versions only.</code></pre>
 <h2 id="faq">FAQ</h2>
+<h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
+<p>You must have a <a href="https://bit.ly/choco_pro_business">licensed edition of Chocolatey</a> (Professional and/or Business). Professional is a personal, named license that costs about the price of a lunch outing per month and comes with several other features. Business editions are great for organizations that need more business friendly features from their software management tool.</p>
 <h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
 <p>When you install package that download content, those items will automatically be verified if the feature is turned on (it is automatically turned on for Professional users). We don&#39;t turn it on automatically in Business editions because many organizations are wary about reaching out to the internet and the generic virus scanner requires additional configuration.</p>
 <h3 id="how-do-i-turn-this-feature-on">How do I turn this feature on?</h3>
