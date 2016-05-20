@@ -13,7 +13,7 @@ git submodule update --remote --rebase
 function Convert-MarkdownLinks($text) {
 
   $text = $text -replace '\[\[([^\|\]]*)\|([^\|\]]*)\]\]', '<a href="$2">$1</a>'
-  $text = $text -replace '\[\[([^\|\]]*)\]\]', '<a href="$1">$1</a>'
+  #$text = $text -replace '\[\[([^\|\]]*)\]\]', ' <a href="$1">$1</a>'
 
   #if ($text -match 'href\=\"([A-Z])([^\"])+\"') {
   #  $replaceValue = 'href="' + $matches[1].ToLower() + '$2"'
