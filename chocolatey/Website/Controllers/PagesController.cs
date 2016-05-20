@@ -77,11 +77,6 @@ namespace NuGetGallery
             return View("~/Views/Pages/Kickstarter.cshtml");
         }
 
-        public ActionResult Newsletter()
-        {
-            return View("~/Views/Pages/Newsletter.cshtml");
-        }
-
         public ActionResult Media()
         {
             return View("~/Views/Pages/Media.cshtml");
@@ -124,7 +119,7 @@ namespace NuGetGallery
 
         public ActionResult FAQ()
         {
-            return View("~/Views/Documentation/FAQ.cshtml","~/Views/Shared/Layout.cshtml");
+            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/Layout.cshtml");
         }
 
         public ActionResult Security()
