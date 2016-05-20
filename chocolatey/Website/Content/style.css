@@ -3146,6 +3146,46 @@ main > article{
   background: #202F3C;
 }
 
+.pricing-table {
+  border: 2px solid #202F3C; 
+}
+
+.pricing-table th {
+  font-size: 25px; 
+  text-align: center;
+  color: #fff;
+  background: #283846;
+}
+
+.pricing-table td {
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+
+.pricing-table td:first-child {
+  text-align: left;   
+  width: 15%;
+}
+
+.pricing-table td:nth-child(even){
+  background: #202F3C;
+  color: #fff;
+}
+
+.pricing-table td:nth-child(odd){
+  background: #1A375A;
+  color: #fff;
+  link: #fff;
+}
+
+ul.docs li:before{
+  content: '-';
+  position: absolute;
+  left: -.9em;
+}
+
 .gui-mock{
   border: 2px solid #fff;
   box-shadow: 5px 7px 50px rgba(0,0,0,.2);
