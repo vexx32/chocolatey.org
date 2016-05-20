@@ -91,13 +91,13 @@
 <li><strong>chocolateyPackageName</strong> (since 0.9.9) = The package name, which is equivalent to the <code>&lt;id&gt;</code> tag in the nuspec</li>
 <li><strong>chocolateyPackageVersion</strong> (since 0.9.9) = The package version, which is equivalent to the <code>&lt;version&gt;</code> tag in the nuspec</li>
 </ul>
-<p><code>chocolateyPackageVersion</code> may be particularly useful, since that would allow you in some cases to create packages for new releases of the updated software by only changing the <code>&lt;version&gt;</code> in the nuspec and not having to touch the <code>chocolateyInstall.ps1</code> at all. An example of this:</p>
-<pre><code>$url = &quot;http://www.thesoftware.com/downloads/thesoftware-$env:chocolateyPackageVersion.zip&quot;
+<p>chocolateyPackageVersion</code> may be particularly useful, since that would allow you in some cases to create packages for new releases of the updated software by only changing the <code>&lt;version&gt;</code> in the nuspec and not having to touch the <code>chocolateyInstall.ps1</code> at all. An example of this:</p>
+<pre class="brush: plain">$url = &quot;http://www.thesoftware.com/downloads/thesoftware-$env:chocolateyPackageVersion.zip&quot;
 
-Install-ChocolateyZipPackage &#39;$env:chocolateyPackageName&#39; $url $binRoot</code></pre>
+Install-ChocolateyZipPackage &#39;$env:chocolateyPackageName&#39; $url $binRoot</pre>
 <p>Remember, if you want to use <code>chocolateyPackageName</code> or <code>chocolateyPackageVersion</code> you should declare a dependency on Chocolatey 0.9.9 in the nuspec</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependencies&gt;</span>
-  <span class="co">&lt;!-- Chocolatey 0.9.9 required in order to access the chocolateyPackageName and chocolateyPackageVersion environment variables --&gt;</span>
-  <span class="kw">&lt;dependency</span><span class="ot"> id=</span><span class="st">&quot;chocolatey&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.9.9&quot;</span> <span class="kw">/&gt;</span>
-<span class="kw">&lt;/dependencies&gt;</span></code></pre></div>
+<pre class="brush: xml">&lt;dependencies&gt;
+  &lt;!-- Chocolatey 0.9.9 required in order to access the chocolateyPackageName and chocolateyPackageVersion environment variables --&gt;
+  &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.9&quot; /&gt;
+&lt;/dependencies&gt;</pre>
 </article>

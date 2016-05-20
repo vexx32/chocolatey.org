@@ -6,7 +6,7 @@
 <h1 id="create-your-own-custom-package-templates">Create Your Own Custom Package Templates</h1>
 <p>As of <a href="https://github.com/chocolatey/choco/issues/76">choco 0.9.9.9</a>, you can create your own custom package templates when the built-in template is not enough.</p>
 <h2 id="overview">Overview</h2>
-<p>A template is used for creating packages. Chocolatey (choco) has a built-in template that it uses when generating a new package from the command <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })"><code>choco new</code></a>.</p>
+<p>A template is used for creating packages. Chocolatey (choco) has a built-in template that it uses when generating a new package from the command <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })">choco new</code></a>.</p>
 <h3 id="where-do-templates-go">Where Do Templates Go?</h3>
 <p>If you drop a template into <code>$env:ChocolateyInstall\templates</code> folder, you can use <code>-t name_of_template</code> to generate a choco template based on that. So for:</p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/9952997/0603b334-5da2-11e5-8b6d-65a5dbf5d8e0.png" alt="image" /></p>
@@ -15,41 +15,41 @@
 <p>To replace the built-in template, you should put a folder in the template with the name of &quot;default&quot;. Then choco will use that instead of the built-in template with no need to specify a template name.</p>
 <h3 id="what-values-can-i-template">What values can I template?</h3>
 <p>You can get the names by running <code>choco new -h</code>:</p>
-<pre><code>Possible properties to pass:
+<pre class="brush: plain">Possible properties to pass:
     packageversion
     maintainername
     maintainerrepo
     installertype
     url
     url64
-    silentargs</code></pre>
+    silentargs</pre>
 <p>However <code>PackageName</code> and <code>PackageNameLower</code> also show up as they are based on the name of the package that you pass e.g. &quot;bob&quot; in <code>choco new bob</code></p>
 <p>Then you surround those templated values with <code>[[]]</code> to make them templated for choco to use.</p>
 <h2 id="example">Example</h2>
 <p>This is a template for embedding an MSI into a package. This removes almost everything that is unnecessary for embedding software into packages. And because the autoUninstaller handles MSIs without an issue, we don&#39;t need a chocolateyUninstall.ps1.</p>
 <p>A file with the extension <code>.nuspec</code>:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;utf-8&quot;<span class="kw">?&gt;</span>
-<span class="kw">&lt;package</span><span class="ot"> xmlns=</span><span class="st">&quot;http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;metadata&gt;</span>
-    <span class="kw">&lt;id&gt;</span>[[PackageNameLower]]<span class="kw">&lt;/id&gt;</span>
-    <span class="kw">&lt;title&gt;</span>[[PackageName]] (Install)<span class="kw">&lt;/title&gt;</span>
-    <span class="kw">&lt;version&gt;</span>[[PackageVersion]]<span class="kw">&lt;/version&gt;</span>
-    <span class="kw">&lt;authors&gt;</span>Original authors<span class="kw">&lt;/authors&gt;</span>
-    <span class="kw">&lt;owners&gt;</span>[[MaintainerName]]<span class="kw">&lt;/owners&gt;</span>
-    <span class="kw">&lt;description&gt;</span>__REPLACE__MarkDown_Okay [[AutomaticPackageNotesNuspec]]
-    <span class="kw">&lt;/description&gt;</span>
-    <span class="kw">&lt;tags&gt;</span>[[PackageNameLower]] admin<span class="kw">&lt;/tags&gt;</span>
-    <span class="co">&lt;!--&lt;dependencies&gt;</span>
-<span class="co">      &lt;dependency id=&quot;&quot; version=&quot;__VERSION__&quot; /&gt;</span>
-<span class="co">      &lt;dependency id=&quot;&quot; /&gt;</span>
-<span class="co">    &lt;/dependencies&gt;--&gt;</span>
-  <span class="kw">&lt;/metadata&gt;</span>
-  <span class="kw">&lt;files&gt;</span>
-    <span class="kw">&lt;file</span><span class="ot"> src=</span><span class="st">&quot;tools\**&quot;</span><span class="ot"> target=</span><span class="st">&quot;tools&quot;</span> <span class="kw">/&gt;</span>
-  <span class="kw">&lt;/files&gt;</span>
-<span class="kw">&lt;/package&gt;</span></code></pre></div>
-<p><code>tools\chocolateyInstall.ps1</code>:</p>
-<pre class="powershell"><code>$ErrorActionPreference = &#39;Stop&#39;; # stop on all errors
+<pre class="brush: xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd&quot;&gt;
+  &lt;metadata&gt;
+    &lt;id&gt;[[PackageNameLower]]&lt;/id&gt;
+    &lt;title&gt;[[PackageName]] (Install)&lt;/title&gt;
+    &lt;version&gt;[[PackageVersion]]&lt;/version&gt;
+    &lt;authors&gt;Original authors&lt;/authors&gt;
+    &lt;owners&gt;[[MaintainerName]]&lt;/owners&gt;
+    &lt;description&gt;__REPLACE__MarkDown_Okay [[AutomaticPackageNotesNuspec]]
+    &lt;/description&gt;
+    &lt;tags&gt;[[PackageNameLower]] admin&lt;/tags&gt;
+    &lt;!--&lt;dependencies&gt;
+      &lt;dependency id=&quot;&quot; version=&quot;__VERSION__&quot; /&gt;
+      &lt;dependency id=&quot;&quot; /&gt;
+    &lt;/dependencies&gt;--&gt;
+  &lt;/metadata&gt;
+  &lt;files&gt;
+    &lt;file src=&quot;tools\**&quot; target=&quot;tools&quot; /&gt;
+  &lt;/files&gt;
+&lt;/package&gt;</pre>
+<p>tools\chocolateyInstall.ps1</code>:</p>
+<pre class="brush: ps">$ErrorActionPreference = &#39;Stop&#39;; # stop on all errors
 
 [[AutomaticPackageNotesInstaller]]
 $packageName  = &#39;[[PackageName]]&#39;
@@ -70,7 +70,7 @@ $packageArgs = @@{
 }
 
 Install-ChocolateyInstallPackage @@packageArgs
-</code></pre>
+</pre>
 <h3 id="extending-templates">Extending Templates</h3>
 <p>Walmart has a really good post on extending package templates. You can read that at <a href="https://puppet.com/blog/extending-chocolatey-packaging-walmart" class="uri">https://puppet.com/blog/extending-chocolatey-packaging-walmart</a></p>
 <h3 id="are-there-planned-enhancements">Are There Planned Enhancements?</h3>

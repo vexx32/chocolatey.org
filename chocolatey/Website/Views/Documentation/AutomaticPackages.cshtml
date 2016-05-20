@@ -18,7 +18,7 @@
 <ol>
 <li><strong>Optional</strong> (strongly recommended) - Ensure you are using a source control repository and file system for keeping packages. A good example is <a href="https://github.com/chocolatey/chocolatey-coreteampackages">chocolatey-coreteampackages</a> repo.</li>
 <li><p><strong>Optional</strong> (strongly recommended) - Make sure you have installed the <a href="https://github.com/chocolatey/chocolateytemplates">chocolatey package templates</a>. If you&#39;ve installed the chocolatey templates (ReadMe has instructions), then all you need to do is take a look at the <a href="https://github.com/chocolatey/chocolateytemplates/tree/master/_templates/chocolateyauto">chocolateyauto</a> and <a href="https://github.com/chocolatey/chocolateytemplates/tree/master/_templates/chocolateyauto3">chocolateyauto3</a>. You will note this looks almost exactly like the regular chocolatey template, except this has some specially named token values.</p>
-<pre class="powershell"><code>#Items that could be replaced based on what you call chocopkgup.exe with
+<pre class="brush: ps">#Items that could be replaced based on what you call chocopkgup.exe with
 #{{PackageName}} - Package Name (should be same as nuspec file and folder) |/p
 #{{PackageVersion}} - The updated version | /v
 #{{DownloadUrl}} - The url for the native file | /u
@@ -27,14 +27,14 @@
 #{{DownloadUrlx64}} - The 64bit url for the native file | /u64
 ## included with 0.6.4
 #{{Checksum}} - The checksum for the file downloaded from DownloadUrl | /c
-#{{Checksumx64}} - The checksum for the 64bit file downloaded from DownloadUrlx64  | /c64</code></pre></li>
+#{{Checksumx64}} - The checksum for the 64bit file downloaded from DownloadUrlx64  | /c64</pre></li>
 <li>These are the tokens that chocopkgup will replace when it generates an instance of a package.</li>
 <li>Install chocopkgup (which will install ketarin and nuget.commandline). <code>cinst chocolateypackageupdater</code>.</li>
 <li>Check the config in <code>C:\tools\ChocolateyPackageUpdater\chocopkgup.exe.config</code> (or <code>ChocolateyBinRoot/ChocolateyPackageUpdater</code>). The <code>PackagesFolder</code> key should point to where your repository is located.</li>
 <li>Create a scheduled task (in Windows). This is the command (edit the path to <code>cmd.exe</code> accordingly): <code>C:\Windows\System32\cmd.exe /c c:\tools\chocolateypackageupdater\ketarinupdate.cmd</code></li>
 <li><p>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:</p>
-<pre><code>Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
-objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True</code></pre></li>
+<pre class="brush: plain">Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
+objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True</pre></li>
 <li>Choose a schedule for the task. I run mine once a day but you can set it to run more often. Choose a time when the computer is not that busy.</li>
 <li>Save the following Ketarin template somewhere: <a href="https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml" class="uri">https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml</a></li>
 <li>Open Ketarin. Choose <code>File</code> –&gt; <code>Settings</code>.</li>
@@ -44,8 +44,8 @@ objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text:</p>
-<pre class="cmd"><code>chocopkgup /p {appname} /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
-REM /disablepush</code></pre></li>
+<pre class="cmd">chocopkgup /p {appname} /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
+REM /disablepush</pre></li>
 <li>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></li>
 <li>Click Okay.</li>
@@ -83,8 +83,8 @@ REM /disablepush</code></pre></li>
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinJobSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text (replace <code>name</code> with the actual name of the meta package folder):</p>
-<pre class="cmd"><code>chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
-REM /disablepush</code></pre></li>
+<pre class="cmd">chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
+REM /disablepush</pre></li>
 <li><p>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></p></li>
 </ol>

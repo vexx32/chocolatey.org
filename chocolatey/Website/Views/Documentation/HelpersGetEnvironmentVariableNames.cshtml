@@ -6,8 +6,8 @@
 <h1 id="get-environmentvariablenames">Get-EnvironmentVariableNames</h1>
 <p>Gets all environment variable names.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="powershell"><code>Get-EnvironmentVariableNames `
-  [-Scope {Process | User | Machine}]</code></pre>
+<pre class="brush: ps">Get-EnvironmentVariableNames `
+  [-Scope {Process | User | Machine}]</pre>
 <h2 id="description">Description</h2>
 <p>Provides a list of environment variable names based on the scope. This<br />
 can be used to loop through the list and generate names.</p>
@@ -23,8 +23,8 @@ session. The other scopes refer to the registry values.</p>
 <h2 id="parameters">Parameters</h2>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="powershell"><code>Get-EnvironmentVariableNames -Scope Machine
-</code></pre>
+<pre class="brush: ps">Get-EnvironmentVariableNames -Scope Machine
+</pre>
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-environment-variable" })">Get-EnvironmentVariable</a></li>

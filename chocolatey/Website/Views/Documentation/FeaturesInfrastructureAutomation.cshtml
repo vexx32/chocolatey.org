@@ -17,41 +17,41 @@
 </ul>
 <h2 id="ansible">Ansible</h2>
 <p>Ansible has the <code>win_chocolatey</code> module that manages both packages and the installation of Chocolatey itself.</p>
-<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">win_chocolatey:</span>
-  <span class="fu">name:</span> git
-  <span class="fu">source:</span> https://my.internal.repository/api/v2/</code></pre></div>
+<pre class="brush: plain">win_chocolatey:
+  name: git
+  source: https://my.internal.repository/api/v2/</pre>
 <p><a href="https://bit.ly/choco_ansible">Read More...</a></p>
 <h2 id="chef">Chef</h2>
 <p>Chef has a built-in <code>chocolatey_package</code> resource to use with Chocolatey.</p>
-<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">chocolatey_package <span class="st">&#39;git&#39;</span> <span class="kw">do</span>
-  action <span class="st">:install</span>
-  source <span class="st">&#39;https://my.internal.repository/api/v2&#39;</span>
-<span class="kw">end</span></code></pre></div>
+<pre class="brush: ruby">chocolatey_package &#39;git&#39; do
+  action :install
+  source &#39;https://my.internal.repository/api/v2&#39;
+end</pre>
 <p><a href="https://docs.chef.io/resource_chocolatey_package.html">Resource - Read More...</a></p>
 <p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team.</p>
-<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">include_recipe <span class="st">&#39;chocolatey&#39;</span></code></pre></div>
+<pre class="brush: ruby">include_recipe &#39;chocolatey&#39;</pre>
 <p><a href="https://bit.ly/choco_chef">Cookbook - Read More...</a></p>
 <h3 id="example">Example</h3>
 <p>Here&#39;s a more in depth example from <a href="https://github.com/Nordstrom/chefdk_bootstrap/blob/master/recipes/windows.rb">Nordstrom</a>:</p>
-<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">include_recipe <span class="st">&#39;chocolatey&#39;</span>
+<pre class="brush: ruby">include_recipe &#39;chocolatey&#39;
 
-home = <span class="dt">Dir</span>.home
-<span class="ot">%W(</span>
-<span class="st">  #{home}/.chef</span>
-<span class="st">  #{home}/chef</span>
-<span class="st">  #{home}/chef/cookbooks</span>
-<span class="ot">)</span>.each <span class="kw">do</span> |directory|
+home = Dir.home
+%W(
+  #{home}/.chef
+  #{home}/chef
+  #{home}/chef/cookbooks
+).each do |directory|
   directory directory
-<span class="kw">end</span>
+end
 
-packages = node[<span class="st">&#39;chefdk_bootstrap&#39;</span>][<span class="st">&#39;package&#39;</span>]
+packages = node[&#39;chefdk_bootstrap&#39;][&#39;package&#39;]
 
-packages.each <span class="kw">do</span> |pkg, install|
-  include_recipe <span class="st">&quot;</span><span class="ot">#{</span>cookbook_name<span class="ot">}</span><span class="st">::</span><span class="ot">#{</span>pkg<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">if</span> install
-<span class="kw">end</span></code></pre></div>
+packages.each do |pkg, install|
+  include_recipe &quot;#{cookbook_name}::#{pkg}&quot; if install
+end</pre>
 <h2 id="powershell-dsc">PowerShell DSC</h2>
 <p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
-<pre class="powershell"><code>  cChocoInstaller installChoco
+<pre class="brush: ps">  cChocoInstaller installChoco
   {
     InstallDir = &quot;c:\ProgramData\chocolatey&quot;
   }
@@ -60,23 +60,24 @@ packages.each <span class="kw">do</span> |pkg, install|
   {
      Name = &quot;git&quot;
      DependsOn = &quot;[cChocoInstaller]installChoco&quot;
-  }</code></pre>
+  }</pre>
 <p><a href="https://bit.ly/choco_dsc">Read More...</a></p>
 <h2 id="puppet">Puppet</h2>
 <p>Puppet has a <a href="https://forge.puppet.com/supported">Supported module</a> coming for Chocolatey, but also has an <a href="https://forge.puppet.com/approved">Approved module</a> written by the Chocolatey team. The module can manage packages and the install and configuration of Chocolatey itself.</p>
-<pre class="puppet"><code>include chocolatey
+<pre class="brush: ruby">include chocolatey
 
 package { &#39;git&#39;:
   ensure   =&gt; latest,
   provider =&gt; &#39;chocolatey&#39;,
   source   =&gt; &#39;https://my.internal.repository/api/v2&#39;,
-}</code></pre>
+}</pre>
 <p><a href="https://bit.ly/choco_puppet">Read More...</a></p>
 <h2 id="saltstack">Saltstack</h2>
 <p>Salt has a Chocolatey module that manages both packages and the installation of Chocolatey itself.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">salt <span class="st">&#39;*&#39;</span> chocolatey.bootstrap
-salt <span class="st">&#39;*&#39;</span> chocolatey.install git</code></pre></div>
+<pre class="brush: python">salt &#39;*&#39; chocolatey.bootstrap
+salt &#39;*&#39; chocolatey.install git</pre>
 <p><a href="https://bit.ly/choco_salt">Read More...</a></p>
 <h2 id="system-center-configuration-manager">System Center Configuration Manager</h2>
 <p>Chocolatey integrates with SCCM by handling the software management, and pointing to <a href="https://technet.microsoft.com/en-us/library/bb680614.aspx">distribution points</a> as the source for packages. This allows folks to get packages and larger binaries out to their network without constraints and still take advantage of Chocolatey&#39;s fantastic abilities!</p>
+<p>To direct Chocolatey package installs, you can still write GPOs to ensure this.</p>
 </article>

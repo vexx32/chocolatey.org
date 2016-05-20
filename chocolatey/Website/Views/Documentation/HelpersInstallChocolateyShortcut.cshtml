@@ -6,13 +6,13 @@
 <h1 id="install-chocolateyshortcut">Install-ChocolateyShortcut</h1>
 <p>Creates a shortcut</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="powershell"><code>Install-ChocolateyShortcut `
+<pre class="brush: ps">Install-ChocolateyShortcut `
   [-ShortcutFilePath &lt;String&gt;] `
   [-TargetPath &lt;String&gt;] `
   [-WorkingDirectory &lt;String&gt;] `
   [-Arguments &lt;String&gt;] `
   [-IconLocation &lt;String&gt;] `
-  [-Description &lt;String&gt;]</code></pre>
+  [-Description &lt;String&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This adds a shortcut, at the specified location, with the option to specify<br />
 a number of additional properties for the shortcut, such as Working Directory,<br />
@@ -221,13 +221,13 @@ is optional.</p>
 </table>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 # This will create a new shortcut at the location of &quot;C:\test.lnk&quot; and
 # link to the file located at &quot;C:\text.exe&quot;
 
-Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</code></pre>
+Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 # This will create a new shortcut at the location of &quot;C:\notepad.lnk&quot;
 # and link to the Notepad application.  In addition, other properties
 # are being set to specify the working directory, an icon to be used for
@@ -239,7 +239,7 @@ Install-ChocolateyShortcut `
   -WorkDirectory &quot;C:\&quot; `
   -Arguments &quot;C:\test.txt&quot; `
   -IconLocation &quot;C:\test.ico&quot; `
-  -Description &quot;This is the description&quot;</code></pre>
+  -Description &quot;This is the description&quot;</pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyShortcut -Full</code>.</p>
 </article>

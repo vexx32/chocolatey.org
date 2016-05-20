@@ -6,36 +6,36 @@
 <h1 id="install-command-choco-install">Install Command (choco install)</h1>
 <p>Installs a package or a list of packages (sometimes specified as a<br />
 packages.config). Some may prefer to use <code>cinst</code> as a shortcut for<br />
-<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })"><code>choco install</code></a>.</p>
+<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })">choco install</code></a>.</p>
 <p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)<br />
 with options and switches. Add <code>-y</code> for previous behavior with no<br />
 prompt. In most cases you can still pass options and switches with one<br />
 dash (<code>-</code>). For more details, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
-<pre><code>choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
-cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
+<pre class="brush: plain">choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
+cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</pre>
 <p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to install<br />
 all packages from a custom feed. Will not work with Chocolatey default<br />
 feed. THIS IS NOT YET REIMPLEMENTED.</p>
 <p><strong>NOTE:</strong> Any package name ending with .config is considered a<br />
 &quot;˜packages.config&#39; file. Please see <a href="https://bit.ly/packages_config" class="uri">https://bit.ly/packages_config</a></p>
 <h2 id="examples">Examples</h2>
-<pre><code>choco install sysinternals
+<pre class="brush: plain">choco install sysinternals
 choco install notepadplusplus googlechrome atom 7zip
 choco install notepadplusplus --force --force-dependencies
 choco install notepadplusplus googlechrome atom 7zip -dvfy
 choco install git --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; -y
 choco install nodejs.install --version 0.10.35
 choco install git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
-choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
+choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</pre>
 <p>Choco can also install directly from a nuspec/nupkg file. This aids in<br />
 testing packages:</p>
-<pre><code>choco install &lt;path/to/nuspec&gt;
-choco install &lt;path/to/nupkg&gt;</code></pre>
+<pre class="brush: plain">choco install &lt;path/to/nuspec&gt;
+choco install &lt;path/to/nupkg&gt;</pre>
 <p>Install multiple versions of a package using -m (AllowMultiple versions)</p>
-<pre><code>choco install ruby --version 1.9.3.55100 -my
+<pre class="brush: plain">choco install ruby --version 1.9.3.55100 -my
 choco install ruby --version 2.0.0.59800 -my
-choco install ruby --version 2.1.5 -my</code></pre>
+choco install ruby --version 2.1.5 -my</pre>
 <p>What is <code>-my</code>? See option bundling in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a><br />
 (<code>choco -?</code>).</p>
 <p><strong>NOTE:</strong> All of these will add to PATH variable. We&#39;ll be adding a special<br />
@@ -53,17 +53,17 @@ protection.</p>
 <h2 id="packages.config">Packages.config</h2>
 <p>Alternative to PackageName. This is a list of packages in an xml manifest for Chocolatey to install. This is like the packages.config that NuGet uses except it also adds other options and switches. This can also be the path to the packages.config file if it is not in the current working directory.</p>
 <p><strong>NOTE:</strong> The filename is only required to end in .config, the name is not required to be packages.config.</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;utf-8&quot;<span class="kw">?&gt;</span>
-    <span class="kw">&lt;packages&gt;</span>
-      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;apackage&quot;</span> <span class="kw">/&gt;</span>
-      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;anotherPackage&quot;</span><span class="ot"> version=</span><span class="st">&quot;1.1&quot;</span> <span class="kw">/&gt;</span>
-      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;chocolateytestpackage&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.1&quot;</span><span class="ot"> source=</span><span class="st">&quot;somelocation&quot;</span> <span class="kw">/&gt;</span>
-      <span class="kw">&lt;package</span><span class="ot"> id=</span><span class="st">&quot;alloptions&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.1.1&quot;</span>
-<span class="ot">               source=</span><span class="st">&quot;https://somewhere/api/v2/&quot;</span><span class="ot"> installArguments=</span><span class="st">&quot;&quot;</span>
-<span class="ot">               packageParameters=</span><span class="st">&quot;&quot;</span><span class="ot"> forceX86=</span><span class="st">&quot;false&quot;</span><span class="ot"> allowMultipleVersions=</span><span class="st">&quot;false&quot;</span>
-<span class="ot">               ignoreDependencies=</span><span class="st">&quot;false&quot;</span>
-               <span class="kw">/&gt;</span>
-    <span class="kw">&lt;/packages&gt;</span></code></pre></div>
+<pre class="brush: xml">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+    &lt;packages&gt;
+      &lt;package id=&quot;apackage&quot; /&gt;
+      &lt;package id=&quot;anotherPackage&quot; version=&quot;1.1&quot; /&gt;
+      &lt;package id=&quot;chocolateytestpackage&quot; version=&quot;0.1&quot; source=&quot;somelocation&quot; /&gt;
+      &lt;package id=&quot;alloptions&quot; version=&quot;0.1.1&quot;
+               source=&quot;https://somewhere/api/v2/&quot; installArguments=&quot;&quot;
+               packageParameters=&quot;&quot; forceX86=&quot;false&quot; allowMultipleVersions=&quot;false&quot;
+               ignoreDependencies=&quot;false&quot;
+               /&gt;
+    &lt;/packages&gt;</pre>
 <h2 id="alternative-sources">Alternative Sources</h2>
 <p>Available in 0.9.10+.</p>
 <h3 id="ruby">Ruby</h3>
@@ -108,7 +108,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre><code>
+<pre class="brush: plain">
 
 
  -?, --help, -h
@@ -252,7 +252,7 @@ out multiple package calls when wanting to pass specific options.</p>
      Virus Check Minimum Scan Result Positives - the minimum number of scan
        result positives required to flag a package. Overrides the default
        configuration value &#39;virusCheckMinimumPositives&#39; set to &#39;5&#39;.
-</code></pre>
+</pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco install -h</code>.</p>
 </article>

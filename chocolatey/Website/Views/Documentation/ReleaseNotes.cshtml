@@ -9,7 +9,7 @@
 <p>Alternative sources (<code>-source webpi</code>, <code>-s windowsfeature</code>, etc) are back! I mean, am I right?! Have you heard of auto uninstaller? If Chocolatey has installed something that works with Programs and Features, Chocolatey knows how to uninstall it without an uninstall script about 90+% of the time. This feature was in beta for the 0.9.9 series, it is on by default in 0.9.10 (unless you disabled it after trying it, you will need to reenable it, see <code>choco feature</code> for more details).</p>
 <p>Here&#39;s one you probably never knew existed - extensions. Chocolatey has had the ability to extend itself by adding PowerShell modules for years, and most folks either didn&#39;t know it existed or have never used them. We&#39;ve enhanced them a bit in preparation for the licensed version of Chocolatey.</p>
 <p>We redesigned our <code>choco new</code> default packaging template and we&#39;ve made managing templates as easy as managing packages.</p>
-<p><code>choco search</code>/<code>choco list</code> has so many enhancements, you may not need to visit dot org again. <a href="https://github.com/chocolatey/choco/wiki/CommandsList#see-it-in-action">See it in action</a>.</p>
+<p>choco search</code>/<code>choco list</code> has so many enhancements, you may not need to visit dot org again. <a href="https://github.com/chocolatey/choco/wiki/CommandsList#see-it-in-action">See it in action</a>.</p>
 <ul>
 <li><a href="https://github.com/chocolatey/choco/issues/493">search -v provides moderation related information and a world of nuspec information</a></li>
 <li><a href="https://github.com/chocolatey/choco/issues/663">search by id only</a></li>
@@ -386,7 +386,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Choco now installs packages without version numbers on folders. This means quite a few things...</li>
 <li>Upgrading packages doesn&#39;t install a new version next to an old version, it actually upgrades.</li>
 <li>Dependencies resolve at highest available version, not the minimum version as before - see <a href="https://github.com/chocolatey/chocolatey/issues/415">Chocolatey #415</a></li>
-<li><code>install</code> versus <code>upgrade</code> - Use <code>upgrade</code> on existing packages instead of install. A <code>-force</code> reinstall will reinstall the <strong><em>same</em></strong> version you already have installed.</li>
+<li>install</code> versus <code>upgrade</code> - Use <code>upgrade</code> on existing packages instead of install. A <code>-force</code> reinstall will reinstall the <strong><em>same</em></strong> version you already have installed.</li>
 </ol>
 <ul>
 <li><strong>Package Maintenance Changes</strong>:</li>
@@ -399,10 +399,10 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li><strong>Deprecated/Removed Commands:</strong></li>
 </ul>
 <ol>
-<li><code>installmissing</code> has been removed. It was deprecated awhile ago, so this should not be a surprise.</li>
-<li><code>choco version</code> has been deprecated and will be removed in v1. Use <code>choco upgrade pkgName --noop</code> or <code>choco upgrade pkgName -whatif</code> instead.</li>
-<li><code>Write-ChocolateySuccess</code>, <code>Write-ChocolateyFailure</code> have been deprecated.</li>
-<li><code>update</code> is now <code>upgrade</code>. <code>update</code> has been deprecated and will be removed/replaced in v1. Update will be reincarnated later for a different purpose. <strong>Hint</strong>: It rhymes with smackage pindexes.</li>
+<li>installmissing</code> has been removed. It was deprecated awhile ago, so this should not be a surprise.</li>
+<li>choco version</code> has been deprecated and will be removed in v1. Use <code>choco upgrade pkgName --noop</code> or <code>choco upgrade pkgName -whatif</code> instead.</li>
+<li>Write-ChocolateySuccess</code>, <code>Write-ChocolateyFailure</code> have been deprecated.</li>
+<li>update</code> is now <code>upgrade</code>. <code>update</code> has been deprecated and will be removed/replaced in v1. Update will be reincarnated later for a different purpose. <strong>Hint</strong>: It rhymes with smackage pindexes.</li>
 </ol>
 <h3 id="features-4">FEATURES</h3>
 <ul>
@@ -412,9 +412,9 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li><strong>New Commands:</strong></li>
 </ul>
 <ol>
-<li><code>pin</code> - Suppress upgrades. This allows you to &quot;˜pin&#39; an install to a particular version - see <a href="https://github.com/chocolatey/choco/issues/1">#1</a>, <a href="https://github.com/chocolatey/chocolatey/issues/5">Chocolatey #5</a> and <a href="https://github.com/chocolatey/choco/wiki/CommandsPin">Pin Command</a></li>
-<li><code>apikey</code> - see <a href="https://github.com/chocolatey/choco/wiki/CommandsApiKey">ApiKey Command</a></li>
-<li><code>new</code> - see <a href="https://github.com/chocolatey/choco/wiki/CommandsNew">New Command</a> and <a href="https://github.com/chocolatey/chocolatey/issues/157">Chocolatey #157</a></li>
+<li>pin</code> - Suppress upgrades. This allows you to &quot;˜pin&#39; an install to a particular version - see <a href="https://github.com/chocolatey/choco/issues/1">#1</a>, <a href="https://github.com/chocolatey/chocolatey/issues/5">Chocolatey #5</a> and <a href="https://github.com/chocolatey/choco/wiki/CommandsPin">Pin Command</a></li>
+<li>apikey</code> - see <a href="https://github.com/chocolatey/choco/wiki/CommandsApiKey">ApiKey Command</a></li>
+<li>new</code> - see <a href="https://github.com/chocolatey/choco/wiki/CommandsNew">New Command</a> and <a href="https://github.com/chocolatey/chocolatey/issues/157">Chocolatey #157</a></li>
 </ol>
 <ul>
 <li>New ways to pass arguments! See <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches">How to Pass Options/Switches</a></li>
@@ -423,7 +423,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li><strong>New Helpers:</strong></li>
 </ul>
 <ol>
-<li><code>Install-ChocolateyShortcut</code> - see <a href="https://github.com/chocolatey/chocolatey/pull/238">Chocolatey #238</a>, <a href="https://github.com/chocolatey/chocolatey/issues/235">Chocolatey #235</a> and <a href="https://github.com/chocolatey/chocolatey/issues/218">Chocolatey #218</a></li>
+<li>Install-ChocolateyShortcut</code> - see <a href="https://github.com/chocolatey/chocolatey/pull/238">Chocolatey #238</a>, <a href="https://github.com/chocolatey/chocolatey/issues/235">Chocolatey #235</a> and <a href="https://github.com/chocolatey/chocolatey/issues/218">Chocolatey #218</a></li>
 </ol>
 <h3 id="bug-fixes-13">BUG FIXES</h3>
 <p>Probably a lot of bug fixes that may not make it here, but here are the ones we know about.</p>
@@ -569,7 +569,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Enhancement - Install to Machine environment variable - <a href="https://github.com/chocolatey/chocolatey/issues/453">#453</a></li>
 <li>Enhancement - Install the .NET framework 4.0 requirement - <a href="https://github.com/chocolatey/chocolatey/issues/255">#255</a></li>
 <li>Update environment using command (RefreshEnv) - <a href="https://github.com/chocolatey/chocolatey/issues/134">#134</a></li>
-<li><code>-quiet</code> parameter that silences almost all output / allow shutting off real write-host - <a href="https://github.com/chocolatey/chocolatey/pull/416">#416</a> &amp; <a href="https://github.com/chocolatey/chocolatey/issues/411">#411</a></li>
+<li>-quiet</code> parameter that silences almost all output / allow shutting off real write-host - <a href="https://github.com/chocolatey/chocolatey/pull/416">#416</a> &amp; <a href="https://github.com/chocolatey/chocolatey/issues/411">#411</a></li>
 <li>New Helpers - Test-ProcessAdminRights, Get-EnvironmentVariableNames, Get-EnvironmentVariable, Set-EnvironmentVariable - <a href="https://github.com/chocolatey/chocolatey/pull/486">#486</a></li>
 </ul>
 <p>BUG FIXES:</p>

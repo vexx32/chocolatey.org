@@ -7,11 +7,11 @@
 <p>Creates a windows explorer context menu item that can be associated with<br />
 a command</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="powershell"><code>Install-ChocolateyExplorerMenuItem `
+<pre class="brush: ps">Install-ChocolateyExplorerMenuItem `
   [-MenuKey &lt;String&gt;] `
   [-MenuLabel &lt;String&gt;] `
   [-Command &lt;String&gt;] `
-  [-Type &lt;String&gt;]</code></pre>
+  [-Type &lt;String&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>Install-ChocolateyExplorerMenuItem can add an entry in the context menu<br />
 of Windows Explorer. The menu item is given a text label and a command.<br />
@@ -162,21 +162,21 @@ selected</p>
 </table>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 # This will create a context menu item in Windows Explorer when any file
 # is right clicked. The menu item will appear with the text &quot;Open with
 # Sublime Text 2&quot; and will invoke sublime text 2 when selected.
 $sublimeDir = (Get-ChildItem $env:ALLUSERSPROFILE\chocolatey\lib\sublimetext* | select $_.last)
 $sublimeExe = &quot;$sublimeDir\tools\sublime_text.exe&quot;
-Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe</code></pre>
+Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe</pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 # This will create a context menu item in Windows Explorer when any
 # folder is right clicked. The menu item will appear with the text
 # &quot;Open with Sublime Text 2&quot; and will invoke sublime text 2 when selected.
 $sublimeDir = (Get-ChildItem $env:ALLUSERSPROFILE\chocolatey\lib\sublimetext* | select $_.last)
 $sublimeExe = &quot;$sublimeDir\tools\sublime_text.exe&quot;
-Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe &quot;directory&quot;</code></pre>
+Install-ChocolateyExplorerMenuItem &quot;sublime&quot; &quot;Open with Sublime Text 2&quot; $sublimeExe &quot;directory&quot;</pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyExplorerMenuItem -Full</code>.</p>
 </article>

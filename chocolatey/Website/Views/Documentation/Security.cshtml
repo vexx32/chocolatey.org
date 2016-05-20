@@ -35,31 +35,31 @@
 <li>Starting with 0.9.10, both the binaries and the PowerShell scripts are Authenticode signed. This certificate is only held by the lead Chocolatey maintainer (Rob). This provides quite a bit of trust that you are getting Chocolatey from the source and as intended.</li>
 </ul>
 <p>Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary).</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">C</span>:<span class="dt">\ </span>PS<span class="kw">&gt;</span> (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe)<span class="kw">.SignerCertificate</span> <span class="kw">|</span> <span class="kw">Format-List</span>
+<pre class="brush: bash">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 
-<span class="kw">Subject</span>      : CN=<span class="st">&quot;RealDimensions Software, LLC&quot;</span>, O=<span class="st">&quot;RealDimensions Software,</span>
-<span class="st">               LLC&quot;</span>, L=Topeka, S=Kansas, C=US
-<span class="kw">Issuer</span>       : CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com,
-               <span class="ot">O=</span>DigiCert <span class="kw">Inc</span>, C=US
-<span class="kw">Thumbprint</span>   : C9F7FD1A91F078DB6BFCFCCE28B9749F8F2A0C38
-<span class="kw">FriendlyName</span> :
-<span class="kw">NotBefore</span>    : 3/23/2016 7:00:00 PM
-<span class="kw">NotAfter</span>     : 3/28/2017 7:00:00 AM
-<span class="kw">Extensions</span>   : {System.Security.Cryptography.Oid,
-               <span class="kw">System.Security.Cryptography.Oid</span>,
-               <span class="kw">System.Security.Cryptography.Oid</span>,
-               <span class="kw">System.Security.Cryptography.Oid...</span>}</code></pre></div>
+Subject      : CN=&quot;RealDimensions Software, LLC&quot;, O=&quot;RealDimensions Software,
+               LLC&quot;, L=Topeka, S=Kansas, C=US
+Issuer       : CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com,
+               O=DigiCert Inc, C=US
+Thumbprint   : C9F7FD1A91F078DB6BFCFCCE28B9749F8F2A0C38
+FriendlyName :
+NotBefore    : 3/23/2016 7:00:00 PM
+NotAfter     : 3/28/2017 7:00:00 AM
+Extensions   : {System.Security.Cryptography.Oid,
+               System.Security.Cryptography.Oid,
+               System.Security.Cryptography.Oid,
+               System.Security.Cryptography.Oid...}</pre>
 <ul>
 <li>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</li>
 </ul>
 <p>Using a Visual Studio Command Prompt, you can verify the binary (the path below is the default install location, adjust if necessary). You can also download sn separately if necessary.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">C</span>:\Program Files (x86)\<span class="kw">Microsoft</span> Visual Studio 10.0\VC<span class="kw">&gt;</span>sn -T c:\ProgramData\chocolatey\choco.exe
+<pre class="brush: bash">C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
 
-<span class="kw">Microsoft</span> (R) <span class="kw">.NET</span> Framework Strong Name Utility  Version 4.0.30319.1
-<span class="kw">Copyright</span> (c) <span class="kw">Microsoft</span> Corporation.  All rights reserved.
+Microsoft (R) .NET Framework Strong Name Utility  Version 4.0.30319.1
+Copyright (c) Microsoft Corporation.  All rights reserved.
 
-<span class="kw">Public</span> key token is 79d02ea9cad655eb</code></pre></div>
+Public key token is 79d02ea9cad655eb</pre>
 <ul>
 <li>Choco will warn if it is not signed with the right key (the FOSS project has a default key so that it can build appropriately) and require a user to pass <code>--allow-unofficial-build</code>. Over time we are going to increase this so that more places will restrict this (those a user can&#39;t just go change source of choco on and build).</li>
 <li>The code for Chocolatey is <a href="https://github.com/chocolatey/choco">open source</a>, so you can inspect to visually be sure it is not doing anything malicious to your machine - <a href="https://github.com/chocolatey/choco" class="uri">https://github.com/chocolatey/choco</a>.</li>

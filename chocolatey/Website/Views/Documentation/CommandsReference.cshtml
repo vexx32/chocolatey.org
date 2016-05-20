@@ -33,58 +33,59 @@
 <h2 id="see-help-menu-in-action">See Help Menu In Action</h2>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action" /></p>
 <h2 id="default-options-and-switches">Default Options and Switches</h2>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">
- <span class="kw">-?</span>, --help, -h
-     <span class="kw">Prints</span> out the help menu.
+<pre class="brush: bash">
+ -?, --help, -h
+     Prints out the help menu.
 
- <span class="kw">-d</span>, --debug
-     <span class="kw">Debug</span> - Run in Debug Mode.
+ -d, --debug
+     Debug - Run in Debug Mode.
 
- <span class="kw">-v</span>, --verbose
-     <span class="kw">Verbose</span> - See verbose messaging.
+ -v, --verbose
+     Verbose - See verbose messaging.
 
-     <span class="kw">--acceptlicense</span>, --accept-license
-     <span class="kw">AcceptLicense</span> - Accept license dialogs automatically.
+     --acceptlicense, --accept-license
+     AcceptLicense - Accept license dialogs automatically.
 
- <span class="kw">-y</span>, --yes, --confirm
-     <span class="kw">Confirm</span> all prompts - Chooses affirmative answer instead of prompting. 
-       <span class="kw">Implies</span> --accept-license
+ -y, --yes, --confirm
+     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+       Implies --accept-license
 
- <span class="kw">-f</span>, --force
-     <span class="kw">Force</span> - force the behavior
+ -f, --force
+     Force - force the behavior
 
-     <span class="kw">--noop</span>, --whatif, --what-if
-     <span class="kw">NoOp</span> - Don<span class="st">&#39;t actually do anything.</span>
+     --noop, --whatif, --what-if
+     NoOp - Don&#39;t actually do anything.
 
-<span class="st"> -r, --limitoutput, --limit-output</span>
-<span class="st">     LimitOutput - Limit the output to essential information</span>
+ -r, --limitoutput, --limit-output
+     LimitOutput - Limit the output to essential information
 
-<span class="st">     --execution-timeout=VALUE</span>
-<span class="st">     CommandExecutionTimeoutSeconds - Override the default execution timeout </span>
-<span class="st">       in the configuration of 2700 seconds.</span>
+     --execution-timeout=VALUE
+     CommandExecutionTimeoutSeconds - Override the default execution timeout 
+       in the configuration of 2700 seconds.
 
-<span class="st"> -c, --cache, --cachelocation, --cache-location=VALUE</span>
-<span class="st">     CacheLocation - Location for download cache, defaults to %TEMP% or value </span>
-<span class="st">       in chocolatey.config file.</span>
+ -c, --cache, --cachelocation, --cache-location=VALUE
+     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+       in chocolatey.config file.
 
-<span class="st">     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build</span>
-<span class="st">     AllowUnofficialBuild - When not using the official build you must set </span>
-<span class="st">       this flag for choco to continue.</span>
+     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
+     AllowUnofficialBuild - When not using the official build you must set 
+       this flag for choco to continue.
 
-<span class="st">     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output</span>
-<span class="st">     FailOnStandardError - Fail on standard error output (stderr), typically </span>
-<span class="st">       received when running external commands during install providers. This </span>
-<span class="st">       overrides the feature failOnStandardError.</span>
+     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
+     FailOnStandardError - Fail on standard error output (stderr), typically 
+       received when running external commands during install providers. This 
+       overrides the feature failOnStandardError.
 
-<span class="st">     --use-system-powershell</span>
-<span class="st">     UseSystemPowerShell - Execute PowerShell using an external process </span>
-<span class="st">       instead of the built-in PowerShell host. Available in 0.9.10+.</span></code></pre></div>
+     --use-system-powershell
+     UseSystemPowerShell - Execute PowerShell using an external process 
+       instead of the built-in PowerShell host. Available in 0.9.10+.
+</pre>
 <h2 id="how-to-pass-options-switches">How To Pass Options / Switches</h2>
 <p>You can pass options and switches in the following ways:</p>
 <ul>
 <li>Unless stated otherwise, an option/switch should only be passed one<br />
 time. Otherwise you may find weird/non-supported behavior.</li>
-<li><code>-</code>, <code>/</code>, or <code>--</code> (one character switches should not use <code>--</code>)</li>
+<li>-</code>, <code>/</code>, or <code>--</code> (one character switches should not use <code>--</code>)</li>
 <li><strong>Option Bundling / Bundled Options</strong>: One character switches can be<br />
 bundled. e.g. <code>-d</code> (debug), <code>-f</code> (force), <code>-v</code> (verbose), and <code>-y</code><br />
 (confirm yes) can be bundled as <code>-dfvy</code>.</li>

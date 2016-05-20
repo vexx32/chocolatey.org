@@ -8,7 +8,7 @@
 download. Use Install-ChocolateyInstallPackage when local or embedded<br />
 file.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="powershell"><code>Install-ChocolateyPackage `
+<pre class="brush: ps">Install-ChocolateyPackage `
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
   [-SilentArgs &lt;String&gt;] `
@@ -20,7 +20,7 @@ file.</p>
   [-Checksum64 &lt;String&gt;] `
   [-ChecksumType64 &lt;String&gt;] `
   [-Options &lt;Hashtable&gt;] `
-  [-UseOnlyPackageSilentArguments] [&lt;CommonParameters&gt;]</code></pre>
+  [-UseOnlyPackageSilentArguments] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This will download a native installer from a url and install it on your<br />
 machine. Has error handling built in.</p>
@@ -480,7 +480,7 @@ use the ones available with the package. Available in 0.9.10+.</p>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 $packageName= &#39;bob&#39;
 $toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
 $url        = &#39;https://somewhere.com/file.msi&#39;
@@ -500,25 +500,25 @@ $packageArgs = @@{
   checksumType64= &#39;sha256&#39;
 }
 
-Install-ChocolateyPackage @@packageArgs</code></pre>
+Install-ChocolateyPackage @@packageArgs</pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="powershell"><code>Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; `
+<pre class="brush: ps">Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; `
 &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39; `
- &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;</code></pre>
+ &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;</pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre class="powershell"><code>Install-ChocolateyPackage &#39;mono&#39; &#39;exe&#39; &#39;/SILENT&#39; `
-&#39;http://somehwere/something.exe&#39; -ValidExitCodes @@(0,21)</code></pre>
+<pre class="brush: ps">Install-ChocolateyPackage &#39;mono&#39; &#39;exe&#39; &#39;/SILENT&#39; `
+&#39;http://somehwere/something.exe&#39; -ValidExitCodes @@(0,21)</pre>
 <p><strong>EXAMPLE 4</strong></p>
-<pre class="powershell"><code>Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; `
+<pre class="brush: ps">Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; `
 &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe&#39; `
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe&#39; `
  -checksum &#39;9383f12958aafc425923e322460a84de&#39; -checksumType = &#39;md5&#39; `
- -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</code></pre>
+ -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</pre>
 <p><strong>EXAMPLE 5</strong></p>
-<pre class="powershell"><code>Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
-</code></pre>
+<pre class="brush: ps">Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
+</pre>
 <p><strong>EXAMPLE 6</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 $options =
 @@{
   Headers = @@{
@@ -530,7 +530,7 @@ $options =
   }
 }
 
-Install-ChocolateyPackage -PackageName &#39;package&#39; -FileType &#39;exe&#39; -SilentArgs &#39;/S&#39; &#39;https://somelocation.com/thefile.exe&#39; -Options $options</code></pre>
+Install-ChocolateyPackage -PackageName &#39;package&#39; -FileType &#39;exe&#39; -SilentArgs &#39;/S&#39; &#39;https://somelocation.com/thefile.exe&#39; -Options $options</pre>
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
@@ -542,11 +542,11 @@ Install-ChocolateyPackage -PackageName &#39;package&#39; -FileType &#39;exe&#39;
 <p>This will download a native installer from a url and install it on your machine. Has error handling built in. You do not need to surround this with try catch if it is the only thing in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>.</p>
 <p><strong>NOTE:</strong> This command will assert UAC/Admin privileges on the machine.</p>
 <h2 id="usage">Usage</h2>
-<pre class="powershell"><code>Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64bit `
+<pre class="brush: ps">Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64bit `
  -validExitCodes $validExitCodes -checksum $checksum -checksumType $checksumType `
- -checksum64 $checksum64 -checksumType64 $checksumType64</code></pre>
+ -checksum64 $checksum64 -checksumType64 $checksumType64</pre>
 <h2 id="examples-1">Examples</h2>
-<pre class="powershell"><code>Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; ` 
+<pre class="brush: ps">Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; ` 
  &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39; `
  &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;
 
@@ -560,43 +560,43 @@ Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; 
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe&#39; `
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe&#39; `
  -checksum &#39;9383f12958aafc425923e322460a84de&#39; -checksumType = &#39;md5&#39; `
- -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</code></pre>
+ -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</pre>
 <h2 id="parameters-1">Parameters</h2>
 <ul>
-<li><p><code>-packageName</code></p>
+<li><p>-packageName</code></p>
 <p>This is an arbitrary name.</p>
 <p>Example: <code>'7zip'</code></p></li>
-<li><p><code>-installerType</code></p>
+<li><p>-installerType</code></p>
 <p>Pick only one to leave here.</p>
 <p>Example: <code>'exe'</code> or <code>'msi'</code> or <code>'msu'</code></p></li>
-<li><p><code>-silentArgs</code></p>
+<li><p>-silentArgs</code></p>
 <p>Silent and other arguments to pass to the native installer.</p>
 <p>Example: <code>'/S'</code></p>
 <p>If there are no silent arguments, pass this as <code>''</code></p></li>
-<li><p><code>-url</code></p>
+<li><p>-url</code></p>
 <p>The Url to the native installer.</p>
 <p>Example: <code>'http://stexbar.googlecode.com/files/StExBar-1.8.3.msi'</code></p></li>
-<li><p><code>-url64bit</code> <em>(optional)</em></p>
+<li><p>-url64bit</code> <em>(optional)</em></p>
 <p>If there is a 64 bit installer available, put the link next to the other url. Chocolatey will automatically determine if the user is running a 64bit machine or not and adjust accordingly.</p>
 <p>Example: <code>'http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi'</code></p>
 <p>Defaults to the 32bit url.</p></li>
-<li><p><code>-validExitCodes</code> <em>(optional)</em></p>
+<li><p>-validExitCodes</code> <em>(optional)</em></p>
 <p>If there are other valid exit codes besides zero signifying a successful install, please pass <code>-validExitCodes</code> with the value, including 0 as long as it is still valid.</p>
 <p>Example: <code>-validExitCodes @@(0,44)</code></p>
 <p>Defaults to <code>@@(0)</code>.</p></li>
-<li><p><code>-checksum</code> <em>(optional)</em></p>
+<li><p>-checksum</code> <em>(optional)</em></p>
 <p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
 <p>Example: <code>-checksum 'C67962F064924F3C7B95D69F88E745C0'</code></p>
 <p>Defaults to ``.</p></li>
-<li><p><code>-checksumType</code> <em>(optional)</em></p>
+<li><p>-checksumType</code> <em>(optional)</em></p>
 <p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
 <p>Example: <code>-checksumType 'sha1'</code></p>
 <p>Defaults to <code>md5</code>.</p></li>
-<li><p><code>-checksum64</code> <em>(optional)</em></p>
+<li><p>-checksum64</code> <em>(optional)</em></p>
 <p>This allows the x64 file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
 <p>Example: <code>-checksum64 'C67962F064924F3C7B95D69F88E745C0'</code></p>
 <p>Defaults to ``.</p></li>
-<li><p><code>-checksumType64</code> <em>(optional)</em></p>
+<li><p>-checksumType64</code> <em>(optional)</em></p>
 <p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
 <p>Example: <code>-checksumType64 'sha1'</code></p>
 <p>Defaults to checksumType&#39;s value.</p></li>

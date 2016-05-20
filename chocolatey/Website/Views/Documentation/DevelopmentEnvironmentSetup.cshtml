@@ -17,7 +17,7 @@
 <li>builds the source with rake</li>
 </ul>
 <h3 id="setup.ps1">setup.ps1:</h3>
-<pre class="powershell"><code>function Install-NeededFor {
+<pre class="brush: ps">function Install-NeededFor {
 param(
    [string] $packageName = &#39;&#39;
   ,[bool] $defaultAnswer = $true
@@ -77,18 +77,18 @@ foreach ($nugetConfig in $nugetConfigs) {
 }
 
 rake
-</code></pre>
+</pre>
 <h3 id="setup.cmd">setup.cmd:</h3>
-<pre><code>@@echo off
+<pre class="brush: plain">@@echo off
 SET DIR=%~dp0%
 @@PowerShell -NoProfile -ExecutionPolicy unrestricted -Command &quot;&amp; &#39;%DIR%setup.ps1&#39; %*&quot;
 pause
-</code></pre>
+</pre>
 <p>The original is <a href="https://gist.github.com/1107920">on github</a>.</p>
 <h2 id="getting-the-source">Getting the Source</h2>
 <p>Create a package for your project and call it projectname<em>.dev</em>. It should take a nuspec dependency on whatever source control you use. So in the case of git, a dependency on msysgit.<br />
 Now, in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>, you just need something like the following:</p>
-<pre class="powershell"><code>try {
+<pre class="brush: ps">try {
 
   $dirSelected = Read-Host &quot;Please tell me the directory where you want to clone dropkick. Press enter to use .\\dropkick&quot;
 
@@ -103,11 +103,11 @@ Error Occurred: $($_.Exception.Message)
 &quot;@@ | Write-Host -ForegroundColor White -BackgroundColor DarkRed
     Start-Sleep 8
     throw
-}</code></pre>
+}</pre>
 <p>The above is from <a href="https://github.com/ferventcoder/nugetpackages/blob/master/dropkick.dev/tools/chocolateyInstall.ps1">DropkicK.Dev</a></p>
 <h2 id="setup-a-full-environment-including-visual-studio-express-iis-express-and-sql-server-express-with-management-studio">Setup A Full Environment Including Visual Studio Express, IIS Express and SQL Server Express (with Management Studio)</h2>
 <p>The original <a href="https://gist.github.com/3825023">gist</a></p>
-<pre class="powershell"><code>$scriptDir = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
+<pre class="brush: ps">$scriptDir = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
 
 function Install-NeededFor {
 param(
@@ -252,5 +252,5 @@ if (Install-NeededFor &#39;website&#39; $false) {
 }
 
 Write-Host &quot;If you have made it here without errors, you should be setup and ready to hack on the apps.&quot;
-Write-Warning &quot;If you see any failures happen, you may want to reboot and continue to let installers catch up. This script is idempotent and will only apply changes that have not yet been applied.&quot;</code></pre>
+Write-Warning &quot;If you see any failures happen, you may want to reboot and continue to let installers catch up. This script is idempotent and will only apply changes that have not yet been applied.&quot;</pre>
 </article>

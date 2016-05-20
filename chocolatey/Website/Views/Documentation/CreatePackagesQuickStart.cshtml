@@ -18,10 +18,10 @@
 <h2 id="quick-start-guide">Quick start guide</h2>
 <ul>
 <li><strong>Generate new package</strong>:</li>
-<li><code>choco new -h</code> will get you started seeing options available to you.</li>
+<li>choco new -h</code> will get you started seeing options available to you.</li>
 <li>Once you figured out all of your options, you should move forward with generating your template.</li>
 <li><strong>Edit template</strong> using common sense</li>
-<li><code>cd package-name</code></li>
+<li>cd package-name</code></li>
 <li>Edit the <code>package-name.nuspec</code> configuration file.</li>
 <li>Edit the <code>./tools/chocolateyInstall.ps1</code> install script.
 <ul>
@@ -30,7 +30,7 @@
 <li>You <strong>must</strong> save your files with <em>UTF–8</em> character encoding without BOM. (<a href="https://github.com/chocolatey/choco/wiki/CreatePackages#character-encoding">Details</a>)</li>
 <li><strong>Build the package</strong></li>
 <li>Still in package directory</li>
-<li><code>choco pack</code>
+<li>choco pack</code>
 <ul>
 <li>&quot;Successfully created package-name.1.1.0.nupkg&quot;</li>
 </ul></li>
@@ -38,12 +38,12 @@
 <li><strong>Testing should probably be done on a Virtual Machine</strong></li>
 <li>In your package directory, use:
 <ul>
-<li><code>choco install package-name -s &quot;$pwd&quot; -f</code> - powershell</li>
-<li><code>choco install package-name -s '%cd%' -f</code> - everywhere else</li>
+<li>choco install package-name -s &quot;$pwd&quot; -f</code> - powershell</li>
+<li>choco install package-name -s '%cd%' -f</code> - everywhere else</li>
 </ul></li>
 <li>Otherwise, use the full path:
 <ul>
-<li><code>choco install package-name -source 'c:\path\to\Package\' -f</code></li>
+<li>choco install package-name -source 'c:\path\to\Package\' -f</code></li>
 </ul></li>
 <li><strong>Push the package</strong> to the Chocolatey community feed repository:</li>
 <li>Get a Chocolatey account:
@@ -51,8 +51,8 @@
 <li><a href="https://chocolatey.org/account/register">Register</a></li>
 </ul></li>
 <li>Copy the API key <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "<a href=" })"https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>">from your Chocolatey account</a>.</li>
-<li><code>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
-<li><code>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
+<li>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
+<li>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
 </ul>
 <h2 id="common-mistakes">Common Mistakes</h2>
 <ul>
@@ -67,30 +67,30 @@
 </ul>
 <h2 id="environmental-variables">Environmental Variables</h2>
 <ul>
-<li><code>%ChocolateyInstall%</code> - Chocolatey installation directory</li>
-<li><code>%ChocolateyInstall%\lib\package-name</code> - Package directory</li>
-<li><code>%cd%</code> or <code>$pwd</code> - current directory</li>
+<li>%ChocolateyInstall%</code> - Chocolatey installation directory</li>
+<li>%ChocolateyInstall%\lib\package-name</code> - Package directory</li>
+<li>%cd%</code> or <code>$pwd</code> - current directory</li>
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Here are some simple examples.</p>
 <h3 id="chocolateyinstall.ps1-for-.exe-installer">chocolateyInstall.ps1 for .exe installer</h3>
-<pre class="powershell"><code>$name = &#39;Package Name&#39;
+<pre class="brush: ps">$name = &#39;Package Name&#39;
 $installerType = &#39;exe&#39;
 $url  = &#39;http://path/to/download/installer.exe&#39;
 $silentArgs = &#39;/VERYSILENT&#39;
 
-Install-ChocolateyPackage $name $installerType $silentArgs $url</code></pre>
+Install-ChocolateyPackage $name $installerType $silentArgs $url</pre>
 <p><strong>NOTE:</strong> You have to figure out the command line switch to make the installer silent, e.g. <strong>/VERYSILENT</strong>. This changes from installer to installer.</p>
 <h3 id="chocolateyinstall.ps1-for-.msi-installer">chocolateyInstall.ps1 for .msi installer</h3>
 <p><strong>NOTE:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It&#39;s best to work with the widest compatibility of systems out there.</p>
-<pre class="powershell"><code>$packageName = &#39;Package Name&#39;
+<pre class="brush: ps">$packageName = &#39;Package Name&#39;
 $installerType = &#39;msi&#39;
 $url = &#39;http://path/to/download/installer_x86.msi&#39;
 $url64 = &#39;http://path/to/download/installer_x64.msi&#39;
 $silentArgs = &#39;/quiet&#39;
 $validExitCodes = @@(0,3010)
 
-Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes</code></pre>
+Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes</pre>
 <h3 id="parsing-package-parameters">Parsing Package Parameters</h3>
 <p>For a complete example of how you can use the PackageParameters argument of the <code>choco install</code> command, see this <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-parse-package-parameters-argument" })">How-To</a>.</p>
 <h2 id="tips">Tips</h2>

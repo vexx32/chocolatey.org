@@ -6,11 +6,11 @@
 <h1 id="get-chocolateyunzip">Get-ChocolateyUnzip</h1>
 <p>Unzips an archive file and returns the location for further processing.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="powershell"><code>Get-ChocolateyUnzip `
+<pre class="brush: ps">Get-ChocolateyUnzip `
   [-FileFullPath &lt;String&gt;] `
   [-Destination &lt;String&gt;] `
   [-SpecificFolder &lt;String&gt;] `
-  [-PackageName &lt;String&gt;]</code></pre>
+  [-PackageName &lt;String&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This unzips files using the 7-zip standalone command line tool 7za.exe.<br />
 Supported archive formats are: 7z, lzma, cab, zip, gzip, bzip2, and tar.</p>
@@ -162,10 +162,10 @@ uninstalls</p>
 </table>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="powershell"><code>
+<pre class="brush: ps">
 # Path to the folder where the script is executing
 $toolsDir = (Split-Path -parent $MyInvocation.MyCommand.Definition)
-Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $toolsDir</code></pre>
+Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $toolsDir</pre>
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>

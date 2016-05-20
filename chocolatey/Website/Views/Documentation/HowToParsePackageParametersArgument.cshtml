@@ -9,7 +9,7 @@
 <p><strong>NOTE:</strong> See <a href="https://github.com/chocolatey/choco/issues/312">#312</a> for Chocolatey v0.9.10 adding a helper to do the below with almost no boilerplate.</p>
 <p>This <em>How-To</em> focuses on how a package creator can make use of the PackageParameters argument within their package, and how they can parse the string which is passed through into their package from the installation command.</p>
 <h2 id="code-sample">Code Sample</h2>
-<pre class="powershell"><code>
+<pre class="brush: ps">
   $arguments = @@{}
 
   # Let&#39;s assume that the input string is something like this, and we will use a Regular Expression to parse the values
@@ -69,7 +69,7 @@
   $silentArgs = &quot;/S /Port:&quot; + $port + &quot; /Edition:&quot; + $edition + &quot; /InstallationPath:&quot; + $installationPath
   if ($additionalTools) { $silentArgs += &quot; /Additionaltools&quot; }
 
-  Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quot;</code></pre>
+  Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quot;</pre>
 <h2 id="what-does-this-mean">What does this mean?</h2>
 <p>The Code Sample assumes that there will be no PackageParameters passed into it, as a result, we need to define a number of default values for each of the variables contained within the script. In this case, the <code>port</code>, the <code>edition</code>, the <code>additionalTools</code> and the <code>installationPath</code>.</p>
 <p>Once that is done, assuming that the PackageParameters contains &quot;something&quot;, use a Regular Expression to parse each of the values into a dictionary. Here, we are assuming that the package parameters will come through in a pre-defined format, such as <code>/Port:82 /Edition:LicenseKey1 /AdditionalTools /InstallationPath:'C:\temp\folder with spaces'</code>. Now, this format can be anything you want it to be. What is shown here is just <strong>one</strong> way of doing it. If you need to deviate from this sample structure, it is likely that you will need to update the regular expression to account for this.</p>
@@ -77,7 +77,7 @@
 <h2 id="add-package-parameter-information-to-the-description">Add Package Parameter Information to the Description</h2>
 <p>Be sure to let folks know about the package parameters (<strong>Note:</strong> this will be a holding review item by moderators).</p>
 <p>Here&#39;s an example:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;description&gt;</span>
+<pre class="brush: xml">    &lt;description&gt;
 Git (for Windows) - Git is a powerful distributed Source Code Management tool. If you just want to use Git to do your version control in Windows, you will need to download Git for Windows, run the installer, and you are ready to start.
 
 Note: Git for Windows is a project run by volunteers, so if you want it to improve, volunteer!
@@ -94,16 +94,16 @@ The following package parameters can be set:
 
 These parameters can be passed to the installer with the use of `-params`.
 For example: `-params &#39;&quot;/GitAndUnixToolsOnPath /NoAutoCrlf&quot;&#39;`.
-    <span class="kw">&lt;/description&gt;</span></code></pre></div>
+    &lt;/description&gt;</pre>
 <h2 id="installing-the-package">Installing the Package</h2>
 <p>Now, in this example, if we were to call:</p>
-<p><code>choco install &lt;packageName&gt;</code></p>
+<p>choco install &lt;packageName&gt;</code></p>
 <p>The output would be:</p>
-<pre><code>This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</code></pre>
+<pre class="brush: plain">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</pre>
 <p>i.e.&nbsp; it is using the default values which we made at the top of the file</p>
 <p>However, if we instead used:</p>
-<pre><code>choco install &lt;packageName&gt; -packageParameters &#39;&quot;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&quot;&#39;</code></pre>
+<pre class="brush: plain">choco install &lt;packageName&gt; -packageParameters &#39;&quot;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&quot;&#39;</pre>
 <p>Keep in mind how to pass pkg args: <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches" class="uri">https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches</a></p>
 <p>The output would be:</p>
-<pre><code>This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</code></pre>
+<pre class="brush: plain">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</pre>
 </article>

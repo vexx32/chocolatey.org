@@ -85,12 +85,12 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <p><strong>Note:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It&#39;s best to work with the widest compatibility of systems out there.</p>
 <p>There is a video showing the creation of a package: <a href="http://www.youtube.com/watch?v=Wt_unjS_SUo" class="uri">http://www.youtube.com/watch?v=Wt_unjS_SUo</a><br />
 The video is a bit outdated in showing the contents of the chocolateyInstall.ps1. Have a look at what the <a href="https://github.com/ferventcoder/chocolatey-packages/blob/master/manual/windirstat/tools/chocolateyInstall.ps1">chocolateyInstall.ps1</a> looks like now:</p>
-<pre class="powershell"><code>$packageName = &#39;windirstat&#39;
+<pre class="brush: ps">$packageName = &#39;windirstat&#39;
 $fileType = &#39;exe&#39;
 $url = &#39;http://prdownloads.sourceforge.net/windirstat/windirstat1_1_2_setup.exe&#39;
 $silentArgs = &#39;/S&#39;
 
-Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
+Install-ChocolateyPackage $packageName $fileType $silentArgs $url</pre>
 <h2 id="during-which-scenarios-will-my-custom-scripts-be-triggered">During which scenarios will my custom scripts be triggered?</h2>
 <p>The table below shows which scripts are available, and which command(s) will cause them to be run.</p>
 <table>
@@ -131,15 +131,15 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
 <p>The <code>Nuspec</code> contains basic information such as the version, license, maintainer, and package dependencies.</p>
 <p><strong>Note:</strong> If your package uses recently introduced functionality, you might want to include <code>chocolatey</code> as a dependency with the version being the lowest version that has the introduced functionality. Otherwise the installation could fail for users with an older version of <code>Chocolatey</code> installed.</p>
 <p>You can indicate the <code>Chocolatey</code> dependency like any other dependency. E.g.:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;dependencies&gt;</span>
-      <span class="kw">&lt;dependency</span><span class="ot"> id=</span><span class="st">&quot;chocolatey&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.9.8.21&quot;</span> <span class="kw">/&gt;</span>
-    <span class="kw">&lt;/dependencies&gt;</span></code></pre></div>
+<pre class="brush: xml">    &lt;dependencies&gt;
+      &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.8.21&quot; /&gt;
+    &lt;/dependencies&gt;</pre>
 <p>Logically, the version is based on the lowest compatible version. But if you don&#39;t know and used a lot of sorcery in your package, depend on the version of <code>Chocolatey</code> that you succesfully tested your package on.</p>
 <p><strong>See also:</strong> <a href="http://docs.nuget.org/docs/reference/versioning">Nuget Version Reference</a></p>
 <h2 id="but-for-real-how-do-i-create-a-package">But for real, how do I create a package?</h2>
 <ul>
 <li><strong>Generate new package</strong>:</li>
-<li><code>choco new -h</code> will get you started seeing options available to you.</li>
+<li>choco new -h</code> will get you started seeing options available to you.</li>
 <li>Once you figured out all of your options, you should move forward with generating your template.</li>
 </ul>
 <h2 id="install-only-on-some-versions-of-windows">Install Only On Some Versions of Windows</h2>
@@ -153,9 +153,9 @@ If you think, the user should be able to customize this path and you, the packag
 <h3 id="the-package-directory-in-chocolateyinstalllibmypackage">2. The package directory in <code>%ChocolateyInstall%\lib\mypackage</code></h3>
 <p>You can extract the application within the package directory itself (or even ship an extracted version with the package). This allows Chocolatey to automatically find executables and put those on <code>%path%</code>.</p>
 <h3 id="path-provided-by-the-get-binroot-helper---will-be-deprecated-later-closer-to-v1-but-okay-to-use-for-now">3. Path provided by the <code>Get-BinRoot</code> helper - will be deprecated later (closer to v1) but okay to use for now</h3>
-<p>The path returned by the helper <code>Get-BinRoot</code> can be used as the parent directory for the installation. <code>Get-BinRoot</code> will return the value of the environment variable <code>%ChocolateyBinRoot%</code>. If the value does not contain a drive reference, the system drive will be prepended. If the environment variable is not set, the default path (<del><code>C:\Tools</code></del> <code>C:\Chocolatey\bin</code>) will be returned.</p>
+<p>The path returned by the helper <code>Get-BinRoot</code> can be used as the parent directory for the installation. <code>Get-BinRoot</code> will return the value of the environment variable <code>%ChocolateyBinRoot%</code>. If the value does not contain a drive reference, the system drive will be prepended. If the environment variable is not set, the default path (<del>C:\Tools</code></del> <code>C:\Chocolatey\bin</code>) will be returned.</p>
 <p>As an example, <a href="https://github.com/ferventcoder/chocolatey-packages/blob/master/manual/mingw/tools/chocolateyInstall.ps1">MinGW</a> uses <code>%ChocolateyBinRoot%</code>. If the environment variable is not set, it will be set to <code>c:\tools</code> and MinGW will install to <code>C:\Tools\MinGW</code> by default. If <code>%ChocolateyBinRoot%</code> is set to &quot;C:\Common\bin&quot;, MinGW installs to <code>C:\Common\bin\MinGW</code>.</p>
-<p><code>%ChocolateyBinRoot%</code> gives the Chocolatey user a way of controlling where packages are installed. If you want to allow customizing the installation path, then this is currently the way to go.</p>
+<p>%ChocolateyBinRoot%</code> gives the Chocolatey user a way of controlling where packages are installed. If you want to allow customizing the installation path, then this is currently the way to go.</p>
 <h3 id="make-it-clear-in-the-package-description">Make it clear in the package description</h3>
 <p>No matter how you decide, you are advised to state the default installation directory in your package description. This prevents confusion about where the application will end up being installed.</p>
 <p>If you allow customizing the installation path, then append instructions on how to do that, too.</p>
@@ -232,12 +232,12 @@ chocolateyInstall or chocolateyUninstall scripts.</p>
 <p>If you have executables in the package or brought into the package folder during PowerShell run and you want to exclude them you need to create an empty file named exactly like (<strong>case sensitive</strong>) the executable with <code>.ignore</code> suffixed on the end in the same directory where the executable is or will be.</p>
 <p>Example: In the case of <code>Bob.exe</code> you would create a file named <code>Bob.exe.ignore</code> and that file would not get a redirect batch link. The Chocolatey package has an example of that. To further expand, <code>bob.exe.ignore</code> would not work because it doesn&#39;t have the correct casing.</p>
 <p>Here&#39;s a great <a href="https://github.com/ferventcoder/chocolatey-packages/blob/6ea7c087bd999d428a564b5d7e236ae998ef72e9/automatic/git.commandline/tools/chocolateyInstall.ps1#L13-L20">programmatic example</a>:</p>
-<pre class="powershell"><code>$files = get-childitem $installDir -include *.exe -recurse
+<pre class="brush: ps">$files = get-childitem $installDir -include *.exe -recurse
 
 foreach ($file in $files) {
   #generate an ignore file
   New-Item &quot;$file.ignore&quot; -type file -force | Out-Null
-}</code></pre>
+}</pre>
 <p><a name="how-do-i-set-up-batch-redirects-for-applications-that-have-a-gui"></a></p>
 <h2 id="how-do-i-set-up-shims-for-applications-that-have-a-gui">How do I set up shims for applications that have a GUI?</h2>
 <p>If you don&#39;t want to see a hanging window when you open an application from the command line that was set up with Chocolatey, you want to create a file next to the executable that is named exactly the same (<strong>case sensitive</strong>) with <code>.gui</code> suffixed on the end.</p>
@@ -249,16 +249,16 @@ foreach ($file in $files) {
 <p><strong>NOTE</strong>: Testing your package can be done in the same way as the verifier - take a look at <a href="https://github.com/chocolatey/package-verifier-vagrant">Chocolatey Verifier Testing</a>.</p>
 <p>To test the package you just built, open a command line shell and navigate to the directory where the <code>*.nupkg</code> file is located. Then type:</p>
 <p>PowerShell:</p>
-<pre class="powershell"><code> choco install packageName -fdv -s $pwd</code></pre>
+<pre class="brush: ps"> choco install packageName -fdv -s $pwd</pre>
 <p>Other shells, including <code>cmd.exe</code>:</p>
-<pre class="cmd"><code> choco install packageName -fdv -s &quot;%cd%&quot;</code></pre>
+<pre class="cmd"> choco install packageName -fdv -s &quot;%cd%&quot;</pre>
 <p>This will install the package right out of your source. As you find things you may need to fix, using <code>--force</code> (<code>-f</code>) will remove and reinstall the package from the updated <code>*.nupkg</code>.</p>
 <p><strong>NOTE:</strong> If you are using a Semver dash in your package version (such as 1.0.0-beta), you will need to use the <code>-pre</code> switch or else you will get <em>Unable to find package</em> errors from <code>choco install</code>. You can also specify <code>-version 1.0.0-beta</code> to try to install that exact version.</p>
-<p><code>%cd%</code> points to the current directory. You can specify multiple directories separated by a semicolon;</p>
+<p>%cd%</code> points to the current directory. You can specify multiple directories separated by a semicolon;</p>
 <p>When your <code>nuspec</code> specifies dependencies that are not in your source, you should add their paths to the source directory. E.g. in the case of Chocolatey itself:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;dependencies&gt;</span>
-      <span class="kw">&lt;dependency</span><span class="ot"> id=</span><span class="st">&quot;chocolatey&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.9.8.20&quot;</span> <span class="kw">/&gt;</span>
-    <span class="kw">&lt;/dependencies&gt;</span></code></pre></div>
+<pre class="brush: xml">    &lt;dependencies&gt;
+      &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.8.20&quot; /&gt;
+    &lt;/dependencies&gt;</pre>
 <p>You&#39;ll need to append the API path like so:<br />
 <code>-source &quot;'%cd%;https://chocolatey.org/api/v2/'&quot;</code> (note the double quotes bookending the apostrophes here). See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">passing options with quotes</a>. Also, use <code>$pwd</code> if you are in PowerShell.exe. <strong>Note:</strong> If you need to do this, please ensure you run <code>choco pack</code> first. This method of passing a source won&#39;t work calling a nuspec or nupkg directly as it will override the source passed to the local folder.</p>
 <p>You can also use the <code>-debug</code> switch on <code>choco install</code> to provide more information.</p>

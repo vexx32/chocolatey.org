@@ -16,20 +16,20 @@ switches with one dash (<code>-</code>). For more details, see<br />
 feeds, it has a requirement that it implements the proper OData<br />
 endpoints required for NuGet packages.</p>
 <h2 id="usage">Usage</h2>
-<pre><code>choco push [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]
-cpush [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]</code></pre>
+<pre class="brush: plain">choco push [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]
+cpush [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]</pre>
 <p><strong>NOTE:</strong> If there is more than one nupkg file in the folder, the command<br />
 will require specifying the path to the file.</p>
 <h2 id="examples">Examples</h2>
-<pre><code>choco push --source https://chocolatey.org/
+<pre class="brush: plain">choco push --source https://chocolatey.org/
 choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -t 500
-choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;</code></pre>
+choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;</pre>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>To use this command, you must have your API key saved for the community<br />
 feed (chocolatey.org) or the source you want to push to. Or you can<br />
-explicitly pass the apikey to the command. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })"><code>apikey</code></a> command help<br />
+explicitly pass the apikey to the command. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })">apikey</code></a> command help<br />
 for instructions on saving your key:</p>
-<pre><code>choco apikey -?</code></pre>
+<pre class="brush: plain">choco apikey -?</pre>
 <p>A common error is <code>Failed to process request. 'The specified API key   does not provide the authority to push packages.' The remote server   returned an error: (403) Forbidden..</code> This means the package already<br />
 exists with a different user (API key). The package could be unlisted.<br />
 You can verify by going to <a href="https://chocolatey.org/packages/packageName" class="uri">https://chocolatey.org/packages/packageName</a>.<br />
@@ -42,7 +42,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre><code>
+<pre class="brush: plain">
  -?, --help, -h
      Prints out the help menu.
 
@@ -101,7 +101,7 @@ out multiple package calls when wanting to pass specific options.</p>
  -t, --timeout=VALUE
      Timeout (in seconds) - The time to allow a package push to occur before 
        timing out. Defaults to 300 seconds (5 minutes).
-</code></pre>
+</pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco push -h</code>.</p>
 </article>

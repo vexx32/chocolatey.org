@@ -10,9 +10,9 @@
 <h2 id="explicit-proxy-settings">Explicit Proxy Settings</h2>
 <p>Chocolatey has explicit proxy support starting with 0.9.9.9.</p>
 <p>You can simply configure 1 or 3 settings and Chocolatey will use a proxy server. <code>proxy</code> is required and is the location and port of the proxy server. <code>proxyUser</code> and <code>proxyPassword</code> are optional. The values for user/password are only used for credentials when both are present.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">choco</span> config set proxy <span class="kw">&lt;</span>locationandport<span class="kw">&gt;</span>
-<span class="kw">choco</span> config set proxyUser <span class="kw">&lt;</span>username<span class="kw">&gt;</span>
-<span class="kw">choco</span> config set proxyPassword <span class="kw">&lt;</span>passwordThatGetsEncryptedInFile<span class="kw">&gt;</span></code></pre></div>
+<pre class="brush: bash">choco config set proxy &lt;locationandport&gt;
+choco config set proxyUser &lt;username&gt;
+choco config set proxyPassword &lt;passwordThatGetsEncryptedInFile&gt;</pre>
 <h3 id="example">Example</h3>
 <p>Running the following commands in 0.9.9.9:<br />
 ~<del>sh<br />
@@ -40,7 +40,7 @@ choco config set proxyPassword 123Sup#rSecur3<br />
 <li>Ensure you have the appropriate domain prefix for the user name. Try: &quot;˜AD\UserName&#39; or just &quot;˜UserName&#39;.</li>
 <li>Run the script to install Chocolatey.</li>
 </ol>
-<pre class="powershell"><code>function Download-File {
+<pre class="brush: ps">function Download-File {
 param (
   [string]$url,
   [string]$file
@@ -54,7 +54,7 @@ param (
     $downloader.UseDefaultCredentials = $true
     $downloader.Proxy = $proxy
     $downloader.DownloadFile($url, $file)
-}</code></pre>
+}</pre>
 <h3 id="still-having-trust-issues">Still having trust issues?</h3>
 <p>You&#39;ve tried everything and Chocolatey still won&#39;t install -</p>
 <blockquote>
