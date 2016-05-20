@@ -3151,7 +3151,7 @@ main > article{
 }
 
 .pricing-table th {
-  font-size: 25px; 
+  font-size: 22px; 
   text-align: center;
   color: #fff;
   background: #283846;
@@ -3160,7 +3160,7 @@ main > article{
 .pricing-table td {
   text-align: center;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 
@@ -3509,3 +3509,15 @@ fieldset.form {
              .sexy-table tfoot tr {
                 border-top: 2px solid #333;
              }
+
+
+.syntaxhighlighter .container {
+    overflow-y: hidden !important;
+    white-space: pre-wrap !important;
+    max-width: 100%;
+    
+}
+
+.syntaxhighlighter  {
+        white-space: pre-wrap !important;
+}

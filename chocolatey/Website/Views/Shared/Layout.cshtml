@@ -1,37 +1,32 @@
 ﻿@{
-    Layout = "_BaseLayout.cshtml";
+  Layout = "_BaseLayout.cshtml";
 }
-
 @{
-    var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
+  var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
 }
-
 @section css
 {
-    @RenderSection("css", required: false)
+  @RenderSection("css", required: false)
 }
-
 @section ExtraHeaders
 {
-    @RenderSection("ExtraHeaders", required: false)
+  @RenderSection("ExtraHeaders", required: false)
 }
-
 @section TopScripts
 {
-    @RenderSection("TopScripts", required: false)
+  @RenderSection("TopScripts", required: false)
 }
 <body class="bg-one">
-    <div class="message @if (string.IsNullOrEmpty(noticeText))
+  <div class="message @if (string.IsNullOrEmpty(noticeText))
                       { <text> hide</text>
                       }">
-        <div class="p-l p-r p--s">
-            <span><i class="icon-exclamation-triangle m-r"></i>@noticeText</span>
-            @*<button class="right pointer" data-close-message>
+    <div class="p-l p-r p--s">
+      <span><i class="icon-exclamation-triangle m-r"></i>@noticeText</span> @*<button class="right pointer" data-close-message>
                 <i class="icon-close"></i>
             </button>*@
-        </div>
     </div>
-    <header class="bg-yellow p-b--s clearfix">
+  </div>
+  <header class="bg-yellow p-b--s clearfix">
         <a class="logo left" href="@Url.Home()">
             <img class="hide-on-small" height="250px" alt="Logo" src="@Url.Content("~/content/images/logo_square.svg")" />
             <img class="hide-on-large" height="100px" alt="Logo" src="@Url.Content("~/content/images/logo_small.svg")" />
@@ -52,8 +47,7 @@
             </ul>
         </nav>
     </header>
-
-    @*
+  @*
         todo NEWSITE this needs a location on every page for the entire site
     
                  @if (TempData.ContainsKey("Message"))
@@ -65,83 +59,85 @@
                       <p class="message error">@TempData["ErrorMessage"]</p>
                   }
     *@
-
-    <main>
+  <main>
         @RenderBody()
     </main>
-    <footer class="p-l--l p-r--l p-t--l p-b clearfix full-width">
-        <ul class="small fourth left p">
-            <li><h3 class="bold m-b--s">Chocolatey</h3></li>
-            @*<li><a href="@Url.RouteUrl(RouteName.Features)">Features</a></li>*@
-            <li><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.FAQ)">FAQ</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Professionals</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Businesses </a></li>
-            @*<li><a href="@Url.RouteUrl(RouteName.Business)">For Enterprise</a></li>*@
-            @*<li><a href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a></li>*@
-            @*<li><a href="@Url.RouteUrl(RouteName.Terms)">Terms of Use</a></li>
+  <footer class="p-l--l p-r--l p-t--l p-b clearfix full-width">
+    <ul class="small fourth left p">
+      <li><h3 class="bold m-b--s">Chocolatey</h3></li>
+      @*<li><a href="@Url.RouteUrl(RouteName.Features)">Features</a></li>*@
+      <li><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.FAQ)">FAQ</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Professionals</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Businesses </a></li>
+      @*<li><a href="@Url.RouteUrl(RouteName.Business)">For Enterprise</a></li>*@
+      @*<li><a href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a></li>*@
+      @*<li><a href="@Url.RouteUrl(RouteName.Terms)">Terms of Use</a></li>
                 <li><a href="@Url.RouteUrl(RouteName.Privacy)">Privacy Policy</a></li>*@
-        </ul>
-        <ul class="small fourth left p">
-            <li><h3 class="bold m-b--s">Resources</h3></li>
-            <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Documentation</a></li>
-            <li><a href="http://eepurl.com/4qUJH">Newsletter</a></li>
-            <li><a href="https://groups.google.com/group/chocolatey">Mailing List</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.Security)">Security</a></li>
-            @*<li><a href="#">Blog</a></li>
+    </ul>
+    <ul class="small fourth left p">
+      <li><h3 class="bold m-b--s">Resources</h3></li>
+      <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Documentation</a></li>
+      <li><a href="http://eepurl.com/4qUJH">Newsletter</a></li>
+      <li><a href="https://groups.google.com/group/chocolatey">Mailing List</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.Security)">Security</a></li>
+      @*<li><a href="#">Blog</a></li>
                 <li><a href="#">Site map</a></li>
                 <li><a href="@Url.RouteUrl(RouteName.Media)">Media Kit</a></li>*@
-            <li><a href="http://cafepress.com/chocolatey">Shop</a></li>
-        </ul>
-        <ul class="small fourth left p">
-            <li><h3 class="bold m-b--s">Connect</h3></li>
-            @*<li><a href="@Url.RouteUrl(RouteName.Company)">Company</a></li>*@
-            <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact Us</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.Pricing)">Support</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.ReportIssue)">Report a Bug</a></li>
-            @*<li><a href="@Url.RouteUrl(RouteName.Press)">Press</a></li>
+      <li><a href="http://cafepress.com/chocolatey">Shop</a></li>
+    </ul>
+    <ul class="small fourth left p">
+      <li><h3 class="bold m-b--s">Connect</h3></li>
+      @*<li><a href="@Url.RouteUrl(RouteName.Company)">Company</a></li>*@
+      <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact Us</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.Pricing)">Support</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.ReportIssue)">Report a Bug</a></li>
+      @*<li><a href="@Url.RouteUrl(RouteName.Press)">Press</a></li>
                 <li><a href="@Url.RouteUrl(RouteName.Partner)">Partner</a></li>*@
-        </ul>
-        <ul class="small fourth left p line-height-normal">
-            <li class="h2">
-                <div>
-                    <a href="https://twitter.com/chocolateynuget" class="icon-twitter"></a> | <a href="https://facebook.com/ChocolateySoftware" class="icon-facebook"></a> | <a href="https://github.com/chocolatey" class="icon-github"></a>
-                </div>
-            </li>
-            <li class="m-t small">
-                <p><strong>&copy; 2011 - @DateTime.UtcNow.Year</strong> RealDimensions Software, LLC.</p>
-                @{
-                    string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
-                    string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
-                }
-                <p id="releaseTag">
-                    Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
-                </p>
-            </li>
-            <li class="m-t">
-                Site made possible by the following sponsors<br />
-                <a class="vertical-middle m-r m-t--s inline-block" href="#">
-                    <img width="70px" alt="RealDimensions Software, LLC Logo" title="RealDimensions Software, LLC - the makers of Chocolatey!" src="@Url.Content("~/content/images/rd_logo.png")" />
-                </a>
-                <a class="vertical-middle m-r m-t--s inline-block" href="https://turbo.net/">
-                    <img width="40px" alt="Turbo.Net Logo" title="Turbo" src="@Url.Content("~/content/images/turbo_logo.png")" />
-                </a>
-                <a class="vertical-middle m-t--s inline-block" href="https://appharbor.com/">
-                    <img width="50px" src="@Url.Content("~/content/images/appharbor_logo.png")" />
-                </a>
-            </li>
-        </ul>
-    </footer>
-    @Bundles.RenderScripts()
-    @RenderSection("BottomScripts", required: false)
-    <script>
-        ((window.gitter = {}).chat = {}).options = {
-            room: 'chocolatey/chocolatey.org'
-        };
-    </script>
-    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
-</body>
+    </ul>
+    <ul class="small fourth left p line-height-normal">
+      <li class="h2">
+        <div>
+          <a href="https://twitter.com/chocolateynuget" class="icon-twitter"></a> | <a href="https://facebook.com/ChocolateySoftware" class="icon-facebook"></a> | <a href="https://github.com/chocolatey" class="icon-github"></a>
+        </div>
+      </li>
+      <li class="m-t small">
+        <p><strong>&copy; 2011 - @DateTime.UtcNow.Year</strong> RealDimensions Software, LLC.</p>
+        @{
+          string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
+          string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
+        }
+        <p id="releaseTag">
+          Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
+        </p>
+      </li>
+      <li class="m-t">
+        Site made possible by the following sponsors<br />
+        <a class="vertical-middle m-r m-t--s inline-block" href="#">
+          <img width="70px" alt="RealDimensions Software, LLC Logo" title="RealDimensions Software, LLC - the makers of Chocolatey!" src="@Url.Content("~/content/images/rd_logo.png")" />
+        </a>
+        <a class="vertical-middle m-r m-t--s inline-block" href="https://turbo.net/">
+          <img width="40px" alt="Turbo.Net Logo" title="Turbo" src="@Url.Content("~/content/images/turbo_logo.png")" />
+        </a>
+        <a class="vertical-middle m-t--s inline-block" href="https://appharbor.com/">
+          <img width="50px" src="@Url.Content("~/content/images/appharbor_logo.png")" />
+        </a>
+      </li>
+    </ul>
+  </footer>
+  @Bundles.RenderStylesheets("bottom")
+  @Bundles.RenderScripts()
+  @RenderSection("BottomScripts", required: false)
 
+  <script>
+    ((window.gitter = {}).chat = {}).options = {
+      room: 'chocolatey/chocolatey.org'
+    };
+  </script>
+
+  <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+</body>
 @*
     <div id="layout-footer" class="group">
           <footer id="footer">

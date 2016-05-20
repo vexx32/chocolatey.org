@@ -61,6 +61,23 @@ function Fix-MarkdownConversion($text) {
   Write-Output $text
 }
 
+function Convert-FencedCode($text) {
+
+  $text = $text.Replace("<pre><code>","<pre class=`"brush: plain`">")
+  $text = $text.Replace("><code>", ">")
+  $text = $text.Replace("</code></pre>","</pre>")
+  $text = $text.Replace("class=`"ruby`"","class=`"brush: ruby`"")
+  $text = $text.Replace("class=`"puppet`"","class=`"brush: ruby`"")
+  $text = $text.Replace("class=`"sh`"","class=`"brush: bash`"")
+  $text = $text.Replace("class=`"xml`"","class=`"brush: xml`"")
+  $text = $text.Replace("class=`"powershell`"","class=`"brush: ps`"")
+  $text = $text.Replace("class=`"yaml`"","class=`"brush: plain`"")
+  $text = $text.Replace("class=`"python`"","class=`"brush: python`"")
+  $text = $text.Replace("class=`"csharp`"","class=`"brush: csharp`"")
+  
+  Write-Output $text
+}
+
 function Convert-ImageUrls($text) {
   $text = $text -replace 'img\ssrc="images\/([^"]+)"', 'img src="@Url.Content("~/content/images/docs/$1")"'
 
@@ -79,9 +96,9 @@ Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.
   $htmlFileName = "chocolatey\Website\Views\Documentation\$($docName.Replace(`"-`", `"`")).cshtml"
 
   #+simple_tables+native_spans+native_divs+multiline_tables
-  & pandoc.exe --from markdown_github --to html5 --old-dashes -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
+  & pandoc.exe --from markdown_github --to html5 --old-dashes --no-highlight -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
 
-  $fileContent = Convert-SeoUrls (Convert-ImageUrls (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName))))
+  $fileContent = Convert-SeoUrls (Convert-ImageUrls (Convert-FencedCode (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName)))))
   $firstLine = Get-FirstLine($fileContent)
   $firstLine -= 1
   Write-Debug "Line number is $firstLine"
