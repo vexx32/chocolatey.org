@@ -241,7 +241,7 @@ Comment Url: {3}
 We can't wait to see what packages you'll upload.
 
 Remember to read the packaging guidelines:
-https://github.com/chocolatey/choco/wiki/CreatePackages
+https://chocolatey.org/docs/create-packages
 
 All packages sumbitted to the Chocolatey Gallery must meet these guidelines.
 
@@ -620,8 +620,8 @@ For urgent issues (including packages that are security releases), please reach 
  * Moderators typically review a package within about a week or less. Many times you may find it to be faster.
  * If you have not heard anything within a week or two, please respond in the review comments on the package page (login first) and ask for status.
  * If the package is an urgent release (resolves security issues or CVEs), reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco
- * Packages must conform to our guidelines https://github.com/chocolatey/choco/wiki/CreatePackages
- * Packages typically get rejected for not conforming to our naming guidelines - https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package
+ * Packages must conform to our guidelines https://chocolatey.org/docs/create-packages
+ * Packages typically get rejected for not conforming to our naming guidelines - https://chocolatey.org/docs/create-packages#naming-your-package
 ",
  Configuration.ReadAppSettings("ModeratorEmail"));
             else if (package.Status == PackageStatusType.Submitted) return @"
@@ -678,7 +678,7 @@ For urgent issues (including packages that are security releases), please reach 
 
              message.AppendFormat(@"{0}## Attention - DO NOT REPLY TO THIS MESSAGE!
  * If you need to update or respond to package review information, please login and visit your package page (listed below).
- * You can also **self-reject packages that are no longer relevant**! See [self-reject](https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-self-reject-a-package) for more information.",
+ * You can also **self-reject packages that are no longer relevant**! See [self-reject](https://chocolatey.org/faq#how-do-i-self-reject-a-package) for more information.",
                 Environment.NewLine);
 
             return message.ToString();

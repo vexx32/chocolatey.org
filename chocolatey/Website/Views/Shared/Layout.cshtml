@@ -39,6 +39,7 @@
         <nav class="text-right p">
             <ul class="inline-list main-menu m-r m-b--s m-t--s">
                 <li><a class="bold m-l--s" href="@Url.RouteUrl(RouteName.Install)">Install</a></li>
+                <li><a class="bold m-l--s" href="@Url.RouteUrl(RouteName.About)">About</a></li>
                 <li><a class="bold m-l--s" href="@Url.RouteUrl(RouteName.ListPackages)">Packages</a></li>
                 @* todo NEWSITE need to figure out where Upload package goes now - perhaps shown when users login? *@
                 @*<li><a class="bold m-l--s" href="@Url.UploadPackage()">Upload</a></li>*@
@@ -71,19 +72,19 @@
     <footer class="p-l--l p-r--l p-t--l p-b clearfix full-width">
         <ul class="small fourth left p">
             <li><h3 class="bold m-b--s">Chocolatey</h3></li>
-            <li><a href="@Url.RouteUrl(RouteName.Features)">Features</a></li>
+            @*<li><a href="@Url.RouteUrl(RouteName.Features)">Features</a></li>*@
             <li><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
             <li><a href="@Url.RouteUrl(RouteName.FAQ)">FAQ</a></li>
             <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Professionals</a></li>
             <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Businesses </a></li>
             @*<li><a href="@Url.RouteUrl(RouteName.Business)">For Enterprise</a></li>*@
-            <li><a href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a></li>
+            @*<li><a href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a></li>*@
             @*<li><a href="@Url.RouteUrl(RouteName.Terms)">Terms of Use</a></li>
                 <li><a href="@Url.RouteUrl(RouteName.Privacy)">Privacy Policy</a></li>*@
         </ul>
         <ul class="small fourth left p">
             <li><h3 class="bold m-b--s">Resources</h3></li>
-            <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "Index"})">Documentation</a></li>
+            <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Documentation</a></li>
             <li><a href="http://eepurl.com/4qUJH">Newsletter</a></li>
             <li><a href="https://groups.google.com/group/chocolatey">Mailing List</a></li>
             <li><a href="@Url.RouteUrl(RouteName.Security)">Security</a></li>
@@ -96,7 +97,7 @@
             <li><h3 class="bold m-b--s">Connect</h3></li>
             @*<li><a href="@Url.RouteUrl(RouteName.Company)">Company</a></li>*@
             <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact Us</a></li>
-            <li><a href="@Url.RouteUrl(RouteName.Support)">Support</a></li>
+            <li><a href="@Url.RouteUrl(RouteName.Pricing)">Support</a></li>
             <li><a href="@Url.RouteUrl(RouteName.ReportIssue)">Report a Bug</a></li>
             @*<li><a href="@Url.RouteUrl(RouteName.Press)">Press</a></li>
                 <li><a href="@Url.RouteUrl(RouteName.Partner)">Partner</a></li>*@

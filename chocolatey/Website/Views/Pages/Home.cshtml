@@ -150,7 +150,7 @@
                 <div>
                     <div class="inline-block m-b stat-number bg-two">
                         <div class="huge-number"><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></div>
-                        <small><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-verifier">Known good packages</a></small>
+                        <small><a href="ChocolateyFAQs#what-is-the-verifier">Known good packages</a></small>
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@
     </section>
     <section class="aggstats">
         <span class="stat">
-          <span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-verifier">known good packages</a>
+          <span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span><a href="@Url.RouteUrl(RouteName.FAQ)#what-is-the-verifier">known good packages</a>
         </span>
         <span class="stat">
             <span id="UpToDatePackages" class="num" title="This is a start towards understanding up to date packages"></span>packages updated in last 4 months
@@ -201,25 +201,25 @@
          <h2>Chocolatey v0.9.9 Released!</h2>
          <p>
              The latest version of Chocolatey uses the new choco.exe C# client. <strong>There are a few breaking changes you need to be aware of.</strong>
-            If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="https://github.com/chocolatey/choco/wiki/ReleaseNotes">release notes</a>.
-            <em>chocolatey upgrade (cup)</em> to get the latest version of chocolatey&nbsp;– <a href="https://github.com/chocolatey/choco/wiki/ReleaseNotes">More information?</a>
+            If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">release notes</a>.
+            <em>chocolatey upgrade (cup)</em> to get the latest version of chocolatey&nbsp;– <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">More information?</a>
          </p>
     </section>
     <section class="info">
         <h3>About</h3>
         <p>When you use chocolatey to install applications/tools, nearly all you need to do is type one line and let it finish the rest! <a href="@Url.RouteUrl(RouteName.About)">Learn more</a>.
-        Where did Chocolatey get it's name? What exactly is chocolatey anyway? Learn more on the <a href="https://github.com/chocolatey/choco/wiki">Wiki</a>!</p>
+        Where did Chocolatey get it's name? What exactly is chocolatey anyway? Learn more in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Docs</a>!</p>
 
         <h3>Videos</h3>
         <p>Watch <a href="http://bit.ly/chocolateyVideo">Chocolatey in action.</a></p>
 
         <h3>Packages Missing? Want to contribute?</h3>
         <p>You can develop your own packages and share them via the Chocolatey Gallery. Read the documentation for more details on
-        <a title="Creating and submitting a package" href="https://github.com/chocolatey/choco/wiki/CreatePackages">how to
+        <a title="Creating and submitting a package" href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">how to
         create and publish a package</a>.</p>
 
         <h3>Package Issues?</h3>
-        <p>If you find something wrong with a package or the package is out of date and you would like it updated, please use the contact maintainers link on the package page. For follow up procedures, please see the <a title="Package Triage Process" href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">Package Triage Process</a>.</p>
+        <p>If you find something wrong with a package or the package is out of date and you would like it updated, please use the contact maintainers link on the package page. For follow up procedures, please see the <a title="Package Triage Process" href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package Triage Process</a>.</p>
     </section>*@
 
 @section BottomScripts
