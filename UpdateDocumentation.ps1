@@ -15,11 +15,36 @@ function Convert-MarkdownLinks($text) {
   $text = $text -replace '\[\[([^\|\]]*)\|([^\|\]]*)\]\]', '<a href="$2">$1</a>'
   #$text = $text -replace '\[\[([^\|\]]*)\]\]', ' <a href="$1">$1</a>'
 
-  #if ($text -match 'href\=\"([A-Z])([^\"])+\"') {
-  #  $replaceValue = 'href="' + $matches[1].ToLower() + '$2"'
-  #  $text = $text.Replace( $matches[0], $replaceValue)
-  #}
+  Write-Output $text
+}
 
+function Convert-SeoUrls($text) {
+
+  Select-String '(href\=\"([^\:\#\"]+)(\#?[^:\"]*)\")' -input $text -AllMatches | % { $_.Matches } | % {
+    # write-host $_.Value
+    # Write-Host "0 - $($_.Groups[0])"
+    # Write-Host "1 - $($_.Groups[1])"
+    # Write-Host "url - $($_.Groups[2])"
+    # Write-Host "hash - $($_.Groups[3])"
+    
+    $fullMatchValue = $_.Groups[1]
+    $matchUrl = $_.Groups[2]
+    $matchUrlReplace = $matchUrl -creplace '([A-Z])', '-$1'
+    $matchUrlReplace = $matchUrlReplace.ToLower().Replace("--","-")
+    $matchUrlReplace = $matchUrlReplace.Replace("-f-a-q","-faq")
+    $matchUrlReplace = $matchUrlReplace.Replace("-p-s1","-ps1")
+    
+    $matchPound = $_.Groups[3]
+    $matchPoundReplace = $matchPound -creplace '([A-Z])', '-$1'
+    $matchPoundReplace = $matchPoundReplace.ToLower().Replace("--","-")
+    
+    if ($matchUrlReplace -ne $null -and $matchUrlReplace -ne '') {
+      $text = $text.Replace($fullMatchValue, "href=`"@Url.RouteUrl(RouteName.Docs, new { docName = `"$matchUrlReplace`" })$matchPoundReplace`"")
+    }
+  }
+
+  $text = $text.Replace("`"-","`"")
+  
   Write-Output $text
 }
 
@@ -56,7 +81,7 @@ Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.
   #+simple_tables+native_spans+native_divs+multiline_tables
   & pandoc.exe --from markdown_github --to html5 --old-dashes -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
 
-  $fileContent = Convert-ImageUrls (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName)))
+  $fileContent = Convert-SeoUrls (Convert-ImageUrls (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName))))
   $firstLine = Get-FirstLine($fileContent)
   $firstLine -= 1
   Write-Debug "Line number is $firstLine"
