@@ -2,8 +2,6 @@
 @using NuGetGallery;
 @using StackExchange.Profiling
 @{
-    var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
-
     if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string)ViewData[Constants.ReturnUrlViewDataKey]))
     {
         if (TempData.ContainsKey(Constants.ReturnUrlViewDataKey))
