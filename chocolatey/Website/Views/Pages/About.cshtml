@@ -3,9 +3,9 @@
 }
 <section>
   <div class="container-wide p-b--l">
-        <h1 class="text-center m-b">About Chocolatey</h1>
-    <article class="about">
-      <h2>What is Chocolatey?</h2>
+    <h1 class="text-center m-b">About Chocolatey</h1>
+    <section class="about">
+      <h2 class="text-center m-b">What is Chocolatey?</h2>
       <p>
         <strong>Chocolatey is a package manager for Windows (like apt-get or yum but for
           Windows)</strong>. It was designed to be a <strong>decentralized</strong> framework
@@ -33,9 +33,12 @@
                                                                                                                                                         OneGet</a> client! See Jeffrey Snover's <a href="http://blogs.technet.com/b/windowsserver/archive/2014/04/03/windows-management-framework-v5-preview.aspx">
                                                                                                                                                                                                   post</a> for more information.
       </p>
-    </article>
-    <article class="about">
-      <h2>About Chocolatey.org</h2>
+    </section>
+  </div>
+</section>
+<div class="bg-two p-t--l p-b--l">
+  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+      <h2 class="text-center m-b">About Chocolatey.org</h2>
       <p>
         Chocolatey.org is a feed of packages provided and maintained by the community. If
         you are a business looking at using Chocolatey, it is strongly recommended that
@@ -69,9 +72,12 @@
         The repository for issues/enhancements/requests for Chocolatey.org at <a href="https://github.com/chocolatey/chocolatey.org">
                                                                                 GitHub Chocolatey.org</a>
       </p>
-    </article>
-    <article class="about">
-      <h2>About the Official Chocolatey Client</h2>
+         
+        </section>
+</div>
+<div class="bg-three p-t--l p-b--l">
+  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+      <h2 class="text-center m-b">About the Official Chocolatey Client</h2>
       <p>
         The official Chocolatey client is the one you get from chocolatey.org on the <a href="https://chocolatey.org/packages/chocolatey">
                                                                                        package page</a>. This is the only official client. ChocolateyGUI is a recognized
@@ -86,9 +92,11 @@
         <span>Note that broken packages should be reported back to package maintainers,
           not to the client repository or on the mailing list. For more information, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">the triage process</a>.</span>
       </p>
-    </article>
-    <article class="about">
-      <h2>Frequently Asked Questions</h2>
+        </section>
+</div>
+<div class="bg-two p-t--l p-b--l">
+  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+      <h2 class="text-center m-b">Frequently Asked Questions</h2>
       <p>
         <strong>What is the difference between Chocolatey and NuGet?</strong> NuGet is for
         development libraries, Chocolatey is a binary machine package manager. Typically
@@ -181,6 +189,5 @@
       <p>
         <strong>Are there other FAQs?</strong> There is a link to the <a href="@Url.RouteUrl(RouteName.FAQ)">FAQs</a> at the top!
       </p>
-    </article>
-  </div>
-</section>
+      </section>
+</div>
