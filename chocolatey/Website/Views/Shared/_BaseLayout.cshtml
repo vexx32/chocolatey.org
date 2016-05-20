@@ -30,7 +30,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>
-        Chocolatey @(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : "| " + ViewBag.Title)
+        Chocolatey @(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : "- " + ViewBag.Title)
     </title>
     @Bundles.RenderStylesheets()
     <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" />
