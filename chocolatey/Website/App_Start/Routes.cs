@@ -175,7 +175,7 @@ namespace NuGetGallery
             routes.MapRouteSeo(
                 RouteName.Docs,
                 "docs/{docName}",
-                new { controller = "Documentation", action = "Documentation", docName = "Index" }
+                new { controller = "Documentation", action = "Documentation", docName = "home" }
                 );
             
             routes.MapRouteSeo(RouteName.Stats, "stats", MVC.Pages.Stats());

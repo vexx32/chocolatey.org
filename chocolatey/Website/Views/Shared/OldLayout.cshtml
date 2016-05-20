@@ -91,7 +91,7 @@
                 <li class="@aboutClass"><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
                 <li class="@packagesClass"><a href="@Url.PackageList()">Packages</a></li>
                 <li class="@uploadClass"><a href="@Url.UploadPackage()" class="upload">Upload</a></li>
-                <li><a href="@Url.UploadPackage()">Docs</a></li>
+                <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Docs</a></li>
                 <li><a href="https://github.com/chocolatey/choco">Project*</a></li>
                 <li><a href="http://groups.google.com/group/chocolatey">Forum*</a></li>
                 <li><a href="http://cafepress.com/chocolatey">Shop*</a></li>
