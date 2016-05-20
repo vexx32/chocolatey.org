@@ -412,11 +412,11 @@ $options =
 Get-ChocolateyWebFile -PackageName &#39;package&#39; -FileFullPath &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\thefile.exe&quot; -Url &#39;https://somelocation.com/thefile.exe&#39; -Options $options</code></pre>
 <h2 id="links">Links</h2>
 <ul>
-<li><a href="HelpersInstallChocolateyPackage">Install-ChocolateyPackage</a></li>
-<li><a href="HelpersGetWebFile">Get-WebFile</a></li>
-<li><a href="HelpersGetWebFileName">Get-WebFileName</a></li>
-<li><a href="HelpersGetFtpFile">Get-FtpFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-file" })">Get-WebFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-file-name" })">Get-WebFileName</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-ftp-file" })">Get-FtpFile</a></li>
 </ul>
-<p><a href="HelpersReference">Function Reference</a></p>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-ChocolateyWebFile -Full</code>.</p>
 </article>

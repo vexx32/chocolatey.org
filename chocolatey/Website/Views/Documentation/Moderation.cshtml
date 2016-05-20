@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="community-feed-moderation">Community Feed Moderation</h1>
-<p>The community feed, which is found at <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>, is a moderated feed. That means all new versions of packages are human reviewed prior to approval to check for safety, quality, and correctness. See <a href="ChocolateyFAQs#what-is-moderation">What is moderation</a> for more details. There are also <a href="ChocolateyFAQs#what-is-a-trusted-package">trusted packages</a>, which only go through automated moderation review and bypass human review as they are coming from trusted sources and/or the software vendors themselves.</p>
+<p>The community feed, which is found at <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>, is a moderated feed. That means all new versions of packages are human reviewed prior to approval to check for safety, quality, and correctness. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-moderation">What is moderation</a> for more details. There are also <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted packages</a>, which only go through automated moderation review and bypass human review as they are coming from trusted sources and/or the software vendors themselves.</p>
 <p>By safety - we check that the package scripts do not do anything devious and that you get the software that the package indicates you are getting. Please note that the underlying software may contain crapware/malware (although it is usually not installed when allowing Chocolatey to install silently). This is not checked for currently, but we have plans for checking this in licensed versions of Chocolatey because a feature doing that is not free for us to provide.</p>
 <h2 id="definitions">Definitions</h2>
 <ul>
@@ -138,10 +138,10 @@
 </ul></li>
 <li>Check over the verifier logs to be sure everything looks good (follow the link from the button). If necessary, you can rerun the verifier.<br />
 <img src="https://cloud.githubusercontent.com/assets/63502/11872329/4b8427ec-a49a-11e5-87ea-46e5e43e8140.png" alt="Rerun" /></li>
-<li>Go over the review log - shows history and review information so far. Note that when the validator runs it leaves comments. Look for it to have done the automated part of the requirements/guidelines checks. If it has not, you are responsible to check all <a href="Moderation#requirements-and-guidelines">requirements/guidelines</a> (see <a href="Moderation#requirements-and-guidelines">Requirements and Guidelines</a> above).<br />
+<li>Go over the review log - shows history and review information so far. Note that when the validator runs it leaves comments. Look for it to have done the automated part of the requirements/guidelines checks. If it has not, you are responsible to check all <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#requirements-and-guidelines">requirements/guidelines</a> (see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#requirements-and-guidelines">Requirements and Guidelines</a> above).<br />
 <img src="https://cloud.githubusercontent.com/assets/63502/11872453/fd757a28-a49a-11e5-98c0-cfff70caebbd.png" alt="Review Notes" /></li>
 <li>Look at the notes section from the latest run of the validator to see if there are additional flagging follow ups from the validator.</li>
-<li>Check over the package based on <a href="Moderation#moderator-review">moderator review</a> (below).</li>
+<li>Check over the package based on <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#moderator-review">moderator review</a> (below).</li>
 <li>Review the previous comments if there are any. <img src="https://cloud.githubusercontent.com/assets/63502/7543258/c2c0abbc-f588-11e4-8cac-4c57b03671f8.png" alt="image" /></li>
 <li>Look through the package files <img src="https://cloud.githubusercontent.com/assets/63502/7543284/ddaa41e0-f588-11e4-817a-9d7bd1130a84.png" alt="image" /></li>
 <li>Leave comments in the review box (&quot;Add to Review Comments&quot; section) if you have any. Note that you can use markdown here.<br />

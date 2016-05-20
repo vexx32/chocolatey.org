@@ -10,7 +10,7 @@
 <p>The first thing to understand is that in most instances when you want to bring Chocolatey knowledgeable about an already installed application, if there is a version match out there (wherever your sources point), then this process is so much better.</p>
 <p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it).</p>
 <p>However if you are sold on skipping the automation scripts and tricking Chocolatey into believing that a script is installed.</p>
-<p>If you wonder over to <a href="CommandsInstall#options-and-switches">install switches</a> you will see</p>
+<p>If you wonder over to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install switches</a> you will see</p>
 <pre><code>-n, --skippowershell, --skip-powershell
   Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.</code></pre>
 <p>This switch is going to be very important for you. Now we will go through some scenarios to help you make the best decision.</p>
@@ -43,7 +43,7 @@
 <p>Your command could be:</p>
 <p><code>choco install firefox -n -y --version 1.8.0</code></p>
 <p><strong>Recommendation</strong>: Ask the maintainer to update the package. Don&#39;t allow choco to know about an older version of a package. If the maintainer provides an update of 1.9.0 without also providing an update at or above your currently installed version, running upgrade later may put your installed software down to the version that is installed by the package. This is definitely not a situation you want to be in.</p>
-<p>Additional thoughts: You could install the older version of the package (with the <code>-n</code> argument) and promptly <a href="CommandsPin">pin</a> that version until the newer version is available. If you don&#39;t already have the package installed though, it&#39;s better to wait for the newer version to become available.</p>
+<p>Additional thoughts: You could install the older version of the package (with the <code>-n</code> argument) and promptly <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> that version until the newer version is available. If you don&#39;t already have the package installed though, it&#39;s better to wait for the newer version to become available.</p>
 <h2 id="upgrade-a-package-without-running-scripts">Upgrade a Package Without Running Scripts</h2>
 <h3 id="application-is-self-updating-like-google-chrome">Application is self-updating (like Google Chrome)</h3>
 <p>Consider the following scenario:</p>
@@ -52,10 +52,10 @@
 <li>Google Chrome self-updates</li>
 <li>Choco version is out of sync with installed version</li>
 </ul>
-<p><strong>Recommendation</strong>: You should <a href="CommandsPin">pin</a> the package to suppress upgrades. The self-updating scenario is keeping you on the latest version and you want to stay up to date with the latest version that may have security fixes in addition to other things.</p>
+<p><strong>Recommendation</strong>: You should <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> the package to suppress upgrades. The self-updating scenario is keeping you on the latest version and you want to stay up to date with the latest version that may have security fixes in addition to other things.</p>
 <p>You should run</p>
 <p><code>choco pin googlechrome</code></p>
-<p>For more information see <a href="CommandsPin">Pin Command</a>.</p>
+<p>For more information see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">Pin Command</a>.</p>
 <h3 id="the-software-was-upgraded-but-not-the-package">The software was upgraded but not the package</h3>
 <p>Similar to the above scenario, but perhaps you upgraded the software manually outside of Chocolatey.</p>
 <p>Consider the following scenario:</p>
@@ -76,7 +76,7 @@
 <li>Chocolatey.org only has up to 1.8.0.</li>
 </ul>
 <p>See <a href="#community-feed-has-a-package-older-than-your-version">Community Feed has a version older than your version</a> - substitute <code>upgrade</code> for <code>install</code> if you must. Follow the recommendation.</p>
-<p><strong>Additional Recommendation</strong>: You may also want to bump it to 1.8.0 using the skip argument (<code>-n</code>) and then promptly <a href="CommandsPin">pin</a> the package until a newer version is available.</p>
+<p><strong>Additional Recommendation</strong>: You may also want to bump it to 1.8.0 using the skip argument (<code>-n</code>) and then promptly <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> the package until a newer version is available.</p>
 <pre><code>choco upgrade firefox -n -y --version 1.8.0
 choco pin firefox</code></pre>
 </article>

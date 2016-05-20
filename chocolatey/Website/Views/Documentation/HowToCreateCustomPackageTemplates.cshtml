@@ -6,7 +6,7 @@
 <h1 id="create-your-own-custom-package-templates">Create Your Own Custom Package Templates</h1>
 <p>As of <a href="https://github.com/chocolatey/choco/issues/76">choco 0.9.9.9</a>, you can create your own custom package templates when the built-in template is not enough.</p>
 <h2 id="overview">Overview</h2>
-<p>A template is used for creating packages. Chocolatey (choco) has a built-in template that it uses when generating a new package from the command <a href="CommandsNew"><code>choco new</code></a>.</p>
+<p>A template is used for creating packages. Chocolatey (choco) has a built-in template that it uses when generating a new package from the command <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })"><code>choco new</code></a>.</p>
 <h3 id="where-do-templates-go">Where Do Templates Go?</h3>
 <p>If you drop a template into <code>$env:ChocolateyInstall\templates</code> folder, you can use <code>-t name_of_template</code> to generate a choco template based on that. So for:</p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/9952997/0603b334-5da2-11e5-8b6d-65a5dbf5d8e0.png" alt="image" /></p>

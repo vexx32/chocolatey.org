@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="install-chocolateyvsixpackage">Install-ChocolateyVsixPackage</h1>
-<p>Downloads and installs a VSIX package for Visual Studio. You do not need to surround this with try catch if it is the only thing in your <a href="ChocolateyInstallPS1">chocolateyInstall.ps1</a>.</p>
+<p>Downloads and installs a VSIX package for Visual Studio. You do not need to surround this with try catch if it is the only thing in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>.</p>
 <p>VSIX packages are Extensions for the Visual Studio IDE. The Visual Studio Gallery at <a href="http://visualstudiogallery.msdn.microsoft.com/" class="uri">http://visualstudiogallery.msdn.microsoft.com/</a> is the public extension feed and hosts thousands of extensions.</p>
 <p>You can locate a VSIX Url by finding the download link of Visual Studio extensions on the Visual Studio Gallery.</p>
 <h2 id="usage">Usage</h2>
@@ -36,5 +36,5 @@
 <p>Example: <code>-checksumType 'sha1'</code></p>
 <p>Defaults to <code>md5</code>.</p></li>
 </ul>
-<p><a href="HelpersReference">Function Reference</a></p>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 </article>

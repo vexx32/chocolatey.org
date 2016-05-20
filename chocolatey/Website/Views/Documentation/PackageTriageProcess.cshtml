@@ -17,13 +17,13 @@
 </ul>
 <h3 id="are-you-a-software-vendor">Are you a Software Vendor?</h3>
 <h4 id="does-a-chocolatey-package-that-installs-my-software-violate-distribution-rights">Does a Chocolatey package that installs my software violate distribution rights?</h4>
-<p>In most cases no. Most packages you will find on the community feed, also known as <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a> use automation scripts to download the software from the <a href="Legal#distributions-aka-chocolatey-packages">official distribution point</a>.</p>
+<p>In most cases no. Most packages you will find on the community feed, also known as <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a> use automation scripts to download the software from the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })#distributions-aka-chocolatey-packages">official distribution point</a>.</p>
 <p>If you visit the package page and slide down to the Files heading, you can see what is included in the package. Many times you will see only a chocolateyInstall.ps1 and a chocolateyUninstall.ps1. You can also see the contents of those files right here so you can review what they are doing (the language is PowerShell, but with most packages it is typically easy to follow what they are doing).</p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/12586960/000e1c80-c418-11e5-9a27-edc8415f9b8b.png" alt="files section with chocolateyInstall.ps1 expanded" /></p>
 <p>If you don&#39;t trust the package page (or if the package was published before July 2014), we invite you to download the actual package and inspect the contents (the .nupkg is just a .zip file after all). On the left menu there is a download link. You can download and rename the .nupkg to a .zip file and extract it to see the contents.</p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/12588103/b7ba6b46-c41c-11e5-87e4-46ea9b8f28e9.png" alt="download link" /></p>
 <p>Many of the packages may look like they include binaries because of the result after an install, but that&#39;s just a fantastic effect of the automation scripts working smoothly and almost unnoticeably.</p>
-<p>We take distribution rights very seriously - see <a href="Legal#distributions-aka-chocolatey-packages">legal</a>. If you do happen to find that the package <strong><em>is</em></strong> violating your distribution rights, please see the next section.</p>
+<p>We take distribution rights very seriously - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })#distributions-aka-chocolatey-packages">legal</a>. If you do happen to find that the package <strong><em>is</em></strong> violating your distribution rights, please see the next section.</p>
 <h4 id="the-package-is-violating-distribution-rights">The package IS violating distribution rights</h4>
 <p>You&#39;ve checked the previous section and it doesn&#39;t apply, and you&#39;ve found that the package <strong><em>is</em></strong> violating distribution rights as it bundles software binaries without your permission and/or license doesn&#39;t allow for it.</p>
 <p>It&#39;s not often that a moderator would approved a package that violates distribution rights, but if you find one, please click the &quot;Report Abuse&quot; link on the left hand side of the package page, and fill out and submit the form. The site admins for the community feed will follow up with you shortly after.</p>
@@ -37,7 +37,7 @@
 <p>Use the Contact Maintainers link on the package page of the community feed or the Disqus comment thread (at the bottom of the package page) to reach out to the maintainers. Neither require an account on Chocolatey.org.</p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/12519569/406aa70a-c105-11e5-9db2-6191ce5bc100.png" alt="contact maintainers link" /></p>
 <h3 id="package-request-package-missing">Package Request? Package Missing?</h3>
-<p>If you are looking for packages to be added to the community feed (aka <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>) - you are part of the community and we welcome your packages. It&#39;s super simple to create and maintain packages, see <a href="CreatePackages">Creating packages</a>.</p>
+<p>If you are looking for packages to be added to the community feed (aka <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>) - you are part of the community and we welcome your packages. It&#39;s super simple to create and maintain packages, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Creating packages</a>.</p>
 <p>When it comes to community packages, we really want folks who are using the software to be package maintainers versus folks who may not be using the software. So when you are asking for other folks to add packages, please consider that it may be better for you to keep the package up to date than someone else who may not be invested in ensuring it stays updated.</p>
 <h3 id="package-is-broken">Package is Broken?</h3>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/12519534/1728a086-c105-11e5-9af7-96b188114ae7.png" alt="red ball failing testing verification" /></p>
@@ -67,5 +67,5 @@
 </ol>
 <p><strong>NOTE</strong>: We don&#39;t have non-maintainer uploads in the community feed and we haven&#39;t needed them yet.</p>
 <h3 id="new-maintainers">New Maintainers</h3>
-<p>Sometimes this results in new maintainers. You can be a maintainer updating the project at a central location that multiple maintainers share. However, if you became maintainer because the package was deemed abandoned, you will want to follow the instructions for a <a href="PackageMantainerHandover">Package Maintainer Handover/Switch</a>.</p>
+<p>Sometimes this results in new maintainers. You can be a maintainer updating the project at a central location that multiple maintainers share. However, if you became maintainer because the package was deemed abandoned, you will want to follow the instructions for a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-mantainer-handover" })">Package Maintainer Handover/Switch</a>.</p>
 </article>

@@ -29,11 +29,11 @@ There are a few ways to install Chocolatey. Chocolatey exists as a <a href="http
 </ul>
 <p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go!. No Visual Studio required.</p>
 <h2 id="why-does-chocolatey-install-where-it-does-by-default">Why does Chocolatey install where it does by default?</h2>
-<p>Great question - <a href="DefaultChocolateyInstallReasoning">Why does Chocolatey install where it does</a></p>
+<p>Great question - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "default-chocolatey-install-reasoning" })">Why does Chocolatey install where it does</a></p>
 <h2 id="before-you-install">Before You Install</h2>
 <p><strong>Can I install Chocolatey to another location?</strong> Yes</p>
 <ol>
-<li>Create a <strong>machine</strong> level (<strong>user</strong> level will also work) environment variable named <code>ChocolateyInstall</code> and set it to the folder you want Chocolatey to install to prior to installation (this environment variable must be set globally or available to PowerShell- it is not enough to simply make it available to your current command prompt session). Keep in mind the <a href="DefaultChocolateyInstallReasoning">restrictions</a> though!</li>
+<li>Create a <strong>machine</strong> level (<strong>user</strong> level will also work) environment variable named <code>ChocolateyInstall</code> and set it to the folder you want Chocolatey to install to prior to installation (this environment variable must be set globally or available to PowerShell- it is not enough to simply make it available to your current command prompt session). Keep in mind the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "default-chocolatey-install-reasoning" })">restrictions</a> though!</li>
 <li>Create the folder manually.</li>
 <li>If you have already installed (and want to change the location after the fact):</li>
 </ol>
@@ -44,7 +44,7 @@ There are a few ways to install Chocolatey. Chocolatey exists as a <a href="http
 <li>Delete your old install directory.</li>
 </ul>
 <p><strong>Can I install with a proxy?</strong> Yes</p>
-<p>Chocolatey will detect and use a system set proxy. However some proxies will need to be set explicitly. To do so, you would do similar to <a href="Proxy-Settings-for-Chocolatey">Proxy settings for Chocolatey</a></p>
+<p>Chocolatey will detect and use a system set proxy. However some proxies will need to be set explicitly. To do so, you would do similar to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "proxy-settings-for-chocolatey" })">Proxy settings for Chocolatey</a></p>
 <p>Set the following environment variable(s) prior to install:</p>
 <ul>
 <li><code>chocolateyProxyLocation</code> - explicit proxy location. This includes the port.</li>
@@ -78,7 +78,7 @@ for explicit proxy</li>
 <p><strong><font color="red">Note: You must have your execution policy set to unrestricted (or at least in bypass) for this to work (<code>Set-ExecutionPolicy Unrestricted</code>). There have been <a href="https://github.com/chocolatey/chocolatey/issues/70">reports</a> that RemoteSigned is enough for the install to work.</font></strong><br />
 It downloads and runs (<a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a>).</p>
 <h2 id="cmdpowershell-wproxy-server">Cmd/PowerShell w/Proxy Server</h2>
-<p>See <a href="Proxy-Settings-for-Chocolatey#installing-chocolatey-behind-a-proxy-server">Installing Chocolatey Behind a Proxy Server</a></p>
+<p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "proxy-settings-for-chocolatey" })#installing-chocolatey-behind-a-proxy-server">Installing Chocolatey Behind a Proxy Server</a></p>
 <h2 id="powershell-through-batch-method">PowerShell Through Batch Method</h2>
 <p>This is the best method if you want to repeat it or include it in source control. It requires no change to your existing PowerShell to allow for remote unsigned scripts.</p>
 <p>Create a file named <code>installChocolatey.cmd</code> with the following:</p>

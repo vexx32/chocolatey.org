@@ -533,13 +533,13 @@ $options =
 Install-ChocolateyPackage -PackageName &#39;package&#39; -FileType &#39;exe&#39; -SilentArgs &#39;/S&#39; &#39;https://somelocation.com/thefile.exe&#39; -Options $options</code></pre>
 <h2 id="links">Links</h2>
 <ul>
-<li><a href="HelpersGetChocolateyWebFile">Get-ChocolateyWebFile</a></li>
-<li><a href="HelpersInstallChocolateyInstallPackage">Install-ChocolateyInstallPackage</a></li>
-<li><a href="HelpersInstallChocolateyZipPackage">Install-ChocolateyZipPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-install-package" })">Install-ChocolateyInstallPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
 </ul>
 <hr />
 <h1 id="install-chocolateypackage-1">Install-ChocolateyPackage</h1>
-<p>This will download a native installer from a url and install it on your machine. Has error handling built in. You do not need to surround this with try catch if it is the only thing in your <a href="ChocolateyInstallPS1">chocolateyInstall.ps1</a>.</p>
+<p>This will download a native installer from a url and install it on your machine. Has error handling built in. You do not need to surround this with try catch if it is the only thing in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>.</p>
 <p><strong>NOTE:</strong> This command will assert UAC/Admin privileges on the machine.</p>
 <h2 id="usage">Usage</h2>
 <pre class="powershell"><code>Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64bit `
@@ -603,9 +603,9 @@ Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; 
 </ul>
 <h2 id="see-also">See Also</h2>
 <ul>
-<li><a href="HelpersInstallChocolateyZipPackage">Install-ChocolateyZipPackage</a> for installing a zip package.</li>
-<li>To add executables to the path see <a href="HelpersGetChocolateyBins">Get-ChocolateyBins</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a> for installing a zip package.</li>
+<li>To add executables to the path see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-bins" })">Get-ChocolateyBins</a></li>
 </ul>
-<p><a href="HelpersReference">Function Reference</a></p>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyPackage -Full</code>.</p>
 </article>

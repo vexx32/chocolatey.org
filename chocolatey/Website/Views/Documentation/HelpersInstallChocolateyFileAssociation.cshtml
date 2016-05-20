@@ -95,6 +95,6 @@ will be opened via the executable specified.</p>
 $sublimeDir = (Get-ChildItem $env:ALLUSERSPROFILE\chocolatey\lib\sublimetext* | select $_.last)
 $sublimeExe = &quot;$sublimeDir\tools\sublime_text.exe&quot;
 Install-ChocolateyFileAssociation &quot;.txt&quot; $sublimeExe</code></pre>
-<p><a href="HelpersReference">Function Reference</a></p>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyFileAssociation -Full</code>.</p>
 </article>

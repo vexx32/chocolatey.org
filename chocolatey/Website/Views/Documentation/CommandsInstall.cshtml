@@ -6,11 +6,11 @@
 <h1 id="install-command-choco-install">Install Command (choco install)</h1>
 <p>Installs a package or a list of packages (sometimes specified as a<br />
 packages.config). Some may prefer to use <code>cinst</code> as a shortcut for<br />
-<a href="Commandsinstall"><code>choco install</code></a>.</p>
+<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })"><code>choco install</code></a>.</p>
 <p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)<br />
 with options and switches. Add <code>-y</code> for previous behavior with no<br />
 prompt. In most cases you can still pass options and switches with one<br />
-dash (<code>-</code>). For more details, see <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+dash (<code>-</code>). For more details, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
 <pre><code>choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
 cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
@@ -36,7 +36,7 @@ choco install &lt;path/to/nupkg&gt;</code></pre>
 <pre><code>choco install ruby --version 1.9.3.55100 -my
 choco install ruby --version 2.0.0.59800 -my
 choco install ruby --version 2.1.5 -my</code></pre>
-<p>What is <code>-my</code>? See option bundling in <a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a><br />
+<p>What is <code>-my</code>? See option bundling in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a><br />
 (<code>choco -?</code>).</p>
 <p><strong>NOTE:</strong> All of these will add to PATH variable. We&#39;ll be adding a special<br />
 option to not allow PATH changes. Until then you will need to manually<br />
@@ -107,7 +107,7 @@ running a command like install that allows installing multiple<br />
 packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
-<p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
+<p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
 <pre><code>
 
 
@@ -253,6 +253,6 @@ out multiple package calls when wanting to pass specific options.</p>
        result positives required to flag a package. Overrides the default
        configuration value &#39;virusCheckMinimumPositives&#39; set to &#39;5&#39;.
 </code></pre>
-<p><a href="CommandsReference">Command Reference</a></p>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco install -h</code>.</p>
 </article>

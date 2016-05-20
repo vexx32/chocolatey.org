@@ -5,11 +5,11 @@
 <article>
 <h1 id="listsearch-command-choco-search">List/Search Command (choco search)</h1>
 <p>Chocolatey will perform a search for a package local or remote. Some<br />
-may prefer to use <a href="Commandslist"><code>clist</code></a> as a shortcut for <a href="Commandslist"><code>choco list</code></a>.</p>
+may prefer to use <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandslist" })"><code>clist</code></a> as a shortcut for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandslist" })"><code>choco list</code></a>.</p>
 <p><strong>NOTE:</strong> 100% compatible with older Chocolatey client (0.9.8.x and below)<br />
 with options and switches. In most cases you can still pass options<br />
 and switches with one dash (<code>-</code>). For more details, see<br />
-<a href="CommandsReference#how-to-pass-options--switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
 <pre><code>choco search &lt;filter&gt; [&lt;options/switches&gt;]
 choco list &lt;filter&gt; [&lt;options/switches&gt;]
@@ -43,7 +43,7 @@ running a command like install that allows installing multiple<br />
 packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
-<p>Includes <a href="CommandsReference#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
+<p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
 <pre><code>
  -?, --help, -h
      Prints out the help menu.
@@ -155,6 +155,6 @@ out multiple package calls when wanting to pass specific options.</p>
      --detail, --detailed
      Detailed - Alias for verbose. Available in 0.9.10+.
 </code></pre>
-<p><a href="CommandsReference">Command Reference</a></p>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco search -h</code>.</p>
 </article>

@@ -5,15 +5,15 @@
 <article>
 <h2 id="creating-chocolatey-packages---tldr-version">Creating Chocolatey Packages - TL;DR version</h2>
 <p>Here&#39;s a TL;DR quick start version of the package creating tutorial. Follow these steps to create a simple package.</p>
-<p><strong>Problem?</strong> Read the detailed version: <a href="CreatePackages">Creating Chocolatey Packages</a></p>
+<p><strong>Problem?</strong> Read the detailed version: <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Creating Chocolatey Packages</a></p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>You have Chocolatey installed.</li>
-<li>You&#39;ve read <a href="GettingStarted#what-are-chocolatey-packages">What are Chocolatey Packages?</a> first.</li>
+<li>You&#39;ve read <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#what-are-chocolatey-packages">What are Chocolatey Packages?</a> first.</li>
 <li>You know how a package works</li>
 <li>A package contains a <code>nuspec</code> file. This defines the package. (<a href="http://docs.nuget.org/docs/reference/nuspec-reference">Docs</a>) (<a href="https://github.com/chocolatey/chocolateytemplates/blob/master/_templates/chocolatey/__NAME__.nuspec">Example</a>)</li>
 <li>A package may contain embedded software.</li>
-<li>A package may contain an installation script. This can be <a href="CreatePackagesQuickStart#examples">very simple</a>.</li>
+<li>A package may contain an installation script. This can be <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages-quick-start" })#examples">very simple</a>.</li>
 </ul>
 <h2 id="quick-start-guide">Quick start guide</h2>
 <ul>
@@ -50,7 +50,7 @@
 <ul>
 <li><a href="https://chocolatey.org/account/register">Register</a></li>
 </ul></li>
-<li>Copy the API key <a href="<a href="https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>">from your Chocolatey account</a>.</li>
+<li>Copy the API key <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "<a href=" })"https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>">from your Chocolatey account</a>.</li>
 <li><code>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
 <li><code>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
 </ul>
@@ -92,7 +92,7 @@ $validExitCodes = @@(0,3010)
 
 Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes</code></pre>
 <h3 id="parsing-package-parameters">Parsing Package Parameters</h3>
-<p>For a complete example of how you can use the PackageParameters argument of the <code>choco install</code> command, see this <a href="How-To-Parse-PackageParameters-Argument">How-To</a>.</p>
+<p>For a complete example of how you can use the PackageParameters argument of the <code>choco install</code> command, see this <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-parse-package-parameters-argument" })">How-To</a>.</p>
 <h2 id="tips">Tips</h2>
 <ul>
 <li>If you cannot find the installer silent mode, you can try an old tool called <a href="http://www.softpedia.com/progDownload/Universal-Silent-Switch-Finder-Download-180984.html">Universal Silent Switch Finder 1.5.0.0</a> - <code>choco install ussf</code>.</li>

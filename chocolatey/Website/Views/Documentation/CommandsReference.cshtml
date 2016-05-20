@@ -7,28 +7,28 @@
 <p>This is a listing of all of the different things you can pass to choco.</p>
 <h2 id="commands">Commands</h2>
 <ul>
-<li><a href="CommandsList">list / search </a> - searches and lists remote or local packages</li>
-<li><a href="CommandsInstall">install</a> - installs packages from various sources</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-list" })">list / search </a> - searches and lists remote or local packages</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })">install</a> - installs packages from various sources</li>
 <li>installmissing - <strong>REMOVED</strong></li>
 <li>update - <strong>DEPRECATED</strong> - RESERVED for future use (You are looking for upgrade, these are not the droids you are looking for)</li>
-<li><a href="CommandsOutdated">outdated</a> - show a list of packages that have updates (similar to <code>choco upgrade --noop</code>, but only outputs out of date packages, current version and available update version).</li>
-<li><a href="CommandsUpgrade">upgrade</a> - upgrades packages from various sources</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-outdated" })">outdated</a> - show a list of packages that have updates (similar to <code>choco upgrade --noop</code>, but only outputs out of date packages, current version and available update version).</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">upgrade</a> - upgrades packages from various sources</li>
 <li>version - <strong>DEPRECATED</strong> - will be removed in v1 - use <code>choco upgrade &lt;pkg|all&gt; -whatif</code> instead</li>
-<li><a href="CommandsUninstall">uninstall</a> - uninstalls a package</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-uninstall" })">uninstall</a> - uninstalls a package</li>
 <li>help - <strong>REMOVED</strong> - use <code>-h</code> on any command.</li>
 </ul>
 <h2 id="commands-intermediate-to-advanced">Commands (intermediate to advanced)</h2>
 <ul>
-<li><a href="CommandsConfig">config</a> - Retrieve and configure config file settings</li>
-<li><a href="CommandsSources">source / sources</a> - view and configure default sources</li>
-<li><a href="CommandsApiKey">apikey / setapikey</a> - retrieves or saves an apikey for a particular source</li>
-<li><a href="CommandsPin">pin</a> - suppress upgrades to a package</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">config</a> - Retrieve and configure config file settings</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">source / sources</a> - view and configure default sources</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-api-key" })">apikey / setapikey</a> - retrieves or saves an apikey for a particular source</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> - suppress upgrades to a package</li>
 </ul>
 <h2 id="package-creation-commands">Package Creation Commands</h2>
 <ul>
-<li><a href="CommandsNew">new</a> - generates files necessary for a Chocolatey package from a template</li>
-<li><a href="CommandsPack">pack</a> - packages up a nuspec to a compiled nupkg</li>
-<li><a href="CommandsPush">push</a> - pushes a compiled nupkg</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })">new</a> - generates files necessary for a Chocolatey package from a template</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pack" })">pack</a> - packages up a nuspec to a compiled nupkg</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-push" })">push</a> - pushes a compiled nupkg</li>
 </ul>
 <h2 id="see-help-menu-in-action">See Help Menu In Action</h2>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action" /></p>

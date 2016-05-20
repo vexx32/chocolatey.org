@@ -87,7 +87,7 @@ pause
 <p>The original is <a href="https://gist.github.com/1107920">on github</a>.</p>
 <h2 id="getting-the-source">Getting the Source</h2>
 <p>Create a package for your project and call it projectname<em>.dev</em>. It should take a nuspec dependency on whatever source control you use. So in the case of git, a dependency on msysgit.<br />
-Now, in <a href="ChocolateyInstallPS1">chocolateyInstall.ps1</a>, you just need something like the following:</p>
+Now, in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>, you just need something like the following:</p>
 <pre class="powershell"><code>try {
 
   $dirSelected = Read-Host &quot;Please tell me the directory where you want to clone dropkick. Press enter to use .\\dropkick&quot;

@@ -5,47 +5,47 @@
 <article>
 <h1 id="chocolatey-package-functions-aka-helpers-reference">Chocolatey Package Functions aka Helpers Reference</h1>
 <h2 id="main-functions">Main Functions</h2>
-<p>These functions call other functions and many times may be the only thing you need in your <a href="ChocolateyInstallPS1">chocolateyInstall.ps1 file</a>.</p>
+<p>These functions call other functions and many times may be the only thing you need in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1 file</a>.</p>
 <ul>
-<li><a href="HelpersInstallChocolateyPackage">Install-ChocolateyPackage</a></li>
-<li><a href="HelpersInstallChocolateyZipPackage">Install-ChocolateyZipPackage</a></li>
-<li><a href="HelpersInstallChocolateyPowershellCommand">Install-ChocolateyPowershellCommand</a></li>
-<li><a href="HelpersInstallChocolateyVsixPackage">Install-ChocolateyVsixPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-powershell-command" })">Install-ChocolateyPowershellCommand</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-vsix-package" })">Install-ChocolateyVsixPackage</a></li>
 </ul>
 <h2 id="error-success-functions">Error / Success Functions</h2>
 <ul>
-<li><a href="HelpersWriteChocolateySuccess">Write-ChocolateySuccess</a> - <strong>DEPRECATED</strong></li>
-<li><a href="HelpersWriteChocolateyFailure">Write-ChocolateyFailure</a> - <strong>DEPRECATED</strong></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-write-chocolatey-success" })">Write-ChocolateySuccess</a> - <strong>DEPRECATED</strong></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-write-chocolatey-failure" })">Write-ChocolateyFailure</a> - <strong>DEPRECATED</strong></li>
 </ul>
 <p>You really don&#39;t need a try catch with chocolatey powershell files anymore.</p>
 <h2 id="more-functions">More Functions</h2>
 <h3 id="administrative-access-functions">Administrative Access Functions</h3>
 <p>When creating packages that need to run one of the following commands below, one should add the tag <code>admin</code> to the nuspec.</p>
 <ul>
-<li><a href="HelpersInstallChocolateyPackage">Install-ChocolateyPackage</a></li>
-<li><a href="HelpersStartChocolateyProcessAsAdmin">Start-ChocolateyProcessAsAdmin</a></li>
-<li><a href="HelpersInstallChocolateyInstallPackage">Install-ChocolateyInstallPackage</a></li>
-<li><a href="HelpersInstallChocolateyPath">Install-ChocolateyPath</a> - when specifying machine path</li>
-<li><a href="HelpersInstallChocolateyEnvironmentVariable">Install-ChocolateyEnvironmentVariable</a> - when specifying machine path</li>
-<li><a href="HelpersInstallChocolateyExplorerMenuItem">Install-ChocolateyExplorerMenuItem</a></li>
-<li><a href="HelpersInstallChocolateyFileAssociation">Install-ChocolateyFileAssociation</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-start-chocolatey-process-as-admin" })">Start-ChocolateyProcessAsAdmin</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-install-package" })">Install-ChocolateyInstallPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-path" })">Install-ChocolateyPath</a> - when specifying machine path</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-environment-variable" })">Install-ChocolateyEnvironmentVariable</a> - when specifying machine path</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-explorer-menu-item" })">Install-ChocolateyExplorerMenuItem</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-file-association" })">Install-ChocolateyFileAssociation</a></li>
 </ul>
 <h3 id="non-administrator-safe-functions">Non-Administrator Safe Functions</h3>
 <p>Some folks expressed a desire to have Chocolatey not run as administrator to reach continuous integration and developers that are not administrators on their machines.</p>
 <p>These are the functions from above as one list.</p>
 <ul>
-<li><a href="HelpersInstallChocolateyZipPackage">Install-ChocolateyZipPackage</a></li>
-<li><a href="HelpersInstallChocolateyPowershellCommand">Install-ChocolateyPowershellCommand</a></li>
-<li><a href="HelpersWriteChocolateySuccess">Write-ChocolateySuccess</a></li>
-<li><a href="HelpersWriteChocolateyFailure">Write-ChocolateyFailure</a></li>
-<li><a href="HelpersGetChocolateyWebFile">Get-ChocolateyWebFile</a></li>
-<li><a href="HelpersGetChocolateyUnzip">Get-ChocolateyUnzip</a></li>
-<li><a href="HelpersInstallChocolateyPath">Install-ChocolateyPath</a> - when specifying user path</li>
-<li><a href="HelpersInstallChocolateyEnvironmentVariable">Install-ChocolateyEnvironmentVariable</a> - when specifying user path</li>
-<li><a href="HelpersInstallChocolateyDesktopLink">Install-ChocolateyDesktopLink</a> - <strong>DEPRECATED</strong> - see <a href="HelpersInstallChocolateyShortcut">Install-ChocolateyShortcut</a></li>
-<li><a href="HelpersInstallChocolateyPinnedTaskBarItem">Install-ChocolateyPinnedTaskBarItem</a></li>
-<li><a href="HelpersInstallChocolateyShortcut">Install-ChocolateyShortcut</a> - v0.9.9+</li>
-<li><a href="HelpersUpdateSessionEnvironment">Update-SessionEnvironment</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-powershell-command" })">Install-ChocolateyPowershellCommand</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-write-chocolatey-success" })">Write-ChocolateySuccess</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-write-chocolatey-failure" })">Write-ChocolateyFailure</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-unzip" })">Get-ChocolateyUnzip</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-path" })">Install-ChocolateyPath</a> - when specifying user path</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-environment-variable" })">Install-ChocolateyEnvironmentVariable</a> - when specifying user path</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-desktop-link" })">Install-ChocolateyDesktopLink</a> - <strong>DEPRECATED</strong> - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-shortcut" })">Install-ChocolateyShortcut</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-pinned-task-bar-item" })">Install-ChocolateyPinnedTaskBarItem</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-shortcut" })">Install-ChocolateyShortcut</a> - v0.9.9+</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-update-session-environment" })">Update-SessionEnvironment</a></li>
 </ul>
 <h2 id="complete-list-alphabetical-order">Complete List (alphabetical order)</h2>
 <ul>
