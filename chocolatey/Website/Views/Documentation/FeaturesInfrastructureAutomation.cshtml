@@ -31,6 +31,24 @@
 <p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team.</p>
 <div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">include_recipe <span class="st">&#39;chocolatey&#39;</span></code></pre></div>
 <p><a href="https://bit.ly/choco_chef">Cookbook - Read More...</a></p>
+<h3 id="example">Example</h3>
+<p>Here&#39;s a more in depth example from <a href="https://github.com/Nordstrom/chefdk_bootstrap/blob/master/recipes/windows.rb">Nordstrom</a>:</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">include_recipe <span class="st">&#39;chocolatey&#39;</span>
+
+home = <span class="dt">Dir</span>.home
+<span class="ot">%W(</span>
+<span class="st">  #{home}/.chef</span>
+<span class="st">  #{home}/chef</span>
+<span class="st">  #{home}/chef/cookbooks</span>
+<span class="ot">)</span>.each <span class="kw">do</span> |directory|
+  directory directory
+<span class="kw">end</span>
+
+packages = node[<span class="st">&#39;chefdk_bootstrap&#39;</span>][<span class="st">&#39;package&#39;</span>]
+
+packages.each <span class="kw">do</span> |pkg, install|
+  include_recipe <span class="st">&quot;</span><span class="ot">#{</span>cookbook_name<span class="ot">}</span><span class="st">::</span><span class="ot">#{</span>pkg<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">if</span> install
+<span class="kw">end</span></code></pre></div>
 <h2 id="powershell-dsc">PowerShell DSC</h2>
 <p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
 <pre class="powershell"><code>  cChocoInstaller installChoco
