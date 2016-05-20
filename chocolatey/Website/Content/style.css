@@ -3021,7 +3021,7 @@ pre code{
   position: relative;
 }
 
-.docs li:before{
+.docs ul li:before{
   content: '-';
   position: absolute;
   left: -.9em;
