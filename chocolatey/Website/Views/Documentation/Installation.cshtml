@@ -10,7 +10,7 @@
 <ul>
 <li>Cmd.exe:</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">@@powershell</span> -NoProfile -ExecutionPolicy Bypass -Command <span class="st">&quot;iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="kw">&amp;amp;&amp;amp;</span> <span class="kw">SET</span> PATH=%PATH%<span class="kw">;%ALLUSERSPROFILE%</span>\chocolatey\bin<span class="kw">&lt;</span>/code<span class="kw">&gt;&lt;</span>/pre<span class="kw">&gt;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">@@powershell</span> -NoProfile -ExecutionPolicy Bypass -Command <span class="st">&quot;iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="kw">&amp;amp;&amp;amp;</span> <span class="kw">SET</span> PATH=%PATH%<span class="kw">;%ALLUSERSPROFILE%</span>\chocolatey\bin</code></pre></div>
 <ul>
 <li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):</li>
 </ul>
