@@ -39,7 +39,7 @@ can do just about anything you need. Choco has some very handy <a href="HelpersR
 <li><a href="CreatePackages#how-do-i-set-up-batch-redirects-for-applications-that-have-a-gui">Make shim for GUI application</a></li>
 <li><a href="CreatePackages#internationalization-and-localization-of-packages">Localization</a></li>
 <li><a href="CreatePackages#build-your-package">Building</a> / <a href="CreatePackages#testing-your-package">Testing</a> / <a href="CreatePackages#push-your-package">Pushing</a></li>
-<li><a href="AutomaticPackages">Automatically updating packages</a></li>
+<li><a href="AutomaticPackages">Maintainer magic - automatically updating packaging</a></li>
 <li><a href="PackageMantainerHandover">Taking over existing package</a></li>
 </ol>
 <h2 id="quick-start-guide">Quick Start guide</h2>
@@ -135,7 +135,7 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
       <span class="kw">&lt;dependency</span><span class="ot"> id=</span><span class="st">&quot;chocolatey&quot;</span><span class="ot"> version=</span><span class="st">&quot;0.9.8.21&quot;</span> <span class="kw">/&gt;</span>
     <span class="kw">&lt;/dependencies&gt;</span></code></pre></div>
 <p>Logically, the version is based on the lowest compatible version. But if you don&#39;t know and used a lot of sorcery in your package, depend on the version of <code>Chocolatey</code> that you succesfully tested your package on.</p>
-<p><strong>See also:</strong> <a href="<a href="http://docs.nuget.org/docs/reference/versioning" class="uri">http://docs.nuget.org/docs/reference/versioning</a>"><a href="http://docs.nuget.org/docs/reference/versioning" class="uri">http://docs.nuget.org/docs/reference/versioning</a></a></p>
+<p><strong>See also:</strong> <a href="http://docs.nuget.org/docs/reference/versioning">Nuget Version Reference</a></p>
 <h2 id="but-for-real-how-do-i-create-a-package">But for real, how do I create a package?</h2>
 <ul>
 <li><strong>Generate new package</strong>:</li>
@@ -267,8 +267,8 @@ foreach ($file in $files) {
 <h2 id="push-your-package">Push Your Package</h2>
 <p>To push your package after you have built and tested it, you type <code>choco push packageName.nupkg -s sourceLocation</code> where <em>packageName.nupkg</em> is the name of the nupkg that was built with a version number as part of the package name and <em>sourceLocation</em> is the location of the source you want to push to (e.g. <code>-s https://chocolatey.org/</code> for chocolatey&#39;s community feed). You must have an api key for <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> set. Take a look at <a href="CommandsPush">choco push</a></p>
 <p>You can also log into chocolatey.org and upload your package from there (not recommended for packages over 2MB).</p>
-<h2 id="automatic-package-repositories">Automatic package repositories?</h2>
-<p>Yes - <a href="AutomaticPackages">AutomaticPackages</a></p>
+<h2 id="automatic-packaging">Automatic packaging?</h2>
+<p>Yes - <a href="AutomaticPackages">Automatic Packaging</a></p>
 <h2 id="becoming-a-primary-maintainer-of-an-existing-package">Becoming a primary maintainer of an existing package</h2>
-<p>See <a href="PackageMantainerHandover">PackageMantainerHandover</a></p>
+<p>See <a href="PackageMantainerHandover">Package Maintainer Handover</a></p>
 </article>
