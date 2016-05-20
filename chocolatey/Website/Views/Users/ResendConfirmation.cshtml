@@ -4,18 +4,20 @@
   Bundles.Reference("Scripts/validation");
 }
 
-<h1 class="page-heading">Resend Email Confirmation</h1>
+<section>
+<div class="p-b p-l">
+  <h1 class="m-b">Resend Email Confirmation</h1>
 
-<p>
-     We are sorry to hear you did not get our confirmation email. Enter your email below 
-     and we will resend the confirmation email. Alternatively you might have been 
-     redirected to this page because the confirmation link you clicked was old and needs 
-     to be updated. Enter your email address and a new one will be sent, sorry for the 
-     inconvenience. 
-</p>
+  <p>
+    We are sorry to hear you did not get our confirmation email. Enter your email below 
+    and we will resend the confirmation email. Alternatively you might have been 
+    redirected to this page because the confirmation link you clicked was old and needs 
+    to be updated. Enter your email address and a new one will be sent, sorry for the 
+    inconvenience. 
+  </p>
 
-@using (Html.BeginForm()) {
-    <fieldset class="form">
+  @using (Html.BeginForm()) {
+      <fieldset class="form">
         <legend>Resend Email Confirmation</legend>
 
         @Html.AntiForgeryToken()
@@ -27,5 +29,7 @@
 
         <input type="submit" value="Send" title="Resend Email Confirmation" />
         <a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a>
-    </fieldset>
-}
+      </fieldset>
+  }
+</div>
+</section>

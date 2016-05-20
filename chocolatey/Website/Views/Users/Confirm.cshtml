@@ -1,42 +1,47 @@
 ﻿@model EmailConfirmationModel
 
-<h1 class="page-heading">Confirm Registration</h1>
+<section>
+<div class="p-b p-l">
 
-@if (Model.SuccessfulConfirmation) {
-    <p>
+  <h1 class="m-b">Confirm Registration</h1>
+
+  @if (Model.SuccessfulConfirmation) {
+      <p>
         @if (Model.ConfirmingNewAccount) {
             @: Account registration completed!
         }
         else {
             @: Email address change confirmed!
         }
-    </p>
-    if (Model.ConfirmingNewAccount) {
-        <p>
-            Click on the Log On link to logon to the site.
-        </p>
-        <p>
+      </p>
+      if (Model.ConfirmingNewAccount) {
+          <p>
+            Click on the Login link to log in to the site.
+          </p>
+          <p>
             You may now upload packages and make your mark in 
             the community.
-        </p>
-    }
-    else {
-        <p>
+          </p>
+      }
+      else {
+          <p>
             Your email address is now updated.
-        </p>
-    }
-}
+          </p>
+      }
+  }
 
- else {
-    <p class="message error">
+  else {
+      <p class="message error">
         Could not confirm your email address.
-    </p>
-     <p>
-         Make sure you clicked on the confirmation URL in the email we sent.
-     </p>
+      </p>
+      <p>
+        Make sure you clicked on the confirmation URL in the email we sent.
+      </p>
     
-     <p class="message warning">
-         If you see this screen and you are logged in, you can likely safely ignore it. <br />
-         If you were already logged into another account when you clicked on confirm, you will need to resend confirmation.
-     </p>
-}
+      <p class="message warning">
+        If you see this screen and you are logged in, you can likely safely ignore it. <br />
+        If you were already logged into another account when you clicked on confirm, you will need to resend confirmation.
+      </p>
+  }
+</div>
+</section>

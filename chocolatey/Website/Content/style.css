@@ -3289,6 +3289,8 @@ fieldset.form {
         border: none;
         clear: both;
         padding: 0;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
     }
     
         fieldset.form legend {
@@ -3301,7 +3303,7 @@ fieldset.form {
         }
         
             .form-field label {
-                color: #52a4ca;
+                color: #21446d;
                 display: block;
                 font-size: 1.25em;
                 margin-bottom: 5px;
@@ -3339,7 +3341,7 @@ fieldset.form {
             
             .form-field input[data-val-required],
             .form-field textarea[data-val-required] {
-                border-left: solid 5px #caa452; 
+                border-left: solid 5px #5C9FD8; 
             }
             
             .form-field input[type="checkbox"]
@@ -3387,12 +3389,12 @@ fieldset.form {
             }
             
         .form input[type="submit"] {
-            background-color: #aa8545;
-            background-image: -ms-linear-gradient(top, #aa8545 0%, #836737 100%);
-            background-image: -o-linear-gradient(top, #aa8545 0%, #836737 100%);
-            background-image: -webkit-linear-gradient(top, #aa8545 0%, #836737 100%);
-            background-image: linear-gradient(top, #aa8545 0%, #836737 100%);
-            border: solid 1px #836737;
+            background-color: #1A375A;
+            background-image: -ms-linear-gradient(top, #1A375A 0%, #21446D 100%);
+            background-image: -o-linear-gradient(top, #1A375A 0%, #21446D 100%);
+            background-image: -webkit-linear-gradient(top, #1A375A 0%, #21446D 100%);
+            background-image: linear-gradient(top, #1A375A 0%, #21446D 100%);
+            border: solid 1px #21446D;
             box-shadow: inset 0px 0px 1px rgba(255,255,255,1), 1px 1px 1px rgba(0,0,0,0.3);
             color: #fff;
             cursor: pointer;
