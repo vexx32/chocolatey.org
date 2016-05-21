@@ -2665,6 +2665,8 @@ img{ max-width: 100%; }
   color: #fff;
   border: none;
   border-bottom: 5px solid #255279;
+  text-align: center;
+  width: 100%;
 }
 
 .install-button:hover{
