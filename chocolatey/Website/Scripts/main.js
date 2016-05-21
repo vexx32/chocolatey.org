@@ -44,7 +44,7 @@ function copyToClipboard(el) {
     if (!parent.dataset['copy-to-clipboard']) {
       parent = parent.parentElement;
     }
-    var item = parent.querySelector('[data-clipboard-content]')
+    var item = parent.querySelector('[data-clipboard-content]');
     var text = item.innerText;
 
     tmpElement.value = text;
