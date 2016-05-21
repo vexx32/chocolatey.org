@@ -206,7 +206,7 @@ namespace NuGetGallery
 
             routes.MapRoute(RouteName.CancelUpload, "packages/cancel-upload", MVC.Packages.CancelUpload());
 
-            routes.MapRouteSeo(
+            routes.MapRoute(
                 RouteName.PackageOwnerConfirmation, "packages/{id}/owners/{username}/confirm/{token}", new
                 {
                     controller = MVC.Packages.Name,
@@ -221,7 +221,7 @@ namespace NuGetGallery
                     version = new VersionRouteConstraint()
                 });
 
-            var packageVersionActionRoute = routes.MapRouteSeo(
+            var packageVersionActionRoute = routes.MapRoute(
                 RouteName.PackageVersionAction, "packages/{id}/{version}/{action}", new
                 {
                     controller = MVC.Packages.Name
@@ -230,28 +230,28 @@ namespace NuGetGallery
                     version = new VersionRouteConstraint()
                 });
 
-            var packageActionRoute = routes.MapRouteSeo(
+            var packageActionRoute = routes.MapRoute(
                 RouteName.PackageAction, "packages/{id}/{action}", new
                 {
                     controller = MVC.Packages.Name
                 });
 
-            var resendRoute = routes.MapRouteSeo("ResendConfirmation", "account/ResendConfirmation", MVC.Users.ResendConfirmation());
+            var resendRoute = routes.MapRoute("ResendConfirmation", "account/ResendConfirmation", MVC.Users.ResendConfirmation());
 
             //Redirecting v1 Confirmation Route
-            routes.Redirect(r => r.MapRouteSeo("v1Confirmation", "Users/Account/ChallengeEmail")).To(resendRoute);
+            routes.Redirect(r => r.MapRoute("v1Confirmation", "Users/Account/ChallengeEmail")).To(resendRoute);
 
-            routes.MapRouteSeo(
+            routes.MapRoute(
                 RouteName.Authentication, "users/account/{action}", new
                 {
                     controller = MVC.Authentication.Name
                 });
 
-            routes.MapRouteSeo(RouteName.Profile, "profiles/{username}", MVC.Users.Profiles());
+            routes.MapRoute(RouteName.Profile, "profiles/{username}", MVC.Users.Profiles());
 
-            routes.MapRouteSeo(RouteName.PasswordReset, "account/{action}/{username}/{token}", MVC.Users.ResetPassword());
+            routes.MapRoute(RouteName.PasswordReset, "account/{action}/{username}/{token}", MVC.Users.ResetPassword());
 
-            routes.MapRouteSeo(RouteName.Account, "account/{action}", MVC.Users.Account());
+            routes.MapRoute(RouteName.Account, "account/{action}", MVC.Users.Account());
 
             routes.MapRoute(
                 "site" + RouteName.DownloadPackage, "packages/{id}/{version}/DownloadPackage", MVC.Api.GetPackage(), defaults: new
@@ -263,8 +263,8 @@ namespace NuGetGallery
                 });
             
             // V1 Routes
-            routes.MapRouteSeo("v1Legacy" + RouteName.PushPackageApi, "PackageFiles/{apiKey}/nupkg", MVC.Api.CreatePackagePost());
-            routes.MapRouteSeo("v1Legacy" + RouteName.PublishPackageApi, "PublishedPackages/Publish", MVC.Api.PublishPackage());
+            routes.MapRoute("v1Legacy" + RouteName.PushPackageApi, "PackageFiles/{apiKey}/nupkg", MVC.Api.CreatePackagePost());
+            routes.MapRoute("v1Legacy" + RouteName.PublishPackageApi, "PublishedPackages/Publish", MVC.Api.PublishPackage());
 
             // V2 routes
             routes.MapRoute(
@@ -353,16 +353,16 @@ namespace NuGetGallery
                  MVC.Api.ScanPackage(), 
                  defaults: null
             );
-            
-            routes.MapRouteSeo("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
 
-            routes.MapRouteSeo("v2PackageVersions", "api/v2/package-versions/{id}", MVC.Api.GetPackageVersions());
+            routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
+
+            routes.MapRoute("v2PackageVersions", "api/v2/package-versions/{id}", MVC.Api.GetPackageVersions());
 
             routes.MapServiceRoute(RouteName.V2ApiFeed, "api/v2/", typeof(V2Feed));
 
             // Redirected Legacy Routes
 
-            routes.Redirect(r => r.MapRouteSeo("ReportAbuse", "Package/ReportAbuse/{id}/{version}", MVC.Packages.ReportAbuse()), permanent: true).To(packageVersionActionRoute);
+            routes.Redirect(r => r.MapRoute("ReportAbuse", "Package/ReportAbuse/{id}/{version}", MVC.Packages.ReportAbuse()), permanent: true).To(packageVersionActionRoute);
 
             routes.Redirect(
                 r => r.MapRoute(
@@ -375,18 +375,18 @@ namespace NuGetGallery
 
             // TODO: this route looks broken as there is no EditPackage action
             //routes.Redirect(
-            //    r => r.MapRouteSeo(
+            //    r => r.MapRoute(
             //        "EditPackage",
             //        "Package/Edit/{id}/{version}",
             //        new { controller = PackagesController.ControllerName, action = "EditPackage" }),
             //    permanent: true).To(packageVersionActionRoute);
 
-            routes.Redirect(r => r.MapRouteSeo(RouteName.ListPackages, "List/Packages", MVC.Packages.ListPackages()), permanent: true).To(packageListRoute);
+            routes.Redirect(r => r.MapRoute(RouteName.ListPackages, "List/Packages", MVC.Packages.ListPackages()), permanent: true).To(packageListRoute);
 
-            routes.Redirect(r => r.MapRouteSeo(RouteName.DisplayPackage, "List/Packages/{id}/{version}", MVC.Packages.DisplayPackage().AddRouteValue("version", UrlParameter.Optional)), permanent: true)
+            routes.Redirect(r => r.MapRoute(RouteName.DisplayPackage, "List/Packages/{id}/{version}", MVC.Packages.DisplayPackage().AddRouteValue("version", UrlParameter.Optional)), permanent: true)
                   .To(packageDisplayRoute);
 
-            routes.Redirect(r => r.MapRouteSeo(RouteName.NewSubmission, "Contribute/NewSubmission", MVC.Packages.UploadPackage()), permanent: true).To(uploadPackageRoute);
+            routes.Redirect(r => r.MapRoute(RouteName.NewSubmission, "Contribute/NewSubmission", MVC.Packages.UploadPackage()), permanent: true).To(uploadPackageRoute);
         }
     }
 }
