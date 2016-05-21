@@ -68,7 +68,7 @@ function Convert-FencedCode($text) {
   $text = $text.Replace("</code></pre>","</pre>")
   $text = $text.Replace("class=`"ruby`"","class=`"brush: ruby`"")
   $text = $text.Replace("class=`"puppet`"","class=`"brush: ruby`"")
-  $text = $text.Replace("class=`"sh`"","class=`"brush: bash`"")
+  $text = $text.Replace("class=`"sh`"","class=`"brush: plain`"")
   $text = $text.Replace("class=`"xml`"","class=`"brush: xml`"")
   $text = $text.Replace("class=`"powershell`"","class=`"brush: ps`"")
   $text = $text.Replace("class=`"yaml`"","class=`"brush: plain`"")

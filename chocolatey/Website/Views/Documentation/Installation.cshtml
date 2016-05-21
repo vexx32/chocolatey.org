@@ -10,15 +10,15 @@
 <ul>
 <li>Cmd.exe:</li>
 </ul>
-<pre class="brush: bash">@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;amp;&amp;amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</pre>
+<pre class="brush: plain">@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;amp;&amp;amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</pre>
 <ul>
 <li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):</li>
 </ul>
-<pre class="brush: bash">iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</pre>
+<pre class="brush: plain">iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</pre>
 <ul>
 <li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):</li>
 </ul>
-<pre class="brush: bash">iwr https://chocolatey.org/install.ps1 | iex</pre>
+<pre class="brush: plain">iwr https://chocolatey.org/install.ps1 | iex</pre>
 <p>If that is still too much to type, <a href="https://twitter.com/jaybazuzi">Jay Bazuzi</a> <a href="https://twitter.com/jaybazuzi/status/625080286934466560">has created a short link</a> <code>cin.st</code> that points to <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a>. So you can use <code>iwr cin.st | iex</code>, although we recommend <code>iwr https://cin.st | iex</code>.<br />
 There are a few ways to install Chocolatey. Chocolatey exists as a <a href="http://chocolatey.org/packages/chocolatey">NuGet package</a>, so virtually any way you can get a NuGet package, you have the opportunity to then install it.</p>
 <h2 id="requirements">Requirements</h2>
