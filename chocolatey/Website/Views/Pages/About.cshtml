@@ -13,6 +13,7 @@
         NuGet infrastructure currently using PowerShell as its focus for delivering packages
         from the distros to your door, err computer.
       </p>
+      <p>Chocolatey is a single, unified interface designed to easily work with all aspects of managing Windows software using a packaging framework that understands both versioning and dependency requirements. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file. Chocolatey packages can be used independently, but also integrate with configuration managers like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, and Chef</a>. Chocolatey is trusted by businesses all over the world to manage their software deployments on Windows. You’ve never had so much fun managing software!</p>
       <p>
         Chocolatey is brought to you by the work and inspiration of the community, the work
         and thankless nights of the <a href="https://github.com/orgs/chocolatey/people">
@@ -25,12 +26,10 @@
       </p>
       <p>
         With all of this in mind, <strong>think of Chocolatey as a framework</strong> that
-        you can build on top of. <a href="https://supermarket.getchef.com/cookbooks/chocolatey">
-                                   Chef</a>, <strong><a href="https://forge.puppetlabs.com/rismoney/chocolatey">Puppet</a></strong>
-        and <a href="https://boxstarter.org">Boxstarter</a> all have ways for using Chocolatey
+        you can build on top of. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Chef, <strong>Puppet</strong>, Boxstarter, PowerShell DSC, Ansible, Saltstack, etc</a> all have ways for using Chocolatey
         to ensure the state of a computer and packages installed. <strong><em>Even Microsoft
-                                                                            has decided to use Chocolatey's framework</em></strong> with the upcoming <a href="https://github.com/OneGet/oneget">
-                                                                                                                                                        OneGet</a> client! See Jeffrey Snover's <a href="http://blogs.technet.com/b/windowsserver/archive/2014/04/03/windows-management-framework-v5-preview.aspx">
+                                                                            has decided to use Chocolatey's framework</em></strong> with the <a href="https://github.com/OneGet/oneget">
+                                                                                                                                                        PowerShell PackageManagement / OneGet</a> package manager aggregator! See Jeffrey Snover's <a href="http://blogs.technet.com/b/windowsserver/archive/2014/04/03/windows-management-framework-v5-preview.aspx">
                                                                                                                                                                                                   post</a> for more information.
       </p>
     </section>
@@ -106,18 +105,18 @@
       <p>
         <strong>How do I contact the Chocolatey group?</strong> The best way to do this
         is to use the <a href="https://groups.google.com/group/chocolatey">official mailing
-                        list</a> (see the forum link above).
+                        list</a> (see the mailing list link below).
       </p>
       <p>
         <strong>Why can't I see my post on the mailing list?</strong> First time posters
-        are moderated to cut down on spammers. Be patient and we will post your message.
+        are moderated to cut down on spammers. Be patient and we will approve your message.
       </p>
       <p>
         <strong>Why is my software listed here? I haven't given anyone distribution permission!</strong>
         Many times the way Chocolatey works is to use PowerShell to download the package
         from the official distribution point, this way no distribution rights are violated.
         This is not always the case so feel free to reach out to the site administrators
-        (the email address is chocolateywebadmin at google groups dot com) if you do have
+        or <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> if you do have
         questions. Also see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Software vendor</a> 
         for more details.
       </p>
@@ -181,10 +180,8 @@
         <strong>Do you have Business or Professional editions of Chocolatey?</strong> Yes! See <a href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a> for details!
       </p>
       <p>
-        <strong>I need a support contract.</strong> We can work with you on that. Please
-        contact the site administrators (the email address is chocolateywebadmin at google
-        groups dot com) and we will route you to the correct folks. In time this will be
-        better automated to set up. Bear with us as we improve this aspect of our service.
+        <strong>I need a support contract.</strong> We can work with you on that. Please see <a href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a> and
+        <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details! 
       </p>
       <p>
         <strong>Are there other FAQs?</strong> There is a link to the <a href="@Url.RouteUrl(RouteName.FAQ)">FAQs</a> at the top!
