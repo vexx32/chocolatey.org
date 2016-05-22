@@ -31,7 +31,7 @@ namespace NuGetGallery
             routes.IgnoreRoute("{*Content}", new { imgs = @"(.*/)?Content(/.*)?" });
             routes.IgnoreRoute("{*Scripts}", new { scripts = @"(.*/)?Scripts(/.*)?" });
 
-            routes.MapRouteSeo(RouteName.Home, "", MVC.Pages.Home());
+            routes.MapRoute(RouteName.Home, "", MVC.Pages.Home());
         
             routes.MapRouteSeo(
                 RouteName.InstallerBatchFile, "installChocolatey.cmd", new
@@ -165,12 +165,6 @@ namespace NuGetGallery
                     controller = "Pages",
                     Action = "Security"
                 });
-            
-            //routes.MapRouteSeo(
-            //   RouteName.DocsIndex,
-            //   "docs",
-            //   new { controller = "Documentation", action = "Index" }
-            //   );
 
             routes.MapRouteSeo(
                 RouteName.Docs,
@@ -178,9 +172,9 @@ namespace NuGetGallery
                 new { controller = "Documentation", action = "Documentation", docName = "home" }
                 );
             
-            routes.MapRouteSeo(RouteName.Stats, "stats", MVC.Pages.Stats());
+            routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 
-            routes.MapRouteSeo(
+            routes.MapRoute(
                 "rss feed", "feed.rss", new
                 {
                     controller = "RSS",
@@ -189,11 +183,11 @@ namespace NuGetGallery
 
             routes.Add(new JsonRoute("json/{controller}"));
 
-            routes.MapRouteSeo(RouteName.Policies, "policies/{action}", MVC.Pages.Terms());
+            routes.MapRoute(RouteName.Policies, "policies/{action}", MVC.Pages.Terms());
 
-            var packageListRoute = routes.MapRouteSeo(RouteName.ListPackages, "packages", MVC.Packages.ListPackages());
+            var packageListRoute = routes.MapRoute(RouteName.ListPackages, "packages", MVC.Packages.ListPackages());
 
-            routes.MapRouteSeo(
+            routes.MapRoute(
                 RouteName.NotifyComment, "packages/{packageId}/notify-comment", new
                 {
                     controller = MVC.Packages.Name,
