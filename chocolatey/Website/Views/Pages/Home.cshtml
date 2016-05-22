@@ -51,23 +51,72 @@
             </a>
         </div>
     </section>
-    <div class="bg-two p-t--l p-b--l">
-        <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-            <div class="feature-sections__column right">
-                <h2>Trusted by Business</h2>
+  <div class="bg-two p-t--l p-b--l">
+    <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+      <div class="feature-sections__column right">
+        <h2>Trusted by Business</h2>
+        <ul class="check-list m-t">
+          <li>Businesses are building and hosting their own packages that are reliable and repeatable so they can fully trust and control the process.</li>
+          <li>Companies trusting Chocolatey for production purposes do not use the packages found on this site (the community package repository). <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "community-packages-disclaimer" })">Find out why</a>.</li>
+          <li>Chocolatey integrates with your favorite configuration manager like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, or Chef.</a></li>
+          <li>When organizations need more features than they can find in the Open Source version of Chocolatey, they turn to <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey for Business</a>.</li>
+        </ul>
+      </div>
+      <div class="feature-sections__column">
+        <img src="@Url.Content("~/content/images/integration_points.png")" />
+      </div>
+    </section>
+  </div>
+    <div class="bg-three">
+        <section class="clearfix p-l p-r container-wide">
+            <div class="feature-sections__column m-t p-t--l p-b--l">
+                <h2>Choose from thousands of community packages</h2>
                 <ul class="check-list m-t">
-                    <li>Businesses are building and hosting their own packages that are reliable and repeatable so they can fully trust and control the process.</li>
-                    <li>Companies trusting Chocolatey for production purposes do not use the packages found on this site (the community package repository). <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "community-packages-disclaimer" })">Find out why</a>.</li>
-                    <li>Chocolatey integrates with your favorite configuration manager like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, or Chef.</a></li>
-                    <li>When organizations need more features than they can find in the Open Source version of Chocolatey, they turn to <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey for Business</a>.</li>
+                    <li>Chocolatey.org has the largest online registry of Windows packages.</li>
+                    <li>Package submissions go through a rigorous moderation review process, including automatic virus scanning.</li>
+                    <li>The community repository has a strict policy on malicious and pirated software.</li>
+                    <li><a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey Professional</a> offers individuals greater protection and more reliability when using the community feed!</li>
                 </ul>
             </div>
-            <div class="feature-sections__column">
-                <img src="@Url.Content("~/content/images/integration_points.png")" />
+            <div class="feature-sections__column text-center bg-statistics p-t--l p-b">
+              <div>
+                
+                <div class="inline-block m-b stat-number bg-two">
+                  <div class="huge-number stat"><span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>/<span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span></div>
+                  <small>unique packages / total packages</small>
+                </div>
+              </div>
+                <div>
+                    <div class="inline-block m-b stat-number bg-two">
+                        <div class="huge-number stat"><span id="Downloads" class="num"></span></div>
+                        <small>total downloads</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="inline-block m-b stat-number bg-two">
+                        <div class="huge-number"><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></div>
+                        <small><a href="ChocolateyFAQs#what-is-the-verifier">Known good packages</a></small>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
-    <div class="bg-three p-t--l p-b--l">
+ 
+    <div class="bg-two">
+        <section class="clearfix p-l p-r container-wide gene-bg">
+            <div class="feature-sections__column right p-t--l p-b--l">
+                <h2>Packages are independent deployment artifacts</h2>
+                <ul class="check-list m-t">
+                    <li>Chocolatey packages are not just fancy zip files with PowerShell, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
+                    <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
+                    <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
+                </ul>
+            </div>
+            <div class="feature-sections__column no-padding">
+            </div>
+        </section>
+    </div>
+     <div class="bg-three p-t--l p-b--l">
         <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
             <div class="feature-sections__column">
                 <h2>Official Chocolatey tools</h2>
@@ -107,54 +156,6 @@
                     </ul>
                 </div>*@
           </div>
-        </section>
-    </div>
-    <div class="bg-two">
-        <section class="clearfix p-l p-r container-wide gene-bg">
-            <div class="feature-sections__column right p-t--l p-b--l">
-                <h2>Packages are independent deployment artifacts</h2>
-                <ul class="check-list m-t">
-                    <li>Chocolatey packages are not just fancy zip files with PowerShell, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
-                    <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
-                    <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
-                </ul>
-            </div>
-            <div class="feature-sections__column no-padding">
-            </div>
-        </section>
-    </div>
-    <div class="bg-three">
-        <section class="clearfix p-l p-r container-wide">
-            <div class="feature-sections__column m-t p-t--l p-b--l">
-                <h2>Choose from thousands of community packages</h2>
-                <ul class="check-list m-t">
-                    <li>Chocolatey.org has the largest online registry of Windows packages.</li>
-                    <li>Package submissions go through a rigorous moderation review process, including automatic virus scanning.</li>
-                    <li>The community repository has a strict policy on malicious and pirated software.</li>
-                    <li><a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey Professional</a> offers individuals greater protection and more reliability when using the community feed!</li>
-                </ul>
-            </div>
-            <div class="feature-sections__column text-center bg-statistics p-t--l p-b">
-              <div>
-                
-                <div class="inline-block m-b stat-number bg-two">
-                  <div class="huge-number stat"><span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>/<span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span></div>
-                  <small>unique packages / total packages</small>
-                </div>
-              </div>
-                <div>
-                    <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number stat"><span id="Downloads" class="num"></span></div>
-                        <small>total downloads</small>
-                    </div>
-                </div>
-                <div>
-                    <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number"><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></div>
-                        <small><a href="ChocolateyFAQs#what-is-the-verifier">Known good packages</a></small>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
 </div>
