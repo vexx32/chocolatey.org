@@ -52,7 +52,7 @@ namespace NuGetGallery
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Send message to")]
-        [Required]
+        [Required(ErrorMessage = "Please make a selection.")]
         public string MessageTo { get; set; }
         public IEnumerable<SelectListItem> MessageToItems
         {

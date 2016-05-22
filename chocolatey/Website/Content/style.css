@@ -3319,6 +3319,7 @@ fieldset.form {
                 color: #7f8c7d;
                 font-size: 1.25em;
                 padding: 2px;
+                width: 450px;
             }
             
             .form-field textarea,
