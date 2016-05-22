@@ -2428,7 +2428,7 @@ ul.check-list li{
 /* Chocolatey Styles*/
 
 body{
-  font-family: Open Sans;
+  font-family: Open Sans, "Segoe UI", "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
   font-size: 18px;
   line-height: 1.6em;
   color: #202F3C;
