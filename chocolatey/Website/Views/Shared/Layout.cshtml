@@ -1,5 +1,6 @@
-﻿@{
-  Layout = "_BaseLayout.cshtml";
+﻿@using System.Configuration
+@{
+    Layout = "_BaseLayout.cshtml";
 }
 @{
     //var noticeText = @"Notice: Download statistics are temporarily not updating on the site. All stats are still being collected.";
@@ -19,7 +20,8 @@
 }
 <body class="bg-one">
   <div class="message @if (string.IsNullOrEmpty(noticeText))
-                      { <text> hide</text>
+                      {
+                          <text> hide</text>
                       }">
     <div class="p-l p-r p--s">
       <span><i class="icon-exclamation-triangle m-r"></i>@noticeText</span> @*<button class="right pointer" data-close-message>
@@ -65,8 +67,8 @@
                   }
     *@
   <main>
-        @RenderBody()
-    </main>
+    @RenderBody()
+  </main>
   <footer class="p-l--l p-r--l p-t--l p-b clearfix full-width">
     <ul class="small fourth left p">
       <li><h3 class="bold m-b--s">Chocolatey</h3></li>
@@ -82,7 +84,10 @@
     </ul>
     <ul class="small fourth left p">
       <li><h3 class="bold m-b--s">Resources</h3></li>
-      <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Documentation</a></li>
+      <li><a href="@Url.RouteUrl(RouteName.Docs, new
+                   {
+                       docName = "home"
+                   })">Documentation</a></li>
       <li><a href="http://eepurl.com/4qUJH">Newsletter</a></li>
       <li><a href="https://groups.google.com/group/chocolatey">Mailing List</a></li>
       <li><a href="@Url.RouteUrl(RouteName.Security)">Security</a></li>
@@ -109,8 +114,8 @@
       <li class="m-t small">
         <p><strong>&copy; 2011 - @DateTime.UtcNow.Year</strong> RealDimensions Software, LLC.</p>
         @{
-          string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
-          string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
+            string commitId = ConfigurationManager.AppSettings["appharbor.commit_id"];
+            string worker = ConfigurationManager.AppSettings["appharbor.worker_name"];
         }
         <p id="releaseTag">
           Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
