@@ -664,6 +664,7 @@
     <Compile Include="Infrastructure\CSharpRazorViewEngine.cs" />
     <Compile Include="Infrastructure\Routing\HyphenatedRouteHandler.cs" />
     <Compile Include="Infrastructure\Routing\SeoRoute.cs" />
+    <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />
     <Compile Include="RouteCollectionExtensions.cs" />
     <Compile Include="Services\AmazonSqsClientWrapper.cs" />
@@ -837,9 +838,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\SignInRequest.cs">
       <Link>RequestModels\SignInRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\RequestModels\RegisterRequest.cs">
-      <Link>RequestModels\RegisterRequest.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\SubmitPackageRequest.cs">
       <Link>RequestModels\SubmitPackageRequest.cs</Link>
