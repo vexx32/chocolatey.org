@@ -5,7 +5,7 @@
     Bundles.Reference("Scripts/validation");
 }
 <section>
-  <div class="container-wide p-b--l">
+  <div class="p-b--l">
     <h1 class="m-b">Contact Us</h1>
 
     <p class="message">Have a question or a comment?</p>
@@ -52,7 +52,6 @@
         @Html.TextAreaFor(m => m.Message,10, 50, null)
         @Html.ValidationMessageFor(m => m.Message)
       </div>
-
           
       @*@Html.EditorForModel()*@
       @Html.SpamPreventionFields()
