@@ -92,7 +92,7 @@
 <li><strong>chocolateyPackageVersion</strong> (since 0.9.9) = The package version, which is equivalent to the <code>&lt;version&gt;</code> tag in the nuspec</li>
 </ul>
 <p>chocolateyPackageVersion</code> may be particularly useful, since that would allow you in some cases to create packages for new releases of the updated software by only changing the <code>&lt;version&gt;</code> in the nuspec and not having to touch the <code>chocolateyInstall.ps1</code> at all. An example of this:</p>
-<pre class="brush: plain">$url = &quot;http://www.thesoftware.com/downloads/thesoftware-$env:chocolateyPackageVersion.zip&quot;
+<pre class="cmd">$url = &quot;http://www.thesoftware.com/downloads/thesoftware-$env:chocolateyPackageVersion.zip&quot;
 
 Install-ChocolateyZipPackage &#39;$env:chocolateyPackageName&#39; $url $binRoot</pre>
 <p>Remember, if you want to use <code>chocolateyPackageName</code> or <code>chocolateyPackageVersion</code> you should declare a dependency on Chocolatey 0.9.9 in the nuspec</p>

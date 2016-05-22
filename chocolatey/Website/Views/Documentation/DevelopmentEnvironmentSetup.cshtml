@@ -79,7 +79,7 @@ foreach ($nugetConfig in $nugetConfigs) {
 rake
 </pre>
 <h3 id="setup.cmd">setup.cmd:</h3>
-<pre class="brush: plain">@@echo off
+<pre class="cmd">@@echo off
 SET DIR=%~dp0%
 @@PowerShell -NoProfile -ExecutionPolicy unrestricted -Command &quot;&amp; &#39;%DIR%setup.ps1&#39; %*&quot;
 pause

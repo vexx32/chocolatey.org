@@ -8,10 +8,10 @@
 source so it doesn&#39;t need to be specified every time.</p>
 <p>Anything that doesn&#39;t contain source and key will list api keys.</p>
 <h2 id="usage">Usage</h2>
-<pre class="brush: plain">choco apikey [&lt;options/switches&gt;]
+<pre class="cmd">choco apikey [&lt;options/switches&gt;]
 choco setapikey [&lt;options/switches&gt;]</pre>
 <h2 id="examples">Examples</h2>
-<pre class="brush: plain">choco apikey
+<pre class="cmd">choco apikey
 choco apikey -s&quot;https://somewhere/out/there&quot;
 choco apikey -s&quot;https://somewhere/out/there/&quot; -k=&quot;value&quot;
 choco apikey -s&quot;https://chocolatey.org/&quot; -k=&quot;123-123123-123&quot;</pre>
@@ -20,7 +20,7 @@ choco apikey -s&quot;https://chocolatey.org/&quot; -k=&quot;123-123123-123&quot;
 log in (or register, confirm and then log in) to<br />
 <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a>, go to <a href="https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>,<br />
 copy the API Key, and then use it in the following command:</p>
-<pre class="brush: plain">choco apikey -k &lt;your key here&gt; -s https://chocolatey.org/</pre>
+<pre class="cmd">choco apikey -k &lt;your key here&gt; -s https://chocolatey.org/</pre>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -28,7 +28,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="brush: plain">
+<pre class="cmd">
  -?, --help, -h
      Prints out the help menu.
 

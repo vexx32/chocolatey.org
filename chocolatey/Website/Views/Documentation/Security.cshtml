@@ -35,7 +35,7 @@
 <li>Starting with 0.9.10, both the binaries and the PowerShell scripts are Authenticode signed. This certificate is only held by the lead Chocolatey maintainer (Rob). This provides quite a bit of trust that you are getting Chocolatey from the source and as intended.</li>
 </ul>
 <p>Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary).</p>
-<pre class="brush: plain">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+<pre class="cmd">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 
 Subject      : CN=&quot;RealDimensions Software, LLC&quot;, O=&quot;RealDimensions Software,
@@ -54,7 +54,7 @@ Extensions   : {System.Security.Cryptography.Oid,
 <li>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</li>
 </ul>
 <p>Using a Visual Studio Command Prompt, you can verify the binary (the path below is the default install location, adjust if necessary). You can also download sn separately if necessary.</p>
-<pre class="brush: plain">C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
+<pre class="cmd">C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
 
 Microsoft (R) .NET Framework Strong Name Utility  Version 4.0.30319.1
 Copyright (c) Microsoft Corporation.  All rights reserved.

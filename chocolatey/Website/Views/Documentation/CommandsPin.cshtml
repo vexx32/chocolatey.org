@@ -9,9 +9,9 @@
 packages, as it will automatically skip those packages. Another<br />
 alternative is <code>choco upgrade --except=&quot;pkg1,pk2&quot;</code>.</p>
 <h2 id="usage">Usage</h2>
-<pre class="brush: plain">choco pin [list]|add|remove [&lt;options/switches&gt;]</pre>
+<pre class="cmd">choco pin [list]|add|remove [&lt;options/switches&gt;]</pre>
 <h2 id="examples">Examples</h2>
-<pre class="brush: plain">choco pin   
+<pre class="cmd">choco pin   
 choco pin list  
 choco pin add -n=git
 choco pin add -n=git --version 1.2.3
@@ -23,7 +23,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="brush: plain">
+<pre class="cmd">
  -?, --help, -h
      Prints out the help menu.
 

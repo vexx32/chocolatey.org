@@ -6,7 +6,7 @@
 <h1 id="new-command-choco-new">New Command (choco new)</h1>
 <p>Chocolatey will generate package specification files for a new package.</p>
 <h2 id="usage">Usage</h2>
-<pre class="brush: plain">choco new &lt;name&gt; [&lt;options/switches&gt;] [&lt;property=value&gt; &lt;propertyN=valueN&gt;]</pre>
+<pre class="cmd">choco new &lt;name&gt; [&lt;options/switches&gt;] [&lt;property=value&gt; &lt;propertyN=valueN&gt;]</pre>
 <p>Possible properties to pass:<br />
 packageversion<br />
 maintainername<br />
@@ -21,7 +21,7 @@ packages automatically!</p>
 <p><strong>NOTE:</strong> <a href="https://bit.ly/choco_pro_business">Chocolatey for Business</a> can create complete packages by just<br />
 pointing the new command to native installers!</p>
 <h2 id="examples">Examples</h2>
-<pre class="brush: plain">choco new bob
+<pre class="cmd">choco new bob
 choco new bob -a --version 1.2.0 maintainername=&quot;&#39;This guy&#39;&quot;
 choco new bob silentargs=&quot;&#39;/S&#39;&quot; url=&quot;&#39;https://somewhere/out/there.msi&#39;&quot;
 choco new bob --outputdirectory Packages</pre>
@@ -32,7 +32,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="brush: plain">
+<pre class="cmd">
  -?, --help, -h
      Prints out the help menu.
 

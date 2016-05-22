@@ -99,11 +99,11 @@ For example: `-params &#39;&quot;/GitAndUnixToolsOnPath /NoAutoCrlf&quot;&#39;`.
 <p>Now, in this example, if we were to call:</p>
 <p>choco install &lt;packageName&gt;</code></p>
 <p>The output would be:</p>
-<pre class="brush: plain">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</pre>
+<pre class="cmd">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</pre>
 <p>i.e.&nbsp; it is using the default values which we made at the top of the file</p>
 <p>However, if we instead used:</p>
-<pre class="brush: plain">choco install &lt;packageName&gt; -packageParameters &#39;&quot;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&quot;&#39;</pre>
+<pre class="cmd">choco install &lt;packageName&gt; -packageParameters &#39;&quot;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&quot;&#39;</pre>
 <p>Keep in mind how to pass pkg args: <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches" class="uri">https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches</a></p>
 <p>The output would be:</p>
-<pre class="brush: plain">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</pre>
+<pre class="cmd">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</pre>
 </article>

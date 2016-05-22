@@ -15,7 +15,7 @@
 <p>To replace the built-in template, you should put a folder in the template with the name of &quot;default&quot;. Then choco will use that instead of the built-in template with no need to specify a template name.</p>
 <h3 id="what-values-can-i-template">What values can I template?</h3>
 <p>You can get the names by running <code>choco new -h</code>:</p>
-<pre class="brush: plain">Possible properties to pass:
+<pre class="cmd">Possible properties to pass:
     packageversion
     maintainername
     maintainerrepo
@@ -69,8 +69,7 @@ $packageArgs = @@{
   #validExitCodes= @@(0) #please insert other valid exit codes here
 }
 
-Install-ChocolateyInstallPackage @@packageArgs
-</pre>
+Install-ChocolateyInstallPackage @@packageArgs</pre>
 <h3 id="extending-templates">Extending Templates</h3>
 <p>Walmart has a really good post on extending package templates. You can read that at <a href="https://puppet.com/blog/extending-chocolatey-packaging-walmart" class="uri">https://puppet.com/blog/extending-chocolatey-packaging-walmart</a></p>
 <h3 id="are-there-planned-enhancements">Are There Planned Enhancements?</h3>

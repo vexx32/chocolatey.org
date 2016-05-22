@@ -33,7 +33,7 @@
 <li>Check the config in <code>C:\tools\ChocolateyPackageUpdater\chocopkgup.exe.config</code> (or <code>ChocolateyBinRoot/ChocolateyPackageUpdater</code>). The <code>PackagesFolder</code> key should point to where your repository is located.</li>
 <li>Create a scheduled task (in Windows). This is the command (edit the path to <code>cmd.exe</code> accordingly): <code>C:\Windows\System32\cmd.exe /c c:\tools\chocolateypackageupdater\ketarinupdate.cmd</code></li>
 <li><p>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:</p>
-<pre class="brush: plain">Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
+<pre class="cmd">Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
 objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True</pre></li>
 <li>Choose a schedule for the task. I run mine once a day but you can set it to run more often. Choose a time when the computer is not that busy.</li>
 <li>Save the following Ketarin template somewhere: <a href="https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml" class="uri">https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml</a></li>
