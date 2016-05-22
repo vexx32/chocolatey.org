@@ -140,6 +140,28 @@ Package Url: {6}
             }
         }
 
+        public void ContactUs(MailAddress fromAddress, string contactType, string message)
+        {
+            string subject = "Chocolatey - Contact Us - {0}".format_with(contactType);
+            string body = message;
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+            //refactor this a bit
+            if (contactType == "Website")
+            {
+                to = Configuration.ReadAppSettings("ModeratorEmail");
+            }
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+
         public void SendContactOwnersMessage(
             MailAddress fromAddress,
             PackageRegistration packageRegistration,

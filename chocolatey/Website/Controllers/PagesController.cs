@@ -28,10 +28,12 @@ namespace NuGetGallery
     public partial class PagesController : Controller
     {
         private readonly IAggregateStatsService statsSvc;
+        private readonly IMessageService messageService;
 
-        public PagesController(IAggregateStatsService statsSvc)
+        public PagesController(IAggregateStatsService statsSvc, IMessageService messageService)
         {
             this.statsSvc = statsSvc;
+            this.messageService = messageService;
         }
 
         public virtual ActionResult Home()
@@ -102,13 +104,29 @@ namespace NuGetGallery
             
             var from = new MailAddress(contactForm.Email);
 
-            // messageService.ContactUs(from, to, contactForm.Message);
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+
+### Message
+{5}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email, 
+              contactForm.PhoneNumber, 
+              contactForm.CompanyName, 
+              contactForm.Message);
+
+            messageService.ContactUs(from, contactForm.MessageTo, message);
 
             TempData["Message"] = "Your message has been sent.";
 
             return View("~/Views/Pages/Thanks.cshtml");
         }
-        
+
 
         public ActionResult Support()
         {
