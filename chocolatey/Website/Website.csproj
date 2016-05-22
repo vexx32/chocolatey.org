@@ -987,6 +987,7 @@
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
     <Content Include="Content\Images\changePassword.png" />
+    <Content Include="Content\Images\Chocolatey_Future.png" />
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
