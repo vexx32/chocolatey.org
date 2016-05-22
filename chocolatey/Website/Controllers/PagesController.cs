@@ -16,10 +16,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using PoliteCaptcha;
 
 namespace NuGetGallery
 {
@@ -87,10 +89,26 @@ namespace NuGetGallery
             return View("~/Views/Pages/Company.cshtml");
         }
 
+        [HttpGet]
         public ActionResult ContactUs()
         {
-            return View("~/Views/Pages/ContactUs.cshtml");
+            return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
         }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        public virtual ActionResult ContactUs(ContactUsViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+            
+            var from = new MailAddress(contactForm.Email);
+
+            // messageService.ContactUs(from, to, contactForm.Message);
+
+            TempData["Message"] = "Your message has been sent.";
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+        
 
         public ActionResult Support()
         {

@@ -16,7 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace NuGetGallery
 {
@@ -48,5 +50,19 @@ namespace NuGetGallery
 
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
+
+        [Display(Name = "Send message to")]
+        [Required]
+        public string MessageTo { get; set; }
+        public IEnumerable<SelectListItem> MessageToItems
+        {
+            get
+            {
+                yield return new SelectListItem { Text = "Sales", Value = "Sales" };
+                yield return new SelectListItem { Text = "Press Request", Value = "PressRequest" };
+                yield return new SelectListItem { Text = "Software Vendor Opt Out", Value = "VendorOptOut" };
+                yield return new SelectListItem { Text = "Website", Value = "Website" };
+            }
+        }
     }
 }
