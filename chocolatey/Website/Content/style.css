@@ -2461,7 +2461,7 @@ a {
 }
 
 .install-example:before, .terminal-content:before{
-  content: 'C:\\';
+  content: 'C:\\>';
   display: inline-block
 }
 
