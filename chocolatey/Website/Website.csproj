@@ -1187,7 +1187,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Code\ViewHelpers.cshtml" />
-    <Content Include="app_offline.htm" />
+    <Content Include="_app_offline.htm" />
     <Content Include="Views\Pages\Notice.cshtml" />
     <Content Include="Views\Packages\_ListVersion.cshtml" />
     <Content Include="Views\Pages\Pricing.cshtml" />
