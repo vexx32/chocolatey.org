@@ -6,11 +6,9 @@
 }
 <section>
   <div class="container-wide p-b--l">
-    <h1 class="text-center m-b">Contact Us</h1>
+    <h1 class="m-b">Contact Us</h1>
 
-    <p class="message">
-     
-    </p>
+    <p class="message">Have a question or a comment?</p>
     
     @using (Html.BeginForm())
     {
@@ -34,7 +32,7 @@
       <div class="form-field">
         @Html.LabelFor(m => m.Email)
         @Html.EditorFor(m => m.Email)
-        <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
+        <span class="field-hint-message">Enter your email address.</span>
         @Html.ValidationMessageFor(m => m.Email)
       </div>  
       <div class="form-field">
@@ -51,7 +49,7 @@
       </div>
       <div class="form-field"> 
         @Html.LabelFor(m => m.Message)
-        @Html.TextAreaFor(m => m.Message, 10, 50, null)
+        @Html.TextAreaFor(m => m.Message,10, 50, null)
         @Html.ValidationMessageFor(m => m.Message)
       </div>
 

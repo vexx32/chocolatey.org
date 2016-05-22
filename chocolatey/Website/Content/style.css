@@ -2875,7 +2875,7 @@ img{ max-width: 100%; }
   background: white;
 }
 
-.message{
+.maintenance-message{
   color: #fff;
   position: relative;
   z-index: 9;
@@ -3330,7 +3330,7 @@ fieldset.form {
                 color: #7f8c7d;
                 font-size: 1.25em;
                 padding: 5px 0 5px 10px;
-                width: 300px;
+                width: 450px;
                 vertical-align: middle;
             }
             
@@ -3360,7 +3360,7 @@ fieldset.form {
             .field-hint-message,
             .field-validation-error {
                 font-size: 1em;
-                left: 330px;
+                left: 480px;
                 line-height: 1.2em;
                 padding: 5px;
                 position: absolute;
@@ -3522,4 +3522,63 @@ fieldset.form {
 
 .syntaxhighlighter  {
         white-space: pre-wrap !important;
+}
+
+.message {
+    background-color: #eff7fa;
+    border: solid 1px;
+    color: #caa452;
+    font-size: 1.3em;
+    padding: 10px;
+}
+
+.error {
+    background-color: #fbe3e4;
+    color: #c13a3f;
+    font-weight: 600;
+}
+
+.warning {
+    background-color: #fff7c4;
+    color: #ff9600;
+}
+
+.prerelease-message,
+.not-latest-message, 
+.app-or-tool-message {
+    border-radius: 0 0 5px 5px;
+    -moz-border-radius:  0 0 5px 5px;
+    -webkit-border-radius:  0 0 5px 5px;
+    border: 1px solid;
+    border-top: none;
+    font-size: 1.5em;
+    margin-top: -20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.prerelease-message {
+    background-color: #fff7c4;
+    border-color: #ff9600;
+    color: #ff9600;
+}
+
+.not-latest-message {
+    background-color: #eff7fa;
+    border-color: #caa452;
+    color: #caa452;
+}
+
+.app-or-tool-message
+{
+    background-color: #eeeeee;
+    color: #474334;
+    border-top: 1px solid;
+     border-color: #bbb9b6;
+    margin-top: -10px;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius:  5px 5px 5px 5px;
+    -webkit-border-radius:  5px 5px 5px 5px;
+    font-size: 1.1em;
+    text-align: left;
 }

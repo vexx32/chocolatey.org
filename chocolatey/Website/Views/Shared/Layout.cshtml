@@ -19,7 +19,7 @@
   @RenderSection("TopScripts", required: false)
 }
 <body class="bg-one">
-  <div class="message @if (string.IsNullOrEmpty(noticeText))
+  <div class="maintenance-message @if (string.IsNullOrEmpty(noticeText))
                       {
                           <text> hide</text>
                       }">
