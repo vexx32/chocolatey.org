@@ -1,7 +1,21 @@
 ﻿@{
-    Layout = "Layout.cshtml";
+    Layout = "OldLayout.cshtml";
 }
 
+@section css
+{
+    @RenderSection("css", required: false)
+}
+
+@section ExtraHeaders
+{
+    @RenderSection("ExtraHeaders", required: false)
+}
+
+@section TopScripts
+{
+    @RenderSection("TopScripts", required: false)
+}
 
 <div id="sideColumn">
     @RenderSection("SideColumn")
@@ -11,10 +25,6 @@
 </div>
 
 <div class="clear-fix"><!--Sad Panda--></div>
-
-@section ExtraHeaders {
-    @RenderSection("ExtraHeaders", required: false)
-}
 
 @section BottomScripts {
     @RenderSection("BottomScripts", required: false)

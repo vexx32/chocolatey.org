@@ -4,8 +4,9 @@
   ViewBag.Title = "Log On";
   Bundles.Reference("Scripts/validation");
 }
-
-<h1>Log On</h1>
+<section>
+  <div class="p-b p-l">
+     <h1 class="m-b">Log In</h1>
 
 <p>
     Don't have an account yet? <a href="@Url.Action(MVC.Users.Register())">Register now.</a>
@@ -37,3 +38,6 @@
         @Html.ActionLink("Lost your Password?", "ForgotPassword", "Users")
     </fieldset>
 }
+
+  </div>
+</section>

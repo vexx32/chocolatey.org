@@ -1,0 +1,40 @@
+﻿@{
+  ViewBag.Title = "HelpersInstallChocolateyVsixPackage";
+}
+
+<article>
+<h1 id="install-chocolateyvsixpackage">Install-ChocolateyVsixPackage</h1>
+<p>Downloads and installs a VSIX package for Visual Studio. You do not need to surround this with try catch if it is the only thing in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>.</p>
+<p>VSIX packages are Extensions for the Visual Studio IDE. The Visual Studio Gallery at <a href="http://visualstudiogallery.msdn.microsoft.com/" class="uri">http://visualstudiogallery.msdn.microsoft.com/</a> is the public extension feed and hosts thousands of extensions.</p>
+<p>You can locate a VSIX Url by finding the download link of Visual Studio extensions on the Visual Studio Gallery.</p>
+<h2 id="usage">Usage</h2>
+<pre class="brush: ps">Install-ChocolateyVsixPackage $packageName $vsixUrl `
+ $vsVersion -checksum $checksum -checksumType $checksumType</pre>
+<h2 id="examples">Examples</h2>
+<pre class="brush: ps">Install-ChocolateyVsixPackage &quot;MyPackage&quot; `
+ http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix</pre>
+<p>This downloads the AutoWrockTestable VSIX from the Visual Studio Gallery and installs it to the latest version of VS.</p>
+<pre class="brush: ps">Install-ChocolateyVsixPackage &quot;MyPackage&quot; `
+ http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix 11</pre>
+<p>This downloads the AutoWrockTestable VSIX from the Visual Studio Gallery and installs it to Visual Studio 2012 (v11.0).</p>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li><p>-packageName</code></p>
+<p>This is an arbitrary name.</p>
+<p>Example: <code>'7zip'</code></p></li>
+<li><p>-vsixUrl</code></p>
+<p>The URL of the package to be installed.</p>
+<p>Example: <code>http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix</code></p></li>
+<li><p>-vsVersion</code> <em>(optional)</em></p>
+<p>The Major version number of Visual Studio where the package should be installed. This is optional. If not specified, the most recent Visual Studio installation will be targeted.</p></li>
+<li><p>-checksum</code> <em>(optional)</em></p>
+<p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
+<p>Example: <code>-checksum 'C67962F064924F3C7B95D69F88E745C0'</code></p>
+<p>Defaults to ``.</p></li>
+<li><p>-checksumType</code> <em>(optional)</em></p>
+<p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
+<p>Example: <code>-checksumType 'sha1'</code></p>
+<p>Defaults to <code>md5</code>.</p></li>
+</ul>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+</article>

@@ -35,6 +35,7 @@ namespace NuGetGallery
 
         void ReportAbuse(MailAddress fromAddress, Package package, string message, string packageUrl, bool copySender);
         void ContactSiteAdmins(MailAddress fromAddress, Package package, string message, string packageUrl, bool copySender);
+        void ContactUs(MailAddress fromAddress, string contactType, string message);
         void SendNewAccountEmail(MailAddress toAddress, string confirmationUrl);
         void SendEmailChangeConfirmationNotice(MailAddress newEmailAddress, string confirmationUrl);
         void SendPasswordResetInstructions(User user, string resetPasswordUrl);

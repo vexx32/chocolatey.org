@@ -1,0 +1,81 @@
+﻿@{
+  ViewBag.Title = "How-To-Create-Custom-Package-Templates";
+}
+
+<article>
+<h1 id="create-your-own-custom-package-templates">Create Your Own Custom Package Templates</h1>
+<p>As of <a href="https://github.com/chocolatey/choco/issues/76">choco 0.9.9.9</a>, you can create your own custom package templates when the built-in template is not enough.</p>
+<h2 id="overview">Overview</h2>
+<p>A template is used for creating packages. Chocolatey (choco) has a built-in template that it uses when generating a new package from the command <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })">choco new</code></a>.</p>
+<h3 id="where-do-templates-go">Where Do Templates Go?</h3>
+<p>If you drop a template into <code>$env:ChocolateyInstall\templates</code> folder, you can use <code>-t name_of_template</code> to generate a choco template based on that. So for:</p>
+<p><img src="https://cloud.githubusercontent.com/assets/63502/9952997/0603b334-5da2-11e5-8b6d-65a5dbf5d8e0.png" alt="image" /></p>
+<p>You would call <code>choco new pkgname -t organization</code> and choco will use the template folder instead of the built-in template.</p>
+<h3 id="can-i-replace-the-built-in-template">Can I replace the built-in template?</h3>
+<p>To replace the built-in template, you should put a folder in the template with the name of &quot;default&quot;. Then choco will use that instead of the built-in template with no need to specify a template name.</p>
+<h3 id="what-values-can-i-template">What values can I template?</h3>
+<p>You can get the names by running <code>choco new -h</code>:</p>
+<pre class="cmd">Possible properties to pass:
+    packageversion
+    maintainername
+    maintainerrepo
+    installertype
+    url
+    url64
+    silentargs</pre>
+<p>However <code>PackageName</code> and <code>PackageNameLower</code> also show up as they are based on the name of the package that you pass e.g. &quot;bob&quot; in <code>choco new bob</code></p>
+<p>Then you surround those templated values with <code>[[]]</code> to make them templated for choco to use.</p>
+<h2 id="example">Example</h2>
+<p>This is a template for embedding an MSI into a package. This removes almost everything that is unnecessary for embedding software into packages. And because the autoUninstaller handles MSIs without an issue, we don&#39;t need a chocolateyUninstall.ps1.</p>
+<p>A file with the extension <code>.nuspec</code>:</p>
+<pre class="brush: xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd&quot;&gt;
+  &lt;metadata&gt;
+    &lt;id&gt;[[PackageNameLower]]&lt;/id&gt;
+    &lt;title&gt;[[PackageName]] (Install)&lt;/title&gt;
+    &lt;version&gt;[[PackageVersion]]&lt;/version&gt;
+    &lt;authors&gt;Original authors&lt;/authors&gt;
+    &lt;owners&gt;[[MaintainerName]]&lt;/owners&gt;
+    &lt;description&gt;__REPLACE__MarkDown_Okay [[AutomaticPackageNotesNuspec]]
+    &lt;/description&gt;
+    &lt;tags&gt;[[PackageNameLower]] admin&lt;/tags&gt;
+    &lt;!--&lt;dependencies&gt;
+      &lt;dependency id=&quot;&quot; version=&quot;__VERSION__&quot; /&gt;
+      &lt;dependency id=&quot;&quot; /&gt;
+    &lt;/dependencies&gt;--&gt;
+  &lt;/metadata&gt;
+  &lt;files&gt;
+    &lt;file src=&quot;tools\**&quot; target=&quot;tools&quot; /&gt;
+  &lt;/files&gt;
+&lt;/package&gt;</pre>
+<p>tools\chocolateyInstall.ps1</code>:</p>
+<pre class="brush: ps">$ErrorActionPreference = &#39;Stop&#39;; # stop on all errors
+
+[[AutomaticPackageNotesInstaller]]
+$packageName  = &#39;[[PackageName]]&#39;
+$toolsDir     = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+$fileLocation = Join-Path $toolsDir &#39;NAME_OF_EMBEDDED_INSTALLER_FILE&#39;
+
+$packageArgs = @@{
+  packageName   = $packageName
+  file          = $fileLocation
+  fileType      = &#39;[[InstallerType]]&#39; #only one of these: exe, msi, msu
+
+  #MSI
+  silentArgs    = &quot;/qn /norestart /l*v `&quot;$env:TEMP\chocolatey\$($packageName)\$($packageName).MsiInstall.log`&quot;&quot;
+  validExitCodes= @@(0, 3010, 1641)
+  #OTHERS
+  #silentArgs   =&#39;[[SilentArgs]]&#39; # /s /S /q /Q /quiet /silent /SILENT /VERYSILENT -s - try any of these to get the silent installer
+  #validExitCodes= @@(0) #please insert other valid exit codes here
+}
+
+Install-ChocolateyInstallPackage @@packageArgs</pre>
+<h3 id="extending-templates">Extending Templates</h3>
+<p>Walmart has a really good post on extending package templates. You can read that at <a href="https://puppet.com/blog/extending-chocolatey-packaging-walmart" class="uri">https://puppet.com/blog/extending-chocolatey-packaging-walmart</a></p>
+<h3 id="are-there-planned-enhancements">Are There Planned Enhancements?</h3>
+<ul>
+<li>List Template names - <a href="https://github.com/chocolatey/choco/issues/449" class="uri">https://github.com/chocolatey/choco/issues/449</a></li>
+<li>Manage templates with Chocolatey - <a href="https://github.com/chocolatey/choco/issues/542" class="uri">https://github.com/chocolatey/choco/issues/542</a> - DONE in 0.9.10 (beta available)</li>
+<li>Arbitrary key/value pairs - <a href="https://github.com/chocolatey/choco/issues/658" class="uri">https://github.com/chocolatey/choco/issues/658</a> - DONE in 0.9.10 (beta available)</li>
+</ul>
+</article>

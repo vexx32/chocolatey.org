@@ -1,0 +1,72 @@
+﻿@{
+  ViewBag.Title = "Proxy-Settings-for-Chocolatey";
+}
+
+<article>
+<h1 id="proxy-support-for-chocolatey">Proxy Support For Chocolatey</h1>
+<h2 id="system-proxy-settings">System Proxy Settings</h2>
+<p>Chocolatey by default already supports system set proxy servers</p>
+<p><img src="https://cloud.githubusercontent.com/assets/63502/10038284/454be026-6189-11e5-8f83-e29d1705995c.png" alt="image" /></p>
+<h2 id="explicit-proxy-settings">Explicit Proxy Settings</h2>
+<p>Chocolatey has explicit proxy support starting with 0.9.9.9.</p>
+<p>You can simply configure 1 or 3 settings and Chocolatey will use a proxy server. <code>proxy</code> is required and is the location and port of the proxy server. <code>proxyUser</code> and <code>proxyPassword</code> are optional. The values for user/password are only used for credentials when both are present.</p>
+<pre class="cmd">choco config set proxy &lt;locationandport&gt;
+choco config set proxyUser &lt;username&gt;
+choco config set proxyPassword &lt;passwordThatGetsEncryptedInFile&gt;</pre>
+<h3 id="example">Example</h3>
+<p>Running the following commands in 0.9.9.9:<br />
+~<del>sh<br />
+choco config set proxy <a href="http://localhost:8888" class="uri">http://localhost:8888</a><br />
+choco config set proxyUser bob<br />
+choco config set proxyPassword 123Sup#rSecur3<br />
+</del>~</p>
+<p>Results in the following items being added to the config file:<br />
+<img src="https://cloud.githubusercontent.com/assets/63502/10038348/4205507c-618a-11e5-911b-122eb960bc53.png" alt="image" /></p>
+<h3 id="what-to-do-if-my-proxy-is-socks">What to do if My proxy is socks?</h3>
+<p>It may just work. It hasn&#39;t been validated yet.</p>
+<h2 id="installing-chocolatey-behind-a-proxy-server">Installing Chocolatey behind a proxy server</h2>
+<p>When trying to install Chocolatey behind a proxy server, you may be faced with errors like</p>
+<blockquote>
+<p>Get Response returned: (407) Proxy Authentication Required</p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>The underlying connection was closed: Could not establish trust relationship for the SSL / TLS secure channel.</p>
+</blockquote>
+<p>Steps to help address this.</p>
+<ol>
+<li>Copy the <a href="https://chocolatey.org/install.ps1">install.ps1</a> file locally.</li>
+<li>Edit the file and add proxy details (see code change). Replace the following entries with your specific proxy servers details: <strong>PROXYSERVER:PROXYPORT; USERPASSWORD; USERNAME</strong></li>
+<li>Ensure you have the appropriate domain prefix for the user name. Try: &quot;˜AD\UserName&#39; or just &quot;˜UserName&#39;.</li>
+<li>Run the script to install Chocolatey.</li>
+</ol>
+<pre class="brush: ps">function Download-File {
+param (
+  [string]$url,
+  [string]$file
+ )
+  Write-Host &quot;Downloading $url to $file&quot;
+    #$proxy = [System.Net.WebRequest]::GetSystemWebProxy()
+    $proxy = New-Object System.Net.WebProxy(&quot;PROXYSERVER:PROXYPORT&quot;, $true)
+    $passwd = ConvertTo-SecureString &quot;USERPASSWORD&quot; -AsPlainText -Force; ## Website credentials
+    $proxy.Credentials = New-Object System.Management.Automation.PSCredential (&quot;USERNAME&quot;, $passwd);
+    $downloader = New-Object System.Net.WebCLient
+    $downloader.UseDefaultCredentials = $true
+    $downloader.Proxy = $proxy
+    $downloader.DownloadFile($url, $file)
+}</pre>
+<h3 id="still-having-trust-issues">Still having trust issues?</h3>
+<p>You&#39;ve tried everything and Chocolatey still won&#39;t install -</p>
+<blockquote>
+<p>The underlying connection was closed: Could not establish trust relationship for the SSL / TLS secure channel.</p>
+</blockquote>
+<p>It could also be that your root trusted certificates are not up to date. You will need the following certificates in your chain:</p>
+<ul>
+<li>Go Daddy Secure Certificate Authority - G2</li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/63502/13706493/ea4d0aac-e76a-11e5-913e-590dfe775fc1.png" alt="Go Daddy Secure Certificate Authority - G2" /></p>
+<ul>
+<li>COMODO ECC Domain Validation Secure Server CA 2</li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/63502/13706546/1a1d237a-e76b-11e5-9263-e586cef5f744.png" alt="image" /></p>
+</article>

@@ -124,6 +124,7 @@ namespace NuGetGallery
             container.Register(() => mailSenderThunk.Value, Lifestyle.Singleton);
 
             container.Register<IMessageService, MessageService>(Lifestyle.Singleton);
+            container.Register<IFileSystemService, FileSystemService>(Lifestyle.Singleton);
 
             container.RegisterPerWebRequest(() => HttpContext.Current.User);
             //Bind<IPrincipal>().ToMethod(context => HttpContext.Current.User);
@@ -132,7 +133,6 @@ namespace NuGetGallery
             {
                 case PackageStoreType.FileSystem:
                 case PackageStoreType.NotSpecified:
-                    container.Register<IFileSystemService, FileSystemService>(Lifestyle.Singleton);
                     container.Register<IFileStorageService, FileSystemFileStorageService>(Lifestyle.Singleton);
                     break;
                 case PackageStoreType.AzureStorageBlob:

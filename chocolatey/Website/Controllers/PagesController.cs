@@ -16,25 +16,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using PoliteCaptcha;
 
 namespace NuGetGallery
 {
     public partial class PagesController : Controller
     {
         private readonly IAggregateStatsService statsSvc;
+        private readonly IMessageService messageService;
 
-        public PagesController(IAggregateStatsService statsSvc)
+        public PagesController(IAggregateStatsService statsSvc, IMessageService messageService)
         {
             this.statsSvc = statsSvc;
+            this.messageService = messageService;
         }
 
         public virtual ActionResult Home()
         {
             return View("~/Views/Pages/Home.cshtml");
+        }
+
+        public virtual ActionResult Features()
+        {
+            return View("~/Views/Pages/Features.cshtml");
         }
 
         public virtual ActionResult About()
@@ -61,11 +70,98 @@ namespace NuGetGallery
         {
             return View("~/Views/Pages/Pricing.cshtml");
         }
+        
+        public ActionResult Business()
+        {
+            return View("~/Views/Pages/Business.cshtml");
+        }
 
-        //public ActionResult Install()
-        //{
-        //    return File(Url.Content("~/installChocolatey.ps1"), "text/plain");
-        //}
+        public ActionResult Kickstarter()
+        {
+            return View("~/Views/Pages/Kickstarter.cshtml");
+        }
+
+        public ActionResult Media()
+        {
+            return View("~/Views/Pages/Media.cshtml");
+        }
+
+        public ActionResult Company()
+        {
+            return View("~/Views/Pages/Company.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactUs()
+        {
+            return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        public virtual ActionResult ContactUs(ContactUsViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+            
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+
+### Message
+{5}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email, 
+              contactForm.PhoneNumber, 
+              contactForm.CompanyName, 
+              contactForm.Message);
+
+            messageService.ContactUs(from, contactForm.MessageTo, message);
+
+            TempData["Message"] = "Your message has been sent.";
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+
+        public ActionResult Support()
+        {
+            return View("~/Views/Pages/Support.cshtml");
+        }
+
+        public ActionResult ReportIssue()
+        {
+            return View("~/Views/Pages/ReportIssue.cshtml");
+        }
+
+        public ActionResult Press()
+        {
+            return View("~/Views/Pages/Press.cshtml");
+        }
+
+        public ActionResult Partner()
+        {
+            return View("~/Views/Pages/Partner.cshtml");
+        }
+
+        public ActionResult Install()
+        {
+            return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/Layout.cshtml");
+        }
+
+        public ActionResult FAQ()
+        {
+            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/Layout.cshtml");
+        }
+
+        public ActionResult Security()
+        {
+            return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/Layout.cshtml");
+        }
 
         public FileResult InstallerBatchFile()
         {

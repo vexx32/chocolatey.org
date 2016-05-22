@@ -1,0 +1,14 @@
+﻿<section>
+<div class="p-b p-l">
+  <h1 class="m-b">Thanks for reaching out!</h1>
+  <p>Someone will be in touch shortly!</p>
+  
+  @if (Request.IsLocal)
+  {
+          <p class="message">
+            Pssst! I see you're running this in a development environment. <strong>Check the <em>
+                                                                                               \App_Data\Mail</em> folder for the email</strong>.
+          </p>
+  }
+</div>
+</section>

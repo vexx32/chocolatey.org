@@ -149,12 +149,12 @@
                 <li><a href="@Model.PackageSourceUrl" title="See the package source. Nuspec reference: &lt;packageSourceUrl&gt;@Model.PackageSourceUrl&lt;/packageSourceUrl&gt;">
                 Package Source</a></li>
             }
-            <li><a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">Package outdated?</a></li>
-            <li><a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">Package broken?</a></li>
+            <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package outdated?</a></li>
+            <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package broken?</a></li>
             <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
             <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Moderators">
             Contact Site Admins</a></li>
-            <li><a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess#are-you-a-software-vendor">Software Vendor?</a></li>
+            <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Software Vendor?</a></li>
             <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">
             Report Abuse</a></li>
 
@@ -221,7 +221,7 @@
     
     @* @if (Model.IsDownloadCacheAvailable)
       {
-          <div class="message approved">Private cached downloads available for licensed customers. Never experience 404 breakages again! <a href="https://github.com/chocolatey/choco/wiki/PackageDownloadCache">Learn more...</a></div>
+          <div class="message approved">Private CDN cached downloads available for licensed customers. Never experience 404 breakages again! <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Learn more...</a></div>
           <br />
       }*@
 
@@ -234,8 +234,8 @@
             <li>Install (*.install/*.app (deprecated naming convention)) - uses native installers, usually requires administrative access to install.</li>
           </ul>
           
-          Learn more about chocolatey's distinction of <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
-            installed versus portable apps</a> and/or learn about <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-the-difference-between-packages-named-install-ie-autohotkeyinstall-portable-ie-autohotkeyportable-and--ie-autohotkey">
+          Learn more about chocolatey's distinction of <a href="@Url.RouteUrl(RouteName.FAQ)#what-distinction-does-chocolatey-make-between-an-installable-and-a-portable-application">
+            installed versus portable apps</a> and/or learn about <a href="@Url.RouteUrl(RouteName.FAQ)#what-is-the-difference-between-packages-named-install-ie-autohotkeyinstall-portable-ie-autohotkeyportable-and--ie-autohotkey">
             this kind of package</a>. 
         </div> 
         <br />
@@ -243,12 +243,12 @@
 
     @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
     {
-        <div class="message error">This version is in <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-moderation">moderation</a> and has not yet been approved. This means it doesn't show up under normal search. 
+        <div class="message error">This version is in <a href="@Url.RouteUrl(RouteName.FAQ)#what-is-moderation">moderation</a> and has not yet been approved. This means it doesn't show up under normal search. 
           <ul>
             <li>Until approved, you should consider this package version unsafe - it could do very bad things to your system (it probably doesn't but you have been warned, that's why we have moderation).</li>
             <li>This package version can change wildly over the course of moderation until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
           that have been made to the package. Until approved, you should consider that this package version doesn't even exist.</li>
-            <li>You cannot install this package under normal scenarios. See <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-install-a-package-version-under-moderation">How to install package version under moderation</a> for more information.</li>
+            <li>You cannot install this package under normal scenarios. See <a href="h@Url.RouteUrl(RouteName.FAQ)#how-do-i-install-a-package-version-under-moderation">How to install package version under moderation</a> for more information.</li>
             <li>There are also no guarantees that it will be approved.</li>
           </ul>
         </div>
@@ -355,7 +355,7 @@
             {
                 <text>Instructions for review:</text>
                 <ul>
-                    <li>Reviewers/Moderators must follow review process at <a href="https://github.com/chocolatey/choco/wiki/Moderation#reviewer--moderator-process">moderation</a>.
+                    <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer--moderator-process">moderation</a>.
                     <li>**Please do not reject a package until the end of the conversation.**</li>
                     <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
                     @if (Model.Status == PackageStatusType.Approved || Model.Status == PackageStatusType.Exempted)
@@ -381,7 +381,7 @@
                   
                   @if (Model.Status == PackageStatusType.Submitted)
                   {
-                     <li>You are also able to self-reject packages that may be out of date or incorrect (if the verifier fails the install). See <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-self-reject-a-package">self-reject</a> for more information.</li>
+                     <li>You are also able to self-reject packages that may be out of date or incorrect (if the verifier fails the install). See <a href="@Url.RouteUrl(RouteName.FAQ)#how-do-i-self-reject-a-package">self-reject</a> for more information.</li>
                   }
                  
                 </ul>
@@ -454,7 +454,7 @@
                     {
                           <div class="form-field">
                             <input id="MaintainerReject" name="MaintainerReject" type="checkbox" value="true" onclick="if (this.checked) { return confirm('Are you sure? It is not normal to reject a package.'); }" />
-                              <label for="MaintainerReject" class="for-checkbox" title="If the download link is always the same and you have some older versions under review, the older versions can be rejected without issue. Under normal circumstances this should not be used.">Reject Package? Not for <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#how-do-i-self-reject-a-package">normal scenarios or obsoletion</a>.</label>
+                              <label for="MaintainerReject" class="for-checkbox" title="If the download link is always the same and you have some older versions under review, the older versions can be rejected without issue. Under normal circumstances this should not be used.">Reject Package? Not for <a href="@Url.RouteUrl(RouteName.FAQ)#how-do-i-self-reject-a-package">normal scenarios or obsoletion</a>.</label>
                           </div> 
                     }
 
@@ -893,7 +893,7 @@
             <li>The maintainers of this Chocolatey Package will be notified about new comments that are posted to this Disqus thread, however, it is NOT a guarantee that you
                 will get a response.  If you do not hear back from the maintainers after posting a message below, please follow up by using the link
                 on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">
-                contact maintainers</a>.  If you still hear nothing back, please follow the <a href="https://github.com/chocolatey/choco/wiki/PackageTriageProcess">package triage process</a>.</li>
+                contact maintainers</a>.  If you still hear nothing back, please follow the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">package triage process</a>.</li>
             <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
             <li>Share your experiences with the package, or extra configuration or gotchas that
                 you've found.</li>

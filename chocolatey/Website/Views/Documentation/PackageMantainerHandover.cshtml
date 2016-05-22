@@ -1,0 +1,29 @@
+﻿@{
+  ViewBag.Title = "PackageMantainerHandover";
+}
+
+<article>
+<h1 id="package-maintainer-handover">Package Maintainer Handover</h1>
+<p><strong>NOTE</strong>: This process comes after the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package Triage Process</a>. If you are a <strong>software vendor</strong> wanting to maintain your own software&#39;s packages, please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#i-want-to-take-overhelp-with-package-maintenance-for-my-software">maintain packages for my software</a>.</p>
+<p>When a package maintainer is deemed no longer maintaining a package, a new maintainer or maintainers can assist and/or takeover. This is done through the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package Triage Process</a>.</p>
+<p>Once an admin makes you a maintainer you will need to click on the link in your email to confirm.</p>
+<p>Once that is done you have several steps:</p>
+<ul>
+<li>Obtain the source for the package. Look at the packageSourceUrl to see if it is filled out or not.<br />
+<img src="https://cloud.githubusercontent.com/assets/63502/12520704/c124c60e-c10b-11e5-9de9-1127ce0c602e.png" alt="Package source link" /></li>
+<li>Look for the maintainer&#39;s profile to see if they have a GitHub repository for their packages.<br />
+<img src="https://cloud.githubusercontent.com/assets/63502/12520758/f755bf4e-c10b-11e5-831e-4da3a91c42c9.png" alt="maintainer profile with github repository link" /></li>
+<li>If you don&#39;t find it there, attempt to find it on GitHub with some google-fu.</li>
+<li>If all else fails, download the package from the website (use the Download link on the left side).</li>
+<li>Use unzip to unpack the package and remove the files that are only used in packaging.</li>
+<li>Put that in your GitHub repository for packages.</li>
+<li>Ensure you have a link to that repository in your Chocolatey profile.</li>
+<li>Commit the package as is prior to any changes. If you are moving it over from another repository, just copy the current files/folders related to that package into your repository.</li>
+<li>Now make your changes/fixes/updates. Commit those changes as necessary.</li>
+<li>One thing to update is any links to the old repository such as images and/or maintainers.</li>
+<li>Also add/update <code>&lt;packageSourceUrl /&gt;</code> to point to your repository.</li>
+<li>Build the package and test locally.</li>
+<li>Push the package with the updates/fixes. ðŸ‘</li>
+<li>If brought in from another repository, be sure to send a Pull Request to that repository to have the package removed from there (or at the very least file an issue). Link the new location in that request for others who might be searching.</li>
+</ul>
+</article>

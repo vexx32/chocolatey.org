@@ -1,0 +1,83 @@
+﻿@{
+  ViewBag.Title = "FeaturesInfrastructureAutomation";
+}
+
+<article>
+<h1 id="configuration-management-integration">Configuration Management Integration</h1>
+<p>Chocolatey integrates with several infrastructure automation tools!</p>
+<h2 id="usage">Usage</h2>
+<p>With most of these tools, the interface you would interact with Chocolatey would be through the tool or through the interfaces of the tool, like in scripts.</p>
+<ul>
+<li><a href="#ansible">Ansible</a></li>
+<li><a href="#chef">Chef</a></li>
+<li><a href="#powershell-dsc">PowerShell DSC</a></li>
+<li><a href="#puppet">Puppet</a></li>
+<li><a href="#saltstack">Saltstack</a></li>
+<li><a href="#system-center-configuration-manager">SCCM</a></li>
+</ul>
+<h2 id="ansible">Ansible</h2>
+<p>Ansible has the <code>win_chocolatey</code> module that manages both packages and the installation of Chocolatey itself.</p>
+<pre class="brush: plain">win_chocolatey:
+  name: git
+  source: https://my.internal.repository/api/v2/</pre>
+<p><a href="https://bit.ly/choco_ansible">Read More...</a></p>
+<h2 id="chef">Chef</h2>
+<p>Chef has a built-in <code>chocolatey_package</code> resource to use with Chocolatey.</p>
+<pre class="brush: ruby">chocolatey_package &#39;git&#39; do
+  action :install
+  source &#39;https://my.internal.repository/api/v2&#39;
+end</pre>
+<p><a href="https://docs.chef.io/resource_chocolatey_package.html">Resource - Read More...</a></p>
+<p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team.</p>
+<pre class="brush: ruby">include_recipe &#39;chocolatey&#39;</pre>
+<p><a href="https://bit.ly/choco_chef">Cookbook - Read More...</a></p>
+<h3 id="example">Example</h3>
+<p>Here&#39;s a more in depth example from <a href="https://github.com/Nordstrom/chefdk_bootstrap/blob/master/recipes/windows.rb">Nordstrom</a>:</p>
+<pre class="brush: ruby">include_recipe &#39;chocolatey&#39;
+
+home = Dir.home
+%W(
+  #{home}/.chef
+  #{home}/chef
+  #{home}/chef/cookbooks
+).each do |directory|
+  directory directory
+end
+
+packages = node[&#39;chefdk_bootstrap&#39;][&#39;package&#39;]
+
+packages.each do |pkg, install|
+  include_recipe &quot;#{cookbook_name}::#{pkg}&quot; if install
+end</pre>
+<h2 id="powershell-dsc">PowerShell DSC</h2>
+<p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
+<pre class="brush: ps">  cChocoInstaller installChoco
+  {
+    InstallDir = &quot;c:\ProgramData\chocolatey&quot;
+  }
+
+  cChocoPackageInstaller installGit
+  {
+     Name = &quot;git&quot;
+     DependsOn = &quot;[cChocoInstaller]installChoco&quot;
+  }</pre>
+<p><a href="https://bit.ly/choco_dsc">Read More...</a></p>
+<h2 id="puppet">Puppet</h2>
+<p>Puppet has a <a href="https://forge.puppet.com/supported">Supported module</a> coming for Chocolatey, but also has an <a href="https://forge.puppet.com/approved">Approved module</a> written by the Chocolatey team. The module can manage packages and the install and configuration of Chocolatey itself.</p>
+<pre class="brush: ruby">include chocolatey
+
+package { &#39;git&#39;:
+  ensure   =&gt; latest,
+  provider =&gt; &#39;chocolatey&#39;,
+  source   =&gt; &#39;https://my.internal.repository/api/v2&#39;,
+}</pre>
+<p><a href="https://bit.ly/choco_puppet">Read More...</a></p>
+<h2 id="saltstack">Saltstack</h2>
+<p>Salt has a Chocolatey module that manages both packages and the installation of Chocolatey itself.</p>
+<pre class="brush: python">salt &#39;*&#39; chocolatey.bootstrap
+salt &#39;*&#39; chocolatey.install git</pre>
+<p><a href="https://bit.ly/choco_salt">Read More...</a></p>
+<h2 id="system-center-configuration-manager">System Center Configuration Manager</h2>
+<p>Chocolatey integrates with SCCM by handling the software management, and pointing to <a href="https://technet.microsoft.com/en-us/library/bb680614.aspx">distribution points</a> as the source for packages. This allows folks to get packages and larger binaries out to their network without constraints and still take advantage of Chocolatey&#39;s fantastic abilities!</p>
+<p>To direct Chocolatey package installs, you can still write GPOs to ensure this.</p>
+</article>

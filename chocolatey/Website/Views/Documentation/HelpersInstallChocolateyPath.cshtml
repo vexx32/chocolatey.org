@@ -1,0 +1,26 @@
+﻿@{
+  ViewBag.Title = "HelpersInstallChocolateyPath";
+}
+
+<article>
+<h1 id="install-chocolateypath">Install-ChocolateyPath</h1>
+<p>This puts a directory on the PATH environment variable. This is used when the application/tool is not being linked by Chocolatey (not in the lib folder).</p>
+<p><strong>NOTE:</strong> This command will assert UAC/Admin privileges on the machine if $pathType == &quot;˜Machine&#39;.</p>
+<h2 id="usage">Usage</h2>
+<pre class="brush: ps">Install-ChocolateyPath $pathToInstall $pathType</pre>
+<h2 id="examples">Examples</h2>
+<pre class="brush: ps">Install-ChocolateyPath &quot;$env:SystemDrive\tools\gittfs&quot;
+Install-ChocolateyPath &quot;$env:SystemDrive\Program Files\MySQL\MySQL Server 5.5\bin&quot; `
+ &#39;Machine&#39;</pre>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li><p>-pathToInstall</code></p>
+<p>This is a directory that you want to add to the PATH environment variable.</p>
+<p>Example: <code>&quot;$env:SystemDrive\tools\gittfs&quot;</code></p></li>
+<li><p>-pathType</code> <em>(optional)</em></p>
+<p>Pick only one : &quot;˜User&#39; or &quot;˜Machine&#39;</p>
+<p>Example: <code>'User'</code> or <code>'Machine'</code></p>
+<p>Defaults to <code>'User'</code></p></li>
+</ul>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+</article>

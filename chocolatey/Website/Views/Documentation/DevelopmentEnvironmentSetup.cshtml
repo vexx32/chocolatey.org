@@ -1,0 +1,256 @@
+﻿@{
+  ViewBag.Title = "DevelopmentEnvironmentSetup";
+}
+
+<article>
+<h2 id="set-up-a-development-environment-using-chocolatey">Set Up A Development Environment Using Chocolatey</h2>
+<p>How many of you out there are rake fans? Getting developers to look at your source code can sometimes be an issue. Wouldn&#39;t it be nice if it was simple for them to get all set up? What about Ruby DevKit? It would be nice, right?</p>
+<h2 id="set-up-from-the-source">Set up From the Source</h2>
+<p>This does the following:</p>
+<ul>
+<li>downloads and installs Chocolatey</li>
+<li>installs nuget.commandline if it is not installed</li>
+<li>installs ruby.devkit if it is not installed</li>
+<li>installs ruby if it is not installed</li>
+<li>updates gems and installs some required gems for rake</li>
+<li>restores nuget packages from the configs</li>
+<li>builds the source with rake</li>
+</ul>
+<h3 id="setup.ps1">setup.ps1:</h3>
+<pre class="brush: ps">function Install-NeededFor {
+param(
+   [string] $packageName = &#39;&#39;
+  ,[bool] $defaultAnswer = $true
+)
+  if ($packageName -eq &#39;&#39;) {return $false}
+
+  $yes = &#39;6&#39;
+  $no = &#39;7&#39;
+  $msgBoxTimeout=&#39;-1&#39;
+  $defaultAnswerDisplay = &#39;Yes&#39;
+  $buttonType = 0x4;
+  if (!$defaultAnswer) { $defaultAnswerDisplay = &#39;No&#39;; $buttonType= 0x104;}
+
+  $answer = $msgBoxTimeout
+  try {
+    $timeout = 10
+    $question = &quot;Do you need to install $($packageName)? Defaults to `&#39;$defaultAnswerDisplay`&#39; after $timeout seconds&quot;
+    $msgBox = New-Object -ComObject WScript.Shell
+    $answer = $msgBox.Popup($question, $timeout, &quot;Install $packageName&quot;, $buttonType)
+  }
+  catch {
+  }
+
+  if ($answer -eq $yes -or ($answer -eq $msgBoxTimeout -and $defaultAnswer -eq $true)) {
+    write-host &quot;Installing $packageName&quot;
+    return $true
+  }
+
+  write-host &quot;Not installing $packageName&quot;
+  return $false
+}
+
+
+# Install Chocolatey
+if (Install-NeededFor &#39;chocolatey&#39;) {
+  iex ((new-object net.webclient).DownloadString(&#39;http://chocolatey.org/install.ps1&#39;))
+}
+
+# install nuget, ruby.devkit, and ruby if they are missing
+cinst nuget.commandline
+
+if (Install-NeededFor &#39;ruby / ruby devkit&#39;) {
+  cinst ruby.devkit
+  cinst ruby -version 1.9.3.54500
+}
+
+# perform ruby updates and get gems
+gem update --system
+gem install rake
+gem install bundler
+
+# restore the nuget packages
+$nugetConfigs = Get-ChildItem &#39;.\\&#39; -Recurse | ?{$_.name -match &quot;packages\\.config&quot;} | select
+foreach ($nugetConfig in $nugetConfigs) {
+  Write-Host &quot;restoring packages from $($nugetConfig.FullName)&quot;
+  nuget install $($nugetConfig.FullName) /OutputDirectory packages
+}
+
+rake
+</pre>
+<h3 id="setup.cmd">setup.cmd:</h3>
+<pre class="cmd">@@echo off
+SET DIR=%~dp0%
+@@PowerShell -NoProfile -ExecutionPolicy unrestricted -Command &quot;&amp; &#39;%DIR%setup.ps1&#39; %*&quot;
+pause
+</pre>
+<p>The original is <a href="https://gist.github.com/1107920">on github</a>.</p>
+<h2 id="getting-the-source">Getting the Source</h2>
+<p>Create a package for your project and call it projectname<em>.dev</em>. It should take a nuspec dependency on whatever source control you use. So in the case of git, a dependency on msysgit.<br />
+Now, in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>, you just need something like the following:</p>
+<pre class="brush: ps">try {
+
+  $dirSelected = Read-Host &quot;Please tell me the directory where you want to clone dropkick. Press enter to use .\\dropkick&quot;
+
+  if ($dirSelected -eq &#39;&#39;) {$dirSelected = &#39;.\\dropkick&#39;}
+
+  git clone git://github.com/chucknorris/dropkick.git $dirSelected
+
+  Start-Sleep 6
+} catch {
+@@&quot;
+Error Occurred: $($_.Exception.Message)
+&quot;@@ | Write-Host -ForegroundColor White -BackgroundColor DarkRed
+    Start-Sleep 8
+    throw
+}</pre>
+<p>The above is from <a href="https://github.com/ferventcoder/nugetpackages/blob/master/dropkick.dev/tools/chocolateyInstall.ps1">DropkicK.Dev</a></p>
+<h2 id="setup-a-full-environment-including-visual-studio-express-iis-express-and-sql-server-express-with-management-studio">Setup A Full Environment Including Visual Studio Express, IIS Express and SQL Server Express (with Management Studio)</h2>
+<p>The original <a href="https://gist.github.com/3825023">gist</a></p>
+<pre class="brush: ps">$scriptDir = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
+
+function Install-NeededFor {
+param(
+   [string] $packageName = &#39;&#39;
+  ,[bool] $defaultAnswer = $true
+)
+  if ($packageName -eq &#39;&#39;) {return $false}
+
+  $yes = &#39;6&#39;
+  $no = &#39;7&#39;
+  $msgBoxTimeout=&#39;-1&#39;
+  $defaultAnswerDisplay = &#39;Yes&#39;
+  $buttonType = 0x4;
+  if (!$defaultAnswer) { $defaultAnswerDisplay = &#39;No&#39;; $buttonType= 0x104;}
+
+  $answer = $msgBoxTimeout
+  try {
+    $timeout = 10
+    $question = &quot;Do you need to install $($packageName)? Defaults to `&#39;$defaultAnswerDisplay`&#39; after $timeout seconds&quot;
+    $msgBox = New-Object -ComObject WScript.Shell
+    $answer = $msgBox.Popup($question, $timeout, &quot;Install $packageName&quot;, $buttonType)
+  }
+  catch {
+  }
+
+  if ($answer -eq $yes -or ($answer -eq $msgBoxTimeout -and $defaultAnswer -eq $true)) {
+    write-host &quot;Installing $packageName&quot;
+    return $true
+  }
+
+  write-host &quot;Not installing $packageName&quot;
+  return $false
+}
+
+# Install Chocolatey
+if (Install-NeededFor &#39;chocolatey&#39;) {
+  iex ((new-object net.webclient).DownloadString(&quot;http://chocolatey.org/install.ps1&quot;)) 
+}
+
+if (Install-NeededFor &#39;autosave&#39;) {
+  cinstm nodejs.install
+  $nodePath = Join-Path $env:programfiles &#39;nodejs&#39;
+   $is64bit = (Get-WmiObject Win32_Processor).AddressWidth -eq 64
+  if ($is64bit) {$nodePath = Join-Path ${env:ProgramFiles(x86)} &#39;nodejs&#39;}
+  $env:Path = &quot;$($env:Path);$nodePath&quot;
+  npm install -g autosave
+
+  Write-Host &#39;You still need to enable experimental packages in Chrome and install the Chrome Extension&#39;
+  Write-Host &#39;Details at https://github.com/NV/chrome-devtools-autosave#readme&#39;
+}
+
+Write-Host &quot;Grabbing required frameworks&quot;
+cinst netframework2 -source webpi
+cinst NETFramework35 -source webpi
+cinst NETFramework4 -source webpi
+cinst NETFramework4Update402 -source webpi
+cinst NETFramework4Update402_KB2544514_Only -source webpi
+cinst WindowsInstaller31 -source webpi
+cinst WindowsInstaller45 -source webpi
+
+cinst roundhouse -pre
+
+Write-Host &quot;Checking for/installing SQLServer Express and Management Studio...&quot;
+cinst SQLManagementStudio -source webpi
+cinst SQLExpressTools -source webpi
+Write-Warning &quot;You will need to supply a password on the screen that is minimized&quot;
+cinst SQLExpress -source webpi
+Write-Host &quot;Finished checking for/install SQLServer Express and Management Studio&quot;
+
+Write-Host &quot;Checking for/installing Visual Studio Items...&quot;
+if (Install-NeededFor &#39;VS2010 Express &amp; SP1&#39; $false) {
+ cinst VWD_RTW -source webpi
+ cinst VWD2010SP1AzurePack -source webpi
+}
+
+if (Install-NeededFor &#39;VS2010 Full Edition SP1&#39;) {
+ cinst VS2010SP1Pack -source webpi
+}
+
+cinst MVC3 -source webpi
+cinst MVC3Loc -source webpi
+Write-Host &quot;Finished checking for/installing Visual Studio Items.&quot;
+
+if (Install-NeededFor &#39;database&#39; $false) {
+  &amp; .\build.bat
+  $sqlFiles = Join-Path $scriptDir &#39;code_drop\ProjectName.Database\ProjectName&#39;
+  $dbServer = Read-Host &quot;Please tell me the server\instance location of the database (i.e. &#39;(local)&#39;). Press enter to use .\SQLEXPRESS&quot;
+  if ($dbServer -eq &#39;&#39;) {$dbServer = &#39;.\SQLEXPRESS&#39;}
+  &amp; rh /d ProjectName /s $dbServer /f $sqlFiles /silent
+}
+
+if (Install-NeededFor &#39;IIS&#39; $false) {
+  cinst ASPNET -source webpi
+  cinst ASPNET_REGIIS -source webpi
+  cinst DefaultDocument -source webpi
+  cinst DynamicContentCompression -source webpi
+  cinst HTTPRedirection -source webpi
+  cinst IIS7_ExtensionLessURLs -source webpi
+  cinst IISExpress -source webpi
+  cinst IISExpress_7_5 -source webpi
+  cinst IISManagementConsole -source webpi
+  cinst ISAPIExtensions -source webpi
+  cinst ISAPIFilters -source webpi
+  cinst NETExtensibility -source webpi
+  cinst RequestFiltering -source webpi
+  cinst StaticContent -source webpi
+  cinst StaticContentCompression -source webpi
+  cinst UrlRewrite2 -source webpi
+  cinst WindowsAuthentication -source webpi
+}
+
+$projectName = &#39;ProjectName&#39;
+$srcDir = Join-Path $scriptDir &quot;src\$($projectName).Web&quot;
+if (Install-NeededFor &#39;website&#39; $false) {
+  $networkSvc = &#39;NT AUTHORITY\NETWORK SERVICE&#39;
+  Write-Host &quot;Setting folder permissions on `&#39;$srcDir`&#39; to &#39;Read&#39; for user $networkSvc&quot;
+  $acl = Get-Acl $srcDir
+  $acl.SetAccessRuleProtection($True, $True)
+  $rule = New-Object System.Security.AccessControl.FileSystemAccessRule(&quot;$networkSvc&quot;,&quot;Read&quot;, &quot;ContainerInherit, ObjectInherit&quot;, &quot;None&quot;, &quot;Allow&quot;);
+  $acl.AddAccessRule($rule);
+  Set-Acl $srcDir $acl
+
+  Import-Module WebAdministration
+  $appPoolPath = &quot;IIS:\AppPools\$projectName&quot;
+  #$pool = new-object
+  Write-Warning &quot;You can safely ignore the next error if it occurs related to getting an app pool that doesn&#39;t exist&quot;
+  $pool = Get-Item $appPoolPath
+  if ($pool -eq $null) {
+    Write-Host &quot;Creating the app pool `&#39;$appPoolPath`&#39;&quot;
+    $pool = New-Item $appPoolPath
+  }
+
+  $pool.processModel.identityType = &quot;NetworkService&quot;
+  $pool | Set-Item
+  Set-itemproperty $appPoolPath -Name &quot;managedRuntimeVersion&quot; -Value &quot;v4.0&quot;
+  #Set-itemproperty $appPoolPath -Name &quot;managedPipelineMode&quot; -Value &quot;Integrated&quot;
+  Start-WebAppPool &quot;$projectName&quot;
+  Write-Host &quot;Creating the site `&#39;$projectName`&#39; with appPool `&#39;$projectName`&#39;&quot;
+  New-WebApplication &quot;$projectName&quot; -Site &quot;Default Web Site&quot; -PhysicalPath $srcDir -ApplicationPool &quot;$projectName&quot; -Force
+
+  Write-Host &#39;You still need to open Visual Studio and build the application one time prior to going to the site in a browser.&#39;
+}
+
+Write-Host &quot;If you have made it here without errors, you should be setup and ready to hack on the apps.&quot;
+Write-Warning &quot;If you see any failures happen, you may want to reboot and continue to let installers catch up. This script is idempotent and will only apply changes that have not yet been applied.&quot;</pre>
+</article>

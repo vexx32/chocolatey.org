@@ -4,101 +4,102 @@
   Bundles.Reference("Scripts/validation");
 }
 
+<section>
+<div class="p-b p-l">
+  <h1 class="m-b">Edit Profile</h1>
 
-<h1 class="page-heading">Edit Profile</h1>
+  @Html.ValidationSummary(true)
 
-@Html.ValidationSummary(true)
-
-@if (!String.IsNullOrEmpty(Model.PendingNewEmailAddress)) {
-    <p class="message">
+  @if (!String.IsNullOrEmpty(Model.PendingNewEmailAddress)) {
+      <p class="message">
         You recently requested to change your email address to <strong>@Model.PendingNewEmailAddress</strong>. 
         This change will take effect when you confirm the address. Check your inbox (or spam folder) for an 
         email with a confirmation link.
-    </p>
-}
+      </p>
+  }
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
+  @using (Html.BeginForm()) {
+      @Html.AntiForgeryToken()
 
-    <fieldset class="form">
+      <fieldset class="form">
         <legend>Edit Profile</legend>
 
         <div class="form-field">
-            @Html.LabelFor(m => m.EmailAddress)
-            @Html.EditorFor(m => m.EmailAddress)
-            @Html.ValidationMessageFor(m => m.EmailAddress)
-            <span class="field-hint-message">If you change your email address, you will need to confirm 
-                your new address for it to take effect.</span>
+          @Html.LabelFor(m => m.EmailAddress)
+          @Html.EditorFor(m => m.EmailAddress)
+          @Html.ValidationMessageFor(m => m.EmailAddress)
+          <span class="field-hint-message">If you change your email address, you will need to confirm 
+            your new address for it to take effect.</span>
         </div>
 
         <div class="form-field">
-            @Html.EditorFor(m => m.EmailAllowed)
-            <label for="EmailAllowed" class="checkbox">
-                Receive Email Notifications 
-            </label>
-            <p>
-                <strong>Important:</strong> This setting allows users of the site to contact you 
-                about packages that you own using the <em>Contact Maintainers</em> form, or to request that you become a maintainer
-                of their package. Unchecking this means users cannot contact you for these reasons. <strong>You will still receive 
-                moderation related email and/or email from site administrators.</strong>
-            </p>
+          @Html.EditorFor(m => m.EmailAllowed)
+          <label for="EmailAllowed" class="checkbox">
+            Receive Email Notifications 
+          </label>
+          <p>
+            <strong>Important:</strong> This setting allows users of the site to contact you 
+            about packages that you own using the <em>Contact Maintainers</em> form, or to request that you become a maintainer
+            of their package. Unchecking this means users cannot contact you for these reasons. <strong>You will still receive 
+                                                                                                  moderation related email and/or email from site administrators.</strong>
+          </p>
 
         </div>
         
         <div class="form-field">
-            @Html.LabelFor(m => m.PackagesRepository)
-            @Html.EditorFor(m => m.PackagesRepository)
-            @Html.ValidationMessageFor(m => m.PackagesRepository)
-            <span class="field-hint-message">The full Url to your packages repository (this is where you keep what builds the packages). Also put your automatic packages into this repository (the packages that use Chocolatey Package Updater to build and push automatically).</span>
+          @Html.LabelFor(m => m.PackagesRepository)
+          @Html.EditorFor(m => m.PackagesRepository)
+          @Html.ValidationMessageFor(m => m.PackagesRepository)
+          <span class="field-hint-message">The full Url to your packages repository (this is where you keep what builds the packages). Also put your automatic packages into this repository (the packages that use Chocolatey Package Updater to build and push automatically).</span>
         </div>
         
-         <div class="form-field">
-            @Html.LabelFor(m => m.PackagesRepositoryAuto)
-            @Html.EditorFor(m => m.PackagesRepositoryAuto)
-            @Html.ValidationMessageFor(m => m.PackagesRepositoryAuto)
-            <span class="field-hint-message">Deprecated field, leave this empty. It is recommended to include your automatic packages into the repository you specified above. No need for an additional separate repository</span>
+        <div class="form-field">
+          @Html.LabelFor(m => m.PackagesRepositoryAuto)
+          @Html.EditorFor(m => m.PackagesRepositoryAuto)
+          @Html.ValidationMessageFor(m => m.PackagesRepositoryAuto)
+          <span class="field-hint-message">Deprecated field, leave this empty. It is recommended to include your automatic packages into the repository you specified above. No need for an additional separate repository</span>
         </div>
 
         <div class="form-field">
-            @Html.LabelFor(m => m.TwitterUserName)
-            @Html.EditorFor(m => m.TwitterUserName)
-            @Html.ValidationMessageFor(m => m.TwitterUserName)
-            <span class="field-hint-message">Your twitter handle</span>
+          @Html.LabelFor(m => m.TwitterUserName)
+          @Html.EditorFor(m => m.TwitterUserName)
+          @Html.ValidationMessageFor(m => m.TwitterUserName)
+          <span class="field-hint-message">Your twitter handle</span>
         </div>
         
         <div class="form-field">
-            @Html.LabelFor(m => m.GithubUserName)
-            @Html.EditorFor(m => m.GithubUserName)
-            @Html.ValidationMessageFor(m => m.GithubUserName)
-            <span class="field-hint-message">Your github username</span>
+          @Html.LabelFor(m => m.GithubUserName)
+          @Html.EditorFor(m => m.GithubUserName)
+          @Html.ValidationMessageFor(m => m.GithubUserName)
+          <span class="field-hint-message">Your github username</span>
         </div>    
             
         <div class="form-field">
-            @Html.LabelFor(m => m.CodeplexUserName)
-            @Html.EditorFor(m => m.CodeplexUserName)
-            @Html.ValidationMessageFor(m => m.CodeplexUserName)
-            <span class="field-hint-message">Your codeplex username</span>
+          @Html.LabelFor(m => m.CodeplexUserName)
+          @Html.EditorFor(m => m.CodeplexUserName)
+          @Html.ValidationMessageFor(m => m.CodeplexUserName)
+          <span class="field-hint-message">Your codeplex username</span>
         </div>
 
         <div class="form-field">
-            @Html.LabelFor(m => m.StackExchangeUrl)
-            @Html.EditorFor(m => m.StackExchangeUrl)
-            @Html.ValidationMessageFor(m => m.StackExchangeUrl)
-            <span class="field-hint-message">The full Url to your stack exchange profile. This is not the same as stackoverflow.</span>
+          @Html.LabelFor(m => m.StackExchangeUrl)
+          @Html.EditorFor(m => m.StackExchangeUrl)
+          @Html.ValidationMessageFor(m => m.StackExchangeUrl)
+          <span class="field-hint-message">The full Url to your stack exchange profile. This is not the same as stackoverflow.</span>
         </div>
 
         <div class="form-field">
-            @Html.LabelFor(m => m.HomepageUrl)
-            @Html.EditorFor(m => m.HomepageUrl)
-            @Html.ValidationMessageFor(m => m.HomepageUrl)
-            <span class="field-hint-message">The full Url to your homepage</span>
+          @Html.LabelFor(m => m.HomepageUrl)
+          @Html.EditorFor(m => m.HomepageUrl)
+          @Html.ValidationMessageFor(m => m.HomepageUrl)
+          <span class="field-hint-message">The full Url to your homepage</span>
         </div> 
         
         <div class="form-field">
-            @Html.LabelFor(m => m.BlogUrl)
-            @Html.EditorFor(m => m.BlogUrl)
-            @Html.ValidationMessageFor(m => m.BlogUrl)
-            <span class="field-hint-message">The full Url to your blog</span>
+          @Html.LabelFor(m => m.BlogUrl)
+          @Html.EditorFor(m => m.BlogUrl)
+          @Html.ValidationMessageFor(m => m.BlogUrl)
+          <span class="field-hint-message">The full Url to your blog</span>
         </div>
 
 
@@ -106,5 +107,7 @@
 
         <input type="submit" value="Save" title="Save Changes" />
         <a class="cancel" href="@Url.Action("Account")" title="Cancel Changes and go back.">Cancel</a>
-    </fieldset>
-}
+      </fieldset>
+  }
+</div>
+</section>

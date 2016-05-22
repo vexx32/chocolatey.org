@@ -1,0 +1,151 @@
+﻿@{
+  ViewBag.Title = "CommandsUninstall";
+}
+
+<article>
+<h1 id="uninstall-command-choco-uninstall">Uninstall Command (choco uninstall)</h1>
+<p>Uninstalls a package or a list of packages. Some may prefer to use<br />
+<code>cuninst</code> as a shortcut for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsuninstall" })">choco uninstall</code></a>.</p>
+<p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)<br />
+with options and switches. Add <code>-y</code> for previous behavior with no<br />
+prompt. In most cases you can still pass options and switches with one<br />
+dash (<code>-</code>). For more details, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
+<p>Choco 0.9.9+ automatically tracks registry changes for &quot;Programs and<br />
+Features&quot; of the underlying software&#39;s native installers when<br />
+installing packages. The &quot;Automatic Uninstaller&quot; (auto uninstaller)<br />
+service is a feature that can use that information to automatically<br />
+determine how to uninstall these natively installed applications. This<br />
+means that a package may not need an explicit chocolateyUninstall.ps1<br />
+to reverse the installation done in the install script.</p>
+<p>Chocolatey tracks packages, which are the files in<br />
+<code>$env:ChocolateyInstall\lib\packagename</code>. These packages may or may not<br />
+contain the software (applications/tools) that each package represents.<br />
+The software may actually be installed in Program Files (most native<br />
+installers will install the software there) or elsewhere on the<br />
+machine.</p>
+<p>With auto uninstaller turned off, a chocolateyUninstall.ps1 is required<br />
+to perform uninstall from the system. In the absence of<br />
+chocolateyUninstall.ps1, choco uninstall only removes the package from<br />
+Chocolatey but does not remove the software from your system<br />
+(unless in the package directory).</p>
+<p><strong>NOTE:</strong> Starting in 0.9.10+, the Automatic Uninstaller (AutoUninstaller)<br />
+is turned on by default. To turn it off, run the following command:</p>
+<pre class="cmd">choco feature disable -n autoUninstaller</pre>
+<h2 id="usage">Usage</h2>
+<pre class="cmd">choco uninstall &lt;pkg|all&gt; [pkg2 pkgN] [options/switches]
+cuninst &lt;pkg|all&gt; [pkg2 pkgN] [options/switches]</pre>
+<p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to<br />
+uninstall all packages.</p>
+<h2 id="see-it-in-action">See It In Action</h2>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_uninstall.gif" alt="choco uninstall" /></p>
+<h2 id="examples">Examples</h2>
+<pre class="cmd">choco uninstall git
+choco uninstall notepadplusplus googlechrome atom 7zip
+choco uninstall notepadplusplus googlechrome atom 7zip -dv
+choco uninstall ruby --version 1.8.7.37402
+choco uninstall nodejs.install --all-versions</pre>
+<h2 id="options-and-switches">Options and Switches</h2>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
+running a command like install that allows installing multiple<br />
+packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
+try to install version 1.0.0 of every package passed. So please split<br />
+out multiple package calls when wanting to pass specific options.</p>
+<p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
+<pre class="cmd">
+
+
+ -?, --help, -h
+     Prints out the help menu.
+
+ -d, --debug
+     Debug - Run in Debug Mode.
+
+ -v, --verbose
+     Verbose - See verbose messaging.
+
+     --acceptlicense, --accept-license
+     AcceptLicense - Accept license dialogs automatically.
+
+ -y, --yes, --confirm
+     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+       Implies --accept-license
+
+ -f, --force
+     Force - force the behavior
+
+     --noop, --whatif, --what-if
+     NoOp - Don&#39;t actually do anything.
+
+ -r, --limitoutput, --limit-output
+     LimitOutput - Limit the output to essential information
+
+     --execution-timeout=VALUE
+     CommandExecutionTimeoutSeconds - Override the default execution timeout 
+       in the configuration of 2700 seconds.
+
+ -c, --cache, --cachelocation, --cache-location=VALUE
+     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+       in chocolatey.config file.
+
+     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
+     AllowUnofficialBuild - When not using the official build you must set 
+       this flag for choco to continue.
+
+     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
+     FailOnStandardError - Fail on standard error output (stderr), typically 
+       received when running external commands during install providers. This 
+       overrides the feature failOnStandardError.
+
+     --use-system-powershell
+     UseSystemPowerShell - Execute PowerShell using an external process 
+       instead of the built-in PowerShell host. Available in 0.9.10+.
+
+ -s, --source=VALUE
+     Source - The source to find the package(s) to install. Special sources 
+       include: ruby, webpi, cygwin, windowsfeatures, and python. Defaults to 
+       default feeds.
+
+     --version=VALUE
+     Version - A specific version to uninstall. Defaults to unspecified.
+
+ -a, --allversions, --all-versions
+     AllVersions - Uninstall all versions? Defaults to false.
+
+     --ua, --uninstallargs, --uninstallarguments, --uninstall-arguments=VALUE
+     UninstallArguments - Uninstall Arguments to pass to the native installer 
+       in the package. Defaults to unspecified.
+
+ -o, --override, --overrideargs, --overridearguments, --override-arguments
+     OverrideArguments - Should uninstall arguments be used exclusively 
+       without appending to current package passed arguments? Defaults to false.
+
+     --notsilent, --not-silent
+     NotSilent - Do not uninstall this silently. Defaults to false.
+
+     --params, --parameters, --pkgparameters, --packageparameters, --package-parameters=VALUE
+     PackageParameters - Parameters to pass to the package. Defaults to 
+       unspecified.
+
+ -x, --forcedependencies, --force-dependencies, --removedependencies, --remove-dependencies
+     RemoveDependencies - Uninstall dependencies when uninstalling package(s-
+       ). Defaults to false.
+
+ -n, --skippowershell, --skip-powershell, --skipscripts, --skip-scripts, --skip-automation-scripts
+     Skip Powershell - Do not run chocolateyUninstall.ps1. Defaults to false.
+
+     --ignorepackagecodes, --ignorepackageexitcodes, --ignore-package-codes, --ignore-package-exit-codes
+     IgnorePackageExitCodes - Exit with a 0 for success and 1 for non-succes-
+       s, no matter what package scripts provide for exit codes. Overrides the 
+       default feature &#39;usePackageExitCodes&#39; set to &#39;True&#39;. Available in 0.-
+       9.10+.
+
+     --usepackagecodes, --usepackageexitcodes, --use-package-codes, --use-package-exit-codes
+     UsePackageExitCodes - Package scripts can provide exit codes. Use those 
+       for choco&#39;s exit code when non-zero (this value can come from a 
+       dependency package). Chocolatey defines valid exit codes as 0, 1605, 
+       1614, 1641, 3010. Overrides the default feature &#39;usePackageExitCodes&#39; 
+       set to &#39;True&#39;. Available in 0.9.10+.
+</pre>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco uninstall -h</code>.</p>
+</article>

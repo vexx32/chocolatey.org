@@ -29,6 +29,7 @@ namespace NuGetGallery
         {
             this.package = package;
             Version = package.Version;
+            Summary = package.Summary;
             Description = package.Description;
             ReleaseNotes = package.ReleaseNotes;
             IconUrl = package.IconUrl;
@@ -64,6 +65,7 @@ namespace NuGetGallery
         public string Id { get { return package.PackageRegistration.Id; } }
         public string Version { get; set; }
         public string Title { get { return String.IsNullOrEmpty(package.Title) ? package.PackageRegistration.Id : package.Title; } }
+        public string Summary { get; set; }
         public string Description { get; set; }
         public string ReleaseNotes { get; set; }
         public string IconUrl { get; set; }

@@ -1,0 +1,109 @@
+﻿@{
+  ViewBag.Title = "How-To-Parse-PackageParameters-Argument";
+}
+
+<article>
+<p>When installing a Chocolatey Package, it is possible to use a number of arguments to control how the package is installed. Each one of these arguments is detailed <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">here</a>.</p>
+<p>Package parameters provide a way for a package consumer to make choices about how they want things installed and configuration of the underlying software.</p>
+<p><strong>NOTE:</strong> Package parameters are not meant to be a substitute for sensible default values. A package installation should require no arguments and the default values should just happen. This is especially true of the packages on the community feed. If you are hosting your own internal feeds, it is recommended you follow this behavior, but not required.</p>
+<p><strong>NOTE:</strong> See <a href="https://github.com/chocolatey/choco/issues/312">#312</a> for Chocolatey v0.9.10 adding a helper to do the below with almost no boilerplate.</p>
+<p>This <em>How-To</em> focuses on how a package creator can make use of the PackageParameters argument within their package, and how they can parse the string which is passed through into their package from the installation command.</p>
+<h2 id="code-sample">Code Sample</h2>
+<pre class="brush: ps">
+  $arguments = @@{}
+
+  # Let&#39;s assume that the input string is something like this, and we will use a Regular Expression to parse the values
+  # /Port:81 /Edition:LicenseKey /AdditionalTools
+
+  # Now we can use the $env:chocolateyPackageParameters inside the Chocolatey package
+  $packageParameters = $env:chocolateyPackageParameters
+
+  # Default the values
+  $port = &quot;81&quot;
+  $edition = &quot;LicenseKey&quot;
+  $additionalTools = $false
+  $installationPath = &quot;c:\temp&quot;
+
+  # Now parse the packageParameters using good old regular expression
+  if ($packageParameters) {
+      $match_pattern = &quot;\/(?&lt;option&gt;([a-zA-Z]+)):(?&lt;value&gt;([`&quot;&#39;])?([a-zA-Z0-9- _\\:\.]+)([`&quot;&#39;])?)|\/(?&lt;option&gt;([a-zA-Z]+))&quot;
+      $option_name = &#39;option&#39;
+      $value_name = &#39;value&#39;
+
+      if ($packageParameters -match $match_pattern ){
+          $results = $packageParameters | Select-String $match_pattern -AllMatches
+          $results.matches | % {
+            $arguments.Add(
+                $_.Groups[$option_name].Value.Trim(),
+                $_.Groups[$value_name].Value.Trim())
+        }
+      }
+      else
+      {
+          Throw &quot;Package Parameters were found but were invalid (REGEX Failure)&quot;
+      }
+
+      if ($arguments.ContainsKey(&quot;Port&quot;)) {
+          Write-Host &quot;Port Argument Found&quot;
+          $port = $arguments[&quot;Port&quot;]
+      }
+
+      if ($arguments.ContainsKey(&quot;Edition&quot;)) {
+          Write-Host &quot;Edition Argument Found&quot;
+          $edition = $arguments[&quot;Edition&quot;]
+      }
+
+      if ($arguments.ContainsKey(&quot;AdditionalTools&quot;)) {
+          Write-Host &quot;You want Additional Tools installed&quot;
+          $additionalTools = $true
+      }
+
+      if ($arguments.ContainsKey(&quot;InstallationPath&quot;)) {
+          Write-Host &quot;You want to use a custom Installation Path&quot;
+          $installationPath = $arguments[&quot;InstallationPath&quot;]
+      }
+  } else {
+      Write-Debug &quot;No Package Parameters Passed in&quot;
+  }
+
+  $silentArgs = &quot;/S /Port:&quot; + $port + &quot; /Edition:&quot; + $edition + &quot; /InstallationPath:&quot; + $installationPath
+  if ($additionalTools) { $silentArgs += &quot; /Additionaltools&quot; }
+
+  Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quot;</pre>
+<h2 id="what-does-this-mean">What does this mean?</h2>
+<p>The Code Sample assumes that there will be no PackageParameters passed into it, as a result, we need to define a number of default values for each of the variables contained within the script. In this case, the <code>port</code>, the <code>edition</code>, the <code>additionalTools</code> and the <code>installationPath</code>.</p>
+<p>Once that is done, assuming that the PackageParameters contains &quot;something&quot;, use a Regular Expression to parse each of the values into a dictionary. Here, we are assuming that the package parameters will come through in a pre-defined format, such as <code>/Port:82 /Edition:LicenseKey1 /AdditionalTools /InstallationPath:'C:\temp\folder with spaces'</code>. Now, this format can be anything you want it to be. What is shown here is just <strong>one</strong> way of doing it. If you need to deviate from this sample structure, it is likely that you will need to update the regular expression to account for this.</p>
+<p>Having collected all the arguments into the dictionary, we can then inspect the values of each parameter that we are interested in. If it exists in the dictionary, replace the corresponding default value, otherwise, continue to use the default value.</p>
+<h2 id="add-package-parameter-information-to-the-description">Add Package Parameter Information to the Description</h2>
+<p>Be sure to let folks know about the package parameters (<strong>Note:</strong> this will be a holding review item by moderators).</p>
+<p>Here&#39;s an example:</p>
+<pre class="brush: xml">    &lt;description&gt;
+Git (for Windows) - Git is a powerful distributed Source Code Management tool. If you just want to use Git to do your version control in Windows, you will need to download Git for Windows, run the installer, and you are ready to start.
+
+Note: Git for Windows is a project run by volunteers, so if you want it to improve, volunteer!
+
+### Package Specifics
+The package uses default install options minus cheetah integration and desktop icons. Cheetah prevents a good upgrade scenario, so it has been removed.
+
+#### Package Parameters
+The following package parameters can be set:
+
+ * `/GitOnlyOnPath` - this puts gitinstall\cmd on path. This is also done by default if no package parameters are set.
+ * `/GitAndUnixToolsOnPath` - this puts gitinstall\bin on path. This setting will override `/GitOnlyOnPath`.
+ * `/NoAutoCrlf` - this setting only affects new installs, it will not override an existing `.gitconfig`. This will ensure &#39;Checkout as is, commit as is&#39;
+
+These parameters can be passed to the installer with the use of `-params`.
+For example: `-params &#39;&quot;/GitAndUnixToolsOnPath /NoAutoCrlf&quot;&#39;`.
+    &lt;/description&gt;</pre>
+<h2 id="installing-the-package">Installing the Package</h2>
+<p>Now, in this example, if we were to call:</p>
+<p>choco install &lt;packageName&gt;</code></p>
+<p>The output would be:</p>
+<pre class="cmd">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</pre>
+<p>i.e.&nbsp; it is using the default values which we made at the top of the file</p>
+<p>However, if we instead used:</p>
+<pre class="cmd">choco install &lt;packageName&gt; -packageParameters &#39;&quot;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&quot;&#39;</pre>
+<p>Keep in mind how to pass pkg args: <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches" class="uri">https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches</a></p>
+<p>The output would be:</p>
+<pre class="cmd">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</pre>
+</article>

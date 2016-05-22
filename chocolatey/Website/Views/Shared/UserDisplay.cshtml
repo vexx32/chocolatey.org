@@ -1,13 +1,28 @@
-﻿<div class="user-display">
+﻿<div class="m-l inline-block">
     @if (!User.Identity.IsAuthenticated)
     {
-        <span class="welcome"><a href="@Url.LogOn()">Log On</a></span> 
-        <a href="@Url.Action(MVC.Users.Register())" class="register">Register</a>
+        <div class="small button-bar inline-block line-height-small">
+            <a class="button" href="@Url.LogOn()">Login</a><a class="button" href="@Url.Action(MVC.Users.Register())">Signup</a>
+        </div>
     }
-    else {
-        <span class="welcome"><a href="@Url.Action(MVC.Users.Account())">@User.Identity.Name</a></span>
-        <span class="user-actions">
-            <a href="@Url.LogOff()">Log Off</a> 
-        </span>
+    else
+    {
+        <div class="small inline-block line-height-small">
+            <span class="welcome"><a href="@Url.Action(MVC.Users.Account())">@User.Identity.Name</a></span>&nbsp;&nbsp;<a href="@Url.LogOff()">Log Off</a>
+        </div>
     }
 </div>
+@*<div class="user-display">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <span class="welcome"><a href="@Url.LogOn()">Log On</a></span>
+                <a href="@Url.Action(MVC.Users.Register())" class="register">Register</a>
+            }
+            else {
+                <span class="welcome"><a href="@Url.Action(MVC.Users.Account())">@User.Identity.Name</a></span>
+                <span class="user-actions">
+                    <a href="@Url.LogOff()">Log Off</a>
+                </span>
+            }
+        </div>
+    *@

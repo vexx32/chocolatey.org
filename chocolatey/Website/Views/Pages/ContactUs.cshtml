@@ -1,0 +1,76 @@
+﻿@using PoliteCaptcha
+@using NuGetGallery
+@model ContactUsViewModel
+@{
+    ViewBag.Title = "Contact Us";
+    Bundles.Reference("Scripts/validation");
+}
+<section>
+  <div class="p-b p-l">
+    <h1 class="m-b">Contact Us</h1>
+
+    @*<p class="message">Have a question or a comment?</p>*@
+    
+    @using (Html.BeginForm())
+    {
+    <fieldset class="form">
+      <legend>Question or comments?</legend>
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary(true)
+      
+      <div class="form-field">
+        @Html.LabelFor(m => m.MessageTo)
+        @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems,"Select...")
+        <span class="field-hint-message">Who should we send this message to?</span>
+        @Html.ValidationMessageFor(m => m.MessageTo)
+      </div>
+      <div class="form-field">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.EditorFor(m => m.FirstName)
+        <span class="field-hint-message">Enter your first name.</span>
+        @Html.ValidationMessageFor(m => m.FirstName)
+      </div>
+      <div class="form-field">
+        @Html.LabelFor(m => m.LastName)
+        @Html.EditorFor(m => m.LastName)
+        <span class="field-hint-message">Enter your last name.</span>
+        @Html.ValidationMessageFor(m => m.LastName)
+      </div>
+      <div class="form-field">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email)
+        <span class="field-hint-message">Enter your email address.</span>
+        @Html.ValidationMessageFor(m => m.Email)
+      </div>  
+      <div class="form-field">
+        @Html.LabelFor(m => m.PhoneNumber)
+        @Html.EditorFor(m => m.PhoneNumber)
+        <span class="field-hint-message">Your phone number is optional but recommended.</span>
+        @Html.ValidationMessageFor(m => m.PhoneNumber)
+      </div>      
+      <div class="form-field">
+        @Html.LabelFor(m => m.CompanyName)
+        @Html.EditorFor(m => m.CompanyName)
+        <span class="field-hint-message">Provide your company or leave empty if not an organizational request.</span>
+        @Html.ValidationMessageFor(m => m.CompanyName)
+      </div>      
+ 
+      <div class="form-field"> 
+        @Html.LabelFor(m => m.Message)
+        @Html.TextAreaFor(m => m.Message,10, 50, null)
+        @Html.ValidationMessageFor(m => m.Message)
+      </div>
+          
+      @*@Html.EditorForModel()*@
+      @Html.SpamPreventionFields()
+      <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
+
+      <input type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
+    </fieldset>
+    }
+
+  </div>
+</section>
+@section BottomScripts {
+  @Html.SpamPreventionScript()
+}

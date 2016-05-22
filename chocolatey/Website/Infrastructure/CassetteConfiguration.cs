@@ -35,6 +35,7 @@ namespace NuGetGallery
             {
                 Pattern = "*.css",
                 SearchOption = SearchOption.AllDirectories,
+                Exclude = new Regex("style\\.css$")
             });
 #if DEBUG
             bundles.AddPerSubDirectory<ScriptBundle>("Scripts", new FileSearch

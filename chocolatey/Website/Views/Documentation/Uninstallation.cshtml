@@ -1,0 +1,44 @@
+﻿@{
+  ViewBag.Title = "Uninstallation";
+}
+
+<article>
+<h2 id="uninstalling-chocolatey">Uninstalling Chocolatey</h2>
+<p>Should you decide you don&#39;t like Chocolatey, you can uninstall it simply by removing the folder (and the environment variable(s) that it creates). Since it is not actually installed on your system, you don&#39;t have to worry that it cluttered up your registry (the applications that you installed with Chocolatey or manually, now that&#39;s a different story).</p>
+<h3 id="folder">Folder</h3>
+<ul>
+<li>C:\Chocolatey - for Chocolatey version &lt; <code>0.9.8.27</code></li>
+<li>C:\ProgramData\chocolatey &gt; <code>0.9.8.27</code></li>
+</ul>
+<p><strong>NOTE:</strong> If you upgraded from <code>0.9.8.26</code> to <code>0.9.8.27</code> it is likely that <code>Chocolatey</code> is installed at C:\Chocolatey, which was the default prior to <code>0.9.8.27</code>. If you did a fresh install of Chocolatey at version <code>0.9.8.27</code> then the installation folder will be <code>C:\ProgramData\Chocolatey</code></p>
+<h3 id="environment-variables">Environment Variables</h3>
+<ul>
+<li>ChocolateyInstall</li>
+<li>ChocolateyBinRoot</li>
+<li>ChocolateyToolsLocation</li>
+<li>PATH (will need updated to remove)</li>
+</ul>
+<h2 id="script">Script</h2>
+<p>There are no warranties on this script whatsoever, but here is something you can try:</p>
+<p><strong>WARNING!!</strong> This will remove Chocolatey and all packages, software, and configurations in the Chocolatey Installation folder from your machine. Everything will be GONE. This is very destructive. DO NOT RUN this script unless you completely understand what the intention of this script is and are good with it. If you mess something up, we cannot help you fix it.</p>
+<p><strong><em>WARNING:</em></strong> Seriously, this script may destroy your machine and require a rebuild. Think twice before running this.</p>
+<p>If you also intend to delete the Chocolatey directory, remove the <code>-WhatIf</code>:</p>
+<pre class="brush: ps">Remove-Item -Recurse -Force &quot;$env:ChocolateyInstall&quot; -WhatIf
+[System.Text.RegularExpressions.Regex]::Replace( ` 
+[Microsoft.Win32.Registry]::CurrentUser.OpenSubKey(&#39;Environment&#39;).GetValue(&#39;PATH&#39;, &#39;&#39;,  `
+[Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames).ToString(),  `
+[System.Text.RegularExpressions.Regex]::Escape(&quot;$env:ChocolateyInstall\bin&quot;) + &#39;(?&gt;;)?&#39;, &#39;&#39;, `
+[System.Text.RegularExpressions.RegexOptions]::IgnoreCase) | `
+%{[System.Environment]::SetEnvironmentVariable(&#39;PATH&#39;, $_, &#39;User&#39;)}
+[System.Text.RegularExpressions.Regex]::Replace( `
+[Microsoft.Win32.Registry]::LocalMachine.OpenSubKey(&#39;SYSTEM\CurrentControlSet\Control\Session Manager\Environment\&#39;).GetValue(&#39;PATH&#39;, &#39;&#39;, `
+[Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames).ToString(),  `
+[System.Text.RegularExpressions.Regex]::Escape(&quot;$env:ChocolateyInstall\bin&quot;) + &#39;(?&gt;;)?&#39;, &#39;&#39;, `
+[System.Text.RegularExpressions.RegexOptions]::IgnoreCase) | `
+%{[System.Environment]::SetEnvironmentVariable(&#39;PATH&#39;, $_, &#39;Machine&#39;)}</pre>
+<p>If you also intend to delete the tools directory that was managed by Chocolatey, remove both of the <code>-WhatIf</code> switches:</p>
+<pre class="brush: ps">if ($env:ChocolateyBinRoot -ne &#39;&#39; -and $env:ChocolateyBinRoot -ne $null) { Remove-Item -Recurse -Force &quot;$env:ChocolateyBinRoot&quot; -WhatIf }
+if ($env:ChocolateyToolsRoot -ne &#39;&#39; -and $env:ChocolateyToolsRoot -ne $null) { Remove-Item -Recurse -Force &quot;$env:ChocolateyToolsRoot&quot; -WhatIf }
+[System.Environment]::SetEnvironmentVariable(&quot;ChocolateyBinRoot&quot;, $null, &#39;User&#39;)
+[System.Environment]::SetEnvironmentVariable(&quot;ChocolateyToolsLocation&quot;, $null, &#39;User&#39;)</pre>
+</article>

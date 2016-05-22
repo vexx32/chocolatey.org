@@ -1,0 +1,245 @@
+﻿@{
+  ViewBag.Title = "HelpersInstallChocolateyShortcut";
+}
+
+<article>
+<h1 id="install-chocolateyshortcut">Install-ChocolateyShortcut</h1>
+<p>Creates a shortcut</p>
+<h2 id="syntax">Syntax</h2>
+<pre class="brush: ps">Install-ChocolateyShortcut `
+  [-ShortcutFilePath &lt;String&gt;] `
+  [-TargetPath &lt;String&gt;] `
+  [-WorkingDirectory &lt;String&gt;] `
+  [-Arguments &lt;String&gt;] `
+  [-IconLocation &lt;String&gt;] `
+  [-Description &lt;String&gt;]</pre>
+<h2 id="description">Description</h2>
+<p>This adds a shortcut, at the specified location, with the option to specify<br />
+a number of additional properties for the shortcut, such as Working Directory,<br />
+Arguments, Icon Location, and Description.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<h3 id="shortcutfilepath">-ShortcutFilePath [\<String\>]</h3>
+<p>The full absolute path to where the shortcut should be created. This is mandatory.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="targetpath">-TargetPath [\<String\>]</h3>
+<p>The full absolute path to the target for new shortcut. This is mandatory.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workingdirectory">-WorkingDirectory [\<String\>]</h3>
+<p>The full absolute path of the Working Directory that will be used by<br />
+the new shortcut. This is optional</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="arguments">-Arguments [\<String\>]</h3>
+<p>Additonal arguments that should be passed along to the new shortcut. This<br />
+is optional.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iconlocation">-IconLocation [\<String\>]</h3>
+<p>The full absolute path to an icon file to be used for the new shortcut. This<br />
+is optional.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="description-1">-Description [\<String\>]</h3>
+<p>A text description to be associated with the new description. This is optional.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="brush: ps">
+# This will create a new shortcut at the location of &quot;C:\test.lnk&quot; and
+# link to the file located at &quot;C:\text.exe&quot;
+
+Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</pre>
+<p><strong>EXAMPLE 2</strong></p>
+<pre class="brush: ps">
+# This will create a new shortcut at the location of &quot;C:\notepad.lnk&quot;
+# and link to the Notepad application.  In addition, other properties
+# are being set to specify the working directory, an icon to be used for
+# the shortcut, along with a description and arguments.
+
+Install-ChocolateyShortcut `
+  -ShortcutFilePath &quot;C:\notepad.lnk&quot; `
+  -TargetPath &quot;C:\Windows\System32\notepad.exe&quot; `
+  -WorkDirectory &quot;C:\&quot; `
+  -Arguments &quot;C:\test.txt&quot; `
+  -IconLocation &quot;C:\test.ico&quot; `
+  -Description &quot;This is the description&quot;</pre>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyShortcut -Full</code>.</p>
+</article>
