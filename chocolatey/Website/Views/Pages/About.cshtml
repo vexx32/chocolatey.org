@@ -55,8 +55,13 @@
         is not a trusted package, then a human must check over what is not easy for a
         computer to find to ensure that the packages are not doing anything malicious, but
         installing the software they state they are installing. Moderation does not check
-        that the software that the package installs is free of crapware (at least not as 
-        of February 2016).
+        that the software that the package installs is free of malware. We do automatically 
+        scan every package and the resources it downloads with VirusTotal and display those
+        results right on the package pages. However that verification is only at the time of
+        check and internet resources can change. If you need better peace of mind, we offer
+        <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">runtime malware protection</a>
+        in <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey Professional</a> and 
+        <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey for Business</a>.
       </p>
       <p>
         Future security enhancements like package signing are planned to increase the security of the
