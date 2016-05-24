@@ -1045,6 +1045,8 @@
     <Content Include="Content\Images\headerbackground.png" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
+    <Content Include="Content\Images\icon_slogan.png" />
+    <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
     <Content Include="Content\Images\integration_points.png" />
     <Content Include="Content\Images\invalidBG.png" />
