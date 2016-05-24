@@ -95,7 +95,7 @@
                 <div>
                     <div class="inline-block m-b stat-number bg-two">
                         <div class="huge-number"><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></div>
-                        <small><a href="ChocolateyFAQs#what-is-the-verifier">Known good packages</a></small>
+                        <small><a href="@Url.RouteUrl(RouteName.FAQ)#what-is-the-verifier">Known good packages</a></small>
                     </div>
                 </div>
             </div>
@@ -165,21 +165,7 @@
     </section>
 
 
-    <section class="aggstats">
-      <span class="stat">
-        <span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>unique packages
-      </span>
-      <span class="stat">
-        <span id="Downloads" class="num"></span>total downloads
-      </span>
-      <span class="stat">
-        <span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span>total packages
-      </span>
-    </section>
-    <section class="aggstats">
-        <span class="stat">
-          <span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span><a href="@Url.RouteUrl(RouteName.FAQ)#what-is-the-verifier">known good packages</a>
-        </span>
+     <section class="aggstats">
         <span class="stat">
             <span id="UpToDatePackages" class="num" title="This is a start towards understanding up to date packages"></span>packages updated in last 4 months
         </span>
