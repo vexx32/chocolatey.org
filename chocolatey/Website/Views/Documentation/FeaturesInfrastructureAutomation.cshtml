@@ -11,6 +11,7 @@
 <li><a href="#ansible">Ansible</a></li>
 <li><a href="#chef">Chef</a></li>
 <li><a href="#powershell-dsc">PowerShell DSC</a></li>
+<li><a href="#powershell-packagemanagement">PowerShell PackageManagement / OneGet</a></li>
 <li><a href="#puppet">Puppet</a></li>
 <li><a href="#saltstack">Saltstack</a></li>
 <li><a href="#system-center-configuration-manager">SCCM</a></li>
@@ -62,6 +63,9 @@ end</pre>
      DependsOn = &quot;[cChocoInstaller]installChoco&quot;
   }</pre>
 <p><a href="https://bit.ly/choco_dsc">Read More...</a></p>
+<h2 id="powershell-packagemanagement">PowerShell PackageManagement</h2>
+<p><strong>NOTE:</strong> Chocolatey has a provider for the built-in package manager on Windows 10/Windows Server 2016. The official provider is still under development at this time and is expected to be complete in early summer 2016.</p>
+<p><a href="https://github.com/OneGet/oneget">PowerShell PackageManagement (aka OneGet)</a> is a package manager <strong><em>aggregator</em></strong> that depends on the existence of package managers as providers to work, one of which is Chocolatey. For a pretty comprehensive post about what PackageManagement is and what it is not, see the PackageManagement Blog post on <a href="https://blogs.technet.microsoft.com/packagemanagement/2015/05/05/10-things-about-oneget-that-are-completely-different-than-you-think/">10 things about OneGet that are completely different than you think</a>.</p>
 <h2 id="puppet">Puppet</h2>
 <p>Puppet has a <a href="https://forge.puppet.com/supported">Supported module</a> coming for Chocolatey, but also has an <a href="https://forge.puppet.com/approved">Approved module</a> written by the Chocolatey team. The module can manage packages and the install and configuration of Chocolatey itself.</p>
 <pre class="brush: ruby">include chocolatey
