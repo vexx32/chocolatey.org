@@ -120,7 +120,7 @@ Company: {4}
               contactForm.CompanyName, 
               contactForm.Message);
 
-            messageService.ContactUs(from, contactForm.MessageTo, message);
+            messageService.ContactUs(from, contactForm.MessageTo, message, contactForm.CompanyName);
 
             TempData["Message"] = "Your message has been sent.";
 

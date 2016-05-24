@@ -140,15 +140,16 @@ Package Url: {6}
             }
         }
 
-        public void ContactUs(MailAddress fromAddress, string contactType, string message)
+        public void ContactUs(MailAddress fromAddress, string contactType, string message, string optionalSubject)
         {
-            string subject = "Chocolatey - Contact Form - {0}".format_with(contactType);
+            string subject = "Customer Inquiry for {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
             string body = message;
 
             var to = Configuration.ReadAppSettings("ContactUsEmail");
             //refactor this a bit
             if (contactType == "Website")
             {
+                subject = "Chocolatey - Contact Form - {0}".format_with(contactType);
                 to = Configuration.ReadAppSettings("ModeratorEmail");
             }
 
