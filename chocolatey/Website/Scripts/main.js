@@ -6,7 +6,7 @@ function animateEl(el) {
   var phrases = el.dataset.animate.split(',');
   var index = 0;
   var position = 0;
-  var currentString = ''
+  var currentString = '';
   var direction = 1;
   var animate = function(){
     position+= direction;
