@@ -8,15 +8,15 @@
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter.</p>
 <p>If you need to install as a non-administrator or want more advanced options, please continue reading...</p>
 <ul>
-<li>Cmd.exe:</li>
+<li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button></li>
 </ul>
 <pre class="cmd">@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</pre>
 <ul>
-<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):</li>
+<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
 </ul>
 <pre class="brush: ps">iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</pre>
 <ul>
-<li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):</li>
+<li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 | iex"></button></li>
 </ul>
 <pre class="brush: ps">iwr https://chocolatey.org/install.ps1 | iex</pre>
 <p>If that is still too much to type, <a href="https://twitter.com/jaybazuzi">Jay Bazuzi</a> <a href="https://twitter.com/jaybazuzi/status/625080286934466560">has created a short link</a> <code>cin.st</code> that points to <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a>. So you can use <code>iwr cin.st | iex</code>, although we recommend <code>iwr https://cin.st | iex</code>.<br />
@@ -111,4 +111,8 @@ SET DIR=%~dp0%
 <li><strong>NOTE</strong>: Ensure PowerShell execution policy is set to at least bypass or remote signed (if you have issues, you may need to set it to Unrestricted).</li>
 <li>Call <code>&amp; .\chocolateyInstall.ps1</code> to allow Chocolatey to install.</li>
 </ol>
+<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js"></script>
+<script>
+  new Clipboard('.copy-button');
+</script>
 </article>
