@@ -2885,6 +2885,9 @@ img{ max-width: 100%; }
   transition: max-height 400ms;
   overflow: hidden;
 }
+  .maintenance-message a {
+    color: #fff;
+  }
 
 .message--collapsed{
   max-height: 0px;
