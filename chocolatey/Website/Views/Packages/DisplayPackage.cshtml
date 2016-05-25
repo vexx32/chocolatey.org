@@ -219,11 +219,11 @@
       </h2>
     </div>
     
-    @* @if (Model.IsDownloadCacheAvailable)
-      {
-          <div class="message approved">Private CDN cached downloads available for licensed customers. Never experience 404 breakages again! <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Learn more...</a></div>
-          <br />
-      }*@
+    @if (Model.IsDownloadCacheAvailable)
+    {
+        <div class="message approved">Private CDN cached downloads available for licensed customers. Never experience 404 breakages again! <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Learn more...</a></div>
+        <br />
+    }
 
   @if (Model.IsInstallOrPortable)
     {
