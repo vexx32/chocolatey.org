@@ -56,8 +56,8 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>[Security] Sign the powershell scripts and assemblies - see <a href="https://github.com/chocolatey/choco/issues/501">#501</a></li>
 <li>Add a <code>choco info</code> command to show info for one package - see <a href="https://github.com/chocolatey/choco/issues/644">#644</a></li>
 <li>Pro/Business - Ubiquitous Install Directory Switch - see <a href="https://github.com/chocolatey/choco/issues/258">#258</a></li>
-<li>Pro/Business - Runtime Virus Scanning - see <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1518468">virus scanning</a></li>
-<li>Pro/Business - Permanent private download location - see <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1479944">alternate download location</a></li>
+<li>Pro/Business - Runtime Virus Scanning - see <a href="https://chocolatey.org/docs/features-virus-check">virus scanning</a></li>
+<li>Pro/Business - Private CDN cache for downloads - see <a href="https://chocolatey.org/docs/features-private-cdn">private CDN cache</a></li>
 </ul>
 <h3 id="bug-fixes">BUG FIXES</h3>
 <ul>
@@ -88,6 +88,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>[POSH Host] Fix - Write-Host adding multiple line breaks - see <a href="https://github.com/chocolatey/choco/issues/672">#672</a></li>
 <li>[POSH Host] Fix - PowerShell Host doesn&#39;t show colorization overrides - see <a href="https://github.com/chocolatey/choco/issues/674">#674</a></li>
 <li>[POSH Host] Fix - $profile is empty string when installing packages - does not automatically install the ChocolateyProfile - see <a href="https://github.com/chocolatey/choco/issues/667">#667</a></li>
+<li>[POSH Host] Fix - Getting LCID doesn&#39;t work properly with the built-in PowerShell - see <a href="https://github.com/chocolatey/choco/issues/741">#741</a></li>
 <li>Fix - Verbose shows in output on debug switch - see <a href="https://github.com/chocolatey/choco/issues/611">#611</a></li>
 <li>Fix - Get-ChocolateyUnzip captures files that don&#39;t belong to the package / Unzip should not do a full disk scan - see <a href="https://github.com/chocolatey/choco/issues/616">#616</a> and <a href="https://github.com/chocolatey/choco/issues/155">#155</a></li>
 <li>Fix - Package succeeds but software install silently fails when Install-ChocolateyInstallPackage has the wrong arguments - see <a href="https://github.com/chocolatey/choco/issues/629">#629</a></li>

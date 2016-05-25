@@ -1281,7 +1281,6 @@
     <Content Include="Views\Documentation\Legal.cshtml" />
     <Content Include="Views\Documentation\MigrateOldChocolateyDirectoryToProgramData.cshtml" />
     <Content Include="Views\Documentation\Moderation.cshtml" />
-    <Content Include="Views\Documentation\PackageDownloadCache.cshtml" />
     <Content Include="Views\Documentation\PackageMantainerHandover.cshtml" />
     <Content Include="Views\Documentation\PackageTriageProcess.cshtml" />
     <Content Include="Views\Documentation\PackagingNext.cshtml" />
