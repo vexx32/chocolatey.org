@@ -11,9 +11,9 @@
 <p>When a binary is flagged:<br />
 <img src="@Url.Content("~/content/images/docs/virus_scan_flagged.png")" alt="Virus scan failure" /></p>
 <h3 id="virustotal">VirusTotal</h3>
-<p>We&#39;ve teamed up with the amazing <a href="https://virustotal.com/">VirusTotal</a> to offer a second opinion to your built-in anti-virus solution. When your packages download content from the internet, Chocolatey Professional will automatically check the executables prior to running any content. If a certain number of positives have been identified (configurable), Chocolatey will fail the install automatically (but can be overridden).</p>
+<p>We&#39;ve teamed up with the amazing <a href="https://virustotal.com/">VirusTotal</a> to offer a second opinion to your built-in anti-virus solution. When your packages download content from the internet, Chocolatey Pro will automatically check the executables prior to running any content. If a certain number of positives have been identified (configurable), Chocolatey will fail the install automatically (but can be overridden).</p>
 <p>VirusTotal scans binaries against over 50 different anti-virus scanners. Chocolatey will use the information based on sending a SHA256 checksum of the binary to VirusTotal and determining what the scans have determined.</p>
-<p>By default the virus scanner is already enabled and set to VirusTotal for Professional licenses. Organizations usually are more wary about reaching out to the internet, so the feature is set to Generic and the virus scanner may not be enabled by default (because it needs configuration). If you need to configure the virus scanner to use VirusTotal, please run the following two commands:</p>
+<p>By default the virus scanner is already enabled and set to VirusTotal for Pro licenses. Organizations usually are more wary about reaching out to the internet, so the feature is set to Generic and the virus scanner may not be enabled by default (because it needs configuration). If you need to configure the virus scanner to use VirusTotal, please run the following two commands:</p>
 <ul>
 <li>choco config set virusScannerType VirusTotal</code></li>
 <li>choco feature enable -n virusCheck</code></li>
@@ -62,9 +62,9 @@ Then you will get the same benefit of runtime virus checking as an added benefit
        Licensed versions only.</pre>
 <h2 id="faq">FAQ</h2>
 <h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
-<p>You must have a <a href="https://chocolatey.org/pricing">licensed edition of Chocolatey</a> (Professional and/or Business). Professional is a personal, named license that costs about the price of a lunch outing per month and comes with several other features. Business editions are great for organizations that need more business friendly features from their software management tool.</p>
+<p>You must have a <a href="https://chocolatey.org/pricing">licensed edition of Chocolatey</a> (Pro and/or Business). Pro is a personal, named license that costs about the price of a lunch outing per month and comes with several other features. Business editions are great for organizations that need more business friendly features from their software management tool.</p>
 <h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
-<p>When you install package that download content, those items will automatically be verified if the feature is turned on (it is automatically turned on for Professional users). We don&#39;t turn it on automatically in Business editions because many organizations are wary about reaching out to the internet and the generic virus scanner requires additional configuration.</p>
+<p>When you install package that download content, those items will automatically be verified if the feature is turned on (it is automatically turned on for Pro users). We don&#39;t turn it on automatically in Business editions because many organizations are wary about reaching out to the internet and the generic virus scanner requires additional configuration.</p>
 <h3 id="how-do-i-turn-this-feature-on">How do I turn this feature on?</h3>
 <ul>
 <li>Globally - <code>choco feature enable -n virusCheck</code></li>
