@@ -61,12 +61,14 @@ namespace NuGetGallery
                     Action = "Notice"
                 }); 
             
-            routes.MapRouteSeo(
+            var pricingRoute = routes.MapRoute(
                 RouteName.Pricing, "pricing", new
                 {
                     controller = "Pages",
                     Action = "Pricing"
                 });
+
+            routes.Redirect(r => r.MapRoute(RouteName.Compare, "compare")).To(pricingRoute);
 
             routes.MapRouteSeo(
                 RouteName.Install, "install", new
