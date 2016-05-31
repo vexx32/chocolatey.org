@@ -9,7 +9,9 @@
 <p>With most of these tools, the interface you would interact with Chocolatey would be through the tool or through the interfaces of the tool, like in scripts.</p>
 <ul>
 <li><a href="#ansible">Ansible</a></li>
+<li><a href="#boxstarter">Boxstarter</a></li>
 <li><a href="#chef">Chef</a></li>
+<li><a href="#octopus-deploy">Octopus Deploy</a></li>
 <li><a href="#powershell-dsc">PowerShell DSC</a></li>
 <li><a href="#powershell-packagemanagement">PowerShell PackageManagement / OneGet</a></li>
 <li><a href="#puppet">Puppet</a></li>
@@ -22,6 +24,12 @@
   name: git
   source: https://my.internal.repository/api/v2/</pre>
 <p><a href="https://bit.ly/choco_ansible">Read More...</a></p>
+<h2 id="boxstarter">Boxstarter</h2>
+<p>Boxstarter is a lightweight configuration management utility.</p>
+<blockquote>
+<p>Repeatable, <strong>reboot resilient</strong> Windows environment installations made easy using Chocolatey packages. When its time to repave either <strong>bare metal or virtualized instances</strong>, locally or on a <strong>remote machine</strong>, Boxstarter can automate both trivial and highly complex installations. Compatible with all Windows versions from <strong>Windows 7/2008 R2 forward</strong>.</p>
+</blockquote>
+<p><a href="http://boxstarter.org/">Read more...</a></p>
 <h2 id="chef">Chef</h2>
 <p>Chef has a built-in <code>chocolatey_package</code> resource to use with Chocolatey.</p>
 <pre class="brush: ruby">chocolatey_package &#39;git&#39; do
@@ -50,6 +58,9 @@ packages = node[&#39;chefdk_bootstrap&#39;][&#39;package&#39;]
 packages.each do |pkg, install|
   include_recipe &quot;#{cookbook_name}::#{pkg}&quot; if install
 end</pre>
+<h2 id="octopus-deploy">Octopus Deploy</h2>
+<p>Octopus is a friendly deployment automation tool for .NET developers. It integrates with lots of utilities, and they have a template for installing Chocolatey packages: <a href="https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package" class="uri">https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package</a></p>
+<p><a href="https://octopus.com/">Read more...</a></p>
 <h2 id="powershell-dsc">PowerShell DSC</h2>
 <p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
 <pre class="brush: ps">  cChocoInstaller installChoco

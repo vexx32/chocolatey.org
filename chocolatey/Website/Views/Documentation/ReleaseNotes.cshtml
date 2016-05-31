@@ -55,6 +55,8 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Provide PowerShell tab completion for Chocolatey - see <a href="https://github.com/chocolatey/choco/issues/412">#412</a></li>
 <li>[Security] Sign the powershell scripts and assemblies - see <a href="https://github.com/chocolatey/choco/issues/501">#501</a></li>
 <li>Add a <code>choco info</code> command to show info for one package - see <a href="https://github.com/chocolatey/choco/issues/644">#644</a></li>
+<li>Mark packages pending until install completes successfully - see <a href="https://github.com/chocolatey/choco/issues/198">#198</a></li>
+<li>Resolve sources by name - see <a href="https://github.com/chocolatey/choco/issues/356">#356</a></li>
 <li>Pro/Business - Ubiquitous Install Directory Switch - see <a href="https://github.com/chocolatey/choco/issues/258">#258</a></li>
 <li>Pro/Business - Runtime Virus Scanning - see <a href="https://chocolatey.org/docs/features-virus-check">virus scanning</a></li>
 <li>Pro/Business - Private CDN cache for downloads - see <a href="https://chocolatey.org/docs/features-private-cdn">private CDN cache</a></li>
@@ -89,6 +91,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>[POSH Host] Fix - PowerShell Host doesn&#39;t show colorization overrides - see <a href="https://github.com/chocolatey/choco/issues/674">#674</a></li>
 <li>[POSH Host] Fix - $profile is empty string when installing packages - does not automatically install the ChocolateyProfile - see <a href="https://github.com/chocolatey/choco/issues/667">#667</a></li>
 <li>[POSH Host] Fix - Getting LCID doesn&#39;t work properly with the built-in PowerShell - see <a href="https://github.com/chocolatey/choco/issues/741">#741</a></li>
+<li>[POSH Host] Fix - Host.Version should return actual PowerShell version - see <a href="https://github.com/chocolatey/choco/issues/708">#708</a></li>
 <li>Fix - Verbose shows in output on debug switch - see <a href="https://github.com/chocolatey/choco/issues/611">#611</a></li>
 <li>Fix - Get-ChocolateyUnzip captures files that don&#39;t belong to the package / Unzip should not do a full disk scan - see <a href="https://github.com/chocolatey/choco/issues/616">#616</a> and <a href="https://github.com/chocolatey/choco/issues/155">#155</a></li>
 <li>Fix - Package succeeds but software install silently fails when Install-ChocolateyInstallPackage has the wrong arguments - see <a href="https://github.com/chocolatey/choco/issues/629">#629</a></li>
@@ -106,6 +109,10 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Removing environment variables sets empty environment variables - see <a href="https://github.com/chocolatey/choco/issues/724">#724</a></li>
 <li>Fix - Environment Variable Changes Require Reboot - see <a href="https://github.com/chocolatey/choco/issues/728">#728</a></li>
 <li>Fix - Get-WebFileName determines strange file name - see <a href="https://github.com/chocolatey/choco/issues/727">#727</a></li>
+<li>Fix - Package params are also applied to dependent package - see <a href="https://github.com/chocolatey/choco/issues/733">#733</a></li>
+<li>Fix - Use package name/version from environment, not parameters - see <a href="https://github.com/chocolatey/choco/issues/751">#751</a></li>
+<li>Fix - Get-WebFileName Does Not Match on Invalid Characters - see <a href="https://github.com/chocolatey/choco/issues/753">#753</a></li>
+<li>Fix - <code>choco new</code> cannot introduce multistage folder hierarchy template - see <a href="https://github.com/chocolatey/choco/issues/706">#706</a></li>
 </ul>
 <h3 id="improvements">IMPROVEMENTS</h3>
 <ul>
@@ -141,6 +148,17 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Interactively prompt with timeout on some questions - see <a href="https://github.com/chocolatey/choco/issues/710">#710</a></li>
 <li>[POSH Host] Exit code from PowerShell Host should be useful - see <a href="https://github.com/chocolatey/choco/issues/709">#709</a></li>
 <li>Update environment for scripts after setting environment variables - see <a href="https://github.com/chocolatey/choco/issues/729">#729</a></li>
+<li>Clean up any temp nuget folder actions after NuGet operations - see <a href="https://github.com/chocolatey/choco/issues/622">#622</a></li>
+<li>Ensure Web Requests and Responses Do Not Timeout - make configurable - see <a href="https://github.com/chocolatey/choco/issues/732">#732</a></li>
+<li>Combine timeout from push and execution timeout as one parameter - see <a href="https://github.com/chocolatey/choco/issues/752">#752</a></li>
+<li>Override autouninstaller / failonautouninstaller fail with switches for uninstall - see <a href="https://github.com/chocolatey/choco/issues/515">#515</a></li>
+<li>Offer to remove actual package (<em>.install/</em>.portable) when removing meta/virtual package - see <a href="https://github.com/chocolatey/choco/issues/735">#735</a></li>
+<li>Provide more info in package summary - see <a href="https://github.com/chocolatey/choco/issues/455">#455</a></li>
+<li>Report install location - see <a href="https://github.com/chocolatey/choco/issues/689">#689</a></li>
+<li>Track MSI Information Better - see <a href="https://github.com/chocolatey/choco/issues/755">#755</a></li>
+<li>Support for client certificates - see <a href="https://github.com/chocolatey/choco/issues/399">#399</a></li>
+<li>choco feature list formatting enhancements - see <a href="https://github.com/chocolatey/choco/issues/742">#742</a></li>
+<li>choco new --original-template - see <a href="https://github.com/chocolatey/choco/issues/737">#737</a></li>
 <li>Pro/Business - Also check for license in User Profile location - see <a href="https://github.com/chocolatey/choco/issues/606">#606</a></li>
 <li>Pro/Business - Set download cache information if available - see <a href="https://github.com/chocolatey/choco/issues/562">#562</a></li>
 <li>Pro/Business - Allow commands to be added - see <a href="https://github.com/chocolatey/choco/issues/583">#583</a></li>
@@ -149,6 +167,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Pro/Business - Add switch to fail on invalid or missing license - see <a href="https://github.com/chocolatey/choco/issues/596">#596</a></li>
 <li>Pro/Business - add ignore invalid switches/parameters - see <a href="https://github.com/chocolatey/choco/issues/586">#586</a></li>
 <li>Pro/Business - Don&#39;t prompt to upload file for virus scanning if it is too large - see <a href="https://github.com/chocolatey/choco/issues/695">#695</a></li>
+<li>Pro/Business - add &quot;˜support&#39; command - see <a href="https://github.com/chocolatey/choco/issues/745">#745</a></li>
 <li>API - Add the ability to retrieve package count for a Source - see <a href="https://github.com/chocolatey/choco/issues/431">#431</a></li>
 <li>API - Chocolatey Lib still marks vital package information as internal - see <a href="https://github.com/chocolatey/choco/issues/433">#433</a></li>
 <li>API - Add paging to list command - see <a href="https://github.com/chocolatey/choco/issues/427">#427</a></li>
