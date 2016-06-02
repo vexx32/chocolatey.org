@@ -4,13 +4,9 @@
 
 <article>
 <h1 id="shimming">Shimming</h1>
-<p>Shimming is like symlinking, but it works much better. It&#39;s a form of<br />
-redirection, where you create a &quot;shim&quot; that redirects input to the<br />
-actual binary process and shares the output. It can also work to simply<br />
-call the actual binary when it shims GUI applications.</p>
+<p>Shimming is like symlinking, but it works much better. It&#39;s a form of redirection, where you create a &quot;shim&quot; that redirects input to the actual binary process and shares the output. It can also work to simply call the actual binary when it shims GUI applications.</p>
 <p>We like to call this &quot;batch redirection that works&quot;.</p>
-<p>This also allows applications and tools to be on the &quot;PATH&quot; without<br />
-cluttering up the PATH environment variable.</p>
+<p>This also allows applications and tools to be on the &quot;PATH&quot; without cluttering up the PATH environment variable.</p>
 <p>These are the benefits of creating a shim:</p>
 <ul>
 <li>Provides an exe file that calls a target executable.</li>
@@ -21,14 +17,9 @@ cluttering up the PATH environment variable.</p>
 <li>Does not require special privileges like creating symlinks (symbolic links) do. So you can create shims without administrative rights.</li>
 </ul>
 <h2 id="usage">Usage</h2>
-<p>Chocolatey automatically shims executables in package folders that are<br />
-not explicitly ignored, putting them into the<br />
-<code>$($env:ChocolateyInstall)\bin</code> folder (and subsequently onto the PATH).</p>
-<p>These executables can come as part of the package or downloaded to the<br />
-package folder during the install script.</p>
-<p>Chocolatey ensures the folder <code>$($env:ChocolateyInstall)\bin</code> in the<br />
-PATH environment variable, allowing you to put tools on the PATH without<br />
-cluttering up the PATH.</p>
+<p>Chocolatey automatically shims executables in package folders that are not explicitly ignored, putting them into the <code>$($env:ChocolateyInstall)\bin</code> folder (and subsequently onto the PATH).</p>
+<p>These executables can come as part of the package or downloaded to the package folder during the install script.</p>
+<p>Chocolatey ensures the folder <code>$($env:ChocolateyInstall)\bin</code> in the PATH environment variable, allowing you to put tools on the PATH without cluttering up the PATH.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p>You pass these arguments to an executable that is a shim (e.g.&nbsp; executables in the bin directory of your Chocolatey install, not choco.exe):</p>
 <ul>
@@ -46,7 +37,7 @@ cluttering up the PATH.</p>
 <h3 id="how-does-it-work">How does it work?</h3>
 <p>Chocolatey uses a tool called ShimGen that inspects an executable and creates a small binary, known as a &quot;shim&quot;, that simply calls the executable. Then it places that shim in the <code>$($env:ChocolateyInstall)\bin</code>. It creates the shim by generating it at runtime based on the actual binary&#39;s information.</p>
 <h3 id="how-is-this-better-than-symlinks">How is this better than symlinks?</h3>
-<p>When you symlink a file on Windows, you must symlink all of its dependencies like dlls and config files. If you put that all into the <code>$($env:ChocolateyInstall)\bin</code> folder to take advantage of being on the PATHyou can see that there</p>
+<p>When you symlink a file on Windows, you must symlink all of its dependencies like dlls and config files. If you put that all into the <code>$($env:ChocolateyInstall)\bin</code> folder to take advantage of being on the PATH, you can quickly see that you will get into a form of &quot;DLL hell&quot; when other executables depend on different versions of the same DLL. Shimming by design does not run into this issue.</p>
 <h3 id="does-it-require-admin-rights">Does it require admin rights?</h3>
 <p>No, and this is another thing that sets it apart from symlinks. To create symlinks on Windows, you need to have <code>SeCreateSymbolicLinkPrivilege</code>, which is one of the privileges granted to Administrators.</p>
 <h3 id="does-the-shim-work-with-uac">Does the shim work with UAC?</h3>
