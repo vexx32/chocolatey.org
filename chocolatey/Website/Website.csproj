@@ -1250,7 +1250,6 @@
     <Content Include="Views\Documentation\HelpersGetChocolateyWebFile.cshtml" />
     <Content Include="Views\Documentation\HelpersGetEnvironmentVariable.cshtml" />
     <Content Include="Views\Documentation\HelpersGetEnvironmentVariableNames.cshtml" />
-    <Content Include="Views\Documentation\HelpersGetFileName.cshtml" />
     <Content Include="Views\Documentation\HelpersInstallChocolateyDesktopLink.cshtml" />
     <Content Include="Views\Documentation\HelpersInstallChocolateyEnvironmentVariable.cshtml" />
     <Content Include="Views\Documentation\HelpersInstallChocolateyExplorerMenuItem.cshtml" />
@@ -1294,12 +1293,27 @@
     <Content Include="Views\Documentation\Why.cshtml" />
     <Content Include="Views\Documentation\FeaturesPrivateCdn.cshtml" />
     <Content Include="Views\Documentation\FeaturesVirusCheck.cshtml" />
-    <Content Include="Views\Documentation\HelpersGetProcessorBits.cshtml" />
     <Content Include="Views\Documentation\HelpersGetWebFileName.cshtml" />
     <Content Include="Views\Documentation\FeaturesInfrastructureAutomation.cshtml" />
     <Content Include="Views\Documentation\FeaturesInstallDirectoryOverride.cshtml" />
     <Content Include="Views\Packages\_ViewStart.cshtml" />
     <Content Include="Views\Pages\Thanks.cshtml" />
+    <Content Include="Views\Documentation\CommandsInfo.cshtml" />
+    <Content Include="Views\Documentation\FeaturesShim.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetFtpFile.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetOSArchitectureWidth.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetToolsLocation.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetUACEnabled.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetVirusCheckValid.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetWebFile.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetWebHeaders.cshtml" />
+    <Content Include="Views\Documentation\HelpersInstallBinFile.cshtml" />
+    <Content Include="Views\Documentation\HelpersSetPowerShellExitCode.cshtml" />
+    <Content Include="Views\Documentation\HelpersTestProcessAdminRights.cshtml" />
+    <Content Include="Views\Documentation\HelpersUninstallBinFile.cshtml" />
+    <Content Include="Views\Documentation\HelpersUninstallChocolateyPackage.cshtml" />
+    <Content Include="Views\Documentation\HelpersUninstallChocolateyZipPackage.cshtml" />
+    <Content Include="Views\Documentation\HelpersWriteFileUpdateLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

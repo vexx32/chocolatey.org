@@ -5,8 +5,9 @@
 <article>
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
 <p>Chocolatey installs in seconds...</p>
+<p><strong>NOTE:</strong> Need to install a particular version of Chocolatey? Proxy? Install to a different location? Advanced Options? See <a href="#before-you-install">Before You Install</a> below. <a href="#alternative-installation-options">Alternative installation options</a>? <a href="#non-administrative-install">Non-Administrator installation</a>?</p>
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter. If you need assistance opening an administrative prompt, see <a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">open an elevated prompt in Windows 8+</a> (or <a href="http://www.howtogeek.com/howto/windows-vista/run-a-command-as-administrator-from-the-windows-vista-run-box/">Windows 7</a>).</p>
-<p>If you need to install as a non-administrator or want more advanced options, please continue reading...</p>
+<p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
 <ul>
 <li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button></li>
 </ul>
@@ -16,10 +17,11 @@
 </ul>
 <pre class="brush: ps">iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</pre>
 <ul>
-<li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 | iex"></button></li>
+<li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button></li>
 </ul>
-<pre class="brush: ps">iwr https://chocolatey.org/install.ps1 | iex</pre>
-<p>There are a few ways to install Chocolatey. Chocolatey exists as a <a href="http://chocolatey.org/packages/chocolatey">NuGet package</a>, so virtually any way you can get a NuGet package, you have the opportunity to then install it.</p>
+<pre class="brush: ps">iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex</pre>
+<p>The easiest option to remember is this one. You may not need <code>-UseBasicParsing</code>.</p>
+<p>What are these scripts doing? <code>iwr</code> (<code>Invoke-WebRequest</code>)/<code>WebClient.DownloadString</code> downloads the install script and passes it to <code>iex</code> (<code>Invoke-Expression</code>) to execute the contents of the script. This runs the installation script for Chocolatey.</p>
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Windows 7+ / Windows Server 2003+</li>
@@ -50,35 +52,48 @@
 <li>chocolateyProxyUser</code> / <code>chocolateyProxyPassword</code> - optional credentials<br />
 for explicit proxy</li>
 </ul>
-<p><strong>NOTE:</strong> This will only work with the methods below that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
+<p>In PowerShell, it looks like this:</p>
+<pre class="brush: ps">$env:chocolateyProxyLocation = &#39;https://local/proxy/server&#39;
+#$env:chocolateyProxyUser = &#39;username&#39;
+#$env:chocolateyProxyPassword = &#39;password&#39;
+# install script</pre>
+<p><strong>NOTE:</strong> This will only work with the installation methods that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
 <p><strong>Can I install a particular version of Chocolatey?</strong> Yes</p>
 <p>Set the following environment variable prior to install:</p>
 <ul>
 <li>chocolateyVersion</code> - controls what version of Chocolatey is installed</li>
 </ul>
-<p><strong>NOTE:</strong> This will only work with the methods below that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
+<p>In PowerShell, it looks like this:</p>
+<pre class="brush: ps">$env:chocolateyVersion = &#39;0.9.9.12&#39;
+# install script</pre>
+<p><strong>NOTE:</strong> This will only work with the installation methods that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
 <p><strong>Can I use Windows built-in compression instead of downloading 7zip?</strong> Yes</p>
 <p>Set the following environment variable prior to install:</p>
 <ul>
-<li>chocolateyUseWindowsCompression</code> - this will bypass the download and use of 7zip</li>
+<li>chocolateyUseWindowsCompression</code> - this will bypass the download and use of 7zip.</li>
 </ul>
-<p><strong>NOTE:</strong> This will only work with the methods below that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
+<p>In PowerShell, it looks like this:</p>
+<pre class="brush: ps">$env:chocolateyUseWindowsCompression = &#39;true&#39;
+# install script</pre>
+<p><strong>NOTE:</strong> This will only work with the installation methods that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
 <h2 id="non-administrative-install">Non-Administrative Install</h2>
 <ol>
 <li>You must choose a different location than the default. The default is a more secure location that only administrators can update.</li>
 <li>Follow that with the command line / PowerShell methods of installation.</li>
 </ol>
-<h2 id="command-line">Command Line</h2>
+<h2 id="alternative-installation-options">Alternative Installation Options</h2>
+<p>There are a few ways to install Chocolatey. Chocolatey exists as a <a href="http://chocolatey.org/packages/chocolatey">NuGet package</a>, so virtually any way you can get a NuGet package, you have the opportunity to then install it.</p>
+<h3 id="command-line">Command Line</h3>
 <p>This really is the easiest method because it requires no configuration of PowerShell prior to executing it. Open a command line, paste the following and press &lt;Enter&gt;:</p>
 <pre class="cmd">@@powershell -NoProfile -ExecutionPolicy unrestricted -Command &quot;(iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))) &gt;$null 2&gt;&amp;1&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</pre>
-<h2 id="powershell">PowerShell</h2>
+<h3 id="powershell">PowerShell</h3>
 <p>This is the second-most easy method. Open a PowerShell command line and paste in the following and press &lt;Enter&gt;:</p>
 <pre class="brush: ps">(iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)))&gt;$null 2&gt;&amp;1</pre>
 <p><strong><font color="red">Note: You must have your execution policy set to unrestricted (or at least in bypass) for this to work (<code>Set-ExecutionPolicy Unrestricted</code>). There have been <a href="https://github.com/chocolatey/chocolatey/issues/70">reports</a> that RemoteSigned is enough for the install to work.</font></strong><br />
 It downloads and runs (<a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a>).</p>
-<h2 id="cmdpowershell-wproxy-server">Cmd/PowerShell w/Proxy Server</h2>
+<h3 id="cmdpowershell-wproxy-server">Cmd/PowerShell w/Proxy Server</h3>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "proxy-settings-for-chocolatey" })#installing-chocolatey-behind-a-proxy-server">Installing Chocolatey Behind a Proxy Server</a></p>
-<h2 id="powershell-through-batch-method">PowerShell Through Batch Method</h2>
+<h3 id="powershell-through-batch-method">PowerShell Through Batch Method</h3>
 <p>This is the best method if you want to repeat it or include it in source control. It requires no change to your existing PowerShell to allow for remote unsigned scripts.</p>
 <p>Create a file named <code>installChocolatey.cmd</code> with the following:</p>
 <pre class="cmd">@@echo off
@@ -89,19 +104,20 @@ SET DIR=%~dp0%
 %systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;((new-object net.webclient).DownloadFile(&#39;https://chocolatey.org/install.ps1&#39;,&#39;install.ps1&#39;))&quot;
 ::run installer
 %systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;&amp; &#39;%DIR%install.ps1&#39; %*&quot;</pre>
+<p>You can also get to this file by going to <a href="https://chocolatey.org/installchocolatey.cmd" class="uri">https://chocolatey.org/installchocolatey.cmd</a>.</p>
 <p>If you prefer to have the install.ps1 file already, comment out the download line in the batch file and download the <a href="https://chocolatey.org/install.ps1">install.ps1</code></a> from <a href="https://chocolatey.org/install.ps1">chocolatey.org</a> and save it as <code>install.ps1</code> next to the <code>installChocolatey.cmd</code> file.</p>
 <p>Run <code>installChocolatey.cmd</code> and it will install the latest version of Chocolatey.</p>
-<h2 id="nuget-package-manager-method">NuGet Package Manager Method</h2>
+<h3 id="nuget-package-manager-method">NuGet Package Manager Method</h3>
 <p>When you have Visual Studio 2010+ and the NuGet extension installed (pre-installed on any newer versions of Visual Studio), you can simply type the following three commands and you will have Chocolatey installed on your machine.</p>
 <p>Install-Package chocolatey</code><br />
 <code>Initialize-Chocolatey</code><br />
 <code>Uninstall-Package chocolatey</code></p>
-<h2 id="nuget.exe-powershell-method">NuGet.exe + PowerShell Method</h2>
+<h3 id="nuget.exe-powershell-method">NuGet.exe + PowerShell Method</h3>
 <p>You can also use NuGet command line to download Chocolatey:</p>
 <p>nuget install chocolatey</code> or <code>nuget install chocolatey -pre</code></p>
 <p>Once you download it, open PowerShell (remote unsigned), navigate to the tools folder and run:</p>
 <p>&amp; .\chocolateyInstall.ps1</code></p>
-<h2 id="download-powershell-method">Download + PowerShell Method</h2>
+<h3 id="download-powershell-method">Download + PowerShell Method</h3>
 <p>You can also just download and unzip the Chocolatey package (<code>.nupkg</code> is a fancy zip file):</p>
 <ol>
 <li>Download the <a href="https://chocolatey.org/api/v2/package/chocolatey/">Chocolatey package</a>.</li>

@@ -9,7 +9,8 @@
 <pre class="brush: ps">Get-ChecksumValid `
   -File &lt;String&gt; `
   [-Checksum &lt;String&gt;] `
-  [-ChecksumType &lt;String&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-ChecksumType &lt;String&gt;] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>Makes a determination if a file meets an expected checksum. This<br />
 function is usually used when comparing a file that is downloaded from<br />
@@ -25,7 +26,7 @@ match, this function throws an error.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="file">-File \<String\></h3>
+<h3 id="file-string">-File &lt;String&gt;</h3>
 <p>The full path to a binary file that is checksummed and compared to the<br />
 passed Checksum parameter value.</p>
 <table>
@@ -58,7 +59,7 @@ passed Checksum parameter value.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="checksum">-Checksum [\<String\>]</h3>
+<h3 id="checksum-string">-Checksum [&lt;String&gt;]</h3>
 <p>The expected checksum hash value of the File resource. The checksum<br />
 type is covered by ChecksumType.</p>
 <table>
@@ -91,7 +92,7 @@ type is covered by ChecksumType.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="checksumtype">-ChecksumType [\<String\>]</h3>
+<h3 id="checksumtype-string">-ChecksumType [&lt;String&gt;]</h3>
 <p>The type of checkum that the file is validated with - &quot;˜md5&#39;, &quot;˜sha1&#39;,<br />
 &quot;˜sha256&#39; or &quot;˜sha512&#39; - defaults to &quot;˜md5&#39;.</p>
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
@@ -127,7 +128,39 @@ compliant algorithms for hashing - see<br />
 </tr>
 </tbody>
 </table>
-<h3 id="section">\<CommonParameters\></h3>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>

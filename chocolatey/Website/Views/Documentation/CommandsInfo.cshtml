@@ -1,24 +1,13 @@
 ﻿@{
-  ViewBag.Title = "CommandsPack";
+  ViewBag.Title = "CommandsInfo";
 }
 
 <article>
-<h1 id="pack-command-choco-pack">Pack Command (choco pack)</h1>
-<p>Chocolatey will attempt to package a nuspec into a compiled nupkg. Some<br />
-may prefer to use <code>cpack</code> as a shortcut for <code>choco pack</code>.</p>
-<p><strong>NOTE:</strong> 100% compatible with older chocolatey client (0.9.8.32 and below)<br />
-with options and switches. In most cases you can still pass options<br />
-and switches with one dash (<code>-</code>). For more details, see<br />
-<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
-<p><strong>NOTE:</strong> <code>cpack</code> has been deprecated as it has a name collision with CMake. Please<br />
-use <code>choco pack</code> instead. The shortcut will be removed in v1.</p>
-<h2 id="usage">Usage</h2>
-<pre class="cmd">choco pack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;]
-cpack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;] (DEPRECATED)</pre>
-<h2 id="examples">Examples</h2>
-<pre class="cmd">choco pack
-choco pack --version 1.2.3
-choco pack path/to/nuspec</pre>
+<h1 id="info-command-choco-info">Info Command (choco info)</h1>
+<p>Chocolatey will perform a search for a package local or remote and provide<br />
+detailed information about that package. This is a synonym for<br />
+<code>choco search &lt;pkgname&gt; --exact --detailed</code>.</p>
+<p><strong>NOTE:</strong> New as of 0.9.10.0.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -74,9 +63,30 @@ out multiple package calls when wanting to pass specific options.</p>
      UseSystemPowerShell - Execute PowerShell using an external process 
        instead of the built-in PowerShell host. Available in 0.9.10+.
 
-     --version=VALUE
-     Version - The version you would like to insert into the package.
+ -s, --source=VALUE
+     Source - Source location for install. Can include special &#39;webpi&#39;. 
+       Defaults to sources.
+
+ -l, --lo, --localonly, --local-only
+     LocalOnly - Only search against local machine items.
+
+     --pre, --prerelease
+     Prerelease - Include Prereleases? Defaults to false.
+
+ -u, --user=VALUE
+     User - used with authenticated feeds. Defaults to empty.
+
+ -p, --password=VALUE
+     Password - the user&#39;s password to the source. Defaults to empty.
+
+     --cert=VALUE
+     Client certificate - PFX pathname for an x509 authenticated feeds. 
+       Defaults to empty. Available in 0.9.10+.
+
+     --cp, --certpassword=VALUE
+     Certificate Password - the client certificate&#39;s password to the source. 
+       Defaults to empty. Available in 0.9.10+.
 </pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco pack -h</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco info -h</code>.</p>
 </article>

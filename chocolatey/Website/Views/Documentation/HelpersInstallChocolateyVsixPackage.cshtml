@@ -4,37 +4,301 @@
 
 <article>
 <h1 id="install-chocolateyvsixpackage">Install-ChocolateyVsixPackage</h1>
-<p>Downloads and installs a VSIX package for Visual Studio. You do not need to surround this with try catch if it is the only thing in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>.</p>
-<p>VSIX packages are Extensions for the Visual Studio IDE. The Visual Studio Gallery at <a href="http://visualstudiogallery.msdn.microsoft.com/" class="uri">http://visualstudiogallery.msdn.microsoft.com/</a> is the public extension feed and hosts thousands of extensions.</p>
-<p>You can locate a VSIX Url by finding the download link of Visual Studio extensions on the Visual Studio Gallery.</p>
-<h2 id="usage">Usage</h2>
-<pre class="brush: ps">Install-ChocolateyVsixPackage $packageName $vsixUrl `
- $vsVersion -checksum $checksum -checksumType $checksumType</pre>
-<h2 id="examples">Examples</h2>
-<pre class="brush: ps">Install-ChocolateyVsixPackage &quot;MyPackage&quot; `
- http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix</pre>
-<p>This downloads the AutoWrockTestable VSIX from the Visual Studio Gallery and installs it to the latest version of VS.</p>
-<pre class="brush: ps">Install-ChocolateyVsixPackage &quot;MyPackage&quot; `
- http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix 11</pre>
-<p>This downloads the AutoWrockTestable VSIX from the Visual Studio Gallery and installs it to Visual Studio 2012 (v11.0).</p>
+<p>Downloads and installs a VSIX package for Visual Studio</p>
+<h2 id="syntax">Syntax</h2>
+<pre class="brush: ps">Install-ChocolateyVsixPackage `
+  [-PackageName &lt;String&gt;] `
+  [-VsixUrl &lt;String&gt;] `
+  [-VsVersion &lt;Int32&gt;] `
+  [-Checksum &lt;String&gt;] `
+  [-ChecksumType &lt;String&gt;] `
+  [-Options &lt;Hashtable&gt;] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+<h2 id="description">Description</h2>
+<p>VSIX packages are Extensions for the Visual Studio IDE. The Visual<br />
+Studio Gallery at <a href="http://visualstudiogallery.msdn.microsoft.com/" class="uri">http://visualstudiogallery.msdn.microsoft.com/</a> is the<br />
+public extension feed and hosts thousands of extensions. You can locate<br />
+a VSIX Url by finding the download link of Visual Studio extensions on<br />
+the Visual Studio Gallery.</p>
+<h2 id="notes">Notes</h2>
+<p>Chocolatey works best when the packages contain the software it is<br />
+managing and doesn&#39;t require downloads. However most software in the<br />
+Windows world requires redistribution rights and when sharing packages<br />
+publicly (like on the <a href="https://chocolatey.org/packages">community feed</a>), maintainers may not have those<br />
+aforementioned rights. Chocolatey understands how to work with that,<br />
+hence this function. You are not subject to this limitation with<br />
+internal packages.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
 <h2 id="parameters">Parameters</h2>
-<ul>
-<li><p>-packageName</code></p>
-<p>This is an arbitrary name.</p>
-<p>Example: <code>'7zip'</code></p></li>
-<li><p>-vsixUrl</code></p>
+<h3 id="packagename-string">-PackageName [&lt;String&gt;]</h3>
+<p>The name of the package - while this is an arbitrary value, it&#39;s<br />
+recommended that it matches the package id.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vsixurl-string">-VsixUrl [&lt;String&gt;]</h3>
 <p>The URL of the package to be installed.</p>
-<p>Example: <code>http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix</code></p></li>
-<li><p>-vsVersion</code> <em>(optional)</em></p>
-<p>The Major version number of Visual Studio where the package should be installed. This is optional. If not specified, the most recent Visual Studio installation will be targeted.</p></li>
-<li><p>-checksum</code> <em>(optional)</em></p>
-<p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
-<p>Example: <code>-checksum 'C67962F064924F3C7B95D69F88E745C0'</code></p>
-<p>Defaults to ``.</p></li>
-<li><p>-checksumType</code> <em>(optional)</em></p>
-<p>This allows the file being downloaded to be validated. Can be an MD5 or SHA1 hash.</p>
-<p>Example: <code>-checksumType 'sha1'</code></p>
-<p>Defaults to <code>md5</code>.</p></li>
+<p>Prefer HTTPS when available. Can be HTTP, FTP, or File URIs.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vsversion-int32">-VsVersion [&lt;Int32&gt;]</h3>
+<p>The Major version number of Visual Studio where the<br />
+package should be installed. This is optional. If not<br />
+specified, the most recent Visual Studio installation<br />
+will be targetted.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="checksum-string">-Checksum [&lt;String&gt;]</h3>
+<p>OPTIONAL (Highly recommended) - The checksum hash value of the Url<br />
+resource. This allows a checksum to be validated for files that are not<br />
+local. The checksum type is covered by ChecksumType.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="checksumtype-string">-ChecksumType [&lt;String&gt;]</h3>
+<p>OPTIONAL - The type of checkum that the file is validated with - valid<br />
+values are &quot;˜md5&#39;, &quot;˜sha1&#39;, &quot;˜sha256&#39; or &quot;˜sha512&#39; - defaults to &quot;˜md5&#39;.</p>
+<p>MD5 is not recommended as certain organizations need to use FIPS<br />
+compliant algorithms for hashing - see<br />
+<a href="https://support.microsoft.com/en-us/kb/811833" class="uri">https://support.microsoft.com/en-us/kb/811833</a> for more details.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="options-hashtable">-Options [&lt;Hashtable&gt;]</h3>
+<p>OPTIONAL - Specify custom headers. Available in 0.9.10+.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>@@<script type="text/javascript">
+<!--
+h='&#x25;&#x37;&#66;&#x25;&#x37;&#68;&#x25;&#x37;&#68;';a='&#64;';n='&#x25;&#x37;&#66;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7b;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#64;&#x7b;&#x7d;&#x7d;'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x7b;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#64;&#x7b;&#x7d;&#x7d;&#32;&#40;&#x25;&#x37;&#66;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#32;&#x61;&#116;&#32;&#x25;&#x37;&#66;&#x25;&#x37;&#68;&#x25;&#x37;&#68;&#x29;</noscript></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
+<p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
+<h2 id="examples">Examples</h2>
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="brush: ps">
+# This downloads the AutoWrockTestable VSIX from the Visual Studio
+# Gallery and installs it to the latest version of VS.
+
+Install-ChocolateyVsixPackage -PackageName &quot;MyPackage&quot; `
+  -VsixUrl http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix</pre>
+<p><strong>EXAMPLE 2</strong></p>
+<pre class="brush: ps">
+# This downloads the AutoWrockTestable VSIX from the Visual Studio
+# Gallery and installs it to Visual Studio 2012 (v11.0).
+
+Install-ChocolateyVsixPackage -PackageName &quot;MyPackage&quot; `
+  -VsixUrl http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix `
+  -VsVersion 11</pre>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-install-package" })">Install-ChocolateyInstallPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyVsixPackage -Full</code>.</p>
 </article>

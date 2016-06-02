@@ -17,7 +17,8 @@ Get-ChocolateyUnzip when local or embedded file.</p>
   [-ChecksumType &lt;String&gt;] `
   [-Checksum64 &lt;String&gt;] `
   [-ChecksumType64 &lt;String&gt;] `
-  [-Options &lt;Hashtable&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-Options &lt;Hashtable&gt;] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This will download a file from a url and unzip it on your machine.<br />
 If you are embedding the file(s) directly in the package (or do not need<br />
@@ -37,7 +38,7 @@ internal packages.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="packagename">-PackageName \<String\></h3>
+<h3 id="packagename-string">-PackageName &lt;String&gt;</h3>
 <p>The name of the package - while this is an arbitrary value, it&#39;s<br />
 recommended that it matches the package id.</p>
 <table>
@@ -70,13 +71,14 @@ recommended that it matches the package id.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="url">-Url [\<String\>]</h3>
+<h3 id="url-string">-Url [&lt;String&gt;]</h3>
 <p>This is the 32 bit url to download the resource from. This resource can<br />
 be used on 64 bit systems when a package has both a Url and Url64bit<br />
 specified if a user passes <code>--forceX86</code>. If there is only a 64 bit url<br />
 available, please remove do not use the paramter (only use Url64bit).<br />
 Will fail on 32bit systems if missing or if a user attempts to force<br />
 a 32 bit installation on a 64 bit system.</p>
+<p>Prefer HTTPS when available. Can be HTTP, FTP, or File URIs.</p>
 <table>
 <thead>
 <tr class="header">
@@ -107,9 +109,11 @@ a 32 bit installation on a 64 bit system.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="unziplocation">-UnzipLocation \<String\></h3>
-<p>This is a location to unzip the contents to, most likely your script<br />
-folder.</p>
+<h3 id="unziplocation-string">-UnzipLocation &lt;String&gt;</h3>
+<p>This is the full path to a location to unzip the contents to, most<br />
+likely your script folder. If unzipping to your package folder, the path<br />
+will be like<br />
+<code>&quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\\file.exe&quot;</code></p>
 <table>
 <thead>
 <tr class="header">
@@ -140,7 +144,7 @@ folder.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="url64bit">-Url64bit [\<String\>]</h3>
+<h3 id="url64bit-string">-Url64bit [&lt;String&gt;]</h3>
 <p>OPTIONAL - If there is a 64 bit resource available, use this<br />
 parameter. Chocolatey will automatically determine if the user is<br />
 running a 64 bit OS or not and adjust accordingly. Please note that<br />
@@ -148,6 +152,7 @@ the 32 bit url will be used in the absence of this. This parameter<br />
 should only be used for 64 bit native software. If the original Url<br />
 contains both (which is quite rare), set this to &quot;˜$url&#39; Otherwise remove<br />
 this parameter.</p>
+<p>Prefer HTTPS when available. Can be HTTP, FTP, or File URIs.</p>
 <table>
 <thead>
 <tr class="header">
@@ -178,7 +183,7 @@ this parameter.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="specificfolder">-SpecificFolder [\<String\>]</h3>
+<h3 id="specificfolder-string">-SpecificFolder [&lt;String&gt;]</h3>
 <table>
 <thead>
 <tr class="header">
@@ -209,7 +214,7 @@ this parameter.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="checksum">-Checksum [\<String\>]</h3>
+<h3 id="checksum-string">-Checksum [&lt;String&gt;]</h3>
 <p>OPTIONAL (Highly recommended) - The checksum hash value of the Url<br />
 resource. This allows a checksum to be validated for files that are not<br />
 local. The checksum type is covered by ChecksumType.</p>
@@ -243,7 +248,7 @@ local. The checksum type is covered by ChecksumType.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="checksumtype">-ChecksumType [\<String\>]</h3>
+<h3 id="checksumtype-string">-ChecksumType [&lt;String&gt;]</h3>
 <p>OPTIONAL - The type of checkum that the file is validated with - valid<br />
 values are &quot;˜md5&#39;, &quot;˜sha1&#39;, &quot;˜sha256&#39; or &quot;˜sha512&#39; - defaults to &quot;˜md5&#39;.</p>
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
@@ -279,7 +284,7 @@ compliant algorithms for hashing - see<br />
 </tr>
 </tbody>
 </table>
-<h3 id="checksum64">-Checksum64 [\<String\>]</h3>
+<h3 id="checksum64-string">-Checksum64 [&lt;String&gt;]</h3>
 <p>OPTIONAL (Highly recommended) - The checksum hash value of the Url64bit<br />
 resource. This allows a checksum to be validated for files that are not<br />
 local. The checksum type is covered by ChecksumType64.</p>
@@ -313,7 +318,7 @@ local. The checksum type is covered by ChecksumType64.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="checksumtype64">-ChecksumType64 [\<String\>]</h3>
+<h3 id="checksumtype64-string">-ChecksumType64 [&lt;String&gt;]</h3>
 <p>OPTIONAL - The type of checkum that the file is validated with - valid<br />
 values are &quot;˜md5&#39;, &quot;˜sha1&#39;, &quot;˜sha256&#39; or &quot;˜sha512&#39; - defaults to<br />
 ChecksumType parameter value.</p>
@@ -350,7 +355,7 @@ compliant algorithms for hashing - see<br />
 </tr>
 </tbody>
 </table>
-<h3 id="options">-Options [\<Hashtable\>]</h3>
+<h3 id="options-hashtable">-Options [&lt;Hashtable&gt;]</h3>
 <p>OPTIONAL - Specify custom headers. Available in 0.9.10+.</p>
 <table>
 <thead>
@@ -387,7 +392,39 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7
 </tr>
 </tbody>
 </table>
-<h3 id="section">\<CommonParameters\></h3>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
@@ -397,12 +434,12 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7
 <pre class="brush: ps">
 Install-ChocolateyZipPackage -PackageName &#39;sysinternals&#39; `
  -Url &#39;http://download.sysinternals.com/Files/SysinternalsSuite.zip&#39; `
- -UnzipLocation &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;</pre>
+ -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;</pre>
 <p><strong>EXAMPLE 3</strong></p>
 <pre class="brush: ps">
 Install-ChocolateyZipPackage -PackageName &#39;sysinternals&#39; `
  -Url &#39;http://download.sysinternals.com/Files/SysinternalsSuite.zip&#39; `
- -UnzipLocation &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot; `
+ -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot; `
  -Url64 &#39;http://download.sysinternals.com/Files/SysinternalsSuitex64.zip&#39;</pre>
 <h2 id="links">Links</h2>
 <ul>

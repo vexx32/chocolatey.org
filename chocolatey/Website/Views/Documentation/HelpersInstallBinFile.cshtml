@@ -1,27 +1,31 @@
 ﻿@{
-  ViewBag.Title = "HelpersGetChocolateyUnzip";
+  ViewBag.Title = "HelpersInstallBinFile";
 }
 
 <article>
-<h1 id="get-chocolateyunzip">Get-ChocolateyUnzip</h1>
-<p>Unzips an archive file and returns the location for further processing.</p>
+<h1 id="install-binfile">Install-BinFile</h1>
+<p>Creates a shim (or batch redirect) for a file that is on the PATH.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-ChocolateyUnzip `
-  -FileFullPath &lt;String&gt; `
-  -Destination &lt;String&gt; `
-  [-SpecificFolder &lt;String&gt;] `
-  [-PackageName &lt;String&gt;] `
+<pre class="brush: ps">Install-BinFile `
+  -Name &lt;String&gt; `
+  -Path &lt;String&gt; `
+  [-UseStart] `
+  [-Command &lt;String&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
-<p>This unzips files using the 7-zip standalone command line tool 7za.exe.<br />
-Supported archive formats are: 7z, lzma, cab, zip, gzip, bzip2, and tar.</p>
+<p>Chocolatey installs have the folder <code>$($env:ChocolateyInstall)\bin</code><br />
+included in the PATH environment variable. Chocolatey automatically<br />
+shims executables in package folders that are not explicitly ignored,<br />
+putting them into the bin folder (and subsequently onto the PATH).</p>
+<p>When you have other files you want to shim to add them to the PATH or<br />
+if you want to handle the shimming explicitly, use this function.</p>
+<p>If you do use this function, ensure you also add <code>Uninstall-BinFile</code> to<br />
+your <code>chocolateyUninstall.ps1</code> script as Chocolatey will not<br />
+automatically clean up shims created with this function.</p>
 <h2 id="notes">Notes</h2>
-<p>If extraction fails, an exception is thrown.</p>
-<p>If you are embedding files into a package, ensure that you have the<br />
-rights to redistribute those files if you are sharing this package<br />
-publicly (like on the <a href="https://chocolatey.org/packages">community feed</a>). Otherwise, please use<br />
-Install-ChocolateyZipPackage to download those resources from their<br />
-official distribution points.</p>
+<p>Not normally needed for exe files in the package folder, those are<br />
+automatically discovered and added as shims after the install script<br />
+completes.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -29,10 +33,8 @@ official distribution points.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="filefullpath-string">-FileFullPath &lt;String&gt;</h3>
-<p>This is the full path to the zip file. If embedding it in the package<br />
-next to the install script, the path will be like<br />
-<code>&quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\\file.zip&quot;</code></p>
+<h3 id="name-string">-Name &lt;String&gt;</h3>
+<p>The name of the redirect file, will have .exe appended to it.</p>
 <table>
 <thead>
 <tr class="header">
@@ -63,9 +65,10 @@ next to the install script, the path will be like<br />
 </tr>
 </tbody>
 </table>
-<h3 id="destination-string">-Destination &lt;String&gt;</h3>
-<p>This is a directory where you would like the unzipped files to end up.<br />
-If it does not exist, it will be created.</p>
+<h3 id="path-string">-Path &lt;String&gt;</h3>
+<p>The path to the original file. Can be relative from<br />
+<code>$($env:ChocolateyInstall)\bin</code> back to your file or a full path to the<br />
+file.</p>
 <table>
 <thead>
 <tr class="header">
@@ -96,8 +99,10 @@ If it does not exist, it will be created.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="specificfolder-string">-SpecificFolder [&lt;String&gt;]</h3>
-<p>OPTIONAL - This is a specific directory within zip file to extract.</p>
+<h3 id="usestart">-UseStart</h3>
+<p>This should be passed if the shim should not wait on the action to<br />
+complete. This is usually the case with GUI apps, you don&#39;t want the<br />
+command shell blocked waiting for the GUI app to be shut back down.</p>
 <table>
 <thead>
 <tr class="header">
@@ -108,7 +113,7 @@ If it does not exist, it will be created.</p>
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td></td>
+<td>isGui</td>
 </tr>
 <tr class="even">
 <td>Required?</td>
@@ -116,11 +121,11 @@ If it does not exist, it will be created.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>3</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
-<td></td>
+<td>False</td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>
@@ -128,9 +133,12 @@ If it does not exist, it will be created.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="packagename-string">-PackageName [&lt;String&gt;]</h3>
-<p>OPTIONAL - This will faciliate logging unzip activity for subsequent<br />
-uninstalls</p>
+<h3 id="command-string">-Command [&lt;String&gt;]</h3>
+<p>OPTIONAL - This is any additional command arguments you want passed<br />
+every time to the command. This is not normally used, but may be<br />
+necessary if you are calling something and then your application. For<br />
+example if you are calling Java with your JAR, the command would be the<br />
+JAR file plus any other options to start Java appropriately.</p>
 <table>
 <thead>
 <tr class="header">
@@ -149,7 +157,7 @@ uninstalls</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>4</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -195,16 +203,12 @@ uninstalls</p>
 </table>
 <h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
-<h2 id="examples">Examples</h2>
-<p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
-# Path to the folder where the script is executing
-$toolsDir = (Split-Path -parent $MyInvocation.MyCommand.Definition)
-Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $toolsDir</pre>
 <h2 id="links">Links</h2>
 <ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-uninstall-bin-file" })">Uninstall-BinFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-shortcut" })">Install-ChocolateyShortcut</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-path" })">Install-ChocolateyPath</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-ChocolateyUnzip -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-BinFile -Full</code>.</p>
 </article>

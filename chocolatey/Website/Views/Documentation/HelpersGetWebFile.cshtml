@@ -1,23 +1,26 @@
 ﻿@{
-  ViewBag.Title = "HelpersInstallChocolateyShortcut";
+  ViewBag.Title = "HelpersGetWebFile";
 }
 
 <article>
-<h1 id="install-chocolateyshortcut">Install-ChocolateyShortcut</h1>
-<p>Creates a shortcut</p>
+<h1 id="get-webfile">Get-WebFile</h1>
+<p>Downloads a file from an HTTP/HTTPS location. Prefer HTTPS when<br />
+available.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyShortcut `
-  [-ShortcutFilePath &lt;String&gt;] `
-  [-TargetPath &lt;String&gt;] `
-  [-WorkingDirectory &lt;String&gt;] `
-  [-Arguments &lt;String&gt;] `
-  [-IconLocation &lt;String&gt;] `
-  [-Description &lt;String&gt;] `
+<pre class="brush: ps">Get-WebFile `
+  [-Url &lt;Object&gt;] `
+  [-FileName &lt;Object&gt;] `
+  [-UserAgent &lt;Object&gt;] `
+  [-Passthru] `
+  [-Quiet] `
+  [-Options &lt;Hashtable&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
-<p>This adds a shortcut, at the specified location, with the option to specify<br />
-a number of additional properties for the shortcut, such as Working Directory,<br />
-Arguments, Icon Location, and Description.</p>
+<p>This will download a file from an HTTP/HTTPS location, saving the file<br />
+to the FileName location specified.</p>
+<h2 id="notes">Notes</h2>
+<p>This is a low-level function and not recommended for use in package<br />
+scripts. It is recommended you call <code>Get-ChocolateyWebFile</code> instead.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -25,8 +28,8 @@ Arguments, Icon Location, and Description.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="shortcutfilepath-string">-ShortcutFilePath [&lt;String&gt;]</h3>
-<p>The full absolute path to where the shortcut should be created. This is mandatory.</p>
+<h3 id="url-object">-Url [&lt;Object&gt;]</h3>
+<p>This is the url to download the file from. Prefer HTTPS when available.</p>
 <table>
 <thead>
 <tr class="header">
@@ -57,8 +60,10 @@ Arguments, Icon Location, and Description.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="targetpath-string">-TargetPath [&lt;String&gt;]</h3>
-<p>The full absolute path to the target for new shortcut. This is mandatory.</p>
+<h3 id="filename-object">-FileName [&lt;Object&gt;]</h3>
+<p>This is the full path to the file to create. If downloading to the<br />
+package folder next to the install script, the path will be like<br />
+<code>&quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\\file.exe&quot;</code></p>
 <table>
 <thead>
 <tr class="header">
@@ -89,9 +94,9 @@ Arguments, Icon Location, and Description.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="workingdirectory-string">-WorkingDirectory [&lt;String&gt;]</h3>
-<p>The full absolute path of the Working Directory that will be used by<br />
-the new shortcut. This is optional</p>
+<h3 id="useragent-object">-UserAgent [&lt;Object&gt;]</h3>
+<p>The user agent to use as part of the request. Defaults to &quot;˜chocolatey<br />
+command line&#39;.</p>
 <table>
 <thead>
 <tr class="header">
@@ -114,7 +119,7 @@ the new shortcut. This is optional</p>
 </tr>
 <tr class="even">
 <td>Default Value</td>
-<td></td>
+<td>chocolatey command line</td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>
@@ -122,9 +127,72 @@ the new shortcut. This is optional</p>
 </tr>
 </tbody>
 </table>
-<h3 id="arguments-string">-Arguments [&lt;String&gt;]</h3>
-<p>Additonal arguments that should be passed along to the new shortcut. This<br />
-is optional.</p>
+<h3 id="passthru">-Passthru</h3>
+<p>DO NOT USE - holdover from original function.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quiet">-Quiet</h3>
+<p>Silences the progress output.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="options-hashtable">-Options [&lt;Hashtable&gt;]</h3>
+<p>OPTIONAL - Specify custom headers. Available in 0.9.10+.</p>
 <table>
 <thead>
 <tr class="header">
@@ -147,7 +215,12 @@ is optional.</p>
 </tr>
 <tr class="even">
 <td>Default Value</td>
-<td></td>
+<td>@@<script type="text/javascript">
+<!--
+h='&#x25;&#x37;&#66;&#x25;&#x37;&#68;&#x25;&#x37;&#68;';a='&#64;';n='&#x25;&#x37;&#66;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7b;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#64;&#x7b;&#x7d;&#x7d;'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x7b;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#64;&#x7b;&#x7d;&#x7d;&#32;&#40;&#x25;&#x37;&#66;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#32;&#x61;&#116;&#32;&#x25;&#x37;&#66;&#x25;&#x37;&#68;&#x25;&#x37;&#68;&#x29;</noscript></td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>
@@ -155,9 +228,8 @@ is optional.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="iconlocation-string">-IconLocation [&lt;String&gt;]</h3>
-<p>The full absolute path to an icon file to be used for the new shortcut. This<br />
-is optional.</p>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
 <table>
 <thead>
 <tr class="header">
@@ -188,99 +260,15 @@ is optional.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="description-string">-Description [&lt;String&gt;]</h3>
-<p>A text description to be associated with the new description. This is optional.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Aliases</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Required?</td>
-<td>false</td>
-</tr>
-<tr class="odd">
-<td>Position?</td>
-<td>6</td>
-</tr>
-<tr class="even">
-<td>Default Value</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Accept Pipeline Input?</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
-<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Aliases</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Required?</td>
-<td>false</td>
-</tr>
-<tr class="odd">
-<td>Position?</td>
-<td>7</td>
-</tr>
-<tr class="even">
-<td>Default Value</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Accept Pipeline Input?</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
 <h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
-<h2 id="examples">Examples</h2>
-<p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
-# This will create a new shortcut at the location of &quot;C:\test.lnk&quot; and
-# link to the file located at &quot;C:\text.exe&quot;
-
-Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</pre>
-<p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
-# This will create a new shortcut at the location of &quot;C:\notepad.lnk&quot;
-# and link to the Notepad application.  In addition, other properties
-# are being set to specify the working directory, an icon to be used for
-# the shortcut, along with a description and arguments.
-
-Install-ChocolateyShortcut `
-  -ShortcutFilePath &quot;C:\notepad.lnk&quot; `
-  -TargetPath &quot;C:\Windows\System32\notepad.exe&quot; `
-  -WorkDirectory &quot;C:\&quot; `
-  -Arguments &quot;C:\test.txt&quot; `
-  -IconLocation &quot;C:\test.ico&quot; `
-  -Description &quot;This is the description&quot;</pre>
 <h2 id="links">Links</h2>
 <ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-desktop-link" })">Install-ChocolateyDesktopLink</a></li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-explorer-menu-item" })">Install-ChocolateyExplorerMenuItem</a></li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-pinned-task-bar-item" })">Install-ChocolateyPinnedTaskBarItem</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-ftp-file" })">Get-FtpFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-headers" })">Get-WebHeaders</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-file-name" })">Get-WebFileName</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyShortcut -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-WebFile -Full</code>.</p>
 </article>

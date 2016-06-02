@@ -1,17 +1,22 @@
 ﻿@{
-  ViewBag.Title = "HelpersGetFileName";
+  ViewBag.Title = "HelpersUninstallChocolateyZipPackage";
 }
 
 <article>
-<h1 id="get-filename">Get-FileName</h1>
-<p>Gets the original file name from the url. Used by Get-WebFile to determine the original file name for a file.</p>
+<h1 id="uninstall-chocolateyzippackage">Uninstall-ChocolateyZipPackage</h1>
+<p>Uninstalls a previous installed zip package</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-FileName [-url &lt;String&gt;] -defaultName &lt;String&gt; [-userAgent &lt;Object&gt;] [&lt;CommonParameters&gt;]</pre>
+<pre class="brush: ps">Uninstall-ChocolateyZipPackage `
+  -PackageName &lt;String&gt; `
+  -ZipFileName &lt;String&gt; `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
-<p>Uses several techniques to determine the original file name of the file based on the url for the file.</p>
+<p>This will uninstall a zip file if installed via Install-ChocolateyZipPackage.<br />
+This is not necessary if the files are unzipped to the package location.</p>
 <h2 id="notes">Notes</h2>
-<p>Available in 0.9.10+.<br />
-Falls back to DefaultName when the name cannot be determined.</p>
+<p>This helper reduces the number of lines one would have to remove the<br />
+files extracted from a previously installed zip file.<br />
+This method has error handling built into it.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -19,8 +24,9 @@ Falls back to DefaultName when the name cannot be determined.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="url">-Url [\<String\>]</h3>
-<p>This is the url to a file that will be possibly downloaded.</p>
+<h3 id="packagename-string">-PackageName &lt;String&gt;</h3>
+<p>The name of the package - while this is an arbitrary value, it&#39;s<br />
+recommended that it matches the package id.</p>
 <table>
 <thead>
 <tr class="header">
@@ -35,7 +41,7 @@ Falls back to DefaultName when the name cannot be determined.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -51,8 +57,8 @@ Falls back to DefaultName when the name cannot be determined.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="defaultname">-DefaultName \<String\></h3>
-<p>The name of the file to use when not able to determine the file name from the url response.</p>
+<h3 id="zipfilename-string">-ZipFileName &lt;String&gt;</h3>
+<p>This is the zip filename originally installed.</p>
 <table>
 <thead>
 <tr class="header">
@@ -83,8 +89,8 @@ Falls back to DefaultName when the name cannot be determined.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="useragent">-UserAgent [\<Object\>]</h3>
-<p>The user agent to use as part of the request. Defaults to &quot;˜chocolatey command line&#39;.</p>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
 <table>
 <thead>
 <tr class="header">
@@ -107,7 +113,7 @@ Falls back to DefaultName when the name cannot be determined.</p>
 </tr>
 <tr class="even">
 <td>Default Value</td>
-<td>chocolatey command line</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>
@@ -115,17 +121,17 @@ Falls back to DefaultName when the name cannot be determined.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="section">\<CommonParameters\></h3>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Get-FileName -url $url -defaultName $originalFileName
+<pre class="brush: ps">Uninstall-ChocolateyZipPackage &#39;__NAME__&#39; &#39;filename.zip&#39;
 </pre>
 <h2 id="links">Links</h2>
 <ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-headers" })">Get-WebHeaders</a></li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-uninstall-chocolatey-package" })">Uninstall-ChocolateyPackage</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-FileName -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Uninstall-ChocolateyZipPackage -Full</code>.</p>
 </article>

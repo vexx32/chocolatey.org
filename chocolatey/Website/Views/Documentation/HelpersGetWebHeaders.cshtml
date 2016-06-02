@@ -1,19 +1,21 @@
 ﻿@{
-  ViewBag.Title = "HelpersFormatFileSize";
+  ViewBag.Title = "HelpersGetWebHeaders";
 }
 
 <article>
-<h1 id="format-filesize">Format-FileSize</h1>
-<p>DO NOT USE. Not part of the public API.</p>
+<h1 id="get-webheaders">Get-WebHeaders</h1>
+<p>Gets the request/response headers for a url.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Format-FileSize `
-  -Size &lt;Double&gt; `
+<pre class="brush: ps">Get-WebHeaders `
+  [-Url &lt;Object&gt;] `
+  [-UserAgent &lt;Object&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
-<p>Formats file size into a human readable format.</p>
+<p>This is a low-level function that is used by Chocolatey to get the<br />
+headers for a request/response to better help when getting and<br />
+validating internet resources.</p>
 <h2 id="notes">Notes</h2>
-<p>Available in 0.9.10+.<br />
-This function is not part of the API.</p>
+<p>Not recommended for use in package scripts.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -21,8 +23,8 @@ This function is not part of the API.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="size-double">-Size &lt;Double&gt;</h3>
-<p>The size of a file in bytes.</p>
+<h3 id="url-object">-Url [&lt;Object&gt;]</h3>
+<p>This is the url to get a request/response from.</p>
 <table>
 <thead>
 <tr class="header">
@@ -37,7 +39,7 @@ This function is not part of the API.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -45,7 +47,40 @@ This function is not part of the API.</p>
 </tr>
 <tr class="even">
 <td>Default Value</td>
-<td>0</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="useragent-object">-UserAgent [&lt;Object&gt;]</h3>
+<p>The user agent to use as part of the request. Defaults to &quot;˜chocolatey<br />
+command line&#39;.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>chocolatey command line</td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>
@@ -73,7 +108,7 @@ This function is not part of the API.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>2</td>
+<td>3</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -87,14 +122,12 @@ This function is not part of the API.</p>
 </table>
 <h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
-<h2 id="examples">Examples</h2>
-<p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Format-FileSize -Size $fileSizeBytes
-</pre>
 <h2 id="links">Links</h2>
 <ul>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-file-name" })">Get-WebFileName</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-file" })">Get-WebFile</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Format-FileSize -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-WebHeaders -Full</code>.</p>
 </article>

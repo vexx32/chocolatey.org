@@ -1,19 +1,19 @@
 ﻿@{
-  ViewBag.Title = "HelpersFormatFileSize";
+  ViewBag.Title = "HelpersSetPowerShellExitCode";
 }
 
 <article>
-<h1 id="format-filesize">Format-FileSize</h1>
-<p>DO NOT USE. Not part of the public API.</p>
+<h1 id="set-powershellexitcode">Set-PowerShellExitCode</h1>
+<p>Sets the exit code for the PowerShell scripts.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Format-FileSize `
-  -Size &lt;Double&gt; `
+<pre class="brush: ps">Set-PowerShellExitCode `
+  -ExitCode &lt;Int32&gt; `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
-<p>Formats file size into a human readable format.</p>
+<p>Sets the exit code as an environment variable that is checked and used<br />
+as the exit code for the package at the end of the package script.</p>
 <h2 id="notes">Notes</h2>
-<p>Available in 0.9.10+.<br />
-This function is not part of the API.</p>
+<p>This tells PowerShell that it should prepare to shut down.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -21,8 +21,8 @@ This function is not part of the API.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="size-double">-Size &lt;Double&gt;</h3>
-<p>The size of a file in bytes.</p>
+<h3 id="exitcode-int32">-ExitCode &lt;Int32&gt;</h3>
+<p>The exit code to set.</p>
 <table>
 <thead>
 <tr class="header">
@@ -73,7 +73,7 @@ This function is not part of the API.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>2</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -89,12 +89,8 @@ This function is not part of the API.</p>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Format-FileSize -Size $fileSizeBytes
+<pre class="brush: ps">Set-PowerShellExitCode 3010
 </pre>
-<h2 id="links">Links</h2>
-<ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-web-file" })">Get-WebFile</a></li>
-</ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Format-FileSize -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Set-PowerShellExitCode -Full</code>.</p>
 </article>

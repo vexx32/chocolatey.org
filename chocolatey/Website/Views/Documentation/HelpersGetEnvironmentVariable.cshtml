@@ -9,7 +9,8 @@
 <pre class="brush: ps">Get-EnvironmentVariable `
   -Name &lt;String&gt; `
   -Scope {Process | User | Machine} `
-  [-PreserveVariables] [&lt;CommonParameters&gt;]</pre>
+  [-PreserveVariables] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This will will get an environment variable based on the variable name<br />
 and scope while accounting whether to expand the variable or not<br />
@@ -25,7 +26,7 @@ must.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="name">-Name \<String\></h3>
+<h3 id="name-string">-Name &lt;String&gt;</h3>
 <p>The environemnt variable you want to get the value from.</p>
 <table>
 <thead>
@@ -124,7 +125,39 @@ not. Defaults to false. Available in 0.9.10+.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="section">\<CommonParameters\></h3>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>

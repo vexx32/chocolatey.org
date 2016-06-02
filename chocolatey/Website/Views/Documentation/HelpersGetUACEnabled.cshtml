@@ -1,0 +1,25 @@
+﻿@{
+  ViewBag.Title = "HelpersGetUACEnabled";
+}
+
+<article>
+<h1 id="get-uacenabled">Get-UACEnabled</h1>
+<p>Determines if UAC (User Account Control) is turned on or off.</p>
+<h2 id="syntax">Syntax</h2>
+<pre class="brush: ps">Get-UACEnabled</pre>
+<h2 id="description">Description</h2>
+<p>This is a low level function used by Chocolatey to decide whether<br />
+prompting for elevated privileges is necessary or not.</p>
+<h2 id="notes">Notes</h2>
+<p>This checks the <code>EnableLUA</code> registry value to be determine the state of<br />
+a system.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-UACEnabled -Full</code>.</p>
+</article>

@@ -1,34 +1,36 @@
 ﻿@{
-  ViewBag.Title = "HelpersInstallChocolateyInstallPackage";
+  ViewBag.Title = "HelpersUninstallChocolateyPackage";
 }
 
 <article>
-<h1 id="install-chocolateyinstallpackage">Install-ChocolateyInstallPackage</h1>
-<p>Installs software into &quot;Programs and Features&quot;. Use<br />
-Install-ChocolateyPackage when software must be downloaded first.</p>
+<h1 id="uninstall-chocolateypackage">Uninstall-ChocolateyPackage</h1>
+<p>Uninstalls software from &quot;Programs and Features&quot;.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyInstallPackage `
+<pre class="brush: ps">Uninstall-ChocolateyPackage `
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
   [-SilentArgs &lt;String&gt;] `
-  -File &lt;String&gt; `
+  [-File &lt;String&gt;] `
   [-ValidExitCodes &lt;Object&gt;] `
-  [-UseOnlyPackageSilentArguments] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
-<p>This will run an installer (local file) on your machine.</p>
+<p>This will uninstall software from your machine (in Programs and<br />
+Features). This may not be necessary if Auto Uninstaller is turned on.</p>
+<p>Choco 0.9.9+ automatically tracks registry changes for &quot;Programs and<br />
+Features&quot; of the underlying software&#39;s native installers when<br />
+installing packages. The &quot;Automatic Uninstaller&quot; (auto uninstaller)<br />
+service is a feature that can use that information to automatically<br />
+determine how to uninstall these natively installed applications. This<br />
+means that a package may not need an explicit chocolateyUninstall.ps1<br />
+to reverse the installation done in the install script.</p>
+<p>With auto uninstaller turned off, a chocolateyUninstall.ps1 is required<br />
+to perform uninstall from &quot;Programs and Features&quot;. In the absence of<br />
+chocolateyUninstall.ps1, choco uninstall only removes the package from<br />
+Chocolatey but does not remove the sofware from your system without<br />
+auto uninstaller.</p>
 <h2 id="notes">Notes</h2>
-<p>If you are embedding files into a package, ensure that you have the<br />
-rights to redistribute those files if you are sharing this package<br />
-publicly (like on the <a href="https://chocolatey.org/packages">community feed</a>). Otherwise, please use<br />
-Install-ChocolateyPackage to download those resources from their<br />
-official distribution points.</p>
-<p>This is a native installer wrapper function. A &quot;true&quot; package will<br />
-contain all the run time files and not an installer. That could come<br />
-pre-zipped and require unzipping in a PowerShell script. Chocolatey<br />
-works best when the packages contain the software it is managing. Most<br />
-software in the Windows world comes as installers and Chocolatey<br />
-understands how to work with that, hence this wrapper function.</p>
+<p>May not be required. Starting in 0.9.10+, the Automatic Uninstaller<br />
+(AutoUninstaller) is turned on by default.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -70,10 +72,7 @@ recommended that it matches the package id.</p>
 </tbody>
 </table>
 <h3 id="filetype-string">-FileType [&lt;String&gt;]</h3>
-<p>This is the extension of the file. This can be &quot;˜exe&#39;, &quot;˜msi&#39;, or &quot;˜msu&#39;.<br />
-<a href="https://chocolatey.org/compare">Licensed editions</a> of Chocolatey use this to automatically determine<br />
-silent arguments. If this is not provided, Chocolatey will<br />
-automatically determine this using the downloaded file&#39;s extension.</p>
+<p>This is the extension of the file. This should be either exe or msi.</p>
 <table>
 <thead>
 <tr class="header">
@@ -84,7 +83,7 @@ automatically determine this using the downloaded file&#39;s extension.</p>
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td>installerType, installType</td>
+<td>installerType</td>
 </tr>
 <tr class="even">
 <td>Required?</td>
@@ -105,11 +104,11 @@ automatically determine this using the downloaded file&#39;s extension.</p>
 </tbody>
 </table>
 <h3 id="silentargs-string">-SilentArgs [&lt;String&gt;]</h3>
-<p>OPTIONAL - These are the parameters to pass to the native installer,<br />
-including any arguments to make the installer silent/unattended.<br />
-Pro/Business Editions of Chocolatey will automatically determine the<br />
+<p>OPTIONAL - These are the parameters to pass to the native uninstaller,<br />
+including any arguments to make the uninstaller silent/unattended.<br />
+<a href="https://chocolatey.org/compare">Licensed editions</a> of Chocolatey will automatically determine the<br />
 installer type and merge the arguments with what is provided here.</p>
-<p>Try any of the to get the silent installer -<br />
+<p>Try any of the to get the silent (unattended) uninstaller -<br />
 <code>/s /S /q /Q /quiet /silent /SILENT /VERYSILENT</code>. With msi it is always<br />
 <code>/quiet</code>. Please pass it in still but it will be overridden by<br />
 Chocolatey to <code>/quiet</code>. If you don&#39;t pass anything it could invoke the<br />
@@ -148,10 +147,8 @@ for the package to be completely unattended.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="file-string">-File &lt;String&gt;</h3>
-<p>Full file path to native installer to run. If embedding in the package,<br />
-you can get it to the path with<br />
-<code>&quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\\INSTALLER_FILE&quot;</code></p>
+<h3 id="file-string">-File [&lt;String&gt;]</h3>
+<p>The full path to the native uninstaller to run.</p>
 <table>
 <thead>
 <tr class="header">
@@ -166,7 +163,7 @@ you can get it to the path with<br />
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -214,39 +211,6 @@ you can get it to the path with<br />
 </tr>
 </tbody>
 </table>
-<h3 id="useonlypackagesilentarguments">-UseOnlyPackageSilentArguments</h3>
-<p>Do not allow choco to provide/merge additional silent arguments and<br />
-only use the ones available with the package. Available in 0.9.10+.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Aliases</td>
-<td>useOnlyPackageSilentArgs</td>
-</tr>
-<tr class="even">
-<td>Required?</td>
-<td>false</td>
-</tr>
-<tr class="odd">
-<td>Position?</td>
-<td>named</td>
-</tr>
-<tr class="even">
-<td>Default Value</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td>Accept Pipeline Input?</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
 <h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
 <p>Allows splatting with arguments that do not apply. Do not use directly.</p>
 <table>
@@ -283,47 +247,21 @@ only use the ones available with the package. Available in 0.9.10+.</p>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
-$packageName= &#39;bob&#39;
-$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
-$fileLocation = Join-Path $toolsDir &#39;INSTALLER_EMBEDDED_IN_PACKAGE&#39;
-
-$packageArgs = @@{
-  packageName   = $packageName
-  fileType      = &#39;msi&#39;
-  file          = $fileLocation
-  silentArgs    = &quot;/qn /norestart&quot;
-  validExitCodes= @@(0, 3010, 1641)
-  softwareName  = &#39;Bob*&#39;
-}
-
-Install-ChocolateyInstallPackage @@packageArgs</pre>
+<pre class="brush: ps">Uninstall-ChocolateyPackage &#39;__NAME__&#39; &#39;EXE_OR_MSI&#39; &#39;SILENT_ARGS&#39; &#39;FilePath&#39;
+</pre>
 <p><strong>EXAMPLE 2</strong></p>
 <pre class="brush: ps">
-$packageArgs = @@{
-  packageName   = &#39;bob&#39;
-  fileType      = &#39;exe&#39;
-  file          = &#39;\\SHARE_LOCATION\to\INSTALLER_FILE&#39;
-  silentArgs    = &quot;/S&quot;
-  validExitCodes= @@(0)
-  softwareName  = &#39;Bob*&#39;
-}
-
-Install-ChocolateyInstallPackage @@packageArgs</pre>
-<p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">Install-ChocolateyInstallPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot;
-</pre>
-<p><strong>EXAMPLE 4</strong></p>
-<pre class="brush: ps">
-Install-ChocolateyInstallPackage -PackageName &#39;bob&#39; -FileType &#39;exe&#39; `
-  -SilentArgs &#39;/S&#39; `
-  -File &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot; `
-  -ValidExitCodes = @@(0)</pre>
+Uninstall-ChocolateyPackage -PackageName $packageName `
+                                -FileType $installerType `
+                                -SilentArgs &quot;$silentArgs&quot; `
+                                -ValidExitCodes $validExitCodes `
+                                -File &quot;$file&quot;</pre>
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-uninstall-chocolatey-package" })">Uninstall-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-install-package" })">Install-ChocolateyInstallPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-uninstall-chocolatey-zip-package" })">Uninstall-ChocolateyZipPackage</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyInstallPackage -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Uninstall-ChocolateyPackage -Full</code>.</p>
 </article>

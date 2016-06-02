@@ -9,7 +9,8 @@
 <pre class="brush: ps">Install-ChocolateyEnvironmentVariable `
   [-VariableName &lt;String&gt;] `
   [-VariableValue &lt;String&gt;] `
-  [-VariableType {Process | User | Machine}]</pre>
+  [-VariableType {Process | User | Machine}] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>Install-ChocolateyEnvironmentVariable creates an environment variable<br />
 with the specified name and value. The variable is persistent and<br />
@@ -27,7 +28,7 @@ elevated to an administrative session.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="variablename">-VariableName [\<String\>]</h3>
+<h3 id="variablename-string">-VariableName [&lt;String&gt;]</h3>
 <p>The name or key of the environment variable</p>
 <table>
 <thead>
@@ -59,7 +60,7 @@ elevated to an administrative session.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="variablevalue">-VariableValue [\<String\>]</h3>
+<h3 id="variablevalue-string">-VariableValue [&lt;String&gt;]</h3>
 <p>A string value assigned to the above name.</p>
 <table>
 <thead>
@@ -125,6 +126,40 @@ individual user level or at the Machine level.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
+<p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
 <pre class="brush: ps">
@@ -140,6 +175,12 @@ Install-ChocolateyEnvironmentVariable `
   -VariableName &quot;_NT_SYMBOL_PATH&quot; `
   -VariableValue &quot;symsrv*symsrv.dll*f:\localsymbols*http://msdl.microsoft.com/download/symbols&quot; `
   -VariableType Machine</pre>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-environment-variable" })">Get-EnvironmentVariable</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-set-environment-variable" })">Set-EnvironmentVariable</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-path" })">Install-ChocolateyPath</a></li>
+</ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyEnvironmentVariable -Full</code>.</p>
 </article>
