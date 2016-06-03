@@ -31,13 +31,13 @@
 </blockquote>
 <p><a href="http://boxstarter.org/">Read more...</a></p>
 <h2 id="chef">Chef</h2>
-<p>Chef has a built-in <code>chocolatey_package</code> resource to use with Chocolatey.</p>
+<p>Chef 12.7+ has a <a href="https://www.chef.io/blog/2016/02/12/chef-client-12-7-released/">built-in</a> <code>chocolatey_package</code> resource to use with Chocolatey.</p>
 <pre class="brush: ruby">chocolatey_package &#39;git&#39; do
   action :install
   source &#39;https://my.internal.repository/api/v2&#39;
 end</pre>
 <p><a href="https://docs.chef.io/resource_chocolatey_package.html">Resource - Read More...</a></p>
-<p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team.</p>
+<p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team. It has a package resource that can be used with older Chef versions.</p>
 <pre class="brush: ruby">include_recipe &#39;chocolatey&#39;</pre>
 <p><a href="https://bit.ly/choco_chef">Cookbook - Read More...</a></p>
 <h3 id="example">Example</h3>

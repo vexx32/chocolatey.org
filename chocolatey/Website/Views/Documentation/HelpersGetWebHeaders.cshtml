@@ -7,8 +7,8 @@
 <p>Gets the request/response headers for a url.</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Get-WebHeaders `
-  [-Url &lt;Object&gt;] `
-  [-UserAgent &lt;Object&gt;] `
+  [-Url &lt;String&gt;] `
+  [-UserAgent &lt;String&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This is a low-level function that is used by Chocolatey to get the<br />
@@ -23,7 +23,7 @@ validating internet resources.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="url-object">-Url [&lt;Object&gt;]</h3>
+<h3 id="url-string">-Url [&lt;String&gt;]</h3>
 <p>This is the url to get a request/response from.</p>
 <table>
 <thead>
@@ -55,7 +55,7 @@ validating internet resources.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="useragent-object">-UserAgent [&lt;Object&gt;]</h3>
+<h3 id="useragent-string">-UserAgent [&lt;String&gt;]</h3>
 <p>The user agent to use as part of the request. Defaults to &quot;˜chocolatey<br />
 command line&#39;.</p>
 <table>
@@ -108,7 +108,7 @@ command line&#39;.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>3</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

@@ -4,31 +4,243 @@
 
 <article>
 <h1 id="start-chocolateyprocessasadmin">Start-ChocolateyProcessAsAdmin</h1>
-<p>Runs a process as an administrator. If $exeToRun is not specified, it is run with PowerShell.</p>
-<p><strong>NOTE:</strong> This command will assert UAC/Admin privileges on the machine.</p>
-<h2 id="usage">Usage</h2>
-<pre class="brush: ps">Start-ChocolateyProcessAsAdmin $statements $exeToRun</pre>
-<h2 id="examples">Examples</h2>
-<pre class="brush: ps">Start-ChocolateyProcessAsAdmin &quot;$msiArgs&quot; &#39;msiexec&#39;
-
-Start-ChocolateyProcessAsAdmin &quot;$silentArgs&quot; $file
-
-Start-ChocolateyProcessAsAdmin &quot;$silentArgs&quot; $file -validExitCodes @@(0,21)</pre>
-<pre class="brush: ps">$psFile = Join-Path &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot; &#39;someInstall.ps1&#39;
-Start-ChocolateyProcessAsAdmin &quot;&amp; `&#39;$psFile`&#39;&quot;</pre>
+<p><strong>NOTE:</strong> Administrative Access Required.</p>
+<p>Runs a process with administrative privileges. If <code>-ExeToRun</code> is not<br />
+specified, it is run with PowerShell.</p>
+<h2 id="syntax">Syntax</h2>
+<pre class="brush: ps">Start-ChocolateyProcessAsAdmin `
+  -Statements &lt;String&gt; `
+  [-ExeToRun &lt;String&gt;] `
+  [-Minimized] `
+  [-NoSleep] `
+  [-ValidExitCodes &lt;Object&gt;] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+<h2 id="notes">Notes</h2>
+<p>This command will assert UAC/Admin privileges on the machine.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
 <h2 id="parameters">Parameters</h2>
+<h3 id="statements-string">-Statements &lt;String&gt;</h3>
+<p>Arguments to pass to <code>ExeToRun</code> or the PowerShell script block to be<br />
+run.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>true</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exetorun-string">-ExeToRun [&lt;String&gt;]</h3>
+<p>The executable/application/installer to run. Defaults to <code>'powershell'</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>powershell</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="minimized">-Minimized</h3>
+<p>Switch indicating if a Windows pops up (if not called with a silent<br />
+argument) that it should be minimized.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nosleep">-NoSleep</h3>
+<p>Used only when calling PowerShell - indicates the window that is opened<br />
+should return instantly when it is complete.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="validexitcodes-object">-ValidExitCodes [&lt;Object&gt;]</h3>
+<p>Array of exit codes indicating success. Defaults to <code>@@(0)</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>@@(0)</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply. Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
+<p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
+<h2 id="examples">Examples</h2>
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="brush: ps">Start-ChocolateyProcessAsAdmin -Statements &quot;$msiArgs&quot; -ExeToRun &#39;msiexec&#39;
+</pre>
+<p><strong>EXAMPLE 2</strong></p>
+<pre class="brush: ps">Start-ChocolateyProcessAsAdmin -Statements &quot;$silentArgs&quot; -ExeToRun $file
+</pre>
+<p><strong>EXAMPLE 3</strong></p>
+<pre class="brush: ps">Start-ChocolateyProcessAsAdmin -Statements &quot;$silentArgs&quot; -ExeToRun $file -ValidExitCodes @@(0,21)
+</pre>
+<p><strong>EXAMPLE 4</strong></p>
+<pre class="brush: ps">
+# Run PowerShell statements
+$psFile = Join-Path &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot; &#39;someInstall.ps1&#39;
+Start-ChocolateyProcessAsAdmin &quot;&amp; `&#39;$psFile`&#39;&quot;</pre>
+<h2 id="links">Links</h2>
 <ul>
-<li><p>-statements</code></p>
-<p>These are statements and/or arguments for an application.</p>
-<p>Example: <code>'/i package /q'</code></p></li>
-<li><p>-exeToRun</code></p>
-<p>This is the executable/application to run.</p>
-<p>Example: <code>cmd.exe</code></p>
-<p>Defaults to <code>powershell</code></p></li>
-<li><p>-validExitCodes</code> <em>(optional)</em></p>
-<p>If there are other valid exit codes besides zero signifying a successful install, please pass <code>-validExitCodes</code> with the value, including 0 as long as it is still valid.</p>
-<p>Example: <code>-validExitCodes @@(0,44)</code></p>
-<p>Defaults to <code>@@(0)</code>.</p></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-install-package" })">Install-ChocolateyInstallPackage</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Start-ChocolateyProcessAsAdmin -Full</code>.</p>
 </article>

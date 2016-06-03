@@ -8,7 +8,7 @@
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Install-ChocolateyPowershellCommand `
   [-PackageName &lt;String&gt;] `
-  [-PsFileFullPath &lt;String&gt;] `
+  -PsFileFullPath &lt;String&gt; `
   [-Url &lt;String&gt;] `
   [-Url64bit &lt;String&gt;] `
   [-Checksum &lt;String&gt;] `
@@ -70,7 +70,7 @@ recommended that it matches the package id.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="psfilefullpath-string">-PsFileFullPath [&lt;String&gt;]</h3>
+<h3 id="psfilefullpath-string">-PsFileFullPath &lt;String&gt;</h3>
 <p>Full file path to PowerShell file to turn into a command. If embedding<br />
 it in the package next to the install script, the path will be like<br />
 <code>&quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\\Script.ps1&quot;</code></p>
@@ -88,7 +88,7 @@ it in the package next to the install script, the path will be like<br />
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -203,7 +203,7 @@ local. The checksum type is covered by ChecksumType.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>5</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -239,7 +239,7 @@ compliant algorithms for hashing - see<br />
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>6</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -273,7 +273,7 @@ local. The checksum type is covered by ChecksumType64.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>7</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -310,7 +310,7 @@ compliant algorithms for hashing - see<br />
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>8</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -342,7 +342,7 @@ compliant algorithms for hashing - see<br />
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>9</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -379,7 +379,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>10</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

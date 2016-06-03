@@ -4,11 +4,12 @@
 
 <article>
 <h1 id="install-chocolateyfileassociation">Install-ChocolateyFileAssociation</h1>
+<p><strong>NOTE:</strong> Administrative Access Required.</p>
 <p>Creates an association between a file extension and a executable.</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Install-ChocolateyFileAssociation `
-  [-Extension &lt;String&gt;] `
-  [-Executable &lt;String&gt;] `
+  -Extension &lt;String&gt; `
+  -Executable &lt;String&gt; `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>Install-ChocolateyFileAssociation can associate a file extension<br />
@@ -24,7 +25,7 @@ will be opened via the executable specified.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="extension-string">-Extension [&lt;String&gt;]</h3>
+<h3 id="extension-string">-Extension &lt;String&gt;</h3>
 <p>The file extension to be associated.</p>
 <table>
 <thead>
@@ -40,7 +41,7 @@ will be opened via the executable specified.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -56,7 +57,7 @@ will be opened via the executable specified.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="executable-string">-Executable [&lt;String&gt;]</h3>
+<h3 id="executable-string">-Executable &lt;String&gt;</h3>
 <p>The path to the application&#39;s executable to be associated.</p>
 <table>
 <thead>
@@ -72,7 +73,7 @@ will be opened via the executable specified.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -108,7 +109,7 @@ will be opened via the executable specified.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>3</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

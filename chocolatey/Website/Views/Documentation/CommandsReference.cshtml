@@ -7,79 +7,30 @@
 <p>This is a listing of all of the different things you can pass to choco.</p>
 <h2 id="commands">Commands</h2>
 <ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-list" })">list / search </a> - searches and lists remote or local packages</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })">install</a> - installs packages from various sources</li>
-<li>installmissing - <strong>REMOVED</strong></li>
-<li>update - <strong>DEPRECATED</strong> - RESERVED for future use (You are looking for upgrade, these are not the droids you are looking for)</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-outdated" })">outdated</a> - show a list of packages that have updates (similar to <code>choco upgrade --noop</code>, but only outputs out of date packages, current version and available update version).</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">upgrade</a> - upgrades packages from various sources</li>
-<li>version - <strong>DEPRECATED</strong> - will be removed in v1 - use <code>choco upgrade &lt;pkg|all&gt; -whatif</code> instead</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-uninstall" })">uninstall</a> - uninstalls a package</li>
-<li>help - <strong>REMOVED</strong> - use <code>-h</code> on any command.</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssearch" })">search</a> - searches remote or local packages (alias for list)</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandslist" })">list</a> - lists remote or local packages</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinfo" })">info</a> - retrieves package information. Shorthand for choco search pkgname --exact --verbose</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })">install</a> - installs packages from various sources</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandspin" })">pin</a> - suppress upgrades for a package</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsoutdated" })">outdated</a> - retrieves packages that are outdated. Similar to upgrade all --noop</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsupgrade" })">upgrade</a> - upgrades packages from various sources</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsuninstall" })">uninstall</a> - uninstalls a package</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandspack" })">pack</a> - packages up a nuspec to a compiled nupkg</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandspush" })">push</a> - pushes a compiled nupkg</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsnew" })">new</a> - generates files necessary for a chocolatey package from a template</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssources" })">sources</a> - view and configure default sources (alias for source)</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssource" })">source</a> - view and configure default sources</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsconfig" })">config</a> - Retrieve and configure config file settings</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsfeatures" })">features</a> - view and configure choco features (alias for feature)</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsfeature" })">feature</a> - view and configure choco features</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })">apikey</a> - retrieves or saves an apikey for a particular source</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssetapikey" })">setapikey</a> - retrieves or saves an apikey for a particular source (alias for apikey)</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsunpackself" })">unpackself</a> - have chocolatey set it self up</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsversion" })">version</a> - [DEPRECATED] will be removed in v1 - use <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsoutdated" })">choco outdated</code></a> or <code>cup &lt;pkg|all&gt; -whatif</code> instead</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsupdate" })">update</a> - [DEPRECATED] RESERVED for future use (you are looking for upgrade, these are not the droids you are looking for)</li>
 </ul>
-<h2 id="commands-intermediate-to-advanced">Commands (intermediate to advanced)</h2>
-<ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">config</a> - Retrieve and configure config file settings</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">source / sources</a> - view and configure default sources</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-api-key" })">apikey / setapikey</a> - retrieves or saves an apikey for a particular source</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> - suppress upgrades to a package</li>
-</ul>
-<h2 id="package-creation-commands">Package Creation Commands</h2>
-<ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })">new</a> - generates files necessary for a Chocolatey package from a template</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pack" })">pack</a> - packages up a nuspec to a compiled nupkg</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-push" })">push</a> - pushes a compiled nupkg</li>
-</ul>
-<h2 id="see-help-menu-in-action">See Help Menu In Action</h2>
-<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action" /></p>
-<h2 id="default-options-and-switches">Default Options and Switches</h2>
-<pre class="cmd">
- -?, --help, -h
-     Prints out the help menu.
-
- -d, --debug
-     Debug - Run in Debug Mode.
-
- -v, --verbose
-     Verbose - See verbose messaging.
-
-     --acceptlicense, --accept-license
-     AcceptLicense - Accept license dialogs automatically.
-
- -y, --yes, --confirm
-     Confirm all prompts - Chooses affirmative answer instead of prompting. 
-       Implies --accept-license
-
- -f, --force
-     Force - force the behavior
-
-     --noop, --whatif, --what-if
-     NoOp - Don&#39;t actually do anything.
-
- -r, --limitoutput, --limit-output
-     LimitOutput - Limit the output to essential information
-
-     --execution-timeout=VALUE
-     CommandExecutionTimeoutSeconds - Override the default execution timeout 
-       in the configuration of 2700 seconds.
-
- -c, --cache, --cachelocation, --cache-location=VALUE
-     CacheLocation - Location for download cache, defaults to %TEMP% or value 
-       in chocolatey.config file.
-
-     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
-     AllowUnofficialBuild - When not using the official build you must set 
-       this flag for choco to continue.
-
-     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
-     FailOnStandardError - Fail on standard error output (stderr), typically 
-       received when running external commands during install providers. This 
-       overrides the feature failOnStandardError.
-
-     --use-system-powershell
-     UseSystemPowerShell - Execute PowerShell using an external process 
-       instead of the built-in PowerShell host. Available in 0.9.10+.
-</pre>
+<p>Please run chocolatey with <code>choco command -help</code> for specific help on<br />
+each command.</p>
 <h2 id="how-to-pass-options-switches">How To Pass Options / Switches</h2>
 <p>You can pass options and switches in the following ways:</p>
 <ul>
@@ -114,4 +65,61 @@ is going to look for and try to install version 1.0.0 of every<br />
 package passed. So please split out multiple package calls when<br />
 wanting to pass specific options.</li>
 </ul>
+<h2 id="see-help-menu-in-action">See Help Menu In Action</h2>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action" /></p>
+<h2 id="default-options-and-switches">Default Options and Switches</h2>
+<p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
+running a command like install that allows installing multiple<br />
+packages, and you use <code>--version=1.0.0</code>, it is going to look for and<br />
+try to install version 1.0.0 of every package passed. So please split<br />
+out multiple package calls when wanting to pass specific options.</p>
+<pre class="cmd">
+ -?, --help, -h
+     Prints out the help menu.
+
+ -d, --debug
+     Debug - Run in Debug Mode.
+
+ -v, --verbose
+     Verbose - See verbose messaging.
+
+     --acceptlicense, --accept-license
+     AcceptLicense - Accept license dialogs automatically.
+
+ -y, --yes, --confirm
+     Confirm all prompts - Chooses affirmative answer instead of prompting. 
+       Implies --accept-license
+
+ -f, --force
+     Force - force the behavior
+
+     --noop, --whatif, --what-if
+     NoOp - Don&#39;t actually do anything.
+
+ -r, --limitoutput, --limit-output
+     LimitOutput - Limit the output to essential information
+
+     --timeout, --execution-timeout=VALUE
+     CommandExecutionTimeout (in seconds) - The time to allow a command to 
+       finish before timing out. Overrides the default execution timeout in the 
+       configuration of 2700 seconds.
+
+ -c, --cache, --cachelocation, --cache-location=VALUE
+     CacheLocation - Location for download cache, defaults to %TEMP% or value 
+       in chocolatey.config file.
+
+     --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
+     AllowUnofficialBuild - When not using the official build you must set 
+       this flag for choco to continue.
+
+     --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
+     FailOnStandardError - Fail on standard error output (stderr), typically 
+       received when running external commands during install providers. This 
+       overrides the feature failOnStandardError.
+
+     --use-system-powershell
+     UseSystemPowerShell - Execute PowerShell using an external process 
+       instead of the built-in PowerShell host. Available in 0.9.10+.
+</pre>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco -h</code>.</p>
 </article>

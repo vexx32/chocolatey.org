@@ -8,9 +8,9 @@
 available.</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Get-WebFile `
-  [-Url &lt;Object&gt;] `
-  [-FileName &lt;Object&gt;] `
-  [-UserAgent &lt;Object&gt;] `
+  [-Url &lt;String&gt;] `
+  [-FileName &lt;String&gt;] `
+  [-UserAgent &lt;String&gt;] `
   [-Passthru] `
   [-Quiet] `
   [-Options &lt;Hashtable&gt;] `
@@ -28,7 +28,7 @@ scripts. It is recommended you call <code>Get-ChocolateyWebFile</code> instead.<
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="url-object">-Url [&lt;Object&gt;]</h3>
+<h3 id="url-string">-Url [&lt;String&gt;]</h3>
 <p>This is the url to download the file from. Prefer HTTPS when available.</p>
 <table>
 <thead>
@@ -60,7 +60,7 @@ scripts. It is recommended you call <code>Get-ChocolateyWebFile</code> instead.<
 </tr>
 </tbody>
 </table>
-<h3 id="filename-object">-FileName [&lt;Object&gt;]</h3>
+<h3 id="filename-string">-FileName [&lt;String&gt;]</h3>
 <p>This is the full path to the file to create. If downloading to the<br />
 package folder next to the install script, the path will be like<br />
 <code>&quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\\file.exe&quot;</code></p>
@@ -94,7 +94,7 @@ package folder next to the install script, the path will be like<br />
 </tr>
 </tbody>
 </table>
-<h3 id="useragent-object">-UserAgent [&lt;Object&gt;]</h3>
+<h3 id="useragent-string">-UserAgent [&lt;String&gt;]</h3>
 <p>The user agent to use as part of the request. Defaults to &quot;˜chocolatey<br />
 command line&#39;.</p>
 <table>
@@ -211,7 +211,7 @@ command line&#39;.</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>4</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -248,7 +248,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>5</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

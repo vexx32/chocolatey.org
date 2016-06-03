@@ -1,17 +1,20 @@
 ﻿@{
-  ViewBag.Title = "HelpersInstallChocolateyPinnedTaskBarItem";
+  ViewBag.Title = "HelpersInstallVsix";
 }
 
 <article>
-<h1 id="install-chocolateypinnedtaskbaritem">Install-ChocolateyPinnedTaskBarItem</h1>
-<p>Creates an item in the task bar linking to the provided path.</p>
+<h1 id="install-vsix">Install-Vsix</h1>
+<p>DO NOT USE. Not part of the public API.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyPinnedTaskBarItem `
-  -TargetFilePath &lt;String&gt; `
+<pre class="brush: ps">Install-Vsix `
+  -Installer &lt;String&gt; `
+  -InstallFile &lt;String&gt; `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+<h2 id="description">Description</h2>
+<p>Installs a VSIX package into a particular version of Visual Studio.</p>
 <h2 id="notes">Notes</h2>
-<p>Does not work with SYSTEM, but does not error. It warns with the error<br />
-message.</p>
+<p>This is not part of the public API. Please use<br />
+Install-ChocolateyVsixPackage instead.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>
@@ -19,9 +22,8 @@ message.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="targetfilepath-string">-TargetFilePath &lt;String&gt;</h3>
-<p>The path to the application that should be launched when clicking on the<br />
-task bar icon.</p>
+<h3 id="installer-string">-Installer &lt;String&gt;</h3>
+<p>The path to the VSIX installer</p>
 <table>
 <thead>
 <tr class="header">
@@ -41,6 +43,38 @@ task bar icon.</p>
 <tr class="odd">
 <td>Position?</td>
 <td>1</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="installfile-string">-InstallFile &lt;String&gt;</h3>
+<p>The VSIX file that is being installed.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>true</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>2</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>
@@ -86,16 +120,10 @@ task bar icon.</p>
 </table>
 <h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
-<h2 id="examples">Examples</h2>
-<p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
-# This will create a Visual Studio task bar icon.
-Install-ChocolateyPinnedTaskBarItem -TargetFilePath &quot;${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe&quot;</pre>
 <h2 id="links">Links</h2>
 <ul>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-shortcut" })">Install-ChocolateyShortcut</a></li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-explorer-menu-item" })">Install-ChocolateyExplorerMenuItem</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-vsix-package" })">Install-ChocolateyVsixPackage</a></li>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
-<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyPinnedTaskBarItem -Full</code>.</p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-Vsix -Full</code>.</p>
 </article>

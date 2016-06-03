@@ -262,6 +262,7 @@ foreach ($file in $files) {
 <p>You&#39;ll need to append the API path like so:<br />
 <code>-source &quot;'%cd%;https://chocolatey.org/api/v2/'&quot;</code> (note the double quotes bookending the apostrophes here). See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">passing options with quotes</a>. Also, use <code>$pwd</code> if you are in PowerShell.exe. <strong>Note:</strong> If you need to do this, please ensure you run <code>choco pack</code> first. This method of passing a source won&#39;t work calling a nuspec or nupkg directly as it will override the source passed to the local folder.</p>
 <p>You can also use the <code>-debug</code> switch on <code>choco install</code> to provide more information.</p>
+<p><strong>NOTE:</strong> Do not call install with <code>.nupkg</code> - pointing to a file explicitly overrides source. You must call your install with the package name, not the nupkg file and location. You&#39;ve already specified for choco to look in a local source with <code>-s &quot;'$pwd;https://chocolatey.org/api/v2/'&quot;</code>. Call <code>choco install dude -s &quot;'$pwd;https://chocolatey.org/api/v2/'&quot;</code>, not <code>choco install .\dude.nupkg -s &quot;'$pwd;https://chocolatey.org/api/v2/'&quot;</code>.</p>
 <h3 id="alternative-testing-strategy">Alternative testing strategy</h3>
 <p>You can also type <code>choco install -fdv path/to/nuspec</code> and choco will build the nupkg and attempt to install it.</p>
 <h2 id="push-your-package">Push Your Package</h2>

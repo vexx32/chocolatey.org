@@ -1314,6 +1314,9 @@
     <Content Include="Views\Documentation\HelpersUninstallChocolateyPackage.cshtml" />
     <Content Include="Views\Documentation\HelpersUninstallChocolateyZipPackage.cshtml" />
     <Content Include="Views\Documentation\HelpersWriteFileUpdateLog.cshtml" />
+    <Content Include="Views\Documentation\HelpersInstallVsix.cshtml" />
+    <Content Include="Views\Documentation\HelpersSetEnvironmentVariable.cshtml" />
+    <Content Include="Views\Documentation\HelpersUninstallChocolateyEnvironmentVariable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

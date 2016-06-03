@@ -4,11 +4,12 @@
 
 <article>
 <h1 id="install-chocolateyexplorermenuitem">Install-ChocolateyExplorerMenuItem</h1>
+<p><strong>NOTE:</strong> Administrative Access Required.</p>
 <p>Creates a windows explorer context menu item that can be associated with<br />
 a command</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Install-ChocolateyExplorerMenuItem `
-  [-MenuKey &lt;String&gt;] `
+  -MenuKey &lt;String&gt; `
   [-MenuLabel &lt;String&gt;] `
   [-Command &lt;String&gt;] `
   [-Type &lt;String&gt;] `
@@ -32,7 +33,7 @@ command.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="menukey-string">-MenuKey [&lt;String&gt;]</h3>
+<h3 id="menukey-string">-MenuKey &lt;String&gt;</h3>
 <p>A unique string to identify this menu item in the registry</p>
 <table>
 <thead>
@@ -48,7 +49,7 @@ command.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -181,7 +182,7 @@ selected</p>
 </tr>
 <tr class="odd">
 <td>Position?</td>
-<td>5</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

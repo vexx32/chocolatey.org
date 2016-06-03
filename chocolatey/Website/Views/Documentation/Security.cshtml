@@ -70,12 +70,12 @@ Public key token is 79d02ea9cad655eb</pre>
 <ol>
 <li>Users can report malicious packages/software directly to the site administrators using a form found on every package page.</li>
 <li>Everything is enforced as HTTPS where it should be. This reduces DNS poisoning attacks.</li>
-<li>As of October 2014, packages submitted to the community feed (<a href="https://chocolatey.org" class="uri">https://chocolatey.org</a>) are moderated and approved before they become live.</li>
+<li>As of October 2014, every version of every package submitted to the community feed (<a href="https://chocolatey.org" class="uri">https://chocolatey.org</a>) is moderated and approved before they become live.</li>
 <li>Some packages move into a trusted status. This is usually when the package maintainer is also the software maintainer, but can also occur when the maintainer(s) are trusted and multiple versions of a package have been submitted without issues.</li>
 <li>Packages that download binaries (installers, zip archives) are checked to ensure that the binary is coming from the official distribution source.</li>
-<li>If the package has a checksum, it provides a further integrity check that the downloadable the maintainer/moderator checked is the same binary that the user gets.</li>
+<li>If the package has a checksum, it provides a further integrity check that the downloadable the maintainer/moderator checked is the same binary that the user gets. Chocolatey clients will enforce a checksum requirement in late 2016 by default and it will become a requirement in 2017 for all packages submitted to the community repository.</li>
 <li>Checksums of of included binaries are shown to allow for folks to perform independent verification. We&#39;ve move to adding an additional VERIFICATION file for verifying the binaries. This will start to show up more over 2016.</li>
-<li>Packages are run through Virus Total to produce a second opinion on the relative safety of the package and underlying software that is contained or downloaded by the package. The verification of this is shown on the site.</li>
+<li>Packages are run through VirusTotal to produce a second opinion on the relative safety of the package and underlying software that is contained or downloaded by the package. The verification of this is shown on the site.</li>
 </ol>
 <h3 id="rigorous-moderation-process-for-community-packages">Rigorous Moderation Process for Community Packages</h3>
 <p>In October 2014, the community feed had moderation turned on. All community packages go through a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })">rigorous moderation process</a> prior to any public consumption:</p>
