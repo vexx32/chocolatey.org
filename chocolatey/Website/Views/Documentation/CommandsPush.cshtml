@@ -27,7 +27,7 @@ choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>To use this command, you must have your API key saved for the community<br />
 feed (chocolatey.org) or the source you want to push to. Or you can<br />
-explicitly pass the apikey to the command. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })">apikey</code></a> command help<br />
+explicitly pass the apikey to the command. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })"><code>apikey</code></a> command help<br />
 for instructions on saving your key:</p>
 <pre class="cmd">choco apikey -?</pre>
 <p>A common error is <code>Failed to process request. 'The specified API key   does not provide the authority to push packages.' The remote server   returned an error: (403) Forbidden..</code> This means the package already<br />

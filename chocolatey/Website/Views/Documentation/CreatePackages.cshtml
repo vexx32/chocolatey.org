@@ -139,7 +139,7 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</pre>
 <h2 id="but-for-real-how-do-i-create-a-package">But for real, how do I create a package?</h2>
 <ul>
 <li><strong>Generate new package</strong>:</li>
-<li>choco new -h</code> will get you started seeing options available to you.</li>
+<li><code>choco new -h</code> will get you started seeing options available to you.</li>
 <li>Once you figured out all of your options, you should move forward with generating your template.</li>
 </ul>
 <h2 id="install-only-on-some-versions-of-windows">Install Only On Some Versions of Windows</h2>
@@ -153,9 +153,9 @@ If you think, the user should be able to customize this path and you, the packag
 <h3 id="the-package-directory-in-chocolateyinstalllibmypackage">2. The package directory in <code>%ChocolateyInstall%\lib\mypackage</code></h3>
 <p>You can extract the application within the package directory itself (or even ship an extracted version with the package). This allows Chocolatey to automatically find executables and put those on <code>%path%</code>.</p>
 <h3 id="path-provided-by-the-get-binroot-helper---will-be-deprecated-later-closer-to-v1-but-okay-to-use-for-now">3. Path provided by the <code>Get-BinRoot</code> helper - will be deprecated later (closer to v1) but okay to use for now</h3>
-<p>The path returned by the helper <code>Get-BinRoot</code> can be used as the parent directory for the installation. <code>Get-BinRoot</code> will return the value of the environment variable <code>%ChocolateyBinRoot%</code>. If the value does not contain a drive reference, the system drive will be prepended. If the environment variable is not set, the default path (<del>C:\Tools</code></del> <code>C:\Chocolatey\bin</code>) will be returned.</p>
+<p>The path returned by the helper <code>Get-BinRoot</code> can be used as the parent directory for the installation. <code>Get-BinRoot</code> will return the value of the environment variable <code>%ChocolateyBinRoot%</code>. If the value does not contain a drive reference, the system drive will be prepended. If the environment variable is not set, the default path (<del><code>C:\Tools</code></del> <code>C:\Chocolatey\bin</code>) will be returned.</p>
 <p>As an example, <a href="https://github.com/ferventcoder/chocolatey-packages/blob/master/manual/mingw/tools/chocolateyInstall.ps1">MinGW</a> uses <code>%ChocolateyBinRoot%</code>. If the environment variable is not set, it will be set to <code>c:\tools</code> and MinGW will install to <code>C:\Tools\MinGW</code> by default. If <code>%ChocolateyBinRoot%</code> is set to &quot;C:\Common\bin&quot;, MinGW installs to <code>C:\Common\bin\MinGW</code>.</p>
-<p>%ChocolateyBinRoot%</code> gives the Chocolatey user a way of controlling where packages are installed. If you want to allow customizing the installation path, then this is currently the way to go.</p>
+<p><code>%ChocolateyBinRoot%</code> gives the Chocolatey user a way of controlling where packages are installed. If you want to allow customizing the installation path, then this is currently the way to go.</p>
 <h3 id="make-it-clear-in-the-package-description">Make it clear in the package description</h3>
 <p>No matter how you decide, you are advised to state the default installation directory in your package description. This prevents confusion about where the application will end up being installed.</p>
 <p>If you allow customizing the installation path, then append instructions on how to do that, too.</p>
@@ -254,7 +254,7 @@ foreach ($file in $files) {
 <pre class="cmd"> choco install packageName -fdv -s &quot;%cd%&quot;</pre>
 <p>This will install the package right out of your source. As you find things you may need to fix, using <code>--force</code> (<code>-f</code>) will remove and reinstall the package from the updated <code>*.nupkg</code>.</p>
 <p><strong>NOTE:</strong> If you are using a Semver dash in your package version (such as 1.0.0-beta), you will need to use the <code>-pre</code> switch or else you will get <em>Unable to find package</em> errors from <code>choco install</code>. You can also specify <code>-version 1.0.0-beta</code> to try to install that exact version.</p>
-<p>%cd%</code> points to the current directory. You can specify multiple directories separated by a semicolon;</p>
+<p><code>%cd%</code> points to the current directory. You can specify multiple directories separated by a semicolon;</p>
 <p>When your <code>nuspec</code> specifies dependencies that are not in your source, you should add their paths to the source directory. E.g. in the case of Chocolatey itself:</p>
 <pre class="brush: xml">    &lt;dependencies&gt;
       &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.8.20&quot; /&gt;

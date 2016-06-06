@@ -18,10 +18,10 @@
 <h2 id="quick-start-guide">Quick start guide</h2>
 <ul>
 <li><strong>Generate new package</strong>:</li>
-<li>choco new -h</code> will get you started seeing options available to you.</li>
+<li><code>choco new -h</code> will get you started seeing options available to you.</li>
 <li>Once you figured out all of your options, you should move forward with generating your template.</li>
 <li><strong>Edit template</strong> using common sense</li>
-<li>cd package-name</code></li>
+<li><code>cd package-name</code></li>
 <li>Edit the <code>package-name.nuspec</code> configuration file.</li>
 <li>Edit the <code>./tools/chocolateyInstall.ps1</code> install script.
 <ul>
@@ -30,7 +30,7 @@
 <li>You <strong>must</strong> save your files with <em>UTF–8</em> character encoding without BOM. (<a href="https://github.com/chocolatey/choco/wiki/CreatePackages#character-encoding">Details</a>)</li>
 <li><strong>Build the package</strong></li>
 <li>Still in package directory</li>
-<li>choco pack</code>
+<li><code>choco pack</code>
 <ul>
 <li>&quot;Successfully created package-name.1.1.0.nupkg&quot;</li>
 </ul></li>
@@ -38,12 +38,12 @@
 <li><strong>Testing should probably be done on a Virtual Machine</strong></li>
 <li>In your package directory, use:
 <ul>
-<li>choco install package-name -s &quot;$pwd&quot; -f</code> - powershell</li>
-<li>choco install package-name -s '%cd%' -f</code> - everywhere else</li>
+<li><code>choco install package-name -s &quot;$pwd&quot; -f</code> - powershell</li>
+<li><code>choco install package-name -s '%cd%' -f</code> - everywhere else</li>
 </ul></li>
 <li>Otherwise, use the full path:
 <ul>
-<li>choco install package-name -source 'c:\path\to\Package\' -f</code></li>
+<li><code>choco install package-name -source 'c:\path\to\Package\' -f</code></li>
 </ul></li>
 <li><strong>Push the package</strong> to the Chocolatey community feed repository:</li>
 <li>Get a Chocolatey account:
@@ -51,8 +51,8 @@
 <li><a href="https://chocolatey.org/account/register">Register</a></li>
 </ul></li>
 <li>Copy the API key <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "<a href=" })"https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>">from your Chocolatey account</a>.</li>
-<li>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
-<li>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
+<li><code>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
+<li><code>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
 </ul>
 <h2 id="common-mistakes">Common Mistakes</h2>
 <ul>
@@ -67,9 +67,9 @@
 </ul>
 <h2 id="environmental-variables">Environmental Variables</h2>
 <ul>
-<li>%ChocolateyInstall%</code> - Chocolatey installation directory</li>
-<li>%ChocolateyInstall%\lib\package-name</code> - Package directory</li>
-<li>%cd%</code> or <code>$pwd</code> - current directory</li>
+<li><code>%ChocolateyInstall%</code> - Chocolatey installation directory</li>
+<li><code>%ChocolateyInstall%\lib\package-name</code> - Package directory</li>
+<li><code>%cd%</code> or <code>$pwd</code> - current directory</li>
 </ul>
 <h2 id="examples">Examples</h2>
 <p>Here are some simple examples.</p>

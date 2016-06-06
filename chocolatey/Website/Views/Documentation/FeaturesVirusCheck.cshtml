@@ -15,13 +15,13 @@
 <p>VirusTotal scans binaries against over 50 different anti-virus scanners. Chocolatey will use the information based on sending a SHA256 checksum of the binary to VirusTotal and determining what the scans have determined.</p>
 <p>By default the virus scanner is already enabled and set to VirusTotal for Pro licenses. Organizations usually are more wary about reaching out to the internet, so the feature is set to Generic and the virus scanner may not be enabled by default (because it needs configuration). If you need to configure the virus scanner to use VirusTotal, please run the following two commands:</p>
 <ul>
-<li>choco config set virusScannerType VirusTotal</code></li>
-<li>choco feature enable -n virusCheck</code></li>
+<li><code>choco config set virusScannerType VirusTotal</code></li>
+<li><code>choco feature enable -n virusCheck</code></li>
 </ul>
 <p>Because some scanners can be quite aggressive and may falsely identify a binary as a false positive for malware, Chocolatey doesn&#39;t flag a binary until a certain number of scanners have identified the binary as malware. This number defaults to <code>5</code> in the configuration. This means 5 AV scanners need to flag the binary for Chocolatey to stop and fail the install/upgrade. You can adjust this value in two ways, by adjusting the configuration and per choco command.</p>
 <p>To adjust the configuration value, which will globally set the number, please run the following replacing <code>##</code> with the value you want as a minimum:</p>
 <ul>
-<li>choco config set virusCheckMinimumPositives ##</code></li>
+<li><code>choco config set virusCheckMinimumPositives ##</code></li>
 </ul>
 <p>You can also adjust the default number of positives prior to flagging a binary with the <code>virusCheckMinimumPositives</code> configuration value. By default it is set to <code>5</code>, which means 5 AV scanners need to flag the binary for Chocolatey to stop and fail the install/upgrade.</p>
 <p>If you need to override the minimum number of positives just for one install/upgrade, you can do that by passing <code>--virus-positives-minimum=VALUE</code> with your install or upgrade commands.</p>
@@ -31,11 +31,11 @@
 Then you will get the same benefit of runtime virus checking as an added benefit on top of the protection it is already providing.</p>
 <p>If you need to configure the virus scanner to use your built-in antivirus solution, please run the following two commands:</p>
 <ul>
-<li>choco config set virusScannerType Generic</code></li>
-<li>choco config set genericVirusScannerPath &quot;full path to av command line&quot;</code></li>
-<li>choco config set genericVirusScannerArgs &quot;[[File]]&quot;</code></li>
-<li>choco config set genericVirusScannerValidExitCodes &quot;0, ##&quot;</code></li>
-<li>choco feature enable -n virusCheck</code></li>
+<li><code>choco config set virusScannerType Generic</code></li>
+<li><code>choco config set genericVirusScannerPath &quot;full path to av command line&quot;</code></li>
+<li><code>choco config set genericVirusScannerArgs &quot;[[File]]&quot;</code></li>
+<li><code>choco config set genericVirusScannerValidExitCodes &quot;0, ##&quot;</code></li>
+<li><code>choco feature enable -n virusCheck</code></li>
 </ul>
 <p>The <code>genericVirusScannerPath</code> should be the full path to the anti-virus command line executable. What we are looking for is the command line interface to the scanner.</p>
 <p>In <code>genericVirusScannerArgs</code>, these are the arguments that Chocolatey will pass to the AV console. Chocolatey will automatically replace <code>[[File]]</code> with the full path to the binary that it is scanning.</p>

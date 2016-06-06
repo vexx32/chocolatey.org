@@ -22,7 +22,7 @@
 <li>You see Chocolatey.org (the community feed) has a version of Firefox 1.0.0 (package id is firefox). It may or may not be the latest version.</li>
 </ul>
 <p>Your command could be</p>
-<p>choco install firefox -n -y --version 1.0.0</code></p>
+<p><code>choco install firefox -n -y --version 1.0.0</code></p>
 <p><strong>Recommendation</strong>: You should try to just install the package first and see what happens. In some cases the package may do additional things like update the path or do some helpful configuration for you (although this is not usually the case). If it fails or doesn&#39;t work, you can always fall back to skipping the install script as in the command above.</p>
 <h3 id="community-feed-has-newer-version-than-you">Community feed has newer version than you</h3>
 <p>Consider the following scenario:</p>
@@ -41,7 +41,7 @@
 <li>There is no newer version than this available.</li>
 </ul>
 <p>Your command could be:</p>
-<p>choco install firefox -n -y --version 1.8.0</code></p>
+<p><code>choco install firefox -n -y --version 1.8.0</code></p>
 <p><strong>Recommendation</strong>: Ask the maintainer to update the package. Don&#39;t allow choco to know about an older version of a package. If the maintainer provides an update of 1.9.0 without also providing an update at or above your currently installed version, running upgrade later may put your installed software down to the version that is installed by the package. This is definitely not a situation you want to be in.</p>
 <p>Additional thoughts: You could install the older version of the package (with the <code>-n</code> argument) and promptly <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> that version until the newer version is available. If you don&#39;t already have the package installed though, it&#39;s better to wait for the newer version to become available.</p>
 <h2 id="upgrade-a-package-without-running-scripts">Upgrade a Package Without Running Scripts</h2>
@@ -54,7 +54,7 @@
 </ul>
 <p><strong>Recommendation</strong>: You should <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> the package to suppress upgrades. The self-updating scenario is keeping you on the latest version and you want to stay up to date with the latest version that may have security fixes in addition to other things.</p>
 <p>You should run</p>
-<p>choco pin googlechrome</code></p>
+<p><code>choco pin googlechrome</code></p>
 <p>For more information see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">Pin Command</a>.</p>
 <h3 id="the-software-was-upgraded-but-not-the-package">The software was upgraded but not the package</h3>
 <p>Similar to the above scenario, but perhaps you upgraded the software manually outside of Chocolatey.</p>

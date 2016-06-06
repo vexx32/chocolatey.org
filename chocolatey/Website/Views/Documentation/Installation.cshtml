@@ -48,8 +48,8 @@
 <p>Chocolatey will detect and use a system set proxy. However some proxies will need to be set explicitly. To do so, you would do similar to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "proxy-settings-for-chocolatey" })">Proxy settings for Chocolatey</a></p>
 <p>Set the following environment variable(s) prior to install:</p>
 <ul>
-<li>chocolateyProxyLocation</code> - explicit proxy location. This includes the port.</li>
-<li>chocolateyProxyUser</code> / <code>chocolateyProxyPassword</code> - optional credentials<br />
+<li><code>chocolateyProxyLocation</code> - explicit proxy location. This includes the port.</li>
+<li><code>chocolateyProxyUser</code> / <code>chocolateyProxyPassword</code> - optional credentials<br />
 for explicit proxy</li>
 </ul>
 <p>In PowerShell, it looks like this:</p>
@@ -61,7 +61,7 @@ for explicit proxy</li>
 <p><strong>Can I install a particular version of Chocolatey?</strong> Yes</p>
 <p>Set the following environment variable prior to install:</p>
 <ul>
-<li>chocolateyVersion</code> - controls what version of Chocolatey is installed</li>
+<li><code>chocolateyVersion</code> - controls what version of Chocolatey is installed</li>
 </ul>
 <p>In PowerShell, it looks like this:</p>
 <pre class="brush: ps">$env:chocolateyVersion = &#39;0.9.9.12&#39;
@@ -70,7 +70,7 @@ for explicit proxy</li>
 <p><strong>Can I use Windows built-in compression instead of downloading 7zip?</strong> Yes</p>
 <p>Set the following environment variable prior to install:</p>
 <ul>
-<li>chocolateyUseWindowsCompression</code> - this will bypass the download and use of 7zip.</li>
+<li><code>chocolateyUseWindowsCompression</code> - this will bypass the download and use of 7zip.</li>
 </ul>
 <p>In PowerShell, it looks like this:</p>
 <pre class="brush: ps">$env:chocolateyUseWindowsCompression = &#39;true&#39;
@@ -106,18 +106,18 @@ SET DIR=%~dp0%
 ::run installer
 %systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;&amp; &#39;%DIR%install.ps1&#39; %*&quot;</pre>
 <p>You can also get to this file by going to <a href="https://chocolatey.org/installchocolatey.cmd" class="uri">https://chocolatey.org/installchocolatey.cmd</a>.</p>
-<p>If you prefer to have the install.ps1 file already, comment out the download line in the batch file and download the <a href="https://chocolatey.org/install.ps1">install.ps1</code></a> from <a href="https://chocolatey.org/install.ps1">chocolatey.org</a> and save it as <code>install.ps1</code> next to the <code>installChocolatey.cmd</code> file.</p>
+<p>If you prefer to have the install.ps1 file already, comment out the download line in the batch file and download the <a href="https://chocolatey.org/install.ps1"><code>install.ps1</code></a> from <a href="https://chocolatey.org/install.ps1">chocolatey.org</a> and save it as <code>install.ps1</code> next to the <code>installChocolatey.cmd</code> file.</p>
 <p>Run <code>installChocolatey.cmd</code> and it will install the latest version of Chocolatey.</p>
 <h3 id="nuget-package-manager-method">NuGet Package Manager Method</h3>
 <p>When you have Visual Studio 2010+ and the NuGet extension installed (pre-installed on any newer versions of Visual Studio), you can simply type the following three commands and you will have Chocolatey installed on your machine.</p>
-<p>Install-Package chocolatey</code><br />
+<p><code>Install-Package chocolatey</code><br />
 <code>Initialize-Chocolatey</code><br />
 <code>Uninstall-Package chocolatey</code></p>
 <h3 id="nuget.exe-powershell-method">NuGet.exe + PowerShell Method</h3>
 <p>You can also use NuGet command line to download Chocolatey:</p>
-<p>nuget install chocolatey</code> or <code>nuget install chocolatey -pre</code></p>
+<p><code>nuget install chocolatey</code> or <code>nuget install chocolatey -pre</code></p>
 <p>Once you download it, open PowerShell (remote unsigned), navigate to the tools folder and run:</p>
-<p>&amp; .\chocolateyInstall.ps1</code></p>
+<p><code>&amp; .\chocolateyInstall.ps1</code></p>
 <h3 id="download-powershell-method">Download + PowerShell Method</h3>
 <p>You can also just download and unzip the Chocolatey package (<code>.nupkg</code> is a fancy zip file):</p>
 <ol>
