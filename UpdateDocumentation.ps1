@@ -65,7 +65,7 @@ function Convert-FencedCode($text) {
 
   #$text = $text.Replace("<pre><code>","<pre class=`"brush: plain`">")
   $text = $text.Replace("<pre><code>","<pre class=`"cmd`">")
-  $text = $text.Replace("><code>", ">")
+  $text = $text -replace '\<pre\s?([^\>]*)\>\<code\>', '<pre $1>'
   $text = $text.Replace("</code></pre>","</pre>")
   $text = $text.Replace("class=`"ruby`"","class=`"brush: ruby`"")
   $text = $text.Replace("class=`"puppet`"","class=`"brush: ruby`"")
