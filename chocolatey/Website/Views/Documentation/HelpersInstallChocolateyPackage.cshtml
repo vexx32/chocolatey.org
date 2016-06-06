@@ -45,6 +45,62 @@ hence this function. You are not subject to this limitation with<br />
 internal packages.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
+<h2 id="examples">Examples</h2>
+<p><strong>EXAMPLE 1</strong></p>
+<pre class="brush: ps">
+$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$url        = &#39;https://somewhere.com/file.msi&#39;
+$url64      = &#39;https://somewhere.com/file-x64.msi&#39;
+
+$packageArgs = @@{
+  packageName   = $packageName
+  fileType      = &#39;msi&#39;
+  url           = $url
+  url64bit      = $url64
+  silentArgs    = &quot;/qn /norestart&quot;
+  validExitCodes= @@(0, 3010, 1641)
+  softwareName  = &#39;Bob*&#39;
+  checksum      = &#39;12345&#39;
+  checksumType  = &#39;sha1&#39;
+  checksum64    = &#39;123356&#39;
+  checksumType64= &#39;sha256&#39;
+}
+
+Install-ChocolateyPackage @@packageArgs</pre>
+<p><strong>EXAMPLE 2</strong></p>
+<pre class="brush: ps">
+Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; `
+ &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39; `
+ &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;</pre>
+<p><strong>EXAMPLE 3</strong></p>
+<pre class="brush: ps">
+Install-ChocolateyPackage &#39;mono&#39; &#39;exe&#39; &#39;/SILENT&#39; `
+ &#39;http://somehwere/something.exe&#39; -ValidExitCodes @@(0,21)</pre>
+<p><strong>EXAMPLE 4</strong></p>
+<pre class="brush: ps">
+Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; `
+ &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe&#39; `
+ &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe&#39; `
+ -checksum &#39;9383f12958aafc425923e322460a84de&#39; -checksumType = &#39;md5&#39; `
+ -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</pre>
+<p><strong>EXAMPLE 5</strong></p>
+<pre class="brush: ps">Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
+</pre>
+<p><strong>EXAMPLE 6</strong></p>
+<pre class="brush: ps">
+$options =
+@@{
+  Headers = @@{
+    Accept = &#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;;
+    &#39;Accept-Charset&#39; = &#39;ISO-8859-1,utf-8;q=0.7,*;q=0.3&#39;;
+    &#39;Accept-Language&#39; = &#39;en-GB,en-US;q=0.8,en;q=0.6&#39;;
+    Cookie = &#39;requiredinfo=info&#39;;
+    Referer = &#39;https://somelocation.com/&#39;;
+  }
+}
+
+Install-ChocolateyPackage -PackageName &#39;package&#39; -FileType &#39;exe&#39; -SilentArgs &#39;/S&#39; &#39;https://somelocation.com/thefile.exe&#39; -Options $options</pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>
@@ -516,62 +572,6 @@ use the ones available with the package. Available in 0.9.10+.</p>
 </table>
 <h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
 <p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
-<h2 id="examples">Examples</h2>
-<p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
-$packageName= &#39;bob&#39;
-$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
-$url        = &#39;https://somewhere.com/file.msi&#39;
-$url64      = &#39;https://somewhere.com/file-x64.msi&#39;
-
-$packageArgs = @@{
-  packageName   = $packageName
-  fileType      = &#39;msi&#39;
-  url           = $url
-  url64bit      = $url64
-  silentArgs    = &quot;/qn /norestart&quot;
-  validExitCodes= @@(0, 3010, 1641)
-  softwareName  = &#39;Bob*&#39;
-  checksum      = &#39;12345&#39;
-  checksumType  = &#39;sha1&#39;
-  checksum64    = &#39;123356&#39;
-  checksumType64= &#39;sha256&#39;
-}
-
-Install-ChocolateyPackage @@packageArgs</pre>
-<p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
-Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; `
- &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39; `
- &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;</pre>
-<p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">
-Install-ChocolateyPackage &#39;mono&#39; &#39;exe&#39; &#39;/SILENT&#39; `
- &#39;http://somehwere/something.exe&#39; -ValidExitCodes @@(0,21)</pre>
-<p><strong>EXAMPLE 4</strong></p>
-<pre class="brush: ps">
-Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; `
- &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe&#39; `
- &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe&#39; `
- -checksum &#39;9383f12958aafc425923e322460a84de&#39; -checksumType = &#39;md5&#39; `
- -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</pre>
-<p><strong>EXAMPLE 5</strong></p>
-<pre class="brush: ps">Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
-</pre>
-<p><strong>EXAMPLE 6</strong></p>
-<pre class="brush: ps">
-$options =
-@@{
-  Headers = @@{
-    Accept = &#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;;
-    &#39;Accept-Charset&#39; = &#39;ISO-8859-1,utf-8;q=0.7,*;q=0.3&#39;;
-    &#39;Accept-Language&#39; = &#39;en-GB,en-US;q=0.8,en;q=0.6&#39;;
-    Cookie = &#39;requiredinfo=info&#39;;
-    Referer = &#39;https://somelocation.com/&#39;;
-  }
-}
-
-Install-ChocolateyPackage -PackageName &#39;package&#39; -FileType &#39;exe&#39; -SilentArgs &#39;/S&#39; &#39;https://somelocation.com/thefile.exe&#39; -Options $options</pre>
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-chocolatey-web-file" })">Get-ChocolateyWebFile</a></li>
