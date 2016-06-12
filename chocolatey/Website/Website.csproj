@@ -1010,9 +1010,21 @@
     <Content Include="Content\Images\docs\clistExample.png" />
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
+    <Content Include="Content\Images\docs\features\features_auto_uninstall.png" />
+    <Content Include="Content\Images\docs\features\features_install_upgrade_refreshenv.png" />
+    <Content Include="Content\Images\docs\features\features_outdated.png" />
+    <Content Include="Content\Images\docs\features\features_override_install_directory.png" />
+    <Content Include="Content\Images\docs\features\features_packages_from_installers.png" />
+    <Content Include="Content\Images\docs\features\features_recompile_packages.png" />
+    <Content Include="Content\Images\docs\features\features_shimgen.png" />
+    <Content Include="Content\Images\docs\features\features_software_audit.png" />
+    <Content Include="Content\Images\docs\features\features_synchronize.png" />
+    <Content Include="Content\Images\docs\features\features_upgrade.png" />
+    <Content Include="Content\Images\docs\features\features_upgrade_everything.png" />
     <Content Include="Content\Images\docs\gifs\chocopro_features_installdirectory.gif" />
     <Content Include="Content\Images\docs\gifs\chocopro_install.gif" />
     <Content Include="Content\Images\docs\gifs\chocopro_install_stopped.gif" />
+    <Content Include="Content\Images\docs\gifs\choco_business_features.gif" />
     <Content Include="Content\Images\docs\gifs\choco_config.gif" />
     <Content Include="Content\Images\docs\gifs\choco_help.gif" />
     <Content Include="Content\Images\docs\gifs\choco_install.gif" />
@@ -1317,6 +1329,8 @@
     <Content Include="Views\Documentation\HelpersInstallVsix.cshtml" />
     <Content Include="Views\Documentation\HelpersSetEnvironmentVariable.cshtml" />
     <Content Include="Views\Documentation\HelpersUninstallChocolateyEnvironmentVariable.cshtml" />
+    <Content Include="Views\Documentation\CommandsDownload.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetUninstallRegistryKey.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
