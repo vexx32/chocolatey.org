@@ -3,7 +3,7 @@
 }
 
 <article>
-<h1 id="shimming">Shimming</h1>
+<h1 id="shimming---automatically-add-executables-to-path">Shimming - Automatically Add Executables to PATH</h1>
 <p>Shimming is like symlinking, but it works much better. It&#39;s a form of redirection, where you create a &quot;shim&quot; that redirects input to the actual binary process and shares the output. It can also work to simply call the actual binary when it shims GUI applications.</p>
 <p>We like to call this &quot;batch redirection that works&quot;.</p>
 <p>This also allows applications and tools to be on the &quot;PATH&quot; without cluttering up the PATH environment variable.</p>
@@ -20,6 +20,20 @@
 <p>Chocolatey automatically shims executables in package folders that are not explicitly ignored, putting them into the <code>$($env:ChocolateyInstall)\bin</code> folder (and subsequently onto the PATH).</p>
 <p>These executables can come as part of the package or downloaded to the package folder during the install script.</p>
 <p>Chocolatey ensures the folder <code>$($env:ChocolateyInstall)\bin</code> in the PATH environment variable, allowing you to put tools on the PATH without cluttering up the PATH.</p>
+<h2 id="see-it-in-action">See It In Action</h2>
+<p><img src="@Url.Content("~/content/images/docs/features/features_shimgen.png")" alt="Shimming - if you are on https://chocolatey.org/docs/features-shim, see commented html below for detailed description of image" /></p>
+<!--
+Text in the image above:
+
+Automatically Adds Package Executables to PATH without clutter (Shimming)
+
+- Exclusive to Chocolatey - When executables are found in the package directory, they are automatically shimmed to a folder on the PATH.
+- When items require elevated privileges, shims will raise UAC prompts.
+- Like symbolic links or batch redirects, but better.
+- Shims have logging and other options - pass `--shimgen-help` to a shimmed executable for options.
+
+The image shows installing ruby.portable, then running `ruby -v` followed by `ruby -v --shimgen-log` and the additional output that comes out from the shim.
+-->
 <h2 id="options-and-switches">Options and Switches</h2>
 <p>You pass these arguments to an executable that is a shim (e.g.&nbsp; executables in the bin directory of your Chocolatey install, not choco.exe):</p>
 <ul>

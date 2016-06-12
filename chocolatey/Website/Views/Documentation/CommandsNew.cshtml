@@ -20,6 +20,10 @@ through to templates. This really unlocks your ability to create<br />
 packages automatically!</p>
 <p><strong>NOTE:</strong> <a href="https://chocolatey.org/compare">Chocolatey for Business</a> can create complete packages by just<br />
 pointing the new command to native installers!</p>
+<p><strong>NOTE:</strong> <a href="https://chocolatey.org/compare">Chocolatey for Business</a> can also download and internalize remote<br />
+resources from existing packages so that existing packages can be used<br />
+without being tied to the internet.<br />
+This is called automatic recompile.</p>
 <h2 id="examples">Examples</h2>
 <pre class="cmd">choco new bob
 choco new bob -a --version 1.2.0 maintainername=&quot;&#39;This guy&#39;&quot;
@@ -109,6 +113,10 @@ out multiple package calls when wanting to pass specific options.</p>
      --built-in, --built-in-template, --originaltemplate, --original-template, --use-original-template, --use-built-in-template
      BuiltInTemplate - Use the original built-in template instead of any 
        override. Available in 0.9.10+.
+
+     --file=VALUE
+     Inspect a file (installer) to determine everything and create a package. 
+       Available in 0.9.10+. Business versions only.
 </pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco new -h</code>.</p>

@@ -37,6 +37,10 @@
 </ul>
 <p>There are more exit codes from Chocolatey now that indicate success -<code>0</code>, <code>1605</code>, <code>1614</code>, <code>1641</code>, and <code>3010</code>. You may need to adjust anything you were using that would only check for 0 and nonzero.<br />
 If you need the previous behavior, be sure to disable the feature <code>usePackageExitCodes</code> or use the <code>--ignore-package-exit-codes</code> switch in your choco commands.</p>
+<ul>
+<li>PowerShell module functions adjusted for automatic documentation - see <a href="https://github.com/chocolatey/choco/issues/697">#697</a></li>
+</ul>
+<p>If you were using any of the functions in a non-recommended way or not compliant with the examples, you are going to find breakages in the functions as some of the things that were called out as non-optional are now enforced. This shouldn&#39;t affect most folks.</p>
 <h3 id="known-issues">KNOWN ISSUES</h3>
 <ul>
 <li><a href="https://github.com/chocolatey/choco/labels/Bug">Known Issues</a></li>
@@ -57,9 +61,11 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Add a <code>choco info</code> command to show info for one package - see <a href="https://github.com/chocolatey/choco/issues/644">#644</a></li>
 <li>Mark packages pending until install completes successfully - see <a href="https://github.com/chocolatey/choco/issues/198">#198</a></li>
 <li>Resolve sources by name - see <a href="https://github.com/chocolatey/choco/issues/356">#356</a></li>
+<li>Uninstall-ChocolateyEnvironmentVariable function - see <a href="https://github.com/chocolatey/choco/issues/772">#772</a></li>
 <li>Pro/Business - Ubiquitous Install Directory Switch - see <a href="https://github.com/chocolatey/choco/issues/258">#258</a></li>
 <li>Pro/Business - Runtime Virus Scanning - see <a href="https://chocolatey.org/docs/features-virus-check">virus scanning</a></li>
 <li>Pro/Business - Private CDN cache for downloads - see <a href="https://chocolatey.org/docs/features-private-cdn">private CDN cache</a></li>
+<li>Pro/Business - Sync &quot;choco installed status&quot; with &quot;Windows installed status&quot; - see <a href="https://github.com/chocolatey/choco/issues/567">#567</a></li>
 </ul>
 <h3 id="bug-fixes">BUG FIXES</h3>
 <ul>
@@ -81,7 +87,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Logger doesn&#39;t clear cached NullLoggers - see <a href="https://github.com/chocolatey/choco/issues/516">#516</a></li>
 <li>Fix - DISM &quot;/All&quot; argument in the wrong position - see <a href="https://github.com/chocolatey/choco/issues/480">#480</a></li>
 <li>Fix - Pro - Installing/uninstalling extensions should rename files in use - see <a href="https://github.com/chocolatey/choco/issues/594">#594</a></li>
-<li>Fix - Running Get-FileName in PowerShell 5 fails and sometimes causes package errors - see <a href="https://github.com/chocolatey/choco/issues/603">#603</a></li>
+<li>Fix - Running Get-WebFileName in PowerShell 5 fails and sometimes causes package errors - see <a href="https://github.com/chocolatey/choco/issues/603">#603</a></li>
 <li>Fix - Merging assemblies on a machine running .Net 4.5 or higher produces binaries incompatible with .Net 4 - see <a href="https://github.com/chocolatey/choco/issues/392">#392</a></li>
 <li>Fix - API - Incorrect log4net version in chocolatey.lib dependencies - see <a href="https://github.com/chocolatey/choco/issues/390">#390</a></li>
 <li>[POSH Host] Fix - Message after Download progress is on the same line sometimes - see <a href="https://github.com/chocolatey/choco/issues/525">#525</a></li>
@@ -113,6 +119,13 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Use package name/version from environment, not parameters - see <a href="https://github.com/chocolatey/choco/issues/751">#751</a></li>
 <li>Fix - Get-WebFileName Does Not Match on Invalid Characters - see <a href="https://github.com/chocolatey/choco/issues/753">#753</a></li>
 <li>Fix - <code>choco new</code> cannot introduce multistage folder hierarchy template - see <a href="https://github.com/chocolatey/choco/issues/706">#706</a></li>
+<li>Fix - Empty $env:ChocolateyToolsLocation combine error - see <a href="https://github.com/chocolatey/choco/issues/756">#756</a></li>
+<li>Fix - Installing chocolatey removes $env:PSModulePath changes for current powershell session - see <a href="https://github.com/chocolatey/choco/issues/295">#295</a></li>
+<li>Fix - Some environment variables are set too early for options/switches to have an effect - see <a href="https://github.com/chocolatey/choco/issues/620">#620</a></li>
+<li>[API] Fix - Issue when attempting to execute run command through API - see <a href="https://github.com/chocolatey/choco/issues/769">#769</a></li>
+<li>Fix - Logging of upgrade messages - placement of some messages is incorrect - see <a href="https://github.com/chocolatey/choco/issues/557">#557</a></li>
+<li>Fix - Get-WebFile fails with - The term &quot;˜//continue&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/789">#789</a></li>
+<li>Fix - Unable to read registry snapshot file - see <a href="https://github.com/chocolatey/choco/issues/487">#487</a></li>
 </ul>
 <h3 id="improvements">IMPROVEMENTS</h3>
 <ul>
@@ -159,6 +172,15 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Support for client certificates - see <a href="https://github.com/chocolatey/choco/issues/399">#399</a></li>
 <li>choco feature list formatting enhancements - see <a href="https://github.com/chocolatey/choco/issues/742">#742</a></li>
 <li>choco new --original-template - see <a href="https://github.com/chocolatey/choco/issues/737">#737</a></li>
+<li>Update Get-FtpFile with fixes for Get-WebFile - see <a href="https://github.com/chocolatey/choco/issues/765">#765</a></li>
+<li>Rename Get-ProcessorBits as a more appropriately named Get-OSArchitectureWidth - see <a href="https://github.com/chocolatey/choco/issues/713">#713</a></li>
+<li>Allow passing no 32-bit url and fail the package on 32-bit systems - see <a href="https://github.com/chocolatey/choco/issues/527">#527</a></li>
+<li>Enhance Install-ChocolateyShortcut to support WindowStyle, Pin to Taskbar and Run As Administrator checkbox - see <a href="https://github.com/chocolatey/choco/issues/519">#519</a></li>
+<li>[Security] Allow hashing files for checksums with FIPS compliant algorithms - see <a href="https://github.com/chocolatey/choco/issues/446">#446</a></li>
+<li>After upgrading provide summary of upgraded packages - see <a href="https://github.com/chocolatey/choco/issues/759">#759</a></li>
+<li>Web functions - Check for local file and return early - see <a href="https://github.com/chocolatey/choco/issues/781">#781</a></li>
+<li>Refresh environment variables after each install - see <a href="https://github.com/chocolatey/choco/issues/439">#439</a></li>
+<li>Capture Arguments for a Package during Install/Upgrade - see <a href="https://github.com/chocolatey/choco/issues/358">#358</a></li>
 <li>Pro/Business - Also check for license in User Profile location - see <a href="https://github.com/chocolatey/choco/issues/606">#606</a></li>
 <li>Pro/Business - Set download cache information if available - see <a href="https://github.com/chocolatey/choco/issues/562">#562</a></li>
 <li>Pro/Business - Allow commands to be added - see <a href="https://github.com/chocolatey/choco/issues/583">#583</a></li>

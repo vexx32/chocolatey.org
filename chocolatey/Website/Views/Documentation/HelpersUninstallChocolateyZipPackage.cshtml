@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="uninstall-chocolateyzippackage">Uninstall-ChocolateyZipPackage</h1>
-<p>Uninstalls a previous installed zip package</p>
+<p>Uninstalls a previous installed zip package, may not be necessary.</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Uninstall-ChocolateyZipPackage `
   -PackageName &lt;String&gt; `
@@ -12,8 +12,9 @@
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This will uninstall a zip file if installed via Install-ChocolateyZipPackage.<br />
-This is not necessary if the files are unzipped to the package location.</p>
+This is not necessary if the files are unzipped to the package directory.</p>
 <h2 id="notes">Notes</h2>
+<p>Not necessary if files are unzippped to package directory.</p>
 <p>This helper reduces the number of lines one would have to remove the<br />
 files extracted from a previously installed zip file.<br />
 This method has error handling built into it.</p>
