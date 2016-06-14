@@ -665,6 +665,7 @@
     <Compile Include="Infrastructure\Routing\HyphenatedRouteHandler.cs" />
     <Compile Include="Infrastructure\Routing\SeoRoute.cs" />
     <Compile Include="RequestModels\RegisterRequest.cs" />
+    <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />
     <Compile Include="RouteCollectionExtensions.cs" />
     <Compile Include="Services\AmazonSqsClientWrapper.cs" />
@@ -758,6 +759,8 @@
     <Compile Include="Services\SearchResults.cs" />
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
+    <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
+    <Compile Include="ViewModels\PasswordResetViewModel.cs" />
     <Compile Include="XmlExtensions.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -767,12 +770,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordChangeViewModel.cs">
-      <Link>ViewModels\PasswordChangeViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordResetViewModel.cs">
-      <Link>ViewModels\PasswordResetViewModel.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\ManagePackageOwnersViewModel.cs">
       <Link>ViewModels\ManagePackageOwnersViewModel.cs</Link>
@@ -836,9 +833,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\RequestModels\SignInRequest.cs">
-      <Link>RequestModels\SignInRequest.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\SubmitPackageRequest.cs">
       <Link>RequestModels\SubmitPackageRequest.cs</Link>
