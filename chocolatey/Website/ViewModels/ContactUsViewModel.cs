@@ -24,6 +24,7 @@ namespace NuGetGallery
 {
     public class ContactUsViewModel
     {
+        [AllowHtml]
         [Display(Name = "Enter your message")]
         [Required(ErrorMessage = "Please enter a message.")]
         [StringLength(4000)]

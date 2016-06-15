@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace NuGetGallery
 {
@@ -25,6 +26,7 @@ namespace NuGetGallery
         public string PackageId { get; set; }
         public string PackageVersion { get; set; }
 
+        [AllowHtml]
         [Required]
         [StringLength(4000)]
         [Display(Name = "Abuse Report")]

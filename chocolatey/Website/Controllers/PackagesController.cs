@@ -25,6 +25,7 @@ using System.Net.Mail;
 using System.Security.Principal;
 using System.Transactions;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Elmah;
 using NuGet;
@@ -502,7 +503,7 @@ namespace NuGetGallery
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.ReportAbuse(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
+            messageService.ReportAbuse(from, package, reportForm.Message.clean_html(), packageUrl, reportForm.CopySender);
 
             TempData["Message"] = "Your abuse report has been sent to the site admins.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
@@ -548,7 +549,7 @@ namespace NuGetGallery
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.ContactSiteAdmins(from, package, reportForm.Message, packageUrl, reportForm.CopySender);
+            messageService.ContactSiteAdmins(from, package, reportForm.Message.clean_html(), packageUrl, reportForm.CopySender);
 
             TempData["Message"] = "Your message has been sent to the site admins.";
             return RedirectToAction(MVC.Packages.DisplayPackage(id, version));
@@ -594,7 +595,7 @@ namespace NuGetGallery
 
             var packageUrl = EnsureTrailingSlash(Configuration.GetSiteRoot(UseHttps())) + RemoveStartingSlash(Url.Package(package));
 
-            messageService.SendContactOwnersMessage(from, package, contactForm.Message, Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl, contactForm.CopySender);
+            messageService.SendContactOwnersMessage(from, package, contactForm.Message.clean_html(), Url.Action(MVC.Users.Edit(), protocol: Request.Url.Scheme), packageUrl, contactForm.CopySender);
 
             string message = String.Format(CultureInfo.CurrentCulture, "Your message has been sent to the maintainers of {0}.", id);
             TempData["Message"] = message;
