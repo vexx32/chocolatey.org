@@ -160,7 +160,8 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
-        [Authorize, HttpPost]
+        // not a fan of ValidateInput=false. Look to change this in an upgrade to true, Exclude
+        [Authorize, HttpPost, ValidateInput(false)]
         public virtual ActionResult DisplayPackage(string id, string version, FormCollection form)
         {
             if (!ModelState.IsValid) return DisplayPackage(id, version);
@@ -194,7 +195,7 @@ namespace NuGetGallery
             {
                 try
                 {
-                    status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"]);
+                    status = (PackageStatusType)Enum.Parse(typeof(PackageStatusType), form["Status"].clean_html());
                 }
                 catch (Exception ex)
                 {
@@ -237,12 +238,11 @@ namespace NuGetGallery
                 return View("~/Views/Packages/DisplayPackage.cshtml", model);
             }
 
-            var comments = form["ReviewComments"];
-            var newComments = form["NewReviewComments"];
-            bool sendMaintainerEmail = form["SendEmail"] == "true";
-            bool trustedPackage = form["IsTrusted"] == "true,false";
-            bool maintainerReject = form["MaintainerReject"] == "true";
-            bool changeSubmittedStatus = form["ChangeSubmittedStatus"] == "true";
+            var newComments = form["NewReviewComments"].clean_html();
+            bool sendMaintainerEmail = form["SendEmail"].clean_html() == "true";
+            bool trustedPackage = form["IsTrusted"].clean_html() == "true,false";
+            bool maintainerReject = form["MaintainerReject"].clean_html() == "true";
+            bool changeSubmittedStatus = form["ChangeSubmittedStatus"].clean_html() == "true";
 
             //if (comments != package.ReviewComments)
             //{
@@ -267,8 +267,8 @@ namespace NuGetGallery
                 status = PackageStatusType.Rejected;
             }
 
-            bool exemptVerfication = form["IsExemptedFromVerification"] == "true,false";
-            var exemptVerficationReason = form["ExemptedFromVerificationReason"];
+            bool exemptVerfication = form["IsExemptedFromVerification"].clean_html() == "true,false";
+            var exemptVerficationReason = form["ExemptedFromVerificationReason"].clean_html();
             if (exemptVerfication && string.IsNullOrWhiteSpace(exemptVerficationReason))
             {
                 ModelState.AddModelError(String.Empty, "In order to exempt a package from automated testing, a reason should be specified.");
@@ -280,7 +280,7 @@ namespace NuGetGallery
                 packageSvc.ExemptPackageFromTesting(package, exemptVerfication, exemptVerficationReason, currentUser);
             }
 
-            bool rerunTests = form["RerunTests"] == "true";
+            bool rerunTests = form["RerunTests"].clean_html() == "true";
             if (rerunTests)
             {
                 packageSvc.ResetPackageTestStatus(package);
@@ -288,7 +288,7 @@ namespace NuGetGallery
                 newComments += "Auto Verification Change - Verification tests have been set to rerun.";
             }
 
-            bool rerunVirusScanner = form["RerunVirusScanner"] == "true";
+            bool rerunVirusScanner = form["RerunVirusScanner"].clean_html() == "true";
             if (rerunVirusScanner)
             {
                 package.PackageScanStatus = PackageScanStatusType.Unknown;

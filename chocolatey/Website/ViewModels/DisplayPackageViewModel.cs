@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Web.Mvc;
 using NuGet;
 
 namespace NuGetGallery
@@ -99,6 +100,7 @@ namespace NuGetGallery
         public IEnumerable<PackageFile> Files { get; private set; }
         public IEnumerable<ScanResult> ScanResults { get; private set; }
 
+        [AllowHtml]
         [Display(Name = "Add to Review Comments")]
         [StringLength(1000)]
         public string NewReviewComments { get; set; }
