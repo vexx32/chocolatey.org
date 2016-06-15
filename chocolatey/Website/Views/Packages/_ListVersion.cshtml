@@ -74,7 +74,7 @@
                     Show</a>
                 <div id="@divVersionId">
                     <br />
-                    @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments.clean_markdown()))
+                    @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments.clean_html()))
                 </div>
                 <script type="text/javascript">
                     $(function() {

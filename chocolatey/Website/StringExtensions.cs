@@ -78,7 +78,7 @@ namespace NuGetGallery
             return s.Split(separator, stringSplitOptions);
         }
 
-        public static string clean_markdown(this string input)
+        public static string clean_html(this string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return input;
 

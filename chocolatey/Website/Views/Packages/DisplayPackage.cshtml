@@ -262,7 +262,7 @@
     @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted)
     {
          <div class="message warning"><p>This package skips automatic verification:</p>
-                @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_markdown()))
+                @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_html()))
          </div><br />
     }
 
@@ -270,7 +270,7 @@
     {
         <div class="message error">This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s):
             <br />
-            @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_markdown()))
+            @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
         </div> <br />
     }
     else if (maintainer && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
@@ -302,7 +302,7 @@
         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
             <div class="message"><p>Review Comments:</p>
-                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_markdown()))
+                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
             </div><br />
         }
     }
@@ -311,7 +311,7 @@
         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
         {
             <div class="message"><p>Review Comments:</p>
-                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_markdown()))
+                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
             </div><br />
         }
     }
@@ -549,7 +549,7 @@
     }
 
   <a name="description" id="description" title="Nuspec reference: description"></a>
-    @Html.Raw(markdownGenerator.Transform(Model.Description.clean_markdown()))
+    @Html.Raw(markdownGenerator.Transform(Model.Description.clean_html()))
 
     @if (Model.Listed || (anyPackageRole && Model.Status != PackageStatusType.Rejected))
     {
@@ -799,7 +799,7 @@
     <ul class="authors">
         @foreach (var author in Model.Authors)
         {
-            <li>@author.Name.clean_markdown()</li>
+            <li>@author.Name.clean_html()</li>
         }
     </ul>
     @if (!String.IsNullOrEmpty(Model.Copyright))
@@ -821,7 +821,7 @@
     @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
     {
         <a name="releasenotes" id="releasenotes"></a><h3 title="Nuspec reference: releaseNotes">Release Notes</h3>
-        @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes.clean_markdown()))
+        @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes.clean_html()))
     }
 
     <a name="versionhistory" id="versionhistory"></a><h3>Version History</h3>
