@@ -700,8 +700,11 @@ For urgent issues (including packages that are security releases), please reach 
             }
 
              message.AppendFormat(@"{0}## Attention - DO NOT REPLY TO THIS MESSAGE!
- * If you need to update or respond to package review information, please login and visit your package page (listed below).
- * You can also **self-reject packages that are no longer relevant**! See [self-reject](https://chocolatey.org/faq#how-do-i-self-reject-a-package) for more information.",
+ * No human moderators see packages until automated checks are passed or the maintainer uses the review comments box to respond. This is very important to understand, if a package has failed any automated checks, you must take action to fix or respond.
+ * **ATTENTION:** If your package is failing any automated checks, **the** ***ONLY*** **way** to get in front of a human moderator is to follow the instructions in the next step.
+ * If you need to update or respond to package review information, please **login** and visit your package page (listed below). Use the [Add to Review Comments](https://chocolatey.org/docs/moderation#maintainer-process) box **ONLY**, Disqus/Gist comments will not reach a human reviewer.
+ * This may include review comments prior to the automated checks, check the status on the package - it must be in 'Ready' or 'Responded' to be in front of a human moderator. 
+ * You can also self-reject packages in certain scenarios - see [self-reject](https://chocolatey.org/faq#how-do-i-self-reject-a-package) for more information.",
                 Environment.NewLine);
 
             return message.ToString();
