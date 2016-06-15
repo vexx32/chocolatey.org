@@ -391,12 +391,6 @@
             {
                 <fieldset class="form">
                     <div class="form-field">
-                        @if (admin && !string.IsNullOrWhiteSpace(Model.ReviewComments))
-                        {
-                            @Html.LabelFor(m => m.ReviewComments)
-                            @Html.TextAreaFor(m => m.ReviewComments, new { @cols = 80, @rows = 10 })
-                            @Html.ValidationMessageFor(m => m.ReviewComments)
-                        }
                         @Html.LabelFor(m => m.NewReviewComments)
                         @Html.TextAreaFor(m => m.NewReviewComments, new { @cols = 80, @rows = 10 })
                         @Html.ValidationMessageFor(m => m.NewReviewComments)
