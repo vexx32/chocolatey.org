@@ -640,7 +640,7 @@ For urgent issues (including packages that are security releases), please reach 
 
 #### Other Pertinent Information
 
- * Moderators typically review a package within about a week or less. Many times you may find it to be faster.
+ * Moderators typically review a package within a couple of business days. Many times you may find it to be faster.
  * If you have not heard anything within a week or two, please respond in the review comments on the package page (login first) and ask for status.
  * If the package is an urgent release (resolves security issues or CVEs), reach out to us immediately on Gitter at https://gitter.im/chocolatey/choco
  * Packages must conform to our guidelines https://chocolatey.org/docs/create-packages
@@ -666,7 +666,7 @@ For urgent issues (including packages that are security releases), please reach 
             if (package.PackageRegistration.IsTrusted && package.SubmittedStatus == PackageSubmittedStatusType.Pending)
             {
                 message.AppendFormat("**NOTE**: This package is trusted and bypasses human moderation. However it will go through automated review and will automatically list when it has completed validation and verification (even if they fail). The two are typically finished within 1-2 hours or less after the package has pushed, depending on the verifier queue. We'll send you a message when it is listed. If you haven't received a message within 6 hours, please contact us for further investigation.{0}", Environment.NewLine);
-                message.AppendFormat("**NOTE**: Starting in March **trusted packages will be held for approval until they pass both validation and verification**. This will give maintainers a chance to fix bad package versions prior to becoming immutable. More details will be provided in an email to all package maintainers sometime in January.{0}", Environment.NewLine);
+                message.AppendFormat("**NOTE**: Starting at some point **trusted packages will be held for approval until they pass both validation and verification**. This will give maintainers a chance to fix bad package versions prior to becoming immutable. More details will be provided in an email to all package maintainers sometime prior to this date.{0}", Environment.NewLine);
             }
 
             if (!string.IsNullOrWhiteSpace(comments))

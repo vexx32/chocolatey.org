@@ -364,13 +364,14 @@
                     }
                     @if (Model.Dependencies.DependencySets.Any())
                     {
-                      <li>Check dependencies, make sure they are listed.</li>
+                      <li>Check dependencies, make sure they are listed on the site (approved if they needed to be moderated first).</li>
                     }
                     @if (!hasPreviousExistingVersions)
                     {
                       <li>NOTE! This is a brand new package with no previous existing versions (prereleases do not count): check the name of the package. Does it meet the guidelines? This makes a package immediately rejectable as new package id will be submitted as a different package.</li> 
                     }
                     <li>Check tags</li>
+                    <li>Keep in mind this is publicly visible, so do not share any sensitive data or anything you wouldn't want to share with the world.</li>
                     <li>Be Nice! :)</li>
                 </ul>
             }
@@ -378,6 +379,7 @@
             {
                 <ul>
                   <li>You can respond to review comments here.</li>
+                  <li>Keep in mind this is publicly visible, so do not share any sensitive data or anything you wouldn't want to share with the world.</li>
                   
                   @if (Model.Status == PackageStatusType.Submitted)
                   {
