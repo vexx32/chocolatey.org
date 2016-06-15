@@ -5,6 +5,7 @@ namespace NuGetGallery
 {
     public class PasswordResetViewModel
     {
+        [AllowHtml]
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
@@ -12,6 +13,7 @@ namespace NuGetGallery
         [Hint("Passwords must be at least 7 characters long.")]
         public string NewPassword { get; set; }
 
+        [AllowHtml]
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
