@@ -26,7 +26,7 @@
 $url = "https://chocolatey.org/api/v2/package/chocolatey/"
 # introduced when there were performance issues - kept around in case we
 # run into them again.
-$url = "https://packages.chocolatey.org/chocolatey.0.9.9.12.nupkg"
+$url = "https://packages.chocolatey.org/chocolatey.0.9.10.nupkg"
 
 $chocolateyVersion = $env:chocolateyVersion
 if (![string]::IsNullOrEmpty($chocolateyVersion)){
