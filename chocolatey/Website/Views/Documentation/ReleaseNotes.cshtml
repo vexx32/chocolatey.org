@@ -4,8 +4,8 @@
 
 <article>
 <h1 id="release-notes">Release Notes</h1>
-<h2 id="unreleased---betas-available"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.10+is%3Aclosed">0.9.10</a> (unreleased - betas available)</h2>
-<p>The &quot;I got 99 problems, but a package manager ain&#39;t one&quot; release. With the release of 0.9.10 (or if you prefer 0.9.10.0), we&#39;re about to make everything 100% better in your Windows package management world. We&#39;ve addressed over 100 features and bugs in this release. We looked at how we could improve PowerShell and we&#39;ve come out with a <a href="https://github.com/chocolatey/choco/issues/8">competely internal host</a> that can Prompt and Read-Host in a way that times out and selects default values after a period of time. Speaking of PowerShell, how about some tab completion <code>choco &amp;lt;tab&amp;gt;</code> to <code>choco install node&amp;lt;tab&amp;gt;</code>? How about never having to <a href="https://github.com/chocolatey/choco/issues/664">close and reopen your shell again</a>?</p>
+<h2 id="june-17-2016"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.10+is%3Aclosed">0.9.10</a> (June 17, 2016)</h2>
+<p>The &quot;I got 99 problems, but a package manager ain&#39;t one&quot; release. With the release of 0.9.10 (or if you prefer 0.9.10.0), we&#39;re about to make everything 100% better in your Windows package management world. We&#39;ve addressed over 100 features and bugs in this release. We looked at how we could improve PowerShell and we&#39;ve come out with a <a href="https://github.com/chocolatey/choco/issues/8">competely internal host</a> that can Prompt and Read-Host in a way that times out and selects default values after a period of time. Speaking of PowerShell, how about some tab completion <code>choco &lt;tab&gt;</code> to <code>choco install node&lt;tab&gt;</code>? How about never having to <a href="https://github.com/chocolatey/choco/issues/664">close and reopen your shell again</a>?</p>
 <p>Alternative sources (<code>-source webpi</code>, <code>-s windowsfeature</code>, etc) are back! I mean, am I right?! Have you heard of auto uninstaller? If Chocolatey has installed something that works with Programs and Features, Chocolatey knows how to uninstall it without an uninstall script about 90+% of the time. This feature was in beta for the 0.9.9 series, it is on by default in 0.9.10 (unless you disabled it after trying it, you will need to reenable it, see <code>choco feature</code> for more details).</p>
 <p>Here&#39;s one you probably never knew existed - extensions. Chocolatey has had the ability to extend itself by adding PowerShell modules for years, and most folks either didn&#39;t know it existed or have never used them. We&#39;ve enhanced them a bit in preparation for the licensed version of Chocolatey.</p>
 <p>We redesigned our <code>choco new</code> default packaging template and we&#39;ve made managing templates as easy as managing packages.</p>
@@ -18,11 +18,7 @@
 <li><a href="https://github.com/chocolatey/choco/issues/668">sort by version</a></li>
 <li><a href="https://github.com/chocolatey/choco/issues/427">search with paging</a></li>
 </ul>
-<p>What will be highlighted:</p>
-<ul>
-<li>Introduce managing package templates, reintroduce extensions.</li>
-<li>Talk a little about what&#39;s coming with pro</li>
-</ul>
+<p>There are 150 tickets closed for this release! We&#39;ve included remediation steps for when a breaking change affects you. Mostly if you have been using Chocolatey in a recommended way, you won&#39;t even notice any adverse changes. There are a number of things we thought to highlight, and quite a few security enhancements coming in this release (look for the [Security] tag on the ticket summary).</p>
 <h3 id="breaking-changes">BREAKING CHANGES</h3>
 <ul>
 <li>Only fail automation scripts (chocolateyInstall.ps1) if the script returns non-zero exit code - see <a href="https://github.com/chocolatey/choco/issues/445">#445</a></li>
@@ -41,6 +37,10 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>PowerShell module functions adjusted for automatic documentation - see <a href="https://github.com/chocolatey/choco/issues/697">#697</a></li>
 </ul>
 <p>If you were using any of the functions in a non-recommended way or not compliant with the examples, you are going to find breakages in the functions as some of the things that were called out as non-optional are now enforced. This shouldn&#39;t affect most folks.</p>
+<ul>
+<li>[Security] Explicit permissions - remove inheritance/lock down to admins - see <a href="https://github.com/chocolatey/choco/issues/398">#398</a></li>
+</ul>
+<p>This further restricts the default installation location by removing all permissions and inheritance of permissions, explicitly giving Administrator/LocalSystem to Full access, and Users are granted Read and Execute.</p>
 <h3 id="known-issues">KNOWN ISSUES</h3>
 <ul>
 <li><a href="https://github.com/chocolatey/choco/labels/Bug">Known Issues</a></li>
@@ -57,7 +57,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Choco list/search should have exact filter search - see <a href="https://github.com/chocolatey/choco/issues/453">#453</a></li>
 <li>RefreshEnv (Refresh Environment Variables) Should also work in PowerShell - see <a href="https://github.com/chocolatey/choco/issues/664">#664</a></li>
 <li>Provide PowerShell tab completion for Chocolatey - see <a href="https://github.com/chocolatey/choco/issues/412">#412</a></li>
-<li>[Security] Sign the powershell scripts and assemblies - see <a href="https://github.com/chocolatey/choco/issues/501">#501</a></li>
+<li>[Security] Sign the PowerShell scripts and assemblies - see <a href="https://github.com/chocolatey/choco/issues/501">#501</a></li>
 <li>Add a <code>choco info</code> command to show info for one package - see <a href="https://github.com/chocolatey/choco/issues/644">#644</a></li>
 <li>Mark packages pending until install completes successfully - see <a href="https://github.com/chocolatey/choco/issues/198">#198</a></li>
 <li>Resolve sources by name - see <a href="https://github.com/chocolatey/choco/issues/356">#356</a></li>
@@ -126,6 +126,9 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Logging of upgrade messages - placement of some messages is incorrect - see <a href="https://github.com/chocolatey/choco/issues/557">#557</a></li>
 <li>Fix - Get-WebFile fails with - The term &quot;˜//continue&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/789">#789</a></li>
 <li>Fix - Unable to read registry snapshot file - see <a href="https://github.com/chocolatey/choco/issues/487">#487</a></li>
+<li>Fix - Pro/Business - Licensed version has an incorrect dependency on PowerShell assemblies and will only load v3 and above - see <a href="https://github.com/chocolatey/choco/issues/799">#799</a></li>
+<li>Fix - Exit codes in package scripts should work - see <a href="https://github.com/chocolatey/choco/issues/802">#802</a></li>
+<li>Fix - Running choco new creates a bad nuspec - see <a href="https://github.com/chocolatey/choco/issues/801">#801</a></li>
 </ul>
 <h3 id="improvements">IMPROVEMENTS</h3>
 <ul>
@@ -181,6 +184,9 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Web functions - Check for local file and return early - see <a href="https://github.com/chocolatey/choco/issues/781">#781</a></li>
 <li>Refresh environment variables after each install - see <a href="https://github.com/chocolatey/choco/issues/439">#439</a></li>
 <li>Capture Arguments for a Package during Install/Upgrade - see <a href="https://github.com/chocolatey/choco/issues/358">#358</a></li>
+<li>If config update fails, log to debug instead of warn - see <a href="https://github.com/chocolatey/choco/issues/793">#793</a></li>
+<li>Remove extra empty lines when doing choco upgrade all - see <a href="https://github.com/chocolatey/choco/issues/796">#796</a></li>
+<li>Mention required permissions if user has no access - see <a href="https://github.com/chocolatey/choco/issues/794">#794</a></li>
 <li>Pro/Business - Also check for license in User Profile location - see <a href="https://github.com/chocolatey/choco/issues/606">#606</a></li>
 <li>Pro/Business - Set download cache information if available - see <a href="https://github.com/chocolatey/choco/issues/562">#562</a></li>
 <li>Pro/Business - Allow commands to be added - see <a href="https://github.com/chocolatey/choco/issues/583">#583</a></li>
@@ -190,6 +196,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Pro/Business - add ignore invalid switches/parameters - see <a href="https://github.com/chocolatey/choco/issues/586">#586</a></li>
 <li>Pro/Business - Don&#39;t prompt to upload file for virus scanning if it is too large - see <a href="https://github.com/chocolatey/choco/issues/695">#695</a></li>
 <li>Pro/Business - add &quot;˜support&#39; command - see <a href="https://github.com/chocolatey/choco/issues/745">#745</a></li>
+<li>Pro/Business - Adjust environment settings warning to suggest upgrade - see <a href="https://github.com/chocolatey/choco/issues/795">#795</a></li>
 <li>API - Add the ability to retrieve package count for a Source - see <a href="https://github.com/chocolatey/choco/issues/431">#431</a></li>
 <li>API - Chocolatey Lib still marks vital package information as internal - see <a href="https://github.com/chocolatey/choco/issues/433">#433</a></li>
 <li>API - Add paging to list command - see <a href="https://github.com/chocolatey/choco/issues/427">#427</a></li>
