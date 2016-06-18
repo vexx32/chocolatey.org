@@ -32,9 +32,6 @@ $chocolateyVersion = $env:chocolateyVersion
 if (![string]::IsNullOrEmpty($chocolateyVersion)){
   Write-Output "Downloading specific version of Chocolatey: $chocolateyVersion"
   $url = "https://chocolatey.org/api/v2/package/chocolatey/$chocolateyVersion"
-  # introduced when there were performance issues - kept around in case we
-  # run into them again.
-  #$url = "https://packages.chocolatey.org/chocolatey.$chocolateyVersion.nupkg"
 }
 
 $chocolateyDownloadUrl = $env:chocolateyDownloadUrl
@@ -181,8 +178,8 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # SIG # Begin signature block
 # MIINWwYJKoZIhvcNAQcCoIINTDCCDUgCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAR0tHHmBEYN3cc
-# FcxOqqcHLjtQ+UqXoyYKjL8fdhF4nqCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCETV6AHwBvLzR2
+# SQzgjK1zvLAFg4YSmgAEsbVGE+cXJaCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -243,12 +240,12 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # bTExMC8GA1UEAxMoRGlnaUNlcnQgU0hBMiBBc3N1cmVkIElEIENvZGUgU2lnbmlu
 # ZyBDQQIQB3Rm7aJnbzrskhfSMFNxEDANBglghkgBZQMEAgEFAKCBhDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDGuPXi
-# /kO1V+ikZZ4KWxYNuK55/olTfmGXJbOi299EfzANBgkqhkiG9w0BAQEFAASCAQB+
-# Kj7u5zPMuTFUIfc6Nqk7Td2FU4IvcyNFVDrJBurFfa3alI4YaS75NBbIRZvAg6A+
-# qYuOZq+ktPQxt+crGtod9paH4TGCJ14w+pjpHTwaInEFecOBsXzyh49icGb37VZd
-# j7Fil2citR/TehCY/g+gj0X/60wuMcTXVxN7pxQzTD3/vw43g+vf9PyJKUBY6FyA
-# 7NU263gDixWDOXQYs3ocd8MFote0Z31qHFFnC5YeOgiwT17jOOf46n8eF0WMA38o
-# sDy+Y6X9TUu6HKe+l1xxuIjU4HD3X+tqcNCzrWeFikbjHvpJTJcxQt6/qINz1isk
-# 0nEIqWOyrYrMF9F7ikBy
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCAo7hJA
+# pmgz2QOH9jT7uvYWGozDBSUYyAVLca1sJkOsfjANBgkqhkiG9w0BAQEFAASCAQCg
+# ZKp4wgOnQ4ui0Ieb8iycknRU2vvfNZPRNN3CYYUC231qxGhqhdVZ/bnzXPZAGPpS
+# HsB90yOHp+Bisb4PzZiurAb2sub6HxKBcrPu+B1RKoPUr7bdekpMzclQnbIQwfmf
+# xw39twnfzNwv9Robv6jAIJzzOwlVlbbiWs4FLF8U0gnMmJqUTTbVmoCxwJZ62oRK
+# 47BgUP69UFYlamT4F5/edSK4qbItriCKWX5bqO/2D3ZiPfLOFU74Ubqz2c+u6vb3
+# maeq2T24HrFiwZZXW0qr0umrgxmKiGBg546Au1U88vndut4Zj2XAgAG8sSv20vI4
+# izpfRGTFBF+0Uiyg4Fas
 # SIG # End signature block
