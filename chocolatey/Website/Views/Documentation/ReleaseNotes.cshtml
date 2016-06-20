@@ -4,6 +4,26 @@
 
 <article>
 <h1 id="release-notes">Release Notes</h1>
+<h2 id="june-19-2016"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.10.2+is%3Aclosed">0.9.10.2</a> (June 19, 2016)</h2>
+<h3 id="bug-fixes">BUG FIXES</h3>
+<ul>
+<li>Fix - Chocolatey Licensed is unable to find 0.9.10.x (only 0.9.10.0) - see <a href="https://github.com/chocolatey/choco/issues/814">#814</a></li>
+<li>Fix - Logging is broken in some packages due to new TEMP directory - see <a href="https://github.com/chocolatey/choco/issues/813">#813</a></li>
+<li>[API] Fix - When performing an Install/Uninstall/Upgrade operation through the API, an error is throw for &quot;chocolatey.resources&quot; - see <a href="https://github.com/chocolatey/choco/issues/811">#811</a></li>
+</ul>
+<h3 id="improvements">IMPROVEMENTS</h3>
+<ul>
+<li>Ensure log file path exists - and fix the log file arguments if necessary - see <a href="https://github.com/chocolatey/choco/issues/758">#758</a></li>
+</ul>
+<h2 id="june-18-2016"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.10.1+is%3Aclosed">0.9.10.1</a> (June 18, 2016)</h2>
+<h3 id="bug-fixes-1">BUG FIXES</h3>
+<ul>
+<li>Fix - Cannot bind argument to parameter &quot;˜exitCode&#39; because it is null - see <a href="https://github.com/chocolatey/choco/issues/810">#810</a></li>
+</ul>
+<h3 id="improvements-1">IMPROVEMENTS</h3>
+<ul>
+<li>[Security] Upgrade to 7zip 16.02 to overcome CVE–2016–2334/CVE–2016–2335 - see <a href="https://github.com/chocolatey/choco/issues/812">#812</a></li>
+</ul>
 <h2 id="june-17-2016"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.10+is%3Aclosed">0.9.10</a> (June 17, 2016)</h2>
 <p>The &quot;I got 99 problems, but a package manager ain&#39;t one&quot; release. With the release of 0.9.10 (or if you prefer 0.9.10.0), we&#39;re about to make everything 100% better in your Windows package management world. We&#39;ve addressed over 100 features and bugs in this release. We looked at how we could improve PowerShell and we&#39;ve come out with a <a href="https://github.com/chocolatey/choco/issues/8">competely internal host</a> that can Prompt and Read-Host in a way that times out and selects default values after a period of time. Speaking of PowerShell, how about some tab completion <code>choco &lt;tab&gt;</code> to <code>choco install node&lt;tab&gt;</code>? How about never having to <a href="https://github.com/chocolatey/choco/issues/664">close and reopen your shell again</a>?</p>
 <p>Alternative sources (<code>-source webpi</code>, <code>-s windowsfeature</code>, etc) are back! I mean, am I right?! Have you heard of auto uninstaller? If Chocolatey has installed something that works with Programs and Features, Chocolatey knows how to uninstall it without an uninstall script about 90+% of the time. This feature was in beta for the 0.9.9 series, it is on by default in 0.9.10 (unless you disabled it after trying it, you will need to reenable it, see <code>choco feature</code> for more details).</p>
@@ -67,7 +87,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Pro/Business - Private CDN cache for downloads - see <a href="https://chocolatey.org/docs/features-private-cdn">private CDN cache</a></li>
 <li>Pro/Business - Sync &quot;choco installed status&quot; with &quot;Windows installed status&quot; - see <a href="https://github.com/chocolatey/choco/issues/567">#567</a></li>
 </ul>
-<h3 id="bug-fixes">BUG FIXES</h3>
+<h3 id="bug-fixes-2">BUG FIXES</h3>
 <ul>
 <li>[Security] Fix - Only load the Chocolatey PowerShell module from a known location - see <a href="https://github.com/chocolatey/choco/issues/560">#560</a></li>
 <li>[Security] Fix - Package source authentication at <a href="http://location/path" class="uri">http://location/path</a> doesn&#39;t also use <a href="http://location/" class="uri">http://location/</a> (base url) - see <a href="https://github.com/chocolatey/choco/issues/466">#466</a></li>
@@ -130,7 +150,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Exit codes in package scripts should work - see <a href="https://github.com/chocolatey/choco/issues/802">#802</a></li>
 <li>Fix - Running choco new creates a bad nuspec - see <a href="https://github.com/chocolatey/choco/issues/801">#801</a></li>
 </ul>
-<h3 id="improvements">IMPROVEMENTS</h3>
+<h3 id="improvements-2">IMPROVEMENTS</h3>
 <ul>
 <li>AutoUninstaller is on by default - see <a href="https://github.com/chocolatey/choco/issues/308">#308</a></li>
 <li>Use the actual download file name instead of providing one - see <a href="https://github.com/chocolatey/choco/issues/435">#435</a></li>
@@ -204,18 +224,18 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>API - Switch dll to .NET Client Profile - see <a href="https://github.com/chocolatey/choco/issues/680">#680</a></li>
 </ul>
 <h2 id="march-18-2016"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.12+is%3Aclosed">0.9.9.12</a> (March 18, 2016)</h2>
-<h3 id="bug-fixes-1">BUG FIXES</h3>
+<h3 id="bug-fixes-3">BUG FIXES</h3>
 <ul>
 <li>Fix - PowerShell &quot;Collection is read-only&quot; - see <a href="https://github.com/chocolatey/choco/issues/659">#659</a></li>
 </ul>
 <h2 id="october-6-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.11+is%3Aclosed">0.9.9.11</a> (October 6, 2015)</h2>
-<h3 id="bug-fixes-2">BUG FIXES</h3>
+<h3 id="bug-fixes-4">BUG FIXES</h3>
 <ul>
 <li>Fix - Pin list is broken - see <a href="https://github.com/chocolatey/choco/issues/452">#452</a></li>
 </ul>
 <h2 id="october-3-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.10+is%3Aclosed">0.9.9.10</a> (October 3, 2015)</h2>
 <p>Not to be confused with 0.9.10 (this is not that version). This fixes a small but extremely significant issue with relation to configuration managers and other tools that use choco.</p>
-<h3 id="bug-fixes-3">BUG FIXES</h3>
+<h3 id="bug-fixes-5">BUG FIXES</h3>
 <ul>
 <li>Fix - List output for other tools messed up in 0.9.9.9 (pipe separator missing) - see <a href="https://github.com/chocolatey/choco/issues/450">#450</a></li>
 <li>Fix - accidentally escaped characters in &quot;new&quot; -help - see <a href="https://github.com/chocolatey/choco/issues/447">#447</a></li>
@@ -228,7 +248,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Create Custom Package Templates - see <a href="https://github.com/chocolatey/choco/issues/76">#76</a></li>
 <li>Proxy Support - see <a href="https://github.com/chocolatey/choco/issues/243">#243</a></li>
 </ul>
-<h3 id="bug-fixes-4">BUG FIXES</h3>
+<h3 id="bug-fixes-6">BUG FIXES</h3>
 <ul>
 <li>Fix - [Security] Remove rollback should validate it exists in choco install backup directory - see <a href="https://github.com/chocolatey/choco/issues/387">#387</a></li>
 <li>Fix - Ensure chocolatey is installed into the lib folder during initial install - see <a href="https://github.com/chocolatey/choco/issues/414">#414</a></li>
@@ -245,7 +265,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Process with an id of is not running errors on 0.9.9.8 - see <a href="https://github.com/chocolatey/choco/issues/346">#346</a></li>
 <li>Fix - Export cmdlets for automation scripts - see <a href="https://github.com/chocolatey/choco/issues/422">#422</a></li>
 </ul>
-<h3 id="improvements-1">IMPROVEMENTS</h3>
+<h3 id="improvements-3">IMPROVEMENTS</h3>
 <ul>
 <li>[Security] Add SHA–2 (sha256 / sha512) to checksum - see <a href="https://github.com/chocolatey/choco/issues/113">#113</a></li>
 <li>Sources should have explicit priority order- see <a href="https://github.com/chocolatey/choco/issues/71">#71</a></li>
@@ -263,12 +283,12 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Enhance Package Template for 0.9.9.9 - see <a href="https://github.com/chocolatey/choco/issues/366">#366</a></li>
 </ul>
 <h2 id="june-26-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.8+is%3Aclosed">0.9.9.8</a> (June 26, 2015)</h2>
-<h3 id="bug-fixes-5">BUG FIXES</h3>
+<h3 id="bug-fixes-7">BUG FIXES</h3>
 <ul>
 <li>Fix: choco install -y C: deletes all files - see <a href="https://github.com/chocolatey/choco/issues/341">#341</a></li>
 <li>Fix: Read-Host halts scripts rather than prompt for input - see <a href="https://github.com/chocolatey/choco/issues/219">#219</a></li>
 </ul>
-<h3 id="improvements-2">IMPROVEMENTS</h3>
+<h3 id="improvements-4">IMPROVEMENTS</h3>
 <ul>
 <li>Download Progress Bar is Missing - see <a href="https://github.com/chocolatey/choco/issues/56">#56</a></li>
 </ul>
@@ -284,7 +304,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Enhance the nuspec - first wave - see <a href="https://github.com/chocolatey/choco/issues/205">#205</a></li>
 <li>Uninstaller Service Enhancements - see <a href="https://github.com/chocolatey/choco/issues/305">#305</a></li>
 </ul>
-<h3 id="bug-fixes-6">BUG FIXES</h3>
+<h3 id="bug-fixes-8">BUG FIXES</h3>
 <ul>
 <li>When uninstall fails, do not continue removing files - see <a href="https://github.com/chocolatey/choco/issues/315">#315</a></li>
 <li>Do not run autouninstaller if the package result is already a failure - see <a href="https://github.com/chocolatey/choco/issues/323">#323</a></li>
@@ -298,7 +318,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Choco pin list is not returning a list - see <a href="https://github.com/chocolatey/choco/issues/302">#302</a></li>
 <li>Fix - A pin is not created for existing installations (prior to new choco) - see <a href="https://github.com/chocolatey/choco/issues/60">#60</a></li>
 </ul>
-<h3 id="improvements-3">IMPROVEMENTS</h3>
+<h3 id="improvements-5">IMPROVEMENTS</h3>
 <ul>
 <li>Allow upgrade to always install missing packages - see <a href="https://github.com/chocolatey/choco/issues/300">#300</a></li>
 <li>Enhance Templates - see <a href="https://github.com/chocolatey/choco/issues/296">#296</a></li>
@@ -313,7 +333,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <ul>
 <li>Outdated Command - Use <code>choco outdated</code> to see outdated packages - see <a href="https://github.com/chocolatey/choco/issues/170">#170</a></li>
 </ul>
-<h3 id="bug-fixes-7">BUG FIXES</h3>
+<h3 id="bug-fixes-9">BUG FIXES</h3>
 <ul>
 <li>Fix - NotSilent Switch Not Working - see <a href="https://github.com/chocolatey/choco/issues/281">#281</a></li>
 <li>Fix - Silent installation of choco without admin is not possible - see <a href="https://github.com/chocolatey/choco/issues/274">#274</a></li>
@@ -325,7 +345,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - SHA1 checksum compared as MD5 for Install-ChocolateyZipPackage - see <a href="https://github.com/chocolatey/choco/issues/253">#253</a></li>
 <li>Fix - Auto uninstaller strips off &quot;/&quot; and &quot;-&quot; in arguments - see <a href="https://github.com/chocolatey/choco/issues/212">#212</a></li>
 </ul>
-<h3 id="improvements-4">IMPROVEMENTS</h3>
+<h3 id="improvements-6">IMPROVEMENTS</h3>
 <ul>
 <li>Uninstall removes all installed files if unchanged - see <a href="https://github.com/chocolatey/choco/issues/121">#121</a></li>
 <li>Auto uninstaller should convert /I to /X for Msi Uninstalls - see <a href="https://github.com/chocolatey/choco/issues/271">#271</a></li>
@@ -337,7 +357,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <ul>
 <li>Renamed short option <code>p</code> to <code>i</code> for list --include-programs so that <code>p</code> could be ubiquitous for password across commands that optionally can pass a password - see <a href="https://github.com/chocolatey/choco/issues/240">#240</a></li>
 </ul>
-<h3 id="bug-fixes-8">BUG FIXES</h3>
+<h3 id="bug-fixes-10">BUG FIXES</h3>
 <ul>
 <li>Fix - Secure Sources Not Working - see <a href="https://github.com/chocolatey/choco/issues/240">#240</a></li>
 <li>Fix - Generate-BinFile / Remove-BinFile - see <a href="https://github.com/chocolatey/choco/issues/230">#230</a></li>
@@ -350,7 +370,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - cpack hangs on security related issue - see <a href="https://github.com/chocolatey/choco/issues/160">#160</a></li>
 <li>Fix - spelling error in &quot;package has been upgradeed successfully&quot; - see <a href="https://github.com/chocolatey/choco/issues/64">#64</a></li>
 </ul>
-<h3 id="improvements-5">IMPROVEMENTS</h3>
+<h3 id="improvements-7">IMPROVEMENTS</h3>
 <ul>
 <li>Api Key and Source matching could be more intuitive - see <a href="https://github.com/chocolatey/choco/issues/238">#228</a></li>
 <li>Remove warning about allowGlobalConfirmation being enabled - see <a href="https://github.com/chocolatey/choco/issues/237">#237</a></li>
@@ -361,16 +381,16 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Do not print PowerShell install/update scripts by default - see <a href="https://github.com/chocolatey/choco/issues/182">#182</a></li>
 </ul>
 <h2 id="march-30-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.4+is%3Aclosed">0.9.9.4</a> (March 30, 2015)</h2>
-<h3 id="bug-fixes-9">BUG FIXES</h3>
+<h3 id="bug-fixes-11">BUG FIXES</h3>
 <ul>
 <li>Fix - The term &quot;˜false&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/215">#215</a></li>
 </ul>
-<h3 id="improvements-6">IMPROVEMENTS</h3>
+<h3 id="improvements-8">IMPROVEMENTS</h3>
 <ul>
 <li>Some packages use non-API variables like $installArguments - see <a href="https://github.com/chocolatey/choco/issues/207">#207</a></li>
 </ul>
 <h2 id="march-29-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.3+is%3Aclosed">0.9.9.3</a> (March 29, 2015)</h2>
-<h3 id="bug-fixes-10">BUG FIXES</h3>
+<h3 id="bug-fixes-12">BUG FIXES</h3>
 <ul>
 <li>Fix - Install .NET Framework immediately during install - see <a href="https://github.com/chocolatey/choco/issues/168">#168</a></li>
 <li>Fix - Do not error on Set-Acl during install/upgrade - see <a href="https://github.com/chocolatey/choco/issues/163">#163</a></li>
@@ -379,7 +399,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Uninstaller check doesn&#39;t find 32-bit registry keys - see <a href="https://github.com/chocolatey/choco/issues/197">#197</a></li>
 <li>Fix - Uninstaller errors on short path to msiexec - see <a href="https://github.com/chocolatey/choco/issues/211">#211</a></li>
 </ul>
-<h3 id="improvements-7">IMPROVEMENTS</h3>
+<h3 id="improvements-9">IMPROVEMENTS</h3>
 <ul>
 <li>Some packages use non-API variables like $installArguments - see <a href="https://github.com/chocolatey/choco/issues/207">#207</a></li>
 <li>Add Generate-BinFile to Helpers (widely used but never part of API) - see <a href="https://github.com/chocolatey/choco/issues/145">#145</a></li>
@@ -387,18 +407,18 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Get-ChocolateyWebFile should create path if it doesn&#39;t exist - see <a href="https://github.com/chocolatey/choco/issues/167">#167</a></li>
 </ul>
 <h2 id="march-6-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.2+is%3Aclosed">0.9.9.2</a> (March 6, 2015)</h2>
-<h3 id="bug-fixes-11">BUG FIXES</h3>
+<h3 id="bug-fixes-13">BUG FIXES</h3>
 <ul>
 <li>Fix - Allow passing install arguments again (regression in 0.9.9 series) - see <a href="https://github.com/chocolatey/choco/issues/150">#150</a></li>
 <li>Fix - Allow apostrophes to be used as quotes - quoting style that worked with previous client - see <a href="https://github.com/chocolatey/choco/issues/141">#141</a></li>
 <li>Fix - Shims write errors to stderr - see <a href="https://github.com/chocolatey/choco/issues/142">#142</a> and <a href="https://github.com/chocolatey/shimgen/issues/14">ShimGen #14</a></li>
 </ul>
-<h3 id="improvements-8">IMPROVEMENTS</h3>
+<h3 id="improvements-10">IMPROVEMENTS</h3>
 <ul>
 <li>Upgrade <code>-r</code> should always return a value - see <a href="https://github.com/chocolatey/choco/issues/153">#153</a></li>
 </ul>
 <h2 id="march-3-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.1+is%3Aclosed">0.9.9.1</a> (March 3, 2015)</h2>
-<h3 id="bug-fixes-12">BUG FIXES</h3>
+<h3 id="bug-fixes-14">BUG FIXES</h3>
 <ul>
 <li>Fix - Get-BinRoot broken - see <a href="https://github.com/chocolatey/choco/issues/144">#144</a></li>
 </ul>
@@ -474,7 +494,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <ol>
 <li><code>Install-ChocolateyShortcut</code> - see <a href="https://github.com/chocolatey/chocolatey/pull/238">Chocolatey #238</a>, <a href="https://github.com/chocolatey/chocolatey/issues/235">Chocolatey #235</a> and <a href="https://github.com/chocolatey/chocolatey/issues/218">Chocolatey #218</a></li>
 </ol>
-<h3 id="bug-fixes-13">BUG FIXES</h3>
+<h3 id="bug-fixes-15">BUG FIXES</h3>
 <p>Probably a lot of bug fixes that may not make it here, but here are the ones we know about.</p>
 <ul>
 <li>Fix - Cannot upgrade from prerelease to same version released - see <a href="https://github.com/chocolatey/chocolatey/issues/122">Chocolatey #122</a></li>
@@ -493,7 +513,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Regression in cver all in 0.9.8.27 - see <a href="https://github.com/chocolatey/chocolatey/issues/530">Chocolatey #530</a></li>
 <li>Fix - Certain installs and updates fail with a &quot;process with an Id of xxxx is not running&quot; error - see <a href="https://github.com/chocolatey/chocolatey/issues/603">Chocolatey #603</a></li>
 </ul>
-<h3 id="improvements-9">IMPROVEMENTS</h3>
+<h3 id="improvements-11">IMPROVEMENTS</h3>
 <ul>
 <li>[Security] Allow keeping <code>c:\chocolatey</code> install directory with environment variable - see <a href="https://github.com/chocolatey/choco/issues/17">#17</a></li>
 <li>[Security] Require switch on unofficial build - see <a href="https://github.com/chocolatey/choco/issues/36">#36</a></li>
