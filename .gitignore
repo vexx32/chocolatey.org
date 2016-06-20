@@ -8,6 +8,7 @@ App_Data
 /packages
 /chocolatey/Website/cassette-cache/
 /chocolatey/Website/Content/packageimages
+snags/
 _AzurePackage
 *.sln.docstates
 *.bak
