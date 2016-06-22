@@ -14,30 +14,30 @@
         <th>&nbsp;</th>
         <th>Open Source</th>
         <th>Pro</th>
+        <th>MSP</th>
         <th>Business</th>
-        <th>Enterprise</th>
       </thead>
       <tbody>
         <tr>
           <td></td>
           <td>For everyone</td>
           <td>The ultimate experience for individuals</td>
-          <td>For organizations that need a better <span title="Return On Investment">ROI</span> - save time and money</td>
-          <td>Like Business, but for organizations with 10K+ machines</td>
+          <td>Features and reliability for managed service providers</td>
+          <td>For organizations / enterprises that need a better <span title="Return On Investment">ROI</span> - save time and money</td>
         </tr> 
         <tr>
           <td>Pricing</td>
           <td>Free</td>
           <td>$8/mo* ($96/yr)</td>
           <td>Starts at $50/mo* ($600/yr)</td>
-          <td>Not yet available</td>
+          <td>Starts at $50/mo* ($600/yr) / Special pricing for qualified institutions!</td>
         </tr>
         <tr>
           <td></td>
           <td>No limit on machines</td>
           <td>Up to 5 machines</td>
+          <td>Starts at 100 machines</td>
           <td>Starts at 35 machines</td>
-          <td>Starts at 10K machines (Coming 3Q/4Q 2016)</td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade all software with one command!</a></td>
@@ -106,49 +106,49 @@
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">Runtime Malware/Virus Protection</a> - stay protected!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
+          <td>Generic Scanner Only</td>
           <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
-          <td>Synchronize with Programs and Features - stay synced up with updates and uninstalls!</td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Synchronize with Programs and Features</a> - stay synced up with updates and uninstalls!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
-          <td>Automatic package creation - Create packages directly from software installers in seconds!</td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Automatic package creation</a> - Create packages directly from software installers in seconds!</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
           <td>Internalize existing package resources - automatic recompile support removes internet access from existing packages!</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td>Priorization of Bugs and Features</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>        
         <tr>
           <td>Email Support</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
+          <td>4 incidents</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td>Phone Support</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>Available</td>
+          <td>&nbsp;</td>
           <td>Available</td>
         </tr>
 
@@ -159,13 +159,14 @@
             <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284622' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
           </td>
           <td>
-            <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact Us for More Information / Demo</a><br/>
-            OR:<br />
-            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284618' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
+            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3307686' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
           </td>
           <td>
-            Over 10K machines?<br />
-            <a href="http://eepurl.com/bVlxUP">Sign up for early access!</a>
+            <ul>
+              <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us for demo, 10K+ machines, or more information</a></li>
+            </ul>
+            OR:<br />
+            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284618' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
           </td>
         </tr>
         <tr>
@@ -184,28 +185,30 @@
 
     <h3>Tell Me More</h3>
     <p>Pro is for individuals (like <em><strong>you</strong></em>) that want the ultimate Chocolatey experience! Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 5 machines for $8/month (about the price of a single lunch outing). You can use Chocolatey Pro at work provided you do not go over the 5 machine limit and are not depending on it for your production servers (it's not meant for production use).</p>
-    <p>Business editions are for organizations that need more out of their software management solutions and that really want to get a handle on the chaos.</p>
-    <p>All licensed versions build on top of the already great features that are available in the FOSS version. When you need more features and better integration with Windows systems, Pro and Business editions have you covered.</p>
+    <p>MSP editions are for managed service providers that want to provide better functionality for their customers.</p>
+    <p>Business editions are for organizations and enterprises that need a complete software management lifecycle solution and want to really get a handle on the chaos.</p>
+    <p>All licensed versions build on top of the already great features that are available in the FOSS version. When you need more features and better integration with Windows systems, Pro, MSP, and Business editions have you covered.</p>
 
     <h3>I'm An Organization Ordering Licenses For My Development Staff, Any Recommendations?</h3>
     <p>While you can purchase Pro licenses for each of your developers, we recommend you take a look at the Start Up edition of the Business license. It is going to give you the best option at only $600 per year for up to 35 machines.</p>
     
     <h3>Is the open source license business friendly?</h3>
-    <p>Yes, it is. Chocolatey carries a FOSS Apache 2.0 license, which is business friendly. You can use Chocolatey and most of its infrastructure without cost. However the Business edition offers better features and support that far outweigh any initial expenses! Given the features supporting package creation and maintenance alone, the time-savings is far greater than the cost!</p>
+    <p>Yes, it is. Chocolatey carries a FOSS Apache 2.0 license, which is business friendly. You can use Chocolatey and most of its infrastructure without cost. However the MSP and Business editions offers better features and support that far outweigh any initial expenses! Given the Business features supporting package creation and maintenance alone, the time-savings is far greater than the cost!</p>
 
     <h3>What Is The Refund Policy?</h3>
-    <p>We provide a full refund the first 30 days. After that Business editions are prorated over the remainder of the year. Pro editions are already very discounted so they prorate over the first six months.</p>
+    <p>We provide a full refund the first 30 days. After that Business editions are prorated over the remainder of the year. MSP and Pro editions are already very discounted so they prorate over the first six months.</p>
 
     <h3>What Counts As a License?</h3>
     <p>Every machine with an active license is counted, no matter if it is physical, virtual, in the cloud, or in test environments. An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshhold.</p>
-    
+ 
     <h3>What Sizes Do Business Editions Come In?</h3>
-    <p>We are excited to offer the following Business editions at a cost to you of around $1.30 per license per month:</p>
+    <p>We are excited to offer the following Business editions at a cost to you of around $1.30 per license per month. The price per machine goes down as you purchase the larger packs. Here are the sizes:</p>
     <ul class="m-b p--s p-l--l docs">
       <li>Startup - up to 35 licenses</li>
       <li>Small - 150 licenses per pack</li>
       <li>Medium - 500 licenses per pack</li>
       <li>Large - 2,000 licenses per pack</li>
+      <li>Enterprise - 10,000 licenses per pack. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</li>
     </ul>
   
     <h3>What Are These "Packs"?</h3>
@@ -213,9 +216,31 @@
   
     <h3>Can I Mix And Match The Business Edition Sizes?</h3>
     <p>We've come up with a great price point and we offer you the ability to purchase multiple packs of the same edition to save you money in not needing to go up to the next size. It keeps things simple and easy. If you are a business with 3,500 computers, you would need two Large Business packs.</p>
+    
+    <h3>What is the Difference Between the MSP and Business Editions?</h3>
+    <ul class="m-b p--s p-l--l docs">
+      <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The MSP edition only has a subset of the features including synchronize and the directory switch.</li>
+      <li>Support - Support in the MSP edition is limited to 4 support incidents annually, where Business editions come with standard support.</li>
+      <li>Pricing - The pricing for Business editions are around $1.30 per license per month where the MSP edition is priced at $0.50 per license per month.</li>
+    </ul>
+
+    <h3>How is the MSP Edition Priced?</h3>
+    <p>The pricing for Chocolatey MSP Edition is competitively priced at $0.50 per license per month with features that service providers are looking to provide for their constituents. These are purchased in packs of 100. If you need 2,000 licenses, select Order Now and set the quantity to 20. Then update the total. Once everything looks good, continue with your order.</p>
+    
+    <h3>We Are Not a Managed Service Provider, Can We Purchase the MSP Edition?</h3>
+    <p>The MSP edition requires verification. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> to see if there are options we can work out with you regarding the Business edition.</p>
 
     <h3>How Does Standard Support Work?</h3>
-    <p>Unless you have an explicit support contract, you are able to contact us through a special email address. This gives you a private support channel to communicate with us about bugs and feature requests. We won't limit this support channel unless we find we need to (if it is being abused, etc). We do provide prioritization of features and bugs for customers.</p>
+    <p>Unless you have an explicit support contract, you are able to contact us through a special email address. This gives you a private support channel to communicate with us about bugs and feature requests. This support channel is not limited for Pro/Business licensed editions. We won't limit this support channel unless we find we need to (if it is being abused, etc). We do provide prioritization of features and bugs for customers. MSP editions carry different support (see next question).</p>
+    
+    <h3>How Does MSP Support Work?</h3>
+    <p>You are limited to 4 support incidents annually. If an incident is found to be a bug with Chocolatey, it will not count towards your incident count.</p>
+    
+    <h3>We Are an MSP, Can We Purchase The Business Edition For the Better Features and Support?</h3>
+    <p>Absolutely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for more details.</p>
+
+    <h3>How Long Does it Take to Get My Licenses?</h3>
+    <p>Once we have received your order successfully, you will receive your licenses with 1-2 business days!</p>
     
     <h3>How Do I Get Support For A Package?</h3>
     <p>We do not have support for packages found on Chocolatey.org - those are considered community packages and should not be used for commercial purposes. Package issues should follow the package triage proces. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Read more...</a></p>
