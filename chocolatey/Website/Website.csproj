@@ -1325,6 +1325,9 @@
     <Content Include="Views\Documentation\HelpersUninstallChocolateyEnvironmentVariable.cshtml" />
     <Content Include="Views\Documentation\CommandsDownload.cshtml" />
     <Content Include="Views\Documentation\HelpersGetUninstallRegistryKey.cshtml" />
+    <Content Include="Views\Documentation\LogoUsePolicy.cshtml" />
+    <Content Include="Views\Documentation\FeaturesSynchronize.cshtml" />
+    <Content Include="Views\Documentation\FeaturesCreatePackagesFromInstallers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
