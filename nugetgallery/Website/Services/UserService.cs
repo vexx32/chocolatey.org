@@ -6,16 +6,16 @@ namespace NuGetGallery
 {
     public class UserService : IUserService
     {
-        readonly GallerySetting settings;
+        readonly IConfiguration config;
         readonly ICryptographyService cryptoSvc;
         readonly IEntityRepository<User> userRepo;
 
         public UserService(
-            GallerySetting settings,
+            IConfiguration config,
             ICryptographyService cryptoSvc,
             IEntityRepository<User> userRepo)
         {
-            this.settings = settings;
+            this.config = config;
             this.cryptoSvc = cryptoSvc;
             this.userRepo = userRepo;
         }
@@ -49,7 +49,7 @@ namespace NuGetGallery
                     PasswordHashAlgorithm = Constants.PBKDF2HashAlgorithmId,
                 };
 
-            if (!settings.ConfirmEmailAddresses)
+            if (!config.ConfirmEmailAddresses)
             {
                 newUser.ConfirmEmailAddress();
             }

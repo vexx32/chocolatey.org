@@ -29,9 +29,9 @@ namespace NuGetGallery
     public class MessageService : IMessageService
     {
         private readonly IMailSender mailSender;
-        private readonly GallerySetting settings;
+        private readonly IConfiguration settings;
 
-        public MessageService(IMailSender mailSender, GallerySetting settings)
+        public MessageService(IMailSender mailSender, IConfiguration settings)
         {
             this.mailSender = mailSender;
             this.settings = settings;

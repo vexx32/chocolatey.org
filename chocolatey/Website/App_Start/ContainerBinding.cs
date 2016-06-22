@@ -45,17 +45,17 @@ namespace NuGetGallery
             IConfiguration configuration = new Configuration();
             container.Register(() => configuration, Lifestyle.Singleton);
 
-            var gallerySetting = new Lazy<GallerySetting>(
-                () =>
-                {
-                    using (var entitiesContext = new EntitiesContext())
-                    {
-                        var settingsRepo = new EntityRepository<GallerySetting>(entitiesContext);
-                        return settingsRepo.GetAll().FirstOrDefault();
-                    }
-                });
+            //var gallerySetting = new Lazy<GallerySetting>(
+            //    () =>
+            //    {
+            //        using (var entitiesContext = new EntitiesContext())
+            //        {
+            //            var settingsRepo = new EntityRepository<GallerySetting>(entitiesContext);
+            //            return settingsRepo.GetAll().FirstOrDefault();
+            //        }
+            //    });
 
-            container.Register(() => gallerySetting.Value);
+            //container.Register(() => gallerySetting.Value);
             //Bind<GallerySetting>().ToMethod(c => gallerySetting.Value);
 
             if (configuration.UseCaching)
@@ -90,7 +90,7 @@ namespace NuGetGallery
             var mailSenderThunk = new Lazy<IMailSender>(
                 () =>
                 {
-                    var settings = container.GetInstance<GallerySetting>();
+                    var settings = container.GetInstance<IConfiguration>();
                     if (settings.UseSmtp)
                     {
                         var mailSenderConfiguration = new MailSenderConfiguration

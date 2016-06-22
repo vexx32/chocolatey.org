@@ -30,13 +30,28 @@ namespace NuGetGallery
 
         string GetSiteRoot(bool useHttps);
 
+        string GalleryOwnerName { get; }
+        string GalleryOwnerEmail { get; }
+        bool ConfirmEmailAddresses { get; }
+
         string S3Bucket { get; }
         string PackagesUrl { get; }
         string S3AccessKey { get; }
         string S3SecretKey { get; }
         string SqsServiceUrl { get; }
+
+        bool UseSmtp { get;  }
+        string SmtpHost { get; }
+        string SmtpUsername { get;}
+        string SmtpPassword { get; }
+        int? SmtpPort { get; }
         bool SmtpEnableSsl { get; }
+        
+
         bool UseCaching { get; }
         bool HostImages { get; }
+        int PackageOperationsUserKey { get; }
+        string ScanResultsKey { get; }
+
     }
 }

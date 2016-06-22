@@ -70,7 +70,6 @@ namespace NuGetGallery
         {
             ModelBinders.Binders.Add(typeof(PackageScanResult), new BaseModelBinder<PackageScanResult>());
 
-
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new CSharpRazorViewEngine());
 

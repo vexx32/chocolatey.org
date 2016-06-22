@@ -77,6 +77,12 @@ namespace NuGetGallery
 
         public string AzureCdnHost { get { return ReadAppSettings("AzureCdnHost"); } }
 
+        public string GalleryOwnerName { get { return ReadAppSettings("GalleryOwnerName", (value) => value ?? string.Empty); } }
+
+        public string GalleryOwnerEmail { get { return ReadAppSettings("GalleryOwnerEmail", (value) => value ?? string.Empty); } }
+
+        public bool ConfirmEmailAddresses { get { return ReadAppSettings("ConfirmEmailAddresses", (value) => bool.Parse(value ?? bool.TrueString)); } }
+
         public string S3Bucket { get { return ReadAppSettings("S3Bucket", (value) => value ?? string.Empty); } }
 
         public string PackagesUrl { get { return ReadAppSettings("PackagesUrl", (value) => value ?? string.Empty); } }
@@ -87,6 +93,16 @@ namespace NuGetGallery
 
         public string SqsServiceUrl { get { return ReadAppSettings("SqsServiceUrl", (value) => value ?? string.Empty); } }
 
+        public bool UseSmtp { get { return ReadAppSettings("UseSmtp", (value) => bool.Parse(value ?? bool.FalseString)); } }
+        
+        public string SmtpHost { get { return ReadAppSettings("SmtpHost", (value) => value ?? string.Empty); }  }
+
+        public string SmtpUsername { get { return ReadAppSettings("SmtpUsername", (value) => value ?? string.Empty); } }
+        
+        public string SmtpPassword { get { return ReadAppSettings("SmtpPassword", (value) => value ?? string.Empty); } }
+
+        public int? SmtpPort { get { return ReadAppSettings("SmtpPort", (value) => int.Parse(value)); } }
+
         public bool SmtpEnableSsl { get { return ReadAppSettings("SmtpEnableSsl", (value) => bool.Parse(value ?? bool.TrueString)); } }
 
         public string ModerationEmail { get { return ReadAppSettings("ModerationEmail", (value) => value ?? string.Empty); } }
@@ -94,6 +110,10 @@ namespace NuGetGallery
         public bool UseCaching { get { return ReadAppSettings("UseCaching", (value) => bool.Parse(value ?? bool.TrueString)); } }
 
         public bool HostImages { get { return ReadAppSettings("HostImages", (value) => bool.Parse(value ?? bool.TrueString)); } }
+
+        public int PackageOperationsUserKey { get { return ReadAppSettings("PackageOperationsUserKey", (value) => int.Parse(value)); } }
+
+        public string ScanResultsKey { get { return ReadAppSettings("ScanResultsKey", (value) => value ?? string.Empty); } }
 
         protected virtual string GetConfiguredSiteRoot()
         {

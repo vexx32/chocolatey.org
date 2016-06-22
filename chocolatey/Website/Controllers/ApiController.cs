@@ -36,9 +36,9 @@ namespace NuGetGallery
         private readonly IUserService userSvc;
         private readonly IPackageFileService packageFileSvc;
         private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
-        private readonly GallerySetting settings;
+        private readonly IConfiguration settings;
 
-        public ApiController(IPackageService packageSvc, IScanService scanSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, GallerySetting settings)
+        public ApiController(IPackageService packageSvc, IScanService scanSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration settings)
         {
             this.packageSvc = packageSvc;
             this.scanSvc = scanSvc;

@@ -24,9 +24,6 @@ namespace NuGetGallery.Migrations
 {
     public class MigrationsConfiguration : DbMigrationsConfiguration<EntitiesContext>
     {
-        private const string GalleryOwnerEmail = "chocolatey@chocolatey.org";
-        private const string GalleryOwnerName = "Chocolatey Gallery";
-
         public MigrationsConfiguration()
         {
             AutomaticMigrationsEnabled = false;
@@ -69,20 +66,14 @@ namespace NuGetGallery.Migrations
                 gallerySettings.Add(
                     new GallerySetting
                     {
-                        SmtpHost = "localhost",
+                        SmtpHost = "",
                         SmtpPort = 25,
-                        GalleryOwnerEmail = GalleryOwnerEmail,
-                        GalleryOwnerName = GalleryOwnerName,
+                        GalleryOwnerEmail = "nobody@nowhere.com",
+                        GalleryOwnerName = "Chocolatey Gallery - Local",
                         ConfirmEmailAddresses = false
                     });
                 context.SaveChanges();
-            } else
-            {
-                var gallerySetting = gallerySettings.First();
-                if (String.IsNullOrEmpty(gallerySetting.GalleryOwnerEmail)) gallerySetting.GalleryOwnerEmail = GalleryOwnerEmail;
-                if (String.IsNullOrEmpty(gallerySetting.GalleryOwnerName)) gallerySetting.GalleryOwnerName = GalleryOwnerName;
-                context.SaveChanges();
-            }
+            } 
         }
     }
 }

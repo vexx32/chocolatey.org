@@ -30,11 +30,11 @@ namespace NuGetGallery
         private readonly IUserService userService;
         private readonly IPackageService packageService;
         private readonly IMessageService messageService;
-        private readonly GallerySetting settings;
+        private readonly IConfiguration settings;
         private readonly IPrincipal currentUser;
         private readonly IUserSiteProfilesService profilesService;
 
-        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, GallerySetting settings, IPrincipal currentUser, IUserSiteProfilesService profilesService)
+        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, IConfiguration settings, IPrincipal currentUser, IUserSiteProfilesService profilesService)
         {
             userService = userSvc;
             this.packageService = packageService;
