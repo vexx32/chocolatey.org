@@ -21,6 +21,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
 using WebBackgrounder;
 
 namespace NuGetGallery
@@ -38,10 +39,28 @@ namespace NuGetGallery
 
     public class EntitiesContext : DbContext, IWorkItemsContext, IEntitiesContext
     {
-        public EntitiesContext() : base("NuGetGallery")
+        public EntitiesContext(): base(SetConnectionString("NuGetGallery"))
         {
             InitializeCustomOptions();
         }
+
+        private static string SetConnectionString(string connectionName)
+        {
+            var connectionString = new StringBuilder();
+            connectionString.Append(System.Configuration.ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
+
+            if (!connectionString.to_string().EndsWith(";"))
+            {
+                connectionString.Append(";");
+            }
+
+            connectionString.Append("Max Pool Size=300");
+
+            return connectionString.to_string();
+        }
+
+        //todo: Look into ensuring background jobs always have resources
+        // https://msdn.microsoft.com/en-us/library/bb933944.aspx
 
         /// <summary>
         ///   Initializes the custom options.
