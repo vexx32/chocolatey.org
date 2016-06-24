@@ -9,9 +9,9 @@ namespace NuGetGallery
 {
     public class LuceneIndexingJob : Job
     {
-        private readonly LuceneIndexingService _indexingService;
+        private readonly IIndexingService _indexingService;
 
-        public LuceneIndexingJob(TimeSpan frequence, TimeSpan timeout, LuceneIndexingService indexingService)
+        public LuceneIndexingJob(TimeSpan frequence, TimeSpan timeout, IIndexingService indexingService)
             : base("Lucene", frequence, timeout)
         {
             _indexingService = indexingService;

@@ -13,7 +13,7 @@ namespace NuGetGallery
         void UpdatePackage(Package package);
         int GetDocumentCount();
         long GetIndexSizeInBytes();
-        void RegisterBackgroundJobs(IList<IJob> jobs);
+        //void RegisterBackgroundJobs(IList<IJob> jobs);
         string IndexPath { get; }
         bool IsLocal { get; }
 
