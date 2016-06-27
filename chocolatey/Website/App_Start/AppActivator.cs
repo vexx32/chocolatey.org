@@ -97,7 +97,13 @@ namespace NuGetGallery
         private static void BackgroundJobsPostStart()
         {
             var jobs = new List<IJob>();
-            jobs.Add(new LuceneIndexingJob(frequence: TimeSpan.FromMinutes(6),timeout: TimeSpan.FromMinutes(5),indexingService: DependencyResolver.Current.GetService<IIndexingService>()));
+            var indexer = DependencyResolver.Current.GetService<IIndexingService>();
+          
+            if (indexer != null)
+            {
+                indexer.RegisterBackgroundJobs(jobs);
+            }
+
             jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
             jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
 

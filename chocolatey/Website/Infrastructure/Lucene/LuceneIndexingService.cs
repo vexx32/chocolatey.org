@@ -227,7 +227,6 @@ namespace NuGetGallery
 
         private void EnsureIndexWriterCore(bool creatingIndex)
         {
-            //locking of the files can cause issues.
             var analyzer = new PerFieldAnalyzer();
             _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
 
@@ -298,16 +297,16 @@ namespace NuGetGallery
                 dir.EnumerateDirectories().Select(d => CalculateSize(d)).Sum();
         }
 
-        //public void RegisterBackgroundJobs(IList<IJob> jobs)
-        //{
-        //    if (_getShouldAutoUpdate())
-        //    {
-        //        jobs.Add(
-        //            new LuceneIndexingJob(
-        //                frequence: TimeSpan.FromMinutes(6),
-        //                timeout: TimeSpan.FromMinutes(5),
-        //                indexingService: this));
-        //    }
-        //}
+        public void RegisterBackgroundJobs(IList<IJob> jobs)
+        {
+            if (_getShouldAutoUpdate())
+            {
+                jobs.Add(
+                    new LuceneIndexingJob(
+                        frequence: TimeSpan.FromMinutes(6),
+                        timeout: TimeSpan.FromMinutes(5),
+                        indexingService: this));
+            }
+        }
     }
 }
