@@ -54,7 +54,7 @@ namespace NuGetGallery
                 connectionString.Append(";");
             }
 
-            connectionString.Append("Max Pool Size=500");
+            connectionString.Append("Max Pool Size=300");
 
             return connectionString.to_string();
         }
