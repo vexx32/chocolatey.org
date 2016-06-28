@@ -76,9 +76,12 @@ namespace NuGetGallery
                 if ((lastWriteTime == null) || IndexRequiresRefresh() || forceRefresh)
                 {
                     EnsureIndexWriter(creatingIndex: true);
-                    _indexWriter.DeleteAll();
-                    _indexWriter.Commit();
-
+                    if (_indexWriter != null)
+                    {
+                        _indexWriter.DeleteAll();
+                        _indexWriter.Commit();
+                    }
+                    
                     // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the latest \ latest successful packages
                     lastWriteTime = null;
 
@@ -117,16 +120,19 @@ namespace NuGetGallery
 
                 // Just update the provided package
                 EnsureIndexWriter(creatingIndex: false);
-                if (package != null)
+                if (_indexWriter != null)
                 {
-                    var indexEntity = new PackageIndexEntity(package);
-                    _indexWriter.UpdateDocument(updateTerm, indexEntity.ToDocument());
+                    if (package != null)
+                    {
+                        var indexEntity = new PackageIndexEntity(package);
+                        _indexWriter.UpdateDocument(updateTerm, indexEntity.ToDocument());
+                    }
+                    else
+                    {
+                        _indexWriter.DeleteDocuments(updateTerm);
+                    }
+                    _indexWriter.Commit();
                 }
-                else
-                {
-                    _indexWriter.DeleteDocuments(updateTerm);
-                }
-                _indexWriter.Commit();
             }
         }
 
@@ -173,6 +179,8 @@ namespace NuGetGallery
 
         private void AddPackagesCore(IList<PackageIndexEntity> packages, bool creatingIndex)
         {
+            if (_indexWriter == null) return;
+
             if (!creatingIndex)
             {
                 // If this is not the first time we're creating the index, clear any package registrations for packages we are going to updating.
@@ -200,7 +208,7 @@ namespace NuGetGallery
 
         private void AddPackage(PackageIndexEntity packageInfo)
         {
-            _indexWriter.AddDocument(packageInfo.ToDocument());
+            if (_indexWriter == null) _indexWriter.AddDocument(packageInfo.ToDocument());
         }
 
         protected void EnsureIndexWriter(bool creatingIndex)
@@ -222,6 +230,11 @@ namespace NuGetGallery
                     }
 
                     EnsureIndexWriterCore(creatingIndex);
+
+                    if (_indexWriter == null)
+                    {
+                        EnsureIndexWriterCore(creatingIndex);
+                    }
                 }
             }
         }
@@ -241,7 +254,13 @@ namespace NuGetGallery
                 _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
 
                 // Log but swallow the exception
-                ErrorSignal.FromCurrentContext().Raise(ex); 
+                ErrorSignal.FromCurrentContext().Raise(ex);
+            }
+            catch (IOException ex)
+            {
+                // Log but swallow the exception
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return;
             }
 
             // Should always be add, due to locking
