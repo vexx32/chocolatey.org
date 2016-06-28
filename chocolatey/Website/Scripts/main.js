@@ -66,4 +66,26 @@ closeButtons.forEach(function(item){
   });
 });
 
+function getCookie(name) {
+    var pattern = RegExp(name + "=.[^;]*");
+    var matched = document.cookie.match(pattern);
+    if (matched) {
+        var cookie = matched[0].split('=');
+        return cookie[1];
+    }
+    return false;
+}
 
+$(function () {
+    if (getCookie('.ChocolateyGalleryAuthentication')) {
+        $("#btn_account").html('Account');
+        $("#btn_account").prop('href', '/account');
+        $("#btn_signup").html('Log Off');
+        $("#btn_signup").prop('href', '/users/account/LogOff');
+    } else {
+        $("#btn_account").html('Login');
+        $("#btn_account").prop('href', '/users/account/LogOn');
+        $("#btn_signup").html('Signup');
+        $("#btn_signup").prop('href', '/account/Register');
+    }
+});
