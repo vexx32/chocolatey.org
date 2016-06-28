@@ -55,20 +55,17 @@
       </ul>
     </nav>
   </header>
-  @*
-        todo NEWSITE this needs a location on every page for the entire site
-    
-                 @if (TempData.ContainsKey("Message"))
-                  {
-                      <p class="message">@TempData["Message"]</p>
-                  }
-                  @if (TempData.ContainsKey("ErrorMessage"))
-                  {
-                      <p class="message error">@TempData["ErrorMessage"]</p>
-                  }
-    *@
   <main>
-    @RenderBody()
+        
+      @if (TempData.ContainsKey("Message"))
+      {
+        <p class="message">@TempData["Message"]</p>
+      }
+      @if (TempData.ContainsKey("ErrorMessage"))
+      {
+        <p class="message error">@TempData["ErrorMessage"]</p>
+      }
+      @RenderBody()
   </main>
   <footer class="p-l--l p-r--l p-t--l p-b clearfix full-width">
     <ul class="small fourth left p">
