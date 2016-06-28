@@ -25,6 +25,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Elmah;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
 using WebBackgrounder;
@@ -228,7 +229,20 @@ namespace NuGetGallery
         private void EnsureIndexWriterCore(bool creatingIndex)
         {
             var analyzer = new PerFieldAnalyzer();
-            _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
+            try
+            {
+                _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
+            }
+            catch (LockObtainFailedException ex)
+            {
+                DirectoryInfo luceneIndexDirectory = new DirectoryInfo(LuceneCommon.IndexDirectory);
+                FSDirectory luceneFSDirectory = FSDirectory.Open(luceneIndexDirectory, new Lucene.Net.Store.SimpleFSLockFactory(luceneIndexDirectory));
+                IndexWriter.Unlock(luceneFSDirectory);
+                _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
+
+                // Log but swallow the exception
+                ErrorSignal.FromCurrentContext().Raise(ex); 
+            }
 
             // Should always be add, due to locking
             var got = WriterCache.GetOrAdd(_directory, _indexWriter);
