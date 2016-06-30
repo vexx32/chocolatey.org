@@ -380,7 +380,7 @@ namespace NuGetGallery
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package validation results have been updated.");
         }
 
-        [ActionName("ScanPackageApi"), HttpGet]
+        [ActionName("ScanPackageApi"), HttpGet, OutputCache(VaryByParam = "*", Location = OutputCacheLocation.Any, Duration = 20)]
         public virtual ActionResult GetScanResults(string apiKey, string id, string version, string sha256Checksum)
         {
             if (string.IsNullOrWhiteSpace(apiKey)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.BadRequest, string.Format(CultureInfo.CurrentCulture, Strings.InvalidApiKey, apiKey));

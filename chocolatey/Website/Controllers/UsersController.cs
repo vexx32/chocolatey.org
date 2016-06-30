@@ -21,6 +21,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Security.Principal;
 using System.Web.Mvc;
+using System.Web.UI;
 using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery
@@ -289,6 +290,7 @@ namespace NuGetGallery
             return View("~/Views/Users/Confirm.cshtml", model);
         }
 
+        [HttpGet, OutputCache(VaryByParam = "username", Location = OutputCacheLocation.Any, Duration = 1800)]
         public virtual ActionResult Profiles(string username)
         {
             var user = userService.FindByUsername(username);

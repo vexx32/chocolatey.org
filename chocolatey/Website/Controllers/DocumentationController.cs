@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace NuGetGallery.Controllers
 {
@@ -30,6 +31,7 @@ namespace NuGetGallery.Controllers
             _fileSystem = fileSystem;
         }
 
+        [HttpGet, OutputCache(VaryByParam = "*", Location = OutputCacheLocation.Any, Duration = 7200)]
         public ActionResult Documentation(string docName)
         {
             docName = docName.Replace("-", "");

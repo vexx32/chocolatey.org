@@ -27,6 +27,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI;
 using Elmah;
 using NuGet;
 using NuGetGallery.MvcOverrides;
@@ -149,6 +150,7 @@ namespace NuGetGallery
             return RedirectToRoute(RouteName.VerifyPackage);
         }
 
+        [HttpGet]
         public virtual ActionResult DisplayPackage(string id, string version)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
@@ -325,6 +327,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
 
+        [HttpGet, OutputCache(VaryByParam = "*", Location = OutputCacheLocation.Any, Duration = 30)]
         public virtual ActionResult ListPackages(string q, string sortOrder = null, int page = 1, bool prerelease = false, bool moderatorQueue = false)
         {
             if (page < 1) page = 1;

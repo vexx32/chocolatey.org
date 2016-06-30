@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
+using System.Web.UI;
 using NuGetGallery.MvcOverrides;
 using NugetGallery;
 
@@ -37,7 +38,7 @@ namespace NuGetGallery
             Configuration = configuration;
         }
 
-        [ActionName("feed.rss")]
+        [ActionName("feed.rss"), HttpGet, OutputCache(VaryByParam = "page;pageSize", Location = OutputCacheLocation.Any, Duration = 3630)]
         public virtual ActionResult Feed(int? page, int? pageSize)
         {
             var siteRoot = EnsureTrailingSlash(Configuration.GetSiteRoot(AppHarbor.IsSecureConnection(HttpContext)));

@@ -36,56 +36,67 @@ namespace NuGetGallery
             this.messageService = messageService;
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult Home()
         {
             return View("~/Views/Pages/Home.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult Features()
         {
             return View("~/Views/Pages/Features.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult About()
         {
             return View("~/Views/Pages/About.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult Notice()
         {
             return View("~/Views/Pages/Notice.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult Terms()
         {
             return View("~/Views/Pages/Terms.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult Privacy()
         {
             return View("~/Views/Pages/Privacy.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public virtual ActionResult Pricing()
         {
             return View("~/Views/Pages/Pricing.cshtml");
         }
-        
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Business()
         {
             return View("~/Views/Pages/Business.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Kickstarter()
         {
             return View("~/Views/Pages/Kickstarter.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Media()
         {
             return View("~/Views/Pages/Media.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Company()
         {
             return View("~/Views/Pages/Company.cshtml");
@@ -127,42 +138,49 @@ Company: {4}
             return View("~/Views/Pages/Thanks.cshtml");
         }
 
-
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Support()
         {
             return View("~/Views/Pages/Support.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult ReportIssue()
         {
             return View("~/Views/Pages/ReportIssue.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Press()
         {
             return View("~/Views/Pages/Press.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Partner()
         {
             return View("~/Views/Pages/Partner.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Install()
         {
             return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/Layout.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult FAQ()
         {
             return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/Layout.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Security()
         {
             return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/Layout.cshtml");
         }
 
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public FileResult InstallerBatchFile()
         {
             const string batchFile = @"@echo off
@@ -182,7 +200,7 @@ SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
         }
 
         [HttpGet]
-        [OutputCache(VaryByParam = "None", Duration = 120, Location = OutputCacheLocation.Server)]
+        [OutputCache(VaryByParam = "none", Duration = 120, Location = OutputCacheLocation.Server)]
         public virtual JsonResult Stats()
         {
             var stats = statsSvc.GetAggregateStats();
