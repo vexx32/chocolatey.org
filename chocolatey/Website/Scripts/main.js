@@ -36,7 +36,12 @@ Array.from(els).forEach(copyToClipboard);
 
 var tmpElement = document.createElement('input');
 tmpElement.className = 'invisible-input';
-document.body.appendChild(tmpElement);
+try {
+  document.body.appendChild(tmpElement);
+} catch (error) {
+ // ignore
+}
+
 
 function copyToClipboard(el) {
   el.addEventListener('click', function(event){
