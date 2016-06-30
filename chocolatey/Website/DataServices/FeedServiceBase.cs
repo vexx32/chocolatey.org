@@ -80,7 +80,7 @@ namespace NuGetGallery
 
         protected internal virtual HttpContextBase HttpContext
         {
-            get { return httpContext ?? new HttpContextWrapper(System.Web.HttpContext.Current); } 
+            get { return httpContext ?? new HttpContextWrapper(System.Web.HttpContext.Current); }
             set { httpContext = value; }
         }
 
@@ -161,7 +161,7 @@ namespace NuGetGallery
             {
                 searchFilter.SearchTerm = searchTerm;
                 searchFilter.IncludePrerelease = includePrerelease;
-                
+
                 return GetResultsFromSearchService(searchFilter);
             }
 
