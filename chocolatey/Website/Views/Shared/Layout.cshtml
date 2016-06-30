@@ -117,7 +117,7 @@
             string worker = ConfigurationManager.AppSettings["appharbor.worker_name"];
         }
         <p id="releaseTag">
-          Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. UTC time is currently @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
+          Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. Page generated @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
         </p>
       </li>
       <li class="m-t">
