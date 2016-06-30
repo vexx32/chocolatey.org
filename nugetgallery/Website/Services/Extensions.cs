@@ -65,6 +65,7 @@ namespace NuGetGallery
                 }
             }
 
+            //todo this becomes an AND
             // Build a giant or statement using the bodies of the lambdas
             var body = expressions.Select(p => p.Body)
                                   .Aggregate(Expression.OrElse);
