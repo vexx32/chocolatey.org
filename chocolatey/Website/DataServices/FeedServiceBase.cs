@@ -147,7 +147,7 @@ namespace NuGetGallery
             return null;
         }
 
-        protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework, bool includePrerelease, SearchFilter searchFilter)
+        protected virtual IQueryable<Package> SearchCore(IQueryable<Package> packages, string searchTerm, string targetFramework, bool includePrerelease, SearchFilter searchFilter, bool useCache)
         {
             // we don't allow an empty search for all versions.
             if (searchFilter.FilterInvalidReason == SearchFilterInvalidReason.DueToAllVersionsRequested && string.IsNullOrWhiteSpace(searchTerm))
@@ -165,12 +165,60 @@ namespace NuGetGallery
                 return GetResultsFromSearchService(searchFilter);
             }
 
-            Trace.WriteLine("Database hit");
-
             if (!includePrerelease)
             {
                 packages = packages.Where(p => !p.IsPrerelease);
             }
+
+            //if (searchFilter.Skip != 0)
+            //{
+            //    packages = packages.Skip(searchFilter.Skip);
+            //}
+
+            //packages = packages.Take(MaxPageSize);
+            //if (searchFilter.Take != 0)
+            //{
+            //    packages = packages.Take(searchFilter.Take);
+            //}
+
+            //switch (searchFilter.SortProperty)
+            //{
+            //    case SortProperty.Relevance:
+            //        //do not change the search order
+            //        break;
+            //    case SortProperty.DownloadCount:
+            //        packages = packages.OrderByDescending(p => p.PackageRegistration.DownloadCount);
+            //        break;
+            //    case SortProperty.DisplayName:
+            //        packages = searchFilter.SortDirection == SortDirection.Ascending ? packages.OrderBy(p => p.Title) : packages.OrderByDescending(p => p.Title);
+            //        break;
+            //    case SortProperty.Recent:
+            //        packages = packages.OrderByDescending(p => p.Published);
+            //        break;
+            //    default:
+            //        //do not change the search order
+            //        break;
+            //}
+
+            if (useCache)
+            {
+                return NugetGallery.Cache.Get(
+                    string.Format(
+                        "V2Feed-Search-{0}-{1}-{2}",
+                        searchTerm.to_lower(),
+                        targetFramework.to_lower(),
+                        includePrerelease
+                        ),
+                    DateTime.UtcNow.AddSeconds(3600),
+                    () =>
+                    {
+                        Trace.WriteLine("Database search results hit for API (caching results) Search term: '{0}' (prerelease? {1}).".format_with(searchTerm, includePrerelease));
+                        return packages.Search(searchTerm).ToList();
+
+                    }).AsQueryable();
+            }
+
+            Trace.WriteLine("Database search results hit for API (not caching results) Search term: '{0}' (prerelease? {1}).".format_with(searchTerm, includePrerelease));
 
             return packages.Search(searchTerm);
         }
@@ -192,7 +240,7 @@ namespace NuGetGallery
              return result.Data.InterceptWith(new DisregardODataInterceptor());
          }
 
-         protected static SearchFilter GetSearchFilter(bool allVersionsInIndex, string url)
+         protected static SearchFilter GetSearchFilter(bool allVersionsInIndex, string url, string searchTerm, bool includePrerelease)
          {
              if (url == null)
              {
@@ -223,6 +271,8 @@ namespace NuGetGallery
                  Skip = 0,
                  CountOnly = path.EndsWith("$count", StringComparison.Ordinal),
                  IsValid = true,
+                 SearchTerm = searchTerm,
+                 IncludePrerelease = includePrerelease,
              };
 
              string[] props = query.Split('&');
@@ -236,6 +286,7 @@ namespace NuGetGallery
                      queryTerms[nameValue[0]] = nameValue[1];
                  }
              }
+             searchFilter.QueryTerms = queryTerms;
 
              // We'll only use the index if we the query searches for latest \ latest-stable packages
              string filter;
@@ -245,12 +296,14 @@ namespace NuGetGallery
                  {
                      searchFilter.IsValid = false;
                      searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
+                     searchFilter.IncludeAllVersions = true;
                  }
              }
              else if (!allVersionsInIndex)
              {
                  searchFilter.IsValid = false;
                  searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
+                 searchFilter.IncludeAllVersions = true;
              }
 
              string skipStr;
@@ -262,13 +315,6 @@ namespace NuGetGallery
                      searchFilter.Skip = skip;
                  }
              } 
-             
-             //comes out as 'searchterm' instead of searchterm
-             //string searchTerm;
-             //if (queryTerms.TryGetValue("searchTerm", out searchTerm))
-             //{
-             //   searchFilter.SearchTerm = searchTerm;
-             //}
 
              string topStr;
              if (queryTerms.TryGetValue("$top", out topStr))

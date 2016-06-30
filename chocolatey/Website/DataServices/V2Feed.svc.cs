@@ -141,7 +141,9 @@ namespace NuGetGallery
 
         private IQueryable<V2FeedPackage> SearchV2FeedCore(IQueryable<Package> packages, string searchTerm, string targetFramework, bool includePrerelease, bool useCache)
         {
-            return SearchCore(packages, searchTerm, targetFramework, includePrerelease, GetSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl)).ToV2FeedPackageQuery(GetSiteRoot());
+            var searchFilter = GetSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, searchTerm, includePrerelease);
+            
+            return SearchCore(packages, searchTerm, targetFramework, includePrerelease, searchFilter, useCache: useCache).ToV2FeedPackageQuery(GetSiteRoot());
         }
 
         [WebGet]
