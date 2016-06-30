@@ -83,14 +83,14 @@ function getCookie(name) {
 
 $(function () {
     if (getCookie('.ChocolateyGalleryAuthentication')) {
-        $("#btn_account").html('Account');
-        $("#btn_account").prop('href', '/account');
-        $("#btn_signup").html('Log Off');
-        $("#btn_signup").prop('href', '/users/account/LogOff');
+      $("#ux_account").html('Account');
+      $("#ux_account").prop('href', '/account');
+      $("#ux_account_action").html('Log Off');
+      $("#ux_account_action").prop('href', '/users/account/LogOff');
     } else {
-        $("#btn_account").html('Login');
-        $("#btn_account").prop('href', '/users/account/LogOn');
-        $("#btn_signup").html('Signup');
-        $("#btn_signup").prop('href', '/account/Register');
+      $("#ux_account").html('Login');
+      $("#ux_account").prop('href', '/users/account/LogOn');
+      $("#ux_account_action").html('Signup');
+      $("#ux_account_action").prop('href', '/account/Register');
     }
 });
