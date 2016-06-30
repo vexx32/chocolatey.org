@@ -53,7 +53,7 @@ namespace NuGetGallery
         {
             // if the version is null, the user is asking for the latest version. Presumably they don't want includePrerelease release versions. 
             // The allow prerelease flag is ignored if both partialId and version are specified.
-            var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: false);
+            var package = packageSvc.FindPackageForDownloadByIdAndVersion(id, version, allowPrerelease: false);
 
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 

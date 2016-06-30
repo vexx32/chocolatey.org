@@ -208,22 +208,47 @@ namespace NuGetGallery
                                 () => packagesQuery.ToList())
                             : packagesQuery.ToList();
 
+            return GetPackageFromResults(packageVersions, id, version, allowPrerelease);
+        }
+
+        public Package FindPackageForDownloadByIdAndVersion(string id, string version, bool allowPrerelease, bool useCache = true)
+        {
+            if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("id");
+
+            IEnumerable<Package> packagesQuery = packageRepo.GetAll()
+                                                            .Include(p => p.PackageRegistration)
+                                                            .Where(p => (p.PackageRegistration.Id == id));
+
+            var packageVersions = useCache
+                            ? Cache.Get(
+                                string.Format("packageDownload-{0}", id.to_lower()),
+                                DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                                () => packagesQuery.ToList())
+                            : packagesQuery.ToList();
+
+            return GetPackageFromResults(packageVersions, id, version, allowPrerelease);
+        }
+
+        public Package GetPackageFromResults(IList<Package> packageVersions, string id, string version, bool allowPrerelease)
+        {
             if (String.IsNullOrEmpty(version) && !allowPrerelease)
             {
                 // If there's a specific version given, don't bother filtering by prerelease. You could be asking for a prerelease package.
                 packageVersions = packageVersions.Where(p => !p.IsPrerelease).ToList();
             }
-            
+
             Package package = null;
             if (version == null)
             {
-                if (allowPrerelease) package = packageVersions.FirstOrDefault(p => p.IsLatest);
-                else package = packageVersions.FirstOrDefault(p => p.IsLatestStable);
+                package = allowPrerelease ? 
+                      packageVersions.FirstOrDefault(p => p.IsLatest) 
+                    : packageVersions.FirstOrDefault(p => p.IsLatestStable);
 
                 // If we couldn't find a package marked as latest, then
                 // return the most recent one.
                 if (package == null) package = packageVersions.OrderByDescending(p => p.Version).FirstOrDefault();
-            } else
+            }
+            else
             {
                 package = packageVersions
                     .Where(
