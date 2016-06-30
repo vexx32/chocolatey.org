@@ -22,6 +22,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NuGetGallery
 {
+    [Serializable]
     [DisplayColumn("Title")]
     public class Package : IEntity
     {

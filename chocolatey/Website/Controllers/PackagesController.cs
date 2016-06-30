@@ -416,40 +416,37 @@ namespace NuGetGallery
             }
             else
             {
-                SearchResults results;
+                var results = searchSvc.Search(searchFilter);
 
-                 // fetch most common query from cache to relieve load on the search service
+                var cacheTime = DateTime.UtcNow.AddSeconds(30);
+                // fetch most common query from cache to relieve load on the search service
                 if (string.IsNullOrEmpty(q) && page == 1)
                 {
-                    results = Cache.Get(
-                        string.Format(
-                            "searchResults-{0}-{1}-{2}-{3}-{4}",
-                            searchFilter.SearchTerm,
-                            searchFilter.IncludePrerelease,
-                            searchFilter.Skip,
-                            searchFilter.SortProperty.to_string(),
-                            searchFilter.SortDirection),
-                        DateTime.UtcNow.AddMinutes(10),
-                        () => searchSvc.Search(searchFilter));
-                  
-                }
-                else
-                {
-                     results = Cache.Get(
-                        string.Format(
-                            "searchResults-{0}-{1}-{2}-{3}-{4}",
-                            searchFilter.SearchTerm,
-                            searchFilter.IncludePrerelease,
-                            searchFilter.Skip,
-                            searchFilter.SortProperty.to_string(),
-                            searchFilter.SortDirection),
-                        DateTime.UtcNow.AddSeconds(30),
-                        () => searchSvc.Search(searchFilter));
+                    cacheTime = DateTime.UtcNow.AddMinutes(10);
                 }
 
-                totalHits = results.Hits;
+                totalHits = 0;
+                int.TryParse(Cache.Get(
+                   string.Format(
+                       "searchResultsHits-{0}-{1}-{2}-{3}-{4}",
+                       searchFilter.SearchTerm.to_lower(),
+                       searchFilter.IncludePrerelease,
+                       searchFilter.Skip,
+                       searchFilter.SortProperty.to_string(),
+                       searchFilter.SortDirection.to_string()),
+                   cacheTime,
+                   () => results.Hits.to_string()), out totalHits);
 
-                packagesToShow = results.Data.ToList();
+                packagesToShow = Cache.Get(
+                   string.Format(
+                       "searchResults-{0}-{1}-{2}-{3}-{4}",
+                       searchFilter.SearchTerm.to_lower(),
+                       searchFilter.IncludePrerelease,
+                       searchFilter.Skip,
+                       searchFilter.SortProperty.to_string(),
+                       searchFilter.SortDirection.to_string()),
+                   cacheTime,
+                   () => results.Data.ToList());
             }
             
             if (page == 1 && !packagesToShow.Any())

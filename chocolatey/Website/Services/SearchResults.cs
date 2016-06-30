@@ -21,6 +21,7 @@ using System.Linq;
 
 namespace NuGetGallery
 {
+    [Serializable]
     public class SearchResults
     {
         public int Hits { get; private set; }

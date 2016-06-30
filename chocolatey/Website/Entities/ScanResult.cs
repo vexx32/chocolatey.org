@@ -19,9 +19,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Serialization;
 
 namespace NuGetGallery
 {
+    [Serializable]
     public class ScanResult : IEntity
     {
         public ScanResult()
