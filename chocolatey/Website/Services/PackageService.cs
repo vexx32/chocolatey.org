@@ -265,6 +265,7 @@ namespace NuGetGallery
 
                 // If we couldn't find a package marked as latest, then
                 // return the most recent one.
+                //bug: this looks like it would return the wrong version if 1.2.0 versus 1.10.0
                 if (package == null) package = packageVersions.OrderByDescending(p => p.Version).FirstOrDefault();
             }
             else
