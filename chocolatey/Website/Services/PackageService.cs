@@ -226,7 +226,26 @@ namespace NuGetGallery
                                 () => packagesQuery.ToList())
                             : packagesQuery.ToList();
 
-            return GetPackageFromResults(packageVersions, id, version, allowPrerelease);
+            var package = GetPackageFromResults(packageVersions, id, version, allowPrerelease);
+
+            if (package == null && !string.IsNullOrEmpty(version) && useCache)
+            {
+                Cache.InvalidateCacheItem("packageDownload-{0}".format_with(id.to_lower()));
+                package = GetPackageForDownloadByIdAndVersion(id, version);
+            }
+
+            return package;
+        }
+
+        public Package GetPackageForDownloadByIdAndVersion(string id, string version)
+        {
+            if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("id");
+
+            return packageRepo.GetAll()
+                .Include(p => p.PackageRegistration)
+                .SingleOrDefault(p => 
+                    p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase)
+                    && p.Version.Equals(version, StringComparison.OrdinalIgnoreCase));
         }
 
         public Package GetPackageFromResults(IList<Package> packageVersions, string id, string version, bool allowPrerelease)
@@ -1173,6 +1192,7 @@ namespace NuGetGallery
             Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", package.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("packageDownload-{0}", package.Id.to_lower()));
             Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
         }
