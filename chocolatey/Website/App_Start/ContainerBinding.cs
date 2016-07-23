@@ -157,7 +157,7 @@ namespace NuGetGallery
                     container.Register<IPackageStatisticsService, AmazonSqsPackageStatisticsService>(Lifestyle.Singleton);
                     break;
                 default:
-                    container.Register<IPackageStatisticsService, DatabasePackageStatisticsService>(Lifestyle.Singleton);
+                    container.RegisterPerWebRequest<IPackageStatisticsService, DatabasePackageStatisticsService>();
                     break;
             }
 
