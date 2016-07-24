@@ -21,10 +21,10 @@
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssources" })">sources</a> - view and configure default sources (alias for source)</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssource" })">source</a> - view and configure default sources</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsconfig" })">config</a> - Retrieve and configure config file settings</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsfeatures" })">features</a> - view and configure choco features (alias for feature)</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsfeature" })">feature</a> - view and configure choco features</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssetapikey" })">setapikey</a> - retrieves or saves an apikey for a particular source (alias for apikey)</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsfeatures" })">features</a> - view and configure choco features (alias for feature)</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })">apikey</a> - retrieves or saves an apikey for a particular source</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandssetapikey" })">setapikey</a> - retrieves or saves an apikey for a particular source (alias for apikey)</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsunpackself" })">unpackself</a> - have chocolatey set it self up</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsversion" })">version</a> - [DEPRECATED] will be removed in v1 - use <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsoutdated" })"><code>choco outdated</code></a> or <code>cup &lt;pkg|all&gt; -whatif</code> instead</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsupdate" })">update</a> - [DEPRECATED] RESERVED for future use (you are looking for upgrade, these are not the droids you are looking for)</li>
@@ -79,23 +79,25 @@ out multiple package calls when wanting to pass specific options.</p>
      Prints out the help menu.
 
  -d, --debug
-     Debug - Run in Debug Mode.
+     Debug - Show debug messaging.
 
  -v, --verbose
-     Verbose - See verbose messaging.
+     Verbose - Show verbose messaging.
 
      --acceptlicense, --accept-license
-     AcceptLicense - Accept license dialogs automatically.
+     AcceptLicense - Accept license dialogs automatically. Reserved for 
+       future use.
 
  -y, --yes, --confirm
      Confirm all prompts - Chooses affirmative answer instead of prompting. 
        Implies --accept-license
 
  -f, --force
-     Force - force the behavior
+     Force - force the behavior. Do not use force during normal operation - 
+       it subverts some of the smart behavior for commands.
 
      --noop, --whatif, --what-if
-     NoOp - Don&#39;t actually do anything.
+     NoOp / WhatIf - Don&#39;t actually do anything.
 
  -r, --limitoutput, --limit-output
      LimitOutput - Limit the output to essential information
@@ -120,7 +122,8 @@ out multiple package calls when wanting to pass specific options.</p>
 
      --use-system-powershell
      UseSystemPowerShell - Execute PowerShell using an external process 
-       instead of the built-in PowerShell host. Available in 0.9.10+.
+       instead of the built-in PowerShell host. Should only be used when 
+       internal host is failing. Available in 0.9.10+.
 </pre>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco -h</code>.</p>
 </article>

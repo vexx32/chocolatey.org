@@ -10,7 +10,7 @@
 <p>The first thing to understand is that in most instances when you want to bring Chocolatey knowledgeable about an already installed application, if there is a version match out there (wherever your sources point), then this process is so much better.</p>
 <p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it).</p>
 <p>However if you are sold on skipping the automation scripts and tricking Chocolatey into believing that a script is installed.</p>
-<p>If you wonder over to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install switches</a> you will see</p>
+<p>If you wander over to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install switches</a> you will see</p>
 <pre class="cmd">-n, --skippowershell, --skip-powershell
   Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.</pre>
 <p>This switch is going to be very important for you. Now we will go through some scenarios to help you make the best decision.</p>

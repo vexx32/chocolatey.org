@@ -36,25 +36,10 @@ choco config set proxyPassword 123Sup#rSecur3<br />
 <p>Steps to help address this.</p>
 <ol>
 <li>Copy the <a href="https://chocolatey.org/install.ps1">install.ps1</a> file locally.</li>
-<li>Edit the file and add proxy details (see code change). Replace the following entries with your specific proxy servers details: <strong>PROXYSERVER:PROXYPORT; USERPASSWORD; USERNAME</strong></li>
-<li>Ensure you have the appropriate domain prefix for the user name. Try: &quot;˜AD\UserName&#39; or just &quot;˜UserName&#39;.</li>
-<li>Run the script to install Chocolatey.</li>
+<li>Open a PowerShell command line.</li>
+<li>Set the following environment variables - <code>$env:chocolateyProxyLocation</code> (with proxyserver:proxyport), <code>$env:chocolateyProxyUser</code> (if it is a domain account, ensure you have the appropriate domain prefix for the account, e.g. <code>AD\UserName</code> or <code>UserName</code>), and <code>$env:chocolateyProxyPassword</code> with your password.</li>
+<li>With that same shell open where the environment variables are set, run the downloaded script to install Chocolatey.</li>
 </ol>
-<pre class="brush: ps">function Download-File {
-param (
-  [string]$url,
-  [string]$file
- )
-  Write-Host &quot;Downloading $url to $file&quot;
-    #$proxy = [System.Net.WebRequest]::GetSystemWebProxy()
-    $proxy = New-Object System.Net.WebProxy(&quot;PROXYSERVER:PROXYPORT&quot;, $true)
-    $passwd = ConvertTo-SecureString &quot;USERPASSWORD&quot; -AsPlainText -Force; ## Website credentials
-    $proxy.Credentials = New-Object System.Management.Automation.PSCredential (&quot;USERNAME&quot;, $passwd);
-    $downloader = New-Object System.Net.WebCLient
-    $downloader.UseDefaultCredentials = $true
-    $downloader.Proxy = $proxy
-    $downloader.DownloadFile($url, $file)
-}</pre>
 <h3 id="still-having-trust-issues">Still having trust issues?</h3>
 <p>You&#39;ve tried everything and Chocolatey still won&#39;t install -</p>
 <blockquote>

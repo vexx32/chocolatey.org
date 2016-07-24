@@ -7,7 +7,7 @@
 <p>Sets the exit code for the PowerShell scripts.</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Set-PowerShellExitCode `
-  -ExitCode &lt;Int32&gt; `
+  [-ExitCode &lt;Int32&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>Sets the exit code as an environment variable that is checked and used<br />
@@ -25,7 +25,7 @@ as the exit code for the package at the end of the package script.</p>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="exitcode-int32">-ExitCode &lt;Int32&gt;</h3>
+<h3 id="exitcode-int32">-ExitCode [&lt;Int32&gt;]</h3>
 <p>The exit code to set.</p>
 <table>
 <thead>
@@ -41,7 +41,7 @@ as the exit code for the package at the end of the package script.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>

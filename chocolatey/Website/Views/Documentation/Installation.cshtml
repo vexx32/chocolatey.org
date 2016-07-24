@@ -9,26 +9,48 @@
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter. If you need assistance opening an administrative prompt, see <a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">open an elevated prompt in Windows 8+</a> (or <a href="http://www.howtogeek.com/howto/windows-vista/run-a-command-as-administrator-from-the-windows-vista-run-box/">Windows 7</a>).</p>
 <p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
 <ul>
-<li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button></li>
+<li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button></li>
 </ul>
-<pre class="cmd">@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</pre>
+<pre class="cmd">
+@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+</pre>
 <ul>
-<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
+<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
 </ul>
-<pre class="brush: ps">iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</pre>
+<pre class="brush: ps">
+iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
+</pre>
 <ul>
 <li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button></li>
 </ul>
-<pre class="brush: ps">iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex</pre>
+<pre class="brush: ps">
+iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+</pre>
 <p>The easiest option to remember is this one. You may not need <code>-UseBasicParsing</code>.</p>
 <p>What are these scripts doing? <code>iwr</code> (<code>Invoke-WebRequest</code>)/<code>WebClient.DownloadString</code> downloads the install script and passes it to <code>iex</code> (<code>Invoke-Expression</code>) to execute the contents of the script. This runs the installation script for Chocolatey.</p>
+<h3 id="installing-behind-a-proxy">Installing Behind a Proxy?</h3>
+<p>Have a proxy? Try</p>
+<ul>
+<li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button></li>
+</ul>
+<pre class="cmd">
+@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+</pre>
+<ul>
+<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
+</ul>
+<pre class="brush: ps">
+[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
+</pre>
+<h4 id="explicit-proxy">Explicit proxy?</h4>
+<p>See how to <a href="#cmdpowershell-wproxy-server">install behind an explicit proxy below</a>.</p>
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Windows 7+ / Windows Server 2003+</li>
 <li>PowerShell v2+</li>
 <li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)</li>
 </ul>
-<p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go!. No Visual Studio required.</p>
+<p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go! No Visual Studio required.</p>
 <h2 id="why-does-chocolatey-install-where-it-does-by-default">Why does Chocolatey install where it does by default?</h2>
 <p>Great question - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "default-chocolatey-install-reasoning" })">Why does Chocolatey install where it does</a></p>
 <h2 id="before-you-install">Before You Install</h2>

@@ -4,8 +4,15 @@
 
 <article>
 <h1 id="automatic-packaging-for-maintenance">Automatic Packaging for Maintenance</h1>
-<p>Automatic packaging is a process that <strong>package maintainers can run on <em>their own machines</em> to keep the packages they maintain up to date</strong>. It is not a required step for maintaining packages on the community feed (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>), but it is recommended you find a way to automate the delivery of packages to the community feed when there are updates if you are going to maintain more than 5 packages and you are not the software vendor for the packages you maintain.</p>
+<p>Automatic packaging is a process that <strong>package maintainers can run on <em>their own</em> to keep the packages they maintain up to date</strong>. It is not a required step for maintaining packages on the community feed (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>), but it is recommended you find a way to automate the delivery of packages to the community feed when there are updates if you are going to maintain more than 5 packages and you are not the software vendor for the packages you maintain.</p>
 <p><strong>NOTE:</strong> Not to be confused with the automatic package creation feature in <a href="https://chocolatey.org/pricing">Chocolatey for Business</a> - that feature creates packages directly from software installer files. This feature is for package maintenance of existing packages on the community feed.</p>
+<h2 id="automatic-update-methods">Automatic update methods</h2>
+<p>There are currently two methods that can be used to maintain automatic packages:</p>
+<ul>
+<li>Using <a href="http://chocolatey.org/packages/ChocolateyPackageUpdater">Chocolatey Package Updater</a> with 3td party tool Ketarin.</li>
+<li>Using only Powershell via <a href="https://github.com/majkinetor/au">Automatic Update module AU</a>.</li>
+</ul>
+<p>The rest of this page contains documentation about the first method. You can learn more about the AU updater via its <a href="https://github.com/majkinetor/au/blob/master/README.md">documentation</a>. You can also learn about its usage from the <a href="https://github.com/majkinetor/chocolatey">real life example</a> which runs the udpater on AppVeyor so you are not required to schedule updater on your own machine.</p>
 <h2 id="chocolatey-package-updater-aka-chocopkgup">Chocolatey Package Updater aka chocopkgup</h2>
 <p><a href="http://chocolatey.org/packages/ChocolateyPackageUpdater" class="uri">http://chocolatey.org/packages/ChocolateyPackageUpdater</a></p>
 <p>The tool that accomplishes this process is known as <a href="http://chocolatey.org/packages/ChocolateyPackageUpdater">chocopkgup</a> (Chocolatey Package Updater). It is a free tool (unless you want to use it for uploads to somewhere other than chocolatey.org).</p>

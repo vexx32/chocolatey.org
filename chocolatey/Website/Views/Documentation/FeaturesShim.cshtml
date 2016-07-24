@@ -17,9 +17,9 @@
 <li>Does not require special privileges like creating symlinks (symbolic links) do. So you can create shims without administrative rights.</li>
 </ul>
 <h2 id="usage">Usage</h2>
-<p>Chocolatey automatically shims executables in package folders that are not explicitly ignored, putting them into the <code>$($env:ChocolateyInstall)\bin</code> folder (and subsequently onto the PATH).</p>
+<p>Chocolatey automatically shims executables in package folders that are not explicitly ignored, putting them into the <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code> folder (and subsequently onto the PATH). This typically resolves to <code>C:\ProgramData\chocolatey\bin</code> unless you customized your install options or a non-administrator install.</p>
 <p>These executables can come as part of the package or downloaded to the package folder during the install script.</p>
-<p>Chocolatey ensures the folder <code>$($env:ChocolateyInstall)\bin</code> in the PATH environment variable, allowing you to put tools on the PATH without cluttering up the PATH.</p>
+<p>Chocolatey ensures the folder <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code> in the PATH environment variable, allowing you to put tools on the PATH without cluttering up the PATH.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p><img src="@Url.Content("~/content/images/docs/features/features_shimgen.png")" alt="Shimming - if you are on https://chocolatey.org/docs/features-shim, see commented html below for detailed description of image" /></p>
 <!--
@@ -49,9 +49,9 @@ The image shows installing ruby.portable, then running `ruby -v` followed by `ru
 <h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
 <p>This works with all versions of Chocolatey. Just use packages and when those packages have exe files, those are automatically shimmed so they are on the PATH.</p>
 <h3 id="how-does-it-work">How does it work?</h3>
-<p>Chocolatey uses a tool called ShimGen that inspects an executable and creates a small binary, known as a &quot;shim&quot;, that simply calls the executable. Then it places that shim in the <code>$($env:ChocolateyInstall)\bin</code>. It creates the shim by generating it at runtime based on the actual binary&#39;s information.</p>
+<p>Chocolatey uses a tool called ShimGen that inspects an executable and creates a small binary, known as a &quot;shim&quot;, that simply calls the executable. Then it places that shim in the <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code>. It creates the shim by generating it at runtime based on the actual binary&#39;s information.</p>
 <h3 id="how-is-this-better-than-symlinks">How is this better than symlinks?</h3>
-<p>When you symlink a file on Windows, you must symlink all of its dependencies like dlls and config files. If you put that all into the <code>$($env:ChocolateyInstall)\bin</code> folder to take advantage of being on the PATH, you can quickly see that you will get into a form of &quot;DLL hell&quot; when other executables depend on different versions of the same DLL. Shimming by design does not run into this issue.</p>
+<p>When you symlink a file on Windows, you must symlink all of its dependencies like dlls and config files. If you put that all into the <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code> folder to take advantage of being on the PATH, you can quickly see that you will get into a form of &quot;DLL hell&quot; when other executables depend on different versions of the same DLL. Shimming by design does not run into this issue.</p>
 <h3 id="does-it-require-admin-rights">Does it require admin rights?</h3>
 <p>No, and this is another thing that sets it apart from symlinks. To create symlinks on Windows, you need to have <code>SeCreateSymbolicLinkPrivilege</code>, which is one of the privileges granted to Administrators.</p>
 <h3 id="does-the-shim-work-with-uac">Does the shim work with UAC?</h3>

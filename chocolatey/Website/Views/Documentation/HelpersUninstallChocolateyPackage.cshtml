@@ -9,7 +9,7 @@
 <pre class="brush: ps">Uninstall-ChocolateyPackage `
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
-  [-SilentArgs &lt;String&gt;] `
+  [-SilentArgs &lt;String[]&gt;] `
   [-File &lt;String&gt;] `
   [-ValidExitCodes &lt;Object&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
@@ -114,7 +114,7 @@ recommended that it matches the package id.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="silentargs-string">-SilentArgs [&lt;String&gt;]</h3>
+<h3 id="silentargs-string">-SilentArgs [&lt;String[]&gt;]</h3>
 <p>OPTIONAL - These are the parameters to pass to the native uninstaller,<br />
 including any arguments to make the uninstaller silent/unattended.<br />
 <a href="https://chocolatey.org/compare">Licensed editions</a> of Chocolatey will automatically determine the<br />

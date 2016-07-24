@@ -19,6 +19,8 @@ FileName location specified.</p>
 <h2 id="notes">Notes</h2>
 <p>This is a low-level function and not recommended for use in package<br />
 scripts. It is recommended you call <code>Get-ChocolateyWebFile</code> instead.</p>
+<p>Starting in 0.9.10, will automatically call Set-PowerShellExitCode to<br />
+set the package exit code to 404 if the resource is not found.</p>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="inputs">Inputs</h2>

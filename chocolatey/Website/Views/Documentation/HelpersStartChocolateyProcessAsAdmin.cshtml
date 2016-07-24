@@ -9,7 +9,7 @@
 specified, it is run with PowerShell.</p>
 <h2 id="syntax">Syntax</h2>
 <pre class="brush: ps">Start-ChocolateyProcessAsAdmin `
-  -Statements &lt;String&gt; `
+  [-Statements &lt;String[]&gt;] `
   [-ExeToRun &lt;String&gt;] `
   [-Minimized] `
   [-NoSleep] `
@@ -17,6 +17,12 @@ specified, it is run with PowerShell.</p>
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="notes">Notes</h2>
 <p>This command will assert UAC/Admin privileges on the machine.</p>
+<p>Starting in 0.9.10, will automatically call Set-PowerShellExitCode to<br />
+set the package exit code in the following ways:</p>
+<ul>
+<li>4 if the binary turns out to be a text file.</li>
+<li>The same exit code returned from the process that is run. If a 3010 is returned, it will set 3010 for the package.</li>
+</ul>
 <h2 id="aliases">Aliases</h2>
 <p>None</p>
 <h2 id="examples">Examples</h2>
@@ -39,7 +45,7 @@ Start-ChocolateyProcessAsAdmin &quot;&amp; `&#39;$psFile`&#39;&quot;</pre>
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="statements-string">-Statements &lt;String&gt;</h3>
+<h3 id="statements-string">-Statements [&lt;String[]&gt;]</h3>
 <p>Arguments to pass to <code>ExeToRun</code> or the PowerShell script block to be<br />
 run.</p>
 <table>
@@ -56,7 +62,7 @@ run.</p>
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
