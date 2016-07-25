@@ -1027,6 +1027,7 @@
     <Content Include="Content\Images\docs\gifs\chocopro_install.gif" />
     <Content Include="Content\Images\docs\gifs\chocopro_install_stopped.gif" />
     <Content Include="Content\Images\docs\gifs\choco_business_features.gif" />
+    <Content Include="Content\Images\docs\gifs\choco_business_features_recompile.gif" />
     <Content Include="Content\Images\docs\gifs\choco_config.gif" />
     <Content Include="Content\Images\docs\gifs\choco_help.gif" />
     <Content Include="Content\Images\docs\gifs\choco_install.gif" />
@@ -1042,6 +1043,10 @@
     <Content Include="Content\Images\docs\hero.png" />
     <Content Include="Content\Images\docs\msysgit.png" />
     <Content Include="Content\Images\docs\msysgit2.png" />
+    <Content Include="Content\Images\docs\recompile\choco_delete_pkg_files.png" />
+    <Content Include="Content\Images\docs\recompile\choco_download_zip.png" />
+    <Content Include="Content\Images\docs\recompile\choco_npp_download.png" />
+    <Content Include="Content\Images\docs\recompile\choco_rename_nupkg_zip.png" />
     <Content Include="Content\Images\docs\statlight.png" />
     <Content Include="Content\Images\docs\virus_scan_flagged.png" />
     <Content Include="Content\Images\docs\virus_scan_normal.png" />
@@ -1336,6 +1341,8 @@
     <Content Include="Views\Documentation\LogoUsePolicy.cshtml" />
     <Content Include="Views\Documentation\FeaturesSynchronize.cshtml" />
     <Content Include="Views\Documentation\FeaturesCreatePackagesFromInstallers.cshtml" />
+    <Content Include="Views\Documentation\HowToRecompilePackages.cshtml" />
+    <Content Include="Views\Documentation\FeaturesAutomaticallyRecompilePackages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
