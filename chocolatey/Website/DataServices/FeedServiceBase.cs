@@ -292,7 +292,8 @@ namespace NuGetGallery
              string filter;
              if (queryTerms.TryGetValue("$filter", out filter))
              {
-                 if (!(filter.Equals("IsLatestVersion", StringComparison.Ordinal) || filter.Equals("IsAbsoluteLatestVersion", StringComparison.Ordinal)))
+                 if (!(filter.Equals("IsLatestVersion", StringComparison.Ordinal) || filter.Equals("IsAbsoluteLatestVersion", StringComparison.Ordinal) 
+                   || filter.Contains("IsLatestVersion") || filter.Contains("IsAbsoluteLatestVersion")))
                  {
                      searchFilter.IsValid = false;
                      searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
