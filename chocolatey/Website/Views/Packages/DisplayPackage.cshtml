@@ -31,7 +31,7 @@
 
     var expandForModeration = Model.Status == PackageStatusType.Submitted && moderationRole;
 
-    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as <a href=\"https://github.com/chocolatey/choco/wiki/ChocolateyFAQs#what-is-a-trusted-package\">a trusted package</a>";
+    var reviewerComments = !string.IsNullOrWhiteSpace(Model.ReviewerUserName) ? "by moderator " + Model.ReviewerUserName : "as <a href=\"https://chocolatey.org/faq#what-is-a-trusted-package\">a trusted package</a>";
 
     if (Model.Status == PackageStatusType.Rejected && Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending)
     {
@@ -248,7 +248,7 @@
             <li>Until approved, you should consider this package version unsafe - it could do very bad things to your system (it probably doesn't but you have been warned, that's why we have moderation).</li>
             <li>This package version can change wildly over the course of moderation until it is approved. If you install it and it later has changes to this version, you will be out of sync with any changes
           that have been made to the package. Until approved, you should consider that this package version doesn't even exist.</li>
-            <li>You cannot install this package under normal scenarios. See <a href="h@Url.RouteUrl(RouteName.FAQ)#how-do-i-install-a-package-version-under-moderation">How to install package version under moderation</a> for more information.</li>
+            <li>You cannot install this package under normal scenarios. See <a href="@Url.RouteUrl(RouteName.FAQ)#how-do-i-install-a-package-version-under-moderation">How to install package version under moderation</a> for more information.</li>
             <li>There are also no guarantees that it will be approved.</li>
           </ul>
         </div>
