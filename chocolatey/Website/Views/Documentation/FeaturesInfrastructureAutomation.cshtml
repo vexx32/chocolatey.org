@@ -58,11 +58,9 @@ packages = node[&#39;chefdk_bootstrap&#39;][&#39;package&#39;]
 packages.each do |pkg, install|
   include_recipe &quot;#{cookbook_name}::#{pkg}&quot; if install
 end</pre>
-<p>Another example from <a href="https://github.com/facebook/IT-CPE/tree/master/chef/cookbooks/cpe_chocolatey">Facebook</a>:</p>
-<pre class="brush: ruby">choco_managed_installs[&#39;pkg_name&#39;] = {
-  &#39;name&#39; =&gt; &#39;pkg_name&#39;,
-  &#39;version&#39; =&gt; &#39;pkg_version&#39;,
-  &#39;feed&#39; =&gt; node[&#39;cpe_chocolatey&#39;][&#39;default_feed&#39;],
+<p>Another example from <a href="https://github.com/facebook/IT-CPE/tree/master/chef/cookbooks/cpe_choco">Facebook</a>:</p>
+<pre class="brush: ruby">node.default[&#39;cpe_choco&#39;][&#39;sources&#39;][&#39;bacon&#39;] =
+  &#39;source&#39; =&gt; &#39;http://bacon.es.yummy&#39;,
 }</pre>
 <h2 id="octopus-deploy">Octopus Deploy</h2>
 <p>Octopus is a friendly deployment automation tool for .NET developers. It integrates with lots of utilities, and they have a template for installing Chocolatey packages: <a href="https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package" class="uri">https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package</a></p>
