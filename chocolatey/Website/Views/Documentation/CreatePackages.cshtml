@@ -248,19 +248,16 @@ foreach ($file in $files) {
 <p><strong>NOTE</strong>: We strongly suggest the following should be performed in a VM and not on your machine.</p>
 <p><strong>NOTE</strong>: Testing your package can be done in the same way as the verifier - take a look at <a href="https://github.com/chocolatey/package-verifier-vagrant">Chocolatey Verifier Testing</a>.</p>
 <p>To test the package you just built, open a command line shell and navigate to the directory where the <code>*.nupkg</code> file is located. Then type:</p>
-<p>PowerShell:</p>
-<pre class="brush: ps"> choco install packageName -fdv -s $pwd</pre>
-<p>Other shells, including <code>cmd.exe</code>:</p>
-<pre class="cmd"> choco install packageName -fdv -s &quot;%cd%&quot;</pre>
+<pre class="brush: ps">choco install packageName -fdv -s .</pre>
 <p>This will install the package right out of your source. As you find things you may need to fix, using <code>--force</code> (<code>-f</code>) will remove and reinstall the package from the updated <code>*.nupkg</code>.</p>
 <p><strong>NOTE:</strong> If you are using a Semver dash in your package version (such as 1.0.0-beta), you will need to use the <code>-pre</code> switch or else you will get <em>Unable to find package</em> errors from <code>choco install</code>. You can also specify <code>-version 1.0.0-beta</code> to try to install that exact version.</p>
-<p><code>%cd%</code> points to the current directory. You can specify multiple directories separated by a semicolon;</p>
+<p><code>.</code> points to the current directory. You can specify multiple directories separated by a semicolon;</p>
 <p>When your <code>nuspec</code> specifies dependencies that are not in your source, you should add their paths to the source directory. E.g. in the case of Chocolatey itself:</p>
 <pre class="brush: xml">    &lt;dependencies&gt;
       &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.8.20&quot; /&gt;
     &lt;/dependencies&gt;</pre>
 <p>You&#39;ll need to append the API path like so:<br />
-<code>-source &quot;'%cd%;https://chocolatey.org/api/v2/'&quot;</code> (note the double quotes bookending the apostrophes here). See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">passing options with quotes</a>. Also, use <code>$pwd</code> if you are in PowerShell.exe. <strong>Note:</strong> If you need to do this, please ensure you run <code>choco pack</code> first. This method of passing a source won&#39;t work calling a nuspec or nupkg directly as it will override the source passed to the local folder.</p>
+<code>-source &quot;'.;https://chocolatey.org/api/v2/'&quot;</code> (note the double quotes bookending the apostrophes here, use <code>%cd%</code> or <code>$pwd</code> if <code>.</code> doesn&#39;t resolve). See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">passing options with quotes</a>. Also, use <code>$pwd</code> if you are in PowerShell.exe. <strong>Note:</strong> If you need to do this, please ensure you run <code>choco pack</code> first. This method of passing a source won&#39;t work calling a nuspec or nupkg directly as it will override the source passed to the local folder.</p>
 <p>You can also use the <code>-debug</code> switch on <code>choco install</code> to provide more information.</p>
 <p><strong>NOTE:</strong> Do not call install with <code>.nupkg</code> - pointing to a file explicitly overrides source. You must call your install with the package name, not the nupkg file and location. You&#39;ve already specified for choco to look in a local source with <code>-s &quot;'$pwd;https://chocolatey.org/api/v2/'&quot;</code>. Call <code>choco install dude -s &quot;'$pwd;https://chocolatey.org/api/v2/'&quot;</code>, not <code>choco install .\dude.nupkg -s &quot;'$pwd;https://chocolatey.org/api/v2/'&quot;</code>.</p>
 <h3 id="alternative-testing-strategy">Alternative testing strategy</h3>

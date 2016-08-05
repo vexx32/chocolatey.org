@@ -3,31 +3,38 @@
 }
 
 <article>
-<h2 id="roadmap---lets-get-chocolatey">RoadMap - Let&#39;s Get Chocolatey!</h2>
-<p><strong>NOTE:</strong> This is not always going to be updated, one can take a look at the issues list here and in the chocolatey.org feed.</p>
-<h3 id="chocolatey-v1">Chocolatey v1</h3>
+<h1 id="roadmap">Roadmap</h1>
+<p>Heading down a sweet road.</p>
+<p><strong>NOTE:</strong> This is not always going to be updated, one can take a look at the issues list here and in the chocolatey.org repositories.</p>
+<h2 id="chocolatey">Chocolatey</h2>
 <ul>
-<li>cpack - <strong>Done in v0.9.8.13</strong></li>
-<li>cpush - <strong>Done in v0.9.8.13</strong></li>
-<li>Chocolatey using its own feed and gallery (see below) and not in the nuget.org gallery except where overlap should occur. - <strong>Done</strong></li>
-<li><a href="https://github.com/chocolatey/chocolatey/issues/6">Uninstall (cuninst)</a></li>
-<li>More general improvements to the rest of the commands</li>
+<li>Validation on packaging (subset of the package-validator)</li>
+<li>Official support for OneGet/PackageManagement - Summer 2016</li>
+<li>GPG package signing - likely sometime in 2017</li>
+<li>Validating authenticodes - see <a href="https://github.com/chocolatey/choco/issues/643">#643</a></li>
+<li>Not allowing package installs that don&#39;t have checksums by default - see <a href="https://github.com/chocolatey/choco/issues/112">#112</a></li>
+<li>Nuspec enhancements - supported versions of Windows, etc</li>
+<li>Packaging enhancements - like package version, architecture</li>
 <li><a href="https://github.com/chocolatey/chocolatey/issues/7">Virtual packages</a></li>
-<li>Ruby Gems Support - <strong>Done in v0.9.8.13</strong></li>
-<li><a href="https://github.com/chocolatey/puppet-chocolatey">Puppet Integration</a> - <strong>Done</strong></li>
-<li><a href="https://github.com/chocolatey/chocolatey-cookbook">Chef Integration</a> - <strong>Done</strong></li>
-<li>Web PI feed support - <a href="http://msdn.microsoft.com/en-us/library/gg433092.aspx">webpicommandline</a> - <strong>Done in v0.9.8.13</strong></li>
+<li>WSA Support</li>
+<li>Windows Nano Support - likely late 2016/early 2017 (switching to .NET Standard/Core)</li>
 </ul>
-<h3 id="chocolatey.org">Chocolatey.org</h3>
+<h2 id="licensed-chocolatey">Licensed Chocolatey</h2>
 <ul>
-<li>Chocolatey Gallery - <strong>Done</strong></li>
-<li>Package inspector - <strong>Done</strong></li>
-<li>Feed Moderation - <strong>Done</strong></li>
-<li>RSS/Atom Feed - <strong>Done</strong></li>
+<li>Self-Service Installs (Non-Admins)</li>
 </ul>
-<h3 id="thoughts-for-future-directions-undecided-directions">Thoughts for future directions (undecided directions)</h3>
+<h2 id="chocolatey.org">Chocolatey.org</h2>
 <ul>
-<li>GUI</li>
+<li>Adding back in search box</li>
+<li>Converting rest of site</li>
+<li>Kickstarter backers</li>
+<li>Add blog</li>
+<li><del>VirusTotal scans of all packages and downloaded binaries</del> - Completed Feb 2016</li>
+<li>Locking down HTTP without checksums</li>
+<li>Locking down packages without checksums</li>
+</ul>
+<h2 id="thoughts-for-future-directions-undecided-directions">Thoughts for future directions (undecided directions)</h2>
+<ul>
 <li>Pluggable compositional model</li>
 </ul>
 </article>

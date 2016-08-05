@@ -66,6 +66,22 @@ passed Checksum parameter value.</p>
 <h3 id="checksum-string">-Checksum [&lt;String&gt;]</h3>
 <p>The expected checksum hash value of the File resource. The checksum<br />
 type is covered by ChecksumType.</p>
+<p><strong>NOTE:</strong> Checksums in packages are meant as a measure to validate the<br />
+originally intended file that was used in the creation of a package is<br />
+the same file that is received at a future date. Since this is used for<br />
+other steps in the process related to the <a href="https://chocolatey.org/packages">community repository</a>, it<br />
+ensures that the file a user receives is the same file a maintainer<br />
+and a moderator (if applicable), plus any moderation review has<br />
+intended for you to receive with this package. If you are looking at a<br />
+remote source that uses the same url for updates, you will need to<br />
+ensure the package also stays updated in line with those remote<br />
+resource updates. You should look into <a href="https://chocolatey.org/docs/automatic-packages">automatic packaging</a><br />
+to help provide that functionality.</p>
+<p><strong>NOTE:</strong> To determine checksums, you can get that from the original<br />
+site if provided. You can also use the <a href="https://chocolatey.org/packages/checksum">checksum tool available on<br />
+the [community feed](https://chocolatey.org/packages)</a> (<code>choco install checksum</code>)<br />
+and use it e.g. <code>checksum -t sha256 -f path\to\file</code>. Ensure you<br />
+provide checksums for all remote resources used.</p>
 <table>
 <thead>
 <tr class="header">

@@ -328,9 +328,25 @@ this parameter.</p>
 </tbody>
 </table>
 <h3 id="checksum-string">-Checksum [&lt;String&gt;]</h3>
-<p>OPTIONAL (Highly recommended) - The checksum hash value of the Url<br />
-resource. This allows a checksum to be validated for files that are not<br />
-local. The checksum type is covered by ChecksumType.</p>
+<p>The checksum hash value of the Url resource. This allows a checksum to<br />
+be validated for files that are not local. The checksum type is covered<br />
+by ChecksumType.</p>
+<p><strong>NOTE:</strong> Checksums in packages are meant as a measure to validate the<br />
+originally intended file that was used in the creation of a package is<br />
+the same file that is received at a future date. Since this is used for<br />
+other steps in the process related to the <a href="https://chocolatey.org/packages">community repository</a>, it<br />
+ensures that the file a user receives is the same file a maintainer<br />
+and a moderator (if applicable), plus any moderation review has<br />
+intended for you to receive with this package. If you are looking at a<br />
+remote source that uses the same url for updates, you will need to<br />
+ensure the package also stays updated in line with those remote<br />
+resource updates. You should look into <a href="https://chocolatey.org/docs/automatic-packages">automatic packaging</a><br />
+to help provide that functionality.</p>
+<p><strong>NOTE:</strong> To determine checksums, you can get that from the original<br />
+site if provided. You can also use the <a href="https://chocolatey.org/packages/checksum">checksum tool available on<br />
+the [community feed](https://chocolatey.org/packages)</a> (<code>choco install checksum</code>)<br />
+and use it e.g. <code>checksum -t sha256 -f path\to\file</code>. Ensure you<br />
+provide checksums for all remote resources used.</p>
 <table>
 <thead>
 <tr class="header">
@@ -362,7 +378,7 @@ local. The checksum type is covered by ChecksumType.</p>
 </tbody>
 </table>
 <h3 id="checksumtype-string">-ChecksumType [&lt;String&gt;]</h3>
-<p>OPTIONAL - The type of checkum that the file is validated with - valid<br />
+<p>The type of checkum that the file is validated with - valid<br />
 values are &quot;˜md5&#39;, &quot;˜sha1&#39;, &quot;˜sha256&#39; or &quot;˜sha512&#39; - defaults to &quot;˜md5&#39;.</p>
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
 compliant algorithms for hashing - see<br />
@@ -398,9 +414,20 @@ compliant algorithms for hashing - see<br />
 </tbody>
 </table>
 <h3 id="checksum64-string">-Checksum64 [&lt;String&gt;]</h3>
-<p>OPTIONAL (Highly recommended) - The checksum hash value of the Url64bit<br />
+<p>OPTIONAL if no Url64bit - The checksum hash value of the Url64bit<br />
 resource. This allows a checksum to be validated for files that are not<br />
 local. The checksum type is covered by ChecksumType64.</p>
+<p><strong>NOTE:</strong> Checksums in packages are meant as a measure to validate the<br />
+originally intended file that was used in the creation of a package is<br />
+the same file that is received at a future date. Since this is used for<br />
+other steps in the process related to the <a href="https://chocolatey.org/packages">community repository</a>, it<br />
+ensures that the file a user receives is the same file a maintainer<br />
+and a moderator (if applicable), plus any moderation review has<br />
+intended for you to receive with this package. If you are looking at a<br />
+remote source that uses the same url for updates, you will need to<br />
+ensure the package also stays updated in line with those remote<br />
+resource updates. You should look into <a href="https://chocolatey.org/docs/automatic-packages">automatic packaging</a><br />
+to help provide that functionality.</p>
 <table>
 <thead>
 <tr class="header">
