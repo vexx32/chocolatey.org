@@ -18,7 +18,8 @@ cpack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;] (DEPRECATED)</pre>
 <h2 id="examples">Examples</h2>
 <pre class="cmd">choco pack
 choco pack --version 1.2.3
-choco pack path/to/nuspec</pre>
+choco pack path/to/nuspec
+choco pack --outputdirectory build</pre>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -79,6 +80,10 @@ out multiple package calls when wanting to pass specific options.</p>
 
      --version=VALUE
      Version - The version you would like to insert into the package.
+
+     --outputdirectory=VALUE
+     OutputDirectory - Specifies the directory for the created Chocolatey 
+       package file. If not specified, uses the current directory.
 </pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco pack -h</code>.</p>

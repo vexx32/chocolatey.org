@@ -52,7 +52,7 @@ objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text:</p>
-<pre class="cmd">chocopkgup /p {appname} /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
+<pre class="cmd">chocopkgup /p {appname} /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot; /c &quot;{Checksum}&quot; /c64 &quot;{Checksumx64}&quot;
 REM /disablepush</pre></li>
 <li>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></li>
@@ -91,7 +91,7 @@ REM /disablepush</pre></li>
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinJobSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text (replace <code>name</code> with the actual name of the meta package folder):</p>
-<pre class="cmd">chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot;
+<pre class="cmd">chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot; /c &quot;{Checksum}&quot; /c64 &quot;{Checksumx64}&quot;
 REM /disablepush</pre></li>
 <li><p>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></p></li>
