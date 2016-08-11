@@ -23,8 +23,10 @@
 # NOTE: $env:chocolateyDownloadUrl does not work with $env:chocolateyVersion.
 # To use built-in compression (no 7zip download), please set $env:chocolateyUseWindowsCompression = 'true'
 
-#specifically use the API to get the latest version (below)
-$url = ''
+$url = "https://chocolatey.org/api/v2/package/chocolatey/"
+# introduced when there were performance issues - kept around in case we
+# run into them again.
+$url = "https://packages.chocolatey.org/chocolatey.0.9.10.3.nupkg"
 
 $chocolateyVersion = $env:chocolateyVersion
 if (![string]::IsNullOrEmpty($chocolateyVersion)){
@@ -72,11 +74,12 @@ function Fix-PowerShellOutputRedirectionBug {
 
 Fix-PowerShellOutputRedirectionBug
 
-function Get-Downloader {
+function Download-File {
 param (
-  [string]$url
+  [string]$url,
+  [string]$file
  )
-
+  Write-Output "Downloading $url to $file"
   $downloader = new-object System.Net.WebClient
 
   $defaultCreds = [System.Net.CredentialCache]::DefaultCredentials
@@ -113,36 +116,9 @@ param (
     $proxy = New-Object System.Net.WebProxy($proxyaddress)
     $proxy.Credentials = $creds
     $downloader.Proxy = $proxy
-  }  
-  
-  return $downloader
-}
+  }
 
-function Download-String {
-param (
-  [string]$url
- )
-  $downloader = Get-Downloader $url
-  
-  return $downloader.DownloadString($url)
-}
-
-function Download-File {
-param (
-  [string]$url,
-  [string]$file
- )
-  Write-Output "Downloading $url to $file"
-  $downloader = Get-Downloader $url
-  
   $downloader.DownloadFile($url, $file)
-}
-
-if ($url -eq $null -or $url -eq '') {
-  Write-Output "Getting latest version of the Chocolatey package for download."
-  $url = 'https://chocolatey.org/api/v2/Packages()?$filter=((Id%20eq%20%27chocolatey%27)%20and%20(not%20IsPrerelease))%20and%20IsLatestVersion'
-  [xml]$result = Download-String $url
-  $url = $result.feed.entry.content.src
 }
 
 # Download the Chocolatey package
@@ -199,11 +175,12 @@ $nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
 if (![System.IO.Directory]::Exists($chocoPkgDir)) { [System.IO.Directory]::CreateDirectory($chocoPkgDir); }
 Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 
+
 # SIG # Begin signature block
 # MIINWwYJKoZIhvcNAQcCoIINTDCCDUgCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCB1hri5jbWs6rY1
-# 53BgRAFlPRzwJ0KvMmTHqQnIz830caCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBU4lgzoP7A2Brt
+# DzxwX5e3dDJKCiZFmgK+5/Cu9IIjV6CCCngwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -264,12 +241,12 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # bTExMC8GA1UEAxMoRGlnaUNlcnQgU0hBMiBBc3N1cmVkIElEIENvZGUgU2lnbmlu
 # ZyBDQQIQB3Rm7aJnbzrskhfSMFNxEDANBglghkgBZQMEAgEFAKCBhDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCBIzpMp
-# EMpSEKvTSmme8wurX3Th5Uz8IU5Bu/+vv9KAZTANBgkqhkiG9w0BAQEFAASCAQCa
-# mY7InXuCQnvs+83KGGrUn+GQT7wh4TWhgIDyR3Svm1eVBsxRCmUbaxVzqNF4h9PG
-# 8IrT8YtEwqMGexnsDqh0hP2CgJUgScA+YJjJBbFvFlFa1tdXD2961yo3A12QZURS
-# R31G+OEE71ZU3pOQb0S6OZVQwAatw4JKFVe8XgGeGcRGDqR+Z4JHgb22R/8M2siJ
-# 7nlYE0u/HPWKG4mn7f29Y2lmreFtuxORuhdFWVRo0OChe5x6Pa/zwViM3mb2vUWt
-# ZsQhFLpQYwkKjwdiacwd9+nNodJ5wgXIccJbSOQ5/4bKdCRzvZ/xoyduy9vJgkHx
-# 4jlZzOMjF45kCmup71Z8
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDlXA/L
+# 12y1ZnHXtSqFA++xhAntM4U9w2KqUhBp5i4PlTANBgkqhkiG9w0BAQEFAASCAQBN
+# ahNIFDkU3xgAjn+FcPVUjxzorANePvsXNNlETNI13lEYX07csTE3ueYgPEz6Lhkt
+# +rCznILeaF2Z1D2Q2jVShZoWmoBXijtb87ysF+L0yFDd8d7XO2C9OidOfrCX0IRe
+# krjZaK/j7OyRzwlWcxivKeHBATsg+av3O360jz1ZQVM4FQaFw9yb27QaTRUnLji2
+# dbAAKSwAX3BMPpIm3Omp2iyAv9y8ZR/VcAVOC0St1/qJ+O0G9FoFVBuYoHwmzxWZ
+# jwhvqpTqpomTEQV53WCWIvvdY2/Tu0EXYwXRYuIvthAosE25qDG1BXzoq0G7/sfN
+# X1Et2sdNHA4QW9yHt+gf
 # SIG # End signature block
