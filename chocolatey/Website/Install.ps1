@@ -90,26 +90,27 @@ param (
   $explicitProxyPassword = $env:chocolateyProxyPassword
   if ($explicitProxy -ne $null) {
     # explicit proxy
-  $proxy = New-Object System.Net.WebProxy($explicitProxy, $true)
-  if ($explicitProxyPassword -ne $null) {
-    $passwd = ConvertTo-SecureString $explicitProxyPassword -AsPlainText -Force
-    $proxy.Credentials = New-Object System.Management.Automation.PSCredential ($explicitProxyUser, $passwd)
-  }
+    $proxy = New-Object System.Net.WebProxy($explicitProxy, $true)
+    if ($explicitProxyPassword -ne $null) {
+      $passwd = ConvertTo-SecureString $explicitProxyPassword -AsPlainText -Force
+      $proxy.Credentials = New-Object System.Management.Automation.PSCredential ($explicitProxyUser, $passwd)
+    }
 
-  Write-Output "Using explicit proxy server '$explicitProxy'."
+    Write-Debug "Using explicit proxy server '$explicitProxy'."
     $downloader.Proxy = $proxy
 
   } elseif (!$downloader.Proxy.IsBypassed($url))
   {
-  # system proxy (pass through)
+    # system proxy (pass through)
     $creds = $defaultCreds
     if ($creds -eq $null) {
       Write-Debug "Default credentials were null. Attempting backup method"
       $cred = get-credential
       $creds = $cred.GetNetworkCredential();
     }
+    
     $proxyaddress = $downloader.Proxy.GetProxy($url).Authority
-    Write-Output "Using system proxy server '$proxyaddress'."
+    Write-Debug "Using system proxy server '$proxyaddress'."
     $proxy = New-Object System.Net.WebProxy($proxyaddress)
     $proxy.Credentials = $creds
     $downloader.Proxy = $proxy
@@ -202,8 +203,8 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # SIG # Begin signature block
 # MIINWwYJKoZIhvcNAQcCoIINTDCCDUgCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCB1hri5jbWs6rY1
-# 53BgRAFlPRzwJ0KvMmTHqQnIz830caCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCC0fiD4BYS2Es8+
+# +BwCbLhGDtXNnuIzaS/Iho2eIVo49aCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -264,12 +265,12 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # bTExMC8GA1UEAxMoRGlnaUNlcnQgU0hBMiBBc3N1cmVkIElEIENvZGUgU2lnbmlu
 # ZyBDQQIQB3Rm7aJnbzrskhfSMFNxEDANBglghkgBZQMEAgEFAKCBhDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCBIzpMp
-# EMpSEKvTSmme8wurX3Th5Uz8IU5Bu/+vv9KAZTANBgkqhkiG9w0BAQEFAASCAQCa
-# mY7InXuCQnvs+83KGGrUn+GQT7wh4TWhgIDyR3Svm1eVBsxRCmUbaxVzqNF4h9PG
-# 8IrT8YtEwqMGexnsDqh0hP2CgJUgScA+YJjJBbFvFlFa1tdXD2961yo3A12QZURS
-# R31G+OEE71ZU3pOQb0S6OZVQwAatw4JKFVe8XgGeGcRGDqR+Z4JHgb22R/8M2siJ
-# 7nlYE0u/HPWKG4mn7f29Y2lmreFtuxORuhdFWVRo0OChe5x6Pa/zwViM3mb2vUWt
-# ZsQhFLpQYwkKjwdiacwd9+nNodJ5wgXIccJbSOQ5/4bKdCRzvZ/xoyduy9vJgkHx
-# 4jlZzOMjF45kCmup71Z8
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCCfXsKl
+# d8ZWNkyGFu9bDM2NgStsM4GlztP7SaBqx/SutDANBgkqhkiG9w0BAQEFAASCAQCw
+# 0p0QAALroxMUy4JgYcR460vV2hm3ckJpXi/RnaEut3nr7BrDX6viswCZt2kWcTJN
+# cHlnqbsTXSShUndC7eVUUV/3l7t1x5QtFE7inR0IJ/n2Cdt9e3j3Go7NkF1bUIlM
+# GyuVN4tfZG4bwi7ySP4Dl9bC+Rb3PnaajxteDts1P9XVIF3ZUTNkSjwFFc6F3CPn
+# gM8FTb03vz8D0F9qsN1l2LDzbY4+0RRAo7MPQjzzUL5fEzrG0kon+mz/SGfdR7ua
+# 2i7qAkY5XZEIdk1U44EVf7obqOBsgRzgrHcc7kRJmmnWLKviI3WYRdH5BGyztVwz
+# 65k6DibcHhUc7yQSuS7G
 # SIG # End signature block
