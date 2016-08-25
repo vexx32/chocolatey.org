@@ -293,7 +293,13 @@ namespace NuGetGallery
                                DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
                                () => packageScanResults.ToList())
                            : packageScanResults.ToList();
-            
+
+            var nupkgs = scanResults.Where(s => s.FileName.EndsWith(".nupkg")).OrderByDescending(s => s.ScanDate).Skip(1).OrEmptyListIfNull().ToList();
+            if (nupkgs.Count != 0)
+            {
+                scanResults.RemoveAll(s => nupkgs.Contains(s));
+            }
+
             return scanResults;
         }
 
