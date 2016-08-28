@@ -889,7 +889,7 @@ namespace NuGetGallery
             
             if (reviewComments.Contains(TESTING_PASSED_MESSAGE))
             {
-                subject = "Passed Verification Testing";
+                subject = Constants.MODERATION_VERIFICATION_PASS;
             } 
             else if (reviewComments.Contains(TESTING_FAILED_MESSAGE))
             {
@@ -1000,7 +1000,7 @@ namespace NuGetGallery
 
                 if (package.IsPrerelease || trustedPackagePassingAutomatedReview)
                 {
-                    messageSvc.SendPackageModerationEmail(package, null, "Finished Automated Moderation Review", null);
+                    messageSvc.SendPackageModerationEmail(package, null, Constants.MODERATION_FINISHED, null);
                 }
             }
         }
@@ -1197,7 +1197,7 @@ namespace NuGetGallery
 
         private void NotifyForModeration(Package package, string comments)
         {
-            messageSvc.SendPackageModerationEmail(package, comments, "Submitted for Moderation Review", null);
+            messageSvc.SendPackageModerationEmail(package, comments, Constants.MODERATION_SUBMITTED, null);
         }
     }
 }

@@ -52,5 +52,11 @@ namespace NuGetGallery
         public const string UploadsFolderName = "uploads";
         public const string NuGetCommandLinePackageId = "NuGet.CommandLine";
         public const string ReturnUrlViewDataKey = "ReturnUrl";
+
+        public const string MODERATION_SUBMITTED = "Submitted for Moderation Review";
+        public const string MODERATION_FINISHED = "Finished Automated Moderation Review";
+        public const string MODERATION_VERIFICATION_PASS = "Passed Verification Testing";
+        public const string MODERATION_VALIDATION_PASS = "Passed Validation Testing - Findings";
+        public const string MODERATION_VALIDATION_PASS_NO_FINDINGS = "Passed Validation Testing";
     }
 }
