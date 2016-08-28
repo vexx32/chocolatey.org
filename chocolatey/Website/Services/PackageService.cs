@@ -1001,7 +1001,7 @@ namespace NuGetGallery
                     package.Status = PackageStatusType.Exempted;
                 }
 
-                var trustedPackagePassingAutomatedReview = (package.PackageRegistration.IsTrusted && passingVerification && passingValidation);
+                var trustedPackagePassingAutomatedReview = PackageIsTrusted(package) && passingVerification && passingValidation;
                 if (trustedPackagePassingAutomatedReview)
                 {
                     package.Listed = true;
@@ -1017,6 +1017,11 @@ namespace NuGetGallery
                     messageSvc.SendPackageModerationEmail(package, null, "Finished Automated Moderation Review", null);
                 }
             }
+        }
+
+        private bool PackageIsTrusted(Package package)
+        {
+            return package.PackageRegistration.IsTrusted || (package.CreatedBy != null && package.CreatedBy.IsTrusted && package.PackageRegistration.Packages.Count(p => p.Listed && !p.IsPrerelease) >= 1);
         }
 
         public void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter)
