@@ -1009,6 +1009,7 @@
     <Content Include="Content\Images\docs\chocolateyicon.png" />
     <Content Include="Content\Images\docs\chocolateynhprofiler.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinCustomCommand.png" />
+    <Content Include="Content\Images\docs\chocopkgup\KetarinGlobalVariables.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinJobSettings.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinMain.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinSettings.png" />
@@ -1057,6 +1058,7 @@
     <Content Include="Content\Images\docs\recompile\choco_download_zip.png" />
     <Content Include="Content\Images\docs\recompile\choco_npp_download.png" />
     <Content Include="Content\Images\docs\recompile\choco_rename_nupkg_zip.png" />
+    <Content Include="Content\Images\docs\reducemoderationemail.png" />
     <Content Include="Content\Images\docs\statlight.png" />
     <Content Include="Content\Images\docs\virus_scan_flagged.png" />
     <Content Include="Content\Images\docs\virus_scan_normal.png" />
