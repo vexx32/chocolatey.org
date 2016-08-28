@@ -457,6 +457,17 @@ The {3} Team";
 
         public void SendPackageModerationEmail(Package package, string comments, string subjectComment, User fromUser)
         {
+            var messageIsInformationLevel = false;
+            if (subjectComment.Contains(Constants.MODERATION_SUBMITTED)
+                || subjectComment.Contains(Constants.MODERATION_FINISHED)
+                || subjectComment.Contains(Constants.MODERATION_VERIFICATION_PASS)
+                || subjectComment.Contains(Constants.MODERATION_VALIDATION_PASS_NO_FINDINGS)
+                || subjectComment == "Approved"
+                )
+            {
+                messageIsInformationLevel = true;
+            }
+
             string subject = "[{0} Moderation] {1} v{2}{3}";
             var packageUrl = string.Format(
                 "{0}packages/{1}/{2}",
@@ -516,11 +527,20 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-
-                AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 mailMessage.From = new MailAddress("moderation@chocolatey.io", "NO REPLY - Chocolatey");
+                
+                AddMaintainersToMailMessage(package.PackageRegistration, mailMessage, informational: messageIsInformationLevel);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
+                
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
+            }
+        }
+
+        private void AddMaintainersToMailMessage(PackageRegistration packageRegistration, MailMessage mailMessage, bool informational)
+        {
+            foreach (var owner in packageRegistration.Owners.Where(o => o.EmailAllModerationNotifications || !informational))
+            {
+                mailMessage.To.Add(owner.ToMailAddress());
             }
         }
 
