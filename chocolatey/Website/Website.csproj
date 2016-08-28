@@ -677,6 +677,10 @@
     <Compile Include="Migrations\201608281925093_TrackPackageCreator.Designer.cs">
       <DependentUpon>201608281925093_TrackPackageCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608282004148_AddTrustedMaintainer.cs" />
+    <Compile Include="Migrations\201608282004148_AddTrustedMaintainer.Designer.cs">
+      <DependentUpon>201608282004148_AddTrustedMaintainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />
