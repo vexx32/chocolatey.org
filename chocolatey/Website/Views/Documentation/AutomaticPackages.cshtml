@@ -9,67 +9,81 @@
 <h2 id="automatic-update-methods">Automatic update methods</h2>
 <p>There are currently two methods that can be used to maintain automatic packages:</p>
 <ul>
-<li>Using <a href="http://chocolatey.org/packages/ChocolateyPackageUpdater">Chocolatey Package Updater</a> with 3rd party tool Ketarin.</li>
+<li>Using <a href="https://chocolatey.org/packages/ChocolateyPackageUpdater">Chocolatey Package Updater</a> with 3rd party tool <a href="https://chocolatey.org/packages/ketarin">Ketarin</a>.</li>
 <li>Using only Powershell via <a href="https://github.com/majkinetor/au">Automatic Update module AU</a>.</li>
 </ul>
-<p>The rest of this page contains documentation about the first method. You can learn more about the AU updater via its <a href="https://github.com/majkinetor/au/blob/master/README.md">documentation</a>. You can also learn about its usage from the <a href="https://github.com/majkinetor/chocolatey">real life example</a> which runs the updater on AppVeyor so you are not required to schedule updater on your own machine.</p>
+<h2 id="automatic-updater-au">Automatic Updater (AU)</h2>
+<p>You can learn more about the AU updater via its <a href="https://github.com/majkinetor/au/blob/master/README.md">documentation</a>. It is a PowerShell module, so you are doing everything with PowerShell scripts. You can also run everything on AppVeyor so you are which runs the updater on AppVeyor so you are not required to schedule updater on your own machine.</p>
+<h3 id="credits">Credits</h3>
+<p>AU is brought to you by a Chocolatey community member <a href="https://github.com/majkinetor">Miodrag Milic</a> and it is becoming more awesome all the time.</p>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>PowerShell v4+. It will be v3+ once <a href="https://github.com/majkinetor/au/issues/17">au #17</a> is implemented.</li>
+<li>The <a href="https://chocolatey.org/packages/au">AU module</a>.</li>
+<li>Ruby for publishing GitHub Gists.</li>
+</ul>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>Fork <a href="https://github.com/chocolatey/chocolatey-packages-template#fork-destination-box"><code>chocolatey-packages-template</code></a> and rename it to something like <code>chocolatey-packages</code> (on GitHub - go into Settings, Repository name and rename).</li>
+<li>Clone the repo locally.</li>
+<li>Head into the setup folder and look for <code>au_setup.ps1</code>. Review that file and then run it.</li>
+<li>Follow the <a href="https://github.com/chocolatey/chocolatey-packages-template/blob/master/setup/README.md">README</a> in the setup folder.</li>
+</ol>
+<p>When creating packages, you can choose to use <code>--auto</code> or not as AU doesn&#39;t use token replacement for updating packages. There are some additional things generated though, so you may want to use the auto switch.</p>
 <h2 id="chocolatey-package-updater-aka-chocopkgup">Chocolatey Package Updater aka chocopkgup</h2>
 <p><a href="http://chocolatey.org/packages/ChocolateyPackageUpdater" class="uri">http://chocolatey.org/packages/ChocolateyPackageUpdater</a></p>
-<p>The tool that accomplishes this process is known as <a href="http://chocolatey.org/packages/ChocolateyPackageUpdater">chocopkgup</a> (Chocolatey Package Updater). It is a free tool (unless you want to use it for uploads to somewhere other than chocolatey.org).</p>
+<p>The tool that accomplishes this process is known as <a href="https://chocolatey.org/packages/ChocolateyPackageUpdater">chocopkgup</a> (Chocolatey Package Updater). It is a free tool (unless you want to use it for uploads to somewhere other than chocolatey.org).</p>
 <h3 id="licensing">Licensing</h3>
 <p>Check the license at <a href="http://realdimensions.net/licenses/chocolateypackageupdater/license.txt" class="uri">http://realdimensions.net/licenses/chocolateypackageupdater/license.txt</a> to be sure that it applies to you.</p>
 <p>Basically it boils down to this: if you want to use chocopkgup privately, you will need to pay for it. As long as you are publishing to chocolatey.org, the tool is completely free! The license does expire every once in awhile, but if you are keeping up on your chocolatey updates locally, you won&#39;t even notice (<code>cup all</code>, remember?).</p>
-<h3 id="credits">Credits</h3>
-<p>This tool makes use of <a href="http://chocolatey.org/packages/ketarin">Ketarin</a>. Ketarin is an awesome tool that helps chocopkgup accomplish its tasks.</p>
-<h3 id="setup">Setup</h3>
-<p>More of this will become automated over time.</p>
+<h3 id="credits-1">Credits</h3>
+<p>This tool makes use of <a href="https://chocolatey.org/packages/ketarin">Ketarin</a>. Ketarin is an awesome tool that helps chocopkgup accomplish its tasks.</p>
+<h3 id="requirements-1">Requirements</h3>
+<ul>
+<li>A Windows box somewhere - to run the updater on</li>
+<li><a href="https://chocolatey.org/packages/ketarin">Ketarin</a></li>
+<li><a href="https://chocolatey.org/packages/chocolateypackageupdater">Chocolatey Package Updater</a></li>
+</ul>
+<h3 id="setup-1">Setup</h3>
 <ol>
-<li><strong>Optional</strong> (strongly recommended) - Ensure you are using a source control repository and file system for keeping packages. A good example is <a href="https://github.com/chocolatey/chocolatey-coreteampackages">chocolatey-coreteampackages</a> repo.</li>
-<li><p><strong>Optional</strong> (strongly recommended) - Make sure you have installed the <a href="https://github.com/chocolatey/chocolateytemplates">chocolatey package templates</a>. If you&#39;ve installed the chocolatey templates (ReadMe has instructions), then all you need to do is take a look at the <a href="https://github.com/chocolatey/chocolateytemplates/tree/master/_templates/chocolateyauto">chocolateyauto</a> and <a href="https://github.com/chocolatey/chocolateytemplates/tree/master/_templates/chocolateyauto3">chocolateyauto3</a>. You will note this looks almost exactly like the regular chocolatey template, except this has some specially named token values.</p>
-<pre class="brush: ps">#Items that could be replaced based on what you call chocopkgup.exe with
-#{{PackageName}} - Package Name (should be same as nuspec file and folder) |/p
-#{{PackageVersion}} - The updated version | /v
-#{{DownloadUrl}} - The url for the native file | /u
-#{{PackageFilePath}} - Downloaded file if including it in package | /pp
-#{{PackageGuid}} - This will be used later | /pg
-#{{DownloadUrlx64}} - The 64bit url for the native file | /u64
-## included with 0.6.4
-#{{Checksum}} - The checksum for the file downloaded from DownloadUrl | /c
-#{{Checksumx64}} - The checksum for the 64bit file downloaded from DownloadUrlx64  | /c64</pre></li>
-<li>These are the tokens that chocopkgup will replace when it generates an instance of a package.</li>
-<li>Install chocopkgup (which will install ketarin and nuget.commandline). <code>cinst chocolateypackageupdater</code>.</li>
-<li>Check the config in <code>C:\tools\ChocolateyPackageUpdater\chocopkgup.exe.config</code> (or <code>ChocolateyBinRoot/ChocolateyPackageUpdater</code>). The <code>PackagesFolder</code> key should point to where your repository is located.</li>
+<li>Fork <a href="https://github.com/chocolatey/chocolatey-packages-template#fork-destination-box"><code>chocolatey-packages-template</code></a> and rename it to something like <code>chocolatey-packages</code> (on GitHub - go into Settings, Repository name and rename).</li>
+<li>Clone the repo locally.</li>
+<li>Install chocopkgup (which will install ketarin and nuget.commandline). <code>choco install chocolateypackageupdater</code>.</li>
+<li>Check the config in <code>$env:ChocolateyInstall\lib\ChocolateyPackageUpdater\chocopkgup.exe.config</code>. The <code>PackagesFolder</code> key should point to where your repository is located.</li>
 <li>Create a scheduled task (in Windows). This is the command (edit the path to <code>cmd.exe</code> accordingly): <code>C:\Windows\System32\cmd.exe /c c:\tools\chocolateypackageupdater\ketarinupdate.cmd</code></li>
-<li><p>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:</p>
-<pre class="cmd">Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
-objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True</pre></li>
-<li>Choose a schedule for the task. I run mine once a day but you can set it to run more often. Choose a time when the computer is not that busy.</li>
-<li>Save the following Ketarin template somewhere: <a href="https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml" class="uri">https://raw.github.com/chocolatey/chocolateytemplates/master/_templates/KetarinChocolateyTemplate.xml</a></li>
+<li>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:<br />
+~<del>vb<br />
+Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)<br />
+objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True<br />
+</del>~</li>
+<li>Choose a schedule for the task. Some folks run the task about once an hour to catch updates as quickly as they happen.</li>
 <li>Open Ketarin. Choose <code>File</code> –&gt; <code>Settings</code>.</li>
-<li>On the <strong>General Tab</strong> we are going to add the Version Column for all jobs. Click <code>Add...</code>, then put <code>Version</code> in Column name and <code>{version}</code> in Column value.<br />
-<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinShowCustomField.png")" title="Ketarin Custom Field Setup" alt="Ketarin Settings Custom" /></li>
-<li>Click <strong>[OK]</strong>. This should add it to the list of Custom Columns.</li>
-<li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
-<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
-<li><p>Add the following text:</p>
-<pre class="cmd">chocopkgup /p {appname} /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot; /c &quot;{Checksum}&quot; /c64 &quot;{Checksumx64}&quot;
-REM /disablepush</pre></li>
-<li>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
-<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></li>
-<li>Click Okay.</li>
-<li><p>Note the commented out <code>/disablepush</code>. This is so you can create a few packages and test that everything is working well before actually pushing those packages up to chocolatey. You may want to add that switch to the main command above it. Add it as the first parameter after <code>chocopkgup</code> so that none of the other commands conflict.</p></li>
+<li>Now Click Import...</li>
+<li>Choose <a href="https://github.com/chocolatey/chocolatey-packages-template/blob/master/setup/KetarinSettings.xml">setup/KetarinSettings.xml</a> from the repo folder. This is going to add everything in that you will need for settings.</li>
+<li>Click on Global Variables. Ensure all of the variables are set appropriately.<br />
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinGlobalVariables.png")" alt="Ketarin Global Variables" /></li>
 </ol>
-<p>This gets Ketarin all set up with a global command for all packages we create. If you want to use this outside of chocolatey, all you need to do is remove the global setting for Before updating an application and instead apply it to every job that pertains to chocolatey update.</p>
+<p>This gets Ketarin all set up with a global command for all packages we create.</p>
+<p><em>NOTE</em>: This has set up global commands for &quot;Before updating an application&quot; and &quot;After updating an application&quot;. Those should not need adjusting, however if you do, please be sure to export the settings again.</p>
 <h3 id="create-an-automatic-package">Create an Automatic Package</h3>
 <p>Preferably you are taking an existing package that you have tested and converting it to an automatic package.</p>
+<h4 id="create-a-package-for-automatic-packaging">Create a package for automatic packaging</h4>
+<p>When you are creating packages, you should ensure you are on the latest version of Chocolatey. This means you have the latest fixes to packaging templates and latest and greatest in the way of automation.</p>
+<ol>
+<li>Ensuring you are on the latest version of Chocolatey - <code>choco upgrade chocolatey</code>.</li>
+<li>Open PowerShell (or cmd.exe) and head to the automatic package folder you are using. This should be &quot;repolocation\automatic&quot;.</li>
+<li>Run <code>choco new &lt;name&gt; --auto [options]</code>. You can use a different package template if you have those installed - see <a href="https://chocolatey.org/docs/commands-new" class="uri">https://chocolatey.org/docs/commands-new</a> for all options or run <code>choco new -?</code>. For package templates, see <a href="https://chocolatey.org/docs/how-to-create-custom-package-templates" class="uri">https://chocolatey.org/docs/how-to-create-custom-package-templates</a>.</li>
+<li>Inspect the output. Merge in your existing package logic if you have an existing package you are converting.</li>
+<li>Make any adjustments you need to the package to prepare for packaging.</li>
+</ol>
+<h4 id="ketarin">Ketarin</h4>
 <ol>
 <li>Open Ketarin. Choose <code>File</code> –&gt; <code>Import...</code></li>
-<li>Choose the template you just saved earlier (<code>KetarinChocolateyTemplate.xml</code>).</li>
+<li>Choose <a href="https://github.com/chocolatey/chocolatey-packages-template/blob/master/ketarin/_KetarinChocolateyTemplate.xml">ketarin/_KetarinChocolateyTemplate.xml</a> from the repo folder.</li>
 <li>Answer the questions. This will create a new job for Ketarin to check.</li>
-<li>One important thing to keep in mind is that <strong>the name of the job needs to match the name of the package folder exactly.</strong></li>
+<li>One important thing to keep in mind is that <strong>the name of the job needs to match the name of the package folder and nuspec <em>exactly</em>.</strong></li>
 <li>Right click on that new job and select <code>Edit</code>. Take a look at the following:<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinMain.png")" title="Ketarin Job Main" alt="Ketarin Job Main" /></li>
-<li>Set the URL appropriately. I would shy away from FileHippo for now, the URL has been known to change and if you upload that as the download url in a chocolatey packages, it won&#39;t work very well.</li>
 <li>Click on <code>Variables</code> on the right of URL<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinSetVariables.png")" title="Ketarin Job Variables" alt="Ketarin Job Variables" /></li>
 <li>On the left side you should see a variable for <strong>version</strong> and one for <strong>url64</strong>. Click on <strong>version</strong>.</li>
@@ -85,6 +99,7 @@ REM /disablepush</pre></li>
 <li>Click <strong>OK</strong> again.</li>
 </ol>
 <h3 id="notes-about-tri-packages-metavirtual-aka-.install-and-.portable">Notes about tri-packages (meta/virtual aka <em>, </em>.install, and *.portable)</h3>
+<p><strong>UPDATE AUG 2016:</strong> This may no longer be true. Just set up three jobs.</p>
 <p>When you have the three packages, you should set up only two jobs, one for <em>.install and one for </em>.portable.</p>
 <p>In whichever job the meta package points to, you should add a command to that like you did for the settings for all jobs in ketarin.</p>
 <ol>
@@ -100,12 +115,7 @@ REM /disablepush</pre></li>
 <ol>
 <li>We need to get a good idea of whether this will work or not.</li>
 <li>Open a command line and type <code>ketarin</code>.</li>
-<li>Once Ketarin opens, open <a href="#setup">global options</a> (steps 10 and 11) and set <code>/disablepush</code> so that it only goes as far as creating packages.</li>
-</ol>
-<ul>
-<li><strong>NOTE</strong>: Do not append it the end, place it first, right after <code>chocopkgup</code> e.g. <code>chocopkgup /disablepush /p ...</code>. This is done to alleviate issues with messed up parameters coming back from other items.</li>
-</ul>
-<ol>
+<li>Once Ketarin opens, open <a href="#setup">global options</a> (steps 8 and 11), go to Global Variables and set <code>cscript</code> to <code>1</code> instead of <code>2</code> so that it only goes as far as creating packages.</li>
 <li>Find your job, and right click -&gt; Update. If everything is set good, in moments you will have a Chocolatey package in the folder you set under <code>{PackagesFolder}\_output</code>, where <code>{PackagesFolder}</code> is the path you set in the course of the <a href="#setup"><em>Setup</em></a> section of this article.</li>
 <li>Inspect the resulting Chocolatey package(s) for any issues.</li>
 <li>You should also test the scheduled task works appropriately.</li>
@@ -121,7 +131,7 @@ REM /disablepush</pre></li>
 <h3 id="important-notes-for-files-hosted-on-sourceforge">Important notes for files hosted on SourceForge</h3>
 <p>Try this first:</p>
 <ul>
-<li>In advanced settings, change the user agent to <code>chocolatey command line</code>. This will allow ketarin to behave similarly to how Chocolatey does.<br />
+<li>In advanced settings, ensure the user agent is <code>chocolatey command line</code>. This will allow ketarin to behave similarly to how Chocolatey does.<br />
 <img src="https://cloud.githubusercontent.com/assets/63502/7350038/b1928aaa-ecc2-11e4-8abe-af9e7c65c82a.png" alt="Ketarin Job Advanced Settings" /></li>
 </ul>
 <p>If you want to make an automatic package that downloads files hosted on SourceForge, it gets a bit tricky. Ketarin does not directly support download links from SourceForge in the format <code>http://sourceforge.net/projects/.../download</code>, because these download links automatically redirect to a mirror (e.&nbsp; g. <code>http://heanet.dl.sourceforge.net/project/...</code>). Ketarin does not support these kind of automatic redirections, but Chocolatey does.</p>
