@@ -492,20 +492,6 @@ namespace NuGetGallery
 
             if (package.ReviewedDate.HasValue) package.SubmittedStatus = PackageSubmittedStatusType.Updated;
 
-            //we don't moderate prereleases
-            //if (package.IsPrerelease)
-            //{
-            //    package.Listed = true;
-            //    package.Status = PackageStatusType.Exempted;
-            //}
-            //if (packageRegistration.IsTrusted)
-            //{
-            //    package.Listed = true;
-            //    package.Status = PackageStatusType.Approved;
-            //    package.ReviewedDate = now;
-            //    package.ApprovedDate = now;
-            //}
-
             package.IconUrl = nugetPackage.IconUrl == null ? string.Empty : nugetPackage.IconUrl.ToString();
             package.LicenseUrl = nugetPackage.LicenseUrl == null ? string.Empty : nugetPackage.LicenseUrl.ToString();
             package.ProjectUrl = nugetPackage.ProjectUrl == null ? string.Empty : nugetPackage.ProjectUrl.ToString();
@@ -920,7 +906,7 @@ namespace NuGetGallery
 
             if (package.Status == PackageStatusType.Approved && statusChanged && !reviewCommentsIsOnlyStatusChange)
             {
-                if (reviewComments != "some statement") subject += " With Review Comments";
+                subject += " With Review Comments";
             }
 
             if (string.IsNullOrWhiteSpace(subject))
