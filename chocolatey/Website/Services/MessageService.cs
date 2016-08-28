@@ -243,7 +243,7 @@ Comment Url: {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress("noreply@chocolatey.io", "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
@@ -457,7 +457,7 @@ The {3} Team";
 
         public void SendPackageModerationEmail(Package package, string comments, string subjectComment, User fromUser)
         {
-            string subject = "[{0}] {1} v{2} Moderation{3}";
+            string subject = "[{0} Moderation] {1} v{2}{3}";
             var packageUrl = string.Format(
                 "{0}packages/{1}/{2}",
                 EnsureTrailingSlash(Configuration.ReadAppSettings("SiteRoot")),
@@ -500,7 +500,7 @@ Maintainer(s): {2}
                 package.Status.GetDescriptionOrValue(),
                 GetModerationMessage(package, comments, fromUser),
                 GetInformationForMaintainers(package, comments),
-                submitted ? "{0}{1}{1}".format_with(tldrText,Environment.NewLine) : string.Empty
+                submitted ? "{0}{1}{1}".format_with(tldrText, Environment.NewLine) : string.Empty
             );
 
             subject = String.Format(
@@ -516,9 +516,9 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
+                mailMessage.From = new MailAddress("moderation@chocolatey.io", "NO REPLY - Chocolatey");
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
             }
@@ -561,7 +561,7 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress("moderation@chocolatey.io", "NO REPLY - Chocolatey");
 
                 if (package.ReviewedBy != null)
                 {
@@ -606,7 +606,7 @@ Maintainer(s): {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("chocolatey@noreply.org", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress("noreply@chocolatey.io", "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
