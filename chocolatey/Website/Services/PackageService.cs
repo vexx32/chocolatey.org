@@ -90,7 +90,7 @@ namespace NuGetGallery
 
             var packageRegistration = CreateOrGetPackageRegistration(currentUser, nugetPackage);
 
-            var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage);
+            var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage, currentUser);
             packageRegistration.Packages.Add(package);
 
             try
@@ -199,6 +199,7 @@ namespace NuGetGallery
                                                             .Include(p => p.Dependencies)
                                                             .Include(p => p.SupportedFrameworks)
                                                             .Include(p => p.ReviewedBy)
+                                                            .Include(p => p.CreatedBy)
                                                             .Where(p => (p.PackageRegistration.Id == id));
             
             var packageVersions = useCache
@@ -425,7 +426,7 @@ namespace NuGetGallery
             return packageRegistration;
         }
 
-        private Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage)
+        private Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage, User currentUser)
         {
             var package = FindPackageByIdAndVersion(packageRegistration.Id, nugetPackage.Version.ToString(), allowPrerelease:true, useCache:false);
 
@@ -523,6 +524,7 @@ namespace NuGetGallery
             package.Summary = nugetPackage.Summary ?? string.Empty;
             package.Tags = nugetPackage.Tags ?? string.Empty;
             package.Title = nugetPackage.Title ?? string.Empty;
+            package.CreatedByKey = currentUser.Key;
 
             foreach (var item in package.Authors.OrEmptyListIfNull().ToList())
             {

@@ -673,6 +673,10 @@
     <Compile Include="Infrastructure\CSharpRazorViewEngine.cs" />
     <Compile Include="Infrastructure\Routing\HyphenatedRouteHandler.cs" />
     <Compile Include="Infrastructure\Routing\SeoRoute.cs" />
+    <Compile Include="Migrations\201608281925093_TrackPackageCreator.cs" />
+    <Compile Include="Migrations\201608281925093_TrackPackageCreator.Designer.cs">
+      <DependentUpon>201608281925093_TrackPackageCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />

@@ -159,8 +159,8 @@ namespace NuGetGallery
             }
         }
 
-        public virtual User ReviewerAssigned { get; set; }
-        public int? ReviewerAssignedId { get; set; }
+        public virtual User CreatedBy { get; set; }
+        public int? CreatedByKey { get; set; }
 
         public DateTime? ReviewedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }

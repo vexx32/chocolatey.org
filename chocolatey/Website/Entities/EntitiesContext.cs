@@ -199,9 +199,9 @@ namespace NuGetGallery
                         .WillCascadeOnDelete(false);  
             
             modelBuilder.Entity<Package>()
-                        .HasOptional<User>(e => e.ReviewerAssigned)
+                        .HasOptional<User>(e => e.CreatedBy)
                         .WithMany()
-                        .HasForeignKey(e => e.ReviewerAssignedId)
+                        .HasForeignKey(e => e.CreatedByKey)
                         .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Package>()
