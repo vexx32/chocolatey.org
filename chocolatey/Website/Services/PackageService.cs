@@ -999,8 +999,8 @@ namespace NuGetGallery
                     package.Status = PackageStatusType.Exempted;
                 }
 
-                //todo: https://github.com/chocolatey/chocolatey.org/issues/308 trusted packages will need to pass both validation and verification starting in March 2016.
-                if (package.PackageRegistration.IsTrusted)
+                var trustedPackagePassingAutomatedReview = (package.PackageRegistration.IsTrusted && passingVerification && passingValidation);
+                if (trustedPackagePassingAutomatedReview)
                 {
                     package.Listed = true;
                     package.Status = PackageStatusType.Approved;
@@ -1010,7 +1010,7 @@ namespace NuGetGallery
 
                 UpdateIsLatest(package.PackageRegistration);
 
-                if (package.IsPrerelease || package.PackageRegistration.IsTrusted)
+                if (package.IsPrerelease || trustedPackagePassingAutomatedReview)
                 {
                     messageSvc.SendPackageModerationEmail(package, null, "Finished Automated Moderation Review", null);
                 }
@@ -1034,10 +1034,8 @@ namespace NuGetGallery
                 resultDetailsUrl
                 );
 
-            //todo: https://github.com/chocolatey/chocolatey.org/issues/308 will subject trusted packages to holding starting in March 2016.
-            var bypassHolding = (package.IsPrerelease || package.PackageRegistration.IsTrusted);
-
-            var testCommentsAdditional = bypassHolding ? "This package is prerelease/trusted, which means it automatically is approved (even if it fails currently). Trusted packages will be held starting in March to provide an opportunity to fix a broken package." : string.Empty;
+            var bypassHolding = package.IsPrerelease;
+            var testCommentsAdditional = bypassHolding ? "This package is a prerelease, which means it automatically is approved (even if it fails)." : string.Empty;
 
             if (package.Status == PackageStatusType.Submitted)
             {
