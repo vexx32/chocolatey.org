@@ -40,6 +40,7 @@ namespace NuGetGallery
         public string EmailConfirmationToken { get; set; }
         public string PasswordResetToken { get; set; }
         public DateTime? PasswordResetTokenExpirationDate { get; set; }
+        public bool EmailAllModerationNotifications { get; set; }
         public bool IsTrusted { get; set; }
 
         public void ConfirmEmailAddress()

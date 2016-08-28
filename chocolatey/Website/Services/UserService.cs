@@ -44,6 +44,7 @@ namespace NuGetGallery
                 {
                     ApiKey = Guid.NewGuid(),
                     EmailAllowed = true,
+                    EmailAllModerationNotifications = true,
                     UnconfirmedEmailAddress = emailAddress,
                     EmailConfirmationToken = cryptoSvc.GenerateToken(),
                     PasswordHashAlgorithm = Constants.PBKDF2HashAlgorithmId,
@@ -60,7 +61,7 @@ namespace NuGetGallery
             return newUser;
         }
 
-        public void UpdateProfile(User user, string emailAddress, bool emailAllowed)
+        public void UpdateProfile(User user, string emailAddress, bool emailAllowed, bool emailAllModerationNotifications)
         {
             if (user == null)
             {
@@ -79,6 +80,7 @@ namespace NuGetGallery
             }
 
             user.EmailAllowed = emailAllowed;
+            user.EmailAllModerationNotifications = emailAllModerationNotifications;
             userRepo.CommitChanges();
         }
 

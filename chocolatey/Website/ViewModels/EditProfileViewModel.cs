@@ -32,7 +32,10 @@ namespace NuGetGallery
         public string PendingNewEmailAddress { get; set; }
 
         [Display(Name = "Receive Email Notifications")]
-        public bool EmailAllowed { get; set; }
+        public bool EmailAllowed { get; set; }     
+        
+        [Display(Name = "Receive Email For All Moderation-Related Notifications")]
+        public bool EmailAllModerationNotifications { get; set; }
 
         [Display(Name = "Twitter Username")]
         [StringLength(255)]

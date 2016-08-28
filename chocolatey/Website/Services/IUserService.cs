@@ -6,7 +6,7 @@ namespace NuGetGallery
     {
         User Create(string username, string password, string emailAddress);
 
-        void UpdateProfile(User user, string emailAddress, bool emailAllowed);
+        void UpdateProfile(User user, string emailAddress, bool emailAllowed, bool emailAllModerationNotifications);
 
         User FindByApiKey(Guid apiKey);
 

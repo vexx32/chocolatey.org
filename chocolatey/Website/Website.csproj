@@ -681,6 +681,10 @@
     <Compile Include="Migrations\201608282004148_AddTrustedMaintainer.Designer.cs">
       <DependentUpon>201608282004148_AddTrustedMaintainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608282019564_ReduceModerationEmails.cs" />
+    <Compile Include="Migrations\201608282019564_ReduceModerationEmails.Designer.cs">
+      <DependentUpon>201608282019564_ReduceModerationEmails.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />

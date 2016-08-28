@@ -77,6 +77,7 @@ namespace NuGetGallery
             {
                 EmailAddress = user.EmailAddress,
                 EmailAllowed = user.EmailAllowed,
+                EmailAllModerationNotifications = user.EmailAllModerationNotifications,
                 PendingNewEmailAddress = user.UnconfirmedEmailAddress,
                 TwitterUserName = twitter,
                 GithubUserName = github,
@@ -101,7 +102,7 @@ namespace NuGetGallery
                 string existingConfirmationToken = user.EmailConfirmationToken;
                 try
                 {
-                    userService.UpdateProfile(user, profile.EmailAddress, profile.EmailAllowed);
+                    userService.UpdateProfile(user, profile.EmailAddress, profile.EmailAllowed, profile.EmailAllModerationNotifications);
                 } catch (EntityException ex)
                 {
                     ModelState.AddModelError(String.Empty, ex.Message);
