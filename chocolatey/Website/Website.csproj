@@ -668,6 +668,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\DocumentationController.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
     <Compile Include="Infrastructure\CSharpRazorViewEngine.cs" />
     <Compile Include="Infrastructure\Routing\HyphenatedRouteHandler.cs" />
@@ -682,6 +683,7 @@
     <Compile Include="Services\IAmazonSqsClient.cs" />
     <Compile Include="Services\IScanService.cs" />
     <Compile Include="Services\IPackageStatisticsService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\ScanService.cs" />
     <Compile Include="DataServices\V2Feed.svc.cs">
       <DependentUpon>V2Feed.svc</DependentUpon>
@@ -766,6 +768,7 @@
     <Compile Include="Services\SearchFilter.cs" />
     <Compile Include="Services\SearchResults.cs" />
     <Compile Include="Services\UploadFileService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModels\PasswordResetViewModel.cs" />
@@ -821,9 +824,6 @@
     <Compile Include="..\..\nugetgallery\Website\Entities\IEntityRepository.cs">
       <Link>Entities\IEntityRepository.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\IUserService.cs">
-      <Link>Services\IUserService.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\EmailMessage.cs">
       <Link>Entities\EmailMessage.cs</Link>
     </Compile>
@@ -832,12 +832,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\DisplayPackageRequest.cs">
       <Link>RequestModels\DisplayPackageRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\User.cs">
-      <Link>Entities\User.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Services\UserService.cs">
-      <Link>Services\UserService.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
