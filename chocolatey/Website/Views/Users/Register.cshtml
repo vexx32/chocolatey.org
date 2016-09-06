@@ -1,4 +1,5 @@
-﻿@model RegisterRequest
+﻿@using PoliteCaptcha
+@model RegisterRequest
 @{
     ViewBag.Title = "Register";
     //Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
@@ -11,24 +12,28 @@
 }
 *@
 <section>
-<div class="p-b p-l">
-  <h1 class="m-b">Create A New Account</h1>
+  <div class="p-b p-l">
+    <h1 class="m-b">Create A New Account</h1>
 
-  @using (Html.BeginForm()) {
-      <fieldset class="form">
-        <legend>Register Form</legend>
+    @using (Html.BeginForm()) {
+        <fieldset class="form">
+          <legend>Register Form</legend>
 
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
+          @Html.AntiForgeryToken()
+          @Html.ValidationSummary(true)
               
-        @Html.EditorForModel()
+          @Html.EditorForModel()
 
-        <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-
-        <input type="submit" value="Register" title="Register" />
-      </fieldset>
-  }
+          <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
+          @Html.SpamPreventionFields()
+          <input type="submit" value="Register" title="Register" />
+        </fieldset>
+    }
   
-  <p>You may also be interested in our <a href="http://eepurl.com/4qUJH">newsletter</a>. Subscribe so you are the first to know about announcements and details related to Chocolatey!</p>
-</div>
+    <p>You may also be interested in our <a href="http://eepurl.com/4qUJH">newsletter</a>. Subscribe so you are the first to know about announcements and details related to Chocolatey!</p>
+  </div>
 </section>
+
+@section BottomScripts {
+    @Html.SpamPreventionScript()
+}
