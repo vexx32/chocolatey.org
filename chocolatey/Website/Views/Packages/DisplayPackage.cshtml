@@ -65,7 +65,19 @@
     }
 
     var packageFileMayNotBeUpdatedYetOnCdn = Model.PublishedDate.AddMinutes(31) > DateTime.UtcNow;
-    
+
+    var possiblePackageRepository = string.Empty;
+    if (!string.IsNullOrWhiteSpace(Model.IconUrl) && string.IsNullOrWhiteSpace(Model.PackageSourceUrl))
+    {
+        var iconUrlSplits = Model.IconUrl.split_safe(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+        if (Model.IconUrl.to_lower().Contains("cdn.rawgit.com") || Model.IconUrl.to_lower().Contains("raw.github.com") || Model.IconUrl.to_lower().Contains("raw.githubusercontent.com"))
+        {
+            if (iconUrlSplits.Length >= 4)
+            {
+                possiblePackageRepository = "https://github.com/{0}/{1}".format_with(iconUrlSplits[2], iconUrlSplits[3]);
+            }
+        }
+    }
 }
 
 @section ExtraHeaders {
@@ -148,6 +160,11 @@
             {
                 <li><a href="@Model.PackageSourceUrl" title="See the package source. Nuspec reference: &lt;packageSourceUrl&gt;@Model.PackageSourceUrl&lt;/packageSourceUrl&gt;">
                 Package Source</a></li>
+            }
+            else if (!string.IsNullOrWhiteSpace(possiblePackageRepository))
+            {
+              <li><a href="@possiblePackageRepository" title="This is a possible package source. NuSpec did not contain &lt;packageSourceUrl /&gt;, but it did contain an icon url from a repository location.">
+                Possible Package Source</a></li>
             }
             <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package outdated?</a></li>
             <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package broken?</a></li>
