@@ -3088,9 +3088,9 @@ main > article{
   transform: translateY(-.5em) rotate(2deg) scale(1.05) translateX(.5em);
 }
 
-.docs article > *{
+/*.docs article > *{
   max-width: 40em;
-}
+}*/
 
 .price-list {
   clear: both;
