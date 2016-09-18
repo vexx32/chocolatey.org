@@ -34,17 +34,17 @@
   </section>
 </div>
 <div class="bg-three p-t p-b">
-  <section class="clearfix p-l p-r p-t p-b">
-    @{
-      // var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
-      var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
-    }
-	  <a name="comments"></a>
-    <div id="disqus_thread">
-    </div>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </section>
+    <section class="clearfix p-l p-r p-t p-b post">
+        @{
+            // var disqusUrl = "http://" + Request.Url.Host + @Url.Package(Model.Id);
+            var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
+        }
+        <a name="comments"></a>
+        <div id="disqus_thread">
+        </div>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
 </div>
 @section BottomScripts {
 
