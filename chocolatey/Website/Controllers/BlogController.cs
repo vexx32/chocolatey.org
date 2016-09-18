@@ -97,6 +97,7 @@ namespace NuGetGallery.Controllers
             var fileName = Path.GetFileNameWithoutExtension(filePath);
             var hyphenatedValue = new StringBuilder();
 
+            Char previousChar = '^';
             foreach (var valueChar in fileName)
             {
                 if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0)
@@ -104,6 +105,12 @@ namespace NuGetGallery.Controllers
                     hyphenatedValue.Append("-");
                 }
 
+                if (Char.IsDigit(valueChar) && !Char.IsDigit(previousChar) && hyphenatedValue.Length != 0)
+                {
+                    hyphenatedValue.Append("-");
+                }
+
+                previousChar = valueChar;
                 hyphenatedValue.Append(valueChar.to_string());
             }
 
