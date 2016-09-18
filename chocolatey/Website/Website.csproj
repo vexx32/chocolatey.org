@@ -1359,6 +1359,7 @@
     <Content Include="Views\Documentation\FeaturesAutomaticallyRecompilePackages.cshtml" />
     <Content Include="Views\Pages\MarkdownPostArticle.cshtml" />
     <Content Include="Views\Pages\MarkdownPostIndex.cshtml" />
+    <Content Include="Views\Blog\Celebrating50Million.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1421,9 +1422,7 @@
     <Content Include="Views\Packages\ContactAdmins.cshtml" />
     <Content Include="Views\Pages\About.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Blog\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
