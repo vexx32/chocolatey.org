@@ -2485,14 +2485,14 @@ a {
   font-size: .8em;
 }
 
-.logo{
+.logo {
   margin-left: 2em !important;
 }
 
-img{ max-width: 100%; }
+img { max-width: 100%; }
 
-.logo img{
-  height: 200px;
+.logo img {
+  height: 155px;
 }
 
 .logo:hover{
@@ -2796,12 +2796,12 @@ img{ max-width: 100%; }
     min-height: 10em;
   }
 
-  .logo img{
+  .logo img {
     transform: translateY(-2em) rotate(-5deg) scale(1) translateX(0);
     transition: transform 200ms;
   }
 
-  .logo:hover img{
+  .logo:hover img {
     transform: translateY(-1em) rotate(1deg) scale(1.1) translateX(1em);
   }
 
@@ -2847,15 +2847,15 @@ img{ max-width: 100%; }
     width: 50%;
   }
 
-  .package-list > li{
+  .package-list > li {
     width: 100%;
   }
 
-  .hide-on-small{
+  .hide-on-small {
     display: none;
   }
 
-  .logo img{
+  .logo img {
     height: 100px;
   }
 
@@ -3084,11 +3084,11 @@ main > article{
   margin-left: 0 !important;
 }
 
-.docs aside .logo img{
+.docs aside .logo img {
   transform: translateY(-.3em) rotate(-3deg) scale(1) translateX(0);
 }
 
-.docs aside .logo:hover img{
+.docs aside .logo:hover img {
   transform: translateY(-.5em) rotate(2deg) scale(1.05) translateX(.5em);
 }
 
