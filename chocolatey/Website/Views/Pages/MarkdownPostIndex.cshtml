@@ -1,0 +1,18 @@
+﻿@model IEnumerable<MarkdownPostViewModel>
+@{
+    ViewBag.Title = "The Official Chocolatey Blog";
+}
+<div class="p-b p-l p-r">
+<h1>Posts</h1>
+</div>
+
+<div class="bg-two p-t p-b">
+  <section class="clearfix p-l p-r p-t p-b">
+    <ul>
+    @foreach (var post in @Model)
+    {
+        <li><a href="@Url.RouteUrl(RouteName.BlogArticle, new { articleName = post.UrlPath })">@post.Title</a></li>
+    }
+    </ul>
+  </section>
+</div>

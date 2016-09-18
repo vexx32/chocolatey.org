@@ -2998,6 +2998,10 @@ pre code{
   border-top: 4px solid #21446D;
 }
 
+.post {
+  max-width: 60em;
+}
+
 .docs:after{
   content: '';
   display: table;

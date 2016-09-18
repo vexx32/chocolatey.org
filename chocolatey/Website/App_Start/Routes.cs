@@ -169,6 +169,18 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.BlogHome,
+                "blog/",
+                new { controller = "Blog", action = "Index" }
+                );          
+            
+            routes.MapRouteSeo(
+                RouteName.BlogArticle,
+                "blog/{articleName}",
+                new { controller = "Blog", action = "Article" }
+                );  
+            
+            routes.MapRouteSeo(
                 RouteName.Docs,
                 "docs/{docName}",
                 new { controller = "Documentation", action = "Documentation", docName = "home" }

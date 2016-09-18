@@ -667,6 +667,7 @@
     <Compile Include="AuthenticationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
@@ -786,6 +787,7 @@
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
+    <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModels\PasswordResetViewModel.cs" />
     <Compile Include="XmlExtensions.cs" />
@@ -1355,6 +1357,8 @@
     <Content Include="Views\Documentation\FeaturesCreatePackagesFromInstallers.cshtml" />
     <Content Include="Views\Documentation\HowToRecompilePackages.cshtml" />
     <Content Include="Views\Documentation\FeaturesAutomaticallyRecompilePackages.cshtml" />
+    <Content Include="Views\Pages\MarkdownPostArticle.cshtml" />
+    <Content Include="Views\Pages\MarkdownPostIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1417,7 +1421,9 @@
     <Content Include="Views\Packages\ContactAdmins.cshtml" />
     <Content Include="Views\Pages\About.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Blog\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
