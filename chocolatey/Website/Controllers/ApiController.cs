@@ -54,10 +54,15 @@ namespace NuGetGallery
             // if the version is null, the user is asking for the latest version. Presumably they don't want includePrerelease release versions. 
             // The allow prerelease flag is ignored if both partialId and version are specified.
             var package = packageSvc.FindPackageForDownloadByIdAndVersion(id, version, allowPrerelease: false);
-
+            
             if (package == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.NotFound, string.Format(CultureInfo.CurrentCulture, Strings.PackageWithIdAndVersionNotFound, id, version));
 
-            packageSvc.AddDownloadStatistics(package, Request.UserHostAddress, Request.UserAgent);
+            // CloudFlare IP passed variable first
+            var ipAddress = Request.Headers["CF-CONNECTING-IP"].to_string();
+            if (string.IsNullOrWhiteSpace(ipAddress)) ipAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"].to_string();
+            if (string.IsNullOrWhiteSpace(ipAddress)) ipAddress = Request.UserHostAddress;
+
+            packageSvc.AddDownloadStatistics(package, ipAddress, Request.UserAgent);
 
             if (!string.IsNullOrWhiteSpace(package.ExternalPackageUrl)) return Redirect(package.ExternalPackageUrl);
             else return packageFileSvc.CreateDownloadPackageActionResult(package);
