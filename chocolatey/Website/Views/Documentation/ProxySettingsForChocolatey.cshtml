@@ -45,13 +45,13 @@ choco config set proxyPassword 123Sup#rSecur3<br />
 <blockquote>
 <p>The underlying connection was closed: Could not establish trust relationship for the SSL / TLS secure channel.</p>
 </blockquote>
-<p>It could also be that your root trusted certificates are not up to date. You will need the following certificates in your chain:</p>
+<p>It could also be that your trusted root certificates are missing or not up to date (Windows 2012 does not install root certificates by default). You will need to download and install both these certificates into your LocalMachine&#39;s <em>Trusted Root Certification Authorities</em> certificate store.</p>
+<p>To access <a href="https://chocolatey.org">chocolatey.org</a>:</p>
 <ul>
-<li>Go Daddy Secure Certificate Authority - G2</li>
+<li><a href="https://certs.godaddy.com/repository">Go Daddy Secure Certificate Authority - G2</a> (File: <code>gdroot-g2.crt</code>; Thumbprint: <code>47BEABC922EAE80E78783462A79F45C254FDE68B</code>). (On the download page, this certificate is named <em>GoDaddy Class 2 Certification Authority Root Certificate - G2</em> and its listed thumbprint (<code>45140B3247EB9CC8C5B4F0D7B53091F73292089E6E5A63E2749DD3ACA9198EDA</code>) is wrong.</li>
 </ul>
-<p><img src="https://cloud.githubusercontent.com/assets/63502/13706493/ea4d0aac-e76a-11e5-913e-590dfe775fc1.png" alt="Go Daddy Secure Certificate Authority - G2" /></p>
+<p>To access <a href="https://packages.chocolatey.org">packages.chocolatey.org</a>:</p>
 <ul>
-<li>COMODO ECC Domain Validation Secure Server CA 2</li>
+<li><a href="https://support.comodo.com/index.php?/Default/Knowledgebase/Article/View/917/91/">AddTrust External CA Root</a> (File: <code>addtrustexternalcaroot.crt</code>; Thumbprint: <code>02FAF3E291435468607857694DF5E45B68851868</code>)</li>
 </ul>
-<p><img src="https://cloud.githubusercontent.com/assets/63502/13706546/1a1d237a-e76b-11e5-9263-e586cef5f744.png" alt="image" /></p>
 </article>

@@ -3,31 +3,31 @@
 }
 
 <article>
-<h1 id="how-to-recompile-packages">How To Recompile Packages</h1>
+<h1 id="how-to-internalizerecompile-packages">How To Internalize/Recompile Packages</h1>
 <h2 id="what-is-it-why">What is it? Why?</h2>
 <p>Sometimes creating packages from scratch can be an involved process. Not all software installers are created equal (and not all are easily automated either)! Thankfully there is already a tremendous resource you can use to make the process of getting your software all packaged up even smoother.</p>
 <p>On <a href="https://chocolatey.org">chocolatey.org</a>, you will find packages with all of the install logic you need to automatically install your software. However, many of these publicly available packages also rely on software that is available from official distribution points because they are subject to <a href="https://en.wikipedia.org/wiki/Software_license">software licensing and copyright law</a>. Unless you&#39;re granted the right to distribute the software via the license, you can&#39;t redistribute it publicly. These laws do not apply when you use internal packages, and that is a good thing!</p>
 <p>Why? Downloading software from the internet creates a failure point because it may not be available, the software vendor site could go down, etc. With internal packages, you don&#39;t have to worry about any of that. You can create internal packages and embed the software directly in the package and/or use internal file shares.</p>
 <p>This is where recompiling packages comes in. Recompiling a package lets you take an existing package and internalize all of the resources to embedded/internal resources so you can reuse the install logic without the hassle of downloading stuff from the internet. This guarantees complete control, trust, reliability, and repeatability of a package for organizations that have a low tolerance for production issues.</p>
-<h2 id="process-of-recompiling">Process of Recompiling</h2>
-<p>Recompiling a Chocolatey package at a high level involves:</p>
+<h2 id="process-of-internalization">Process of Internalization</h2>
+<p>Internalizing a Chocolatey package at a high level involves:</p>
 <ol>
 <li>Downloading and unpacking the existing package as a zip file.</li>
 <li>Downloading the resources the package has and putting them in the package or somewhere internal (<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">UNC, internal Http repository, DFS</a>, <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM Distribution point</a>, etc).</li>
 <li>Editing the install script to point to the internal/embedded software.</li>
-<li>Packaging it back up.</li>
+<li>Packaging it back up (recompiling).</li>
 <li>Pushing it to your internal server.</li>
 <li>And that&#39;s it!</li>
 </ol>
 <p>Recompiling is a great way to quickly get your organization up to speed on managing software with Chocolatey packages.</p>
-<h2 id="how-to-recompile-an-existing-package-automatically">How to Recompile An Existing Package Automatically</h2>
-<p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Automatically Recompile Packages</a>.</p>
+<h2 id="how-to-internalize-an-existing-package-automatically">How to Internalize An Existing Package Automatically</h2>
+<p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Automatically Internalize/Recompile Packages</a>.</p>
 <ul>
 <li>Have Chocolatey for Business</li>
-<li>Call <code>choco download --recompile notepadplusplus.commandline</code>.</li>
+<li>Call <code>choco download notepadplusplus.commandline --recompile</code>, <code>choco download git.install --recompile --resources-location \\unc\share</code> or <code>choco download nodejs.install --recompile --resources-location http://some/internal/url</code>.</li>
 <li>That&#39;s it! It does all of the manual steps below in a fraction of the time.</li>
 </ul>
-<h2 id="how-to-recompile-an-existing-package-manually">How To Recompile An Existing Package Manually</h2>
+<h2 id="how-to-internalizerecompile-an-existing-package-manually">How To Internalize/Recompile An Existing Package Manually</h2>
 <p>Chocolatey&#39;s <a href="https://chocolatey.org/packages">community feed</a> has quite a few packages but they are geared towards community and use the internet for downloading from official distribution sites. However, they are attractive as they have everything necessary to install a piece of software on your machine. Through the recompiling process, by which you take a community package and bring all of the bits internal and/or embed them into the pacakge, you can completely internalize a package to host on an internal Chocolatey repository. This gives you complete control over a package and removes the aforementioned production trust and control issues.</p>
 <p>To make the existing package local, use these steps.</p>
 <p><code>1.</code> Download the package from Chocolatey&#39;s community feed by going to the <a href="https://chocolatey.org/packages/notepadplusplus.commandline">package page</a> and clicking the download link.</p>

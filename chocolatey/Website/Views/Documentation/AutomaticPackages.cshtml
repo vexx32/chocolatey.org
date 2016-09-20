@@ -74,6 +74,7 @@ objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;),
 <li>Open PowerShell (or cmd.exe) and head to the automatic package folder you are using. This should be &quot;repolocation\automatic&quot;.</li>
 <li>Run <code>choco new &lt;name&gt; --auto [options]</code>. You can use a different package template if you have those installed - see <a href="https://chocolatey.org/docs/commands-new" class="uri">https://chocolatey.org/docs/commands-new</a> for all options or run <code>choco new -?</code>. For package templates, see <a href="https://chocolatey.org/docs/how-to-create-custom-package-templates" class="uri">https://chocolatey.org/docs/how-to-create-custom-package-templates</a>.</li>
 <li>Inspect the output. Merge in your existing package logic if you have an existing package you are converting.</li>
+<li>Ensure that <code>checksumType</code> and <code>checksumType64</code> is <code>sha256</code> as this is the type the updater will generate.</li>
 <li>Make any adjustments you need to the package to prepare for packaging.</li>
 </ol>
 <h4 id="ketarin">Ketarin</h4>
@@ -127,6 +128,7 @@ REM /disablepush</pre></li>
 <li>The name of the application in ketarin matches exactly that of the folder that is in the automatic packages folder.</li>
 <li>Every once in awhile you want to look in Ketarin to see what jobs might be failing. Then figure out why.</li>
 <li>Every once in awhile you will want to inspect the chocopkgupfolder to see if there are any packages that did not make it up for some reason or another and then upload them.</li>
+<li>If the downloaded application/installer has not changed, the package will not be generated. Delete the files in the download location specified in <a href="#ketarin"><em>Ketarin</em></a> and try again.</li>
 </ul>
 <h3 id="important-notes-for-files-hosted-on-sourceforge">Important notes for files hosted on SourceForge</h3>
 <p>Try this first:</p>

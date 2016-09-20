@@ -9,11 +9,14 @@
 resources and recompiling it to internal resources. This takes an<br />
 existing package and makes it available without any internet<br />
 requirement.</p>
+<p>See <a href="https://chocolatey.org/docs/features-automatically-recompile-packages" class="uri">https://chocolatey.org/docs/features-automatically-recompile-packages</a></p>
 <h2 id="usage">Usage</h2>
 <pre class="cmd">choco download &lt;pkg [&lt;options/switches&gt;]</pre>
 <h2 id="examples">Examples</h2>
 <pre class="cmd">choco download sysinternals
-choco download notepadplusplus.install --recompile</pre>
+choco download notepadplusplus.install --recompile
+choco download notepadplusplus.install --recompile --resources-location \\server\share
+choco download notepadplusplus.install --recompile --resources-location http://somewhere/internal</pre>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p>Coming soon</p>
 <h2 id="options-and-switches">Options and Switches</h2>

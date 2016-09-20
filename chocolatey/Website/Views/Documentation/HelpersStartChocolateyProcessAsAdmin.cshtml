@@ -14,6 +14,8 @@ specified, it is run with PowerShell.</p>
   [-Minimized] `
   [-NoSleep] `
   [-ValidExitCodes &lt;Object&gt;] `
+  [-WorkingDirectory &lt;String&gt;] `
+  [-SensitiveStatements &lt;String&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="notes">Notes</h2>
 <p>This command will assert UAC/Admin privileges on the machine.</p>
@@ -208,6 +210,76 @@ should return instantly when it is complete.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="workingdirectory-string">-WorkingDirectory [&lt;String&gt;]</h3>
+<p>The working directory for the running process. Defaults to<br />
+<code>Get-Location</code>.</p>
+<p>Available in 0.10.1+.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>$(Get-Location)</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sensitivestatements-string">-SensitiveStatements [&lt;String&gt;]</h3>
+<p>Arguments to pass to <code>ExeToRun</code> that are not logged.</p>
+<p>Note that only <a href="https://chocolatey.org/compare">licensed versions</a> of Chocolatey provide a way to pass<br />
+those values completely through without having them in the install<br />
+script or on the system in some way.</p>
+<p>Available in 0.10.1+.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
 <p>Allows splatting with arguments that do not apply. Do not use directly.</p>
 <table>
@@ -249,4 +321,5 @@ should return instantly when it is complete.</p>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Start-ChocolateyProcessAsAdmin -Full</code>.</p>
+<p>View the source for <a href="https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Start-ChocolateyProcessAsAdmin.ps1">Start-ChocolateyProcessAsAdmin</a></p>
 </article>

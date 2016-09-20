@@ -17,6 +17,7 @@
   [-ChecksumType64 &lt;String&gt;] `
   [-Options &lt;Hashtable&gt;] `
   [-GetOriginalFileName] `
+  [-ForceDownload] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This will download a file from a url, tracking with a progress bar.<br />
@@ -178,9 +179,10 @@ parameter. Chocolatey will automatically determine if the user is<br />
 running a 64 bit OS or not and adjust accordingly. Please note that<br />
 the 32 bit url will be used in the absence of this. This parameter<br />
 should only be used for 64 bit native software. If the original Url<br />
-contains both (which is quite rare), set this to &quot;˜$url&#39; Otherwise remove<br />
-this parameter.</p>
+contains both (which is quite rare), set this to &quot;˜$url&#39; Otherwise<br />
+remove this parameter.</p>
 <p>Prefer HTTPS when available. Can be HTTP, FTP, or File URIs.</p>
+<p>In 0.10.1+, <code>Url64</code> is an alias for Url64bit.</p>
 <table>
 <thead>
 <tr class="header">
@@ -191,7 +193,7 @@ this parameter.</p>
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td></td>
+<td>url64</td>
 </tr>
 <tr class="even">
 <td>Required?</td>
@@ -262,6 +264,7 @@ values are &quot;˜md5&#39;, &quot;˜sha1&#39;, &quot;˜sha256&#39; or &quot;˜s
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
 compliant algorithms for hashing - see<br />
 <a href="https://support.microsoft.com/en-us/kb/811833" class="uri">https://support.microsoft.com/en-us/kb/811833</a> for more details.</p>
+<p>The recommendation is to use at least SHA256.</p>
 <table>
 <thead>
 <tr class="header">
@@ -349,6 +352,7 @@ ChecksumType parameter value.</p>
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
 compliant algorithms for hashing - see<br />
 <a href="https://support.microsoft.com/en-us/kb/811833" class="uri">https://support.microsoft.com/en-us/kb/811833</a> for more details.</p>
+<p>The recommendation is to use at least SHA256.</p>
 <table>
 <thead>
 <tr class="header">
@@ -418,7 +422,41 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7
 </table>
 <h3 id="getoriginalfilename">-GetOriginalFileName</h3>
 <p>OPTIONAL switch to allow Chocolatey to determine the original file name<br />
-from the url resource.</p>
+from the url resource. Available in 0.9.10+.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="forcedownload">-ForceDownload</h3>
+<p>OPTIONAL switch to force download of file every time, even if the file<br />
+already exists.</p>
+<p>Available in 0.10.1+.</p>
 <table>
 <thead>
 <tr class="header">
@@ -492,4 +530,5 @@ from the url resource.</p>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-ChocolateyWebFile -Full</code>.</p>
+<p>View the source for <a href="https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Get-ChocolateyWebFile.ps1">Get-ChocolateyWebFile</a></p>
 </article>

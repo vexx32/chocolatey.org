@@ -44,6 +44,7 @@ Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $tool
 <p>This is the full path to the zip file. If embedding it in the package<br />
 next to the install script, the path will be like<br />
 <code>&quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\\file.zip&quot;</code></p>
+<p>In 0.10.1+, <code>File</code> is an alias for FileFullPath.</p>
 <table>
 <thead>
 <tr class="header">
@@ -54,7 +55,7 @@ next to the install script, the path will be like<br />
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td></td>
+<td>file</td>
 </tr>
 <tr class="even">
 <td>Required?</td>
@@ -212,4 +213,5 @@ uninstalls</p>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-ChocolateyUnzip -Full</code>.</p>
+<p>View the source for <a href="https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Get-ChocolateyUnzip.ps1">Get-ChocolateyUnzip</a></p>
 </article>

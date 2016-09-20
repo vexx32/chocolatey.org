@@ -22,6 +22,7 @@ file.</p>
   [-ChecksumType64 &lt;String&gt;] `
   [-Options &lt;Hashtable&gt;] `
   [-UseOnlyPackageSilentArguments] `
+  [-UseOriginalLocation] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
 <h2 id="description">Description</h2>
 <p>This will download a native installer from a url and install it on your<br />
@@ -62,7 +63,7 @@ $packageArgs = @@{
   validExitCodes= @@(0, 3010, 1641)
   softwareName  = &#39;Bob*&#39;
   checksum      = &#39;12345&#39;
-  checksumType  = &#39;sha1&#39;
+  checksumType  = &#39;sha256&#39;
   checksum64    = &#39;123356&#39;
   checksumType64= &#39;sha256&#39;
 }
@@ -383,6 +384,7 @@ values are &quot;˜md5&#39;, &quot;˜sha1&#39;, &quot;˜sha256&#39; or &quot;˜s
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
 compliant algorithms for hashing - see<br />
 <a href="https://support.microsoft.com/en-us/kb/811833" class="uri">https://support.microsoft.com/en-us/kb/811833</a> for more details.</p>
+<p>The recommendation is to use at least SHA256.</p>
 <table>
 <thead>
 <tr class="header">
@@ -465,6 +467,7 @@ ChecksumType parameter value.</p>
 <p>MD5 is not recommended as certain organizations need to use FIPS<br />
 compliant algorithms for hashing - see<br />
 <a href="https://support.microsoft.com/en-us/kb/811833" class="uri">https://support.microsoft.com/en-us/kb/811833</a> for more details.</p>
+<p>The recommendation is to use at least SHA256.</p>
 <table>
 <thead>
 <tr class="header">
@@ -565,6 +568,42 @@ use the ones available with the package. Available in 0.9.10+.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="useoriginallocation">-UseOriginalLocation</h3>
+<p>Do not download the resources. This is typically passed if Url/Url64bit<br />
+are pointed to local files or files on a share and those files should<br />
+be used in place. Available in 0.10.1+.</p>
+<p>NOTE: You can also use <code>Install-ChocolateyInstallPackage</code> for the same<br />
+functionality (see links).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
 <p>Allows splatting with arguments that do not apply. Do not use directly.</p>
 <table>
@@ -608,4 +647,5 @@ use the ones available with the package. Available in 0.9.10+.</p>
 </ul>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Install-ChocolateyPackage -Full</code>.</p>
+<p>View the source for <a href="https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Install-ChocolateyPackage.ps1">Install-ChocolateyPackage</a></p>
 </article>
