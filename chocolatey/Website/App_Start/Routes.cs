@@ -194,6 +194,13 @@ namespace NuGetGallery
                     controller = "RSS",
                     Action = "feed.rss"
                 });
+            
+            routes.MapRoute(
+            "blog rss feed", "blog.rss", new
+            {
+                controller = "Blog",
+                Action = "blog.rss"
+            });
 
             routes.Add(new JsonRoute("json/{controller}"));
 
