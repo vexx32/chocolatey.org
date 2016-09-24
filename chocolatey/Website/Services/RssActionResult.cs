@@ -33,6 +33,7 @@ namespace NuGetGallery
             if (Feed != null)
             {
                 var rssFormatter = new Rss20FeedFormatter(Feed);
+                //remove a10 - http://stackoverflow.com/a/15971300/18475
 
                 using (var xmlWriter = new XmlTextWriter(context.HttpContext.Response.Output))
                 {
