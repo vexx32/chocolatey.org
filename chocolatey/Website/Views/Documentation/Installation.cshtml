@@ -129,7 +129,8 @@ SET DIR=%~dp0%
 %systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;&amp; &#39;%DIR%install.ps1&#39; %*&quot;</pre>
 <p>You can also get to this file by going to <a href="https://chocolatey.org/installchocolatey.cmd" class="uri">https://chocolatey.org/installchocolatey.cmd</a>.</p>
 <p>If you prefer to have the install.ps1 file already, comment out the download line in the batch file and download the <a href="https://chocolatey.org/install.ps1"><code>install.ps1</code></a> from <a href="https://chocolatey.org/install.ps1">chocolatey.org</a> and save it as <code>install.ps1</code> next to the <code>installChocolatey.cmd</code> file.</p>
-<p>Run <code>installChocolatey.cmd</code> and it will install the latest version of Chocolatey.</p>
+<p>Run <code>installChocolatey.cmd</code> from an elevated <code>cmd.exe</code> command prompt and it will install the latest version of Chocolatey. You can not run this from <code>powershell.exe</code> without making changes to your execution policy.</p>
+<p><strong>NOTE</strong>: To create and save a <code>.cmd</code> file, please use a text editor and nothing fancy like Microsoft Word or OneNote.</p>
 <h3 id="nuget-package-manager-method">NuGet Package Manager Method</h3>
 <p>When you have Visual Studio 2010+ and the NuGet extension installed (pre-installed on any newer versions of Visual Studio), you can simply type the following three commands and you will have Chocolatey installed on your machine.</p>
 <p><code>Install-Package chocolatey</code><br />

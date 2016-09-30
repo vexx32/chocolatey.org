@@ -11,6 +11,7 @@ specified, it is run with PowerShell.</p>
 <pre class="brush: ps">Start-ChocolateyProcessAsAdmin `
   [-Statements &lt;String[]&gt;] `
   [-ExeToRun &lt;String&gt;] `
+  [-Elevated] `
   [-Minimized] `
   [-NoSleep] `
   [-ValidExitCodes &lt;Object&gt;] `
@@ -25,8 +26,11 @@ set the package exit code in the following ways:</p>
 <li>4 if the binary turns out to be a text file.</li>
 <li>The same exit code returned from the process that is run. If a 3010 is returned, it will set 3010 for the package.</li>
 </ul>
+<p>Aliases <code>Start-ChocolateyProcess</code> and <code>Invoke-ChocolateyProcess</code><br />
+available in 0.10.2+.</p>
 <h2 id="aliases">Aliases</h2>
-<p>None</p>
+<p><code>Invoke-ChocolateyProcess</code><br />
+<code>Start-ChocolateyProcess</code></p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
 <pre class="brush: ps">Start-ChocolateyProcessAsAdmin -Statements &quot;$msiArgs&quot; -ExeToRun &#39;msiexec&#39;
@@ -105,6 +109,39 @@ run.</p>
 <tr class="even">
 <td>Default Value</td>
 <td>powershell</td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="elevated">-Elevated</h3>
+<p>Indicate whether the process should run elevated.</p>
+<p>Available in 0.10.2+.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td>True</td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>

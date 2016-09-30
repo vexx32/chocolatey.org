@@ -1361,6 +1361,7 @@
     <Content Include="Views\Pages\MarkdownPostIndex.cshtml" />
     <Content Include="Views\Blog\Celebrating50Million.md" />
     <Content Include="Views\Documentation\ReleaseNotesLicensed.cshtml" />
+    <Content Include="Views\Documentation\HelpersWriteFunctionCallLogMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

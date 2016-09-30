@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="package-builder---create-packages-automatically-from-installers-business-editions-only">Package Builder - Create Packages Automatically From Installers (Business Editions Only)</h1>
-<p>Creating packages is a pretty quick process as compared to manually installing software on multiple machines. There is still some time involved to create a package. Even the best packagers take between 5–10 minutes to create a package. Chocolatey can do the same in 5–10 seconds when pointed to native installers and zips! You can even point package builder to both a 32-bit and 64-bit url and seconds later you have a fully functioning package using all local/embedded resources!</p>
+<p>Creating packages is a pretty quick process as compared to manually installing software on multiple machines. There is still some time involved to create a package. Even the best packagers take between 5–10 minutes to create a package. Chocolatey&#39;s Package Builder creates high quality packages in 5–10 seconds when pointed to native installers and zips! You can even point package builder to both a 32-bit and 64-bit url and seconds later you have a fully functioning package using all local/embedded resources!</p>
 <p>Chocolatey for Business is able to inspect an installer and determine silent arguments and complete packaging components for you, saving you hours of time in packaging and maintaining software!</p>
 <h2 id="usage">Usage</h2>
 <p>When calling <code>choco new</code>, just add <code>--file=value</code> to point to a native installer and Chocolatey for Business will automatically determine the silent arguments, create the packaging and wrap that all around the installer.</p>
@@ -27,16 +27,54 @@ This image shows running `choco new --file .\installers\1Password-4.6.0.598.exe`
 <p><img src="@Url.Content("~/content/images/docs/gifs/choco_business_features.gif")" alt="auto package creation/synchronize" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p>When running <code>choco new</code> in the Business editions, pass the following:</p>
-<pre class="cmd">     --file=VALUE
-     Inspect a file (installer) to determine everything and create a package.
-       Available in 0.9.10+. Business versions only.</pre>
+<pre class="cmd">     --file, --url=VALUE
+     Inspect a file (native installer, zip, patch/upgrade file, or remote url
+       to download first) to to completely create a package with proper silent
+       arguments! Can be 32-bit or 64-bit architecture.  Available in Business
+       editions only (licensed version 1.4.0+, url/zip starting in 1.6.0).
+
+     --file64, --url64=VALUE
+     Optional - used when specifying both a 32-bit and a 64-bit file. Can be
+       an installer or a zip, or remote url to download. Available in Business
+       editions only (licensed version 1.6.0+).
+
+     --keepremote, --originallocation, --original-location, --useoriginallocation, --use-original-location, --useoriginalfileslocation, --use-original-files-location
+     Use Original Files Location - when using file or url, use the original
+       location in packaging. Available in Business editions only (licensed
+       version 1.6.0+).
+
+     --checksum, --downloadchecksum, --download-checksum=VALUE
+     Download Checksum - checksum to verify File/Url with. Defaults to empty.
+       Available in Business editions only (licensed version 1.7.0+).
+
+     --checksum64, --checksumx64, --downloadchecksumx64, --download-checksum-x64=VALUE
+     Download Checksum 64-bit - checksum to verify File64/Url64 with.
+       Defaults to empty. Available in Business editions only (licensed version
+       1.7.0+).
+
+     --checksumtype, --checksum-type, --downloadchecksumtype, --download-checksum-type=VALUE
+     Download Checksum Type - checksum type for File/Url (and optional
+       separate 64-bit files when specifying both). Used in conjunction with
+       Download Checksum and Download Checksum 64-bit. Available values are
+       &#39;md5&#39;, &#39;sha1&#39;, &#39;sha256&#39; or &#39;sha512&#39;. Defaults to &#39;sha256&#39;.  Available in
+       Business editions only (licensed version 1.7.0+).
+
+     --pauseonerror, --pause-on-error
+     Pause on Error - Pause when there is an error with creating the package.
+       Available in Business editions only (licensed version 1.7.0+).
+
+     --buildpackage, --build-package
+     Build Package - Attempt to compile the package after creating it.
+       Available in Business editions only (licensed version 1.7.0+).</pre>
 <h2 id="faq">FAQ</h2>
-<h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
+<h3 id="how-do-i-take-advantage-of-package-builder">How do I take advantage of Package Builder?</h3>
 <p>You must have a <a href="https://chocolatey.org/compare">Business edition of Chocolatey</a>. Business editions are great for organizations that need to manage the total software management lifecycle.</p>
 <h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
 <p>When you run <code>choco new</code>, you can add <code>--file</code> and point Chocolatey at the installer file and let Chocolatey figure out everything for creating a package and the silent arguments and wrap that around the installer.</p>
 <h3 id="how-does-it-work">How does it work?</h3>
 <p>It inspects the installer file using a series of rules that helps determine the installer type. From there it builds a package with the information it is able to extract from the installer.</p>
+<h3 id="what-types-of-extensions-are-supported">What types of extensions are supported?</h3>
+<p>Package Builder supports <code>.exe</code>, <code>.msi</code>, <code>.msu</code>, <code>.msp</code>, <code>.7z</code>, and <code>.zip</code>.</p>
 <h3 id="will-it-catch-all-types-of-installers">Will it catch all types of installers?</h3>
 <p>It is able to detect 12 types of installers currently.</p>
 <h3 id="does-it-always-find-the-silent-uninstall-arguments">Does it always find the silent uninstall arguments?</h3>
@@ -46,7 +84,7 @@ This image shows running `choco new --file .\installers\1Password-4.6.0.598.exe`
 <h3 id="does-it-create-auto-unattend-files">Does it create auto unattend files?</h3>
 <p>Unfortunately, it is not able to do this. See the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">automatic internalize and recompile packages feature</a> to take advantage of thousands of existing packages without a need for internet access.</p>
 <h3 id="does-it-work-with-zip-archive">Does it work with zip archive?</h3>
-<p>Not currently, but archives are on the future enhancements list.</p>
+<p>Yes, but somewhat naively. It will generate the packaging to unpack the archive for both 7z and zip files.</p>
 <h3 id="does-this-work-with-keeping-the-installer-on-a-unc-share-or-elsewhere-yet">Does this work with keeping the installer on a UNC share or elsewhere yet?</h3>
-<p>Not yet, but it&#39;s easy to edit the package once it has done all of the hard work for you.</p>
+<p>Yes, as of Licensed version v1.6.0+. Use <code>--use-original-location</code>.</p>
 </article>
