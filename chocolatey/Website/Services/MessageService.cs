@@ -41,11 +41,11 @@ namespace NuGetGallery
             _siteEmail = "noreply@" + GetDomain(settings);
         }
 
-        private string GetDomain(IConfiguration settings)
+        private static string GetDomain(IConfiguration settings)
         {
             var uri = new Uri(settings.GetSiteRoot(false));
 
-            return uri.Host;
+            return uri.Authority;
         }
 
         private void SendMessage(MailMessage mailMessage, bool copySender = false)
