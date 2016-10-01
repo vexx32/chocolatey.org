@@ -30,22 +30,53 @@ namespace NuGetGallery
     {
         private readonly IMailSender mailSender;
         private readonly IConfiguration settings;
-        private readonly string _moderationEmail;
-        private readonly string _siteEmail;
+        private string _moderationEmail;
+        private string _siteEmail;
+
+        public string ModerationEmail
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_moderationEmail))
+                {
+                    _moderationEmail = "moderation@" + GetDomain(settings);
+                }
+                
+                return _moderationEmail;
+            }
+            set { _moderationEmail = value; }
+        }      
+        
+        public string SiteEmail
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_siteEmail))
+                {
+                    _siteEmail = "noreply@" + GetDomain(settings);
+                }
+
+                return _siteEmail;
+            }
+            set { _siteEmail = value; }
+        }
 
         public MessageService(IMailSender mailSender, IConfiguration settings)
         {
             this.mailSender = mailSender;
             this.settings = settings;
-            _moderationEmail = "moderation@" + GetDomain(settings);
-            _siteEmail = "noreply@" + GetDomain(settings);
         }
 
         private static string GetDomain(IConfiguration settings)
         {
-            var uri = new Uri(settings.GetSiteRoot(false));
+            var domain = new Uri(settings.GetSiteRoot(false)).DnsSafeHost;
 
-            return uri.Authority;
+            if (domain.IndexOf(':') >= 0)
+            {
+                domain = domain.Substring(0, domain.IndexOf(':'));
+            }
+
+            return domain;
         }
 
         private void SendMessage(MailMessage mailMessage, bool copySender = false)
@@ -53,10 +84,15 @@ namespace NuGetGallery
             try
             {
                 var originalFrom = mailMessage.From;
-                if (mailMessage.From.Address != _moderationEmail && mailMessage.From.Address != _siteEmail)
+                if (mailMessage.From.Address != ModerationEmail && mailMessage.From.Address != SiteEmail)
                 {
                     mailMessage.ReplyToList.Add(originalFrom);
-                    mailMessage.From = new MailAddress(_siteEmail, string.IsNullOrWhiteSpace(originalFrom.DisplayName) ? originalFrom.Address : originalFrom.DisplayName);
+                    var displayName = string.IsNullOrWhiteSpace(originalFrom.DisplayName) ? originalFrom.Address : originalFrom.DisplayName;
+                    if (displayName.IndexOf('@') >= 0)
+                    {
+                        displayName = "'{0}' via {1}".format_with(displayName.Substring(0, displayName.IndexOf('@')),settings.GalleryOwnerName) ;
+                    }
+                    mailMessage.From = new MailAddress(SiteEmail, displayName);
                 }
 
                 mailSender.Send(mailMessage);
@@ -261,7 +297,7 @@ Comment Url: {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(_siteEmail, "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(SiteEmail, "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
@@ -545,7 +581,7 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(_moderationEmail, "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(ModerationEmail, "NO REPLY - Chocolatey Moderation");
                 
                 AddMaintainersToMailMessage(package.PackageRegistration, mailMessage, informational: messageIsInformationLevel);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
@@ -599,7 +635,7 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(_moderationEmail, "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(ModerationEmail, "NO REPLY - Chocolatey Moderation");
 
                 if (package.ReviewedBy != null)
                 {
@@ -644,7 +680,7 @@ Maintainer(s): {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress(_siteEmail, "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(SiteEmail, "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
