@@ -21,10 +21,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Web.Mvc;
 using AnglicanGeek.MarkdownMailer;
 using Elmah;
-using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery
 {
