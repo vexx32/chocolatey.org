@@ -21,8 +21,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Web.Mvc;
 using AnglicanGeek.MarkdownMailer;
 using Elmah;
+using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery
 {
@@ -30,17 +32,35 @@ namespace NuGetGallery
     {
         private readonly IMailSender mailSender;
         private readonly IConfiguration settings;
+        private readonly string _moderationEmail;
+        private readonly string _siteEmail;
 
         public MessageService(IMailSender mailSender, IConfiguration settings)
         {
             this.mailSender = mailSender;
             this.settings = settings;
+            _moderationEmail = "moderation@" + GetDomain(settings);
+            _siteEmail = "noreply@" + GetDomain(settings);
+        }
+
+        private string GetDomain(IConfiguration settings)
+        {
+            var uri = new Uri(settings.GetSiteRoot(false));
+
+            return uri.Host;
         }
 
         private void SendMessage(MailMessage mailMessage, bool copySender = false)
         {
             try
             {
+                var originalFrom = mailMessage.From;
+                if (mailMessage.From.Address != _moderationEmail && mailMessage.From.Address != _siteEmail)
+                {
+                    mailMessage.ReplyToList.Add(originalFrom);
+                    mailMessage.From = new MailAddress(_siteEmail, string.IsNullOrWhiteSpace(originalFrom.DisplayName) ? originalFrom.Address : originalFrom.DisplayName);
+                }
+
                 mailSender.Send(mailMessage);
                 if (copySender)
                 {
@@ -48,7 +68,7 @@ namespace NuGetGallery
                         "You sent the following message via {0}:{1}{1}", settings.GalleryOwnerName, Environment.NewLine);
                     mailMessage.To.Clear();
                     mailMessage.Body = senderNote + mailMessage.Body;
-                    mailMessage.To.Add(mailMessage.From);
+                    mailMessage.To.Add(originalFrom);
                     mailSender.Send(mailMessage);
                 }
             } catch (SmtpException ex)
@@ -243,7 +263,7 @@ Comment Url: {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("noreply@chocolatey.io", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(_siteEmail, "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(packageRegistration, mailMessage);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
@@ -527,7 +547,7 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("moderation@chocolatey.io", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(_moderationEmail, "NO REPLY - Chocolatey");
                 
                 AddMaintainersToMailMessage(package.PackageRegistration, mailMessage, informational: messageIsInformationLevel);
                 //mailMessage.To.Add(settings.GalleryOwnerEmail);
@@ -581,7 +601,7 @@ Maintainer(s): {2}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("moderation@chocolatey.io", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(_moderationEmail, "NO REPLY - Chocolatey");
 
                 if (package.ReviewedBy != null)
                 {
@@ -626,7 +646,7 @@ Maintainer(s): {3}
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.From = new MailAddress("noreply@chocolatey.io", "NO REPLY - Chocolatey");
+                mailMessage.From = new MailAddress(_siteEmail, "NO REPLY - Chocolatey");
 
                 AddOwnersToMailMessage(package.PackageRegistration, mailMessage, requireEmail: true);
                 if (mailMessage.To.Any()) SendMessage(mailMessage);
