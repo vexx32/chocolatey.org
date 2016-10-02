@@ -21,7 +21,7 @@
 # For an explicit version of Chocolatey, please set $env:chocolateyVersion = 'versionnumber'
 # To target a different url for chocolatey.nupkg, please set $env:chocolateyDownloadUrl = 'full url to nupkg file'
 # NOTE: $env:chocolateyDownloadUrl does not work with $env:chocolateyVersion.
-# To use built-in compression (no 7zip download), please set $env:chocolateyUseWindowsCompression = 'true'
+# To use 7zip (requires additional download) instead of built-in compression, please set $env:chocolateyUseWindowsCompression = 'false'
 
 #specifically use the API to get the latest version (below)
 $url = ''
@@ -150,28 +150,30 @@ if ($url -eq $null -or $url -eq '') {
 Download-File $url $file
 
 # Determine unzipping method
-$unzipMethod = '7zip'
-if (![string]::IsNullOrEmpty($env:chocolateyUseWindowsCompression)){
-  Write-Output 'Using built in compression to unzip.'
-  $unzipMethod = 'builtin'
+$unzipMethod = 'builtin'
+$useWindowsCompression = $env:chocolateyUseWindowsCompression
+if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'false') {
+  Write-Output 'Using 7zip to unzip.'
+  $unzipMethod = '7zip'
 }
 
+# unzip the package
+Write-Output "Extracting $file to $tempDir..."
 if ($unzipMethod -eq '7zip') {
   # download 7zip
-  Write-Output "Download 7Zip commandline tool"
+  Write-Output "Downloading 7-Zip commandline tool first"
   $7zaExe = Join-Path $tempDir '7za.exe'
   Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
-
-  # unzip the package
-  Write-Output "Extracting $file to $tempDir..."
   Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait -NoNewWindow
 } else {
-  # unzip the package
-  Write-Output "Extracting $file to $tempDir..."
-  $shellApplication = new-object -com shell.application
-  $zipPackage = $shellApplication.NameSpace($file)
-  $destinationFolder = $shellApplication.NameSpace($tempDir)
-  $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+  try {
+    $shellApplication = new-object -com shell.application
+    $zipPackage = $shellApplication.NameSpace($file)
+    $destinationFolder = $shellApplication.NameSpace($tempDir)
+    $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+  } catch {
+    throw "Unable to unzip package using built-in compression. Set `$env:chocolateyUseWindowsCompression = 'false' and call install again to use 7zip to unzip. Error: `n $_"
+  }
 }
 
 # Call chocolatey install
