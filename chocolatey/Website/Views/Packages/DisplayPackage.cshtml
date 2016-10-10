@@ -719,35 +719,35 @@
                     }
                     <br />
                     <div id="@fileDivId" class="package-file-content">
-                      @{ var shBrush = "";
+                      @{ var langBrush = "";
                       }
                       @switch (Path.GetExtension(file.FilePath))
                       {
                           case ".ps1":
                           case ".psm1":
-                              shBrush = "ps";
+                              langBrush = "ps";
                               break;
                           case ".xml":
                           case ".config":
                           case ".nuspec":
-                              shBrush = "xml";
+                              langBrush = "xml";
                               break;
                           case ".js":
                           case ".json":
-                              shBrush = "js";
+                              langBrush = "js";
                               break;
                           case ".template":
-                              shBrush = "plain";
+                              langBrush = "plain";
                               if (file.FilePath.EndsWith(".nuspec.template"))
                               {
-                                  shBrush = "xml";
+                                  langBrush = "xml";
                               }
                               break;
                           default:
-                              shBrush = "plain";
+                              langBrush = "plain";
                               break;
                       }
-                      <pre class="brush: @shBrush">@file.FileContent</pre>
+                        <pre class="brush: @langBrush">@file.FileContent</pre>
                     </div>
                     if (expandForModeration)
                     {
