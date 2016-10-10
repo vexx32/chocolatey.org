@@ -28,6 +28,9 @@ to perform uninstall from the system. In the absence of<br />
 chocolateyUninstall.ps1, choco uninstall only removes the package from<br />
 Chocolatey but does not remove the software from your system (unless<br />
 in the package directory).</p>
+<p><strong>NOTE:</strong> A package with a failing uninstall can be removed with the<br />
+<code>-n --skipautouninstaller</code> flags. This will remove the package from<br />
+chocolatey without attempting to uninstall the program.</p>
 <p><strong>NOTE:</strong> Starting in 0.9.10+, the Automatic Uninstaller (AutoUninstaller)<br />
 is turned on by default. To turn it off, run the following command:</p>
 <pre class="cmd">choco feature disable -n autoUninstaller</pre>
