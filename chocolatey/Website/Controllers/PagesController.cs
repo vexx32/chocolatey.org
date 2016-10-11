@@ -165,19 +165,19 @@ Company: {4}
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Install()
         {
-            return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/Layout.cshtml");
+            return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/CodeLayout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult FAQ()
         {
-            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/Layout.cshtml");
+            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/CodeLayout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Security()
         {
-            return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/Layout.cshtml");
+            return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/CodeLayout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
