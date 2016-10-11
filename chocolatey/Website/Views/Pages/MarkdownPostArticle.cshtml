@@ -48,6 +48,14 @@
   </script>
 
     <script type="text/javascript">
+        window.onload = function () {
+            // remove leading linebreaks from code blocks.
+            var pre = document.getElementsByTagName("code");
+            for (var i = 0, len = pre.length; i < len; i++) {
+                var text = pre[i].firstChild.nodeValue;
+                pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
+            }
+        }
         hljs.initHighlightingOnLoad();
     </script>
 
