@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+    //css
+    //Bundles.Reference("Content/highlight/solarized-dark.css", "bottom");
+    Bundles.Reference("Content/highlight/vs.css", "bottom");
+    //js
+    Bundles.Reference("Scripts/highlight");
+}
+
+@RenderBody()
+
+@section BottomScripts {
+    @RenderSection("BottomScripts")
+}

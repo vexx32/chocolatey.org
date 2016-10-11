@@ -1446,6 +1446,8 @@
     <Content Include="Views\Pages\MarkdownPostIndex.cshtml" />
     <Content Include="Views\Blog\Celebrating50Million.md" />
     <Content Include="Views\Documentation\ReleaseNotesLicensed.cshtml" />
+    <Content Include="Views\Blog\_Layout.cshtml" />
+    <Content Include="Views\Blog\_ViewStart.cshtml" />
     <Content Include="Views\Documentation\HelpersWriteFunctionCallLogMessage.cshtml" />
     <Content Include="Views\Shared\CodeLayout.cshtml" />
   </ItemGroup>
