@@ -26,7 +26,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.UI;
-using MarkdownSharp;
+using Markdig;
 using NuGetGallery.MvcOverrides;
 
 namespace NuGetGallery.Controllers
@@ -35,20 +35,17 @@ namespace NuGetGallery.Controllers
     {
         private readonly IFileSystemService _fileSystem;
         public IConfiguration Configuration { get; set; }
-        public Markdown _markdownGenerator { get; set; }
+        public MarkdownPipeline MarkdownPipeline { get; set; }
 
         public BlogController(IFileSystemService fileSystem, IConfiguration configuration)
         {
             _fileSystem = fileSystem;
             Configuration = configuration;
-            _markdownGenerator = new Markdown
-            {
-                AutoHyperlink = true,
-                AutoNewLines = true,
-                //EncodeProblemUrlCharacters = true,
-                LinkEmails = true,
-                SkipCodeBlocks = false,
-            };
+
+            MarkdownPipeline = new MarkdownPipelineBuilder()
+                 .UseSoftlineBreakAsHardlineBreak()
+                 .UseAdvancedExtensions()
+                 .Build();
         }
 
         public ActionResult Index()
@@ -80,7 +77,7 @@ namespace NuGetGallery.Controllers
             foreach (var post in posts.OrEmptyListIfNull())
             {
                 var blogUrl = blogRoot + "/" + post.UrlPath;
-                var item = new SyndicationItem(post.Title, _markdownGenerator.Transform(post.Post), new Uri(blogUrl), post.UrlPath, post.Published.GetValueOrDefault());
+                var item = new SyndicationItem(post.Title, post.Post, new Uri(blogUrl), post.UrlPath, post.Published.GetValueOrDefault());
                 item.PublishDate = post.Published.GetValueOrDefault();
                 item.Authors.Add(new SyndicationPerson(string.Empty, post.Author, string.Empty));
                 item.Copyright = new TextSyndicationContent("Copyright RealDimensions Software LLC and original author(s).");
@@ -159,7 +156,7 @@ namespace NuGetGallery.Controllers
                 model.Title = GetPostMetadataValue("Title", contents);
                 model.Author = GetPostMetadataValue("Author", contents);
                 model.Published = DateTime.ParseExact(GetPostMetadataValue("Published", contents), "yyyyMMdd", CultureInfo.InvariantCulture);
-                model.Post = contents.Remove(0, contents.IndexOf("---") + 3);
+                model.Post = Markdig.Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
             }
 
             return model;

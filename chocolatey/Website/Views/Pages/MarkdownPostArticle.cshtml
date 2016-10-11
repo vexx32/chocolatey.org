@@ -1,16 +1,6 @@
-﻿@using MarkdownSharp
-@model MarkdownPostViewModel
+﻿@model MarkdownPostViewModel
 @{
   ViewBag.Title = Model.Title;
-
-  var markdownGenerator = new Markdown
-  {
-    AutoHyperlink = true,
-    AutoNewLines = true,
-    //EncodeProblemUrlCharacters = true,
-    LinkEmails = true,
-    SkipCodeBlocks = false,
-  };
 
   //css
   Bundles.Reference("Content/SyntaxHighlighter/shCore.css", "bottom");
@@ -24,7 +14,7 @@
   <h2>@Model.Title</h2>
   <h5>@Model.Author, @Model.Published.GetValueOrDefault().ToLongDateString()</h5>
   <section class="post">
-      @Html.Raw(markdownGenerator.Transform(Model.Post))  
+      @Html.Raw(Model.Post)  
   </section>
   
 </div>
