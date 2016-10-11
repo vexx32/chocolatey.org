@@ -12,12 +12,12 @@ existing package and makes it available without any internet<br />
 requirement.</p>
 <p>See <a href="https://chocolatey.org/docs/features-automatically-recompile-packages" class="uri">https://chocolatey.org/docs/features-automatically-recompile-packages</a></p>
 <h2 id="usage">Usage</h2>
-<pre class="cmd">choco download &lt;pkg&gt; [&lt;options/switches&gt;]</pre>
+<pre><code class="nohighlight">choco download &lt;pkg&gt; [&lt;options/switches&gt;]</code></pre>
 <h2 id="examples">Examples</h2>
-<pre class="cmd">choco download sysinternals
+<pre><code class="nohighlight">choco download sysinternals
 choco download notepadplusplus.install --recompile
 choco download notepadplusplus.install --recompile --resources-location \\server\share
-choco download notepadplusplus.install --recompile --resources-location http://somewhere/internal --append-useoriginallocation</pre>
+choco download notepadplusplus.install --recompile --resources-location http://somewhere/internal --append-useoriginallocation</code></pre>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p>Coming soon</p>
 <h2 id="options-and-switches">Options and Switches</h2>
@@ -27,7 +27,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="cmd">
+<pre><code class="nohighlight">
  downloading multiple packages, and you use `--version=1.0.0`, it is
  going to look for and try to download version 1.0.0 of every package
 
@@ -125,7 +125,7 @@ out multiple package calls when wanting to pass specific options.</p>
        least Chocolatey v0.10.1 for `Install-ChocolateyPacakge` to recognize 
        the switch appropriately. Overrides the feature 
        &#39;internalizeAppendUseOriginalLocation&#39; set to by default to &#39;False&#39;.
-</pre>
+</code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco download -h</code>.</p>
 </article>

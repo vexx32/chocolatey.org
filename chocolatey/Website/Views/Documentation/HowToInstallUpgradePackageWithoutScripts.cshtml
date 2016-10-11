@@ -11,8 +11,8 @@
 <p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it).</p>
 <p>However if you are sold on skipping the automation scripts and tricking Chocolatey into believing that a script is installed.</p>
 <p>If you wander over to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install switches</a> you will see</p>
-<pre class="cmd">-n, --skippowershell, --skip-powershell
-  Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.</pre>
+<pre><code class="nohighlight">-n, --skippowershell, --skip-powershell
+  Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.</code></pre>
 <p>This switch is going to be very important for you. Now we will go through some scenarios to help you make the best decision.</p>
 <h3 id="community-feed-has-a-package-with-your-version">Community Feed has a package with your version</h3>
 <p>Consider the following scenario:</p>
@@ -77,6 +77,6 @@
 </ul>
 <p>See <a href="#community-feed-has-a-package-older-than-your-version">Community Feed has a version older than your version</a> - substitute <code>upgrade</code> for <code>install</code> if you must. Follow the recommendation.</p>
 <p><strong>Additional Recommendation</strong>: You may also want to bump it to 1.8.0 using the skip argument (<code>-n</code>) and then promptly <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> the package until a newer version is available.</p>
-<pre class="cmd">choco upgrade firefox -n -y --version 1.8.0
-choco pin firefox</pre>
+<pre><code class="nohighlight">choco upgrade firefox -n -y --version 1.8.0
+choco pin firefox</code></pre>
 </article>

@@ -7,9 +7,9 @@
 <p>Retrieve registry key(s) for system-installed applications from an<br />
 exact or wildcard search.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-UninstallRegistryKey `
+<pre><code class="powershell">Get-UninstallRegistryKey `
   -SoftwareName &lt;String&gt; `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This function will attempt to retrieve a matching registry key for an<br />
 already installed application, usually to be used with a<br />
@@ -19,27 +19,27 @@ handling wrongly encoded registry keys.</p>
 <h2 id="notes">Notes</h2>
 <p>Available in 0.9.10+. If you need to maintain compatibility with pre<br />
 0.9.10, please add the following to your nuspec:</p>
-<pre class="brush: xml">&lt;dependencies&gt;
+<pre><code class="xml">&lt;dependencies&gt;
   &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; /&gt;
-&lt;/dependencies&gt;</pre>
+&lt;/dependencies&gt;</code></pre>
 <h2 id="aliases">Aliases</h2>
 <p><code>Get-InstallRegistryKey</code></p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # Software name in Programs and Features is &quot;Gpg4Win (2.3.0)&quot;
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;Gpg4win*&quot;
-$key.DisplayName</pre>
+$key.DisplayName</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # Software name is &quot;Launchy 2.5&quot;
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;Launchy*&quot;
-$key.UninstallString</pre>
+$key.UninstallString</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # Software name is &quot;Mozilla Firefox&quot;
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;Mozilla Firefox&quot;
-$key.UninstallString</pre>
+$key.UninstallString</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

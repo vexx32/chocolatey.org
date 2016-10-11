@@ -7,11 +7,11 @@
 <p>Gets the original file name from a url. Used by Get-WebFile to determine<br />
 the original file name for a file.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-WebFileName `
+<pre><code class="powershell">Get-WebFileName `
   [-Url &lt;String&gt;] `
   -DefaultName &lt;String&gt; `
   [-UserAgent &lt;String&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Uses several techniques to determine the original file name of the file<br />
 based on the url for the file.</p>
@@ -29,8 +29,8 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Get-WebFileName -Url $url -DefaultName $originalFileName
-</pre>
+<pre><code class="powershell">Get-WebFileName -Url $url -DefaultName $originalFileName
+</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

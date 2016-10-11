@@ -20,9 +20,9 @@
 </ul>
 <h2 id="ansible">Ansible</h2>
 <p>Ansible has the <code>win_chocolatey</code> module that manages both packages and the installation of Chocolatey itself.</p>
-<pre class="brush: plain">win_chocolatey:
+<pre><code class="yaml">win_chocolatey:
   name: git
-  source: https://my.internal.repository/api/v2/</pre>
+  source: https://my.internal.repository/api/v2/</code></pre>
 <p><a href="https://bit.ly/choco_ansible">Read More...</a></p>
 <h2 id="boxstarter">Boxstarter</h2>
 <p>Boxstarter is a lightweight configuration management utility.</p>
@@ -32,17 +32,17 @@
 <p><a href="http://boxstarter.org/">Read more...</a></p>
 <h2 id="chef">Chef</h2>
 <p>Chef 12.7+ has a <a href="https://www.chef.io/blog/2016/02/12/chef-client-12-7-released/">built-in</a> <code>chocolatey_package</code> resource to use with Chocolatey.</p>
-<pre class="brush: ruby">chocolatey_package &#39;git&#39; do
+<pre><code class="ruby">chocolatey_package &#39;git&#39; do
   action :install
   source &#39;https://my.internal.repository/api/v2&#39;
-end</pre>
+end</code></pre>
 <p><a href="https://docs.chef.io/resource_chocolatey_package.html">Resource - Read More...</a></p>
 <p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team. It has a package resource that can be used with older Chef versions.</p>
-<pre class="brush: ruby">include_recipe &#39;chocolatey&#39;</pre>
+<pre><code class="ruby">include_recipe &#39;chocolatey&#39;</code></pre>
 <p><a href="https://bit.ly/choco_chef">Cookbook - Read More...</a></p>
 <h3 id="example">Example</h3>
 <p>Here&#39;s a more in depth example from <a href="https://github.com/Nordstrom/chefdk_bootstrap/blob/master/recipes/windows.rb">Nordstrom</a>:</p>
-<pre class="brush: ruby">include_recipe &#39;chocolatey&#39;
+<pre><code class="ruby">include_recipe &#39;chocolatey&#39;
 
 home = Dir.home
 %W(
@@ -57,17 +57,17 @@ packages = node[&#39;chefdk_bootstrap&#39;][&#39;package&#39;]
 
 packages.each do |pkg, install|
   include_recipe &quot;#{cookbook_name}::#{pkg}&quot; if install
-end</pre>
+end</code></pre>
 <p>Another example from <a href="https://github.com/facebook/IT-CPE/tree/master/chef/cookbooks/cpe_choco">Facebook</a>:</p>
-<pre class="brush: ruby">node.default[&#39;cpe_choco&#39;][&#39;sources&#39;][&#39;bacon&#39;] =
+<pre><code class="ruby">node.default[&#39;cpe_choco&#39;][&#39;sources&#39;][&#39;bacon&#39;] =
   &#39;source&#39; =&gt; &#39;http://bacon.es.yummy&#39;,
-}</pre>
+}</code></pre>
 <h2 id="octopus-deploy">Octopus Deploy</h2>
 <p>Octopus is a friendly deployment automation tool for .NET developers. It integrates with lots of utilities, and they have a template for installing Chocolatey packages: <a href="https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package" class="uri">https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package</a></p>
 <p><a href="https://octopus.com/">Read more...</a></p>
 <h2 id="powershell-dsc">PowerShell DSC</h2>
 <p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
-<pre class="brush: ps">  cChocoInstaller installChoco
+<pre><code class="powershell">  cChocoInstaller installChoco
   {
     InstallDir = &quot;c:\ProgramData\chocolatey&quot;
   }
@@ -76,26 +76,26 @@ end</pre>
   {
      Name = &quot;git&quot;
      DependsOn = &quot;[cChocoInstaller]installChoco&quot;
-  }</pre>
+  }</code></pre>
 <p><a href="https://bit.ly/choco_dsc">Read More...</a></p>
 <h2 id="powershell-packagemanagement">PowerShell PackageManagement</h2>
 <p><strong>NOTE:</strong> Chocolatey has a provider for the built-in package manager on Windows 10/Windows Server 2016. The official provider is still under development at this time and is expected to be complete in early summer 2016.</p>
 <p><a href="https://github.com/OneGet/oneget">PowerShell PackageManagement (aka OneGet)</a> is a package manager <strong><em>aggregator</em></strong> that depends on the existence of package managers as providers to work, one of which is Chocolatey. For a pretty comprehensive post about what PackageManagement is and what it is not, see the PackageManagement Blog post on <a href="https://blogs.technet.microsoft.com/packagemanagement/2015/05/05/10-things-about-oneget-that-are-completely-different-than-you-think/">10 things about OneGet that are completely different than you think</a>.</p>
 <h2 id="puppet">Puppet</h2>
 <p>Puppet has a <a href="https://forge.puppet.com/supported">Supported module</a> coming for Chocolatey, but also has an <a href="https://forge.puppet.com/approved">Approved module</a> written by the Chocolatey team. The module can manage packages and the install and configuration of Chocolatey itself.</p>
-<pre class="brush: ruby">include chocolatey
+<pre><code class="puppet">include chocolatey
 
 package { &#39;git&#39;:
   ensure   =&gt; latest,
   provider =&gt; &#39;chocolatey&#39;,
   source   =&gt; &#39;https://my.internal.repository/api/v2&#39;,
-}</pre>
+}</code></pre>
 <p>Puppet has some great documentation on getting started with Chocolatey. Be sure to check that out at <a href="https://docs.puppet.com/pe/latest/windows_modules.html">Using Windows modules</a>.</p>
 <p><a href="https://bit.ly/choco_puppet">Read More...</a></p>
 <h2 id="saltstack">Saltstack</h2>
 <p>Salt has a Chocolatey module that manages both packages and the installation of Chocolatey itself.</p>
-<pre class="brush: python">salt &#39;*&#39; chocolatey.bootstrap
-salt &#39;*&#39; chocolatey.install git</pre>
+<pre><code class="python">salt &#39;*&#39; chocolatey.bootstrap
+salt &#39;*&#39; chocolatey.install git</code></pre>
 <p><a href="https://bit.ly/choco_salt">Read More...</a></p>
 <h2 id="system-center-configuration-manager">System Center Configuration Manager</h2>
 <p>Chocolatey integrates with SCCM by handling the software management, and pointing to <a href="https://technet.microsoft.com/en-us/library/bb680614.aspx">distribution points</a> as the source for packages. This allows folks to get packages and larger binaries out to their network without constraints and still take advantage of Chocolatey&#39;s fantastic abilities!</p>

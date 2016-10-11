@@ -6,9 +6,9 @@
 <h1 id="get-chocolateybins">Get-ChocolateyBins</h1>
 <p>Creates batch files for all executables in <code>$packageFolder</code> in the Chocolatey bin folder (usually C:\ProgramData\Chocolatey\bin)</p>
 <h2 id="usage">Usage</h2>
-<pre class="brush: ps">Get-ChocolateyBins $packageFolder</pre>
+<pre><code class="powershell">Get-ChocolateyBins $packageFolder</code></pre>
 <h2 id="examples">Examples</h2>
-<pre class="brush: ps">$installDir = Split-Path -Parent (Get-ItemProperty ` 
+<pre><code class="powershell">$installDir = Split-Path -Parent (Get-ItemProperty ` 
 HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Vim UninstallString).UninstallString
 # special batch files we want to create
 $diffExeIgnore = Join-Path $installDir &quot;diff.exe.ignore&quot;
@@ -17,7 +17,7 @@ $gvimExeGui = Join-Path $installDir &quot;gvim.exe.gui&quot;
 
 New-Item $diffExeIgnore,$uninstallExeIgnore,$gvimExeGui `
  -Type File -Force | Out-Null Get-ChocolateyBins $installDir
-Remove-Item $diffExeIgnore,$uninstallExeIgnore,$gvimExeGui</pre>
+Remove-Item $diffExeIgnore,$uninstallExeIgnore,$gvimExeGui</code></pre>
 <h2 id="parameters">Parameters</h2>
 <ul>
 <li><p><code>-packageFolder</code></p>

@@ -6,7 +6,7 @@
 <h1 id="install-chocolateypowershellcommand">Install-ChocolateyPowershellCommand</h1>
 <p>Installs a PowerShell Script as a command</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyPowershellCommand `
+<pre><code class="powershell">Install-ChocolateyPowershellCommand `
   [-PackageName &lt;String&gt;] `
   -PsFileFullPath &lt;String&gt; `
   [-Url &lt;String&gt;] `
@@ -16,7 +16,7 @@
   [-Checksum64 &lt;String&gt;] `
   [-ChecksumType64 &lt;String&gt;] `
   [-Options &lt;Hashtable&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This will install a PowerShell script as a command on your system. Like<br />
 an executable can be run from a batch redirect, this will do the same,<br />
@@ -34,27 +34,27 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 $psFile = Join-Path $(Split-Path -Parent $MyInvocation.MyCommand.Definition) &quot;Install-WindowsImage.ps1&quot;
-Install-ChocolateyPowershellCommand -PackageName &#39;installwindowsimage.powershell&#39; -PSFileFullPath $psFile</pre>
+Install-ChocolateyPowershellCommand -PackageName &#39;installwindowsimage.powershell&#39; -PSFileFullPath $psFile</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 $psFile = Join-Path $(Split-Path -Parent $MyInvocation.MyCommand.Definition) `
  &quot;Install-WindowsImage.ps1&quot;
 Install-ChocolateyPowershellCommand `
  -PackageName &#39;installwindowsimage.powershell&#39; `
  -PSFileFullPath $psFile `
  -PSFileFullPath $psFile `
- -Url &#39;http://somewhere.com/downloads/Install-WindowsImage.ps1&#39;</pre>
+ -Url &#39;http://somewhere.com/downloads/Install-WindowsImage.ps1&#39;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 $psFile = Join-Path $(Split-Path -Parent $MyInvocation.MyCommand.Definition) `
  &quot;Install-WindowsImage.ps1&quot;
 Install-ChocolateyPowershellCommand `
  -PackageName &#39;installwindowsimage.powershell&#39; `
  -PSFileFullPath $psFile `
  -Url &#39;http://somewhere.com/downloads/Install-WindowsImage.ps1&#39; `
- -Url64 &#39;http://somewhere.com/downloads/Install-WindowsImagex64.ps1&#39;</pre>
+ -Url64 &#39;http://somewhere.com/downloads/Install-WindowsImagex64.ps1&#39;</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

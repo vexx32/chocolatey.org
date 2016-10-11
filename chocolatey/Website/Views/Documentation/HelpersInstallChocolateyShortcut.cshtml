@@ -6,7 +6,7 @@
 <h1 id="install-chocolateyshortcut">Install-ChocolateyShortcut</h1>
 <p>Creates a shortcut</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyShortcut `
+<pre><code class="powershell">Install-ChocolateyShortcut `
   -ShortcutFilePath &lt;String&gt; `
   -TargetPath &lt;String&gt; `
   [-WorkingDirectory &lt;String&gt;] `
@@ -16,7 +16,7 @@
   [-WindowStyle &lt;Int32&gt;] `
   [-RunAsAdmin] `
   [-PinToTaskbar] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This adds a shortcut, at the specified location, with the option to specify<br />
 a number of additional properties for the shortcut, such as Working Directory,<br />
@@ -29,13 +29,13 @@ of failing a package installation.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # This will create a new shortcut at the location of &quot;C:\test.lnk&quot; and
 # link to the file located at &quot;C:\text.exe&quot;
 
-Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</pre>
+Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # This will create a new shortcut at the location of &quot;C:\notepad.lnk&quot;
 # and link to the Notepad application.  In addition, other properties
 # are being set to specify the working directory, an icon to be used for
@@ -47,9 +47,9 @@ Install-ChocolateyShortcut `
   -WorkDirectory &quot;C:\&quot; `
   -Arguments &quot;C:\test.txt&quot; `
   -IconLocation &quot;C:\test.ico&quot; `
-  -Description &quot;This is the description&quot;</pre>
+  -Description &quot;This is the description&quot;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # Creates a new notepad shortcut on the root of c: that starts
 # notepad.exe as Administrator. Shortcut is also pinned to taskbar.
 # These parameters are available in 0.9.10+.
@@ -59,7 +59,7 @@ Install-ChocolateyShortcut `
   -TargetPath &quot;C:\Windows\System32\notepad.exe&quot; `
   -WindowStyle 3 `
   -RunAsAdmin `
-  -PinToTaskbar</pre>
+  -PinToTaskbar</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

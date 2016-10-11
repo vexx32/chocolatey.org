@@ -6,12 +6,12 @@
 <h1 id="install-binfile">Install-BinFile</h1>
 <p>Creates a shim (or batch redirect) for a file that is on the PATH.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-BinFile `
+<pre><code class="powershell">Install-BinFile `
   -Name &lt;String&gt; `
   -Path &lt;String&gt; `
   [-UseStart] `
   [-Command &lt;String&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Chocolatey installs have the folder <code>$($env:ChocolateyInstall)\bin</code><br />
 included in the PATH environment variable. Chocolatey automatically<br />

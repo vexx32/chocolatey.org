@@ -8,14 +8,14 @@
 <p>Installs software into &quot;Programs and Features&quot;. Use<br />
 Install-ChocolateyPackage when software must be downloaded first.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyInstallPackage `
+<pre><code class="powershell">Install-ChocolateyInstallPackage `
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
   [-SilentArgs &lt;String[]&gt;] `
   -File &lt;String&gt; `
   [-ValidExitCodes &lt;Object&gt;] `
   [-UseOnlyPackageSilentArguments] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This will run an installer (local file) on your machine.</p>
 <h2 id="notes">Notes</h2>
@@ -35,7 +35,7 @@ understands how to work with that, hence this wrapper function.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 $packageName= &#39;bob&#39;
 $toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
 $fileLocation = Join-Path $toolsDir &#39;INSTALLER_EMBEDDED_IN_PACKAGE&#39;
@@ -49,9 +49,9 @@ $packageArgs = @@{
   softwareName  = &#39;Bob*&#39;
 }
 
-Install-ChocolateyInstallPackage @@packageArgs</pre>
+Install-ChocolateyInstallPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 $packageArgs = @@{
   packageName   = &#39;bob&#39;
   fileType      = &#39;exe&#39;
@@ -61,16 +61,16 @@ $packageArgs = @@{
   softwareName  = &#39;Bob*&#39;
 }
 
-Install-ChocolateyInstallPackage @@packageArgs</pre>
+Install-ChocolateyInstallPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">Install-ChocolateyInstallPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot;
-</pre>
+<pre><code class="powershell">Install-ChocolateyInstallPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot;
+</code></pre>
 <p><strong>EXAMPLE 4</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 Install-ChocolateyInstallPackage -PackageName &#39;bob&#39; -FileType &#39;exe&#39; `
   -SilentArgs &#39;/S&#39; `
   -File &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot; `
-  -ValidExitCodes = @@(0)</pre>
+  -ValidExitCodes = @@(0)</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

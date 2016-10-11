@@ -7,10 +7,10 @@
 <p>Used in Pro/Business editions. Runtime virus check against downloaded<br />
 resources.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-VirusCheckValid `
+<pre><code class="powershell">Get-VirusCheckValid `
   [-Url &lt;String&gt;] `
   [-File &lt;String&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Run a runtime malware check against downloaded resources prior to<br />
 allowing Chocolatey to execute a file. This is available in 0.9.10+ only<br />

@@ -7,7 +7,7 @@
 <p>Downloads file from a url and unzips it on your machine. Use<br />
 Get-ChocolateyUnzip when local or embedded file.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyZipPackage `
+<pre><code class="powershell">Install-ChocolateyZipPackage `
   -PackageName &lt;String&gt; `
   [-Url &lt;String&gt;] `
   -UnzipLocation &lt;String&gt; `
@@ -18,7 +18,7 @@ Get-ChocolateyUnzip when local or embedded file.</p>
   [-Checksum64 &lt;String&gt;] `
   [-ChecksumType64 &lt;String&gt;] `
   [-Options &lt;Hashtable&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This will download a file from a url and unzip it on your machine.<br />
 If you are embedding the file(s) directly in the package (or do not need<br />
@@ -35,19 +35,19 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Install-ChocolateyZipPackage -PackageName &#39;gittfs&#39; -Url &#39;https://github.com/downloads/spraints/git-tfs/GitTfs-0.11.0.zip&#39; -UnzipLocation $gittfsPath
-</pre>
+<pre><code class="powershell">Install-ChocolateyZipPackage -PackageName &#39;gittfs&#39; -Url &#39;https://github.com/downloads/spraints/git-tfs/GitTfs-0.11.0.zip&#39; -UnzipLocation $gittfsPath
+</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 Install-ChocolateyZipPackage -PackageName &#39;sysinternals&#39; `
  -Url &#39;http://download.sysinternals.com/Files/SysinternalsSuite.zip&#39; `
- -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;</pre>
+ -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 Install-ChocolateyZipPackage -PackageName &#39;sysinternals&#39; `
  -Url &#39;http://download.sysinternals.com/Files/SysinternalsSuite.zip&#39; `
  -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot; `
- -Url64 &#39;http://download.sysinternals.com/Files/SysinternalsSuitex64.zip&#39;</pre>
+ -Url64 &#39;http://download.sysinternals.com/Files/SysinternalsSuitex64.zip&#39;</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

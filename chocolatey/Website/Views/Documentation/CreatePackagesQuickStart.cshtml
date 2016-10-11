@@ -74,23 +74,23 @@
 <h2 id="examples">Examples</h2>
 <p>Here are some simple examples.</p>
 <h3 id="chocolateyinstall.ps1-for-.exe-installer">chocolateyInstall.ps1 for .exe installer</h3>
-<pre class="brush: ps">$name = &#39;Package Name&#39;
+<pre><code class="powershell">$name = &#39;Package Name&#39;
 $installerType = &#39;exe&#39;
 $url  = &#39;http://path/to/download/installer.exe&#39;
 $silentArgs = &#39;/VERYSILENT&#39;
 
-Install-ChocolateyPackage $name $installerType $silentArgs $url</pre>
+Install-ChocolateyPackage $name $installerType $silentArgs $url</code></pre>
 <p><strong>NOTE:</strong> You have to figure out the command line switch to make the installer silent, e.g. <strong>/VERYSILENT</strong>. This changes from installer to installer.</p>
 <h3 id="chocolateyinstall.ps1-for-.msi-installer">chocolateyInstall.ps1 for .msi installer</h3>
 <p><strong>NOTE:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It&#39;s best to work with the widest compatibility of systems out there.</p>
-<pre class="brush: ps">$packageName = &#39;Package Name&#39;
+<pre><code class="powershell">$packageName = &#39;Package Name&#39;
 $installerType = &#39;msi&#39;
 $url = &#39;http://path/to/download/installer_x86.msi&#39;
 $url64 = &#39;http://path/to/download/installer_x64.msi&#39;
 $silentArgs = &#39;/quiet&#39;
 $validExitCodes = @@(0,3010)
 
-Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes</pre>
+Install-ChocolateyPackage $packageName $installerType $silentArgs $url $url64  -validExitCodes $validExitCodes</code></pre>
 <h3 id="parsing-package-parameters">Parsing Package Parameters</h3>
 <p>For a complete example of how you can use the PackageParameters argument of the <code>choco install</code> command, see this <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-parse-package-parameters-argument" })">How-To</a>.</p>
 <h2 id="tips">Tips</h2>

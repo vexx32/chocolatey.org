@@ -13,13 +13,13 @@ and switches with one dash (<code>-</code>). For more details, see<br />
 <p><strong>NOTE:</strong> <code>cpack</code> has been deprecated as it has a name collision with CMake. Please<br />
 use <code>choco pack</code> instead. The shortcut will be removed in v1.</p>
 <h2 id="usage">Usage</h2>
-<pre class="cmd">choco pack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;]
-cpack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;] (DEPRECATED)</pre>
+<pre><code class="nohighlight">choco pack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;]
+cpack [&lt;path to nuspec&gt;] [&lt;options/switches&gt;] (DEPRECATED)</code></pre>
 <h2 id="examples">Examples</h2>
-<pre class="cmd">choco pack
+<pre><code class="nohighlight">choco pack
 choco pack --version 1.2.3
 choco pack path/to/nuspec
-choco pack --outputdirectory build</pre>
+choco pack --outputdirectory build</code></pre>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -27,7 +27,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="cmd">
+<pre><code class="nohighlight">
  -?, --help, -h
      Prints out the help menu.
 
@@ -84,7 +84,7 @@ out multiple package calls when wanting to pass specific options.</p>
      --outputdirectory=VALUE
      OutputDirectory - Specifies the directory for the created Chocolatey 
        package file. If not specified, uses the current directory.
-</pre>
+</code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco pack -h</code>.</p>
 </article>

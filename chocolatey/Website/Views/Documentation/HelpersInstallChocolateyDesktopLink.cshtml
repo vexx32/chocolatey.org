@@ -6,9 +6,9 @@
 <h1 id="install-chocolateydesktoplink">Install-ChocolateyDesktopLink</h1>
 <p>DEPRECATED - This adds a shortcut on the desktop to the specified file path.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Install-ChocolateyDesktopLink `
+<pre><code class="powershell">Install-ChocolateyDesktopLink `
   -TargetFilePath &lt;String&gt; `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Determines the desktop folder and creates a shortcut to the specified<br />
 file path. Will not throw errors if it fails.</p>
@@ -24,10 +24,10 @@ installation.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # This will create a new Desktop Shortcut pointing at the NHibernate
 # Profiler exe.
-Install-ChocolateyDesktopLink -TargetFilePath &quot;C:\tools\NHibernatProfiler\nhprof.exe&quot;</pre>
+Install-ChocolateyDesktopLink -TargetFilePath &quot;C:\tools\NHibernatProfiler\nhprof.exe&quot;</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

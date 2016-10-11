@@ -7,11 +7,11 @@
 <p>Returns a list of outdated packages.</p>
 <p><strong>NOTE:</strong> Available with 0.9.9.6+.</p>
 <h2 id="usage">Usage</h2>
-<pre class="cmd">choco outdated [&lt;options/switches&gt;]</pre>
+<pre><code class="nohighlight">choco outdated [&lt;options/switches&gt;]</code></pre>
 <h2 id="examples">Examples</h2>
-<pre class="cmd">choco outdated
+<pre><code class="nohighlight">choco outdated
 choco outdated -s https://somewhere/out/there
-choco outdated -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</pre>
+choco outdated -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
 <p>If you use <code>--source=https://somewhere/out/there</code>, it is<br />
 going to look for outdated packages only based on that source.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
@@ -23,7 +23,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="cmd">
+<pre><code class="nohighlight">
  -?, --help, -h
      Prints out the help menu.
 
@@ -92,7 +92,7 @@ out multiple package calls when wanting to pass specific options.</p>
      --cp, --certpassword=VALUE
      Certificate Password - the client certificate&#39;s password to the source. 
        Defaults to empty. Available in 0.9.10+.
-</pre>
+</code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco outdated -h</code>.</p>
 </article>

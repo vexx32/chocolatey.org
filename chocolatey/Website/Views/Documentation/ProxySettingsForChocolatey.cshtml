@@ -10,9 +10,9 @@
 <h2 id="explicit-proxy-settings">Explicit Proxy Settings</h2>
 <p>Chocolatey has explicit proxy support starting with 0.9.9.9.</p>
 <p>You can simply configure 1 or 3 settings and Chocolatey will use a proxy server. <code>proxy</code> is required and is the location and port of the proxy server. <code>proxyUser</code> and <code>proxyPassword</code> are optional. The values for user/password are only used for credentials when both are present.</p>
-<pre class="cmd">choco config set proxy &lt;locationandport&gt;
+<pre><code class="nohighlight">choco config set proxy &lt;locationandport&gt;
 choco config set proxyUser &lt;username&gt;
-choco config set proxyPassword &lt;passwordThatGetsEncryptedInFile&gt;</pre>
+choco config set proxyPassword &lt;passwordThatGetsEncryptedInFile&gt;</code></pre>
 <h3 id="example">Example</h3>
 <p>Running the following commands in 0.9.9.9:<br />
 ~<del>sh<br />

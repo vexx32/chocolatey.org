@@ -9,13 +9,13 @@
 packages, as it will automatically skip those packages. Another<br />
 alternative is <code>choco upgrade --except=&quot;pkg1,pk2&quot;</code>.</p>
 <h2 id="usage">Usage</h2>
-<pre class="cmd">choco pin [list]|add|remove [&lt;options/switches&gt;]</pre>
+<pre><code class="nohighlight">choco pin [list]|add|remove [&lt;options/switches&gt;]</code></pre>
 <h2 id="examples">Examples</h2>
-<pre class="cmd">choco pin   
+<pre><code class="nohighlight">choco pin   
 choco pin list  
 choco pin add -n=git
 choco pin add -n=git --version 1.2.3
-choco pin remove --name git</pre>
+choco pin remove --name git</code></pre>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -23,7 +23,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre class="cmd">
+<pre><code class="nohighlight">
  -?, --help, -h
      Prints out the help menu.
 
@@ -81,7 +81,7 @@ out multiple package calls when wanting to pass specific options.</p>
      --version=VALUE
      Version - Used when multiple versions of a package are installed.  
        Defaults to empty.
-</pre>
+</code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco pin -h</code>.</p>
 </article>

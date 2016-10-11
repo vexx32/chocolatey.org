@@ -6,10 +6,10 @@
 <h1 id="uninstall-chocolateyzippackage">Uninstall-ChocolateyZipPackage</h1>
 <p>Uninstalls a previous installed zip package, may not be necessary.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Uninstall-ChocolateyZipPackage `
+<pre><code class="powershell">Uninstall-ChocolateyZipPackage `
   -PackageName &lt;String&gt; `
   -ZipFileName &lt;String&gt; `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This will uninstall a zip file if installed via Install-ChocolateyZipPackage.<br />
 This is not necessary if the files are unzipped to the package directory.</p>
@@ -22,8 +22,8 @@ This method has error handling built into it.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Uninstall-ChocolateyZipPackage &#39;__NAME__&#39; &#39;filename.zip&#39;
-</pre>
+<pre><code class="powershell">Uninstall-ChocolateyZipPackage &#39;__NAME__&#39; &#39;filename.zip&#39;
+</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

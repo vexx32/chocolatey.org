@@ -6,12 +6,12 @@
 <h1 id="get-chocolateyunzip">Get-ChocolateyUnzip</h1>
 <p>Unzips an archive file and returns the location for further processing.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-ChocolateyUnzip `
+<pre><code class="powershell">Get-ChocolateyUnzip `
   -FileFullPath &lt;String&gt; `
   -Destination &lt;String&gt; `
   [-SpecificFolder &lt;String&gt;] `
   [-PackageName &lt;String&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This unzips files using the 7-zip command line tool 7z.exe.<br />
 Supported archive formats are listed at:<br />
@@ -31,10 +31,10 @@ set the package exit code based on 7-zip&#39;s exit code.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # Path to the folder where the script is executing
 $toolsDir = (Split-Path -parent $MyInvocation.MyCommand.Definition)
-Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $toolsDir</pre>
+Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $toolsDir</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

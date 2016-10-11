@@ -6,8 +6,8 @@
 <h1 id="get-environmentvariablenames">Get-EnvironmentVariableNames</h1>
 <p>Gets all environment variable names.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-EnvironmentVariableNames `
-  [-Scope {Process | User | Machine}]</pre>
+<pre><code class="powershell">Get-EnvironmentVariableNames `
+  [-Scope {Process | User | Machine}]</code></pre>
 <h2 id="description">Description</h2>
 <p>Provides a list of environment variable names based on the scope. This<br />
 can be used to loop through the list and generate names.</p>
@@ -18,8 +18,8 @@ session. The other scopes refer to the registry values.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Get-EnvironmentVariableNames -Scope Machine
-</pre>
+<pre><code class="powershell">Get-EnvironmentVariableNames -Scope Machine
+</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

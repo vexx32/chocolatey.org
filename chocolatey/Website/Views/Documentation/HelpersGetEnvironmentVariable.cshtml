@@ -6,11 +6,11 @@
 <h1 id="get-environmentvariable">Get-EnvironmentVariable</h1>
 <p>Gets an Environment Variable.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-EnvironmentVariable `
+<pre><code class="powershell">Get-EnvironmentVariable `
   -Name &lt;String&gt; `
   -Scope {Process | User | Machine} `
   [-PreserveVariables] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This will will get an environment variable based on the variable name<br />
 and scope while accounting whether to expand the variable or not<br />
@@ -23,11 +23,11 @@ must.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Get-EnvironmentVariable -Name &#39;TEMP&#39; -Scope User -PreserveVariables
-</pre>
+<pre><code class="powershell">Get-EnvironmentVariable -Name &#39;TEMP&#39; -Scope User -PreserveVariables
+</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre class="brush: ps">Get-EnvironmentVariable -Name &#39;PATH&#39; -Scope Machine
-</pre>
+<pre><code class="powershell">Get-EnvironmentVariable -Name &#39;PATH&#39; -Scope Machine
+</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

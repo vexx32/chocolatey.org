@@ -6,12 +6,12 @@
 <h1 id="get-checksumvalid">Get-ChecksumValid</h1>
 <p>Checks a file&#39;s checksum versus a passed checksum and checksum type.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Get-ChecksumValid `
+<pre><code class="powershell">Get-ChecksumValid `
   -File &lt;String&gt; `
   [-Checksum &lt;String&gt;] `
   [-ChecksumType &lt;String&gt;] `
   [-OriginalUrl &lt;String&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Makes a determination if a file meets an expected checksum signature.<br />
 This function is usually used when comparing a file that is downloaded<br />
@@ -54,8 +54,8 @@ to what is expected.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">Get-ChecksumValid -File $fileFullPath -CheckSum $checksum -ChecksumType $checksumType
-</pre>
+<pre><code class="powershell">Get-ChecksumValid -File $fileFullPath -CheckSum $checksum -ChecksumType $checksumType
+</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

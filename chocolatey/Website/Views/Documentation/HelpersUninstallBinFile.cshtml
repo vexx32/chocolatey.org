@@ -6,10 +6,10 @@
 <h1 id="uninstall-binfile">Uninstall-BinFile</h1>
 <p>Removes a shim (or batch redirect) for a file.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Uninstall-BinFile `
+<pre><code class="powershell">Uninstall-BinFile `
   -Name &lt;String&gt; `
   [-Path &lt;String&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Chocolatey installs have the folder <code>$($env:ChocolateyInstall)\bin</code><br />
 included in the PATH environment variable. Chocolatey automatically<br />

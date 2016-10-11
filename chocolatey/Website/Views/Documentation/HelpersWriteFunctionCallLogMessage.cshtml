@@ -6,10 +6,10 @@
 <h1 id="write-functioncalllogmessage">Write-FunctionCallLogMessage</h1>
 <p>DO NOT USE. Not part of the public API.</p>
 <h2 id="syntax">Syntax</h2>
-<pre class="brush: ps">Write-FunctionCallLogMessage `
+<pre><code class="powershell">Write-FunctionCallLogMessage `
   [-Invocation &lt;Object&gt;] `
   [-Parameters &lt;Object&gt;] `
-  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</pre>
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>Writes function call as a debug message.</p>
 <h2 id="notes">Notes</h2>
@@ -19,9 +19,9 @@
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre class="brush: ps">
+<pre><code class="powershell">
 # This is how this function should always be called
-Write-FunctionCallLogMessage -Invocation $MyInvocation -Parameters $PSBoundParameters</pre>
+Write-FunctionCallLogMessage -Invocation $MyInvocation -Parameters $PSBoundParameters</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>
