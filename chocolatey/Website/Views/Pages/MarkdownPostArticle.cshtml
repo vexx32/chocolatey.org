@@ -3,11 +3,10 @@
   ViewBag.Title = Model.Title;
 
   //css
-  Bundles.Reference("Content/SyntaxHighlighter/shCore.css", "bottom");
-  Bundles.Reference("Content/SyntaxHighlighter/shCoreDefault.css", "bottom");
-  Bundles.Reference("Content/SyntaxHighlighter/shThemeDefault.css", "bottom");
+  //Bundles.Reference("Content/highlight/solarized-dark.css", "bottom");
+  Bundles.Reference("Content/highlight/vs.css", "bottom");
   //js
-  Bundles.Reference("Scripts/SyntaxHighlighter");
+  Bundles.Reference("Scripts/highlight");
     
 }
 <div class="p-b p-l p-r">
@@ -39,24 +38,17 @@
 @section BottomScripts {
 
   <script type="text/javascript">
-    var disqus_shortname = '@disqusShortname';
+      var disqus_shortname = '@disqusShortname';
 
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+      (function () {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
   </script>
 
-  <script type="text/javascript">
-    SyntaxHighlighter.defaults['gutter'] = false;
-    SyntaxHighlighter.defaults['tab-size'] = 2;
-    SyntaxHighlighter.defaults['toolbar'] = false;
-    SyntaxHighlighter.defaults['wrap-lines'] = true;
-    SyntaxHighlighter.defaults['pad-line-numbers'] = false;
-    SyntaxHighlighter.defaults['auto-links'] = true;
-    SyntaxHighlighter.defaults['collapse'] = false;
-    SyntaxHighlighter.all();
-  </script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
 
 }
