@@ -64,17 +64,17 @@ function Fix-MarkdownConversion($text) {
 function Convert-FencedCode($text) {
 
   #$text = $text.Replace("<pre><code>","<pre class=`"brush: plain`">")
-  $text = $text.Replace("<pre><code>","<pre class=`"cmd`">")
-  $text = $text -replace '\<pre\s?([^\>]*)\>\<code\>', '<pre $1>'
-  $text = $text.Replace("</code></pre>","</pre>")
-  $text = $text.Replace("class=`"ruby`"","class=`"brush: ruby`"")
-  $text = $text.Replace("class=`"puppet`"","class=`"brush: ruby`"")
-  $text = $text.Replace("class=`"sh`"","class=`"cmd`"")
-  $text = $text.Replace("class=`"xml`"","class=`"brush: xml`"")
-  $text = $text.Replace("class=`"powershell`"","class=`"brush: ps`"")
-  $text = $text.Replace("class=`"yaml`"","class=`"brush: plain`"")
-  $text = $text.Replace("class=`"python`"","class=`"brush: python`"")
-  $text = $text.Replace("class=`"csharp`"","class=`"brush: csharp`"")
+  $text = $text.Replace("<pre><code>","<pre><code class=`"nohighlight`">")
+  $text = $text -replace '\<pre\s?([^\>]*)\>\<code\>', '<pre><code $1>'
+  #$text = $text.Replace("</code></pre>","</pre>")
+  #$text = $text.Replace("class=`"ruby`"","class=`"brush: ruby`"")
+  #$text = $text.Replace("class=`"puppet`"","class=`"brush: ruby`"")
+  $text = $text.Replace("class=`"sh`"","class=`"nohighlight`"")
+  #$text = $text.Replace("class=`"xml`"","class=`"brush: xml`"")
+  #$text = $text.Replace("class=`"powershell`"","class=`"brush: ps`"")
+  #$text = $text.Replace("class=`"yaml`"","class=`"brush: plain`"")
+  #$text = $text.Replace("class=`"python`"","class=`"brush: python`"")
+  #$text = $text.Replace("class=`"csharp`"","class=`"brush: csharp`"")
   
   Write-Output $text
 }
