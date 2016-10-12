@@ -5,7 +5,7 @@ Tags: News
 Keywords: chocolatey, logo
 Summary: Chocolatey recently underwent a bit of a fancy facelift. We are excited to unveil what that looks like!
 ---
-**Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/).
+**Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/). *Reposted with permission.*
 
 A designer started a conversation with us in [December 2014](https://github.com/chocolatey/chocolatey/issues/640) and we’ve recently come to a decision point on Chocolatey – a new logo (and soon a new website)! A special thanks goes out to [Julian Krispel-Samsel](https://github.com/juliankrispel)!
 

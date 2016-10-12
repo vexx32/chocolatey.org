@@ -5,7 +5,7 @@ Tags: HowTo, Packaging
 Keywords: howto, chocolatey, packages
 Summary: Creating Chocolatey packages can save you a lot of time. And Chocolatey has ways to make that process much smoother.
 ---
-**Note:** Originally posted on [Puppet's blog](https://puppet.com/blog/chocolatey-creating-your-own-chocolatey-packages).
+**Note:** Originally posted on [Puppet's blog](https://puppet.com/blog/chocolatey-creating-your-own-chocolatey-packages). *Reposted with permission.*
 
 Chocolatey is a package manager. It works by managing packages that contain software or know how to manage the underlying software themselves. For folks unfamiliar with packaging concepts, a Chocolatey package is really just a fancy version of a zip file that knows about metadata, versioning and dependencies related to underlying software, plus optional automation scripts that are run during installation, upgrade and uninstallation of the package.
 

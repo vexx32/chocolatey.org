@@ -5,7 +5,7 @@ Tags: HowTo, Packaging, Internalize
 Keywords: howto, chocolatey, packages, internalize
 Summary: The community repository has quite a few packages out there that have great logic. Learn how to take advantage of them without the hit to the internet! 
 ---
-**Note:** Originally posted on [Puppet's blog](https://puppet.com/blog/chocolatey-creating-recompiled-packages).
+**Note:** Originally posted on [Puppet's blog](https://puppet.com/blog/chocolatey-creating-recompiled-packages). *Reposted with permission.*
 
 Sometimes creating packages from scratch can be an involved process. Not all software installers are created equal (and not all are easily automated either)! Thankfully there is already a tremendous resource you can use to make the process of getting your software all packaged up even smoother.
 

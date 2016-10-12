@@ -5,7 +5,7 @@ Tags: News
 Keywords: 5 years, chocolatey, history
 Summary: The Chocolatey team remembers the last 5 years with Chocolatey. Did you know that Chocolatey derives its name from NuGet?
 ---
-**Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/).
+**Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/). *Reposted with permission.*
 
 Chocolatey turned [5 years old recently](https://twitter.com/ferventcoder/status/712410862611341312)! I committed the first lines of Chocolatey code on [March 22, 2011](https://github.com/ferventcoder/nugetpackages/commit/d16ed7ac675395b3bb8ecee90fb13efb03d4b619). At that time I never imagined that Chocolatey would grow into a flourishing community and a tool that is widely used by individuals and organizations to help automate the wild world of Windows software. It’s come a long way since I first showed off early versions of Chocolatey to some friends for feedback. Over the last 2 years things have really taken off!
 

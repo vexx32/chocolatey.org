@@ -5,7 +5,7 @@ Tags: HowTo, Server, Packaging
 Keywords: howto, host, chocolatey, packages
 Summary: Hosting your own server can be easy. Here's what you need to know.
 ---
-**Note:** Originally posted on [Puppet's blog](https://puppet.com/blog/chocolatey-hosting-your-own-server).
+**Note:** Originally posted on [Puppet's blog](https://puppet.com/blog/chocolatey-hosting-your-own-server). *Reposted with permission.*
 
 When folks think of Chocolatey, they often conflate the Chocolatey framework with the default location for packages, [Chocolatey.org](https://chocolatey.org/). However, Chocolatey was designed as a decentralized framework to allow you to use multiple (including internal) locations to get packages. This is one of the most important differentiators of Chocolatey compared to other packaging frameworks for Windows, especially for organizational use.
 
