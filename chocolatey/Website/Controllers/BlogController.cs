@@ -52,7 +52,7 @@ namespace NuGetGallery.Controllers
         {
             var posts = GetPostsByMostRecentFirst();
 
-            return View("~/Views/Pages/MarkdownPostIndex.cshtml", posts);
+            return View("~/Views/Pages/MarkdownPostIndex.cshtml", "~/Views/Blog/_Layout.cshtml", posts);
         }
 
         [ActionName("blog.rss"), HttpGet, OutputCache(VaryByParam = "page;pageSize", Location = OutputCacheLocation.Any, Duration = 3630)]
@@ -120,7 +120,7 @@ namespace NuGetGallery.Controllers
 
             if (_fileSystem.FileExists(filePath))
             {
-                return View("~/Views/Pages/MarkdownPostArticle.cshtml", GetPost(filePath, articleName));
+                return View("~/Views/Pages/MarkdownPostArticle.cshtml", "~/Views/Blog/_Layout.cshtml", GetPost(filePath, articleName));
             }
 
             return RedirectToAction("PageNotFound", "Error");
