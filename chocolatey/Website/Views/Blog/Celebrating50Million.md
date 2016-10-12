@@ -1,6 +1,9 @@
 Title: Celebrating 50 Million Installs!
 Published: 20160917
 Author: Rob Reynolds
+Tags: News
+Keywords:
+Summary:
 ---
 Recently Chocolatey's community repository (this site in the packages section) surpassed 50 million package installs! 50 million! That is a milestone worth a mention.
 

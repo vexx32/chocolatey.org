@@ -1447,9 +1447,14 @@
     <Content Include="Views\Blog\Celebrating50Million.md" />
     <Content Include="Views\Documentation\ReleaseNotesLicensed.cshtml" />
     <Content Include="Views\Blog\_Layout.cshtml" />
-    <Content Include="Views\Blog\_ViewStart.cshtml" />
     <Content Include="Views\Documentation\HelpersWriteFunctionCallLogMessage.cshtml" />
+    <Content Include="Views\Blog\Celebrating5Years.md" />
+    <Content Include="Views\Blog\ChocolateyBusinessAndProfessionalComing.md" />
+    <Content Include="Views\Blog\ChocolateyHasANewLogo.md" />
     <Content Include="Views\Shared\CodeLayout.cshtml" />
+    <Content Include="Views\Blog\CreateChocolateyPackages.md" />
+    <Content Include="Views\Blog\HostYourOwnServer.md" />
+    <Content Include="Views\Blog\InternalizePackages.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
