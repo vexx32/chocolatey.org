@@ -3012,6 +3012,11 @@ pre code {
   list-style-type: disc;  
 }
 
+.post img {
+    margin: 2px;
+    padding: 5px;
+}
+
 
 .docs:after {
   content: '';

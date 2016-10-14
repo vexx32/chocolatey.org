@@ -1193,6 +1193,7 @@
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
+    <Content Include="Content\Images\team\mukesh.png" />
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
     <Content Include="Content\Images\Turbo-on-Red.png" />
@@ -1457,6 +1458,7 @@
     <Content Include="Views\Blog\InternalizePackages.md" />
     <Content Include="Views\Blog\Hacktoberfest2016.md" />
     <Content Include="Views\Blog\ExtendingChocolateyPackagingAtWalmart.md" />
+    <Content Include="Views\Blog\MukeshSharmaJoinsChocolatey.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
