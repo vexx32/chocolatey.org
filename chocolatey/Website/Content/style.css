@@ -2312,6 +2312,7 @@ small, .small { font-size: .9em !important; }
 .invisible { visibility: hidden; }
 
 .text-center { text-align: center !important; }
+.text-underline { text-decoration: underline !important; }
 .text-left { text-align: left !important; }
 .text-right { text-align: right !important; }
 .text-nowrap { white-space: nowrap !important; }
@@ -2904,6 +2905,7 @@ img  { max-width: 100%; }
   padding: .5em 1em;
 }
 
+.text-white { color: white; }
 .text-green { color: green; }
 .text-grey { color: #777; }
 .text-orange { color: #FF6F00; }
@@ -3000,6 +3002,32 @@ pre code {
   background: #1A375A;
   color: #fff;
   border-top: 4px solid #21446D;
+}
+
+.kickstarter ul  {
+  padding-left: 2em;
+  display: block;
+  list-style-type: disc;  
+}
+
+.kickstarter p {
+  padding-left: 1em;
+}
+
+.kickstarter-logos {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.3em;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.kickstarter-logos li {
+  margin-bottom: 20px;
+}
+
+.kickstarter-logos a {
+  color: white;
 }
 
 .post  {
@@ -3310,6 +3338,8 @@ a.choco-404:hover {
   background: rgba(32, 47, 60, 0.5);
 }
 
+/* ====== Items from Site.css ======*/
+
 fieldset.form  {
         border: none;
         clear: both;
@@ -3554,6 +3584,13 @@ fieldset.form  {
     color: #caa452;
     font-size: 1.3em;
     padding: 10px;
+}
+
+.quote  {
+    text-align: center;
+    background-color: #a9d7ff;
+    color: #242c5c;
+    font-size: 0.95em;
 }
 
 .error  {
