@@ -55,11 +55,13 @@ namespace NuGetGallery
         [Display(Name = "Send message to")]
         [Required(ErrorMessage = "Please make a selection.")]
         public string MessageTo { get; set; }
+
         public IEnumerable<SelectListItem> MessageToItems
         {
             get
             {
-                yield return new SelectListItem { Text = "Sales / Demo", Value = "Sales" };
+                yield return new SelectListItem { Text = "Sales / Demo / Trial", Value = "Sales" };
+                yield return new SelectListItem { Text = "Partnership Opportunities", Value = "Partner" };
                 yield return new SelectListItem { Text = "Press Request", Value = "PressRequest" };
                 yield return new SelectListItem { Text = "Software Vendor Opt Out", Value = "VendorOptOut" };
                 yield return new SelectListItem { Text = "Website", Value = "Website" };
