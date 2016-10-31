@@ -1168,6 +1168,16 @@
     <Content Include="Content\Images\integration_points.png" />
     <Content Include="Content\Images\invalidBG.png" />
     <Content Include="Content\Images\just-type-logo.svg" />
+    <Content Include="Content\Images\kickstarter\Chef.png" />
+    <Content Include="Content\Images\kickstarter\Elastic.png" />
+    <Content Include="Content\Images\kickstarter\ISE.png" />
+    <Content Include="Content\Images\kickstarter\MyGet.png" />
+    <Content Include="Content\Images\kickstarter\OctopusDeploy.png" />
+    <Content Include="Content\Images\kickstarter\ProGet.png" />
+    <Content Include="Content\Images\kickstarter\Puppet.png" />
+    <Content Include="Content\Images\kickstarter\SEEK.png" />
+    <Content Include="Content\Images\kickstarter\ShareByLink.png" />
+    <Content Include="Content\Images\kickstarter\Velocity.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\Images\logo2.svg" />
     <Content Include="Content\Images\logo_3.svg" />
