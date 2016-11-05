@@ -1,0 +1,59 @@
+﻿@{
+  ViewBag.Title = "How-To-Create-Extensions";
+}
+
+<article>
+<h1 id="create-your-own-custom-extensions">Create Your Own Custom Extensions</h1>
+<p>For years Chocolatey has allowed you to extend Chocolatey with your own PowerShell modules and functions. These are known as extensions.</p>
+<h2 id="overview">Overview</h2>
+<p>Extensions allow you to package up PowerShell functions that you may reuse across packages as a package that other packages can use and depend on. This allows you to use those same functions as if they were part of Chocolatey itself. Chocolatey loads these PowerShell modules up as part of the regular module import load that it does for built-in PowerShell modules.</p>
+<h3 id="why-would-i-create-an-extension">Why Would I Create an Extension?</h3>
+<p>To reduce code in your Chocolatey automation scripts. Packaging up logic as functions into a PowerShell module that you can version independently, fix issues in, and enhance without needing to touch existing packages that you have is pretty powerful.</p>
+<h2 id="creating-a-chocolatey-extension">Creating a Chocolatey Extension</h2>
+<p>When it comes to extensions, Chocolatey takes a conventional approach. You must create a package with the suffix &quot;.extension&quot; and have a extensions folder with at least one PowerShell module in it.</p>
+<p>The name of the package should be &quot;extensionname.extension&quot;. The name of the package minus &quot;.extension&quot; will be the name of the extension that is installed.</p>
+<ul>
+<li>To create an extension package, run <code>choco new name.extension</code> and then delete everything but the nuspec.</li>
+<li>Then create an extensions folder in the root of the package.</li>
+<li>In the extensions folder, create your PowerShell module.</li>
+</ul>
+<p>Here&#39;s an example: <a href="https://chocolatey.org/packages/chocolatey-uninstall.extension" class="uri">https://chocolatey.org/packages/chocolatey-uninstall.extension</a>. The source is at <a href="https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions" class="uri">https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions</a></p>
+<p>Yes, it is really that easy. Enjoy!</p>
+<h2 id="recommendations">Recommendations</h2>
+<h3 id="naming-your-extension">Naming Your Extension</h3>
+<p>Avoid &quot;Chocolatey&quot; as part of the name. Yes the example is named that, but this extension is owned by the Core Chocolatey team, so it makes sense for that to be the name.</p>
+<h3 id="powershell-modules">PowerShell Modules</h3>
+<ul>
+<li>The recommendation is typically as few PowerShell modules as possible in an extension, just enough to represent what that extension does. Strive for one module per extension package, although that may not be realistic.</li>
+<li>The module should explicitly export the functions, aliases, and cmdlets that are wanted to be used in Chocolatey automation scripts.</li>
+</ul>
+<h3 id="taking-a-dependency-on-an-extension-package">Taking a Dependency on an Extension Package</h3>
+<p>When taking a dependency on an extension package, it is recommended to take a minimum version dependency. If there is functionality that is enhanced in that extension, you should bump that dependency version.</p>
+<h4 id="minimum-version-depdendencies">Minimum Version Depdendencies</h4>
+<p>What does a minimum version depdency look like?</p>
+<pre><code class="xml">&lt;dependencies&gt;
+  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; version=&quot;1.1.0&quot; /&gt;
+&lt;/dependencies&gt;</code></pre>
+<h4 id="avoid-version-ranges-for-extensions">Avoid Version Ranges For Extensions</h4>
+<p>Avoid version ranges when it comes to extensions as it can lock out fixes and enhancements in the future.</p>
+<pre><code class="xml">
+&lt;dependencies&gt;
+  &lt;!-- This means at least 1.0.0, and anything less than 2 --&gt;
+  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; version=&quot;[1.0.0, 2)&quot; /&gt;
+  &lt;!-- This means anything between 1.0.0 and 2.0.1 (including 2.0.1) is good to go --&gt;
+  &lt;dependency id=&quot;another.extension&quot; version=&quot;[1.0.0, 2.0.1]&quot; /&gt;
+&lt;/dependencies&gt;</code></pre>
+<h4 id="avoid-exact-version-dependencies-for-extensions-at-all-costs">Avoid Exact Version Dependencies For Extensions at All Costs</h4>
+<p>Try to never lock into an exact version dependency:</p>
+<pre><code class="xml">&lt;!-- DO NOT DO THIS --&gt;
+&lt;dependencies&gt;
+  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; version=&quot;[1.1.0]&quot; /&gt;
+&lt;/dependencies&gt;</code></pre>
+<p>This locks every other package into that singular version and does not allow for upgrades and fixes.</p>
+<h4 id="version-less-dependencies">Version-less Dependencies</h4>
+<p>There is also the concept of versionless dependencies.</p>
+<pre><code class="xml">&lt;dependencies&gt;
+  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; /&gt;
+&lt;/dependencies&gt;</code></pre>
+<p>Folks typically have used these in the past. They are less bad, but it just means that any version will do.</p>
+</article>
