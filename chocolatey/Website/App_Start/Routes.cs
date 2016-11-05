@@ -113,10 +113,10 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
-                RouteName.Media, "media", new
+                RouteName.MediaKit, "mediakit", new
                 {
                     controller = "Pages",
-                    Action = "Media"
+                    Action = "MediaKit"
                 });  
             
             routes.MapRouteSeo(

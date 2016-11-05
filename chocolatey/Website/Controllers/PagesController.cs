@@ -91,7 +91,7 @@ namespace NuGetGallery
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
-        public ActionResult Media()
+        public ActionResult MediaKit()
         {
             return View("~/Views/Pages/Media.cshtml");
         }
