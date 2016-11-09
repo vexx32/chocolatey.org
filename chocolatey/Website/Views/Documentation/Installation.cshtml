@@ -8,6 +8,7 @@
 <p><strong>NOTE:</strong> Need to install a particular version of Chocolatey? Proxy? Install to a different location? Advanced Options? See <a href="#before-you-install">Before You Install</a> below. <a href="#alternative-installation-options">Alternative installation options</a>? <a href="#non-administrative-install">Non-Administrator installation</a>? <a href="#download--powershell-method">Restricted/no internet access on target machine</a>?</p>
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter. If you need assistance opening an administrative prompt, see <a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">open an elevated prompt in Windows 8+</a> (or <a href="http://www.howtogeek.com/howto/windows-vista/run-a-command-as-administrator-from-the-windows-vista-run-box/">Windows 7</a>).</p>
 <p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
+<p><strong>NOTE:</strong> If your server is restricted to TLS 1.1+, you need to add additional logic to be able to download and install Chocolatey (this is not necessary when running Chocolatey normally as it does this automatically). If this is for organizational use, you should consider hosting the Chocolatey package internally and installing from there. Otherwise, please see the <a href="#installing-with-restricted-tls">TLS1.1+ section</a></p>
 <ul>
 <li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button></li>
 </ul>
@@ -28,6 +29,39 @@ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
 <p>The easiest option to remember is this one. You may not need <code>-UseBasicParsing</code>.</p>
 <p>What are these scripts doing? <code>iwr</code> (<code>Invoke-WebRequest</code>)/<code>WebClient.DownloadString</code> downloads the install script and passes it to <code>iex</code> (<code>Invoke-Expression</code>) to execute the contents of the script. This runs the installation script for Chocolatey.</p>
+<h3 id="installing-with-restricted-tls">Installing With Restricted TLS</h3>
+<p>If you see an error that looks similar to the following:</p>
+<pre><code class="nohighlight">Exception calling &quot;DownloadString&quot; with &quot;1&quot; argument(s): &quot;The underlying connection was closed: An unexpected error
+occurred on a receive.&quot;
+At line:1 char:1
++ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/in ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : WebException</code></pre>
+<p>It&#39;s possible that you are attempting to install from a server that needs to use TLS 1.1 or TLS 1.2 (has restricted the use of TLS 1.0 and SSL v3), you have some options.</p>
+<h4 id="option-1">Option 1</h4>
+<p>If you have the following:</p>
+<ul>
+<li>PowerShell v3+</li>
+<li>.NET Framework 4.5</li>
+</ul>
+<p>You can just run the following instead of just the one-liner to get Chocolatey installed:</p>
+<pre><code class="powershell">$securityProtocolSettingsOriginal = [System.Net.ServicePointManager]::SecurityProtocol
+
+try {
+  # This should work in .NET 4 where .NET 4.5 is installed as an in place upgrade
+  # Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
+  $securityProtocolSettings = 3072 -bor 768 -bor 192 -bor 48 
+  [System.Net.ServicePointManager]::SecurityProtocol = $securityProtocolSettings
+} catch {
+  Write-Warning &quot;Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. Please upgrade to at least .NET Framework 4.5 and PowerShell v3 for this to work appropriately.&quot;
+}
+
+iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
+
+[System.Net.ServicePointManager]::SecurityProtocol = $securityProtocolSettingsOriginal</code></pre>
+<h4 id="option-2">Option 2</h4>
+<p>You need to download and unzip the Chocolatey package, then call the PowerShell install script from there. See the <a href="#download--powershell-method">Download + PowerShell Method</a> section below.</p>
 <h3 id="installing-behind-a-proxy">Installing Behind a Proxy?</h3>
 <p>Have a proxy? Try</p>
 <ul>
@@ -149,15 +183,15 @@ SET DIR=%~dp0%
 <li>Open a PowerShell command shell and navigate into the unzipped package&#39;s tools folder.</li>
 <li><strong>NOTE</strong>: Ensure PowerShell execution policy is set to at least bypass or remote signed (if you have issues, you may need to set it to Unrestricted).</li>
 <li>Call <code>&amp; .\chocolateyInstall.ps1</code> to allow Chocolatey to install.</li>
+<li><strong>NOTE</strong>: This will not set Chocolatey as an installed package, so it may be a good idea to also call <code>choco upgrade chocolatey -y</code> and let it reinstall the same version, but at least it will be available for upgrades then.</li>
 </ol>
 <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js"></script>
 <script>
   new Clipboard('.copy-button');
 </script>
 <h2 id="upgrading-chocolatey">Upgrading Chocolatey</h2>
-<p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command:</p>
+<p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command to install the latest stable release of Chocolatey:</p>
 <pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
-<p>to install the latest release of Chocolatey, and:</p>
+<p>OR to install the absolute latest version including possible pre-releases of Chocolatey:</p>
 <pre><code class="nohighlight">choco upgrade chocolatey -pre</code></pre>
-<p>to install the latest pre-release version of Chocolatey.</p>
 </article>
