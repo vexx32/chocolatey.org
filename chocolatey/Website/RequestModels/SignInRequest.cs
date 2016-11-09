@@ -10,6 +10,7 @@ namespace NuGetGallery
         [Hint("Enter your username or email address.")]
         public string UserNameOrEmail { get; set; }
 
+        [AllowHtml]
         [Required]
         [DataType(DataType.Password)]
         [Hint("Passwords must be at least 7 characters long.")]
