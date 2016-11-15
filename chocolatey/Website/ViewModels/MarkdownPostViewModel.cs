@@ -27,5 +27,8 @@ namespace NuGetGallery
         public string Title { get; set; }
         public string Author { get; set; }
         public string Post { get; set; }
+        public string Tags { get; set; }
+        public string Keywords { get; set; }
+        public string Summary { get; set; }
     }
 }

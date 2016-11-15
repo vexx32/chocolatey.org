@@ -111,7 +111,6 @@ namespace NuGetGallery.Controllers
             return siteRoot;
         }
 
-
         [HttpGet, OutputCache(VaryByParam = "*", Location = OutputCacheLocation.Any, Duration = 7200)]
         public ActionResult Article(string articleName)
         {
@@ -155,6 +154,9 @@ namespace NuGetGallery.Controllers
                 model.UrlPath = GetUrl(filePath, articleName);
                 model.Title = GetPostMetadataValue("Title", contents);
                 model.Author = GetPostMetadataValue("Author", contents);
+                model.Keywords = GetPostMetadataValue("Keywords", contents);
+                model.Summary = GetPostMetadataValue("Summary", contents);
+                model.Tags = GetPostMetadataValue("Tags", contents);
                 model.Published = DateTime.ParseExact(GetPostMetadataValue("Published", contents), "yyyyMMdd", CultureInfo.InvariantCulture);
                 model.Post = Markdig.Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
             }
