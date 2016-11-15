@@ -3,7 +3,7 @@ Published: 20160422
 Author: Rob Reynolds
 Tags: News, Business, Professional
 Keywords: chocolatey for business, chocolatey professional, features
-Summary: 
+Summary: Chocolatey for Business and Chocolatey Professional availability is coming May 2, 2016.
 ---
 **Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/04/22/chocolatey-for-business-chocolatey-professional-coming-may-2/). *Reposted with permission.*
 
