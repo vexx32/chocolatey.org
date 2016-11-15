@@ -9,6 +9,21 @@
   Bundles.Reference("Scripts/highlight");
     
 }
+
+@section ExtraHeaders {  
+  <link rel="canonical" href="https://chocolatey.org/blog/@Model.UrlPath" />
+ @* @if (!string.IsNullOrWhiteSpace(Model.Keywords))
+  {
+  <meta property="og:keywords" content="@Model.Keywords"/>
+  <meta property="keywords" content="@Model.Keywords"/>    
+  }*@
+  @if (!string.IsNullOrWhiteSpace(Model.Summary))
+  {
+  <meta property="og:description" content="@Model.Summary" />
+  <meta property="description" content="@Model.Summary" />
+  }
+}
+
 <div class="p-b p-l p-r">
   <h2>@Model.Title</h2>
   <h5>@Model.Author, @Model.Published.GetValueOrDefault().ToLongDateString()</h5>
