@@ -119,6 +119,14 @@ namespace NuGetGallery
                 .SingleOrDefault();
         }
 
+        public User FindByUserId(int userKey)
+        {
+            return userRepo.GetAll()
+                    .Include(u => u.Roles)
+                    .Where(u => u.Key == userKey)
+                    .SingleOrDefault();
+        }
+
         public virtual User FindByUsernameAndPassword(string username, string password)
         {
             // TODO: validate input

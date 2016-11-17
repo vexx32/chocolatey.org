@@ -16,6 +16,8 @@ namespace NuGetGallery
 
         User FindByUsername(string username);
 
+        User FindByUserId(int userKey);
+
         User FindByUsernameAndPassword(string username, string password);
 
         User FindByUsernameOrEmailAddressAndPassword(string usernameOrEmail, string password);

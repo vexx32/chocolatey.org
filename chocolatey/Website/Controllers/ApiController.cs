@@ -130,6 +130,17 @@ namespace NuGetGallery
                     switch (existingPackage.Status)
                     {
                         case PackageStatusType.Rejected:
+                            var testReporterUser = userSvc.FindByUserId(settings.PackageOperationsUserKey);
+
+                            if (existingPackage.PackageCleanupResultDate.HasValue && 
+                                testReporterUser != null && 
+                                existingPackage.ReviewedById == testReporterUser.Key
+                                )
+                            {
+                                //allow rejected by cleanup to return a value
+                                break;
+                            }
+
                             return new HttpStatusCodeWithBodyResult(
                                 HttpStatusCode.Conflict, string.Format("This package has been {0} and can no longer be submitted.", existingPackage.Status.GetDescriptionOrValue().ToLower()));
                         case PackageStatusType.Submitted:
