@@ -37,6 +37,10 @@ namespace NuGetGallery
         private readonly IPackageFileService packageFileSvc;
         private readonly INuGetExeDownloaderService nugetExeDownloaderSvc;
         private readonly IConfiguration settings;
+        //private const int MAX_ALLOWED_CONTENT_LENGTH = 209715200; // 200 MB
+        //private const int MAX_ALLOWED_CONTENT_LENGTH = 104857600; // 100 MB
+        private const int MAX_ALLOWED_CONTENT_LENGTH = 157286400; // 150 MB
+        private const int ONE_MB = 1048576;
 
         public ApiController(IPackageService packageSvc, IScanService scanSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration settings)
         {
@@ -114,6 +118,11 @@ namespace NuGetGallery
 
             var user = userSvc.FindByApiKey(parsedApiKey);
             if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
+
+            if (Request.ContentLength > MAX_ALLOWED_CONTENT_LENGTH)
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.RequestEntityTooLarge,String.Format(CultureInfo.CurrentCulture, Strings.PackageTooLarge, MAX_ALLOWED_CONTENT_LENGTH / ONE_MB));
+            }
 
             var packageToPush = ReadPackageFromRequest();
 
