@@ -60,4 +60,4 @@ Hundreds of organizations in every industry have seen the power of Chocolatey an
 
 * Watch all videos related to [Chocolatey’s Package Builder](https://www.youtube.com/playlist?list=PLfn-TaDnc1us5X-PVlxW8M1h-6mXEXZSG "Chocolatey's Package Builder").
 * Learn about other features available in [Chocolatey for Business](https://chocolatey.org/compare).
-* [Contact us](https://chocolatey.org/contact) to find out more and set-up your evaluation of Chocolatey for Business today.
+* [Contact us](https://chocolatey.org/contact) to find out more and setup your evaluation of Chocolatey for Business today.
