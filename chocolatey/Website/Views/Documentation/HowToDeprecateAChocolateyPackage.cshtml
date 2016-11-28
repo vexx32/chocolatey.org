@@ -17,12 +17,12 @@
 <p>When deprecating a Chocolatey Package, the following steps should be followed:</p>
 <ul>
 <li>Create a <strong><a href="https://github.com/chocolatey/choco/wiki/CreatePackages#package-fix-version-notation">new version</a></strong> of the deprecated Chocolatey Package.</li>
-<li>Prepend <strong>[Deprecated]</strong> to the <strong>title</strong> of the package.</li>
+<li>Prepend <strong>[Deprecated]</strong> to the <strong>title</strong> of the package (e.g. <code>&lt;title=&quot;[Deprecated] Software Title&quot; /&gt;</code></li>
 <li>Update the package <strong>description</strong>: Why is the package being deprecated?</li>
 <li>Add a <strong><a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies">dependency</a> on the other package</strong> (if the package is being superseded).</li>
 <li><strong>Remove all files</strong> except the <code>.nuspec</code> from the Chocolatey Package.</li>
 <li><strong>Remove the iconUrl</strong>.</li>
-<li><strong>Unlist all versions</strong> from the package gallery.</li>
+<li><strong>Unlist all versions</strong> from the package gallery, <strong><em>except</em></strong> the final deprecated version. The final deprecated version is required so that there is an update path to the new package.</li>
 </ul>
-<p>By following this process, any existing users who try to update the old package will automatically get the new package, as it will be installed as a dependency</p>
+<p>By following this process, any existing users who try to update the old package will automatically get the new package, as it will be installed as a dependency.</p>
 </article>

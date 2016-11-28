@@ -6,6 +6,23 @@
 <h1 id="chocolatey-release-notes---licensed-edition">Chocolatey Release Notes - Licensed Edition</h1>
 <p>This covers the release notes for the &quot;chocolatey.extension&quot; package, where the licensed editions of Chocolatey get their enhanced functionality.</p>
 <p><strong>NOTE</strong>: For licensed versions, refer to both this set of release notes and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">Open Source Release Notes</a>.</p>
+<h2 id="november-27-2016">1.8.1 (November 27, 2016)</h2>
+<h3 id="bug-fixes">BUG FIXES</h3>
+<ul>
+<li>AutoUninstaller - Fix - do not fail on auto-detection of type when uninstall executable is not in the correct format.</li>
+<li>Package Builder (Choco New):
+<ul>
+<li>Fix - Programs and Features - do not fail on auto-detection of type based on uninstall string</li>
+</ul></li>
+</ul>
+<h3 id="improvements">IMPROVEMENTS</h3>
+<ul>
+<li>Package Builder (Choco New):
+<ul>
+<li>version - always set to 3 segments (x.y.z)</li>
+<li>version - remove extra version segments when more than 4 segments are returned</li>
+</ul></li>
+</ul>
 <h2 id="november-16-2016">1.8.0 (November 16, 2016)</h2>
 <p>Package Builder has some major improvements in this release, including a new UI! See <a href="https://chocolatey.org/blog/package-builder-announcements" class="uri">https://chocolatey.org/blog/package-builder-announcements</a> for details! While building some of the features for the enhancements for this release, we&#39;ve made quite a few tweaks and fixes to Package Builder and we think you are going to like the results. Being able to generate packages from the installed software on a reference system is huge (<code>choco new --from-programs-and-features</code>)!</p>
 <p>Pro users now have the ability to download packages (minus internalization). This is fantastic if you want to pull down a lot of packages quickly from a remote source. Or pull down packages and push them up to an internal source.</p>
@@ -19,7 +36,7 @@
 <li>Package Builder - generate packages from installed software (Programs and Features) - see <a href="https://youtu.be/Mw_ReipnskI" class="uri">https://youtu.be/Mw_ReipnskI</a> for details.</li>
 </ul></li>
 </ul>
-<h3 id="bug-fixes">BUG FIXES</h3>
+<h3 id="bug-fixes-1">BUG FIXES</h3>
 <ul>
 <li>Package Builder (Choco New):
 <ul>
@@ -38,7 +55,7 @@
 <li>Fix - sync over an existing synced package without error.</li>
 </ul></li>
 </ul>
-<h3 id="improvements">IMPROVEMENTS</h3>
+<h3 id="improvements-1">IMPROVEMENTS</h3>
 <ul>
 <li>Uninstall - Uninstall software not managed with Chocolatey. Use something like <code>choco uninstall 7-zip* --from-programs-and-features</code> to ensure removal from Programs and Features directly.</li>
 <li>VirusTotal - When a user cancels a virus check, set the proper exit code so that rollback occurs automatically - see <a href="https://github.com/chocolatey/choco/issues/985">#985</a>.</li>
@@ -58,13 +75,13 @@
 </ul></li>
 </ul>
 <h2 id="sep-22-2016">1.7.0 (Sep 22, 2016)</h2>
-<h3 id="bug-fixes-1">BUG FIXES</h3>
+<h3 id="bug-fixes-2">BUG FIXES</h3>
 <ul>
 <li>Package Builder (Choco New) - Removed <code>fileFullPath</code> from install template - add back in when local zip only. Fixes an error as <code>file</code> and <code>fileFullPath</code> are aliases starting in 0.10.1.</li>
 <li>Package Internalizer (Choco Download) - ensure logging does not incur log format exceptions</li>
 <li>install/upgrade - Look for downloaded file at old path if replaced &quot;˜chocolatey\chocolatey&#39; path does not exist - see <a href="https://github.com/chocolatey/choco/issues/969">#969</a></li>
 </ul>
-<h3 id="improvements-1">IMPROVEMENTS</h3>
+<h3 id="improvements-2">IMPROVEMENTS</h3>
 <ul>
 <li>Package Builder (Choco New):
 <ul>
@@ -82,22 +99,22 @@
 </ul></li>
 </ul>
 <h2 id="sep-20-2016">1.6.3 (Sep 20, 2016)</h2>
-<h3 id="bug-fixes-2">BUG FIXES</h3>
+<h3 id="bug-fixes-3">BUG FIXES</h3>
 <ul>
 <li>Require Chocolatey be upgraded to at least 0.10.1 due to internal incompatibilities that affect this extension.</li>
 </ul>
 <h2 id="sep-19-2016---pulled">1.6.2 (Sep 19, 2016 - pulled)</h2>
-<h3 id="bug-fixes-3">BUG FIXES</h3>
+<h3 id="bug-fixes-4">BUG FIXES</h3>
 <ul>
 <li>Recompiled to work with 0.10.1. There were some internal changes that appear to affect the virus scanner and PackageBuilder.</li>
 </ul>
-<h3 id="improvements-2">IMPROVEMENTS</h3>
+<h3 id="improvements-3">IMPROVEMENTS</h3>
 <ul>
 <li>Install/upgrade - support MSP (patch files)</li>
 <li>PackageBuilder - support MSU/MSP files</li>
 </ul>
 <h2 id="sep-8-2016">1.6.1 (Sep 8, 2016)</h2>
-<h3 id="bug-fixes-4">BUG FIXES</h3>
+<h3 id="bug-fixes-5">BUG FIXES</h3>
 <ul>
 <li>Package Builder (Choco New):
 <ul>
@@ -122,7 +139,7 @@
 <li>Work with zip files</li>
 </ul></li>
 </ul>
-<h3 id="bug-fixes-5">BUG FIXES</h3>
+<h3 id="bug-fixes-6">BUG FIXES</h3>
 <ul>
 <li>Fix - changes related to working directory fixes for <a href="https://github.com/chocolatey/choco/issues/937">#937</a></li>
 <li>Fix - double chocolatey folder name is not also applied to the passed in file name - see <a href="https://github.com/chocolatey/choco/issues/908">#908</a></li>
@@ -136,7 +153,7 @@
 <li>Fix - handle downloaded files with the same name Sometimes the file name is the same when the architecture is different. Handle that by using the url counter for all additional files with the same name.</li>
 </ul></li>
 </ul>
-<h3 id="improvements-3">IMPROVEMENTS</h3>
+<h3 id="improvements-4">IMPROVEMENTS</h3>
 <ul>
 <li>Remind About Upcoming Expiration - when the license is expiring within a month&#39;s time, remind the user about renewal</li>
 <li>Package Builder (Choco New):
@@ -159,11 +176,11 @@
 </ul></li>
 </ul>
 <h2 id="aug-9-2016">1.5.1 (Aug 9, 2016)</h2>
-<h3 id="bug-fixes-6">BUG FIXES</h3>
+<h3 id="bug-fixes-7">BUG FIXES</h3>
 <ul>
 <li>Fix - Valid Exit Codes do not support values bigger than Int32.MaxValue. - see <a href="https://github.com/chocolatey/choco/issues/900">#900</a></li>
 </ul>
-<h3 id="improvements-4">IMPROVEMENTS</h3>
+<h3 id="improvements-5">IMPROVEMENTS</h3>
 <ul>
 <li>Package Internalizer (Choco Download) - specify resources location (when not embedding into package)</li>
 </ul>
@@ -173,26 +190,26 @@
 <li>[Business] Recompiled packages support aka Package Internalizer - Download a package and all remote resources, recompiling the package to use local resources instead.</li>
 <li>Synchronize w/Programs and Features - Chocolatey synchronizes manually uninstalled software with package state.</li>
 </ul>
-<h3 id="bug-fixes-7">BUG FIXES</h3>
+<h3 id="bug-fixes-8">BUG FIXES</h3>
 <ul>
 <li>Fix - Silent Args being passed as a string array cause package failure - see <a href="https://github.com/chocolatey/choco/issues/808">#808</a></li>
 </ul>
-<h3 id="improvements-5">IMPROVEMENTS</h3>
+<h3 id="improvements-6">IMPROVEMENTS</h3>
 <ul>
 <li>VirusTotal - allow skipping check entirely - <a href="https://github.com/chocolatey/choco/issues/786">#786</a></li>
 <li>Trial allows more features to work, but in a way that is not automatable.</li>
 </ul>
 <h2 id="june-20-2016">1.4.2 (June 20, 2016)</h2>
-<h3 id="bug-fixes-8">BUG FIXES</h3>
+<h3 id="bug-fixes-9">BUG FIXES</h3>
 <ul>
 <li>Fix - Logging is broken in some packages due to new TEMP directory - <a href="https://github.com/chocolatey/choco/issues/813">#813</a></li>
 </ul>
-<h3 id="improvements-6">IMPROVEMENTS</h3>
+<h3 id="improvements-7">IMPROVEMENTS</h3>
 <ul>
 <li>Ensure log file path exists - <a href="https://github.com/chocolatey/choco/issues/758">#758</a></li>
 </ul>
 <h2 id="june-14-2016">1.4.1 (June 14, 2016)</h2>
-<h3 id="bug-fixes-9">BUG FIXES</h3>
+<h3 id="bug-fixes-10">BUG FIXES</h3>
 <ul>
 <li>PowerShell v2 assembly was not loading. There was a dependency on an incorrect version of PowerShell assemblies, causing it to only attempt to load System.Management.Automation v3 and above - <a href="https://github.com/chocolatey/choco/issues/799">#799</a></li>
 </ul>
@@ -205,25 +222,25 @@
 <li>New Command! choco support - quickly see how you can contact support - <a href="https://github.com/chocolatey/choco/issues/745">#745</a></li>
 <li>Web functions for local files support - <a href="https://github.com/chocolatey/choco/issues/781">#781</a></li>
 </ul>
-<h3 id="improvements-7">IMPROVEMENTS</h3>
+<h3 id="improvements-8">IMPROVEMENTS</h3>
 <ul>
 <li>Support FIPS compliant algorithms <a href="https://github.com/chocolatey/choco/issues/446">#446</a></li>
 </ul>
 <h2 id="may-28-2016">1.3.2 (May 28, 2016)</h2>
-<h3 id="bug-fixes-10">BUG FIXES</h3>
+<h3 id="bug-fixes-11">BUG FIXES</h3>
 <ul>
 <li>Get-WebFile name changes related to <a href="https://github.com/chocolatey/choco/issues/753">#753</a></li>
 </ul>
-<h3 id="improvements-8">IMPROVEMENTS</h3>
+<h3 id="improvements-9">IMPROVEMENTS</h3>
 <ul>
 <li>Clarified options with version and better messaging.</li>
 </ul>
 <h2 id="may-9-2016">1.3.1 (May 9, 2016)</h2>
-<h3 id="bug-fixes-11">BUG FIXES</h3>
+<h3 id="bug-fixes-12">BUG FIXES</h3>
 <ul>
 <li>Get-WebFile name changes related to <a href="https://github.com/chocolatey/choco/issues/727">#727</a></li>
 </ul>
-<h3 id="improvements-9">IMPROVEMENTS</h3>
+<h3 id="improvements-10">IMPROVEMENTS</h3>
 <ul>
 <li>Report directory switch override.</li>
 </ul>
@@ -238,7 +255,7 @@
 <li>Fix - Content Length check may error if original location is changed. This means the permanent download location will not error on other checks.</li>
 <li>Fix - Original remote file name can be affected if original url has changed or is unavailable.</li>
 </ul>
-<h3 id="improvements-10">IMPROVEMENTS</h3>
+<h3 id="improvements-11">IMPROVEMENTS</h3>
 <ul>
 <li>Virus Scanner exits as soon as possible on files too big for the scanner. If the file is over 500MB, the scanner cannot upload the file, so it should not ask whether it can try to upload prior to failing on the size check (previous behavior).</li>
 </ul>
@@ -248,7 +265,7 @@
 <li>Virus scanning for Pro users! See the <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1518468">post</a> for details!</li>
 </ul>
 <h2 id="february-12-2016">1.1.0 (February 12, 2016)</h2>
-<h3 id="improvements-11">IMPROVEMENTS</h3>
+<h3 id="improvements-12">IMPROVEMENTS</h3>
 <ul>
 <li>License can now be in user profile (like <code>c:\Users\yourname\chocolatey.license.xml</code>). This is great for roaming user profiles and in multiple machine usage scenarios.</li>
 <li>Download cache can be controlled with a feature flag and/or a command option. See <code>choco feature</code> and <code>choco install -h</code> for more details.</li>
@@ -261,12 +278,12 @@
 <li>Skip or run virus check with command options - see <code>choco install -h</code> for details.</li>
 </ul>
 <h2 id="february-5-2016">1.0.2 (February 5, 2016)</h2>
-<h3 id="bug-fixes-12">BUG FIXES</h3>
+<h3 id="bug-fixes-13">BUG FIXES</h3>
 <ul>
 <li>Fix - PowerShell 5 respects Cmdlet aliases, causing overrides on functions not ready (Install-ChocolateyPackage). See the <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1484093">post</a> for details.</li>
 </ul>
 <h2 id="february-2-2016">1.0.1 (February 2, 2016)</h2>
-<h3 id="bug-fixes-13">BUG FIXES</h3>
+<h3 id="bug-fixes-14">BUG FIXES</h3>
 <ul>
 <li>Fix - License location validation is incorrect.</li>
 </ul>
