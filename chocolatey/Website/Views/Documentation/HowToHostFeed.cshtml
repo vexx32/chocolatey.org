@@ -16,6 +16,9 @@
 <li><a href="https://www.jetbrains.com/teamcity/">TeamCity</a> has built-in Simple Server</li>
 <li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_proxy_repositories.html">Nexus</a> - Sonatype Nexus has a built-in simple server</li>
 </ul>
+<h2 id="package-version-immutability">Package Version Immutability</h2>
+<p>A package version is immutable on some sources. This means that everybody&#39;s version 1.0.1 of a particular package is the same. You do not need to worry about this when updating with newer versions of packages, because each package version compiled nupkg has the unique version in the name (e.g <code>bob.1.0.0.nupkg</code> vs <code>bob.1.0.1.nupkg</code> ).</p>
+<p>Package immutability is usually desired, because then you know that everyone on v1.0.0 of a package has exactly the same code as does even everyone else. Even a broken version v1.0.0 gives you a global understanding that everyone who has v1.0.0 has exactly the same bits. This really simplifies administration. Without immutability, there is no guarantee that a version of a package installed is the same as the version of the package at the source.</p>
 <h2 id="local-folder-unc-share-cifs">Local Folder / UNC Share (CIFS)</h2>
 <p>Perhaps the easiest to set up and recommended for testing quick and dirty scenarios, local folder is easily a strong point when you need a quick source for packages.</p>
 <p><strong>Advantages:</strong></p>
@@ -31,12 +34,12 @@
 <li>Anyone with permission can push and overwrite packages.</li>
 <li>No HTTP/HTTPS pushing. Must be able to access the folder/share to push to it.</li>
 <li>Starts to affect choco performance once the source has over 500 packages (maybe?).</li>
-<li><strong>Big disadvantage</strong>: Does not do anything to keep from package versions being overwritten. This provides no immutability of a package version and no guarantee that a version of a package installed is the same as the version in the source.</li>
+<li><strong>Big disadvantage</strong>: For a file share there is not a guarantee of package version immutability. Does not do anything to keep from package versions being overwritten. This provides no immutability of a package version and no guarantee that a version of a package installed is the same as the version in the source.</li>
 </ul>
 <h3 id="local-folder-share-setup">Local Folder Share Setup</h3>
 <p>No really, it&#39;s that easy. Just set your permissions appropriately and put packages in the folder. You are already done.</p>
 <h2 id="simple-server">Simple Server</h2>
-<p>There is where the bulk of NuGet compatible servers fall (Nexus, Nuget.Server, Chocolatey.Server, Artifactory, MyGet, etc).</p>
+<p>There is where the bulk of NuGet OData compatible servers fall (Nexus, Nuget.Server, Chocolatey.Server, Artifactory, MyGet, etc). Since Chocolatey just uses an enhanced version of the NuGet framework, it is compatible everywhere you can put a NuGet package.</p>
 <p><strong>Advantages:</strong></p>
 <ul>
 <li>Setup can be really simple - just a website and IIS for some simple servers.</li>
@@ -104,7 +107,7 @@
 <h4 id="package-gallery-setup">Package Gallery Setup</h4>
 <p>Only approach this if you are a Windows Admin with significant experience in setting up SQL Server databases and IIS for ASP.NET MVC sites. We don&#39;t have resources to help support the setup, but we can point you to <a href="https://github.com/NuGet/NuGetGallery/wiki/Hosting-the-NuGet-Gallery-Locally-in-IIS">NuGet Gallery Setup</a>.</p>
 <h5 id="chocolatey-package-gallery-setup">Chocolatey Package Gallery Setup</h5>
-<p>At this time we don&#39;t have setup instructions and won&#39;t answer questions specifically surrounding the setup of a Chocolatey specific gallery. Watch for this to change as Chocolatey for Business becomes a thing.</p>
+<p>At this time we don&#39;t have setup instructions and are not keen to answer questions specifically surrounding the setup of a Chocolatey Gallery (the code behind chocolatey.org). This is due to specific necessary settings regarding the community packages repository and tight integration to what it offers. Chocolatey for Business is likely to offer a gallery at some point, depending on prioritization.</p>
 <h2 id="non-windows-hosting">Non-Windows Hosting</h2>
 <p>If you don&#39;t want to host on Windows you have only the following options (from least advanced to most advanced - these options typically also work on Windows):</p>
 <ul>

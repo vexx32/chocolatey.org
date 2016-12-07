@@ -5,7 +5,7 @@
 <article>
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
 <p>Chocolatey installs in seconds...</p>
-<p><strong>NOTE:</strong> Need to install a particular version of Chocolatey? Proxy? Install to a different location? Advanced Options? See <a href="#before-you-install">Before You Install</a> below. <a href="#alternative-installation-options">Alternative installation options</a>? <a href="#non-administrative-install">Non-Administrator installation</a>? <a href="#download--powershell-method">Restricted/no internet access on target machine</a>?</p>
+<p><strong>NOTE:</strong> Need to install a particular version of Chocolatey? Proxy? Install to a different location? Advanced Options? See <a href="#before-you-install">Before You Install</a> below. <a href="#alternative-installation-options">Alternative installation options</a>? <a href="#non-administrative-install">Non-Administrator installation</a>? <a href="#download--powershell-method">Restricted/no internet access on target machine</a>? Looking for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">licensed edition installation</a>?</p>
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter. If you need assistance opening an administrative prompt, see <a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">open an elevated prompt in Windows 8+</a> (or <a href="http://www.howtogeek.com/howto/windows-vista/run-a-command-as-administrator-from-the-windows-vista-run-box/">Windows 7</a>).</p>
 <p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
 <p><strong>NOTE:</strong> If your server is restricted to TLS 1.1+, you need to add additional logic to be able to download and install Chocolatey (this is not necessary when running Chocolatey normally as it does this automatically). If this is for organizational use, you should consider hosting the Chocolatey package internally and installing from there. Otherwise, please see the <a href="#installing-with-restricted-tls">TLS1.1+ section</a></p>
@@ -53,7 +53,7 @@ try {
   # Use integers because the enumeration values for TLS 1.2 and TLS 1.1 won&#39;t
   # exist in .NET 4.0, even though they are addressable if .NET 4.5+ is
   # installed (.NET 4.5 is an in-place upgrade).
-  [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48 
+  [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48
 } catch {
   Write-Warning &#39;Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. If you see underlying connection closed or trust errors, you may need to do one or more of the following: (1) upgrade to .NET Framework 4.5 and PowerShell v3, (2) specify internal Chocolatey package location (set $env:chocolateyDownloadUrl prior to install or host the package internally), (3) use the Download + PowerShell method of install. See https://chocolatey.org/install for all install options.&#39;
 }
@@ -92,8 +92,7 @@ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.or
 <h4 id="can-i-install-chocolatey-to-another-location">Can I install Chocolatey to another location?</h4>
 <p>Yes!</p>
 <ol>
-<li>Create a <strong>machine</strong> level (<strong>user</strong> level will also work) environment variable named <code>ChocolateyInstall</code> and set it to the folder you want Chocolatey to install to prior to installation (this environment variable must be set globally or available to PowerShell- it is not enough to simply make it available to your current command prompt session).<br />
-</li>
+<li>Create a <strong>machine</strong> level (<strong>user</strong> level will also work) environment variable named <code>ChocolateyInstall</code> and set it to the folder you want Chocolatey to install to prior to installation (this environment variable must be set globally or available to PowerShell- it is not enough to simply make it available to your current command prompt session).</li>
 <li>Don&#39;t use <code>&quot;C:\Chocolatey&quot;</code> unless necessary.</li>
 <li>Create the folder manually.</li>
 <li>If you have already installed (and want to change the location after the fact):</li>

@@ -28,14 +28,29 @@ This image shows running `choco download --recompile git.install`.
 <p><img src="@Url.Content("~/content/images/docs/gifs/choco_business_features_recompile.gif")" alt="automatic recompile" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p>When running <code>choco download</code> in the Business editions, pass the following:</p>
-<pre><code class="nohighlight">
-     --recompile
-     Recompile - Download all external resources and recompile the package to
-       use the local resources instead.
-
-     --outputdirectory=VALUE
+<pre><code class="nohighlight">     --outputdirectory=VALUE
      OutputDirectory - Specifies the directory for the downloaded Chocolatey
-       package file. If not specified, uses the current directory.</code></pre>
+       package file. If not specified, uses the current directory.
+
+     --recompile, --internalize
+     Recompile / Internalize - Download all external resources and recompile
+       the package to use the local resources instead.
+
+     --resources-location=VALUE
+     Resources Location - When recompiling, use this location for resources
+       instead of embedding the downloaded resources into the package. Can be
+       a file share or an internal url location.  When it is a file share, it
+       will attempt to download to that location. When it is an internal url,
+       it will download locally and give further instructions on where it
+       should be uploaded to match package edits.
+
+     --append-useoriginallocation, --append-use-original-location
+     Append -UseOriginalLocation - When `Install-ChocolateyPackage` is
+       internalized, append the `-UseOriginalLocation` parameter to the
+       function. Business editions only (licensed version 1.7.0+). Requires at
+       least Chocolatey v0.10.1 for `Install-ChocolateyPacakge` to recognize
+       the switch appropriately. Overrides the feature
+       &#39;internalizeAppendUseOriginalLocation&#39; set to by default to &#39;False&#39;.</code></pre>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">download command</a> for more information.</p>
 <h2 id="faq">FAQ</h2>
 <h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
@@ -48,6 +63,7 @@ This image shows running `choco download --recompile git.install`.
 <p>Some packages are already internalized or don&#39;t have remote resources. In those cases it will just download the existing package and have it available for pushing to an internal repository.</p>
 <h3 id="it-was-not-able-to-download-a-resource.-why-not">It was not able to download a resource. Why not?</h3>
 <p>This feature is in preview, but is able to download/recompile quite a few packages. There are a few that it may have issues with, especially if variables with methods are used (e.g. <code>$(somevar).Replace(&quot;.&quot;,&quot;&quot;)</code>). In those cases it attempts to warn you ahead of time that it cannot handle those yet.</p>
+<p>Future versions of the licensed edition will support advanced scenarios such as these.</p>
 <h3 id="are-all-packages-guaranteed-to-be-compatible">Are all packages guaranteed to be compatible?</h3>
 <p>Unfortunately not all packages on the community repository are created equal, even with the rigorous moderation process. A few packages do not use the built-in functions for acquiring files from the internet, so they don&#39;t lend well to automatic recompiling. Typically Chocolatey will let you know when this is the case and allow you to inspect the package to allow you to finish up the next steps of recompiling. As a future enhancement, it&#39;s possible this scenario would also be supported, although it is a very small subset of packages that are created in this way.</p>
 </article>
