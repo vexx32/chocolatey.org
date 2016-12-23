@@ -29,8 +29,8 @@
           <td>Pricing</td>
           <td>Free</td>
           <td>$8/mo* ($96/yr)</td>
-          <td>Starts at $50/mo* ($600/yr)</td>
-          <td>Starts at $50/mo* ($600/yr) / Special pricing for qualified institutions! <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us today to get started!</a></td>
+          <td>Starts at $50/mo* ($600/yr) for 100 licenses</td>
+          <td>Starts at $50/mo* ($600/yr) for 35 licenses / Special pricing for qualified institutions! <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us today to get started!</a></td>
         </tr>
         <tr>
           <td></td>
@@ -40,54 +40,97 @@
           <td>Starts at 35 machines</td>
         </tr>
         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade all software with one command!</a></td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Package Repository</a> - Chocolatey supports <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">multiple package sources</a> including your own internal (private and/or authenticated) feeds!</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
-          <td>Extensions</td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Infrastructure Automation Integration</a> - Chocolatey works with all infrastructure management and RMM tools!</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Community Packages Support</a></td>
-          <td>N/A</td>
-          <td>N/A</td>
-          <td>N/A</td>
-          <td>N/A</td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Package Repository</a></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">Multiple package sources including private / authenticated feeds</a></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Infrastructure Automation Integration</a></td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade all software with one command</a> - it's like Windows Update, but for all your internal and 3rd party software!</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Package Templates</a></td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Packaging Templates</a></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr> 
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">30+ built-in PowerShell functions</a> - turns complex software management tasks into one line function calls!</td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr> 
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">PowerShell Extensions</a> - Extend Chocolatey with your own functions!</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
+        <!-- reliability, security, -->
+        <tr>
+          <td>Enhanced functionality, additional PowerShell functions - giving you more control, reliability, smoother usage, and covering more scenarios that make sense for organizations!</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr>
+         <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> - automatic offline/internalization and recompile support removes internet access from existing packages!</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr> 
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder</a> - Detect and create full software deployments in 5-10 seconds!</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr> 
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Generate from Programs and Features</a> - create packages for all current installs in under 60 seconds?!</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr> 
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder UI</a> - A visual interface to create packages!</td>
+          <td>&nbsp;</td>
+          <td>(Minus detection, Early Q1 2017)</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr>        
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer</a> - stay synced up with updates and uninstalls performed outside of Chocolatey!</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
+        </tr>
+        <tr>
+          <td>Package Synchronizer v2 - create packages out of Programs and Features and bring existing software installations under Chocolatey management!</td>
+          <td>&nbsp;</td>
+          <td>(est Q2 2017, search against existing packages only)</td>
+          <td>&nbsp;</td>
+          <td>(Q1 2017)</td>
+        </tr>    
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Install Directory Override</a> - one switch for all installers!</td>
           <td>&nbsp;</td>
@@ -110,25 +153,25 @@
           <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Synchronize with Programs and Features</a> - stay synced up with updates and uninstalls!</td>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">Package Downloader</a> - download existing packages with an easy command!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
-        </tr>
+        </tr>       
         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Automatic package creation</a> - Create packages directly from software installers in seconds!</td>
+          <td>Self-Service Installer - Chocolatey as a background service so admins and non-admins alike can manage software!</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
+          <td>(Early Q1 2017)</td>
+        </tr>      
         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Internalize existing package resources</a> - automatic recompile support removes internet access from existing packages!</td>
+          <td>Central Console - Reporting and management of software for your entire organization from one location!</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
+          <td>(est Q2 2017)</td>
         </tr>
         <tr>
           <td>Priorization of Bugs and Features</td>
@@ -136,6 +179,13 @@
           <td><span class="text-green icon-check"></span></td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+        </tr>
+        <tr>
+          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Support for Community Packages</a></td>
+          <td>N/A</td>
+          <td>N/A</td>
+          <td>N/A</td>
+          <td>N/A</td>
         </tr>        
         <tr>
           <td>Email Support</td>
@@ -151,7 +201,6 @@
           <td>&nbsp;</td>
           <td>Available</td>
         </tr>
-
         <tr>
           <td>&nbsp;</td>
           <td>
@@ -279,7 +328,6 @@
     <h3>Upcoming Features?</h3>
     <p><strong>NOTE:</strong> Upcoming features could be changed, reprioritized and/or removed without notice. With that in mind, we are planning on the following features:</p>
     <ul class="m-b p--s p-l--l docs">
-      <li>[Business] Non-Administrator Self-Service Installs - Chocolatey as a background service that allows non-admins to self-serve approved installations.</li>
       <li>[Business] Administrator Only Mode - Only allow administrators to run Chocolatey.</li>
       <li>[Business] Lock down configuration of Chocolatey to certain groups - helpful when you want to ensure the default source (the community feed) stays disabled.</li>
     </ul>
