@@ -21,7 +21,7 @@
 # For an explicit version of Chocolatey, please set $env:chocolateyVersion = 'versionnumber'
 # To target a different url for chocolatey.nupkg, please set $env:chocolateyDownloadUrl = 'full url to nupkg file'
 # NOTE: $env:chocolateyDownloadUrl does not work with $env:chocolateyVersion.
-# To use 7zip (requires additional download) instead of built-in compression, please set $env:chocolateyUseWindowsCompression = 'false'
+# To use built-in compression instead of 7zip (requires additional download), please set $env:chocolateyUseWindowsCompression = 'true'
 # To bypass the use of any proxy, please set $env:chocolateyIgnoreProxy = 'true'
 
 #specifically use the API to get the latest version (below)
@@ -72,6 +72,20 @@ function Fix-PowerShellOutputRedirectionBug {
 }
 
 Fix-PowerShellOutputRedirectionBug
+
+# Attempt to set highest encryption available for SecurityProtocol.
+# PowerShell will not set this by default (until maybe .NET 4.6.x). This
+# will typically produce a message for PowerShell v2 (just an info
+# message though)
+try {
+  # Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
+  # Use integers because the enumeration values for TLS 1.2 and TLS 1.1 won't
+  # exist in .NET 4.0, even though they are addressable if .NET 4.5+ is
+  # installed (.NET 4.5 is an in-place upgrade).
+  [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48
+} catch {
+  Write-Output 'Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. If you see underlying connection closed or trust errors, you may need to do one or more of the following: (1) upgrade to .NET Framework 4.5+ and PowerShell v3, (2) specify internal Chocolatey package location (set $env:chocolateyDownloadUrl prior to install or host the package internally), (3) use the Download + PowerShell method of install. See https://chocolatey.org/install for all install options.'
+}
 
 function Get-Downloader {
 param (
@@ -156,12 +170,19 @@ if ($url -eq $null -or $url -eq '') {
 Download-File $url $file
 
 # Determine unzipping method
-$unzipMethod = 'builtin'
+# 7zip is the most compatible so use it by default
+$unzipMethod = '7zip'
 $useWindowsCompression = $env:chocolateyUseWindowsCompression
-if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'false') {
-  Write-Output 'Using 7zip to unzip.'
-  $unzipMethod = '7zip'
+if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
+  Write-Output 'Using built-in compression to unzip'
+  $unzipMethod = 'builtin'
 }
+
+#if ($useWindowsCompression -eq $null -or $windowsCompression -eq '') {
+#  Write-Output 'Using 7zip to unzip.'
+#  Write-Warning "The default is currently 7zip to better handle things like Server Core. This default will be changed to use built-in compression in December 2016. Please make sure if you need to use 7zip that you have adjusted your scripts to set `$env:chocolateyUseWindowsCompression = 'false' prior to calling the install."
+#  $unzipMethod = '7zip'
+#}
 
 # unzip the package
 Write-Output "Extracting $file to $tempDir..."
@@ -170,15 +191,19 @@ if ($unzipMethod -eq '7zip') {
   Write-Output "Downloading 7-Zip commandline tool first"
   $7zaExe = Join-Path $tempDir '7za.exe'
   Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
-  Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -y `"$file`"" -Wait -NoNewWindow
+  Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -bd -y `"$file`"" -Wait -NoNewWindow
 } else {
-  try {
-    $shellApplication = new-object -com shell.application
-    $zipPackage = $shellApplication.NameSpace($file)
-    $destinationFolder = $shellApplication.NameSpace($tempDir)
-    $destinationFolder.CopyHere($zipPackage.Items(),0x10)
-  } catch {
-    throw "Unable to unzip package using built-in compression. Set `$env:chocolateyUseWindowsCompression = 'false' and call install again to use 7zip to unzip. Error: `n $_"
+  if ($PSVersionTable.PSVersion.Major -lt 5) {
+    try {
+      $shellApplication = new-object -com shell.application
+      $zipPackage = $shellApplication.NameSpace($file)
+      $destinationFolder = $shellApplication.NameSpace($tempDir)
+      $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+    } catch {
+      throw "Unable to unzip package using built-in compression. Set `$env:chocolateyUseWindowsCompression = 'false' and call install again to use 7zip to unzip. Error: `n $_"
+    }
+  } else {
+    Expand-Archive -Path "$file" -DestinationPath "$tempDir" -Force
   }
 }
 
@@ -211,8 +236,8 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # SIG # Begin signature block
 # MIINWwYJKoZIhvcNAQcCoIINTDCCDUgCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBTImtQthSv4EIL
-# 5pnaQl3hubK8yJm5W8uSyH+Rm3qPoKCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAzys9hDznTG7n8
+# IFe/Cf/VF7ViU0JMjgXOd234PlpJZqCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -273,12 +298,12 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # bTExMC8GA1UEAxMoRGlnaUNlcnQgU0hBMiBBc3N1cmVkIElEIENvZGUgU2lnbmlu
 # ZyBDQQIQB3Rm7aJnbzrskhfSMFNxEDANBglghkgBZQMEAgEFAKCBhDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDZnyOU
-# C9Dk3O9KFGYAhlugiQgrCrbD5EOW3DbBO3XOADANBgkqhkiG9w0BAQEFAASCAQBT
-# xFxUBWg4sItMVKpOfo3AzKbyWdGNBv4Fo42fWbQqgFmMaZSTkztClwKuqLpCKVuh
-# NUbt0XBxp2+17SI2/h8zJKOQ/V98/iObMCq8XlRyOz1HF2vCCrXWdhK5JVQ1Jitt
-# DZFDeTPgjezAaHcGqclGx2XXA0MVDNaYnZiq7ThaYrqFSlytqkkfZpDCcTOb/b6B
-# AwG8UO+g2zCSn0pINEjBDYA3Jr6dymOcm+C2MM2tlcXWWEoUtxaA/y9tsqdfHQBO
-# c+eF4a/xqLTxf2+OS9xO8JEZJ30teqJwkZY3tqwSCvvBUI2vZ6uTxoBA5c+puL93
-# TJ/FBbTxlw5bsC9j4Qwa
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCAh8jGV
+# KdFZjcGM2NPfsFRYBQwLaavc4fils8PyIUX/fTANBgkqhkiG9w0BAQEFAASCAQB6
+# yxJXWCr7krOdYesyP44ebkQDV+Cpf3v1+Q0mT6wgvS310ZVTYqJ+f/7NuQJerp6H
+# V3CYe5+6JJ6UfyK8NnDVpxk3+CI8Wj7SvGFhEY1WrpFD7NKCXdV8uyWDfLi7b540
+# fwDi3vtch8H8bqHr9CDZpcvnTWqzjKkcaKZYgq4gxGeNZL8ZtnZbMswgGccJ7/bB
+# aotv4/aNefRxQaZVKoveHpp9ndkSTM5LIKFqA7PrKIjWP1m9LpGiCwlP5FE7eRwT
+# +Rp6PaqOVnWzItwyw2gXJuwpCJp5RbUuEHtlXcJ/lyfT8f2YMn47ANNgibifbUSG
+# YXFwgk3H0Tk/wJPQ73AO
 # SIG # End signature block
