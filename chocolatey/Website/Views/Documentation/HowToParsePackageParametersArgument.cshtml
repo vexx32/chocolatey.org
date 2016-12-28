@@ -3,7 +3,7 @@
 }
 
 <article>
-<p>When installing a Chocolatey Package, it is possible to use a number of arguments to control how the package is installed. Each one of these arguments is detailed <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">here</a>.</p>
+<p>When installing a Chocolatey Package, it is possible to use a number of arguments to control how the package is installed. Each one of these arguments is detailed <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })">here</a>.</p>
 <p>Package parameters provide a way for a package consumer to make choices about how they want things installed and configuration of the underlying software.</p>
 <p><strong>NOTE:</strong> Package parameters are not meant to be a substitute for sensible default values. A package installation should require no arguments and the default values should just happen. This is especially true of the packages on the community feed. If you are hosting your own internal feeds, it is recommended you follow this behavior, but not required.</p>
 <p><strong>NOTE:</strong> See <a href="https://github.com/chocolatey/choco/issues/312">#312</a> for Chocolatey v0.9.10 adding a helper to do the below with almost no boilerplate.</p>

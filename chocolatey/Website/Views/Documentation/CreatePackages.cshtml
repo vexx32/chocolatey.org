@@ -43,12 +43,12 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-mantainer-handover" })">Taking over existing package</a></li>
 </ol>
 <h2 id="quick-start-guide">Quick Start guide</h2>
-<p>If you think you got what it takes and just want to know the basic steps to get a package out, there is a special <a href="https://github.com/chocolatey/choco/wiki/CreatePackagesQuickStart">Quick Start Guide</a> for you. <strong>NOTE</strong>: This doesn&#39;t exempt you from observing the rules, requirements and guidelines (noted below).</p>
+<p>If you think you got what it takes and just want to know the basic steps to get a package out, there is a special <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages-quick-start" })">Quick Start Guide</a> for you. <strong>NOTE</strong>: This doesn&#39;t exempt you from observing the rules, requirements and guidelines (noted below).</p>
 <h2 id="rules-to-be-observed-before-publishing-packages">Rules to be observed before publishing packages</h2>
 <p>There are a few rules that you have to follow before pushing packages to chocolatey.org:</p>
 <ol>
 <li><strong>Don&#39;t package illegal software.</strong> Packages of software that is illegal in most countries in the world are prohibited to publish on Chocolatey.org. This applies in particular to software that violates the copyright, pirated software and activation cracks. Remember that this also affects software that is especially designed to accomplish software piracy.</li>
-<li><strong>Do not package software that you don&#39;t have the right to distribute.</strong> Please see <a href="https://github.com/chocolatey/choco/wiki/Legal#wiki-distributions-aka-chocolatey-packages">Distribution Rights</a> for more information. Any package found not in compliance with this will be removed immediately.</li>
+<li><strong>Do not package software that you don&#39;t have the right to distribute.</strong> Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })#wiki-distributions-aka-chocolatey-packages">Distribution Rights</a> for more information. Any package found not in compliance with this will be removed immediately.</li>
 <li><strong>Packaging commercial or trial software?</strong> Clearly state this in the package description. Does it require an activation key? Is there a trial period if you don&#39;t have a key? How long is this trial period?</li>
 <li><strong>Only post publicly relevant packages.</strong> You should consider whether this package is useful for others. If that is not the case, it shouldn&#39;t be published on Chocolatey.org. Reasons for that can be if the package would require a very customized configuration. You can host your personal packages on <a href="https://www.myget.org/">MyGet</a> and still be able to install them with Chocolatey using the <code>-source</code> parameter.</li>
 <li><strong>Do not publish junk or malware</strong> packages.</li>
@@ -58,7 +58,7 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <li><strong>Split dependencies into multiple packages.</strong> Try to split up packages as much as possible. If for example a program comes with additional modules/installers that are optional, make different packages for them instead of including all the things into one package. This idea is already widely applied for Linux packages, because it leads to a more lightweight system and reduces potential issues and conflicts.</li>
 <li><strong>Use a simple intuitive lowercase name for the package</strong>. See the <a href="http://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package">package naming guidelines</a> for details. (If you are a reviewer/moderator, this is considered a guideline).</li>
 </ol>
-<p>Is your package unqualified for the Chocolatey feed, but you like to be able to install it through Chocolatey? Don&#39;t worry, you can always host your package for free on MyGet. See <a href="https://github.com/chocolatey/choco/wiki/Hosting-Chocolatey-Packages-on-MyGet">Hosting Chocolatey Packages on MyGet</a>.</p>
+<p>Is your package unqualified for the Chocolatey feed, but you like to be able to install it through Chocolatey? Don&#39;t worry, you can always host your package for free on MyGet. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "hosting-chocolatey-packages-on-my-get" })">Hosting Chocolatey Packages on MyGet</a>.</p>
 <h2 id="character-encoding">Character encoding</h2>
 <ul>
 <li><strong>Use the UTF–8 character encoding</strong> for the <code>*.nuspec</code> and <code>*.ps1</code> files. If you don&#39;t respect this rule, some characters are not displayed correctly in the <a href="http://chocolatey.org/packages">Gallery on Chocolatey.org</a>, because the Gallery assumes <code>UTF-8</code>.</li>
@@ -78,7 +78,7 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <h2 id="okay-how-do-i-create-packages">Okay, how do I create packages?</h2>
 <p>There are three main elements to a Chocolatey package. Only the nuspec is required (#1 below).</p>
 <ol>
-<li><a href="https://github.com/chocolatey/chocolateytemplates/blob/master/_templates/chocolatey/__NAME__.nuspec">Nuspec</a> - <a href="http://docs.nuget.org/docs/reference/nuspec-reference">Nuspec Reference</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#nuspec">Nuspec</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a> - check out the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">helper reference</a></li>
 <li>any application files to include (it is highly suggested that you are the author in this case or you have the right to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })">distribute files</a>). EXE files in the package/downloaded to package folder from chocolateyInstall.ps1 will get a link to the command line.</li>
 <li>chocolateyUninstall.ps1, for uninstalling your package. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">helper reference</a> for functions available in your script.</li>
@@ -126,17 +126,17 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
 </table>
 <p><strong>Note:</strong> In the upgrade scenario, the chocolateyInstall.ps1 script will be the one included in the new package. The chocolateyBeforeModify.ps1 script will be the one from the previously installed package.</p>
 <p>The chocolateyBeforeModify.ps1 script will only be executed if using choco version 0.9.10 or later.</p>
-<h2 id="nuspec">Nuspec?</h2>
-<p>For reference - <a href="http://docs.nuget.org/docs/reference/nuspec-reference">Nuspec Reference</a></p>
+<h2 id="nuspec">Nuspec</h2>
 <p>The <code>Chocolatey</code> Windows package manager uses the same infrastructure as <a href="http://nuget.org/">NuGet</a> , the Visual Studio package manager by Outercurve Foundation (sponsored by Microsoft). Therefore packages are based on the same principles. One of those is a package description (specification) in <code>xml</code> format, known as the <code>Nuspec</code>.</p>
-<p>The <code>Nuspec</code> contains basic information such as the version, license, maintainer, and package dependencies.</p>
+<p>The <code>Nuspec</code> contains basic information such as the version, license, maintainer, and package dependencies. <code>Chocolatey</code> includes additional optional functionality on top of <a href="http://docs.nuget.org/docs/reference/nuspec-reference">NuGet&#39;s Nuspec format</a> - the best way to determine currently supported features is to create a test package, and look at the generated nuspec file.</p>
+<p><code>choco new testpackage</code></p>
 <p><strong>Note:</strong> If your package uses recently introduced functionality, you might want to include <code>chocolatey</code> as a dependency with the version being the lowest version that has the introduced functionality. Otherwise the installation could fail for users with an older version of <code>Chocolatey</code> installed.</p>
 <p>You can indicate the <code>Chocolatey</code> dependency like any other dependency. E.g.:</p>
 <pre><code class="xml">    &lt;dependencies&gt;
       &lt;dependency id=&quot;chocolatey&quot; version=&quot;0.9.8.21&quot; /&gt;
     &lt;/dependencies&gt;</code></pre>
 <p>Logically, the version is based on the lowest compatible version. But if you don&#39;t know and used a lot of sorcery in your package, depend on the version of <code>Chocolatey</code> that you succesfully tested your package on.</p>
-<p><strong>See also:</strong> <a href="http://docs.nuget.org/docs/reference/versioning">Nuget Version Reference</a></p>
+<p><strong>See also:</strong> <a href="http://docs.nuget.org/docs/reference/versioning">NuGet Version Reference</a></p>
 <h2 id="but-for-real-how-do-i-create-a-package">But for real, how do I create a package?</h2>
 <ul>
 <li><strong>Generate new package</strong>:</li>
@@ -148,7 +148,7 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
 <p>There is at least one noted exception to this and that is low-level packages that are meant as dependencies that need to be present even if they do not install anything. These are things like KBs that only need to be installed on some versions of Windows. If the package failed and it was a dependency of a higher level package that installed software, it would cause issues attempting to install that software on different versions of Windows. Since about 5% of the packages apply to this exception, stick with the above thoughts for packages.</p>
 <p><strong>NOTE</strong>: We will ultimately enhance the nuspec and take care of this for you automatically. Until we get there, follow the above avenue.</p>
 <h2 id="installation-paths">Installation Paths</h2>
-<p>As the package maintainer, you decide where the packaged application is installed or extracted to. Depending on your type of application (see <em>&quot;What distinction does Chocolatey make between an installable and a portable application?&quot;</em> at the bottom of the <a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs">FAQ</a>) there are a couple of suitable locations (not listed in any particular order):</p>
+<p>As the package maintainer, you decide where the packaged application is installed or extracted to. Depending on your type of application (see <em>&quot;What distinction does Chocolatey make between an installable and a portable application?&quot;</em> at the bottom of the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">FAQ</a>) there are a couple of suitable locations (not listed in any particular order):</p>
 <h3 id="the-default-installation-path-of-your-.msi.exe-setup-file">1. The default installation path of your .msi/.exe setup file</h3>
 <p>The original creator probably had a reason for choosing a specific default installation path.<br />
 If you think, the user should be able to customize this path and you, the package maintainer, know how to pass a custom path on to the installer, then you should use <code>%ChocolateyBinRoot%</code>.</p>

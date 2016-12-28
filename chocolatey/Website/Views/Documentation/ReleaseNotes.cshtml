@@ -180,7 +180,7 @@ You can shut off the checksum requirement by enabling the feature <code>allowEmp
 <p>Alternative sources (<code>-source webpi</code>, <code>-s windowsfeature</code>, etc) are back! I mean, am I right?! Have you heard of auto uninstaller? If Chocolatey has installed something that works with Programs and Features, Chocolatey knows how to uninstall it without an uninstall script about 90+% of the time. This feature was in beta for the 0.9.9 series, it is on by default in 0.9.10 (unless you disabled it after trying it, you will need to reenable it, see <code>choco feature</code> for more details).</p>
 <p>Here&#39;s one you probably never knew existed - extensions. Chocolatey has had the ability to extend itself by adding PowerShell modules for years, and most folks either didn&#39;t know it existed or have never used them. We&#39;ve enhanced them a bit in preparation for the licensed version of Chocolatey.</p>
 <p>We redesigned our <code>choco new</code> default packaging template and we&#39;ve made managing templates as easy as managing packages.</p>
-<p><code>choco search</code>/<code>choco list</code> has so many enhancements, you may not need to visit dot org again. <a href="https://github.com/chocolatey/choco/wiki/CommandsList#see-it-in-action">See it in action</a>.</p>
+<p><code>choco search</code>/<code>choco list</code> has so many enhancements, you may not need to visit dot org again. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-list" })#see-it-in-action">See it in action</a>.</p>
 <ul>
 <li><a href="https://github.com/chocolatey/choco/issues/493">search -v provides moderation related information and a world of nuspec information</a></li>
 <li><a href="https://github.com/chocolatey/choco/issues/663">search by id only</a></li>
@@ -627,17 +627,17 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <h3 id="features-6">FEATURES</h3>
 <ul>
 <li>In app documentation! Use <code>choco -?</code>, <code>choco -h</code> or <code>choco commandName -?</code> to learn about each command, complete with examples!</li>
-<li>WhatIf/Noop mode for all commands (<code>--noop</code> can also be specified as <code>-whatif</code>) - see <a href="https://github.com/chocolatey/chocolatey/issues/263">Chocolatey #263</a> and <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#default-options-and-switches">Default Options and Switches</a></li>
+<li>WhatIf/Noop mode for all commands (<code>--noop</code> can also be specified as <code>-whatif</code>) - see <a href="https://github.com/chocolatey/chocolatey/issues/263">Chocolatey #263</a> and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">Default Options and Switches</a></li>
 <li>Performs like a package manager, expect to see queries failing because of unmet dependency issues.</li>
 <li><strong>New Commands:</strong></li>
 </ul>
 <ol>
-<li><code>pin</code> - Suppress upgrades. This allows you to &quot;˜pin&#39; an install to a particular version - see <a href="https://github.com/chocolatey/choco/issues/1">#1</a>, <a href="https://github.com/chocolatey/chocolatey/issues/5">Chocolatey #5</a> and <a href="https://github.com/chocolatey/choco/wiki/CommandsPin">Pin Command</a></li>
-<li><code>apikey</code> - see <a href="https://github.com/chocolatey/choco/wiki/CommandsApiKey">ApiKey Command</a></li>
-<li><code>new</code> - see <a href="https://github.com/chocolatey/choco/wiki/CommandsNew">New Command</a> and <a href="https://github.com/chocolatey/chocolatey/issues/157">Chocolatey #157</a></li>
+<li><code>pin</code> - Suppress upgrades. This allows you to &quot;˜pin&#39; an install to a particular version - see <a href="https://github.com/chocolatey/choco/issues/1">#1</a>, <a href="https://github.com/chocolatey/chocolatey/issues/5">Chocolatey #5</a> and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">Pin Command</a></li>
+<li><code>apikey</code> - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-api-key" })">ApiKey Command</a></li>
+<li><code>new</code> - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })">New Command</a> and <a href="https://github.com/chocolatey/chocolatey/issues/157">Chocolatey #157</a></li>
 </ol>
 <ul>
-<li>New ways to pass arguments! See <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches">How to Pass Options/Switches</a></li>
+<li>New ways to pass arguments! See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">How to Pass Options/Switches</a></li>
 <li>Did we mention there is a help menu that is actually helpful now? Shiny!</li>
 <li>AutoUninstaller!!!! But it is not enabled by default this version. See <a href="https://github.com/chocolatey/choco/issues/15">#15</a>, <a href="https://github.com/chocolatey/choco/issues/9">#9</a> and <a href="https://github.com/chocolatey/chocolatey/issues/6">Chocolatey #6</a></li>
 <li><strong>New Helpers:</strong></li>
@@ -650,7 +650,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <ul>
 <li>Fix - Cannot upgrade from prerelease to same version released - see <a href="https://github.com/chocolatey/chocolatey/issues/122">Chocolatey #122</a></li>
 <li>Fix - install <code>--force</code> should not use cache - see <a href="https://github.com/chocolatey/chocolatey/issues/199">Chocolatey #199</a></li>
-<li>Fix - force dependencies as well - see <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">--force-dependencies</a> and <a href="https://github.com/chocolatey/chocolatey/issues/199">Chocolatey #199</a></li>
+<li>Fix - force dependencies as well - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })">--force-dependencies</a> and <a href="https://github.com/chocolatey/chocolatey/issues/199">Chocolatey #199</a></li>
 <li>Fix - Chocolatey should not stop on error - see <a href="https://github.com/chocolatey/chocolatey/issues/192">Chocolatey #192</a></li>
 <li>Fix - Upgrading does not remove previous version - see <a href="https://github.com/chocolatey/chocolatey/issues/259">Chocolatey #259</a></li>
 <li>Fix - Non-elevated shell message spills errors - see <a href="https://github.com/chocolatey/chocolatey/issues/540">Chocolatey #540</a></li>
@@ -676,7 +676,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Add $env:CHOCOLATEY_VERSION - see <a href="https://github.com/chocolatey/chocolatey/issues/251">Chocolatey #251</a></li>
 <li>Replace ascii cue with visual cues - see <a href="https://github.com/chocolatey/chocolatey/pull/376">Chocolatey #376</a></li>
 <li>Uninstall all versions of an app - see <a href="https://github.com/chocolatey/chocolatey/issues/389">Chocolatey #389</a></li>
-<li>Add parameters in packages.config files - see <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall#packagesconfig">Packages.config</a>, <a href="https://github.com/chocolatey/chocolatey/issues/472">Chocolatey #472</a>, and <a href="https://github.com/chocolatey/choco/issues/10">#10</a></li>
+<li>Add parameters in packages.config files - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#packagesconfig">Packages.config</a>, <a href="https://github.com/chocolatey/chocolatey/issues/472">Chocolatey #472</a>, and <a href="https://github.com/chocolatey/choco/issues/10">#10</a></li>
 <li>Choco pack should support <code>-version</code> - see <a href="https://github.com/chocolatey/chocolatey/issues/526">Chocolatey #526</a></li>
 <li>Enhancements to Start-ChocolateyProcessAsAdmin - see <a href="https://github.com/chocolatey/chocolatey/pull/564">Chocolatey #564</a></li>
 <li>Install-ChocolateyFileAssociation - add label to new file types - see <a href="https://github.com/chocolatey/chocolatey/pull/564">Chocolatey #564</a></li>

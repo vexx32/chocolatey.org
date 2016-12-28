@@ -11,7 +11,7 @@
 <li>You have Chocolatey installed.</li>
 <li>You&#39;ve read <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#what-are-chocolatey-packages">What are Chocolatey Packages?</a> first.</li>
 <li>You know how a package works</li>
-<li>A package contains a <code>nuspec</code> file. This defines the package. (<a href="http://docs.nuget.org/docs/reference/nuspec-reference">Docs</a>) (<a href="https://github.com/chocolatey/chocolateytemplates/blob/master/_templates/chocolatey/__NAME__.nuspec">Example</a>)</li>
+<li>A package contains a <code>nuspec</code> file. This defines the package. (<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#nuspec">Docs</a>)</li>
 <li>A package may contain embedded software.</li>
 <li>A package may contain an installation script. This can be <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages-quick-start" })#examples">very simple</a>.</li>
 </ul>
@@ -27,7 +27,7 @@
 <ul>
 <li>Make sure you figure out the installer&#39;s silent mode. Use <a href="http://unattended.sourceforge.net/installers.php">Universal Silent Switch Finder</a>, which is available as a Choco package: <code>choco install ussf</code></li>
 </ul></li>
-<li>You <strong>must</strong> save your files with <em>UTF–8</em> character encoding without BOM. (<a href="https://github.com/chocolatey/choco/wiki/CreatePackages#character-encoding">Details</a>)</li>
+<li>You <strong>must</strong> save your files with <em>UTF–8</em> character encoding without BOM. (<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#character-encoding">Details</a>)</li>
 <li><strong>Build the package</strong></li>
 <li>Still in package directory</li>
 <li><code>choco pack</code>
