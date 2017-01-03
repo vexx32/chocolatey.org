@@ -22,6 +22,7 @@ using System.Net.Mail;
 using System.Security.Principal;
 using System.Web.Mvc;
 using System.Web.UI;
+using NuGet;
 using NuGetGallery.MvcOverrides;
 using PoliteCaptcha;
 
@@ -178,7 +179,9 @@ namespace NuGetGallery
             var user = userService.FindByUsername(currentUser.Identity.Name);
             var packages = packageService.FindPackagesByOwner(user);
 
-            var published = from p in packages group p by p.PackageRegistration.Id;
+            var published = from p in packages
+                            orderby new SemanticVersion(p.Version) descending
+                            group p by p.PackageRegistration.Id;
 
             var model = new ManagePackagesViewModel
             {
@@ -186,7 +189,7 @@ namespace NuGetGallery
                            select new PackageViewModel(pr.First())
                            {
                                DownloadCount = pr.Sum(p => p.DownloadCount),
-                               Version = pr.Max(p => p.Version),
+                               Listed = pr.Any(p => p.Listed)
                            },
             };
             return View("~/Views/Users/Packages.cshtml", model);
