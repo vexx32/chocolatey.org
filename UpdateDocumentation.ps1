@@ -57,6 +57,8 @@ function Fix-MarkdownConversion($text) {
   $text = $text -creplace 'â€œ', '&quot;'
   $text = $text -creplace 'â€', '&quot;'
   $text = $text -creplace 'Â', '&nbsp;'
+  $text = $text.Replace("<!--remove","")
+  $text = $text.Replace("remove-->","")
 
   Write-Output $text
 }
