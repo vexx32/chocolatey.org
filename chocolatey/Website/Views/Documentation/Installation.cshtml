@@ -11,10 +11,11 @@
 </ul>
 <p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go! No Visual Studio required.</p>
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
-<p>Chocolatey installs in seconds. Just run the following command from PowerShell v3+  - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </p>
+<p>Chocolatey installs in seconds. Just run the following command from an <strong><em>administrative</em></strong> PowerShell v3+ prompt:  <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </p>
 <pre><code class="powershell">
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
+<p>We take security very seriously. <a href="https://chocolatey.org/security">Learn more</a>.</p>
 <h2 id="more-install-options">More Install Options</h2>
 
 
@@ -209,7 +210,7 @@ SET DIR=%~dp0%
 </div>
 
 <h2 id="upgrading-chocolatey">Upgrading Chocolatey</h2>
-<p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command to install the latest stable release of Chocolatey:</p>
+<p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command to upgrade to the latest stable release of Chocolatey:</p>
 <pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
 <h2 id="uninstalling-chocolatey">Uninstalling Chocolatey</h2>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "uninstallation" })">uninstall</a>.</p>
