@@ -8,8 +8,8 @@
 <p><strong>NOTE:</strong> This is not always going to be updated, one can take a look at the issues list here and in the chocolatey.org repositories.</p>
 <h2 id="chocolatey">Chocolatey</h2>
 <ul>
-<li>Validation on packaging (subset of the package-validator)</li>
-<li>Official support for OneGet/PackageManagement - Summer 2016</li>
+<li>Validation on choco pack (subset of the package-validator)</li>
+<li>Official support for OneGet/PackageManagement - Prioritizing</li>
 <li>GPG package signing - likely sometime in 2017</li>
 <li>Validating authenticodes - see <a href="https://github.com/chocolatey/choco/issues/643">#643</a></li>
 <li><del>Not allowing package installs that don&#39;t have checksums by default when using non-secure resources like HTTP/FTP - see <a href="https://github.com/chocolatey/choco/issues/112">#112</a></del> released in 0.10.0</li>
@@ -17,18 +17,19 @@
 <li>Packaging enhancements - like package version, architecture</li>
 <li><a href="https://github.com/chocolatey/chocolatey/issues/7">Virtual packages</a></li>
 <li>WSA Support</li>
-<li>Windows Nano Support - likely late 2016/early 2017 (switching to .NET Standard/Core)</li>
+<li>Windows Nano Support - likely Q2 2017 (switching to .NET Standard/Core)</li>
 </ul>
 <h2 id="licensed-chocolatey">Licensed Chocolatey</h2>
 <ul>
-<li>Self-Service Installs (Non-Admins)</li>
+<li><del><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Self-Service Installs (Non-Admins)</a></del> released in Jan 2017</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Chocolatey Central Console</a></li>
 <li>Package Modernizer</li>
 <li>Package Sync command</li>
 <li>finding existing packages</li>
 <li>building packages on the fly with sync (business edition)</li>
-<li>Package Builder - create packages from Programs and Features</li>
-<li>Right Click <code>Create Chocolatey Package...</code> (business editions)</li>
-<li>Package Builder UI (business edition)</li>
+<li><del>Package Builder - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })#generate-packages-from-programs-and-features">create packages from Programs and Features</a></del> - released in Q3 2016</li>
+<li><del>Right Click <code>Create Chocolatey Package...</code> (business editions)</del> - released in Q3 2016</li>
+<li><del><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })#package-builder-ui">Package Builder UI</a> (business edition)</del> - released in Q3 2016</li>
 <li>Package Builder UI (pro edition without the auto detection)</li>
 <li>Possibly a business edition gallery with features specific to business needs.</li>
 </ul>

@@ -3,8 +3,30 @@
 }
 
 <article>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Windows 7+ / Windows Server 2003+</li>
+<li>PowerShell v2+</li>
+<li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)</li>
+</ul>
+<p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go! No Visual Studio required.</p>
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
-<p>Chocolatey installs in seconds...</p>
+<p>Chocolatey installs in seconds. Just run the following command from PowerShell v3+  - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </p>
+<pre><code class="powershell">
+iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+</code></pre>
+
+
+<p>&nbsp;</p>
+<p><strong>Troubleshooting? Install from cmd.exe or PowerShell v2? Need more options?</strong><br />
+
+<a onclick="if ($(this).text() == 'Less Options') {$('#div-moreoptions').addClass('hide');$(this).text('More Options');} else {$('#div-moreoptions').removeClass('hide');$(this).text('Less Options');}">More Options</a>
+</p>
+
+<p>&nbsp;</p>
+<div id="div-moreoptions" class="hide">
+
+<h2 id="more-options">More Options</h2>
 <p><strong>NOTE:</strong> Need to install a particular version of Chocolatey? Proxy? Install to a different location? Advanced Options? See <a href="#before-you-install">Before You Install</a> below. <a href="#alternative-installation-options">Alternative installation options</a>? <a href="#non-administrative-install">Non-Administrator installation</a>? <a href="#download--powershell-method">Restricted/no internet access on target machine</a>? Looking for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">licensed edition installation</a>?</p>
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter. If you need assistance opening an administrative prompt, see <a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">open an elevated prompt in Windows 8+</a> (or <a href="http://www.howtogeek.com/howto/windows-vista/run-a-command-as-administrator-from-the-windows-vista-run-box/">Windows 7</a>).</p>
 <p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
@@ -79,13 +101,6 @@ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.or
 </code></pre>
 <h4 id="explicit-proxy">Explicit proxy?</h4>
 <p>See how to <a href="#cmdpowershell-wproxy-server">install behind an explicit proxy below</a>.</p>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li>Windows 7+ / Windows Server 2003+</li>
-<li>PowerShell v2+</li>
-<li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)</li>
-</ul>
-<p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go! No Visual Studio required.</p>
 <h2 id="why-does-chocolatey-install-where-it-does-by-default">Why does Chocolatey install where it does by default?</h2>
 <p>Great question - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "default-chocolatey-install-reasoning" })">Why does Chocolatey install where it does</a></p>
 <h2 id="before-you-install">Before You Install</h2>
@@ -201,4 +216,7 @@ SET DIR=%~dp0%
 <pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
 <p>OR to install the absolute latest version including possible pre-releases of Chocolatey:</p>
 <pre><code class="nohighlight">choco upgrade chocolatey -pre</code></pre>
+
+</div>
+
 </article>
