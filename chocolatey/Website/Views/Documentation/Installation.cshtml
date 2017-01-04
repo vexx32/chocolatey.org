@@ -15,18 +15,16 @@
 <pre><code class="powershell">
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
+<h2 id="more-install-options">More Install Options</h2>
 
 
-<p>&nbsp;</p>
-<p><strong>Troubleshooting? Install from cmd.exe or PowerShell v2? Need more options?</strong><br />
+<p><strong>Troubleshooting? Install from cmd.exe or PowerShell v2? Proxy? Need more options?</strong><br />
 
 <a onclick="if ($(this).text() == 'Less Options') {$('#div-moreoptions').addClass('hide');$(this).text('More Options');} else {$('#div-moreoptions').removeClass('hide');$(this).text('Less Options');}">More Options</a>
 </p>
 
-<p>&nbsp;</p>
 <div id="div-moreoptions" class="hide">
 
-<h2 id="more-options">More Options</h2>
 <p><strong>NOTE:</strong> Need to install a particular version of Chocolatey? Proxy? Install to a different location? Advanced Options? See <a href="#before-you-install">Before You Install</a> below. <a href="#alternative-installation-options">Alternative installation options</a>? <a href="#non-administrative-install">Non-Administrator installation</a>? <a href="#download--powershell-method">Restricted/no internet access on target machine</a>? Looking for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">licensed edition installation</a>?</p>
 <p>To install chocolatey now, open an <strong>administrative</strong> command prompt and paste the text from the box below that applies to the name of your shell and press enter. If you need assistance opening an administrative prompt, see <a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">open an elevated prompt in Windows 8+</a> (or <a href="http://www.howtogeek.com/howto/windows-vista/run-a-command-as-administrator-from-the-windows-vista-run-box/">Windows 7</a>).</p>
 <p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
@@ -207,16 +205,19 @@ SET DIR=%~dp0%
 <li>Call <code>&amp; .\chocolateyInstall.ps1</code> to allow Chocolatey to install.</li>
 <li><strong>NOTE</strong>: This will not set Chocolatey as an installed package, so it may be a good idea to also call <code>choco upgrade chocolatey -y</code> and let it reinstall the same version, but at least it will be available for upgrades then.</li>
 </ol>
+
+</div>
+
+<h2 id="upgrading-chocolatey">Upgrading Chocolatey</h2>
+<p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command to install the latest stable release of Chocolatey:</p>
+<pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
+<h2 id="uninstalling-chocolatey">Uninstalling Chocolatey</h2>
+<p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "uninstallation" })">uninstall</a>.</p>
+
+<p>&nbsp;</p>
+
 <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js"></script>
 <script>
   new Clipboard('.copy-button');
 </script>
-<h2 id="upgrading-chocolatey">Upgrading Chocolatey</h2>
-<p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command to install the latest stable release of Chocolatey:</p>
-<pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
-<p>OR to install the absolute latest version including possible pre-releases of Chocolatey:</p>
-<pre><code class="nohighlight">choco upgrade chocolatey -pre</code></pre>
-
-</div>
-
 </article>
