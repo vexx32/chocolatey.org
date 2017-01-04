@@ -51,17 +51,15 @@
 <li>Install chocopkgup (which will install ketarin and nuget.commandline). <code>choco install chocolateypackageupdater</code>.</li>
 <li>Check the config in <code>$env:ChocolateyInstall\lib\ChocolateyPackageUpdater\tools\chocopkgup\chocopkgup.exe.config</code>. The <code>PackagesFolder</code> key should point to where your repository is located.</li>
 <li>Create a scheduled task (in Windows). This is the command (edit the path to <code>cmd.exe</code> accordingly): <code>C:\Windows\System32\cmd.exe /c c:\tools\chocolateypackageupdater\ketarinupdate.cmd</code></li>
-<li>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:<br />
-~<del>vb<br />
-Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)<br />
-objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True<br />
-</del>~</li>
+<li><p>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:</p>
+<pre><code class="vb">Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
+objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True</code></pre></li>
 <li>Choose a schedule for the task. Some folks run the task about once an hour to catch updates as quickly as they happen.</li>
 <li>Open Ketarin. Choose <code>File</code> –&gt; <code>Settings</code>.</li>
 <li>Now Click Import...</li>
 <li>Choose <a href="https://github.com/chocolatey/chocolatey-packages-template/blob/master/setup/KetarinSettings.xml">setup/KetarinSettings.xml</a> from the repo folder. This is going to add everything in that you will need for settings.</li>
-<li>Click on Global Variables. Ensure all of the variables are set appropriately.<br />
-<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinGlobalVariables.png")" alt="Ketarin Global Variables" /></li>
+<li><p>Click on Global Variables. Ensure all of the variables are set appropriately.<br />
+<img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinGlobalVariables.png")" alt="Ketarin Global Variables" /></p></li>
 </ol>
 <p>This gets Ketarin all set up with a global command for all packages we create.</p>
 <p><em>NOTE</em>: This has set up global commands for &quot;Before updating an application&quot; and &quot;After updating an application&quot;. Those should not need adjusting, however if you do, please be sure to export the settings again.</p>
