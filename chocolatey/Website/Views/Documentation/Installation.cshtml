@@ -11,7 +11,7 @@
 </ul>
 <p>That&#39;s it! All you need is choco.exe (that you get from the installation scripts) and you are good to go! No Visual Studio required.</p>
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
-<p>Chocolatey installs in seconds. Just run the following command from an <strong><em>administrative</em></strong> PowerShell v3+ prompt:  <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </p>
+<p>Chocolatey installs in seconds. Just run the following command from an <strong><em>administrative</em></strong> PowerShell v3+ prompt (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted):  <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </p>
 <pre><code class="powershell">
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
@@ -37,13 +37,13 @@ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 @@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
 <ul>
-<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
+<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted) - <button class="icon-clipboard copy-button" data-clipboard-text="iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
 </ul>
 <pre><code class="powershell">
 iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
 </code></pre>
 <ul>
-<li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button></li>
+<li>PowerShell v3+ (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted) - <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button></li>
 </ul>
 <pre><code class="powershell">
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
