@@ -153,7 +153,7 @@ param (
   [string]$url,
   [string]$file
  )
-  Write-Output "Downloading $url to $file"
+  #Write-Output "Downloading $url to $file"
   $downloader = Get-Downloader $url
 
   $downloader.DownloadFile($url, $file)
@@ -167,15 +167,22 @@ if ($url -eq $null -or $url -eq '') {
 }
 
 # Download the Chocolatey package
+
+Write-Output "Getting Chocolatey from $url."
 Download-File $url $file
 
 # Determine unzipping method
 # 7zip is the most compatible so use it by default
+$7zaExe = Join-Path $tempDir '7za.exe'
 $unzipMethod = '7zip'
 $useWindowsCompression = $env:chocolateyUseWindowsCompression
 if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
   Write-Output 'Using built-in compression to unzip'
   $unzipMethod = 'builtin'
+} else {
+  Write-Output "Downloading 7-Zip commandline tool prior to extraction."  
+  # download 7zip
+  Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
 }
 
 #if ($useWindowsCompression -eq $null -or $windowsCompression -eq '') {
@@ -187,11 +194,30 @@ if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
 # unzip the package
 Write-Output "Extracting $file to $tempDir..."
 if ($unzipMethod -eq '7zip') {
-  # download 7zip
-  Write-Output "Downloading 7-Zip commandline tool first"
-  $7zaExe = Join-Path $tempDir '7za.exe'
-  Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
-  Start-Process "$7zaExe" -ArgumentList "x -o`"$tempDir`" -bd -y `"$file`"" -Wait -NoNewWindow
+  $params = "x -o`"$tempDir`" -bd -y `"$file`""
+  # use more robust Process as compared to Start-Process -Wait (which doesn't
+  # wait for the process to finish in PowerShell v3)
+  $process = New-Object System.Diagnostics.Process
+  $process.StartInfo = New-Object System.Diagnostics.ProcessStartInfo($7zaExe, $params)
+  $process.StartInfo.RedirectStandardOutput = $true
+  $process.StartInfo.UseShellExecute = $false
+  $process.StartInfo.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
+  $process.Start() | Out-Null
+  $process.BeginOutputReadLine()
+  $process.WaitForExit()
+  $exitCode = $process.ExitCode
+  $process.Dispose()
+
+  $errorMessage = "Unable to unzip package using 7zip. Perhaps try setting `$env:chocolateyUseWindowsCompression = 'true' and call install again. Error:"
+  switch ($exitCode) {
+    0 { break }
+    1 { throw "$errorMessage Some files could not be extracted" }
+    2 { throw "$errorMessage 7-Zip encountered a fatal error while extracting the files" }
+    7 { throw "$errorMessage 7-Zip command line error" }
+    8 { throw "$errorMessage 7-Zip out of memory" }
+    255 { throw "$errorMessage Extraction cancelled by the user" }
+    default { throw "$errorMessage 7-Zip signalled an unknown error (code $exitCode)" }
+  }
 } else {
   if ($PSVersionTable.PSVersion.Major -lt 5) {
     try {
@@ -236,8 +262,8 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # SIG # Begin signature block
 # MIINWwYJKoZIhvcNAQcCoIINTDCCDUgCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAzys9hDznTG7n8
-# IFe/Cf/VF7ViU0JMjgXOd234PlpJZqCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBlBAdKza9HJh5y
+# SStdXAQqtPBJqqekYVu4kBAl52mATaCCCngwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -298,12 +324,12 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # bTExMC8GA1UEAxMoRGlnaUNlcnQgU0hBMiBBc3N1cmVkIElEIENvZGUgU2lnbmlu
 # ZyBDQQIQB3Rm7aJnbzrskhfSMFNxEDANBglghkgBZQMEAgEFAKCBhDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCAh8jGV
-# KdFZjcGM2NPfsFRYBQwLaavc4fils8PyIUX/fTANBgkqhkiG9w0BAQEFAASCAQB6
-# yxJXWCr7krOdYesyP44ebkQDV+Cpf3v1+Q0mT6wgvS310ZVTYqJ+f/7NuQJerp6H
-# V3CYe5+6JJ6UfyK8NnDVpxk3+CI8Wj7SvGFhEY1WrpFD7NKCXdV8uyWDfLi7b540
-# fwDi3vtch8H8bqHr9CDZpcvnTWqzjKkcaKZYgq4gxGeNZL8ZtnZbMswgGccJ7/bB
-# aotv4/aNefRxQaZVKoveHpp9ndkSTM5LIKFqA7PrKIjWP1m9LpGiCwlP5FE7eRwT
-# +Rp6PaqOVnWzItwyw2gXJuwpCJp5RbUuEHtlXcJ/lyfT8f2YMn47ANNgibifbUSG
-# YXFwgk3H0Tk/wJPQ73AO
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCB/OBR9
+# 5mBzWjK5lvv+fJ/LFvbGgZexonMYOEcyibSwfDANBgkqhkiG9w0BAQEFAASCAQAQ
+# P9ixZZf+KMWo2HW7Tn7VwiEVBXGQC4IrUvq984RHXRiuLVP5NPfPj/7KinAsgauw
+# pkCQQcOBhNMG+BQUhyIpE0C8VCcrwU95k+C00XQrPSAAwdMliunwneW4PCST9/GV
+# 5vCmNBSqAMC07WUlESw8rItTO+eHifng3PydrYMrWck1Sb9SxG9NJ6h10OmLTuhf
+# 5a4yn/yymjcJZg9mJdo6Wpg9tXVrQLYVLc0OrkgjEJdjpBm4jYzmM/YySFm4F/if
+# yXmi9q0L9H9NWbOi1b/eDb2gJFREPoUZC0FOYP1qDy7DW/LCYeviawv2sJk2kcBX
+# pzyAIMKTmS0n4FWRXJfh
 # SIG # End signature block
