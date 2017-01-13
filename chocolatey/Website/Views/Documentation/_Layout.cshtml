@@ -6,6 +6,7 @@
   Bundles.Reference("Content/highlight/vs.css", "bottom");
   //js
   Bundles.Reference("Scripts/highlight");
+  Bundles.Reference("Scripts/anchorjs");
 }
 @section css
 {
@@ -159,6 +160,8 @@
             }
         }
         hljs.initHighlightingOnLoad();
-    </script>
 
+        anchors.options.placement = 'left';
+        anchors.add();
+    </script>
 </body>
