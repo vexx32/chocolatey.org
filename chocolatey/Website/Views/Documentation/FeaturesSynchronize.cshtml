@@ -62,7 +62,7 @@ This image shows running `choco list -lo`. Chocolatey for Business automatically
 <h3 id="some-packages-have-a-todo-list">Some packages have a TODO list</h3>
 <p>Generating packages on the fly from Programs and Features for non-MSI installers doesn&#39;t provide everything necessary to ensure an actual install. So when you take those packages back to source, you will need to finish out the packaging for those so that later when you upgrade, things will work appropriately.</p>
 <h3 id="how-do-i-get-machine-parseable-output">How do I get machine parseable output?</h3>
-<p>Use <code>-r</code>. <code>choco sync -r</code></p>
+<p>Use <code>-r</code>. <code>choco sync -r</code>. May require Chocolatey v0.10.4+.</p>
 <h3 id="what-if-i-have-an-existing-package-that-is-just-not-tracking-to-programs-and-features">What if I have an existing package that is just not tracking to Programs and Features?</h3>
 <p>Synchronize can recognize existing packages and sync to those as long as the name of the package is a close match to the software name (e.g.&nbsp; Google Chrome becomes either google-chrome or googlechrome).</p>
 <h2 id="sync-command-known-issues">Sync Command Known issues</h2>
