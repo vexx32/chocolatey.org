@@ -6,6 +6,7 @@
   Bundles.Reference("Content/highlight/vs.css", "bottom");
   //js
   Bundles.Reference("Scripts/highlight");
+  Bundles.Reference("Scripts/anchorjs");
 }
 @section css
 {
@@ -27,10 +28,10 @@
       </a>
       <ul>
         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Docs Home</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "why" })">Why Chocolatey?</a></li> 
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "why" })">Why Chocolatey?</a></li>
         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })">Security</a></li>
       </ul>
-          
+
       <p><strong>Features</strong></p>
       <ul>
         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer - Synchronize with Programs and Features</a></li>
@@ -159,6 +160,8 @@
             }
         }
         hljs.initHighlightingOnLoad();
-    </script>
 
+        anchors.options.placement = 'left';
+        anchors.add();
+    </script>
 </body>
