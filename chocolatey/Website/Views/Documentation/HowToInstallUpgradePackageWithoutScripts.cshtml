@@ -5,11 +5,13 @@
 <article>
 <h1 id="how-to-install-or-upgrade-a-package-without-running-scripts">How To Install or Upgrade a Package Without Running Scripts</h1>
 <p>So you&#39;ve updated your applications manually or through some other means or you want to make Chocolatey aware of some previously installed applications without actually running the installation scripts.</p>
+<p><strong>NOTE</strong>: <a href="https://chocolatey.org/compare">Chocolatey Pro+</a> has <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">automatic sync</a> to handle this. <a href="https://chocolatey.org/compare">Chocolatey for Business</a> also has <code>choco sync</code> that can generate packages on the fly and baseline them to the system. The <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">sync command</a> is also able to link up installed packages that are installed through this manner so they track the package to the software (something you won&#39;t get without running the install script).</p>
 <p><strong>NOTE</strong>: This is considered an advanced scenario - make sure you read and understand everything here before trying it. You may mess something up if you don&#39;t understand the full implication of what you are doing.</p>
 <h2 id="installing-a-package-without-running-install-script">Installing a Package Without Running Install Script</h2>
 <p>The first thing to understand is that in most instances when you want to bring Chocolatey knowledgeable about an already installed application, if there is a version match out there (wherever your sources point), then this process is so much better.</p>
-<p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it).</p>
-<p>However if you are sold on skipping the automation scripts and tricking Chocolatey into believing that a script is installed.</p>
+<p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it). In most cases it will ensure that the link for tracking the package to the software for automatic uninstalls is covered.</p>
+<p><strong>NOTE</strong>: If no scripts are run, Chocolatey cannot link the package to the software, so things like AutoUninstaller will not be able to be used until you have also run an upgrade (unless you use <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">&quot;choco sync&quot;</a> - see above).</p>
+<p>However if you are sold on skipping the automation scripts and tricking Chocolatey into believing that a script is installed, then continue reading.</p>
 <p>If you wander over to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install switches</a> you will see</p>
 <pre><code class="nohighlight">-n, --skippowershell, --skip-powershell
   Skip Powershell - Do not run chocolateyInstall.ps1. Defaults to false.</code></pre>
@@ -54,7 +56,7 @@
 </ul>
 <p><strong>Recommendation</strong>: You should <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> the package to suppress upgrades. The self-updating scenario is keeping you on the latest version and you want to stay up to date with the latest version that may have security fixes in addition to other things.</p>
 <p>You should run</p>
-<p><code>choco pin googlechrome</code></p>
+<p><code>choco pin add -n=googlechrome</code></p>
 <p>For more information see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">Pin Command</a>.</p>
 <h3 id="the-software-was-upgraded-but-not-the-package">The software was upgraded but not the package</h3>
 <p>Similar to the above scenario, but perhaps you upgraded the software manually outside of Chocolatey.</p>
@@ -78,5 +80,5 @@
 <p>See <a href="#community-feed-has-a-package-older-than-your-version">Community Feed has a version older than your version</a> - substitute <code>upgrade</code> for <code>install</code> if you must. Follow the recommendation.</p>
 <p><strong>Additional Recommendation</strong>: You may also want to bump it to 1.8.0 using the skip argument (<code>-n</code>) and then promptly <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">pin</a> the package until a newer version is available.</p>
 <pre><code class="nohighlight">choco upgrade firefox -n -y --version 1.8.0
-choco pin firefox</code></pre>
+choco pin add -n=firefox</code></pre>
 </article>

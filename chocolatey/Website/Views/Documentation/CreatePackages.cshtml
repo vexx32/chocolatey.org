@@ -14,11 +14,13 @@
 </ol>
 <h4 id="self-contained">Self-Contained?</h4>
 <p>If you have a self-contained package, you can remove the automation scripts<br />
-entirely and just include the executables, they will automatically get shimmed,<br />
+entirely and just include the runtime executables, they will automatically get shimmed,<br />
 which puts them on the path. Ensure you have the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })">legal right to distribute</a><br />
 the application though. You should read up on the Shim Generation section<br />
 below though to familiarize yourself on what to do with GUI applications<br />
 and/or ignoring shims (also known as batch redirects).</p>
+<h4 id="including-the-software-installer-in-the-package">Including the Software Installer in the Package</h4>
+<p>Sometimes called embedding the binaries, there are functions in the automation scripts you can call that will use the installers directly from the package instead of downloading first. This makes for the most reliable and deterministic packages, but ensure you have the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })">legal right to distribute</a> the software first if publishing to a public location (like the community package repository).</p>
 <h4 id="automation-scripts">Automation Scripts</h4>
 <p>You have a powerful use of Chocolatey, as you are using PowerShell. So you<br />
 can do just about anything you need. Choco has some very handy <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">built-in functions</a> that you can use, these are sometimes called<br />
@@ -48,7 +50,7 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <p>There are a few rules that you have to follow before pushing packages to chocolatey.org:</p>
 <ol>
 <li><strong>Don&#39;t package illegal software.</strong> Packages of software that is illegal in most countries in the world are prohibited to publish on Chocolatey.org. This applies in particular to software that violates the copyright, pirated software and activation cracks. Remember that this also affects software that is especially designed to accomplish software piracy.</li>
-<li><strong>Do not package software that you don&#39;t have the right to distribute.</strong> Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })#wiki-distributions-aka-chocolatey-packages">Distribution Rights</a> for more information. Any package found not in compliance with this will be removed immediately.</li>
+<li><strong>Do not include software in a package that you don&#39;t have the right to distribute.</strong> Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })#wiki-distributions-aka-chocolatey-packages">Distribution Rights</a> for more information. Any package found not in compliance with this will be removed immediately. Instead you can download binaries from official distribution locations at runtime.</li>
 <li><strong>Packaging commercial or trial software?</strong> Clearly state this in the package description. Does it require an activation key? Is there a trial period if you don&#39;t have a key? How long is this trial period?</li>
 <li><strong>Only post publicly relevant packages.</strong> You should consider whether this package is useful for others. If that is not the case, it shouldn&#39;t be published on Chocolatey.org. Reasons for that can be if the package would require a very customized configuration. You can host your personal packages on <a href="https://www.myget.org/">MyGet</a> and still be able to install them with Chocolatey using the <code>-source</code> parameter.</li>
 <li><strong>Do not publish junk or malware</strong> packages.</li>
@@ -56,7 +58,7 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <li><strong>Don&#39;t package software that is already packaged</strong>. Use the search function in the <a href="http://chocolatey.org/packages">Chocolatey.org gallery</a> and look if there is already a package for the desired software. If you would like to improve the already existing package or if you have suggestions, just contact the package maintainer or open a pull request at the maintainer&#39;s package repository.</li>
 <li><strong>Don&#39;t include other required software if there&#39;s a package of it.</strong> If a package requires other software of which there is already a package, the already existing package should be used as <a href="http://docs.nuget.org/create/nuspec-reference#specifying-dependencies">dependency</a> instead.</li>
 <li><strong>Split dependencies into multiple packages.</strong> Try to split up packages as much as possible. If for example a program comes with additional modules/installers that are optional, make different packages for them instead of including all the things into one package. This idea is already widely applied for Linux packages, because it leads to a more lightweight system and reduces potential issues and conflicts.</li>
-<li><strong>Use a simple intuitive lowercase name for the package</strong>. See the <a href="http://github.com/chocolatey/chocolatey/wiki/CreatePackages#naming-your-package">package naming guidelines</a> for details. (If you are a reviewer/moderator, this is considered a guideline).</li>
+<li><strong>Use a simple intuitive lowercase name for the package</strong>. See the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#naming-your-package">package naming guidelines</a> for details. (If you are a reviewer/moderator, this is considered a guideline).</li>
 </ol>
 <p>Is your package unqualified for the Chocolatey feed, but you like to be able to install it through Chocolatey? Don&#39;t worry, you can always host your package for free on MyGet. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "hosting-chocolatey-packages-on-my-get" })">Hosting Chocolatey Packages on MyGet</a>.</p>
 <h2 id="character-encoding">Character encoding</h2>

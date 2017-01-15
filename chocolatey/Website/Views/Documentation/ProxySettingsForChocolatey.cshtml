@@ -14,12 +14,10 @@
 choco config set proxyUser &lt;username&gt;
 choco config set proxyPassword &lt;passwordThatGetsEncryptedInFile&gt;</code></pre>
 <h3 id="example">Example</h3>
-<p>Running the following commands in 0.9.9.9:<br />
-~<del>sh<br />
-choco config set proxy <a href="http://localhost:8888" class="uri">http://localhost:8888</a><br />
-choco config set proxyUser bob<br />
-choco config set proxyPassword 123Sup#rSecur3<br />
-</del>~</p>
+<p>Running the following commands in 0.9.9.9:</p>
+<pre><code class="nohighlight">choco config set proxy http://localhost:8888
+choco config set proxyUser bob
+choco config set proxyPassword 123Sup#rSecur3</code></pre>
 <p>Results in the following items being added to the config file:<br />
 <img src="https://cloud.githubusercontent.com/assets/63502/10038348/4205507c-618a-11e5-911b-122eb960bc53.png" alt="image" /></p>
 <h3 id="what-to-do-if-my-proxy-is-socks">What to do if My proxy is socks?</h3>
