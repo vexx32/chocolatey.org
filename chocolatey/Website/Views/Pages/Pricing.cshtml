@@ -127,7 +127,7 @@
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder UI</a> - A visual interface to create packages!</td>
           <td>&nbsp;</td>
-          <td>(Minus detection, Early Q1 2017)</td>
+          <td><span class="text-green icon-check"></span></td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
@@ -143,7 +143,7 @@
           <td>&nbsp;</td>
           <td>(est Q2 2017, search against existing packages only)</td>
           <td>&nbsp;</td>
-          <td>(Q1 2017)</td>
+          <td><span class="text-green icon-check"></span></td>
         </tr>    
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Install Directory Override</a> - one switch for all installers!</td>
@@ -179,6 +179,13 @@
           <td><span class="text-green icon-check"></span></td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+        </tr>      
+        <tr>
+          <td>Packaging Support Services - You upload your troublesome installers, we provide you fully automated packages</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>Add-on at any time</td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Support for Community Packages</a></td>
@@ -246,7 +253,12 @@
 <div class="bg-two p-t--l p-b--l">
   <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
     <h2>FAQ</h2>
-
+    
+    <h3>What Counts As a License?</h3>
+    <p>Every machine that has or will have Chocolatey installed is part of the license count, whether that is for building packages, taking advantage of runtime features, or receiving packages built with Package Builder / Package Internalizer. Those machines can be physical, virtual, in the cloud, or in test environments. It does not matter if you deploy the license to these machines, they are still part of the count for licensing costs. An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshold.</p>
+    
+    <p><strong>Note</strong>: Chocolatey Architect edition is the only exception, where the package you build are deployed to machines in external organizations that your organization has no control over (Chocolatey Architect Edition will be listed with pricing soon).</p>
+ 
     <h3>Tell Me More</h3>
     <p>
         Pro is for individuals (like <em><strong>you</strong></em>) that want the ultimate Chocolatey experience! Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 5 machines for $8/month (about the price of a single lunch outing). You can use Chocolatey Pro at work provided you do not go over the 5 machine limit and are not depending on it for your production servers (it's not meant for production use).
@@ -262,27 +274,33 @@
     <h3>I'm An Organization Ordering Licenses For My Development Staff, Any Recommendations?</h3>
     <p>While you can purchase Pro licenses for each of your developers, we recommend you take a look at the Start Up edition of the Business license. It is going to give you the best option at only $600 per year for up to 35 machines.</p>
     
+    <h3>I'm An Organization That Provides CI / CD / DevOps Services to External Organizations/Customers. What Should I Choose?</h3>
+    <p>You are likely going to be most interested in Chocolatey Architect Edition, which has all of the fantastic packaging and build time features, but does not carry a runtime count as part of the licensing costs. That allows packages to be deployed to environments that your organization doesn't control, whether to environments that have Chocolatey open source or licensed.</p>
+    
+    <h3>What is the difference between Business and Architect?</h3>
+    <p>Architect edition is for creating packages for external organizations or customers. Business edition is when those packages are being deployed to environments in your organization.</p>
+
+    <h3>As an organization that is using Chocolatey, should I get Business or Architect?</h3>
+    <p>If your organization owns/controls the environments, you should purchase Chocolatey for Business. It is a violation of licensing to deploy packages built by Architect edition into your environments, except for testing before providing those packages to your external customers.</p>
+
     <h3>Is the open source license business friendly?</h3>
     <p>Yes, it is. Chocolatey carries a FOSS Apache 2.0 license, which is business friendly. You can use Chocolatey and most of its infrastructure without cost. However the MSP and Business editions offers better features and support that far outweigh any initial expenses! Given the Business features supporting package creation and maintenance alone, the time-savings is far greater than the cost!</p>
 
     <h3>What Is The Refund Policy?</h3>
     <p>We provide a full refund the first 30 days. After that Business editions are prorated over the remainder of the year. MSP and Pro editions are already very discounted so they prorate over the first six months.</p>
-
-    <h3>What Counts As a License?</h3>
-    <p>Every machine with an active license is counted, no matter if it is physical, virtual, in the cloud, or in test environments. An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshhold.</p>
- 
+    
     <h3>What Sizes Do Business Editions Come In?</h3>
-    <p>We are excited to offer the following Business editions at a cost to you of around $1.30 per license per month. The price per machine goes down as you purchase the larger packs. Here are the sizes:</p>
+    <p>We are excited to offer the following Business editions at a cost to you of around $15 per license annually, depending on volume. Here are the sizes:</p>
     <ul class="m-b p--s p-l--l docs">
       <li>Startup - up to 35 licenses</li>
-      <li>Small - 150 licenses per pack</li>
-      <li>Medium - 500 licenses per pack</li>
-      <li>Large - 2,000 licenses per pack</li>
-      <li>Enterprise - 10,000 licenses per pack. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</li>
+      <li>Small - over 35 and up to 500 licenses</li>
+      <li>Medium - 500+ licenses</li>
+      <li>Large - 2,000+ licenses</li>
+      <li>Enterprise - over 10,000 licenses - <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details</li>
     </ul>
   
-    <h3>What Are These "Packs"?</h3>
-    <p>You may be curious about the "pack" in the subscriptions. It's really to give you an approximate cost when it comes to purchasing licensing as the price goes down per machine when you hit each level. If you are a small business with 200 computers, you don't need to purchase a Business Medium license, instead you could purchase two Small Business packs and that would allow you to go up to 300 machines for $400/mo instead of $650/month. If you are a large business with 2,600 machines, you could purchase 2 large business packs which would allow you to go up to 4,000 machines or you can <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> to get a price point for 2,600 machines.</p>
+    <h3>What Are "Business Packs"?</h3>
+    <p>To give you an idea of the costs, the licensing is shown in "packs", e.g. "a large pack" or "three medium packs". It's really to give you an approximate cost when it comes to purchasing licensing as the price goes down per machine when you hit each level. If you are a small business with 200 computers, you don't need to purchase Business Medium, instead you could purchase Business Small for 200 computers (<a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> to do so) or you could directly purchase 2 Small packs and that would allow you to go up to 300 machines for $400/mo instead of $650/month. If you are a large business with 2,600 machines, you could purchase 2 large business packs which would allow you to go up to 4,000 machines or you can <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> to get a price point for 2,600 machines.</p>
 
     <h3>Can I Mix And Match The Business Edition Sizes?</h3>
     <p>The packs really are there to give you a rough idea of the pricing at each volume level. When you have a number of machines that doesn't quite meet one of the levels exactly, you still want to take advantage of that volume pricing but get a price for the number of machines that you have. For example if you have 3,000 machines, you probably won't want to buy two Large Business packs, instead you may just want to purchase licensing for 3,000 machines. While you could purchase two Large Business packs if you are going to expand, it is more economical for you to <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> about pricing for 3,000 machines.</p>
@@ -297,7 +315,7 @@
     <ul class="m-b p--s p-l--l docs">
       <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The MSP edition only has a subset of the features including synchronize and the directory switch.</li>
       <li>Support - Support in the MSP edition is limited to 4 support incidents annually, where Business editions come with standard support.</li>
-      <li>Pricing - The pricing for Business editions are around $1.30 per license per month where the MSP edition is priced at $0.50 per license per month.</li>
+      <li>Pricing - The pricing for Business editions are around $1.30 per license per month (price drops based on volume) where the MSP edition is priced at $0.50 per license per month.</li>
     </ul>
 
     <h3>How is the MSP Edition Priced?</h3>
