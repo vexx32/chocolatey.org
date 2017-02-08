@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading;
 using AnglicanGeek.MarkdownMailer;
 using MarkdownSharp;
 
@@ -31,6 +32,8 @@ namespace NuGetGallery
     /// <remarks>https://github.com/half-ogre/MarkdownMailer/blob/master/LICENSE.txt</remarks>
     public class MailSender : IMailSender
     {
+        private const int SendTimeout = 5000;
+
         private readonly SmtpClient _smtpClient;
 
         public MailSender() : this(new SmtpClient(), null)
@@ -112,7 +115,15 @@ namespace NuGetGallery
                 MediaTypeNames.Text.Html);
             mailMessage.AlternateViews.Add(htmlView);
 
-            _smtpClient.Send(mailMessage);
+            if (!Monitor.TryEnter(_smtpClient, SendTimeout)) throw new TimeoutException("Smtp client busy, unable to send a mail.");
+            try
+            {
+                _smtpClient.Send(mailMessage);
+            }
+            finally
+            {
+                Monitor.Exit(_smtpClient);
+            }
         }
     }
 }
