@@ -17,7 +17,7 @@
 <li>Then create an extensions folder in the root of the package.</li>
 <li>In the extensions folder, create your PowerShell module.</li>
 </ul>
-<p>Here&#39;s an example: <a href="https://chocolatey.org/packages/chocolatey-uninstall.extension" class="uri">https://chocolatey.org/packages/chocolatey-uninstall.extension</a>. The source is at <a href="https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions" class="uri">https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions</a></p>
+<p>Here&#39;s an example: <a href="https://chocolatey.org/packages/chocolatey-core.extension" class="uri">https://chocolatey.org/packages/chocolatey-core.extension</a>. The source is at <a href="https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions" class="uri">https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions</a></p>
 <p>Yes, it is really that easy. Enjoy!</p>
 <h2 id="recommendations">Recommendations</h2>
 <h3 id="naming-your-extension">Naming Your Extension</h3>
@@ -32,14 +32,14 @@
 <h4 id="minimum-version-depdendencies">Minimum Version Depdendencies</h4>
 <p>What does a minimum version depdency look like?</p>
 <pre><code class="xml">&lt;dependencies&gt;
-  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; version=&quot;1.1.0&quot; /&gt;
+  &lt;dependency id=&quot;chocolatey-core.extension&quot; version=&quot;1.1.0&quot; /&gt;
 &lt;/dependencies&gt;</code></pre>
 <h4 id="avoid-version-ranges-for-extensions">Avoid Version Ranges For Extensions</h4>
 <p>Avoid version ranges when it comes to extensions as it can lock out fixes and enhancements in the future.</p>
 <pre><code class="xml">
 &lt;dependencies&gt;
   &lt;!-- This means at least 1.0.0, and anything less than 2 --&gt;
-  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; version=&quot;[1.0.0, 2)&quot; /&gt;
+  &lt;dependency id=&quot;chocolatey-core.extension&quot; version=&quot;[1.0.0, 2)&quot; /&gt;
   &lt;!-- This means anything between 1.0.0 and 2.0.1 (including 2.0.1) is good to go --&gt;
   &lt;dependency id=&quot;another.extension&quot; version=&quot;[1.0.0, 2.0.1]&quot; /&gt;
 &lt;/dependencies&gt;</code></pre>
@@ -47,13 +47,13 @@
 <p>Try to never lock into an exact version dependency:</p>
 <pre><code class="xml">&lt;!-- DO NOT DO THIS --&gt;
 &lt;dependencies&gt;
-  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; version=&quot;[1.1.0]&quot; /&gt;
+  &lt;dependency id=&quot;chocolatey-core.extension&quot; version=&quot;[1.1.0]&quot; /&gt;
 &lt;/dependencies&gt;</code></pre>
 <p>This locks every other package into that singular version and does not allow for upgrades and fixes.</p>
 <h4 id="version-less-dependencies">Version-less Dependencies</h4>
 <p>There is also the concept of versionless dependencies.</p>
 <pre><code class="xml">&lt;dependencies&gt;
-  &lt;dependency id=&quot;chocolatey-uninstall.extension&quot; /&gt;
+  &lt;dependency id=&quot;chocolatey-core.extension&quot; /&gt;
 &lt;/dependencies&gt;</code></pre>
 <p>Folks typically have used these in the past. They are less bad, but it just means that any version will do.</p>
 </article>
