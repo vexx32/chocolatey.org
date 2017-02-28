@@ -16,6 +16,8 @@
 <li>To create an extension package, run <code>choco new name.extension</code> and then delete everything but the nuspec.</li>
 <li>Then create an extensions folder in the root of the package.</li>
 <li>In the extensions folder, create your PowerShell module.</li>
+<li>The important file you will need is a PSM1 (PowerShell Module) file that loads up and ensures functions are available. Have a look at <a href="https://github.com/chocolatey/choco/blob/master/src/chocolatey.resources/helpers/chocolateyProfile.psm1">profile module</a> and <a href="https://github.com/chocolatey/chocolatey-coreteampackages/blob/master/extensions/extensions.psm1">chocolatey-core.extensions module</a>.</li>
+<li>When those functions are loaded by Chocolatey, they will already be available when your scripts run so you won&#39;t need to load up the files again in your install scripts - the functions will already be available!</li>
 </ul>
 <p>Here&#39;s an example: <a href="https://chocolatey.org/packages/chocolatey-core.extension" class="uri">https://chocolatey.org/packages/chocolatey-core.extension</a>. The source is at <a href="https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions" class="uri">https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/extensions</a></p>
 <p>Yes, it is really that easy. Enjoy!</p>

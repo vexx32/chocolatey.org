@@ -7,7 +7,7 @@
 <p>Chocolatey maintains its own state of the world, while Windows maintains the state of Programs and Features. If an application is upgraded or uninstalled outside of Chocolatey, such as is the case with Google Chrome and its auto updating utility, Chocolatey doesn&#39;t know about the change. The synchronize feature keeps Chocolatey&#39;s state in sync with Programs and Features, removing possible system-installed state drift.</p>
 <ul>
 <li><a href="#automatic-synchronize">Automatic Sync</a></li>
-<li><a href="#sync-command">Synchronize Command</a></li>
+<li><a href="#sync-command">Synchronize Command</a> (Business edition only until Q3 2017)</li>
 </ul>
 <h1 id="automatic-synchronize">Automatic Synchronize</h1>
 <p>In licensed editions of Chocolatey, synchronize for existing packages that are tracking to software installed in Programs and Features happens automatically and takes effect prior to the command running.</p>
@@ -37,7 +37,7 @@ This image shows running `choco list -lo`. Chocolatey for Business automatically
 <h3 id="how-does-it-work">How does it work?</h3>
 <p>Chocolatey tracks applications that it installs, so it is able to keep up with those applications as they are upgraded and uninstalled, even outside of Chocolatey.</p>
 <h1 id="sync-command">Sync Command</h1>
-<p>Starting in 1.9.0 of the licensed extension, sync has been added as a preview feature for organizations to try out.</p>
+<p>Starting in 1.9.0 of the licensed extension, sync has been added as a preview feature for organizations to try out. Currently Business edition only, but expected to be in Pro+ in Q3 2017.</p>
 <p>Sync looks at all software that is in Programs and Features that is not being managed with Chocolatey packages and brings them under management. This means you can run one command and suddenly, all of the software installed on a machine is under management by Chocolatey!</p>
 <h2 id="usage-1">Usage</h2>
 <p>To synchronize your system, Simply call <code>choco sync</code> and Chocolatey will ensure that all software in Programs and Features comes under Chocolatey management and provides you the packages/package sources so you can add them to source control for managing those packages over time.</p>

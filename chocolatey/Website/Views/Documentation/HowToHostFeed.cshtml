@@ -69,18 +69,12 @@
 <li>Brandon - <a href="http://netitude.bc3tech.net/2015/01/07/create-your-own-hosted-nuget-server-in-azure/">Host NuGet Server in Azure</a></li>
 </ul>
 <h5 id="chocolatey-server-setup">Chocolatey Server Setup</h5>
-<p><a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey Server</a> is a simple Nuget.Server that is ready to rock and roll. It has already completed Steps 1–3 of NuGet&#39;s <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">host your own remote feed</a>. Version 0.1.2 has the following additional adds:</p>
+<p><a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey Simple Server</a> is a simple Nuget.Server that is ready to rock and roll. It has already completed Steps 1–3 of NuGet&#39;s <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">host your own remote feed</a>. Version 0.1.2 has the following additional adds:</p>
 <ul>
 <li>Uses same enhanced NuGet that Chocolatey uses so you can see more information in search if you choose to use those things.</li>
 <li>Allows packages up to 2GB. Package size can be controlled through <a href="https://msdn.microsoft.com/en-us/library/ms689462(v=vs.90).aspx">maxAllowedContentLength</a> and <a href="https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx">maxRequestLength</a>.</li>
 </ul>
-<p>Set it up:</p>
-<ol>
-<li>Install the <a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey Server</a> package - <code>choco install chocolatey.server -y</code></li>
-<li>Configure IIS appropriately for the package.</li>
-<li>Be sure to give the app pool modify permissions to the <code>App_Data</code> folder.</li>
-</ol>
-<p>Alternative means of installation? If you have <a href="https://docs.puppetlabs.com/puppet/">Puppet</a>, you can take a look at the <a href="https://forge.puppetlabs.com/chocolatey/chocolatey_server">chocolatey server module</a>.</p>
+<p>To set it up, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Set up the Chocolatey.Server</a>.</p>
 <h2 id="package-gallery">Package Gallery</h2>
 <p>This is like what <a href="https://chocolatey.org" class="uri">https://chocolatey.org</a> (the community feed runs on). It is the most advanced, having both a file store for packages and a database for tracking all sorts of information.</p>
 <p><strong>Advantages:</strong></p>

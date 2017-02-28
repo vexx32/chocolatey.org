@@ -3,12 +3,71 @@
 }
 
 <article>
+<h1 id="package-parameters">Package Parameters</h1>
 <p>When installing a Chocolatey Package, it is possible to use a number of arguments to control how the package is installed. Each one of these arguments is detailed <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })">here</a>.</p>
 <p>Package parameters provide a way for a package consumer to make choices about how they want things installed and configuration of the underlying software.</p>
+<ul>
+<li><a href="#walkthrough">Walkthrough</a></li>
+<li><a href="#step-1---determine-your-package-parameters">Step 1 - Determine Parameters</a></li>
+<li><a href="#step-2---add-package-parameters-to-the-description">Step 2 - Add to Package Description</a></li>
+<li><a href="#step-3---use-core-community-extension">Step 3 - Use <code>Get-PackageParameters</code></a></li>
+<li><a href="#step-3-alternative---set-up-your-own-parsing">Step 3 (alternative) - Parse Your Own</a></li>
+<li><a href="#review-set-parameters">Review</a></li>
+<li><a href="#installing-with-package-parameters">Installing With Package Parameters</a></li>
+</ul>
+<p><strong>NOTE:</strong> There is also the concept of &quot;Install Arguments&quot;, or silent arguments you can pass through transparently to the native installer. This is more of a way for a package consumer to override the default silent arguments that are passed to the native installer.</p>
 <p><strong>NOTE:</strong> Package parameters are not meant to be a substitute for sensible default values. A package installation should require no arguments and the default values should just happen. This is especially true of the packages on the community feed. If you are hosting your own internal feeds, it is recommended you follow this behavior, but not required.</p>
-<p><strong>NOTE:</strong> See <a href="https://github.com/chocolatey/choco/issues/312">#312</a> for Chocolatey v0.9.10 adding a helper to do the below with almost no boilerplate.</p>
+<p><strong>NOTE:</strong> <code>Get-PackageParameters</code> is available now with a dependency on <code>chocolatey-core.extension</code>, and in a future version of Chocolatey (see <a href="https://github.com/chocolatey/choco/issues/312">#312</a>), it will also be one of Chocolatey&#39;s built-in functions.</p>
+<h2 id="walkthrough">Walkthrough</h2>
+<h3 id="step-1---determine-your-package-parameters">Step 1 - Determine your Package Parameters</h3>
+<p>One thing you will need is a good idea of what package parameters and defaults for those parameters what you would offer. Let&#39;s say the following package parameters can be set:</p>
+<ul>
+<li>Port - defaults to &quot;81&quot;</li>
+<li>Edition - defaults to &quot;LicenseKey&quot;</li>
+<li>AdditionalTools (boolean switch) - all booleans default to false</li>
+<li>InstallationPath - defaulting to &quot;c:\temp&quot; (or <code>$env:SystemDrive\temp</code>)</li>
+</ul>
+<h3 id="step-2---add-package-parameters-to-the-description">Step 2 - Add Package Parameters to the Description</h3>
+<p>Be sure to let folks know about the package parameters (<strong>Note:</strong> this will be a holding review item by moderators).</p>
+<p>Set up your nuspec appropriately:</p>
+<pre><code class="xml">    &lt;description&gt;
+Main description here about the software
+
+### Package Specific
+
+#### Package Parameters
+The following package parameters can be set:
+
+ * `/Port` - determines what port to listen on - defaults to &quot;81&quot;
+ * `/Edition` - What edition to install - defaults to &quot;LicenseKey&quot;
+ * `/AdditionalTools` - install additional tools
+ * `/InstallationPath` - Where to install the binaries to - defaults to &quot;`$env:SystemDrive\temp`&quot;
+
+These parameters can be passed to the installer with the use of `-params`.
+For example: `-params &quot;&#39;/Port:82 /AdditionalTools&#39;&quot;`.
+    &lt;/description&gt;</code></pre>
+<h3 id="step-3---use-core-community-extension">Step 3 - Use Core Community extension</h3>
+<p>If you want to do this simply, take a dependency on the <a href="https://chocolatey.org/packages/chocolatey-core.extension">core community extension</a>, which already has the above function <code>Get-PackageParameters</code> built in.</p>
+<p>Open the nuspec back up and add a dependency on <code>chocolatey-core.extension</code>. This will be inserted just above the closing &quot;metadata&quot; tag (<code>&lt;/metadata&gt;</code>).</p>
+<pre><code class="xml">  &lt;dependencies&gt;
+      &lt;dependency id=&quot;chocolatey-core.extension&quot; version=&quot;1.0.0&quot; /&gt; 
+  &lt;/dependencies&gt;</code></pre>
+<p><strong>NOTE</strong>: The version specified without brackets (<code>[]</code>) means this is a minimum version dependency. So in this case, 1.0.0 or newer (<code>&gt;=1.0.0</code>). If it was <code>[1.0.0]</code>, that would mean exactly version 1.0.0 (<code>=1.0.0</code>).</p>
+<p>Now use <code>Get-PackageParameters</code> to parse the parameters as it will automatically be added to the functions when Chocolatey adds the <code>chocolatey-core.extension</code>.</p>
+<pre><code class="powershell">$pp = Get-PackageParameters
+
+if ($pp[&quot;Port&quot;] -eq $null -or $pp[&quot;Port&quot;] -eq &#39;&#39;) { $pp[&quot;Port&quot;] = &#39;81&#39; }
+if ($pp[&quot;Edition&quot;] -eq $null -or $pp[&quot;Edition&quot;] -eq &#39;&#39;) { $pp[&quot;Edition&quot;] = &#39;LicenseKey&#39; }
+if ($pp[&quot;AdditionalTools&quot;] -eq $null -or $pp[&quot;AdditionalTools&quot;] -eq &#39;&#39;) { $pp[&quot;AdditionalTools&quot;] = &#39;false&#39; }
+if ($pp[&quot;InstallationPath&quot;] -eq $null -or $pp[&quot;InstallationPath&quot;] -eq &#39;&#39;) { $pp[&quot;InstallationPath&quot;] = &quot;$env:SystemDrive\temp&quot; }
+
+$silentArgs = &quot;/S /Port:$($pp[&quot;Port&quot;]) /Edition:$($pp[&quot;Edition&quot;]) /InstallationPath:$($pp[&quot;InstallationPath&quot;])&quot;
+if ($pp[&quot;AdditionalTools&quot;] -eq &#39;true&#39;) { $silentArgs += &quot; /Additionaltools&quot; }
+
+Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quot;</code></pre>
+<h3 id="step-3-alternative---set-up-your-own-parsing">Step 3 (alternative) - Set up Your Own Parsing</h3>
 <p>This <em>How-To</em> focuses on how a package creator can make use of the PackageParameters argument within their package, and how they can parse the string which is passed through into their package from the installation command.</p>
-<h2 id="code-sample">Code Sample</h2>
+<h4 id="code-sample">Code Sample</h4>
 <pre><code class="powershell">
   $arguments = @@{}
 
@@ -70,40 +129,20 @@
   if ($additionalTools) { $silentArgs += &quot; /Additionaltools&quot; }
 
   Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quot;</code></pre>
-<h2 id="what-does-this-mean">What does this mean?</h2>
-<p>The Code Sample assumes that there will be no PackageParameters passed into it, as a result, we need to define a number of default values for each of the variables contained within the script. In this case, the <code>port</code>, the <code>edition</code>, the <code>additionalTools</code> and the <code>installationPath</code>.</p>
+<h2 id="review-set-parameters">Review Set Parameters</h2>
+<p>We&#39;ve set up package parameters now for a package and have added information for consumers to know what is offered.</p>
+<p>The code samples above assume that there will be no PackageParameters passed into it by default and have set sensible defaults for the values. In this case, the <code>port</code>, the <code>edition</code>, the <code>additionalTools</code> and the <code>installationPath</code>.</p>
 <p>Once that is done, assuming that the PackageParameters contains &quot;something&quot;, use a Regular Expression to parse each of the values into a dictionary. Here, we are assuming that the package parameters will come through in a pre-defined format, such as <code>/Port:82 /Edition:LicenseKey1 /AdditionalTools /InstallationPath:'C:\temp\folder with spaces'</code>. Now, this format can be anything you want it to be. What is shown here is just <strong>one</strong> way of doing it. If you need to deviate from this sample structure, it is likely that you will need to update the regular expression to account for this.</p>
 <p>Having collected all the arguments into the dictionary, we can then inspect the values of each parameter that we are interested in. If it exists in the dictionary, replace the corresponding default value, otherwise, continue to use the default value.</p>
-<h2 id="add-package-parameter-information-to-the-description">Add Package Parameter Information to the Description</h2>
-<p>Be sure to let folks know about the package parameters (<strong>Note:</strong> this will be a holding review item by moderators).</p>
-<p>Here&#39;s an example:</p>
-<pre><code class="xml">    &lt;description&gt;
-Git (for Windows) - Git is a powerful distributed Source Code Management tool. If you just want to use Git to do your version control in Windows, you will need to download Git for Windows, run the installer, and you are ready to start.
-
-Note: Git for Windows is a project run by volunteers, so if you want it to improve, volunteer!
-
-### Package Specifics
-The package uses default install options minus cheetah integration and desktop icons. Cheetah prevents a good upgrade scenario, so it has been removed.
-
-#### Package Parameters
-The following package parameters can be set:
-
- * `/GitOnlyOnPath` - this puts gitinstall\cmd on path. This is also done by default if no package parameters are set.
- * `/GitAndUnixToolsOnPath` - this puts gitinstall\bin on path. This setting will override `/GitOnlyOnPath`.
- * `/NoAutoCrlf` - this setting only affects new installs, it will not override an existing `.gitconfig`. This will ensure &#39;Checkout as is, commit as is&#39;
-
-These parameters can be passed to the installer with the use of `-params`.
-For example: `-params &#39;&quot;/GitAndUnixToolsOnPath /NoAutoCrlf&quot;&#39;`.
-    &lt;/description&gt;</code></pre>
-<h2 id="installing-the-package">Installing the Package</h2>
+<h2 id="installing-with-package-parameters">Installing With Package Parameters</h2>
 <p>Now, in this example, if we were to call:</p>
 <p><code>choco install &lt;packageName&gt;</code></p>
 <p>The output would be:</p>
 <pre><code class="nohighlight">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</code></pre>
 <p>i.e.&nbsp; it is using the default values which we made at the top of the file</p>
 <p>However, if we instead used:</p>
-<pre><code class="nohighlight">choco install &lt;packageName&gt; -packageParameters &#39;&quot;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&quot;&#39;</code></pre>
-<p>Keep in mind how to pass pkg args: <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches" class="uri">https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches</a></p>
+<pre><code class="nohighlight">choco install &lt;packageName&gt; -packageParameters &quot;&#39;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&#39;&quot;</code></pre>
+<p>Keep in mind how to pass package args: <a href="https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches" class="uri">https://github.com/chocolatey/choco/wiki/CommandsReference#how-to-pass-options--switches</a></p>
 <p>The output would be:</p>
 <pre><code class="nohighlight">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</code></pre>
 </article>

@@ -4,6 +4,25 @@
 
 <article>
 <h1 id="install-the-licensed-edition">Install The Licensed Edition</h1>
+<p>Congratulations on your recent purchase of a licensed edition of Chocolatey! If you are trialing, please pay particular attention to that section:</p>
+<ul>
+<li><a href="#some-administrative-actions">Administrative Actions</a></li>
+<li><a href="#how-do-i-know-when-the-license-is-installed">Know When License is Good</a></li>
+<li><a href="#see-it-in-action">See It!</a></li>
+<li><a href="#how-do-i-install-the-licensed-edition">How To Install</a></li>
+<li><a href="#how-do-i-install-the-trial-edition">Install Trial Edition</a></li>
+<li><a href="#upgrading">How To Upgrade</a></li>
+<li><a href="#how-do-i-upgrade-the-trial-edition">Upgrade Trial Edition</a></li>
+<li><a href="#installing--upgrading-in-secure-environments--without-internet-access">Install / Upgrade in Secure Environments</a></li>
+<li><a href="#set-up-licensed-edition-with-puppet">Set Up With Puppet</a></li>
+</ul>
+<h2 id="some-administrative-actions">Some Administrative Actions</h2>
+<ul>
+<li>The email the license is sent to will automatically be subscribed to the customer advisory list. If there are other folks who need to be on that list for important notifications, please have them sign up at <a href="http://eepurl.com/b6zpGv">Chocolatey Customers</a>.</li>
+<li>Please sign up for software announcements at <a href="https://groups.google.com/d/forum/chocolatey-announce">Chocolatey Announce</a>. Direct others to sign up for the list as well.</li>
+<li>For support, remember to use the support email address (below).</li>
+<li>Learn how to install below. Installation is also found at <a href="https://chocolatey.org/docs/installation-licensed" class="uri">https://chocolatey.org/docs/installation-licensed</a>.</li>
+</ul>
 <h2 id="how-do-i-know-when-the-license-is-installed">How Do I Know When the License is Installed?</h2>
 <p>Installing a licensed edition requires two parts</p>
 <ul>
@@ -29,18 +48,92 @@
 <ol>
 <li>That&#39;s it! You are good to go.</li>
 </ol>
-<h2 id="how-do-i-install-the-trial-edition">How Do I Install The Trial Edition?</h2>
+<h3 id="how-do-i-install-the-trial-edition">How Do I Install The Trial Edition?</h3>
 <p>If you&#39;ve received a trial license, you will also receive a link to download a recent version of the <code>chocolatey.extension</code> package. You will not be able to install or upgrade the licensed edition through regular means. Chocolatey may add the licensed source, but your license will not be recognized on the server.</p>
 <ul>
 <li>Follow all of the instructions above except the <code>choco upgrade chocolatey.extension</code> command, that will not work with the trial license as the license will not be recognized by the licensed source.</li>
 <li>Instead download the <code>chocolatey.extension</code> (licensed package) from the provided download link location and remember where you saved it.</li>
 <li>Now run this command: <code>choco upgrade chocolatey.extension --pre --source c:\folder\where\downloaded\nupkg\resides</code> (or you can use <code>install</code> instead of <code>upgrade</code>). <strong>Note</strong>: Source location is not <code>--source c:\downloads\chocolatey.extension.1.8.1.nupkg</code>, it is <code>--source c:\downloads</code>.</li>
 </ul>
-<h3 id="some-administrative-actions">Some Administrative Actions</h3>
+<h2 id="upgrading">Upgrading</h2>
+<p>To upgrade the licensed edition just run the following code:</p>
 <ul>
-<li>The email this license is being sent to will automatically be subscribed to the customer advisory list. If there are other folks who need to be on that list for important notifications, please have them sign up at <a href="http://eepurl.com/b6zpGv">Chocolatey Customers</a>.</li>
-<li>Please sign up for software announcements at <a href="https://groups.google.com/d/forum/chocolatey-announce">Chocolatey Announce</a>. Direct others to sign up for the list as well.</li>
-<li>For support, remember to use the support email address (below).</li>
-<li>Learn how to install below. Installation is also found at <a href="https://chocolatey.org/docs/installation-licensed" class="uri">https://chocolatey.org/docs/installation-licensed</a>.</li>
+<li><code>choco upgrade chocolatey.extension</code></li>
 </ul>
+<p>Your license automatically adds the licensed source.</p>
+<h3 id="how-do-i-upgrade-the-trial-edition">How Do I Upgrade The Trial Edition?</h3>
+<p>You will not be able to upgrade through regular means - please reach back out to the Chocolatey Software folks to get an updated edition (and possibly an extended trial license).</p>
+<h2 id="installing-upgrading-in-secure-environments-without-internet-access">Installing / Upgrading In Secure Environments / Without Internet Access</h2>
+<p>Once you have the license down and the licensed edition extension intstalled the first time, you will have access to <code>choco download</code>. This will allow you to download the licensed edition and put it on your internally hosted repository.</p>
+<p>From a machine that will have access to do this you simply run:</p>
+<ul>
+<li><code>choco download chocolatey.extension --source https://licensedpackages.chocolatey.org/api/v2/ --ignore-dependencies</code></li>
+<li>Whatever followup command you need to push that downloaded package to your internal package repository.</li>
+</ul>
+<p>You can even script this or add it to a CI job that would automatically make the newer edition available.</p>
+<p><strong>NOTE</strong>: The licensed source that is automatically added can be disabled, but it cannot be removed. So just run <code>choco source disable -n chocolatey.licensed</code> to disable it or set that up in your configuration management solution scripts. Some of them, like Puppet, have a resource dedicated strictly to this:</p>
+<pre><code class="puppet">chocolateysource {&#39;chocolatey.licensed&#39;:
+  ensure   =&gt; disabled,
+  require  =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
+}</code></pre>
+<h2 id="set-up-licensed-edition-with-puppet">Set Up Licensed Edition With Puppet</h2>
+<p>Most organizations using Chocolatey and Puppet are going to do so with zero internet access. Here is what a completely offline ensurance of Chocolatey looks like (complete with a Chocolatey.Server instance):</p>
+<pre><code class="puppet"># ensure Chocolatey is installed - host the package internally
+class {&#39;chocolatey&#39;:
+  chocolatey_download_url         =&gt; &#39;https://internalurl/to/chocolatey.nupkg&#39;,
+}
+
+# ensure installation of the Chocolatey Simple Server package repository
+class {&#39;chocolatey_server&#39;:
+  server_package_source =&gt; &#39;https://internalurl/odata/server&#39;,
+}
+
+file { [&#39;C:/ProgramData/chocolatey&#39;,&#39;C:/ProgramData/chocolatey/license&#39;]:
+  ensure =&gt; directory,
+}
+
+file {&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;:
+  ensure             =&gt; file,
+  source             =&gt; &#39;puppet:///modules/choco_internal/chocolatey.license.xml&#39;,
+  source_permissions =&gt; ignore,
+}
+
+# configure sources
+chocolateysource {&#39;chocolatey&#39;:
+  ensure   =&gt; absent,
+}
+
+chocolateysource {&#39;chocolatey.licensed&#39;:
+  ensure   =&gt; disabled,
+  require  =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
+}
+
+chocolateysource {&#39;internal_chocolatey&#39;:
+  ensure   =&gt; enabled,
+  location =&gt; &#39;http://internal/server&#39;,
+  priority =&gt; 1,
+}
+
+# set features appropriately
+chocolateyfeature {&#39;useFipsCompliantChecksums&#39;:
+  ensure =&gt; enabled,
+}
+
+# https://chocolatey.org/docs/features-automatically-recompile-packages
+chocolateyfeature {&#39;internalizeAppendUseOriginalLocation&#39;:
+  ensure =&gt; enabled,
+  require =&gt; Package[&#39;chocolatey.extension&#39;],
+}
+
+# configuration
+chocolateyconfig {&#39;cacheLocation&#39;:
+  value  =&gt; &#39;c:\ProgramData\choco-cache&#39;,
+}
+
+# ensure licensed edition is installed
+package { &#39;chocolatey.extension&#39;:
+  ensure   =&gt; latest,
+  source   =&gt; &#39;internal_chocolatey&#39;,
+  require  =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
+}</code></pre>
 </article>
