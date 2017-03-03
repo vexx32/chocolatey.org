@@ -25,6 +25,7 @@
     silentargs</code></pre>
 <p>However <code>PackageName</code> and <code>PackageNameLower</code> also show up as they are based on the name of the package that you pass e.g. &quot;bob&quot; in <code>choco new bob</code></p>
 <p>Then you surround those templated values with <code>[[]]</code> to make them templated for choco to use.</p>
+<p><strong>NOTE</strong>: You can set and pass arbitrary values through as well. This is shown in the example with <code>CustomValue</code>.</p>
 <h2 id="example">Example</h2>
 <p>This is a template for embedding an MSI into a package. This removes almost everything that is unnecessary for embedding software into packages. And because the autoUninstaller handles MSIs without an issue, we don&#39;t need a chocolateyUninstall.ps1.</p>
 <p>A file with the extension <code>.nuspec</code>:</p>
@@ -49,7 +50,8 @@
   &lt;/files&gt;
 &lt;/package&gt;</code></pre>
 <p><code>tools\chocolateyInstall.ps1</code>:</p>
-<pre><code class="powershell">$ErrorActionPreference = &#39;Stop&#39;; # stop on all errors
+<pre><code class="powershell"># Custom value: [[CustomValue]]
+$ErrorActionPreference = &#39;Stop&#39;; # stop on all errors
 
 [[AutomaticPackageNotesInstaller]]
 $packageName  = &#39;[[PackageName]]&#39;
@@ -70,6 +72,7 @@ $packageArgs = @@{
 }
 
 Install-ChocolateyInstallPackage @@packageArgs</code></pre>
+<p>Once installed, call this with <code>choco new test -t mytemplatename CustomValue=Yes</code></p>
 <h3 id="manage-as-templates-as-packages">Manage as Templates as Packages</h3>
 <p>If you have Chocolatey v0.9.10+, then you can manage templates as packages themselves, allowing you to upgrade a template when a new version is available. When it comes to packaging templates, Chocolatey takes a conventional approach. You must create a package with the suffix &quot;.template&quot; and have a templates folder.</p>
 <p>To manage a template as a package, create a new package with the name &quot;templatename.template&quot;. The name of the package minus the &quot;.template&quot; will be the name of the template.</p>
@@ -77,10 +80,9 @@ Install-ChocolateyInstallPackage @@packageArgs</code></pre>
 <p>Here&#39;s an example: <a href="https://chocolatey.org/packages/zip.template" class="uri">https://chocolatey.org/packages/zip.template</a>. The source is at <a href="https://github.com/ferventcoder/chocolatey-packages/tree/master/manual/zip.template" class="uri">https://github.com/ferventcoder/chocolatey-packages/tree/master/manual/zip.template</a></p>
 <p>Yes, it is really that easy. Enjoy!</p>
 <h3 id="extending-templates">Extending Templates</h3>
-<p>Walmart has a really good post on extending package templates. You can read that at <a href="https://puppet.com/blog/extending-chocolatey-packaging-walmart" class="uri">https://puppet.com/blog/extending-chocolatey-packaging-walmart</a></p>
+<p>Walmart has a really good post on extending package templates. You can read that at <a href="https://chocolatey.org/blog/extending-chocolatey-packaging-at-walmart" class="uri">https://chocolatey.org/blog/extending-chocolatey-packaging-at-walmart</a></p>
 <h3 id="are-there-planned-enhancements">Are There Planned Enhancements?</h3>
 <ul>
 <li>List Template names - <a href="https://github.com/chocolatey/choco/issues/449" class="uri">https://github.com/chocolatey/choco/issues/449</a></li>
-<li>Arbitrary key/value pairs - <a href="https://github.com/chocolatey/choco/issues/658" class="uri">https://github.com/chocolatey/choco/issues/658</a> - DONE in 0.9.10 (beta available)</li>
 </ul>
 </article>

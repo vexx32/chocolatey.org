@@ -95,13 +95,73 @@
 </ul>
 <h2 id="variables">Variables</h2>
 <p>There are also a number of environment variables providing access to some values from the nuspec and other information that may be useful. They are accessed via <code>$env:variableName</code>.</p>
+<h3 id="environment-variables">Environment Variables</h3>
+<p>Chocolatey makes a number of environment variables available (You can access any of these with $env:TheVariableNameBelow):</p>
 <ul>
-<li><strong>chocolateyPackageFolder</strong> = the folder where Chocolatey has downloaded and extracted the NuGet package, typically <code>C:\ProgramData\chocolatey\lib\packageName</code>.</li>
-<li><strong>chocolateyPackageName</strong> (since 0.9.9.0) = The package name, which is equivalent to the <code>&lt;id&gt;</code> tag in the nuspec</li>
-<li><strong>chocolateyPackageVersion</strong> (since 0.9.9.0) = The package version, which is equivalent to the <code>&lt;version&gt;</code> tag in the nuspec</li>
+<li>TEMP/TMP - Overridden to the CacheLocation, but may be the same as the original TEMP folder</li>
+<li>ChocolateyInstall - Top level folder where Chocolatey is installed</li>
+<li>ChocolateyPackageName - The name of the package, equivalent to the <code>&lt;id /&gt;</code> field in the nuspec (0.9.9+)</li>
+<li>ChocolateyPackageTitle - The title of the package, equivalent to the <code>&lt;title /&gt;</code> field in the nuspec (0.10.1+)</li>
+<li>ChocolateyPackageVersion - The version of the package, equivalent to the <code>&lt;version /&gt;</code> field in the nuspec (0.9.9+)</li>
+<li>ChocolateyPackageFolder - The top level location of the package folder - the folder where Chocolatey has downloaded and extracted the NuGet package, typically <code>C:\ProgramData\chocolatey\lib\packageName</code>.</li>
 </ul>
-<p><code>chocolateyPackageVersion</code> may be particularly useful, since that would allow you in some cases to create packages for new releases of the updated software by only changing the <code>&lt;version&gt;</code> in the nuspec and not having to touch the <code>chocolateyInstall.ps1</code> at all. An example of this:</p>
-<pre><code class="powershell">$url = &quot;http://www.thesoftware.com/downloads/thesoftware-$env:chocolateyPackageVersion.zip&quot;
-
-Install-ChocolateyZipPackage &#39;$env:chocolateyPackageName&#39; $url $binRoot</code></pre>
+<h4 id="advanced-environment-variables">Advanced Environment Variables</h4>
+<p>The following are more advanced settings:</p>
+<ul>
+<li>ChocolateyPackageParameters - Parameters to use with packaging, not the same as install arguments (which are passed directly to the native installer). Based on <code>--package-parameters</code>. (0.9.8.22+)</li>
+<li>CHOCOLATEY_VERSION - The version of Choco you normally see. Use if you are &quot;˜lighting&#39; things up based on choco version. (0.9.9+) - Otherwise take a dependency on the specific version you need.</li>
+<li>ChocolateyForceX86 = If available and set to &quot;˜true&#39;, then user has requested 32bit version. (0.9.9+) - Automatically handled in built in Choco functions.</li>
+<li>OS_PLATFORM - Like Windows, OSX, Linux. (0.9.9+)</li>
+<li>OS_VERSION - The version of OS, like 6.1 something something for Windows. (0.9.9+)</li>
+<li>OS_NAME - The reported name of the OS. (0.9.9+)</li>
+<li>IS_PROCESSELEVATED = Is the process elevated? (0.9.9+)</li>
+<li>ChocolateyToolsLocation - formerly &quot;˜ChocolateyBinRoot&#39; (&quot;˜ChocolateyBinRoot&#39; will be removed with Chocolatey v2.0.0), this is where tools being installed outside of Chocolatey packaging will go. (0.9.10+)</li>
+</ul>
+<h4 id="set-by-options-and-configuration">Set By Options and Configuration</h4>
+<p>Some environment variables are set based on options that are passed, configuration and/or features that are turned on:</p>
+<ul>
+<li>ChocolateyEnvironmentDebug - Was <code>--debug</code> passed? If using the built-in PowerShell host, this is always true (but only logs debug messages to console if <code>--debug</code> was passed) (0.9.10+)</li>
+<li>ChocolateyEnvironmentVerbose - Was <code>--verbose</code> passed? If using the built-in PowerShell host, this is always true (but only logs verbose messages to console if <code>--verbose</code> was passed). (0.9.10+)</li>
+<li>ChocolateyForce - Was <code>--force</code> passed? (0.9.10+)</li>
+<li>ChocolateyForceX86 - Was <code>-x86</code> passed? (CHECK)</li>
+<li>ChocolateyRequestTimeout - How long before a web request will time out. Set by config <code>webRequestTimeoutSeconds</code> (CHECK)</li>
+<li>ChocolateyResponseTimeout - How long to wait for a download to complete? Set by config <code>commandExecutionTimeoutSeconds</code> (CHECK)</li>
+<li>ChocolateyPowerShellHost - Are we using the built-in PowerShell host? Set by <code>--use-system-powershell</code> or the feature <code>powershellHost</code> (0.9.10+)</li>
+</ul>
+<h4 id="business-edition-variables">Business Edition Variables</h4>
+<ul>
+<li>ChocolateyInstallArgumentsSensitive - Encrypted arguments passed from command line <code>--install-arguments-sensitive</code> that are not logged anywhere. (0.10.1+ and licensed editions 1.6.0+)</li>
+<li>ChocolateyPackageParametersSensitive - Package parameters passed from command line <code>--package-parameters-senstivite</code> that are not logged anywhere. (0.10.1+ and licensed editions 1.6.0+)</li>
+<li>ChocolateyLicensedVersion - What version is the licensed edition on?</li>
+<li>ChocolateyLicenseType - What edition / type of the licensed edition is installed?</li>
+</ul>
+<h4 id="experimental-environment-variables">Experimental Environment Variables</h4>
+<p>The following are experimental or use not recommended:</p>
+<ul>
+<li>OS_IS64BIT = This may not return correctly - it may depend on the process the app is running under (0.9.9+)</li>
+<li>CHOCOLATEY_VERSION_PRODUCT = the version of Choco that may match CHOCOLATEY_VERSION but may be different (0.9.9+) - based on git describe</li>
+<li>IS_ADMIN = Is the user an administrator? But doesn&#39;t tell you if the process is elevated. (0.9.9+)</li>
+</ul>
+<h4 id="not-useful-or-anti-pattern-if-used">Not Useful Or Anti-Pattern If Used</h4>
+<ul>
+<li>ChocolateyInstallOverride = Not for use in package automation scripts. Based on <code>--override-arguments</code> being passed. (0.9.9+)</li>
+<li>ChocolateyInstallArguments = The installer arguments meant for the native installer. You should use chocolateyPackageParameters intead. Based on <code>--install-arguments</code> being passed. (0.9.9+)</li>
+<li>ChocolateyIgnoreChecksums - Was <code>--ignore-checksums</code> passed or the feature <code>checksumFiles</code> turned off? (0.9.9.9+)</li>
+<li>ChocolateyAllowEmptyChecksums - Was <code>--allow-empty-checksums</code> passed or the feature <code>allowEmptyChecksums</code> turned on? (0.10.0+)</li>
+<li>ChocolateyAllowEmptyChecksumsSecure - Was <code>--allow-empty-checksums-secure</code> passed or the feature <code>allowEmptyChecksumsSecure</code> turned on? (0.10.0+)</li>
+<li>ChocolateyCheckLastExitCode - Should Chocolatey check LASTEXITCODE? Is the feature <code>scriptsCheckLastExitCode</code> turned on? (0.10.3+)</li>
+<li>ChocolateyChecksum32 - Was <code>--download-checksum</code> passed? (0.10.0+)</li>
+<li>ChocolateyChecksumType32 - Was <code>--download-checksum-type</code> passed? (0.10.0+)</li>
+<li>ChocolateyChecksum64 - Was <code>--download-checksum-x64</code> passed? (0.10.0)+</li>
+<li>ChocolateyChecksumType64 - Was <code>--download-checksum-type-x64</code> passed? (0.10.0)+</li>
+<li>ChocolateyPackageExitCode - The exit code of the script that just ran - usually set by <code>Set-PowerShellExitCode</code> (CHECK)</li>
+<li>ChocolateyLastPathUpdate - Set by Chocolatey as part of install, but not used for anything in particular in packaging.</li>
+<li>ChocolateyProxyLocation - The explicit proxy location as set in the configuration <code>proxy</code> (0.9.9.9+)</li>
+<li>ChocolateyDownloadCache - Use available download cache? Set by <code>--skip-download-cache</code>, <code>--use-download-cache</code>, or feature <code>downloadCache</code> (0.9.10+ and licensed editions 1.1.0+)</li>
+<li>ChocolateyProxyBypassList - Explicitly set locations to ignore in configuration <code>proxyBypassList</code> (0.10.4+)</li>
+<li>ChocolateyProxyBypassOnLocal - Should the proxy bypass on local connections? Set based on configuration <code>proxyBypassOnLocal</code> (0.10.4+)</li>
+<li>http_proxy - Set by original <code>http_proxy</code> passthrough, or same as <code>ChocolateyProxyLocation</code> if explicitly set. (0.10.4+)</li>
+<li>https_proxy - Set by original <code>https_proxy</code> passthrough, or same as <code>ChocolateyProxyLocation</code> if explicitly set. (0.10.4+)</li>
+<li>no_proxy- Set by original <code>no_proxy</code> passthrough, or same as <code>ChocolateyProxyBypassList</code> if explicitly set. (0.10.4+)</li>
+</ul>
 </article>
