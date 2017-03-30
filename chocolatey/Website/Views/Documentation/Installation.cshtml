@@ -21,7 +21,7 @@
 </ol>
 <p><strong>NOTE</strong>: If you are behind a proxy, please see <a href="#more-install-options">More Options</a>.</p>
 <h4 id="install-with-cmd.exe">Install with cmd.exe</h4>
-<p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> </p>
+<p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
 <pre><code class="nohighlight">
 @@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
@@ -29,7 +29,7 @@
 <p>With PowerShell, there is an additional step. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
 <ul>
 <li>Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass</code>.</li>
-<li>Now run the following command:  Copy command to clipboard: <button class="icon-clipboard copy-button" data-clipboard-text="iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button> </li>
+<li>Now run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button> (copy command text) </li>
 </ul>
 <pre><code class="powershell">
 # Don&#39;t forget to ensure ExecutionPolicy above
@@ -67,7 +67,7 @@ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.or
 <p>With PowerShell, there is an additional step or two. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
 <ul>
 <li>Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass</code>.</li>
-<li>Now run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </li>
+<li>Now run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command text) </li>
 </ul>
 <pre><code class="powershell">
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
@@ -101,6 +101,7 @@ SET DIR=%~dp0%
 <p>You can also just download and unzip the Chocolatey package (<code>.nupkg</code> is a fancy zip file):</p>
 <ol>
 <li>Download the <a href="https://chocolatey.org/api/v2/package/chocolatey/">Chocolatey package</a>.</li>
+<li>Ensure the downloaded nupkg is not blocked.</li>
 <li>Unzip it using any application that supports <code>zip</code> format.</li>
 <li>Open a PowerShell command shell and navigate into the unzipped package&#39;s tools folder.</li>
 <li><strong>NOTE</strong>: Ensure PowerShell execution policy is set to at least bypass or remote signed (if you have issues, you may need to set it to Unrestricted).</li>
@@ -112,13 +113,13 @@ SET DIR=%~dp0%
 <h3 id="installing-behind-a-proxy">Installing behind a proxy</h3>
 <p>Have a proxy? Try</p>
 <ul>
-<li>Cmd.exe - <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button></li>
+<li>Cmd.exe:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button> (copy command text) </li>
 </ul>
 <pre><code class="nohighlight">
 @@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET PATH=&quot;%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
 <ul>
-<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned) - <button class="icon-clipboard copy-button" data-clipboard-text="[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button></li>
+<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):  <button class="icon-clipboard copy-button" data-clipboard-text="[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button> (copy command text) </li>
 </ul>
 <pre><code class="powershell">
 [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
