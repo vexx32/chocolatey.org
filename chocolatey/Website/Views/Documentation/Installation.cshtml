@@ -32,12 +32,8 @@
 <li>Now run the following command:  Copy command to clipboard: <button class="icon-clipboard copy-button" data-clipboard-text="iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button> </li>
 </ul>
 <pre><code class="powershell">
-# Don&#39;t forget `Set-ExecutionPolicy AllSigned` above
+# Don&#39;t forget to ensure ExecutionPolicy above
 iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
-</code></pre>
-<p>Chocolatey installs in seconds. Just run the following command from an <strong><em>administrative</em></strong> PowerShell v3+ prompt (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted):  <button class="icon-clipboard copy-button" data-clipboard-text="iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command) </p>
-<pre><code class="powershell">
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
 <h4 id="additional-considerations">Additional considerations</h4>
 <p><strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it&#39;s safe, but you should also be comfortable before running <strong><em>any</em></strong> script from the internet you are not familiar with. All of these scripts download a remote PowerShell script and execute it on your machine.</p>
