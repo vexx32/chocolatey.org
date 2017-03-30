@@ -8,13 +8,21 @@
 <p>Please read <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#should-my-organization-depend-on-use-the-community-feed-httpschocolateyorgpackages">Depending on the chocolatey.org as an organization</a></p>
 <h2 id="host-your-own-server">Host your own server</h2>
 <p>There are three types of package repositories, <a href="#local-folder--unc-share">folder/unc share</a>, <a href="#simple-server">simple server</a>, and the sophisticated <a href="#package-gallery">package gallery</a>.</p>
-<p><strong>Alternative Hosting Options (that require less work/maintenance):</strong></p>
+<p><strong>Known Hosting Options</strong></p>
 <ul>
-<li><a href="https://www.myget.org/">MyGet</a> - MyGet has free public and paid for public/private cloud-hosting options if you don&#39;t want to handle all of the pain of setup and administration. MyGet offers some stellar options like multi-feed aggregation, mirroring, and source package build services!</li>
-<li><a href="http://inedo.com/proget/overview">ProGet</a> - ProGet gives you a ready to go On-Premise option.</li>
+<li>File Share\UNC share (below)</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Chocolatey.Server</a></li>
+<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_hosted_repositories.html">Nexus</a> - Sonatype Nexus has a built-in simple server</li>
+<li><a href="http://inedo.com/proget/overview">ProGet</a> - ProGet gives you a ready to go On-Premise option. Enterprise has replication</li>
 <li><a href="http://www.jfrog.com/open-source/">Artifactory</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a> - not in the free version</li>
+<li><a href="https://www.myget.org/">MyGet</a> - MyGet has free public and paid for public/private cloud-hosting options if you don&#39;t want to handle all of the pain of setup and administration. MyGet offers some stellar options like multi-feed aggregation, mirroring, and source package build services!</li>
 <li><a href="https://www.jetbrains.com/teamcity/">TeamCity</a> has built-in Simple Server</li>
-<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_proxy_repositories.html">Nexus</a> - Sonatype Nexus has a built-in simple server</li>
+<li><a href="https://github.com/themotleyfool/Klondike">Klondike</a> - Ember front-end that builds on NuGet.Lucene for private NuGet package hosting</li>
+<li><a href="http://www.kendar.org/?p=/dotnet/phpnuget">PHP NuGet</a> - Simple server built in PHP</li>
+<li><a href="https://github.com/MPIB/hazel">Hazel</a> - Simple server built in Rust</li>
+<li>NuGet.Server</li>
+<li><a href="https://github.com/NuGet/NuGetGallery/wiki/Hosting-the-NuGet-Gallery-Locally-in-IIS">NuGet Gallery</a></li>
+<li>Chocolatey Gallery</li>
 </ul>
 <h2 id="package-version-immutability">Package Version Immutability</h2>
 <p>A package version is immutable on some sources. This means that everybody&#39;s version 1.0.1 of a particular package is the same. You do not need to worry about this when updating with newer versions of packages, because each package version compiled nupkg has the unique version in the name (e.g <code>bob.1.0.0.nupkg</code> vs <code>bob.1.0.1.nupkg</code> ).</p>
@@ -60,7 +68,7 @@
 </ul>
 <p>The actual limit for package sizes varies depending on what each simple server can handle (usually determined by the limitation of pushing a package to the server). If you determine what those are, we&#39;d be happy to list each one here.</p>
 <h4 id="simple-server-setup">Simple Server Setup</h4>
-<p>Many google searches will throw out good ways to set up your own feed (hint: search for host your own nuget server feed)</p>
+<p>Many google searches will throw out good ways to set up your own feed (hint: search for &quot;host your own NuGet server feed&quot;)</p>
 <p>Some notable references:</p>
 <ul>
 <li>Nuget Docs <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">Host Your Own Remote Feed</a></li>
@@ -112,7 +120,7 @@
 <li><a href="http://www.kendar.org/?p=/dotnet/phpnuget">PHP NuGet</a> - Simple server built in PHP</li>
 <li><a href="https://github.com/MPIB/hazel">Hazel</a> - Simple server built in Rust</li>
 <li><a href="http://www.jfrog.com/open-source/">Artifactory</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a> - not in the free version</li>
-<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_proxy_repositories.html">Nexus</a></li>
+<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_hosted_repositories.html">Nexus</a></li>
 </ul>
 <p><strong>Note:</strong> NuGet.Java.Server, TeamCity and JNuGet are about the same in terms of sophistication (they are ordered alphabetically).</p>
 </article>

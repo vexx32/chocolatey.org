@@ -6,11 +6,13 @@
 <h1 id="chocolatey-release-notes---open-source">Chocolatey Release Notes - Open Source</h1>
 <p>This covers changes for the &quot;chocolatey&quot; and &quot;chocolatey.lib&quot; packages, which are available as FOSS.</p>
 <p><strong>NOTE</strong>: For licensed versions, refer to both this set of release notes and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes-licensed" })">Licensed Release Notes</a>.</p>
-<h2 id="unreleased"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.10.4+is%3Aclosed">0.10.4</a> (unreleased)</h2>
+<h2 id="march-30-2017"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.10.4+is%3Aclosed">0.10.4</a> (March 30, 2017)</h2>
 <p>We&#39;re dubbing this the &quot;10–4 good buddy&quot; release. We&#39;ve added some major functionality and fixes we think you are going to find top notch - dare we say as smooth as really expensive chocolate? A lot of work for this release has been provided by the community. Remember that Chocolatey is only as good as the support that comes from the community! Be sure to thank other community members for the awesome that is Chocolatey and Chocolatey 10–4. We&#39;ve closed over 30 bugs and added 39 enhancements!</p>
-<p>Proxy support just got some major enhancements with the ability to not only <a href="https://github.com/chocolatey/choco/issues/1173">specify proxy information at runtime</a>, but also to <a href="https://github.com/chocolatey/choco/issues/1165">set bypass lists and bypassing on local connections</a>. A major issue with <a href="https://github.com/chocolatey/choco/issues/1059">changing command execution timeout</a> was just fixed. And there used to be a tiny chance you might <a href="https://github.com/chocolatey/choco/issues/1047">corrupt the choco config when running multiple choco processes</a> - which is now fixed.</p>
+<p>Proxy support just got some major enhancements with the ability to not only <a href="https://github.com/chocolatey/choco/issues/1173">specify proxy information at runtime</a>, but also to <a href="https://github.com/chocolatey/choco/issues/1165">set bypass lists and bypassing on local connections</a> and <a href="https://github.com/chocolatey/choco/issues/262">configure source repositories to bypass proxies</a>. A major issue with <a href="https://github.com/chocolatey/choco/issues/1059">changing command execution timeout</a> was just fixed. And there used to be a tiny chance you might <a href="https://github.com/chocolatey/choco/issues/1047">corrupt the choco config when running multiple choco processes</a> -but now that is much better handled.</p>
 <p>We&#39;ve also made <a href="https://github.com/chocolatey/choco/issues/1134">package itself display download progress</a>, which is great when software binaries are embedded in packages. For you folks looking to remove any progress (like when using Vagrant), now you can use <a href="https://github.com/chocolatey/choco/issues/917"><code>--no-progress</code></a>. When NuGet.Core has issues, those issues will have more visibility into why things are failing without needing a debugging log. Speaking of some extreme visibility, see network traffic with <a href="https://github.com/chocolatey/choco/issues/1182"><code>--trace</code></a>.</p>
-<p>We&#39;ve got two possible breaking changes that could affect you, see what we&#39;ve written about them below.</p>
+<p>We&#39;ve got a few possible breaking changes that could affect you, see what we&#39;ve written about them below.</p>
+<p>This also marks the first release that uses the <a href="https://github.com/chocolatey/choco/issues/1214">Chocolatey Software digital certificate for signing</a> instead of the RealDimensions Software, LLC certificate.</p>
+<p>Another major feature released in preview is <a href="https://github.com/chocolatey/choco/issues/797">using remembered arguments on upgrade</a>. This is in preview in 0.10.4 and will be turned to &quot;˜on&#39; automatically in a future release. We are going to be continually making it better and won&#39;t turn it on by default until it is ready. If you want to turn it on and start using it, once you have 0.10.4 installed, run <code>choco feature enable -n useRememberedArgumentsForUpgrades</code>. You can also do this per command with <code>--use-remembered-arguments</code>. You can also turn it off per command with <code>--ignore-remembered-arguments</code>. We&#39;ve also really described a lot of important considerations and thoughts related to using this so there are no surprises. Please do read the issue notes at length if you plan to use this feature to reduce confusion.</p>
 <h3 id="breaking-changes">BREAKING CHANGES</h3>
 <ul>
 <li><p>Run with highestAvailable Execution Level by default - see <a href="https://github.com/chocolatey/choco/issues/1054">#1054</a></p>
@@ -18,9 +20,12 @@
 <p>Moving to &quot;highestAvailable&quot; allows for that asking of privileges that you are used to, up front before it runs. However one additional thing we did here was give you more control over this setting now. We used to embed the app manifest into choco.exe. We now set it next to choco.exe (base install under <code>$env:ChocolateyInstall</code>, you will find <code>choco.exe.manifest</code>) so you have more freedom to adjust those execution levels as you see fit. There is one catch, you will need to do it on every install/upgrade of Chocolatey until <a href="https://github.com/chocolatey/choco/issues/1206">#1206</a> is implemented.</p></li>
 <li><p>When a prerelease is installed, it should upgrade to latest prerelease unless excluded - typically seen in choco upgrade all - see <a href="https://github.com/chocolatey/choco/issues/686">#686</a></p>
 <p>When you run <code>choco upgrade all</code>, it never catches the prereleases. However if you run <code>choco upgrade all --pre</code>, it may upgrade some of your stable installs to prereleases. Neither of these situations are desirable. So by default, we&#39;ve made it so that <code>choco upgrade all</code> just does the right thing, which is to upgrade your stable releases to the latest stable release and your prerelease packages will upgrade to the absolute latest available, whether that be stable or prerelease. If you need to change the behavior back to the old way for upgrade all, simply add the <code>--exclude-prerelease</code> option.</p></li>
+<li><p>Fix - Passing Allow Downgrade To upgrade against a prerelease may downgrade it to last stable version - see <a href="https://github.com/chocolatey/choco/issues/1212">#1212</a></p>
+<p>This is a bug fix that was allowing a prerelease to be downgraded accidentally to the last stable version if you ran <code>choco upgrade somepackage --allow-downgrade</code> without a particular version and without <code>--pre</code>. Now while this would be less affected with #686 above, it could still happen. It&#39;s a bug. The only reason this was marked as breaking change is that someone could be depending on the buggy behavior. So heads up, this bug is now fixed. If you are attempting to downgrade, make sure you specify the version you want it to go down to.</p></li>
 </ul>
 <h3 id="features">FEATURES</h3>
 <ul>
+<li>[Security][Preview] Use Remembered Arguments for a Package During Upgrades - You must opt in for this to work - see <a href="https://github.com/chocolatey/choco/issues/797">#797</a></li>
 <li>Show download progress for the packages themselves - see <a href="https://github.com/chocolatey/choco/issues/1134">#1134</a></li>
 <li>Set Explicit Proxy Bypass List / Bypass On Local - see <a href="https://github.com/chocolatey/choco/issues/1165">#1165</a></li>
 <li>Option/feature to stop installation when a package fails - see <a href="https://github.com/chocolatey/choco/issues/1151">#1151</a></li>
@@ -55,15 +60,20 @@
 <li>Fix - <code>$env:OS_NAME</code> is &quot;˜Windows&#39; for Windows 10 - see <a href="https://github.com/chocolatey/choco/issues/1178">#1178</a></li>
 <li>Fix - choco install relativepath/to/some.nuspec fails - see <a href="https://github.com/chocolatey/choco/issues/906">#906</a></li>
 <li>Fix - When pointing to a nupkg, choco should use only that nupkg to install and not a newer version in the same directory - see <a href="https://github.com/chocolatey/choco/issues/523">#523</a></li>
+<li>Fix - Automatic uninstaller should split by quotes when necessary - see <a href="https://github.com/chocolatey/choco/issues/1208">#1208</a></li>
 <li>[API] Fix - lib should merge the AlphaFS dependency - see <a href="https://github.com/chocolatey/choco/issues/1148">#1148</a></li>
 <li>[API] Fix - don&#39;t reset loggers on setting custom automatically - see <a href="https://github.com/chocolatey/choco/issues/1121">#1121</a></li>
+<li>[API] Fix - Chocolatey file cache adds a &quot;˜chocolatey&#39; directory on each install - see <a href="https://github.com/chocolatey/choco/issues/1210">#1210</a></li>
+<li>[API] Fix - Getting Local List of Package may leave config in undesirable state - see <a href="https://github.com/chocolatey/choco/issues/1213">#1213</a></li>
 <li>Fix - Pro/Business - Chocolatey Licensed Feed May Show Up More Than Once - see <a href="https://github.com/chocolatey/choco/issues/1166">#1166</a></li>
 <li>Fix - Pro/Business - Synchronized packages with DLLs are attempted to be imported by Chocolatey&#39;s PowerShell Extensions Loader - see <a href="https://github.com/chocolatey/choco/issues/1041">#1041</a></li>
 </ul>
 <h3 id="improvements">IMPROVEMENTS</h3>
 <ul>
 <li>[Security] Username and password for <code>choco apikey</code> not encrypted in output - see <a href="https://github.com/chocolatey/choco/issues/1106">#1106</a></li>
+<li>[Security] Sign Binaries / Authenticode Signatures with Chocolatey Software digital certificate - see <a href="https://github.com/chocolatey/choco/issues/1214">#1214</a></li>
 <li>Setting commandExecutionTimeout to 0 means never time out - see <a href="https://github.com/chocolatey/choco/issues/1202">#1202</a></li>
+<li>Configure sources to skip proxy - see <a href="https://github.com/chocolatey/choco/issues/262">#262</a></li>
 <li>Set proxy information at runtime - see <a href="https://github.com/chocolatey/choco/issues/1173">#1173</a></li>
 <li>Start-ChocolateyProcessAsAdmin should not elevate when already elevated - see <a href="https://github.com/chocolatey/choco/issues/1126">#1126</a></li>
 <li>Add <code>--no-progress</code> cli switch for hidding progress bars - see <a href="https://github.com/chocolatey/choco/issues/917">#917</a></li>
@@ -82,8 +92,9 @@
 <li>Typo in Install-ChocolateyPowershellCommand - see <a href="https://github.com/chocolatey/choco/issues/1088">#1088</a></li>
 <li>Update <code>choco new pkg</code> template to give example of handling nested quoted paths - see <a href="https://github.com/chocolatey/choco/issues/1067">#1067</a></li>
 <li>Add Aliases for Install-ChocolateyVsixPackage - see <a href="https://github.com/chocolatey/choco/issues/1146">#1146</a></li>
+<li>Add Chocolatey Software to copyright - see <a href="https://github.com/chocolatey/choco/issues/1209">#1209</a></li>
 <li>Pro/Business - Feature to Disable Non-Elevated Warnings - see <a href="https://github.com/chocolatey/choco/issues/1118">#1118</a></li>
-<li>Pro/Business - Bitrate limit packages and downloads (support) - see <a href="https://github.com/chocolatey/choco/issues/454">#454</a></li>
+<li>Pro/Business - Package Throttle - Bitrate limit packages and downloads (support) - see <a href="https://github.com/chocolatey/choco/issues/454">#454</a></li>
 <li>Pro/Business - Allow version overrides for local packages - see <a href="https://github.com/chocolatey/choco/issues/942">#942</a></li>
 <li>Pro/Business - List include programs should not show items from Package Synchronizer&#39;s Programs and Features Package Sync - see <a href="https://github.com/chocolatey/choco/issues/1205">#1205</a></li>
 <li>Pro/Business - Show better messaging when unable to load licensed assembly - see <a href="https://github.com/chocolatey/choco/issues/1145">#1145</a></li>
