@@ -13,7 +13,8 @@ Install-ChocolateyPackage when software must be downloaded first.</p>
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
   [-SilentArgs &lt;String[]&gt;] `
-  -File &lt;String&gt; `
+  [-File &lt;String&gt;] `
+  [-File64 &lt;String&gt;] `
   [-ValidExitCodes &lt;Object&gt;] `
   [-UseOnlyPackageSilentArguments] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
@@ -189,11 +190,13 @@ for the package to be completely unattended.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="file-string">-File &lt;String&gt;</h3>
+<h3 id="file-string">-File [&lt;String&gt;]</h3>
 <p>Full file path to native installer to run. If embedding in the package,<br />
 you can get it to the path with<br />
 <code>&quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\\INSTALLER_FILE&quot;</code></p>
 <p>In 0.10.1+, <code>FileFullPath</code> is an alias for File.</p>
+<p>This can be a 32-bit or 64-bit file. This is mandatory in earlier versions<br />
+of Chocolatey, but optional if File64 has been provided.</p>
 <table>
 <thead>
 <tr class="header">
@@ -208,11 +211,48 @@ you can get it to the path with<br />
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
 <td>4</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="file64-string">-File64 [&lt;String&gt;]</h3>
+<p>Full file path to a 64-bit native installer to run. Available in 0.10.4+.<br />
+If embedding in the package, you can get it to the path with<br />
+<code>&quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\\INSTALLER_FILE&quot;</code></p>
+<p>Provide this when you want to provide both 32-bit and 64-bit<br />
+installers or explicitly only a 64-bit installer (which will cause a package<br />
+install failure on 32-bit systems).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td>fileFullPath64</td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

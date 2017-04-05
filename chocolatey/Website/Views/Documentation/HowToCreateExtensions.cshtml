@@ -5,6 +5,23 @@
 <article>
 <h1 id="create-your-own-custom-extensions">Create Your Own Custom Extensions</h1>
 <p>For years Chocolatey has allowed you to extend Chocolatey with your own PowerShell modules and functions. These are known as extensions.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#why-would-i-create-an-extension">Why Would I Create an Extension?</a></li>
+<li><a href="#creating-a-chocolatey-extension">Creating a Chocolatey Extension</a></li>
+<li><a href="#recommendations">Recommendations</a></li>
+<li><a href="#naming-your-extension">Naming Your Extension</a></li>
+<li><a href="#powershell-modules">PowerShell Modules</a></li>
+<li><a href="#taking-a-dependency-on-an-extension-package">Taking a Dependency on an Extension Package</a>
+<ul>
+<li><a href="#minimum-version-depdendencies">Minimum Version Depdendencies</a></li>
+<li><a href="#avoid-version-ranges-for-extensions">Avoid Version Ranges For Extensions</a></li>
+<li><a href="#avoid-exact-version-dependencies-for-extensions-at-all-costs">Avoid Exact Version Dependencies For Extensions at All Costs</a></li>
+<li><a href="#version-less-dependencies">Version-less Dependencies</a></li>
+</ul></li>
+</ul>
+<!-- /TOC -->
 <h2 id="overview">Overview</h2>
 <p>Extensions allow you to package up PowerShell functions that you may reuse across packages as a package that other packages can use and depend on. This allows you to use those same functions as if they were part of Chocolatey itself. Chocolatey loads these PowerShell modules up as part of the regular module import load that it does for built-in PowerShell modules.</p>
 <h3 id="why-would-i-create-an-extension">Why Would I Create an Extension?</h3>

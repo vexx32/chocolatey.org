@@ -4,13 +4,18 @@
 
 <article>
 <h1 id="proxy-support-for-chocolatey">Proxy Support For Chocolatey</h1>
+<!-- TOC -->
 <ul>
-<li><a href="#installing-chocolatey-behind-a-proxy-server">Installing Chocolatey</a></li>
-<li><a href="#system-proxy-settings">Pass through System Proxy Settings</a></li>
-<li><a href="#existing-proxy-environment-variables">Existing Proxy Environment Variable Pass through</a></li>
-<li><a href="#explicit-proxy-settings">Explicit Proxy Settings (most deterministic)</a></li>
-<li><a href="#explicit-proxy-settings-at-runtime">Explicit at Runtime</a></li>
+<li><a href="#installing-chocolatey-behind-a-proxy-server">Installing Chocolatey behind a proxy server</a></li>
+<li><a href="#troubleshooting-installation">Troubleshooting Installation</a></li>
+<li><a href="#system-proxy-settings">System Proxy Settings</a></li>
+<li><a href="#existing-proxy-environment-variables">Existing Proxy Environment Variables</a></li>
+<li><a href="#explicit-proxy-settings">Explicit Proxy Settings</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#explicit-proxy-settings-at-runtime">Explicit Proxy Settings at Runtime</a></li>
+<li><a href="#what-to-do-if-my-proxy-is-socks">What to do if my proxy is socks?</a></li>
 </ul>
+<!-- /TOC -->
 <h2 id="installing-chocolatey-behind-a-proxy-server">Installing Chocolatey behind a proxy server</h2>
 <p>When trying to install Chocolatey behind a proxy server, you may be faced with errors like</p>
 <blockquote>

@@ -7,6 +7,18 @@
 <p>So you&#39;ve updated your applications manually or through some other means or you want to make Chocolatey aware of some previously installed applications without actually running the installation scripts.</p>
 <p><strong>NOTE</strong>: <a href="https://chocolatey.org/compare">Chocolatey Pro+</a> has <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">automatic sync</a> to handle this. <a href="https://chocolatey.org/compare">Chocolatey for Business</a> also has <code>choco sync</code> that can generate packages on the fly and baseline them to the system. The <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">sync command</a> is also able to link up installed packages that are installed through this manner so they track the package to the software (something you won&#39;t get without running the install script).</p>
 <p><strong>NOTE</strong>: This is considered an advanced scenario - make sure you read and understand everything here before trying it. You may mess something up if you don&#39;t understand the full implication of what you are doing.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#installing-a-package-without-running-install-script">Installing a Package Without Running Install Script</a></li>
+<li><a href="#community-feed-has-a-package-with-your-version">Community Feed has a package with your version</a></li>
+<li><a href="#community-feed-has-newer-version-than-you">Community feed has newer version than you</a></li>
+<li><a href="#community-feed-has-a-package-older-than-your-version">Community Feed has a package older than your version</a></li>
+<li><a href="#upgrade-a-package-without-running-scripts">Upgrade a Package Without Running Scripts</a></li>
+<li><a href="#application-is-self-updating-like-google-chrome">Application is self-updating (like Google Chrome)</a></li>
+<li><a href="#the-software-was-upgraded-but-not-the-package">The software was upgraded but not the package</a></li>
+<li><a href="#the-software-was-upgraded-but-not-the-package-and-community-feed-is-outdated">The software was upgraded but not the package and Community Feed is outdated</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="installing-a-package-without-running-install-script">Installing a Package Without Running Install Script</h2>
 <p>The first thing to understand is that in most instances when you want to bring Chocolatey knowledgeable about an already installed application, if there is a version match out there (wherever your sources point), then this process is so much better.</p>
 <p>We normally recommend just calling the install as usual with no special switches and letting it handle the install - normally this turns into a no state change scenario for the computer (that is, the end state is that your application is still installed and Chocolatey now knows about it). In most cases it will ensure that the link for tracking the package to the software for automatic uninstalls is covered.</p>

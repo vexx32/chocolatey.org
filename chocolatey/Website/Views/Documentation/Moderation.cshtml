@@ -6,6 +6,37 @@
 <h1 id="community-feed-moderation">Community Feed Moderation</h1>
 <p>The community feed, which is found at <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>, is a moderated feed. That means all new versions of packages are human reviewed prior to approval to check for safety, quality, and correctness. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-moderation">What is moderation</a> for more details. There are also <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted packages</a>, which only go through automated moderation review and bypass human review as they are coming from trusted sources and/or the software vendors themselves.</p>
 <p>By safety - we check that the package scripts do not do anything devious and that you get the software that the package indicates you are getting. Please note that the underlying software may contain crapware/malware (although it is usually not installed when allowing Chocolatey to install silently). This is not checked for currently, but we have plans for checking this in licensed versions of Chocolatey because a feature doing that is not free for us to provide.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#definitions">Definitions</a></li>
+<li><a href="#requirements-and-guidelines">Requirements and Guidelines</a></li>
+<li><a href="#existing-packages">Existing Packages</a>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#guidelines">Guidelines</a></li>
+</ul></li>
+<li><a href="#package-review-process">Package Review Process</a></li>
+<li><a href="#moderation-workflow">Moderation Workflow</a>
+<ul>
+<li><a href="#first-time-go-workflow">First Time Go Workflow</a></li>
+<li><a href="#full-workflow">Full Workflow</a></li>
+<li><a href="#trusted-package-workflow">Trusted Package Workflow</a></li>
+</ul></li>
+<li><a href="#maintainer-process">Maintainer Process</a></li>
+<li><a href="#reviewer--moderator-process">Reviewer / Moderator Process</a>
+<ul>
+<li><a href="#moderator-review">Moderator Review</a></li>
+</ul></li>
+<li><a href="#roles">Roles</a>
+<ul>
+<li><a href="#becoming-a-maintainer">Becoming a Maintainer</a></li>
+<li><a href="#becoming-a-reviewer">Becoming a Reviewer</a></li>
+<li><a href="#becoming-a-moderator">Becoming a Moderator</a></li>
+<li><a href="#becoming-an-admin">Becoming an Admin</a></li>
+</ul></li>
+<li><a href="#new-reviewers--moderators">New Reviewers / Moderators</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="definitions">Definitions</h2>
 <ul>
 <li>package - The Chocolatey/NuGet package</li>

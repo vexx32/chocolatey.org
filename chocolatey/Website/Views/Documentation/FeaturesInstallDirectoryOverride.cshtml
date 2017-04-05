@@ -7,6 +7,18 @@
 <p>The ubiquitous install directory switch for <a href="https://chocolatey.org/pricing">customers</a>! The only switch you will ever need for overriding the install directory for native installers! When working with packages that use native installers (software that actually installs on a machine), Chocolatey is able to override the default installation directory from a simple switch you pass to choco.</p>
 <p>It can be a pain determining the native installer type (MSI, NSIS, InnoSetup, etc) for a piece of software and then determining what the what the install directory argument should look like.</p>
 <p>With the ubiquitous switch, you are not only saving time, but also possible errors in passing the wrong arguments to an installer!</p>
+<!-- TOC -->
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#see-it-in-action">See It In Action</a></li>
+<li><a href="#options-and-switches">Options and Switches</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</a></li>
+<li><a href="#im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</a></li>
+<li><a href="#how-does-it-work">How does it work?</a></li>
+<li><a href="#do-you-have-plans-to-make-this-work-for-zip-files">Do you have plans to make this work for zip files?</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="usage">Usage</h2>
 <p>Just pass <code>--install-directory=value</code> along and Chocolatey will determine what the actual call to the native installer needs to be and manage that for you!</p>
 <p><img src="@Url.Content("~/content/images/docs/chocopro_features_installdirectory.png")" alt="choco install 1password --install-directory c:\1password" /></p>

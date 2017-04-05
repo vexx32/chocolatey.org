@@ -5,11 +5,27 @@
 <article>
 <h1 id="security">Security</h1>
 <p>Bottom line: If someone tells you Chocolatey <strong><em>is</em></strong> insecure, please respond with &quot;You mean Chocolatey <strong><em>used</em></strong> to be insecure. You may want to check out chocolatey dot org slash security and catch up with the last 2+ years. Or do you mean a <strong><em>community package</em></strong> may not be secure? Organizations don&#39;t typically use the community repository anyway and only use Chocolatey in a completely secure manner. Individuals looking for more protection with the community repository go Pro.&quot; Unfortunately some security features have significant recurring costs based on usage for the Chocolatey team, so they can&#39;t be offered for free.</p>
-<h2 id="report-issue">Report Issue</h2>
+<!-- TOC -->
 <ul>
-<li>Report general security issue - please email security [at] realdimensions dot net.</li>
-<li>Report package malware/security/other package issue - please use the Report Abuse link directly on the package page on <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>.</li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#overall">Overall</a></li>
+<li><a href="#chocolatey-binaries-and-the-chocolatey-package">Chocolatey binaries and the Chocolatey package</a></li>
+<li><a href="#organizational-use-of-chocolatey">Organizational Use of Chocolatey</a></li>
+<li><a href="#chocolateyorg-packages">Chocolatey.org Packages</a></li>
+<li><a href="#security-for-the-community-package-repository">Security for the Community Package Repository:</a></li>
+<li><a href="#rigorous-moderation-process-for-community-packages">Rigorous Moderation Process for Community Packages</a>
+<ul>
+<li><a href="#downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</a></li>
+</ul></li>
+<li><a href="#chocolatey-pro--chocolatey-for-business">Chocolatey Pro / Chocolatey for Business</a></li>
+<li><a href="#future-chocolatey-enhancements">Future Chocolatey Enhancements</a></li>
+<li><a href="#history">History</a></li>
+<li><a href="#past-security-concerns">Past Security Concerns</a></li>
+<li><a href="#what-about-a-non-administrative-installation-of-chocolatey-is-it-secure">What about a non-administrative installation of Chocolatey? Is it secure?</a></li>
+<li><a href="#security-scenarios-to-keep-in-mind--avoid">Security Scenarios to Keep in Mind / Avoid</a></li>
+<li><a href="#report-issue">Report Issue</a></li>
 </ul>
+<!-- /TOC -->
 <h2 id="summary">Summary</h2>
 <p>We take security issues very seriously. Security falls into a few areas of the Chocolatey framework - the clients (choco.exe and ChocolateyGUI), and the community repository (aka <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>). While no one can give you a guarantee of complete security, we can provide information here for you to make the best decision for your use of Chocolatey. The most secure use of Chocolatey is when you use Chocolatey with packages that use embedded or local software resources. If you are super security conscious, you should understand the tradeoffs prior to using the community repository.</p>
 <ul>
@@ -19,7 +35,7 @@
 <li>If you need better runtime protection against malware, you should look at <a href="https://chocolatey.org/compare">Chocolatey Pro / Chocolatey For Business</a>. While we&#39;d like to offer runtime protection for free to everyone, it&#39;s not free for us so we are not able to provide it as a free service.</li>
 </ul>
 <h2 id="overall">Overall</h2>
-<p>Chocolatey has grown up quite a bit with the release of 0.9.9+ series and has been moving to a more secure by default approach. What that means is that Chocolatey will set the more secure defaults and the user has to do something (e.g.&nbsp; set a switch, choose to install Chocolatey to a less secure location) to reduce the overall security of Chocolatey.</p>
+<p>Chocolatey has grown up quite a bit since the release of 0.9.9+ series and has continued moving towards a secure by default approach. What that means is that Chocolatey will set the more secure defaults and the user has to do something (e.g.&nbsp; set a switch, choose to install Chocolatey to a less secure location, etc.) to reduce the overall security of Chocolatey.</p>
 <ol>
 <li>Requires elevated permissions to make changes to the default location (<code>C:\ProgramData\chocolatey</code>). The default location is locked down to explicitly to Administrators starting in 0.9.10. This reduces escalation of privilege attacks.</li>
 <li>Requires elevated permissions to run <code>choco.exe</code> in the default installed location. This reduces escalation of privilege attacks.</li>
@@ -36,26 +52,37 @@
 <h2 id="chocolatey-binaries-and-the-chocolatey-package">Chocolatey binaries and the Chocolatey package</h2>
 <p>The binary <code>choco.exe</code> can be trusted (at least as far as you trust the Chocolatey maintainers, RealDimensions Software, LLC, and Chocolatey Software, Inc).</p>
 <ul>
-<li><strong>Starting with 0.9.10.0</strong>, both the binaries and the PowerShell scripts are Authenticode signed. This certificate is only held by the lead Chocolatey maintainer (Rob). This provides quite a bit of trust that you are getting Chocolatey from the source and as intended.</li>
-</ul>
+<li><p><strong>Starting with 0.9.10.0</strong>, both the binaries and the PowerShell scripts are Authenticode signed. This certificate is only held by the lead Chocolatey maintainer (Rob). This provides quite a bit of trust that you are getting Chocolatey from the source and as intended.</p>
 <p>Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary):</p>
+<p>0.10.4+:</p>
+<pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+
+
+Subject      : CN=&quot;Chocolatey Software, Inc.&quot;, O=&quot;Chocolatey Software, Inc.&quot;, L=Topeka, S=Kansas, C=US
+Issuer       : CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+Thumbprint   : 493018BA27EAA09B895BC5660E77F694B84877C7
+FriendlyName :
+NotBefore    : 3/27/2017 7:00:00 PM
+NotAfter     : 4/3/2018 7:00:00 AM
+Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid,
+              System.Security.Cryptography.Oid, System.Security.Cryptography.Oid...}</code></pre>
+<p>0.9.10 - 0.10.3:</p>
 <pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 
 Subject      : CN=&quot;RealDimensions Software, LLC&quot;, O=&quot;RealDimensions Software,
-               LLC&quot;, L=Topeka, S=Kansas, C=US
+              LLC&quot;, L=Topeka, S=Kansas, C=US
 Issuer       : CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com,
-               O=DigiCert Inc, C=US
+              O=DigiCert Inc, C=US
 Thumbprint   : C9F7FD1A91F078DB6BFCFCCE28B9749F8F2A0C38
 FriendlyName :
 NotBefore    : 3/23/2016 7:00:00 PM
 NotAfter     : 3/28/2017 7:00:00 AM
 Extensions   : {System.Security.Cryptography.Oid,
-               System.Security.Cryptography.Oid,
-               System.Security.Cryptography.Oid,
-               System.Security.Cryptography.Oid...}</code></pre>
-<ul>
-<li>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</li>
+              System.Security.Cryptography.Oid,
+              System.Security.Cryptography.Oid,
+              System.Security.Cryptography.Oid...}</code></pre></li>
+<li><p>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</p></li>
 </ul>
 <p>Using a Visual Studio Command Prompt, you can verify the binary (the path below is the default install location, adjust if necessary). You can also download sn separately if necessary:</p>
 <pre><code class="nohighlight">C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
@@ -69,12 +96,21 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>The code for Chocolatey is <a href="https://github.com/chocolatey/choco">open source</a>, so you can inspect to visually be sure it is not doing anything malicious to your machine - <a href="https://github.com/chocolatey/choco" class="uri">https://github.com/chocolatey/choco</a>.</li>
 </ul>
 <p>For more information on the specifics, see <a href="https://github.com/chocolatey/choco/issues/36">#36</a> and <a href="https://github.com/chocolatey/choco/issues/501">#501</a>.</p>
+<h2 id="organizational-use-of-chocolatey">Organizational Use of Chocolatey</h2>
+<p>When you use Chocolatey in an organizational sense, do so in a manner that requires no internet access. Chocolatey doesn&#39;t require internet access at all. The default source (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>, aka the community package repository) that is available on installed is typically the first thing to go when organizations are using Chocolatey. This provides the utmost in security for organizations.</p>
+<blockquote>
+<p>&quot;Hundreds of organizations use a packaging solution that requires zero internet access. It&#39;s pretty much the de facto for packaging software deployments on Windows. Have you looked at Chocolatey and building and hosting your own internal packages?&quot;</p>
+</blockquote>
+<p>It&#39;s important to keep the following in mind:</p>
+<blockquote>
+<p><strong>&quot;Chocolatey != Chocolatey.org Packages&quot;</strong></p>
+</blockquote>
+<p>It goes without stating that if you are a business and you are using Chocolatey, you should think long and hard before trusting an external source you have no control over (chocolatey.org packages, in addition to all of the binaries that download from official distribution channels over the internet). It is too easy to set up your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">own private feed</a> where you can vet packages and have complete control over the binaries and what gets installed. This also provides a complete offline solution that is reliable and trustworthy. This is what we recommend for businesses that use Chocolatey in production scenarios (and what many of them do). There is a <a href="https://chocolatey.org/blog/host-your-own-server">great article written up</a> on the reasoning and options for hosting your own server.</p>
 <h2 id="chocolatey.org-packages">Chocolatey.org Packages</h2>
 <p>Chocolatey.org has a community repository of packages known as the community feed / community package repository. These packages are created by folks in the community and due to distribution rights, they usually contain executable instructions on how to download software from official distribution points written in PowerShell.</p>
-<p><strong>NOTE: For Organizational Use of Chocolatey</strong> - First of all, it goes without stating that if you are a business and you are using Chocolatey, you should think long and hard before trusting an external source you have no control over (chocolatey.org packages, in addition to all of the binaries that download from official distribution channels over the internet). It is too easy to set up your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">own private feed</a> where you can vet packages and have complete control over the binaries and what gets installed. This also provides complete reliability, trust, and repeatability. This is what we recommend for businesses that use Chocolatey in production scenarios (and what many of them do). There is a <a href="https://chocolatey.org/blog/host-your-own-server">great article written up</a> on the reasoning and options for hosting your own server.</p>
-<p>Security for the Community Repository:</p>
+<h3 id="security-for-the-community-package-repository">Security for the Community Package Repository:</h3>
 <ol>
-<li>Every package submitted to the community feed (<a href="https://chocolatey.org" class="uri">https://chocolatey.org</a>) since October 2014 undergoes a rigorous moderation process before it becomes live. Yes, every package, every version of a package is moderated and approved before they become live. See &quot;Rigorous Moderation Process&quot; below.</li>
+<li>Every package submitted to the community package repository (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>) since October 2014 undergoes a rigorous moderation process before it becomes live. Yes, every package, every version of a package is moderated and approved before they become live. See &quot;Rigorous Moderation Process&quot; below.</li>
 <li>Packages are run through VirusTotal to produce a second opinion on the relative safety of the package and underlying software that is contained or downloaded by the package. The verification of this is shown on the site.</li>
 <li>Some packages move into a trusted status. This is usually when the package maintainer is also the software maintainer, but can also occur when the maintainer(s) are trusted and multiple versions of a package have been submitted without issues.</li>
 <li>Packages that download binaries (installers, zip archives) are checked to ensure that the binary is coming from the official distribution source.</li>
@@ -82,8 +118,8 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>Everything is enforced as HTTPS where it should be. This reduces DNS poisoning attacks.</li>
 <li>Packages are pushed to the site over HTTPS. The site grabs a SHA512 checksum of the package, then forwards it on to where packages are stored securely. You can see this package checksum in 0.9.10+ if you call <code>choco info packagename</code>.</li>
 <li>When installing a package, the site passes the package checksum and then the link for downloading the package. The Chocolatey binaries verify the package meets the package checksum.</li>
-<li>If the package automation scripts download binaries from official sources, the scripts used can provide checksums to verify those binaries (and are required for non-secure sources). If the package scripts have a checksum, it provides a further integrity check that the downloadable the maintainer/moderator checked is the same binary that the user gets. Chocolatey clients will enforce a checksum requirement in late 2016 by default and it will become a requirement in 2017 for all packages submitted to the community repository.</li>
-<li>Checksums of of included binaries are shown on the package page to allow for folks to perform independent verification. We&#39;ve moved to adding an additional VERIFICATION.txt file for verifying the binaries.</li>
+<li>If the package automation scripts download binaries from official sources, the scripts used can provide checksums to verify those binaries (and are required for non-secure sources). If the package scripts have checksums for the downloads, it provides a further integrity check that the downloadable binaries are the exact same file that the maintainer based the package version on, the moderation process checked (including virus scans by all of the scanners set up with VirusTotal), and is the same binary that the user gets. Chocolatey <a href="https://github.com/chocolatey/choco/issues/112">v0.10.0+ enforces a checksum requirement for non-secure locations by default</a> and is hoping that secure downloads will also become a requirement in 2017 for all new packages and versions submitted to the community repository.</li>
+<li>Checksums of of included binaries are shown on the community package page to allow for folks to perform independent verification. The community has moved to adding an additional VERIFICATION.txt file for verifying the binaries.</li>
 </ol>
 <h3 id="rigorous-moderation-process-for-community-packages">Rigorous Moderation Process for Community Packages</h3>
 <p>In October 2014, the community feed had moderation turned on. All community packages (every version of a package) go through a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })">rigorous moderation process</a> prior to any public consumption:</p>
@@ -144,4 +180,9 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>Non-admin user chooses to install Chocolatey to an insecure location (like the root of the system drive, e.g. <code>C:\Chocolatey</code>). Now anyone that has access to that computer has an attack vector for that user alone. This has a medium possibility and low impact.</li>
 <li>Installing user is admin during install, but then the admin privileges are removed. That user can still install portable packages that will end up on PATH. This can lead to escalation of privilege attacks. This is an unlikely scenario but one to consider if you reduce privileges for users in your organization. This has a low possibility but a high impact.</li>
 </ol>
+<h2 id="report-issue">Report Issue</h2>
+<ul>
+<li>Report general security issue - please email security [at] realdimensions dot net.</li>
+<li>Report package malware/security/other package issue - please use the Report Abuse link directly on the package page on <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>.</li>
+</ul>
 </article>

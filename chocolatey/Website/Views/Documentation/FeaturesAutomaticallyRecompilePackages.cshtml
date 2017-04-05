@@ -7,6 +7,20 @@
 <p>Automatically Internalize/Recompile Existing Packages (Business Editions Only)</p>
 <p>There are thousands of existing packages on the <a href="https://chocolatey.org/packages">community repository</a> that are a tremendous resource when it comes to creating packages that have software that can sometimes be tricky! Unfortunately you may be wary of using those packages without changes because many of those packages are subject to distribution rights and thus have an internet dependency (which creates both <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">trust and control issues</a>). There is a process for downloading and internalizing packages to use internal or embedded locations for that software that is called <strong>internalizing</strong> (also known as recompiling).</p>
 <p>Chocolatey for Business is able to automatically download packages and resources, edit the scripts, and recompile packages to internalize and remove internet dependencies from those packages, saving you hours of time in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">manually internalizing/recompiling packages</a>!</p>
+<!-- TOC -->
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#see-it-in-action">See It In Action</a></li>
+<li><a href="#options-and-switches">Options and Switches</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</a></li>
+<li><a href="#im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</a></li>
+<li><a href="#how-does-it-work">How does it work?</a></li>
+<li><a href="#does-it-work-with-all-types-of-packages">Does it work with all types of packages?</a></li>
+<li><a href="#it-was-not-able-to-download-a-resource-why-not">It was not able to download a resource. Why not?</a></li>
+<li><a href="#are-all-packages-guaranteed-to-be-compatible">Are all packages guaranteed to be compatible?</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="usage">Usage</h2>
 <p>Call <code>choco download</code> with options including the name of an existing package for Chocolatey for Business to download and download all existing remote resources.</p>
 <p><img src="@Url.Content("~/content/images/docs/features/features_recompile_packages.png")" alt="Internalize Existing Packages, Recompiling Resources - if you are on https://chocolatey.org/docs/features-automatically-recompile-packages, see commented html below for detailed description of image" /></p>

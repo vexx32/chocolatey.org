@@ -8,10 +8,11 @@
 <p>Unzips an archive file and returns the location for further processing.</p>
 <h2 id="syntax">Syntax</h2>
 <pre><code class="powershell">Get-ChocolateyUnzip `
-  -FileFullPath &lt;String&gt; `
+  [-FileFullPath &lt;String&gt;] `
   -Destination &lt;String&gt; `
   [-SpecificFolder &lt;String&gt;] `
   [-PackageName &lt;String&gt;] `
+  [-FileFullPath64 &lt;String&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This unzips files using the 7-zip command line tool 7z.exe.<br />
@@ -41,11 +42,13 @@ Get-ChocolateyUnzip -FileFullPath &quot;c:\someFile.zip&quot; -Destination $tool
 <h2 id="outputs">Outputs</h2>
 <p>None</p>
 <h2 id="parameters">Parameters</h2>
-<h3 id="filefullpath-string">-FileFullPath &lt;String&gt;</h3>
+<h3 id="filefullpath-string">-FileFullPath [&lt;String&gt;]</h3>
 <p>This is the full path to the zip file. If embedding it in the package<br />
 next to the install script, the path will be like<br />
 <code>&quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\\file.zip&quot;</code></p>
 <p>In 0.10.1+, <code>File</code> is an alias for FileFullPath.</p>
+<p>This can be a 32-bit or 64-bit file. This is mandatory in earlier versions<br />
+of Chocolatey, but optional if FileFullPath64 has been provided.</p>
 <table>
 <thead>
 <tr class="header">
@@ -60,7 +63,7 @@ next to the install script, the path will be like<br />
 </tr>
 <tr class="even">
 <td>Required?</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr class="odd">
 <td>Position?</td>
@@ -163,6 +166,43 @@ uninstalls</p>
 <tr class="odd">
 <td>Position?</td>
 <td>4</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filefullpath64-string">-FileFullPath64 [&lt;String&gt;]</h3>
+<p>Full file path to a 64-bit native installer to run. Available in 0.10.4+.<br />
+If embedding in the package, you can get it to the path with<br />
+<code>&quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)\\INSTALLER_FILE&quot;</code></p>
+<p>Provide this when you want to provide both 32-bit and 64-bit<br />
+installers or explicitly only a 64-bit installer (which will cause a package<br />
+install failure on 32-bit systems).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td>file64</td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
 </tr>
 <tr class="even">
 <td>Default Value</td>

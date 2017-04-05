@@ -5,6 +5,18 @@
 <article>
 <h1 id="create-your-own-custom-package-templates">Create Your Own Custom Package Templates</h1>
 <p>As of <a href="https://github.com/chocolatey/choco/issues/76">choco 0.9.9.9</a>, you can create your own custom package templates when the built-in template is not enough.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#where-do-templates-go">Where Do Templates Go?</a></li>
+<li><a href="#can-i-replace-the-built-in-template">Can I replace the built-in template?</a></li>
+<li><a href="#what-values-can-i-template">What values can I template?</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#manage-as-templates-as-packages">Manage as Templates as Packages</a></li>
+<li><a href="#extending-templates">Extending Templates</a></li>
+<li><a href="#are-there-planned-enhancements">Are There Planned Enhancements?</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="overview">Overview</h2>
 <p>A template is used for creating packages. Chocolatey (choco) has a built-in template that it uses when generating a new package from the command <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })"><code>choco new</code></a>.</p>
 <h3 id="where-do-templates-go">Where Do Templates Go?</h3>

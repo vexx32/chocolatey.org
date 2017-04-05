@@ -9,9 +9,41 @@
 <li><a href="#automatic-synchronize">Automatic Sync</a></li>
 <li><a href="#sync-command">Synchronize Command</a> (Business edition only until Q3 2017)</li>
 </ul>
-<h1 id="automatic-synchronize">Automatic Synchronize</h1>
+<!-- TOC -->
+<ul>
+<li><a href="#automatic-synchronize">Automatic Synchronize</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#see-it-in-action">See It In Action</a></li>
+<li><a href="#options-and-switches">Options and Switches</a></li>
+<li><a href="#faq">FAQ</a>
+<ul>
+<li><a href="#how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</a></li>
+<li><a href="#im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</a></li>
+<li><a href="#how-does-it-work">How does it work?</a></li>
+</ul></li>
+<li><a href="#sync-command">Sync Command</a></li>
+<li><a href="#usage-1">Usage</a>
+<ul>
+<li><a href="#setup">Setup</a></li>
+</ul></li>
+<li><a href="#see-it-in-action">See it in action</a></li>
+<li><a href="#options-and-switches-1">Options and Switches</a></li>
+<li><a href="#faq-1">FAQ</a>
+<ul>
+<li><a href="#how-do-i-take-advantage-of-this-feature-1">How do I take advantage of this feature?</a></li>
+<li><a href="#im-a-business-customer-now-what">I&#39;m a business customer, now what?</a></li>
+<li><a href="#how-does-it-work-1">How does it work?</a></li>
+<li><a href="#do-i-get-the-packages-to-add-to-source">Do I get the packages to add to source?</a></li>
+<li><a href="#some-packages-have-a-todo-list">Some packages have a TODO list</a></li>
+<li><a href="#how-do-i-get-machine-parseable-output">How do I get machine parseable output?</a></li>
+<li><a href="#what-if-i-have-an-existing-package-that-is-just-not-tracking-to-programs-and-features">What if I have an existing package that is just not tracking to Programs and Features?</a></li>
+</ul></li>
+<li><a href="#sync-command-known-issues">Sync Command Known issues</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="automatic-synchronize">Automatic Synchronize</h2>
 <p>In licensed editions of Chocolatey, synchronize for existing packages that are tracking to software installed in Programs and Features happens automatically and takes effect prior to the command running.</p>
-<h2 id="usage">Usage</h2>
+<h3 id="usage">Usage</h3>
 <p><img src="@Url.Content("~/content/images/docs/features/features_synchronize.png")" alt="Synchronize - if you are on https://chocolatey.org/docs/features-synchronize, see commented html below for detailed description of image" /></p>
 <!--
 Text in the image above:
@@ -25,28 +57,35 @@ Synchronize with Programs and Features
 
 This image shows running `choco list -lo`. Chocolatey for Business automatically detects that 1Password has been manually uninstalled and synchronizes Chocolatey's state.
 -->
-<h2 id="see-it-in-action">See It In Action</h2>
+<h3 id="see-it-in-action">See It In Action</h3>
 <p><img src="@Url.Content("~/content/images/docs/gifs/choco_business_features.gif")" alt="auto package creation/synchronize" /></p>
-<h2 id="options-and-switches">Options and Switches</h2>
-<p>N/A</p>
-<h2 id="faq">FAQ</h2>
-<h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
+<h3 id="options-and-switches">Options and Switches</h3>
+<p>The following are available in the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sync" })">choco sync</a> command.</p>
+<pre><code class="nohighlight">     --id=VALUE
+     Id - The Display Name from Programs and Features
+
+     --out, --outdir, --outputdirectory, --output-directory=VALUE
+     OutputDirectory - Specifies the directory for the generated Chocolatey
+       package file(s). If not specified, uses a subdirectory of the current
+       directory.</code></pre>
+<h3 id="faq">FAQ</h3>
+<h4 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h4>
 <p>You must have a <a href="https://chocolatey.org/pricing">licensed edition of Chocolatey</a> (Pro, Business, or MSP). Pro is a personal, named license that costs about the price of a lunch outing per month and comes with several other features. Business editions are great for organizations that need to manage the total software management lifecycle. MSP editions contain a subset of the Business edition features.</p>
-<h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
+<h4 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h4>
 <p>It just works.</p>
-<h3 id="how-does-it-work">How does it work?</h3>
+<h4 id="how-does-it-work">How does it work?</h4>
 <p>Chocolatey tracks applications that it installs, so it is able to keep up with those applications as they are upgraded and uninstalled, even outside of Chocolatey.</p>
-<h1 id="sync-command">Sync Command</h1>
+<h2 id="sync-command">Sync Command</h2>
 <p>Starting in 1.9.0 of the licensed extension, sync has been added as a preview feature for organizations to try out. Currently Business edition only, but expected to be in Pro+ in Q3 2017.</p>
 <p>Sync looks at all software that is in Programs and Features that is not being managed with Chocolatey packages and brings them under management. This means you can run one command and suddenly, all of the software installed on a machine is under management by Chocolatey!</p>
-<h2 id="usage-1">Usage</h2>
+<h3 id="usage-1">Usage</h3>
 <p>To synchronize your system, Simply call <code>choco sync</code> and Chocolatey will ensure that all software in Programs and Features comes under Chocolatey management and provides you the packages/package sources so you can add them to source control for managing those packages over time.</p>
-<h3 id="setup">Setup</h3>
+<h4 id="setup">Setup</h4>
 <p>At 1.9.0, sync is in preview. You need to turn it on by enabling the feature <code>allowPreviewFeatures</code>:</p>
 <ul>
 <li><code>choco feature enable -n allowPreviewFeatures</code></li>
 </ul>
-<h2 id="see-it-in-action-1">See it in action</h2>
+<h3 id="see-it-in-action-1">See it in action</h3>
 <p>We&#39;ve prepared a short video to show sync in action:<br />
 <a href="https://youtu.be/tzSsYHYsjf4" title="Chocolatey&#39;s Package Synchronizer - Sync Command"><img src="https://cloud.githubusercontent.com/assets/63502/22050108/ade28e5a-dcfd-11e6-8835-afc9f699e400.png" alt="Chocolatey&#39;s Package Synchronizer - Sync Command" /></a></p>
 <p>In the following image, sync is run on a system that has 18 applications installed and a base Chocolatey for Business install. Note after running sync, all software on the machine is now being managed by Chocolatey.</p>
@@ -65,24 +104,24 @@ Package Synchronizer's Sync Command
 This image shows running `choco sync`. It shows first a system that has 18 applications installed outside of Chocolatey, then runs `choco sync` and watches Chocolatey generate packages and baseline the system. Then it shows `choco list -lo --include-programs` again, which shows that all software on the machine is now being managed by Chocolatey.
 
 -->
-<h2 id="options-and-switches-1">Options and Switches</h2>
+<h3 id="options-and-switches-1">Options and Switches</h3>
 <p>N/A at this time. More switches will be added as this feature is enhanced</p>
-<h2 id="faq-1">FAQ</h2>
-<h3 id="how-do-i-take-advantage-of-this-feature-1">How do I take advantage of this feature?</h3>
+<h3 id="faq-1">FAQ</h3>
+<h4 id="how-do-i-take-advantage-of-this-feature-1">How do I take advantage of this feature?</h4>
 <p>You must have the <a href="https://chocolatey.org/pricing">business edition of Chocolatey</a>. Business editions are great for organizations that need to manage the total software management lifecycle.</p>
-<h3 id="im-a-business-customer-now-what">I&#39;m a business customer, now what?</h3>
+<h4 id="im-a-business-customer-now-what">I&#39;m a business customer, now what?</h4>
 <p>You would periodically run <code>choco sync</code>.</p>
-<h3 id="how-does-it-work-1">How does it work?</h3>
+<h4 id="how-does-it-work-1">How does it work?</h4>
 <p>Chocolatey takes a look at all software in Programs and Features that is not under Chocolatey management, generates packages on the fly and baselines them under the Chocolatey install, ensuring all of the links are tracked.</p>
-<h3 id="do-i-get-the-packages-to-add-to-source">Do I get the packages to add to source?</h3>
+<h4 id="do-i-get-the-packages-to-add-to-source">Do I get the packages to add to source?</h4>
 <p>Yes! Chocolatey will tell you the location of the sync files so you can put them into source control.</p>
-<h3 id="some-packages-have-a-todo-list">Some packages have a TODO list</h3>
+<h4 id="some-packages-have-a-todo-list">Some packages have a TODO list</h4>
 <p>Generating packages on the fly from Programs and Features for non-MSI installers doesn&#39;t provide everything necessary to ensure an actual install. So when you take those packages back to source, you will need to finish out the packaging for those so that later when you upgrade, things will work appropriately.</p>
-<h3 id="how-do-i-get-machine-parseable-output">How do I get machine parseable output?</h3>
+<h4 id="how-do-i-get-machine-parseable-output">How do I get machine parseable output?</h4>
 <p>Use <code>-r</code>. <code>choco sync -r</code>. Requires Chocolatey v0.10.4+.</p>
-<h3 id="what-if-i-have-an-existing-package-that-is-just-not-tracking-to-programs-and-features">What if I have an existing package that is just not tracking to Programs and Features?</h3>
+<h4 id="what-if-i-have-an-existing-package-that-is-just-not-tracking-to-programs-and-features">What if I have an existing package that is just not tracking to Programs and Features?</h4>
 <p>Synchronize can recognize existing packages and sync to those as long as the name of the package is a close match to the software name (e.g.&nbsp; Google Chrome becomes either google-chrome or googlechrome).</p>
-<h2 id="sync-command-known-issues">Sync Command Known issues</h2>
+<h3 id="sync-command-known-issues">Sync Command Known issues</h3>
 <ul>
 <li>Any packages you&#39;ve installed side by side (<code>-m</code>) will show up every time during sync.</li>
 <li>If you have both a 64-bit and 32-bit version of some software installed, sync will track to one on the first run and the other on the next run. This is not a normal scenario.</li>

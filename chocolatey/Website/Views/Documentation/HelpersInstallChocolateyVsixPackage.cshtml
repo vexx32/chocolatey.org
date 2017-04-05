@@ -55,6 +55,7 @@ Install-ChocolateyVsixPackage -PackageName &quot;MyPackage&quot; `
 <h3 id="packagename-string">-PackageName &lt;String&gt;</h3>
 <p>The name of the package - while this is an arbitrary value, it&#39;s<br />
 recommended that it matches the package id.</p>
+<p>In 0.10.4+, <code>Name</code> is an alias for PackageName.</p>
 <table>
 <thead>
 <tr class="header">
@@ -65,7 +66,7 @@ recommended that it matches the package id.</p>
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td></td>
+<td>name</td>
 </tr>
 <tr class="even">
 <td>Required?</td>
@@ -88,6 +89,7 @@ recommended that it matches the package id.</p>
 <h3 id="vsixurl-string">-VsixUrl [&lt;String&gt;]</h3>
 <p>The URL of the package to be installed.</p>
 <p>Prefer HTTPS when available. Can be HTTP, FTP, or File URIs.</p>
+<p>In 0.10.4+, <code>Url</code> is an alias for VsixUrl.</p>
 <table>
 <thead>
 <tr class="header">
@@ -98,7 +100,7 @@ recommended that it matches the package id.</p>
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td></td>
+<td>url</td>
 </tr>
 <tr class="even">
 <td>Required?</td>
@@ -119,10 +121,13 @@ recommended that it matches the package id.</p>
 </tbody>
 </table>
 <h3 id="vsversion-int32">-VsVersion [&lt;Int32&gt;]</h3>
-<p>The Major version number of Visual Studio where the<br />
+<p>The major version number of Visual Studio where the<br />
 package should be installed. This is optional. If not<br />
 specified, the most recent Visual Studio installation<br />
 will be targetted.</p>
+<p>NOTE: For Visual Studio 2015, the VsVersion is 14. It can be determined<br />
+by looking at the folders under Program Files / Program Files (x86).</p>
+<p>In 0.10.4+, <code>VisualStudioVersion</code> is an alias for VsVersion.</p>
 <table>
 <thead>
 <tr class="header">
@@ -133,7 +138,7 @@ will be targetted.</p>
 <tbody>
 <tr class="odd">
 <td>Aliases</td>
-<td></td>
+<td>visualStudioVersion</td>
 </tr>
 <tr class="even">
 <td>Required?</td>

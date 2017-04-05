@@ -47,6 +47,13 @@ available in 0.10.2+.</p>
 # Run PowerShell statements
 $psFile = Join-Path &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot; &#39;someInstall.ps1&#39;
 Start-ChocolateyProcessAsAdmin &quot;&amp; `&#39;$psFile`&#39;&quot;</code></pre>
+<p><strong>EXAMPLE 5</strong></p>
+<pre><code class="powershell"># This also works for cmd and is required if you have any spaces in the paths within your command
+$appPath = &quot;$env:ProgramFiles\myapp&quot;
+$cmdBatch = &quot;/c `&quot;$appPath\bin\installmyappservice.bat`&quot;&quot;
+Start-ChocolateyProcessAsAdmin $cmdBatch cmd 
+# or more explicitly
+Start-ChocolateyProcessAsAdmin -Statements $cmdBatch -ExeToRun &quot;cmd.exe&quot;</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>

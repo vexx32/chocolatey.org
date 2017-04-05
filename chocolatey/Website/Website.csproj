@@ -1482,6 +1482,8 @@
     <Content Include="Views\Documentation\HowToSetUpChocolateyServer.cshtml" />
     <Content Include="Views\Documentation\FeaturesAgentService.cshtml" />
     <Content Include="Views\Blog\PackageSynchronizerSyncCommand.md" />
+    <Content Include="Views\Documentation\CommandsSync.cshtml" />
+    <Content Include="Views\Documentation\CommandsSynchronize.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

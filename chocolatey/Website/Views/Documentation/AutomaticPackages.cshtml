@@ -6,6 +6,29 @@
 <h1 id="automatic-packaging-for-maintenance">Automatic Packaging for Maintenance</h1>
 <p>Automatic packaging is a process that <strong>package maintainers can run on <em>their own</em> to keep the packages they maintain up to date</strong>. It is not a required step for maintaining packages on the community feed (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>), but it is recommended you find a way to automate the delivery of packages to the community feed when there are updates if you are going to maintain more than 5 packages and you are not the software vendor for the packages you maintain.</p>
 <p><strong>NOTE:</strong> Not to be confused with the automatic package creation feature in <a href="https://chocolatey.org/pricing">Chocolatey for Business</a> - that feature creates packages directly from software installer files. This feature is for package maintenance of existing packages on the community feed.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#automatic-update-methods">Automatic update methods</a></li>
+<li><a href="#automatic-updater-au">Automatic Updater (AU)</a></li>
+<li><a href="#credits">Credits</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#chocolatey-package-updater-aka-chocopkgup">Chocolatey Package Updater aka chocopkgup</a></li>
+<li><a href="#licensing">Licensing</a></li>
+<li><a href="#credits-1">Credits</a></li>
+<li><a href="#requirements-1">Requirements</a></li>
+<li><a href="#setup-1">Setup</a></li>
+<li><a href="#create-an-automatic-package">Create an Automatic Package</a>
+<ul>
+<li><a href="#create-a-package-for-automatic-packaging">Create a package for automatic packaging</a></li>
+<li><a href="#ketarin">Ketarin</a></li>
+</ul></li>
+<li><a href="#notes-about-tri-packages-metavirtual-aka--install-and-portable">Notes about tri-packages (meta/virtual aka <em>, </em>.install, and *.portable)</a></li>
+<li><a href="#testing-ketarinchocopkgup">Testing Ketarin/ChocoPkgUp:</a></li>
+<li><a href="#troubleshootingnotes">Troubleshooting/Notes</a></li>
+<li><a href="#important-notes-for-files-hosted-on-sourceforge">Important notes for files hosted on SourceForge</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="automatic-update-methods">Automatic update methods</h2>
 <p>There are currently two methods that can be used to maintain automatic packages:</p>
 <ul>

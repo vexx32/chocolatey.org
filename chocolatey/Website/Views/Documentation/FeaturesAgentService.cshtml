@@ -8,6 +8,35 @@
 <p>Empower your users and give your IT folks the precious gift of time to invest into taking your organization to the next level!</p>
 </blockquote>
 <p>The Chocolatey Agent service allows you to go further with your software management, bringing Chocolatey to desktop users in organizations that have controlled environments. This provides users in controlled environments more empowerment and instant turn around on required software. This frees up IT folks and admins time to spend on making the organization even better.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#setup">Setup</a>
+<ul>
+<li><a href="#background-mode-setup">Background Mode Setup</a></li>
+</ul></li>
+<li><a href="#chocolatey-background-service--self-service-installer">Chocolatey Background Service / Self-Service Installer</a>
+<ul>
+<li><a href="#self-service-roadmap">Self-Service Roadmap:</a></li>
+</ul></li>
+<li><a href="#chocolatey-central-console">Chocolatey Central Console</a>
+<ul>
+<li><a href="#chocolatey-central-console-roadmap">Chocolatey Central Console Roadmap</a></li>
+</ul></li>
+<li><a href="#see-it-in-action">See It In Action</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#how-do-i-take-advantage-of-chocolatey-agent">How do I take advantage of Chocolatey Agent?</a></li>
+<li><a href="#im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</a></li>
+<li><a href="#i-have-puppet-or-some-other-configuration-management-tool-rmm-tool-infrastructure-automation-tool-etc-that-also-runs-chocolatey-can-i-configure-it-to-skip-background-mode">I have Puppet or some other configuration management tool (RMM tool, infrastructure automation tool, etc.) that also runs Chocolatey. Can I configure it to skip background mode?</a></li>
+<li><a href="#how-does-it-work">How does it work?</a></li>
+<li><a href="#whats-the-minimum-chocolatey-licensed-edition-version-that-i-need-to-install-the-agent">What&#39;s the minimum Chocolatey licensed edition version that I need to install the agent?</a></li>
+<li><a href="#how-is-it-secure">How is it secure?</a></li>
+<li><a href="#do-you-have-an-example-of-a-message-that-goes-across-the-agent-service-named-pipe-from-the-client">Do you have an example of a message that goes across the agent service named pipe, from the client?</a></li>
+<li><a href="#what-is-the-purpose-of-the-hash-that-is-used-to-protect-the-named-pipe">What is the purpose of the hash that is used to protect the named pipe?</a></li>
+<li><a href="#does-the-agent-service-or-chocolatey-stop-installation-from-unconfigured-sources">Does the agent service or Chocolatey stop installation from unconfigured sources?</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="usage">Usage</h2>
 <p>The Chocolatey agent enables two simultaneous modes of operation, one as an agent for a central console and the other as a background service for use in controlled environments. You can configure one or both modes.</p>
 <h3 id="requirements">Requirements</h3>

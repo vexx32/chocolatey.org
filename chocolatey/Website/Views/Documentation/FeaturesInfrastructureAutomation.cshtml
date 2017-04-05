@@ -5,20 +5,21 @@
 <article>
 <h1 id="configuration-management-integration">Configuration Management Integration</h1>
 <p>Chocolatey integrates with several infrastructure automation tools!</p>
-<h2 id="usage">Usage</h2>
 <p>With most of these tools, the interface you would interact with Chocolatey would be through the tool or through the interfaces of the tool, like in scripts.</p>
+<!-- TOC depthTo:2 -->
 <ul>
 <li><a href="#ansible">Ansible</a></li>
 <li><a href="#boxstarter">Boxstarter</a></li>
 <li><a href="#chef">Chef</a></li>
 <li><a href="#octopus-deploy">Octopus Deploy</a></li>
 <li><a href="#powershell-dsc">PowerShell DSC</a></li>
-<li><a href="#powershell-packagemanagement">PowerShell PackageManagement / OneGet</a></li>
+<li><a href="#powershell-packagemanagement">PowerShell PackageManagement</a></li>
 <li><a href="#psdeploy">PSDeploy</a></li>
 <li><a href="#puppet">Puppet</a></li>
 <li><a href="#saltstack">Saltstack</a></li>
-<li><a href="#system-center-configuration-manager">SCCM</a></li>
+<li><a href="#system-center-configuration-manager">System Center Configuration Manager</a></li>
 </ul>
+<!-- /TOC -->
 <h2 id="ansible">Ansible</h2>
 <p>Ansible has the <code>win_chocolatey</code> module that manages both packages and the installation of Chocolatey itself.</p>
 <pre><code class="yaml">win_chocolatey:
