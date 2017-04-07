@@ -1109,6 +1109,7 @@
     <Content Include="Content\Images\docs\clistExample.png" />
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
+    <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
     <Content Include="Content\Images\docs\features\features_auto_uninstall.png" />
     <Content Include="Content\Images\docs\features\features_choco_sync.png" />
     <Content Include="Content\Images\docs\features\features_install_upgrade_refreshenv.png" />
