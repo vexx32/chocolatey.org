@@ -20,6 +20,7 @@
 <li>If you don&#39;t see any errors, you are ready to use Chocolatey! Type <code>choco</code> or <code>choco -?</code> now.</li>
 </ol>
 <p><strong>NOTE</strong>: If you are behind a proxy, please see <a href="#more-install-options">More Options</a>.<br />
+<strong>NOTE</strong>: Need completely offline solution? See <a href="#more-install-options">More Options</a>.<br />
 <strong>NOTE</strong>: Installing the licensed edition? See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">install licensed edition</a>.</p>
 <h4 id="install-with-cmd.exe">Install with cmd.exe</h4>
 <p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
@@ -51,6 +52,7 @@ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.or
 
 <ul>
 <li><a href="#install-from-powershell-v3">Install from PowerShell v3+</a></li>
+<li><a href="#completely-offline-install">Completely offline/internal install</a></li>
 <li><a href="#install-using-powershell-from-cmdexe">Install using PowerShell from cmd.exe</a></li>
 <li><a href="#install-using-nuget-package-manager">Install using NuGet Package Manager</a></li>
 <li><a href="#install-using-nugetexe-from-powershell">Install using NuGet.exe from PowerShell</a></li>
@@ -73,6 +75,82 @@ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.or
 <pre><code class="powershell">
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
+<h3 id="completely-offline-install">Completely offline install</h3>
+<p>With completely offline use of Chocolatey, you want to ensure you remove the default community package source (<code>choco source list</code> followed by <code>choco source remove -n chocolatey</code>, or however you would do that with a configuration manager <a href="https://forge.puppet.com/puppetlabs/chocolatey#sources-configuration">like Puppet</a>).</p>
+<ol>
+<li>The first step with offline is to obtain a copy of the Chocolatey Nupkg (nupkg files are just fancy zip files). Go to <a href="https://chocolatey.org/packages/chocolatey" class="uri">https://chocolatey.org/packages/chocolatey</a> and find a version you want.</li>
+<li><p>Click on Download to download that version&#39;s nupkg file.</p>
+<p><img src="@Url.Content("~/content/images/docs/DownloadChocolateyPackage.png")" alt="download chocolatey.nupkg visual" /></p></li>
+<li>You can put the chocolatey.nupkg on an internal package repository and then address that full path, similar to how you see in the Puppet provider - <a href="https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation" class="uri">https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation</a></li>
+<li><p>Then you would run a script similar to the below to address that local install. If it is on a repository somewhere, you will need to enhance the below script to get that file (the Chocolatey Puppet provider install script shows that).</p></li>
+</ol>
+<pre><code class="powershell"># based on local file, see above instructions for how you can obtain package
+# from internal repository and download it local
+$localChocolateyPackageFilePath = &#39;c:\packages\chocolatey.0.10.0.nupkg&#39;
+
+$ChocoInstallPath = &quot;$($env:SystemDrive)\ProgramData\Chocolatey\bin&quot;
+$env:ChocolateyInstall = &quot;$($env:SystemDrive)\ProgramData\Chocolatey&quot;
+$env:Path += &quot;;$ChocoInstallPath&quot;
+$DebugPreference = &quot;Continue&quot;;
+# if you really want to see debugging output related to the
+# installation, uncomment the next line
+#$env:ChocolateyEnvironmentDebug = &#39;true&#39;
+
+function Install-LocalChocolateyPackage {
+param (
+  [string]$chocolateyPackageFilePath = &#39;&#39;
+)
+
+  if ($chocolateyPackageFilePath -eq $null -or $chocolateyPackageFilePath -eq &#39;&#39;) {
+    throw &quot;You must specify a local package to run the local install.&quot;
+  }
+
+  if (!(Test-Path($chocolateyPackageFilePath))) {
+    throw &quot;No file exists at $chocolateyPackageFilePath&quot;
+  }
+
+  if ($env:TEMP -eq $null) {
+    $env:TEMP = Join-Path $env:SystemDrive &#39;temp&#39;
+  }
+  $chocTempDir = Join-Path $env:TEMP &quot;chocolatey&quot;
+  $tempDir = Join-Path $chocTempDir &quot;chocInstall&quot;
+  if (![System.IO.Directory]::Exists($tempDir)) {[System.IO.Directory]::CreateDirectory($tempDir)}
+  $file = Join-Path $tempDir &quot;chocolatey.zip&quot;
+  Copy-Item $chocolateyPackageFilePath $file -Force
+
+  # unzip the package
+  Write-Output &quot;Extracting $file to $tempDir...&quot;
+  $shellApplication = new-object -com shell.application
+  $zipPackage = $shellApplication.NameSpace($file)
+  $destinationFolder = $shellApplication.NameSpace($tempDir)
+  $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+
+  # Call chocolatey install
+  Write-Output &quot;Installing chocolatey on this machine&quot;
+  $toolsFolder = Join-Path $tempDir &quot;tools&quot;
+  $chocInstallPS1 = Join-Path $toolsFolder &quot;chocolateyInstall.ps1&quot;
+
+  &amp; $chocInstallPS1
+
+  Write-Output &#39;Ensuring chocolatey commands are on the path&#39;
+  $chocInstallVariableName = &quot;ChocolateyInstall&quot;
+  $chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName)
+  if ($chocoPath -eq $null -or $chocoPath -eq &#39;&#39;) {
+    $chocoPath = &#39;C:\ProgramData\Chocolatey&#39;
+  }
+
+  $chocoExePath = Join-Path $chocoPath &#39;bin&#39;
+
+  if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower()) -eq $false) {
+    $env:Path = [Environment]::GetEnvironmentVariable(&#39;Path&#39;,[System.EnvironmentVariableTarget]::Machine);
+  }
+}
+
+# Idempotence - do not install Chocolatey if it is already installed
+if (!(Test-Path $ChocoInstallPath)) {
+  # Install Chocolatey
+  Install-LocalChocolateyPackage $localChocolateyPackageFilePath
+}</code></pre>
 <h3 id="install-using-powershell-from-cmd.exe">Install using PowerShell from cmd.exe</h3>
 <p>This is the best method if you want to repeat it or include it in source control. It requires no change to your existing PowerShell to allow for remote unsigned scripts.</p>
 <p>Create a file named <code>installChocolatey.cmd</code> with the following:</p>
