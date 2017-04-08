@@ -159,6 +159,14 @@ namespace NuGetGallery
                             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version));
                     }
                 }
+                else if(!packageRegistration.Packages.Any(p => !p.IsPrerelease && p.Status == PackageStatusType.Approved)
+                      && packageRegistration.Packages.Any(p => p.Status == PackageStatusType.Submitted))
+                {
+                    return new HttpStatusCodeWithBodyResult(
+                        HttpStatusCode.Forbidden,
+                        string.Format("The package {0} have a previous version in a submitted state, and no approved stable releases.",
+                            packageToPush.Id));
+                }
             }
 
             try
