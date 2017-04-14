@@ -1094,6 +1094,7 @@
     <Content Include="Content\Images\docs\chocolateyicon.gif" />
     <Content Include="Content\Images\docs\chocolateyicon.png" />
     <Content Include="Content\Images\docs\chocolateynhprofiler.png" />
+    <Content Include="Content\Images\docs\ChocolateyPackagingPublicVsPrivate.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinCustomCommand.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinGlobalVariables.png" />
     <Content Include="Content\Images\docs\chocopkgup\KetarinJobSettings.png" />
@@ -1119,6 +1120,7 @@
     <Content Include="Content\Images\docs\features\features_outdated.png" />
     <Content Include="Content\Images\docs\features\features_override_install_directory.png" />
     <Content Include="Content\Images\docs\features\features_packages_from_installers.png" />
+    <Content Include="Content\Images\docs\features\features_packages_in_programs_and_features.png" />
     <Content Include="Content\Images\docs\features\features_recompile_packages.png" />
     <Content Include="Content\Images\docs\features\features_shimgen.png" />
     <Content Include="Content\Images\docs\features\features_software_audit.png" />
