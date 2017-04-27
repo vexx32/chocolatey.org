@@ -1,16 +1,318 @@
 ﻿@{
-    ViewBag.Title = "Support";
+  ViewBag.Title = "Support";
 }
-
 <section>
   <div class="container-wide p-b--l">
     <h1 class="text-center m-b">Support</h1>
+   
+  <h2>Contents</h2> 
+  <ul>
+    <li><a href="#package">Package Support</a></li>
+    <li><a href="#foss">Open Source Support</a></li>
+    <li><a href="#professional">Chocolatey Pro Support</a></li>
+    <li><a href="#business">Business Support</a></li>
+    <li><a href="#support-terms">Business Support Terms</a></li>
+  </ul>
+  <br />
 
-    <p>Coming Soon!</p>
+  <h2>Support for a Package</h2> 
+  <a name="package"></a>
+  <p>We do not have support for packages found on Chocolatey.org - those are considered community packages and should not be used for commercial purposes. Package issues should follow the package triage proces. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Read more...</a></p>
+  
+  <h2>Open Source</h2>
+  <a name="foss"></a>
+  <p>Unfortunately we are unable to provide private support for open source users. However there are a lot of avenues that open source users can work within the community to get the help they need.</p>
+  <p>If you are an open-source user, you have the following channels for support:</p>
+  
+  <ul class="m-b p--s p-l--l docs">
+    <li><a href="@Url.RouteUrl(RouteName.Docs)">Documentation</a></li>
+    <li><a href="https://groups.google.com/group/chocolatey">Mailing List</a></li>
+    <li><a href="https://twitter.com/chocolateynuget">Twitter</a></li>
+    <li><a href="https://gitter.im/chocolatey/choco">Gitter</a></li>
+  </ul>
+  
+  <p>Pro and Business users are welcome to use these forms of support as well, but they have an additional, private line directly back to Chocolatey Software for support.</p>
 
-    <h3>Are you looking for a support contract?</h3>
-    <h3>Do you already have a support contract?</h3>
+  <h2>Chocolatey Professional </h2>
+  
+  <p>Chocolatey Pro is a personal license for individuals. We are happy to extend support to help out our community users. Below is that support schedule for our Pro users.</p>
 
-    <p>Keep in mind that the packages found on this site (the community repository) are not supported.</p> 
+  <a name="professional"></a>
+  <table class="m-b--l compare-table">
+      <thead>
+      <th colspan="2">Chocolatey Professional - Support</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Included automatically?</td>
+        <td><span class="text-green icon-check"></span></td>
+      </tr>
+      <tr>
+        <td>Support hours</td>
+        <td>Monday &ndash; Friday 8AM &ndash; 5PM CST*</td>
+      </tr>
+      <tr>
+        <td>Response times
+        </td>
+        <td>2 business days</td>
+      </tr>
+      <tr>
+        <td>Phone support</td>
+        <td>n/a</td>
+      </tr>
+      <tr>
+        <td>Online support</td>
+        <td><span class="text-green icon-check"></span></td>
+      </tr>
+      <tr>
+        <td>Number of cases</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>Number of contacts</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Access to all updates &amp; upgrades of Chocolatey Professional</td>
+        <td><span class="text-green icon-check"></span></td>
+      </tr>
+      <tr>
+        <td>Support System</td>
+        <td>Email addresses provided in licensing email</td>
+      </tr>
+      <tr>
+        <td colspan="2">* Company holidays are observed and local offices are closed.</td>
+      </tr>
+      </tbody>
+  </table> 
+
+  <h2>Chocolatey for Business (C4B)</h2>
+  <a name="business"></a>
+  <p>The business edition has 3 levels of support - limited, standard, and premium. Limited and Standard are based on the number of licenses you purchase. Premium is an additional cost, but also requires a minimum number of licenses.</p>
+  
+  <ul>
+   <li><a href="#business-limited">Limited</a></li>
+   <li><a href="#business-standard">Standard</a></li>
+   <li><a href="#business-premium">Premium</a></li>
+  </ul>
+
+  <a name="business-limited"></a>
+  <table class="m-b--l compare-table">
+      <thead>
+      <th colspan="2">Chocolatey for Business - Limited Support</th>
+      </thead>
+    <tbody>
+    <tr>
+      <td>Included automatically?</td>
+      <td><span class="text-green icon-check"></span></td>
+    </tr>
+    <tr>
+      <td>Licenses</td>
+      <td>Under 100 licenses</td>
+    </tr>
+    <tr>
+      <td>Support hours</td>
+      <td>Monday &ndash; Friday 7AM &ndash; 6PM CST*</td>
+    </tr>
+    
+    <tr>
+      <td>Response times
+      </td>
+      <td>
+        <ul class="m-b p--s p-l--l docs">
+          <li>Priority 1: 4 business hours</li>
+          <li>Priority 2: 8 business hours</li>
+          <li>Priority 3: 12 business hours</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Phone support</td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <td>Online support</td>
+      <td><span class="text-green icon-check"></span></td>
+    </tr>
+    <tr>
+      <td>Number of cases per month</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Status meetings</td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <td>Maximum number of technical contacts</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Access to all updates &amp; upgrades of Chocolatey for Business</td>
+      <td><span class="text-green icon-check"></span></td>
+    </tr>
+    <tr>
+      <td>Support System</td>
+      <td>Email addresses provided in licensing email</td>
+    </tr>
+    <tr>
+      <td colspan="2">* Company holidays are observed and local offices are closed.</td>
+    </tr>
+    </tbody>
+    </table>
+    
+    <a name="business-standard"></a>
+    <table class="m-b--l compare-table">
+      <thead>
+      <th colspan="2">Chocolatey for Business - Standard Support</th>
+      </thead>
+    <tbody>
+    <tr>
+      <td>Included automatically?</td>
+      <td><span class="text-green icon-check"></span></td>
+    </tr>
+    <tr>
+      <td>Licenses</td>
+      <td>100+</td>
+    </tr>
+    <tr>
+      <td>Support hours</td>
+      <td>Monday &ndash; Friday 7AM &ndash; 6PM CST*</td>
+    </tr>
+    <tr>
+      <td>Response times
+      </td>
+      <td>
+        <ul class="m-b p--s p-l--l docs">
+          <li>Priority 1: 3 business hours</li>
+          <li>Priority 2: 6 business hours</li>
+          <li>Priority 3: 12 business hours</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Phone support</td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <td>Online support</td>
+      <td><span class="text-green icon-check"></span></td>
+    </tr>
+    <tr>
+      <td>Number of cases per month</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>Status meetings</td>
+      <td>Every 2 months by customer request</td>
+    </tr>
+    <tr>
+      <td>Maximum number of technical contacts</td>
+      <td>2 (negotiable)</td>
+    </tr>
+    <tr>
+      <td>Access to all updates &amp; upgrades of Chocolatey for Business</td>
+      <td><span class="text-green icon-check"></span></td>
+    </tr>
+    <tr>
+      <td>Support System</td>
+      <td>Email addresses provided in licensing email</td>
+    </tr>
+    <tr>
+      <td colspan="2">* Company holidays are observed and local offices are closed.</td>
+    </tr>
+    </tbody>
+    </table>
+    
+    <a name="business-premium"></a>
+    <table class="m-b--l compare-table">
+    <thead>
+    <th colspan="2">Chocolatey for Business - Premium Support</th>
+    </thead>
+      <tbody>
+       <tr>
+        <td>Licenses</td>
+        <td>1,500+ or minimum $30,000 purchase if multi-year required to purchase premium support</td>
+      </tr>
+      <tr>
+        <td>Included automatically?</td>
+        <td>Premium is available for an additional cost</td>
+      </tr>
+      <tr>
+        <td>Support hours</td>
+        <td>24 / 7 *</td>
+      </tr>
+      <tr>
+        <td>Response times</td>
+        <td>
+          <ul class="m-b p--s p-l--l docs">
+            <li>Priority 1: 2 hours</li>
+            <li>Priority 2: 4 hours</li>
+            <li>Priority 3: 6 hours</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Phone support</td>
+        <td>available add-on</td>
+      </tr>
+      <tr>
+        <td>Online support</td>
+        <td><span class="text-green icon-check"></span></td>
+      </tr>
+      <tr>
+        <td>Number of cases per month</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Status meetings</td>
+        <td>Weekly by customer request</td>
+      </tr>
+      <tr>
+        <td>Maximum number of technical contacts</td>
+        <td>6 (negotiable)</td>
+      </tr>
+      <tr>
+        <td>Access to all updates &amp; upgrades of Chocolatey for Business</td>
+        <td><span class="text-green icon-check"></span></td>
+      </tr>
+      <tr>
+        <td>Support System</td>
+        <td>Email addresses provided in licensing email</td>
+      </tr>
+      <tr>
+        <td colspan="2">* Company holidays are observed and local offices are closed. During closures, support response times are within 3, 6, and 12 hours, respectively based on priority.</td>
+      </tr>
+      </tbody>
+  </table>
   </div>
 </section>
+<div class="bg-two p-t--l p-b--l">
+  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+    <a name="support-terms"></a>
+    <h1>Chocolatey for Business - Support Terms</h1> 
+<p>Chocolatey Software, Inc. &ndash; Chocolatey for Business Support and Maintenance Services Terms</p>
+<p>These Support Services Terms describe the Support Services which current, compliant subscribers of Support Services are entitled to receive pursuant to the License Agreement between Chocolatey Software, Inc. ("Chocolatey") and Customer. These Support Services Terms form an integral part of, and are incorporated by reference into, the License Agreement.</p>
+<ol>
+  <li><strong>Definitions.</strong> 
+    <ul class="m-b p--s p-l--l docs">
+      <li><strong>"Software"</strong> means any of the following: Chocolatey for Business, Chocolatey for Architect, Chocolatey for MSP, or any other offerings as defined in a License agreement between Chocolatey and Customer.</li>
+      <li><strong>"Error"</strong> means a malfunction in Software that can be duplicated by Chocolatey that materially degrades the use or performance of the Customer business system the Software manages ("Business System").</li>
+      <li><strong>"Fix"</strong> means the repair or replacement of object code versions of Software to remedy an Error.</li>
+      <li><strong>"Priority 1 Error"</strong> means an Error that renders Software inoperative or materially degraded with respect to the Business System, such that: (i) the Business System's production system is severely impacted or completely shut down, or (ii) the Business System's system operations or mission-critical applications are down.</li>
+      <li><strong>"Priority 2 Error"</strong> means an Error that degrades Software performance with respect to the Business System.</li>
+      <li><strong>"Priority 3 Error"</strong> means an Error that affects Company's use of Software, but does not materially degrade Software performance with respect to the Business System or has a workaround that could include installing a previous version of Software.</li>
+      <li><strong>"Ticket"</strong> means the tracking of a Fix for an Error or requested feature in the Software has been noted by Customer, that is typically tracked in an issue tracking system.</li>
+      <li><strong>"Technical Contact"</strong> means an employee or authorized representative of Customer that is technically familiar and competent with Customer's systems (including the Business System), infrastructure and use of the Software, who: (i) has "read, write, and execute" access to the necessary files, English language communication skills and relevant technical knowledge; and (ii) is a designated Customer contact to receive Support Services, and to resolve Customer technical issues related to the Software. The permitted number of Technical Contacts is based on the level of Support Services purchased by Company, and is set forth in the tables above. Technical Contacts may be changed by the Customer upon five (5) business days prior written notice to Chocolatey, which can be executed electronically by email whereas the 5 days is the date of confirmation of receipt from Chocolatey.</li>
+      <li><strong>"Update"</strong> means subsequent releases of the Software that are generally made available by Chocolatey to customers using the Software as part of Support Services at no additional charge, other than any applicable media and handling charges. Updates may include updated code to accommodate changes in applicable industry standards. Updates shall not include any releases, enhancements, functionality or products which Chocolatey licenses separately or provides at a fee separate from the Support Services fee. Updates are delivered only on an as if and when available basis.</li>
+    </ul>
+  </li>
+  <li><strong>Support Services Coverage.</strong> Subject to the terms of these Support Services Terms, including the support schedule table(s) set forth above, and the other terms of the License Agreement (including, without limitation, Customer's payment of the applicable Support Services fees to Chocolatey), Chocolatey will provide Customer with the Support Services described herein for the Software, exclusive of any integration issues between the Software and applicable Third Party Software. Customer shall designate the permitted number of Technical Contacts who are responsible for resolving user issues, and only such Technical Contacts may contact Chocolatey for the provision of Support Services. Support Services do not include anything not set forth in these Support Services Terms, and specifically excludes support of any hardware or any software other than the Software, including and without limitation, any integration with Third Party Software (other than the Third Party Software (as defined in the License Agreement) to the extent of its function within the Software). The Support Services telephone numbers, email address and Chocolatey Support Portal are located in the tables above as applicable.</li>
+  <li><strong>Chocolatey Software Maintenance.</strong> Chocolatey will periodically, and at its sole discretion, provide Customer with Fixes to Errors and Updates to the Software.</li>
+  <li><strong>Customer Obligations.</strong> Customer and its Technical Contacts shall: (i) make reasonable efforts to resolve Customer issues or identify issues as relating to the Software prior to contacting Chocolatey for Support Services; and (ii) provide Chocolatey with sufficient information and resources to address the Error, and access to the personnel, hardware, and any additional software as reasonably necessary to enable Chocolatey to reproduce, analyze and address the Error.</li>
+  <li><strong>Process.</strong> Customer will contact Chocolatey Support by email or phone number, as noted in Support Services contract. Customer may also follow up on interested Ticket, if pre-existing or after creation, but for Support Services, Customer must contact Support through Support channels. If Ticket is public, Chocolatey Support will adjust the priority and identified release to resolve Ticket. Chocolatey Support will work to resolve Ticket. Ticket is closed when Fix is complete in code. For Priority 1, Fix will be provided out of band and Chocolatey Support will move up release schedule to provide a wider release quickly. On Priority 2, Customer and Chocolatey Support will determine if out of band Fix is provided and whether release schedule is moved up to support Customer necessity. For Priority 3, Fixes will normally wait until next release on normal release schedule. Chocolatey may provide Customer with Fix at Customer discretion.</li>
+  <li><strong>Status Updates.</strong> Customer may have certain Tickets for Software that they are interested in seeing resolved. These could be bugs or features that Chocolatey has noted and has plans to resolve. On Customer request based on Support Schedule, Chocolatey will provide updates on prioritization and status for Tickets.</li>
+  <li><strong>Exclusions.</strong> Chocolatey is not obligated to provide Support Services when: (i) the Software has been changed, modified, or damaged; (ii) the issue is caused by Customer's negligence, misuse of software or hardware, hardware malfunction, or other causes other than the Software; (iii) the issue is caused by hardware, third party software or infrastructure; (iv) the Customer is using packages from the community package repository source, located at <a href="https://chocolatey.org/packages">https://chocolatey.org/packages</a> (through <a href="https://chocolatey.org/api/v2)">https://chocolatey.org/api/v2)</a> or any repositories that are not controlled exclusively by Customer; or (v) the version of the Software is not a currently supported version, as determined by Chocolatey's announced policies regarding the support of such versions.</li>
+  <li><strong>Changes.</strong> Chocolatey reserves the right to change these Support Services at any time; provided however, that any such changes which occur during the then current Support Services term for which Customer has paid fees to Chocolatey, will not materially diminish the Support Services to be provided during the remainder of such Support Services term. It is your responsibility to check these Support Services Terms periodically for changes. By continuing to use the Support Services Terms, you are indicating your acceptance of such changes. Chocolatey, at its discretion, will provide written notice to you of any significant changes to these Support Services Terms, electronically through the Technical Contacts or the email provided for the License file.</li>
+</ol>
+ </section>
+</div>
