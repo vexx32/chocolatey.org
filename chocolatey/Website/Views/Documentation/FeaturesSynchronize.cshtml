@@ -9,6 +9,7 @@
 <li><a href="#automatic-synchronize">Automatic Sync</a></li>
 <li><a href="#sync-command">Synchronize Command</a> (Business edition only until Q3 2017)</li>
 </ul>
+<hr />
 <!-- TOC -->
 <ul>
 <li><a href="#automatic-synchronize">Automatic Synchronize</a></li>
@@ -60,14 +61,7 @@ This image shows running `choco list -lo`. Chocolatey for Business automatically
 <h3 id="see-it-in-action">See It In Action</h3>
 <p><img src="@Url.Content("~/content/images/docs/gifs/choco_business_features.gif")" alt="auto package creation/synchronize" /></p>
 <h3 id="options-and-switches">Options and Switches</h3>
-<p>The following are available in the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sync" })">choco sync</a> command.</p>
-<pre><code class="nohighlight">     --id=VALUE
-     Id - The Display Name from Programs and Features
-
-     --out, --outdir, --outputdirectory, --output-directory=VALUE
-     OutputDirectory - Specifies the directory for the generated Chocolatey
-       package file(s). If not specified, uses a subdirectory of the current
-       directory.</code></pre>
+<p>There are none - automatic sync just happens every run.</p>
 <h3 id="faq">FAQ</h3>
 <h4 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h4>
 <p>You must have a <a href="https://chocolatey.org/pricing">licensed edition of Chocolatey</a> (Pro, Business, or MSP). Pro is a personal, named license that costs about the price of a lunch outing per month and comes with several other features. Business editions are great for organizations that need to manage the total software management lifecycle. MSP editions contain a subset of the Business edition features.</p>
@@ -105,7 +99,14 @@ This image shows running `choco sync`. It shows first a system that has 18 appli
 
 -->
 <h3 id="options-and-switches-1">Options and Switches</h3>
-<p>N/A at this time. More switches will be added as this feature is enhanced</p>
+<p>The following are available in the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sync" })">choco sync</a> command.</p>
+<pre><code class="nohighlight">     --id=VALUE
+     Id - The Display Name from Programs and Features
+
+     --out, --outdir, --outputdirectory, --output-directory=VALUE
+     OutputDirectory - Specifies the directory for the generated Chocolatey
+       package file(s). If not specified, uses a subdirectory of the current
+       directory.</code></pre>
 <h3 id="faq-1">FAQ</h3>
 <h4 id="how-do-i-take-advantage-of-this-feature-1">How do I take advantage of this feature?</h4>
 <p>You must have the <a href="https://chocolatey.org/pricing">business edition of Chocolatey</a>. Business editions are great for organizations that need to manage the total software management lifecycle.</p>
