@@ -2529,10 +2529,6 @@ img  { max-width: 100%; }
   box-shadow: 5px 7px 50px rgba(0,0,0,.2);
 }
 
-.terminal-chrome__close {
-  content: '\c02715';
-}
-
 .terminal-chrome-top {
   position: absolute;
   left: 0;
