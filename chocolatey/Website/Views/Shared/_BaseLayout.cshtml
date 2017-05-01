@@ -15,9 +15,7 @@
   }
 
   //css
-  //Bundles.Reference("Content/style.css");
-  //Bundles.Reference("Content/site.css");
-  //Bundles.Reference("Content/chocolatey.css");
+  Bundles.Reference("Content/style.css");
   //js
   Bundles.Reference("Scripts");
   Bundles.Reference("Scripts/header", "header");
@@ -39,7 +37,6 @@
   <meta property="og:image:height" content="700" />
   <meta property="copyright" content="Chocolatey is Copyright 2017 - @DateTime.UtcNow.Year Chocolatey Software, Inc. Copyright 2011 - 2017 RealDimensions Software, LLC."/> 
   @Bundles.RenderStylesheets()
-  <link href="@Url.Content("~/content/style.css")?update=20170427" rel="stylesheet" />
   @RenderSection("css", required: false)
   <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
   <link rel="nuget" type="application/atom+xml" title="Chocolatey" href="http://www.chocolatey.org/api/v2" />
