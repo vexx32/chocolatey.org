@@ -571,9 +571,9 @@
         <div class="nuget-badge">
             <p><code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
                     @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                    { <text> -version @Model.Version</text> }
+                    { <text> --version @Model.Version</text> }
                     @if (Model.Prerelease)
-                    {<text> -pre </text>}</code></p>
+                    {<text> --pre </text>}</code></p>
         </div>
 
         <p>To upgrade @Model.Title, run the following command from the command line or from
@@ -581,9 +581,9 @@
         <div class="nuget-badge">
             <p><code><span>C:\&gt; </span>choco upgrade @Model.Id.ToLower()
                     @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                    { <text> -version @Model.Version</text> }
+                    { <text> --version @Model.Version</text> }
                     @if (Model.Prerelease)
-                    {<text> -pre </text>}</code></p>
+                    {<text> --pre </text>}</code></p>
         </div>
     }
 
