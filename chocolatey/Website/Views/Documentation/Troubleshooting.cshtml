@@ -1,0 +1,154 @@
+﻿@{
+  ViewBag.Title = "Troubleshooting";
+}
+
+<article>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>There are some well-known things you may run into when you are using Chocolatey. We&#39;ve tried to get some of the high level things you may run into into one document.</p>
+<p><strong>NOTE</strong>: This is a work in progress. It doesn&#39;t cover all of the troubleshooting steps that are known but it is attempting to cover quite a few.</p>
+<!-- TOC insertAnchor:true -->
+<ul>
+<li><a href="#general">General</a></li>
+<li><a href="#chocolatey-installation">Chocolatey Installation</a></li>
+<li><a href="#i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</a></li>
+<li><a href="#licensed-installation">Licensed Installation</a></li>
+<li><a href="#creating-packages">Creating Packages</a></li>
+<li><a href="#error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once">ERROR: Cannot bind parameter because parameter &quot;˜fileType&#39; is specified more than once.</a></li>
+<li><a href="#error-this-package-does-not-support-64-bit-architecture">ERROR: This package does not support 64 bit architecture.</a></li>
+<li><a href="#error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</a></li>
+<li><a href="#runtime">Runtime</a></li>
+<li><a href="#i-cant-get-the-powershell-tab-completion-working">I can&#39;t get the PowerShell tab completion working.</a></li>
+<li><a href="#why-does-choco-intabtab-not-work-for-me">Why does choco in<tab><tab> not work for me?</a></li>
+<li><a href="#microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed">Microsoft.Powershell_profile.ps1 cannot be loaded. The file is not digitally signed.</a></li>
+<li><a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</a></li>
+<li><a href="#im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</a></li>
+<li><a href="#a-package-is-broken-for-me">A package is broken for me</a></li>
+<li><a href="#the-package-install-failed-with-1603">The package install failed with 1603</a></li>
+</ul>
+<!-- /TOC -->
+<p><a id="markdown-general" name="general"></a></p>
+<h2 id="general">General</h2>
+<p>If you are unable to find answers to your questions here, please see <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a> (FOSS and Licensed) and <a href="https://chocolatey.org/bugs" class="uri">https://chocolatey.org/bugs</a> to learn more about how you can report issues and get things fixed if they are broken.</p>
+<p>Also consider the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">frequently asked questions</a>.</p>
+<p><a id="markdown-chocolatey-installation" name="chocolatey-installation"></a></p>
+<h2 id="chocolatey-installation">Chocolatey Installation</h2>
+<p><a id="markdown-i-am-having-trouble-with-powershell-to-install-chocolatey" name="i-am-having-trouble-with-powershell-to-install-chocolatey"></a></p>
+<h3 id="i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</h3>
+<p>See the More Options section of <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">installation</a>.</p>
+<p><a id="markdown-licensed-installation" name="licensed-installation"></a></p>
+<h2 id="licensed-installation">Licensed Installation</h2>
+<p>See [[Installation-Licensed]]</p>
+<p><a id="markdown-creating-packages" name="creating-packages"></a></p>
+<h2 id="creating-packages">Creating Packages</h2>
+<p><a id="markdown-error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once" name="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once"></a></p>
+<h3 id="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once.">ERROR: Cannot bind parameter because parameter &quot;˜fileType&#39; is specified more than once.</h3>
+<p>This error is seen sometimes on versions of Chocolatey older than 0.10.6. The problem is likely you have the following in your packaging:</p>
+<pre><code class="powershell">$toolsPath      = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
+
+$packageArgs = @@{
+  packageName   = &#39;test&#39;
+  fileType      = &#39;MSI&#39;
+  file          = &quot;$toolsPath\somefile.msi&quot;
+  softwareName  = &#39;test&#39;
+  silentArgs    = &#39;/qn /norestart&#39;
+  validExitCodes= @@(0)
+}
+
+Install-ChocolateyPackage @@packageArgs
+#Install-ChocolateyInstallPackage @@packageArgs # this is what you meant to use in this case.</code></pre>
+<p><code>Install-ChocolateyPackage</code> didn&#39;t have both a <code>File</code> parameter and a <code>FileType</code> parameter. PowerShell has a &quot;feature&quot; where it does partial matching of parameters. When you splat the parameters in, it tries to apply both <code>File</code> and <code>FileType</code> to <code>FileType</code> and throws the above error.</p>
+<p>Typically, when you are installing locally, you want to use <code>Install-ChocolateyInstallPackage</code> anyway.</p>
+<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/40736df7-7f3f-4be7-929d-1606be0e3a62%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/40736df7-7f3f-4be7-929d-1606be0e3a62%40googlegroups.com</a></p>
+<p><a id="markdown-error-this-package-does-not-support-64-bit-architecture" name="error-this-package-does-not-support-64-bit-architecture"></a></p>
+<h3 id="error-this-package-does-not-support-64-bit-architecture.">ERROR: This package does not support 64 bit architecture.</h3>
+<p>This message is from <a href="https://github.com/chocolatey/choco/issues/527" class="uri">https://github.com/chocolatey/choco/issues/527</a> - it is when the url value chosen is empty. This is common when you are creating a package and you forget to use splatting, instead passing the variable in as the first positional parameter to a function.</p>
+<p>This means you have set up your arguments for a function and then called something like <code>Install-ChocolateyPackage $packageArgs</code> instead of <code>Install-ChocolateyPackage @@packageArgs</code>. Note <code>@@</code> is for splatting, taking the values in the hash variable and using the key/values to pass those each as parameters to a function, where <code>$</code> just passes the entire hash as the first parameter of the function.</p>
+<pre><code class="powershell"># this is a hash array
+$packageArgs = @@{
+  packageName   = &#39;test&#39;
+  fileType      = &#39;exe&#39;
+  url           = &#39;https://location&#39;
+  url64bit      = &#39;https://location64&#39;
+  checksum      = &#39;checksum&#39;
+  checksum64    = &#39;checksum64&#39;
+  checksumType  = &#39;sha256&#39;
+  silentArgs    = &quot;/qn /norestart /l*v `&quot;$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`&quot;&quot;
+  validExitCodes= @@(0, 3010, 1641)
+}
+
+Install-ChocolateyPackage $packageArgs # this is 100% wrong and will pass the entire hash as the first positional parameter
+#Install-ChocolateyPackage @@packageArgs # is what you are looking for
+
+# Splatting takes the above hash and calls Install-ChocolateyPackage like this:
+# Install-ChocolateyPackage -PackageName &#39;test&#39; -FileType &#39;exe&#39; -Url &#39;https://location&#39; `
+#           -Url64bit &#39;https://location64&#39; -Checksum &#39;checksum&#39; -Checksum64 &#39;checksum64&#39; `
+#           -ChecksumType &#39;sha256&#39; `
+#           -SilentArgs &quot;/qn /norestart /l*v `&quot;$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`&quot;&quot; `
+#           -ValidExitCodes @@(0, 3010, 1641)</code></pre>
+<p><strong>NOTE</strong>: It is helpful to always use <code>choco new</code> when creating packages, it has this correct and you never run into this error.</p>
+<p>References:</p>
+<ul>
+<li><a href="https://github.com/majkinetor/au/issues/70" class="uri">https://github.com/majkinetor/au/issues/70</a></li>
+<li><a href="https://groups.google.com/d/msgid/chocolatey/5c544e16-e1b2-4249-bad6-4591017df81b%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/5c544e16-e1b2-4249-bad6-4591017df81b%40googlegroups.com</a></li>
+<li><a href="https://github.com/chocolatey/chocolatey-coreteampackages/issues/439" class="uri">https://github.com/chocolatey/chocolatey-coreteampackages/issues/439</a> (separate issue)</li>
+</ul>
+<p><a id="markdown-error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary" name="error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary"></a></p>
+<h3 id="error-this-package-does-not-support-64-bit-architecture.-when-trying-to-install-from-a-local-or-included-binary.">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</h3>
+<p>This is similar to the above, the error is the same. In most cases it stems from setting up your package parameters for <code>Install-ChocolateyInstallPackage</code> but calling <code>Install-ChocolateyPackage</code> instead. Learn the differences at the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">PowerShell function reference</a>.</p>
+<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com</a></p>
+<p><a id="markdown-runtime" name="runtime"></a></p>
+<h2 id="runtime">Runtime</h2>
+<p><a id="markdown-i-cant-get-the-powershell-tab-completion-working" name="i-cant-get-the-powershell-tab-completion-working"></a></p>
+<h3 id="i-cant-get-the-powershell-tab-completion-working.">I can&#39;t get the PowerShell tab completion working.</h3>
+<p><a id="markdown-why-does-choco-intabtab-not-work-for-me" name="why-does-choco-intabtab-not-work-for-me"></a></p>
+<h3 id="why-does-choco-in-not-work-for-me">Why does choco in<tab><tab> not work for me?</h3>
+<p>This means the import failed during install/upgrade. Chocolatey does supply a warning when this happens in the install/upgrade log. Take a look there.</p>
+<ul>
+<li>If this is the same shell that the upgrade occurred in, the message states you need to update your profile - run <code>. $profile</code>. Try that first, then try restarting your shell and see if it takes hold.</li>
+<li>If it still doesn&#39;t work, it means there was a failure setting the profile with the module.</li>
+<li>This could be due to PowerShell Execution Policy settings. Run <code>Get-ExecutionPolicy</code> - if it is set to <code>Restricted</code> you need to adjust that to something like <code>RemoteSigned</code>. See about execution policies (link)</li>
+<li>If that is fine, then we need to look at your &quot;$profile&quot;. Run <code>type $profile</code>. Examine the output. You should have something like this in the file:</li>
+</ul>
+<pre><code class="powershell"># Chocolatey profile
+$ChocolateyProfile = &quot;$env:ChocolateyInstall\helpers\chocolateyProfile.psm1&quot;
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module &quot;$ChocolateyProfile&quot;
+}</code></pre>
+<ul>
+<li>If you don&#39;t see that, let&#39;s add it. Run <code>Write-Host $profile</code> - note the location and open it up in an editor (anything but plain old notepad.exe for the love of..., well your favorite editor).</li>
+<li>Now let&#39;s add that text above to the profile. Save and close the file. Now type <code>. $profile</code> to update your current Shell. Give <code>choco in&lt;tab&gt;</code> a shot again. If it still doesn&#39;t work we&#39;ll need to examine something a bit more deeply about your environment. Please submit an issue so we can investigate.</li>
+</ul>
+<p><a id="markdown-microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed" name="microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed"></a></p>
+<h3 id="microsoft.powershell_profile.ps1-cannot-be-loaded.-the-file-is-not-digitally-signed.">Microsoft.Powershell_profile.ps1 cannot be loaded. The file is not digitally signed.</h3>
+<p>If you are seeing this, your PowerShell execution policy is either <code>AllSigned</code> or <code>Restricted</code>. You could be seeing this due to the addition of the Chocolatey profile (above question) for tab completion. You need to authenticode sign the PowerShell profile file, rename it, or remove it.</p>
+<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/58ef0ece-5e2a-4c2c-82a8-10e1711bdd3f%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/58ef0ece-5e2a-4c2c-82a8-10e1711bdd3f%40googlegroups.com</a></p>
+<p><a id="markdown-im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository" name="im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository"></a></p>
+<h3 id="im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository.">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</h3>
+<p>It could be one of a few things:</p>
+<ul>
+<li>You have a proxy that you need to configure</li>
+<li>It is being blocked in your organization</li>
+<li>We broke something (this is the least likely reason)</li>
+<li>CloudFlare has blocked your IP due to reasons</li>
+</ul>
+<p>You can use a tool like <a href="http://www.telerik.com/fiddler">Fiddler</a> (choco install for this would not be helpful in your case) to help determine what is going on.</p>
+<p>If you determine it is CloudFlare blocking your IP, we may be able to get you whitelisted for Chocolatey - see <a href="https://chocolatey.org/contact" class="uri">https://chocolatey.org/contact</a></p>
+<p><a id="markdown-im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on" name="im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on"></a></p>
+<h3 id="im-seeing-chocolatey-application-tool-using-32-bit-to-run-instead-of-x64.-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</h3>
+<p>The shims are generated as &quot;Any CPU&quot; programs, which depend on the <code>Enable64Bit</code> registry value to be set to <code>1</code>, which it is by default. A way to fix it is to issue the following command at the location where the prompt shows below:</p>
+<pre><code class="nohighlight">C:\Windows\Microsoft.NET\Framework64\v2.0.50727&gt; Ldr64 set64</code></pre>
+<p><a href="http://stackoverflow.com/a/14857294">Any CPU 32-bit mode on 64 bit machine</a></p>
+<p><a id="markdown-a-package-is-broken-for-me" name="a-package-is-broken-for-me"></a></p>
+<h3 id="a-package-is-broken-for-me">A package is broken for me</h3>
+<p>Depening on where you are installing this package from, we suggest you first look at your log files for more detailed output on the logs (based on the failure instructions).</p>
+<p><a id="markdown-the-package-install-failed-with-1603" name="the-package-install-failed-with-1603"></a></p>
+<h3 id="the-package-install-failed-with-1603">The package install failed with 1603</h3>
+<p>This is a generic MSI error code - you probably want to ensure you capture the log output from the MSI - if the package doesn&#39;t have it in the script, add it with <code>--install-arguments '&quot;/l*v c:\msi_install.log&quot;'</code> and then search the log file that is created for <code>Return Value 3</code>. This typically surrounds the actual error. Typically it can be anything from</p>
+<ul>
+<li>The installer doesn&#39;t allow reinstalling the same version</li>
+<li>There is a pending reboot</li>
+<li>Some prerequisite has not been met</li>
+<li>The installer doesn&#39;t allow installing an older version</li>
+<li>etc - it&#39;s a generic error like we said</li>
+</ul>
+</article>
