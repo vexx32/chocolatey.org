@@ -62,8 +62,9 @@
         
         <div>
             <p>
-                <span id="key">@Model.ApiKey</span> 
-                <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />
+              <span id="key">@Model.ApiKey</span> 
+              <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />
+              @*<button title="Copy to clipboard" class="icon-clipboard copy-button" data-clipboard-text="@Model.ApiKey"></button>*@
             </p>
 
             <fieldset class="form">
@@ -77,9 +78,9 @@
 
             <h2>Example usage:</h2>
             <p>
-                <pre><code>
-choco apiKey -k @Model.ApiKey -source https://chocolatey.org/
-choco push MyPackage.1.0.nupkg 
+              <pre><code>
+choco apikey --key @Model.ApiKey --source https://package.chocolatey.org/
+choco push MyPackage.1.0.nupkg --source https://package.chocolatey.org/
                 </code></pre>
             </p>
         </div>
