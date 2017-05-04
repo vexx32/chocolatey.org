@@ -53,6 +53,7 @@ function Fix-MarkdownConversion($text) {
   $text = $text -creplace 'â€”', '--'
   $text = $text -creplace 'â€“', '–'
   $text = $text -creplace 'â€¦', '...'
+  $text = $text -creplace 'â€˜', '&#39;'
   $text = $text -creplace 'â€™', '&#39;'
   $text = $text -creplace 'â€œ', '&quot;'
   $text = $text -creplace 'â€', '&quot;'
