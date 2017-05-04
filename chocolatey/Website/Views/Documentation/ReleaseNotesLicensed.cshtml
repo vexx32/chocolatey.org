@@ -192,7 +192,7 @@ Uninstall-ChocolateyWindowsService -Name &#39;chocolatey-agent&#39;</code></pre>
 <li>Fix - Ensure web requests don&#39;t time out / are configurable - see <a href="https://github.com/chocolatey/choco/issues/732">#732</a></li>
 <li>Package Builder (Choco New):
 <ul>
-<li>Fix - Cannot bind parameter because parameter &quot;˜fileType&#39; is specified more than once for <code>--keep-remote</code></li>
+<li>Fix - Cannot bind parameter because parameter &#39;fileType&#39; is specified more than once for <code>--keep-remote</code></li>
 <li>Fix - UNC paths with <code>--use-original-location</code> should not use <code>Install-ChocolateyPackage</code></li>
 <li>Fix - Escape double quotes in PowerShell strings</li>
 </ul></li>
@@ -314,7 +314,7 @@ Uninstall-ChocolateyWindowsService -Name &#39;chocolatey-agent&#39;</code></pre>
 <ul>
 <li>Package Builder (Choco New) - Removed <code>fileFullPath</code> from install template - add back in when local zip only. Fixes an error as <code>file</code> and <code>fileFullPath</code> are aliases starting in 0.10.1.</li>
 <li>Package Internalizer (Choco Download) - ensure logging does not incur log format exceptions</li>
-<li>install/upgrade - Look for downloaded file at old path if replaced &quot;˜chocolatey\chocolatey&#39; path does not exist - see <a href="https://github.com/chocolatey/choco/issues/969">#969</a></li>
+<li>install/upgrade - Look for downloaded file at old path if replaced &#39;chocolatey\chocolatey&#39; path does not exist - see <a href="https://github.com/chocolatey/choco/issues/969">#969</a></li>
 </ul>
 <h3 id="improvements-9">IMPROVEMENTS</h3>
 <ul>

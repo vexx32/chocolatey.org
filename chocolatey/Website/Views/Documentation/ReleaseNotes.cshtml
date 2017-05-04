@@ -21,7 +21,7 @@
 <p>We&#39;ve also made <a href="https://github.com/chocolatey/choco/issues/1134">package itself display download progress</a>, which is great when software binaries are embedded in packages. For you folks looking to remove any progress (like when using Vagrant), now you can use <a href="https://github.com/chocolatey/choco/issues/917"><code>--no-progress</code></a>. When NuGet.Core has issues, those issues will have more visibility into why things are failing without needing a debugging log. Speaking of some extreme visibility, see network traffic with <a href="https://github.com/chocolatey/choco/issues/1182"><code>--trace</code></a>.</p>
 <p>We&#39;ve got a few possible breaking changes that could affect you, see what we&#39;ve written about them below.</p>
 <p>This also marks the first release that uses the <a href="https://github.com/chocolatey/choco/issues/1214">Chocolatey Software digital certificate for signing</a> instead of the RealDimensions Software, LLC certificate.</p>
-<p>Another major feature released in preview is <a href="https://github.com/chocolatey/choco/issues/797">using remembered arguments on upgrade</a>. This is in preview in 0.10.4 and will be turned to &quot;˜on&#39; automatically in a future release. We are going to be continually making it better and won&#39;t turn it on by default until it is ready. If you want to turn it on and start using it, once you have 0.10.4 installed, run <code>choco feature enable -n useRememberedArgumentsForUpgrades</code>. You can also do this per command with <code>--use-remembered-arguments</code>. You can also turn it off per command with <code>--ignore-remembered-arguments</code>. We&#39;ve also really described a lot of important considerations and thoughts related to using this so there are no surprises. Please do read the issue notes at length if you plan to use this feature to reduce confusion.</p>
+<p>Another major feature released in preview is <a href="https://github.com/chocolatey/choco/issues/797">using remembered arguments on upgrade</a>. This is in preview in 0.10.4 and will be turned to &#39;on&#39; automatically in a future release. We are going to be continually making it better and won&#39;t turn it on by default until it is ready. If you want to turn it on and start using it, once you have 0.10.4 installed, run <code>choco feature enable -n useRememberedArgumentsForUpgrades</code>. You can also do this per command with <code>--use-remembered-arguments</code>. You can also turn it off per command with <code>--ignore-remembered-arguments</code>. We&#39;ve also really described a lot of important considerations and thoughts related to using this so there are no surprises. Please do read the issue notes at length if you plan to use this feature to reduce confusion.</p>
 <h3 id="breaking-changes">BREAKING CHANGES</h3>
 <ul>
 <li><p>Run with highestAvailable Execution Level by default - see <a href="https://github.com/chocolatey/choco/issues/1054">#1054</a></p>
@@ -66,13 +66,13 @@
 <li>Fix - Get-UninstallRegistryKey fixes/improvements - see <a href="https://github.com/chocolatey/choco/issues/815">#815</a></li>
 <li>Fix - Unzip specific folder feature is broken after introducing 7zip - see <a href="https://github.com/chocolatey/choco/issues/676">#676</a></li>
 <li>Fix - Join-Path error when installing Chocolatey as SYSTEM - see <a href="https://github.com/chocolatey/choco/issues/1042">#1042</a></li>
-<li>Fix - <code>$env:OS_NAME</code> is &quot;˜Windows&#39; for Windows 10 - see <a href="https://github.com/chocolatey/choco/issues/1178">#1178</a></li>
+<li>Fix - <code>$env:OS_NAME</code> is &#39;Windows&#39; for Windows 10 - see <a href="https://github.com/chocolatey/choco/issues/1178">#1178</a></li>
 <li>Fix - choco install relativepath/to/some.nuspec fails - see <a href="https://github.com/chocolatey/choco/issues/906">#906</a></li>
 <li>Fix - When pointing to a nupkg, choco should use only that nupkg to install and not a newer version in the same directory - see <a href="https://github.com/chocolatey/choco/issues/523">#523</a></li>
 <li>Fix - Automatic uninstaller should split by quotes when necessary - see <a href="https://github.com/chocolatey/choco/issues/1208">#1208</a></li>
 <li>[API] Fix - lib should merge the AlphaFS dependency - see <a href="https://github.com/chocolatey/choco/issues/1148">#1148</a></li>
 <li>[API] Fix - don&#39;t reset loggers on setting custom automatically - see <a href="https://github.com/chocolatey/choco/issues/1121">#1121</a></li>
-<li>[API] Fix - Chocolatey file cache adds a &quot;˜chocolatey&#39; directory on each install - see <a href="https://github.com/chocolatey/choco/issues/1210">#1210</a></li>
+<li>[API] Fix - Chocolatey file cache adds a &#39;chocolatey&#39; directory on each install - see <a href="https://github.com/chocolatey/choco/issues/1210">#1210</a></li>
 <li>[API] Fix - Getting Local List of Package may leave config in undesirable state - see <a href="https://github.com/chocolatey/choco/issues/1213">#1213</a></li>
 <li>Fix - Pro/Business - Chocolatey Licensed Feed May Show Up More Than Once - see <a href="https://github.com/chocolatey/choco/issues/1166">#1166</a></li>
 <li>Fix - Pro/Business - Synchronized packages with DLLs are attempted to be imported by Chocolatey&#39;s PowerShell Extensions Loader - see <a href="https://github.com/chocolatey/choco/issues/1041">#1041</a></li>
@@ -276,7 +276,7 @@ You can shut off the checksum requirement by enabling the feature <code>allowEmp
 <h2 id="june-18-2016"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.10.1+is%3Aclosed">0.9.10.1</a> (June 18, 2016)</h2>
 <h3 id="bug-fixes-8">BUG FIXES</h3>
 <ul>
-<li>Fix - Cannot bind argument to parameter &quot;˜exitCode&#39; because it is null - see <a href="https://github.com/chocolatey/choco/issues/810">#810</a></li>
+<li>Fix - Cannot bind argument to parameter &#39;exitCode&#39; because it is null - see <a href="https://github.com/chocolatey/choco/issues/810">#810</a></li>
 </ul>
 <h3 id="improvements-7">IMPROVEMENTS</h3>
 <ul>
@@ -402,7 +402,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Fix - Some environment variables are set too early for options/switches to have an effect - see <a href="https://github.com/chocolatey/choco/issues/620">#620</a></li>
 <li>[API] Fix - Issue when attempting to execute run command through API - see <a href="https://github.com/chocolatey/choco/issues/769">#769</a></li>
 <li>Fix - Logging of upgrade messages - placement of some messages is incorrect - see <a href="https://github.com/chocolatey/choco/issues/557">#557</a></li>
-<li>Fix - Get-WebFile fails with - The term &quot;˜//continue&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/789">#789</a></li>
+<li>Fix - Get-WebFile fails with - The term &#39;//continue&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/789">#789</a></li>
 <li>Fix - Unable to read registry snapshot file - see <a href="https://github.com/chocolatey/choco/issues/487">#487</a></li>
 <li>Fix - Pro/Business - Licensed version has an incorrect dependency on PowerShell assemblies and will only load v3 and above - see <a href="https://github.com/chocolatey/choco/issues/799">#799</a></li>
 <li>Fix - Exit codes in package scripts should work - see <a href="https://github.com/chocolatey/choco/issues/802">#802</a></li>
@@ -432,7 +432,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Show a prompt character when asking a multiple choice question - see <a href="https://github.com/chocolatey/choco/issues/184">#184</a></li>
 <li>When prompting for a user yes/no answer, use a short [y/n] representation - see <a href="https://github.com/chocolatey/choco/issues/181">#181</a></li>
 <li>Default package template should include LICENSE.txt and VERIFICATION.txt for packages with binaries - see <a href="https://github.com/chocolatey/choco/issues/675">#675</a></li>
-<li>choco list/search aliases for -v - &quot;˜-detail&#39; and &quot;˜-detailed&#39; - see <a href="https://github.com/chocolatey/choco/issues/646">#646</a></li>
+<li>choco list/search aliases for -v - &#39;-detail&#39; and &#39;-detailed&#39; - see <a href="https://github.com/chocolatey/choco/issues/646">#646</a></li>
 <li>Log normal output to a secondary log - see <a href="https://github.com/chocolatey/choco/issues/682">#682</a></li>
 <li>Display Package test status information on install/upgrade - see <a href="https://github.com/chocolatey/choco/issues/696">#696</a></li>
 <li>Report when reboots are necessary from package installs - see <a href="https://github.com/chocolatey/choco/issues/712">#712</a></li>
@@ -473,7 +473,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li>Pro/Business - Add switch to fail on invalid or missing license - see <a href="https://github.com/chocolatey/choco/issues/596">#596</a></li>
 <li>Pro/Business - add ignore invalid switches/parameters - see <a href="https://github.com/chocolatey/choco/issues/586">#586</a></li>
 <li>Pro/Business - Don&#39;t prompt to upload file for virus scanning if it is too large - see <a href="https://github.com/chocolatey/choco/issues/695">#695</a></li>
-<li>Pro/Business - add &quot;˜support&#39; command - see <a href="https://github.com/chocolatey/choco/issues/745">#745</a></li>
+<li>Pro/Business - add &#39;support&#39; command - see <a href="https://github.com/chocolatey/choco/issues/745">#745</a></li>
 <li>Pro/Business - Adjust environment settings warning to suggest upgrade - see <a href="https://github.com/chocolatey/choco/issues/795">#795</a></li>
 <li>API - Add the ability to retrieve package count for a Source - see <a href="https://github.com/chocolatey/choco/issues/431">#431</a></li>
 <li>API - Chocolatey Lib still marks vital package information as internal - see <a href="https://github.com/chocolatey/choco/issues/433">#433</a></li>
@@ -632,7 +632,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <ul>
 <li>Api Key and Source matching could be more intuitive - see <a href="https://github.com/chocolatey/choco/issues/238">#228</a></li>
 <li>Remove warning about allowGlobalConfirmation being enabled - see <a href="https://github.com/chocolatey/choco/issues/237">#237</a></li>
-<li>Include log file path when saying &quot;˜See the log for details&#39; - see <a href="https://github.com/chocolatey/choco/issues/187">#187</a></li>
+<li>Include log file path when saying &#39;See the log for details&#39; - see <a href="https://github.com/chocolatey/choco/issues/187">#187</a></li>
 <li>Uninstall prompts for version when there is only one installed - see <a href="https://github.com/chocolatey/choco/issues/186">#186</a></li>
 <li>Do not offer a default option when prompting for a user choice - see <a href="https://github.com/chocolatey/choco/issues/185">#185</a></li>
 <li>Remove the warning note about skipping, and instead show the warning when selecting skip - see <a href="https://github.com/chocolatey/choco/issues/183">#183</a></li>
@@ -641,7 +641,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <h2 id="march-30-2015"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.9.9.4+is%3Aclosed">0.9.9.4</a> (March 30, 2015)</h2>
 <h3 id="bug-fixes-18">BUG FIXES</h3>
 <ul>
-<li>Fix - The term &quot;˜false&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/215">#215</a></li>
+<li>Fix - The term &#39;false&#39; is not recognized as the name of a cmdlet - see <a href="https://github.com/chocolatey/choco/issues/215">#215</a></li>
 </ul>
 <h3 id="improvements-14">IMPROVEMENTS</h3>
 <ul>
@@ -739,7 +739,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <li><strong>New Commands:</strong></li>
 </ul>
 <ol>
-<li><code>pin</code> - Suppress upgrades. This allows you to &quot;˜pin&#39; an install to a particular version - see <a href="https://github.com/chocolatey/choco/issues/1">#1</a>, <a href="https://github.com/chocolatey/chocolatey/issues/5">Chocolatey #5</a> and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">Pin Command</a></li>
+<li><code>pin</code> - Suppress upgrades. This allows you to &#39;pin&#39; an install to a particular version - see <a href="https://github.com/chocolatey/choco/issues/1">#1</a>, <a href="https://github.com/chocolatey/chocolatey/issues/5">Chocolatey #5</a> and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pin" })">Pin Command</a></li>
 <li><code>apikey</code> - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-api-key" })">ApiKey Command</a></li>
 <li><code>new</code> - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-new" })">New Command</a> and <a href="https://github.com/chocolatey/chocolatey/issues/157">Chocolatey #157</a></li>
 </ol>
@@ -901,7 +901,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 </ul>
 <p>BUG FIXES:</p>
 <ul>
-<li>Fix - Cannot bind argument to parameter &quot;˜Path&#39; because it is an empty string - <a href="https://github.com/chocolatey/chocolatey/issues/371">#371</a></li>
+<li>Fix - Cannot bind argument to parameter &#39;Path&#39; because it is an empty string - <a href="https://github.com/chocolatey/chocolatey/issues/371">#371</a></li>
 <li>Fix - clist -source webpi doesn&#39;t prompt for admin access - <a href="https://github.com/chocolatey/chocolatey/issues/293">#293</a></li>
 <li>Fix - Get-ChocolateyUnzip silently fails due to incorrect usage of System32 (File System Redirector Issues) - <a href="https://github.com/chocolatey/chocolatey/pull/476">#476</a> &amp; <a href="https://github.com/chocolatey/chocolatey/issues/455">#455</a></li>
 <li>Fix - 7za.exe is subject to UAC file virtualization - <a href="https://github.com/chocolatey/chocolatey/issues/454">#454</a></li>
@@ -1104,7 +1104,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 </ul>
 <p>BUG FIXES:</p>
 <ul>
-<li>Fix - The packages.config feature has broken naming packages with &quot;˜.config&#39; - <a href="https://github.com/chocolatey/chocolatey/issues/56">#56</a></li>
+<li>Fix - The packages.config feature has broken naming packages with &#39;.config&#39; - <a href="https://github.com/chocolatey/chocolatey/issues/56">#56</a></li>
 <li>Fix - CList includes all versions without adding the switch - <a href="https://github.com/chocolatey/chocolatey/issues/60">#60</a></li>
 <li>Fix - When NuGet.exe failes to run due to .NET Framework 4.0 not installed, chocolatey should report that. - <a href="https://github.com/chocolatey/chocolatey/issues/65">#65</a></li>
 </ul>
@@ -1198,7 +1198,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 </ul>
 <p>FEATURES:</p>
 <ul>
-<li>New chocolatey command! InstallMissing allows you to install a package only if it is not already installed. Shortcut is &quot;˜cinstm&#39;.</li>
+<li>New chocolatey command! InstallMissing allows you to install a package only if it is not already installed. Shortcut is &#39;cinstm&#39;.</li>
 <li>New Helper! Install-ChocolateyPath - give it a path for out of band items that are not imported to path with chocolatey</li>
 <li>New Helper! Start-ChocolateyProcessAsAdmin - this allows you to run processes as administrator</li>
 <li>New Helper! Install-ChocolateyDesktopLink - put shortcuts on the desktop</li>
@@ -1226,7 +1226,7 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 </ul>
 <p>IMPROVEMENTS:</p>
 <ul>
-<li>Shortcuts have been added: &quot;˜cup&#39; for &quot;˜chocolatey update&#39;, &quot;˜cver&#39; for &quot;˜chocolatey version&#39;, and &quot;˜clist&#39; for &quot;˜chocolatey list&#39;.</li>
+<li>Shortcuts have been added: &#39;cup&#39; for &#39;chocolatey update&#39;, &#39;cver&#39; for &#39;chocolatey version&#39;, and &#39;clist&#39; for &#39;chocolatey list&#39;.</li>
 <li>Update only runs if newer version detected.</li>
 <li>Calling update with no arguments will update chocolatey.</li>
 <li>Calling update with all will update your entire chocolatey repository.</li>
@@ -1317,6 +1317,6 @@ If you need the previous behavior, be sure to disable the feature <code>usePacka
 <h2 id="march-30-2011">0.9.1 (March 30, 2011)</h2>
 <p>IMPROVEMENTS:</p>
 <ul>
-<li>Shortcut for &quot;˜chocolatey install&#39; - &quot;˜cinst&#39; now available.</li>
+<li>Shortcut for &#39;chocolatey install&#39; - &#39;cinst&#39; now available.</li>
 </ul>
 </article>

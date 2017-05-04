@@ -13,7 +13,7 @@
 <li><a href="#i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</a></li>
 <li><a href="#licensed-installation">Licensed Installation</a></li>
 <li><a href="#creating-packages">Creating Packages</a></li>
-<li><a href="#error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once">ERROR: Cannot bind parameter because parameter &quot;˜fileType&#39; is specified more than once.</a></li>
+<li><a href="#error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once">ERROR: Cannot bind parameter because parameter &#39;fileType&#39; is specified more than once.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture">ERROR: This package does not support 64 bit architecture.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</a></li>
 <li><a href="#runtime">Runtime</a></li>
@@ -41,7 +41,7 @@
 <p><a id="markdown-creating-packages" name="creating-packages"></a></p>
 <h2 id="creating-packages">Creating Packages</h2>
 <p><a id="markdown-error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once" name="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once"></a></p>
-<h3 id="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once.">ERROR: Cannot bind parameter because parameter &quot;˜fileType&#39; is specified more than once.</h3>
+<h3 id="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once.">ERROR: Cannot bind parameter because parameter &#39;fileType&#39; is specified more than once.</h3>
 <p>This error is seen sometimes on versions of Chocolatey older than 0.10.6. The problem is likely you have the following in your packaging:</p>
 <pre><code class="powershell">$toolsPath      = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
 
