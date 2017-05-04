@@ -18,7 +18,7 @@
 <li><a href="#error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</a></li>
 <li><a href="#runtime">Runtime</a></li>
 <li><a href="#i-cant-get-the-powershell-tab-completion-working">I can&#39;t get the PowerShell tab completion working.</a></li>
-<li><a href="#why-does-choco-intabtab-not-work-for-me">Why does choco in<tab><tab> not work for me?</a></li>
+<li><a href="#why-does-choco-intab-not-work-for-me">Why does choco in{tab} not work for me?</a></li>
 <li><a href="#microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed">Microsoft.Powershell_profile.ps1 cannot be loaded. The file is not digitally signed.</a></li>
 <li><a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</a></li>
 <li><a href="#im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</a></li>
@@ -100,8 +100,8 @@ Install-ChocolateyPackage $packageArgs # this is 100% wrong and will pass the en
 <h2 id="runtime">Runtime</h2>
 <p><a id="markdown-i-cant-get-the-powershell-tab-completion-working" name="i-cant-get-the-powershell-tab-completion-working"></a></p>
 <h3 id="i-cant-get-the-powershell-tab-completion-working.">I can&#39;t get the PowerShell tab completion working.</h3>
-<p><a id="markdown-why-does-choco-intabtab-not-work-for-me" name="why-does-choco-intabtab-not-work-for-me"></a></p>
-<h3 id="why-does-choco-in-not-work-for-me">Why does choco in<tab><tab> not work for me?</h3>
+<p><a id="markdown-why-does-choco-intab-not-work-for-me" name="why-does-choco-intab-not-work-for-me"></a></p>
+<h3 id="why-does-choco-intab-not-work-for-me">Why does choco in{tab} not work for me?</h3>
 <p>This means the import failed during install/upgrade. Chocolatey does supply a warning when this happens in the install/upgrade log. Take a look there.</p>
 <ul>
 <li>If this is the same shell that the upgrade occurred in, the message states you need to update your profile - run <code>. $profile</code>. Try that first, then try restarting your shell and see if it takes hold.</li>
