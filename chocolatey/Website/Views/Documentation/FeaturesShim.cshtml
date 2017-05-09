@@ -82,9 +82,9 @@ The image shows installing ruby.portable, then running `ruby -v` followed by `ru
 <p>We tried using batch (&quot;<em>.bat&quot;) files, and it mostly works, but when applications calling other applications expect the file name to be&quot;.exe&quot;, a file named&quot;</em>.bat&quot; doesn&#39;t work. Batch files also don&#39;t work in all shells, and shims do.</p>
 <h3 id="have-you-thought-about-shimming-in-more-places">Have you thought about shimming in more places?</h3>
 <p>Yes, but we have not decided whether shimming Program Files is a good idea yet or not. Packages can explicitly enforce shims with <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-bin-file" })">Install-BinFile</a>.</p>
-<h3 id="i-need-to-shim-a-non-exe-file.">I need to shim a non-exe file.</h3>
+<h3 id="i-need-to-shim-a-non-exe-file">I need to shim a non-exe file.</h3>
 <p>If you are creating a package and you need to shim a file that doesn&#39;t end in .exe (like a .bat file), you should look at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-bin-file" })">Install-BinFile</a>.</p>
-<h3 id="i-need-to-exclude-a-file-from-shimming.">I need to exclude a file from shimming.</h3>
+<h3 id="i-need-to-exclude-a-file-from-shimming">I need to exclude a file from shimming.</h3>
 <p>If you are creating a package and you want to skip creation of a shim for a particular file, you can create a &quot;*.ignore&quot; file.</p>
 <p>Set an empty file next to the executable (or where it will be downloaded/unpacked to), sharing the same name with the executable and appending &quot;.ignore&quot;. For example, if your file is named &quot;<code>bob.exe</code>&quot;, you need a file named &quot;<code>bob.exe.ignore</code>&quot; (pay attention to case - &quot;<code>BOB.exe.ignore</code>&quot; may not work with all versions of Chocolatey).</p>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#how-do-i-exclude-executables-from-getting-shims">Read more...</a></p>
@@ -92,8 +92,8 @@ The image shows installing ruby.portable, then running `ruby -v` followed by `ru
 <p>Chocolatey 0.9.10+ will automatically detect GUI applications and adjust the shim accordingly. The detection may not always be accurate, and older versions of Chocolatey don&#39;t handle this, so it&#39;s best to create a &quot;*.gui&quot; file to direct the shim creation to be for a GUI application.</p>
 <p>If you are creating a package and want the shim to exit immediately after calling the application, create an empty &quot;*.gui&quot; file next to where the exe file is (or where it will be downloaded/unpacked to), sharing the same name with the executable and appending &quot;.gui&quot;. For example, if your file is named &quot;<code>bob.exe</code>&quot;, you need a file named &quot;<code>bob.exe.gui</code>&quot; (pay attention to case - &quot;<code>BOB.exe.gui</code>&quot; may not work with all versions of Chocolatey).</p>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#how-do-i-set-up-shims-for-applications-that-have-a-gui">Read more...</a></p>
-<h3 id="a-package-messed-up-and-should-have-set-up-a-shim-as-a-gui.">A package messed up and should have set up a shim as a GUI.</h3>
+<h3 id="a-package-messed-up-and-should-have-set-up-a-shim-as-a-gui">A package messed up and should have set up a shim as a GUI.</h3>
 <p>Call the shim with <code>--shimgen-gui</code> to target the correct behavior.</p>
-<h3 id="an-executable-requires-being-run-from-the-folder-where-it-actually-is.">An executable requires being run from the folder where it actually is.</h3>
+<h3 id="an-executable-requires-being-run-from-the-folder-where-it-actually-is">An executable requires being run from the folder where it actually is.</h3>
 <p>Call the shim with <code>--shimgen-usetargetworkingdirectory</code>. There are badly behaved applications that don&#39;t run well from anywhere, and they require some extra help so they will run correctly.</p>
 </article>

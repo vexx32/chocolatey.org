@@ -141,7 +141,7 @@ Get-ChildItem -Path $path -Recurse | ?{
 <p>It is able to detect 12 types of installers currently.</p>
 <h3 id="does-it-always-find-the-silent-uninstall-arguments">Does it always find the silent uninstall arguments?</h3>
 <p>In over 90% of the cases it will, but not always. Even with this in mind, it still removes 90% of the packaging work. See the next question on how to handle cases where it can not.</p>
-<h3 id="this-was-unable-to-detect-custom-installer-arguments.">This was unable to detect custom installer arguments.</h3>
+<h3 id="this-was-unable-to-detect-custom-installer-arguments">This was unable to detect custom installer arguments.</h3>
 <p>Unfortunately, some installers out there are just a pain to work with. In the case of custom installers, you may be able to find the silent arguments for install and uninstall by searching online. If you can not find anything, consider unpacking the installer and putting the software binaries directly in the package.</p>
 <h3 id="does-it-create-auto-unattend-files">Does it create auto unattend files?</h3>
 <p>Unfortunately, it is not able to do this. See the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">automatic internalize and recompile packages feature</a> to take advantage of thousands of existing packages without a need for internet access.</p>

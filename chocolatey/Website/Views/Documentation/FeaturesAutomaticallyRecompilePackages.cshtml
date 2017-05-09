@@ -87,7 +87,7 @@ This image shows running `choco download --recompile git.install`.
 <p>It downloads a package locally. Then it looks at the install script to determine if there are remote resources, which are downloaded to a directory in the package (or with another switch will be placed on a file share or setup for an http location). Then it edits the install script to use the local resources instead and recompiles the package. The process takes about as long as it takes to download the remote resources.</p>
 <h3 id="does-it-work-with-all-types-of-packages">Does it work with all types of packages?</h3>
 <p>Some packages are already internalized or don&#39;t have remote resources. In those cases it will just download the existing package and have it available for pushing to an internal repository.</p>
-<h3 id="it-was-not-able-to-download-a-resource.-why-not">It was not able to download a resource. Why not?</h3>
+<h3 id="it-was-not-able-to-download-a-resource-why-not">It was not able to download a resource. Why not?</h3>
 <p>This feature is in preview, but is able to download/recompile quite a few packages. There are a few that it may have issues with, especially if variables with methods are used (e.g. <code>$(somevar).Replace(&quot;.&quot;,&quot;&quot;)</code>). In those cases it attempts to warn you ahead of time that it cannot handle those yet.</p>
 <p>Future versions of the licensed edition will support advanced scenarios such as these.</p>
 <h3 id="are-all-packages-guaranteed-to-be-compatible">Are all packages guaranteed to be compatible?</h3>

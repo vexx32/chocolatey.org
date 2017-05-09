@@ -8,12 +8,20 @@
 <ul>
 <li><a href="#why">Why?</a></li>
 <li><a href="#host-your-own-server">Host your own server</a></li>
+<li><a href="#known-hosting-options">Known Hosting Options</a></li>
 <li><a href="#package-version-immutability">Package Version Immutability</a></li>
 <li><a href="#local-folder--unc-share-cifs">Local Folder / UNC Share (CIFS)</a></li>
+<li><a href="#advantages">Advantages</a></li>
+<li><a href="#disadvantages">Disadvantages</a></li>
 <li><a href="#local-folder-share-setup">Local Folder Share Setup</a></li>
-<li><a href="#simple-server">Simple Server</a>
+<li><a href="#simple-server">Simple Server</a></li>
+<li><a href="#advantages-1">Advantages</a></li>
+<li><a href="#disadvantages-1">Disadvantages</a></li>
+<li><a href="#simple-server-setup">Simple Server Setup</a>
 <ul>
-<li><a href="#simple-server-setup">Simple Server Setup</a></li>
+<li><a href="#third-party--commercial-options">Third Party / Commercial Options</a></li>
+<li><a href="#chocolateyserver-setup">Chocolatey.Server Setup</a></li>
+<li><a href="#nugetserver-setup">NuGet.Server Setup</a></li>
 </ul></li>
 <li><a href="#package-gallery">Package Gallery</a>
 <ul>
@@ -23,16 +31,20 @@
 </ul>
 <!-- /TOC -->
 <h2 id="why">Why?</h2>
-<p>Please read <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#should-my-organization-depend-on-use-the-community-feed-httpschocolateyorgpackages">Depending on the chocolatey.org as an organization</a></p>
+<p>Chocolatey has had the ability to be able to work with packages from one or more sources since its inception back in 2011. With that, Chocolatey comes with a default package repository configured - the community package repository (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>). However due to the community repository being in the public domain and subject to distribution rights, it has a failure point in that it can not be 100% reliable (most packages can&#39;t contain software and must download at runtime). It&#39;s not something an organization hosting their own package repository would be subject to, so we recommend organizational use of Chocolatey should include an internal package repository. Organizations looking to use Chocolatey should review the following topics to learn more:</p>
+<ul>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Community package repository - organizational use</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })#organizational-use-of-chocolatey">Security and the community repository</a></li>
+</ul>
 <h2 id="host-your-own-server">Host your own server</h2>
 <p>There are three types of package repositories, <a href="#local-folder--unc-share">folder/unc share</a>, <a href="#simple-server">simple server</a>, and the sophisticated <a href="#package-gallery">package gallery</a>.</p>
-<p><strong>Known Hosting Options</strong></p>
+<h3 id="known-hosting-options">Known Hosting Options</h3>
 <ul>
 <li>File Share\UNC share (below)</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Chocolatey.Server</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Chocolatey.Server</a> (supported by Chocolatey Software with your Chocolatey for Business subscription)</li>
 <li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_hosted_repositories.html">Nexus2</a> / <a href="https://books.sonatype.com/nexus-book/3.0/reference/nuget.html#nuget-hosted">Nexus3</a>- Sonatype Nexus has a built-in simple server</li>
 <li><a href="http://inedo.com/proget/overview">ProGet</a> - ProGet gives you a ready to go On-Premise option. Enterprise has replication</li>
-<li><a href="http://www.jfrog.com/open-source/">Artifactory</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a> - not in the free version</li>
+<li><a href="https://www.jfrog.com/artifactory/">Artifactory Pro</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a></li>
 <li><a href="https://www.myget.org/">MyGet</a> - MyGet has free public and paid for public/private cloud-hosting options if you don&#39;t want to handle all of the pain of setup and administration. MyGet offers some stellar options like multi-feed aggregation, mirroring, and source package build services!</li>
 <li><a href="https://www.jetbrains.com/teamcity/">TeamCity</a> has built-in Simple Server</li>
 <li><a href="https://github.com/themotleyfool/Klondike">Klondike</a> - Ember front-end that builds on NuGet.Lucene for private NuGet package hosting</li>
@@ -42,12 +54,13 @@
 <li><a href="https://github.com/NuGet/NuGetGallery/wiki/Hosting-the-NuGet-Gallery-Locally-in-IIS">NuGet Gallery</a></li>
 <li>Chocolatey Gallery</li>
 </ul>
+<p>Some of these options also work from a non-Windows hosting perspective. See <a href="#non-windows-hosting">Non-Windows Hosting</a>.</p>
 <h2 id="package-version-immutability">Package Version Immutability</h2>
 <p>A package version is immutable on some sources. This means that everybody&#39;s version 1.0.1 of a particular package is the same. You do not need to worry about this when updating with newer versions of packages, because each package version compiled nupkg has the unique version in the name (e.g <code>bob.1.0.0.nupkg</code> vs <code>bob.1.0.1.nupkg</code> ).</p>
 <p>Package immutability is usually desired, because then you know that everyone on v1.0.0 of a package has exactly the same code as does even everyone else. Even a broken version v1.0.0 gives you a global understanding that everyone who has v1.0.0 has exactly the same bits. This really simplifies administration. Without immutability, there is no guarantee that a version of a package installed is the same as the version of the package at the source.</p>
 <h2 id="local-folder-unc-share-cifs">Local Folder / UNC Share (CIFS)</h2>
 <p>Perhaps the easiest to set up and recommended for testing quick and dirty scenarios, local folder is easily a strong point when you need a quick source for packages.</p>
-<p><strong>Advantages:</strong></p>
+<h3 id="advantages">Advantages</h3>
 <ul>
 <li>Speed of setup (can be setup almost immediately).</li>
 <li>Package store is filesystem.</li>
@@ -55,18 +68,19 @@
 <li>Permissions are based on file system/share permissions.</li>
 <li>There is no limitation on package sizes (or rather, it can likely handle 100MB+ file sizes, maybe even GB sized packages). Don&#39;t create multiple GB sized packages, what is wrong with you?! ;)</li>
 </ul>
-<p><strong>Disadvantages:</strong></p>
+<h3 id="disadvantages">Disadvantages</h3>
 <ul>
 <li>Anyone with permission can push and overwrite packages.</li>
 <li>No HTTP/HTTPS pushing. Must be able to access the folder/share to push to it.</li>
 <li>Starts to affect choco performance once the source has over 500 packages (maybe?).</li>
+<li>No tracking on number of downloads / no package statistics</li>
 <li><strong>Big disadvantage</strong>: For a file share there is not a guarantee of package version immutability. Does not do anything to keep from package versions being overwritten. This provides no immutability of a package version and no guarantee that a version of a package installed is the same as the version in the source.</li>
 </ul>
 <h3 id="local-folder-share-setup">Local Folder Share Setup</h3>
 <p>No really, it&#39;s that easy. Just set your permissions appropriately and put packages in the folder. You are already done.</p>
 <h2 id="simple-server">Simple Server</h2>
 <p>There is where the bulk of NuGet OData compatible servers fall (Nexus, Nuget.Server, Chocolatey.Server, Artifactory, MyGet, etc). Since Chocolatey just uses an enhanced version of the NuGet framework, it is compatible everywhere you can put a NuGet package.</p>
-<p><strong>Advantages:</strong></p>
+<h3 id="advantages-1">Advantages</h3>
 <ul>
 <li>Setup can be really simple - just a website and IIS for some simple servers.</li>
 <li>Windows is not required - there are at least two pure Java versions (see <a href="#non-windows-hosting">Non-Windows Hosting</a>).</li>
@@ -75,39 +89,51 @@
 <li>No direct access to packages so security can be locked down to just modify through push.</li>
 <li>Package store is file system.</li>
 </ul>
-<p><strong>Disadvantages:</strong></p>
+<h3 id="disadvantages-1">Disadvantages</h3>
 <ul>
-<li>Only one API key, so no multi user scenarios.</li>
-<li>Starts to affect choco performance once the source has over 500 packages (maybe?).</li>
+<li>Only one API key, so no multi-user scenarios. Some options like ProGet/Nexus/Artifactory can manage several repos with different keys. I believe they can also offer multiple API Keys</li>
+<li>Starts to affect choco performance once the source has over 2,000 packages for some sources. It depends on how they keep that information (in a db or file scans).</li>
 <li>No moderation.</li>
-<li>No website to view packages.</li>
-<li>No package statistics.</li>
+<li>No pretty interface for viewing package information aside from ChocolateyGUI.</li>
+<li>No package statistics for most of the simple server sources.</li>
 <li>A package should may be limited to 28.61MB by default on some simple servers. Depending on your simple server - For IIS simple servers package size can be controlled through <a href="https://msdn.microsoft.com/en-us/library/ms689462(v=vs.90).aspx">maxAllowedContentLength</a> and <a href="https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx">maxRequestLength</a>. For others like Nexus, it may already be set very high. You can host the installer internally somewhere and access it through packaging though.</li>
 </ul>
 <p>The actual limit for package sizes varies depending on what each simple server can handle (usually determined by the limitation of pushing a package to the server). If you determine what those are, we&#39;d be happy to list each one here.</p>
-<h4 id="simple-server-setup">Simple Server Setup</h4>
-<p>Many google searches will throw out good ways to set up your own feed (hint: search for &quot;host your own NuGet server feed&quot;)</p>
-<p>Some notable references:</p>
+<h3 id="simple-server-setup">Simple Server Setup</h3>
+<p>Most hosting options have great information on how to set up the package repository. When it comes to Chocolatey.Server and NuGet.Server, we&#39;ve added additional information that is quite helpful.</p>
+<h4 id="third-party-commercial-options">Third Party / Commercial Options</h4>
+<ul>
+<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_hosted_repositories.html">Nexus2</a> / <a href="https://books.sonatype.com/nexus-book/3.0/reference/nuget.html#nuget-hosted">Nexus3</a></li>
+<li><a href="http://inedo.com/support/documentation/proget/installation/installation-guide">ProGet</a></li>
+<li><a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory Pro</a></li>
+<li><a href="https://www.myget.org/">MyGet</a></li>
+</ul>
+<p>If the option you&#39;ve chosen is not listed, take a look at <a href="#known-hosting-options">known hosting options</a> and follow the link from there to see what the vendor provides in the way of documentation.</p>
+<h4 id="chocolateyserver-setup">Chocolatey.Server Setup</h4>
+<p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Set up the Chocolatey.Server</a>. More details below on what this option provides.</p>
+<p><a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey Simple Server</a> is a simple Nuget.Server that is ready to rock and roll. It has already completed Steps 1–3 of NuGet&#39;s <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">host your own remote feed</a>. Some things to consider with Chocolatey.Server as compared to other options:</p>
+<ul>
+<li>Uses same enhanced NuGet that Chocolatey uses so you can see more information in search if you choose to use those things.</li>
+<li>Allows packages up to 2GB. Package size can be controlled through <a href="https://msdn.microsoft.com/en-us/library/ms689462(v=vs.90).aspx">maxAllowedContentLength</a> and <a href="https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx">maxRequestLength</a>.</li>
+</ul>
+<p><strong>NOTE:</strong> Commercial options of Chocolatey also may have support for the Chocolatey.Server.</p>
+<h4 id="nugetserver-setup">NuGet.Server Setup</h4>
+<p>Setting up NuGet.Server is very much a hands on approach for a packaging server - it requires Visual Studio as you will be adding the NuGet package to a Website project. We recommend looking at Chocolatey.Server as it is nearly the same thing but fully ready to go (and with Chocolatey enhancements).</p>
+<p>Many google searches will throw out good ways to set up your own feed (hint: search for &quot;host your own NuGet server feed&quot;)<br />
+Some notable references:</p>
 <ul>
 <li>Nuget Docs <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">Host Your Own Remote Feed</a></li>
 <li>itToby - <a href="http://blog.ittoby.com/2014/07/setup-your-own-chocoloateynuget.html">Setup Your Own Chocolatey/NuGet Repository</a></li>
 <li>Rich Hopkins - <a href="https://souladin.wordpress.com/2014/12/05/bake-your-own-chocolatey-nuget-repository/">Bake your own Chocolatey NuGet repository</a></li>
 <li>Brandon - <a href="http://netitude.bc3tech.net/2015/01/07/create-your-own-hosted-nuget-server-in-azure/">Host NuGet Server in Azure</a></li>
 </ul>
-<h5 id="chocolatey-server-setup">Chocolatey Server Setup</h5>
-<p><a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey Simple Server</a> is a simple Nuget.Server that is ready to rock and roll. It has already completed Steps 1–3 of NuGet&#39;s <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">host your own remote feed</a>. Version 0.1.2 has the following additional adds:</p>
-<ul>
-<li>Uses same enhanced NuGet that Chocolatey uses so you can see more information in search if you choose to use those things.</li>
-<li>Allows packages up to 2GB. Package size can be controlled through <a href="https://msdn.microsoft.com/en-us/library/ms689462(v=vs.90).aspx">maxAllowedContentLength</a> and <a href="https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx">maxRequestLength</a>.</li>
-</ul>
-<p>To set it up, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Set up the Chocolatey.Server</a>.</p>
 <h2 id="package-gallery">Package Gallery</h2>
 <p>This is like what <a href="https://chocolatey.org" class="uri">https://chocolatey.org</a> (the community feed runs on). It is the most advanced, having both a file store for packages and a database for tracking all sorts of information.</p>
 <p><strong>Advantages:</strong></p>
 <ul>
 <li>Can deal with thousands of packages with no performance issues.</li>
 <li>Package versions are immutable - in other words you can guarantee the version installed is the same as the version in the source.</li>
-<li>Package store can be File system, Azure blobs, or AWS S3 (<strong>Chocolatey Package Gallery only</strong>).</li>
+<li>Package store can be File system, Azure blobs, or AWS S3 (<strong>S3 available with Chocolatey Package Gallery only</strong>).</li>
 <li>Multiple users each having their own API keys.</li>
 <li>User registration with email confirmation.</li>
 <li>Interaction and collaboration based.</li>
@@ -137,8 +163,8 @@
 <li><a href="https://www.jetbrains.com/teamcity/">TeamCity</a> - contains built-in simple server</li>
 <li><a href="http://www.kendar.org/?p=/dotnet/phpnuget">PHP NuGet</a> - Simple server built in PHP</li>
 <li><a href="https://github.com/MPIB/hazel">Hazel</a> - Simple server built in Rust</li>
-<li><a href="http://www.jfrog.com/open-source/">Artifactory</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a> - not in the free version</li>
-<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_hosted_repositories.html">Nexus</a></li>
+<li><a href="https://www.jfrog.com/artifactory/">Artifactory Pro</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a></li>
+<li><a href="https://books.sonatype.com/nexus-book/reference/nuget-nuget_hosted_repositories.html">Sonatype Nexus</a></li>
 </ul>
 <p><strong>Note:</strong> NuGet.Java.Server, TeamCity and JNuGet are about the same in terms of sophistication (they are ordered alphabetically).</p>
 </article>

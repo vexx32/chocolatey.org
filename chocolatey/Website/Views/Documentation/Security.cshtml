@@ -106,7 +106,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <p><strong>&quot;Chocolatey != Chocolatey.org Packages&quot;</strong></p>
 </blockquote>
 <p>It goes without stating that if you are a business and you are using Chocolatey, you should think long and hard before trusting an external source you have no control over (chocolatey.org packages, in addition to all of the binaries that download from official distribution channels over the internet). It is too easy to set up your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">own private feed</a> where you can vet packages and have complete control over the binaries and what gets installed. This also provides a complete offline solution that is reliable and trustworthy. This is what we recommend for businesses that use Chocolatey in production scenarios (and what many of them do). There is a <a href="https://chocolatey.org/blog/host-your-own-server">great article written up</a> on the reasoning and options for hosting your own server.</p>
-<h2 id="chocolatey.org-packages">Chocolatey.org Packages</h2>
+<h2 id="chocolateyorg-packages">Chocolatey.org Packages</h2>
 <p>Chocolatey.org has a community repository of packages known as the community feed / community package repository. These packages are created by folks in the community and due to distribution rights, they usually contain executable instructions on how to download software from official distribution points written in PowerShell.</p>
 <h3 id="security-for-the-community-package-repository">Security for the Community Package Repository:</h3>
 <ol>
@@ -132,7 +132,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>Checksumming is not yet a requirement in some scenarios, so keep reading the next section.</li>
 </ul>
 <h4 id="downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</h4>
-<p>With all of that said, you may want to ensure you build trust with each package as the software is coming from somewhere on the internet sometimes and moderators only validate that the package gets the software from those official distribution points, not necessarily the software itself. While VirusTotal provides a bit more of a validation against the binaries, if the maintainer is not using checksums in the package, there isn&#39;t a guarantee that the software vendor did not pull a switch on the binary (the remote distribution source). If you are concerned about that you should look to Pro or Business (next section).</p>
+<p>With all of that said, you may want to ensure you build trust with each package as the software is coming from somewhere on the internet sometimes and moderators only validate that the package gets the software from those official distribution points, not necessarily the software itself. While VirusTotal provides a bit more of a validation against the binaries, if the maintainer is not using checksums in the package (checksums are required if the package downloads from non-secure locations), there isn&#39;t a guarantee that the software vendor did not pull a switch on the binary (the remote distribution source). If you are concerned about that you should look to Pro or Business (next section).</p>
 <h2 id="chocolatey-pro-chocolatey-for-business">Chocolatey Pro / Chocolatey for Business</h2>
 <ol>
 <li><a href="https://chocolatey.org/compare">Licensed editions of Chocolatey</a> perform runtime virus scan verification. We highly recommend folks concerned about security using the community feed or other packages that download resources from the internet to use Pro.</li>
@@ -143,7 +143,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>Moderators will cryptographically sign packages with a PGP key that they own. This will allow folks to trust moderators.</li>
 <li>Users will also cryptographically sign packages so we can provide authenticity that the package came from them.</li>
 <li>We&#39;ll show the package checksum on the website for folks that want to verify the package is brought down appropriately.</li>
-<li>A user can optionally pass their own checksums that must be validated for downloaded software - <a href="https://github.com/chocolatey/choco/issues/112" class="uri">https://github.com/chocolatey/choco/issues/112</a></li>
+<li><del>A user can optionally pass their own checksums that must be validated for downloaded software - <a href="https://github.com/chocolatey/choco/issues/112" class="uri">https://github.com/chocolatey/choco/issues/112</a></del> Available in v0.10.0+.</li>
 </ol>
 <h2 id="history">History</h2>
 <p>Some folks may state that Chocolatey <em>is</em> insecure. That is based on older information and is incorrect to be stated in that way. Feel free to correct the person with &quot;You mean Chocolatey <strong><em>used</em></strong> to be insecure.&quot; and then point them to this page (<a href="https://chocolatey.org/security" class="uri">https://chocolatey.org/security</a>). It is correct that there <strong><em>were</em></strong> security concerns. However, all known concerns have been corrected and/or have a plan to be resolved (e.g.&nbsp; package signing). As we learn of new security concerns we put together a plan to resolve those issues with a priority that each CVE (common vulnerabilities and exposures) requires.</p>

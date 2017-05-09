@@ -16,7 +16,7 @@
 <li>restores nuget packages from the configs</li>
 <li>builds the source with rake</li>
 </ul>
-<h3 id="setup.ps1">setup.ps1:</h3>
+<h3 id="setupps1">setup.ps1:</h3>
 <pre><code class="powershell">function Install-NeededFor {
 param(
    [string] $packageName = &#39;&#39;
@@ -78,7 +78,7 @@ foreach ($nugetConfig in $nugetConfigs) {
 
 rake
 </code></pre>
-<h3 id="setup.cmd">setup.cmd:</h3>
+<h3 id="setupcmd">setup.cmd:</h3>
 <pre><code class="nohighlight">@@echo off
 SET DIR=%~dp0%
 @@PowerShell -NoProfile -ExecutionPolicy unrestricted -Command &quot;&amp; &#39;%DIR%setup.ps1&#39; %*&quot;

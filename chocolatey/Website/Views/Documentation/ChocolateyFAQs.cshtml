@@ -89,7 +89,7 @@
 <p>&quot;Okay, machine package manager, that&#39;s nice. What does that mean though?&quot; It means you can simply install software with a few keystrokes and go get coffee while your co-workers are downloading and running an install manually (and I do mean something like an MSI).</p>
 <p>How about updates? Wouldn&#39;t it be nice to update nearly everything on your machine with a few simple keystrokes? We think so, too. Chocolatey does that. <code>choco upgrade all -y</code></p>
 <p><a id="markdown-i-need-a-tool-that-manages-software---using-scripts-to-work-with-those-unattended-installs-is-that-chocolatey" name="i-need-a-tool-that-manages-software---using-scripts-to-work-with-those-unattended-installs-is-that-chocolatey"></a></p>
-<h3 id="i-need-a-tool-that-manages-software---using-scripts-to-work-with-those-unattended-installs.-is-that-chocolatey">I need a tool that manages software - using scripts to work with those unattended installs. Is that Chocolatey?</h3>
+<h3 id="i-need-a-tool-that-manages-software---using-scripts-to-work-with-those-unattended-installs-is-that-chocolatey">I need a tool that manages software - using scripts to work with those unattended installs. Is that Chocolatey?</h3>
 <p>Yes, in a nutshell that is what Chocolatey does. Nearly exactly what you may already be doing, except wrapped up into a package file that allows you to modularize and easily manage order with dependencies on other packages.</p>
 <p><a id="markdown-what-is-the-purpose-of-chocolatey" name="what-is-the-purpose-of-chocolatey"></a></p>
 <h3 id="what-is-the-purpose-of-chocolatey">What is the purpose of Chocolatey?</h3>
@@ -130,7 +130,7 @@
 <p><a id="markdown-using-chocolatey" name="using-chocolatey"></a></p>
 <h2 id="using-chocolatey">Using Chocolatey</h2>
 <p><a id="markdown-can-i-use-chocolatey-in-a-cmdexe-shell" name="can-i-use-chocolatey-in-a-cmdexe-shell"></a></p>
-<h3 id="can-i-use-chocolatey-in-a-cmd.exe-shell">Can I use Chocolatey in a cmd.exe shell?</h3>
+<h3 id="can-i-use-chocolatey-in-a-cmdexe-shell">Can I use Chocolatey in a cmd.exe shell?</h3>
 <p>Yes, Chocolatey has some official clients, one of which is <code>choco.exe</code> and it is a command line tool, so it works equally well in Powershell.exe and cmd.exe. However if you have the PowerShell profile installed, you also get tab completion in Powershell.exe.</p>
 <p><a id="markdown-tab-completion" name="tab-completion"></a></p>
 <h3 id="tab-completion">Tab-completion?</h3>
@@ -139,13 +139,13 @@
 <h3 id="what-is-the-difference-between-open-source-chocolatey-chocolatey-pro-and-chocolatey-for-business">What is the difference between Open Source Chocolatey, Chocolatey Pro, and Chocolatey for Business?</h3>
 <p>Great question, we have a comparison table listed at <a href="https://chocolatey.org/compare">compare</a>. There is also an FAQ section related specifically to licensing.</p>
 <p><a id="markdown-im-interested-in-c4b-chocolatey-for-business-but-i-have-questions" name="im-interested-in-c4b-chocolatey-for-business-but-i-have-questions"></a></p>
-<h3 id="im-interested-in-c4b-chocolatey-for-business-but-i-have-questions.">I&#39;m interested in C4B (Chocolatey for Business) but I have questions.</h3>
+<h3 id="im-interested-in-c4b-chocolatey-for-business-but-i-have-questions">I&#39;m interested in C4B (Chocolatey for Business) but I have questions.</h3>
 <p>Please see <a href="https://chocolatey.org/pricing">pricing</a> and the FAQ section. If it doesn&#39;t answer your questions, please feel free to reach out to the team from there!</p>
 <p><a id="markdown-does-chocolatey-require-administrative-permissions-to-run" name="does-chocolatey-require-administrative-permissions-to-run"></a></p>
 <h3 id="does-chocolatey-require-administrative-permissions-to-run">Does Chocolatey require administrative permissions to run?</h3>
 <p>It does by default - based on where it is installed. However there is an non-administrative installation for Chocolatey under More Options at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">installation</a>. Do keep in mind that there is pass through to what packages are doing that makes a determination for whether the package needs administrative permissions, and Chocolatey works within the context of Windows permissions, so you are not going to get around that (aside from what is provided with self-service, see question below).</p>
 <p><a id="markdown-i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations" name="i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations"></a></p>
-<h3 id="i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations.">I would like to be able to offer my non-admin desktop users an option for self-service type of installations.</h3>
+<h3 id="i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations">I would like to be able to offer my non-admin desktop users an option for self-service type of installations.</h3>
 <p>Yes, we absolutely support that scenario in Chocolatey for Business.</p>
 <p><a id="markdown-can-i-use-chocolatey-with-existing-installs" name="can-i-use-chocolatey-with-existing-installs"></a></p>
 <h3 id="can-i-use-chocolatey-with-existing-installs">Can I use Chocolatey with existing installs?</h3>
@@ -186,7 +186,7 @@ Installable applications end up where the native installer wants them to end up 
 <p>Chocolatey has a different avenue for portable packages that allows both admins and non-admins to be able to use these packages, after all they are just downloading and unzipping an archive. These packages either go into a Tools Root location or just get shims (executables are put on the path) and continue to stay in the Chocolatey lib directory. If we restricted a non-admin for an avenue that would work for them manually, it wouldn&#39;t make choco useful for them at all. Since we support non-admin usage of Chocolatey, packages that can support the portable model should support it.</p>
 <p>Also consider that if the package <strong>is</strong> using <code>$env:ChocolateyBinRoot</code> (which will later be named <code>$env:ChocolateyToolsRoot</code>) you can set the root under Program Files and then you get the better of both worlds.</p>
 <p><a id="markdown-what-is-the-difference-between-packages-no-suffix-as-compared-to-install-portable" name="what-is-the-difference-between-packages-no-suffix-as-compared-to-install-portable"></a></p>
-<h3 id="what-is-the-difference-between-packages-no-suffix-as-compared-to-.install-.portable">What is the difference between packages no suffix as compared to <em>.install </em>.portable?</h3>
+<h3 id="what-is-the-difference-between-packages-no-suffix-as-compared-to-install-portable">What is the difference between packages no suffix as compared to <em>.install </em>.portable?</h3>
 <p>What is the difference between packages named <em>.install (i.&nbsp; e. <a href="https://chocolatey.org/packages/autohotkey.install">autohotkey.install</a>), </em>.portable (i.&nbsp; e. <a href="https://chocolatey.org/packages/autohotkey.portable">autohotkey.portable</a>) and * (i.&nbsp; e. <a href="https://chocolatey.org/packages/autohotkey">autohotkey</a>)?</p>
 <p>tl;dr: Nearly 100% of the time, the package with no suffix (autohotkey in this example) is going to ensure the *.install. The package without the suffix is for both discoverability and for other packages to take a dependency on.</p>
 <p>Hey, good question! You are paying attention! Chocolatey has the concept of virtual packages (coming) and meta packages. Virtual packages are packages that represent other packages when used as a dependency. Metapackages are packages that only exist to provide a grouping of dependencies.</p>
@@ -197,7 +197,7 @@ Installable applications end up where the native installer wants them to end up 
 <p><strong>NOTE:</strong> now <em>.tool and </em>.commandline are deprecated and should not be used for new packages.</p>
 <p>Want more information? See <a href="http://ferventcoder.com/archive/2012/02/25/chocolatey---guidance-on-packaging-apps-with-both-an-install.aspx" class="uri">http://ferventcoder.com/archive/2012/02/25/chocolatey---guidance-on-packaging-apps-with-both-an-install.aspx</a></p>
 <p><a id="markdown-when-i-install-a-portable-app-like-autohotkeyportable-how-is-it-on-my-path-without-littering-my-path" name="when-i-install-a-portable-app-like-autohotkeyportable-how-is-it-on-my-path-without-littering-my-path"></a></p>
-<h3 id="when-i-install-a-portable-app-like-autohotkey.portable-how-is-it-on-my-path-without-littering-my-path">When I install a portable app like autohotkey.portable, how is it on my path? Without littering my path?</h3>
+<h3 id="when-i-install-a-portable-app-like-autohotkeyportable-how-is-it-on-my-path-without-littering-my-path">When I install a portable app like autohotkey.portable, how is it on my path? Without littering my path?</h3>
 <p>When you install portable apps that have executables in the package, Chocolatey automatically creates a &quot;shim&quot; file and puts that in a folder that is on the path. That allows you to run a portable application by asking for it on the command line.</p>
 <p>When you take an application with a native installer, say like WinDirStat, it is only on your path if the native installer has put it there or the instructions in the Chocolatey package itself has requested for it to be on the path. In this case, this is the &quot;littering&quot; the path concept.</p>
 <p><a id="markdown-is-there-a-powershell-module-for-chocolatey" name="is-there-a-powershell-module-for-chocolatey"></a></p>
@@ -209,7 +209,7 @@ Installable applications end up where the native installer wants them to end up 
 <p><a id="markdown-troubleshooting" name="troubleshooting"></a></p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p><a id="markdown-im-running-into-some-issue-with-chocolatey-packaging-or-something-else" name="im-running-into-some-issue-with-chocolatey-packaging-or-something-else"></a></p>
-<h3 id="im-running-into-some-issue-with-chocolatey-packaging-or-something-else.">I&#39;m running into some issue with Chocolatey, packaging, or something else.</h3>
+<h3 id="im-running-into-some-issue-with-chocolatey-packaging-or-something-else">I&#39;m running into some issue with Chocolatey, packaging, or something else.</h3>
 <p>See [[Troubleshooting]]</p>
 <p><a id="markdown-organizational-use" name="organizational-use"></a></p>
 <h2 id="organizational-use">Organizational Use</h2>
@@ -217,11 +217,11 @@ Installable applications end up where the native installer wants them to end up 
 <h3 id="i-would-like-to-use-chocolatey-in-my-organization-is-the-licensing-friendly">I would like to use Chocolatey in my organization, is the licensing friendly?</h3>
 <p>Yes, it is. Chocolatey carries a FOSS Apache 2.0 license, which is extremely business friendly. You can use Chocolatey and most of it&#39;s infrastructure completely free. Chocolatey also has a business edition with features organizations need for better software management . See <a href="https://chocolatey.org/pricing">Compare</a> for details.</p>
 <p><a id="markdown-should-my-organization-depend-on-use-the-community-feed-httpschocolateyorgpackages" name="should-my-organization-depend-on-use-the-community-feed-httpschocolateyorgpackages"></a></p>
-<h3 id="should-my-organization-depend-on-use-the-community-feed-httpschocolatey.orgpackages">Should my organization depend on (use) the community feed (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>)?</h3>
+<h3 id="should-my-organization-depend-on-use-the-community-feed-httpschocolateyorgpackages">Should my organization depend on (use) the community feed (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>)?</h3>
 <p>For production-level scenarios, I couldn&#39;t justify giving up that level of control and trust to the internet in an organization. It&#39;s recommended that you copy and modify existing packages and/or create your own internal packages and host them internally. That way you can completely guarantee that an install/upgrade/uninstall will always work every time. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })#chocolateyorg-the-community-feed">Security</a> for more details.</p>
 <p>If you are just setting up or updating developer workstations and can tolerate things breaking every once in awhile because internet/uncertainty, it&#39;s fine to use the community feed.</p>
 <p><a id="markdown-chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization" name="chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization"></a></p>
-<h3 id="chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization.">Chocolatey is great! I need it to do something additional for my organization.</h3>
+<h3 id="chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization">Chocolatey is great! I need it to do something additional for my organization.</h3>
 <p>Please see <a href="https://chocolatey.org/compare" class="uri">https://chocolatey.org/compare</a> - we may already support it doing that for the business edition. If not, feel free to reach out to our team.</p>
 <p><a id="markdown-packaging" name="packaging"></a></p>
 <h2 id="packaging">Packaging</h2>
@@ -258,7 +258,7 @@ Installable applications end up where the native installer wants them to end up 
 <p><a id="markdown-community-package-repository" name="community-package-repository"></a></p>
 <h2 id="community-package-repository">Community Package Repository</h2>
 <p><a id="markdown-i-just-took-over-as-the-primary-maintainer-of-a-package-what-do-i-need-to-do" name="i-just-took-over-as-the-primary-maintainer-of-a-package-what-do-i-need-to-do"></a></p>
-<h3 id="i-just-took-over-as-the-primary-maintainer-of-a-package.-what-do-i-need-to-do">I just took over as the primary maintainer of a package. What do I need to do?</h3>
+<h3 id="i-just-took-over-as-the-primary-maintainer-of-a-package-what-do-i-need-to-do">I just took over as the primary maintainer of a package. What do I need to do?</h3>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-mantainer-handover" })">Package Maintainer Handover</a></p>
 <p><a id="markdown-what-is-moderation" name="what-is-moderation"></a></p>
 <h3 id="what-is-moderation">What is moderation?</h3>

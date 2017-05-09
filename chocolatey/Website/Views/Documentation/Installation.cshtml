@@ -22,12 +22,12 @@
 <p><strong>NOTE</strong>: If you are behind a proxy, please see <a href="#more-install-options">More Options</a>.<br />
 <strong>NOTE</strong>: Need completely offline solution? See <a href="#more-install-options">More Options</a>.<br />
 <strong>NOTE</strong>: Installing the licensed edition? See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">install licensed edition</a>.</p>
-<h4 id="install-with-cmd.exe">Install with cmd.exe</h4>
+<h4 id="install-with-cmdexe">Install with cmd.exe</h4>
 <p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
 <pre><code class="nohighlight">
 @@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
-<h4 id="install-with-powershell.exe">Install with PowerShell.exe</h4>
+<h4 id="install-with-powershellexe">Install with PowerShell.exe</h4>
 <p>With PowerShell, there is an additional step. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
 <ul>
 <li>Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass</code>.</li>
@@ -151,7 +151,7 @@ if (!(Test-Path $ChocoInstallPath)) {
   # Install Chocolatey
   Install-LocalChocolateyPackage $localChocolateyPackageFilePath
 }</code></pre>
-<h3 id="install-using-powershell-from-cmd.exe">Install using PowerShell from cmd.exe</h3>
+<h3 id="install-using-powershell-from-cmdexe">Install using PowerShell from cmd.exe</h3>
 <p>This is the best method if you want to repeat it or include it in source control. It requires no change to your existing PowerShell to allow for remote unsigned scripts.</p>
 <p>Create a file named <code>installChocolatey.cmd</code> with the following:</p>
 <pre><code class="nohighlight">@@echo off
@@ -171,7 +171,7 @@ SET DIR=%~dp0%
 <p><code>Install-Package chocolatey</code><br />
 <code>Initialize-Chocolatey</code><br />
 <code>Uninstall-Package chocolatey</code></p>
-<h3 id="install-using-nuget.exe-from-powershell">Install using NuGet.exe from PowerShell</h3>
+<h3 id="install-using-nugetexe-from-powershell">Install using NuGet.exe from PowerShell</h3>
 <p>You can also use NuGet command line to download Chocolatey:</p>
 <p><code>nuget install chocolatey</code> or <code>nuget install chocolatey -pre</code></p>
 <p>Once you download it, open PowerShell (remote unsigned), navigate to the tools folder and run:</p>
