@@ -9,6 +9,12 @@ try {
 
 git submodule update --remote --rebase
 
+function CleanUpHeaderIds($text) {
+  $text | % {
+    [Regex]::Replace($_, '<h\d id="[^"]+', { $args[0] -replace '\.', '' })
+  }
+}
+
 # https://github.com/jgm/pandoc/issues/2923
 function Convert-MarkdownLinks($text) {
 
@@ -102,7 +108,7 @@ Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.
   #+simple_tables+native_spans+native_divs+multiline_tables
   & pandoc.exe --from markdown_github --to html5 --old-dashes --no-highlight -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
 
-  $fileContent = Convert-SeoUrls (Convert-ImageUrls (Convert-FencedCode (Fix-MarkdownConversion (Convert-MarkdownLinks (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName)))))
+  $fileContent = Convert-SeoUrls (Convert-ImageUrls (Convert-FencedCode (Fix-MarkdownConversion (Convert-MarkdownLinks (CleanUpHeaderIds (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName))))))
   $firstLine = Get-FirstLine($fileContent)
   $firstLine -= 1
   Write-Debug "Line number is $firstLine"
