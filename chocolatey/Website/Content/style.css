@@ -104,8 +104,8 @@ button {
 }
 @-webkit-keyframes fa-spin  {
   0%  {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
   }
   100%  {
     -webkit-transform: rotate(359deg);
@@ -114,8 +114,8 @@ button {
 }
 @keyframes fa-spin  {
   0%  {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
   }
   100%  {
     -webkit-transform: rotate(359deg);
@@ -2102,10 +2102,6 @@ ul, header, main, h1, h2, h3, h4, h5 {
   margin: 0;
 }
 
-main
- {
-}
-
 .container-wide {
   margin: auto;
   max-width: 1400px;
@@ -2366,9 +2362,6 @@ small, .small { font-size: .9em !important; }
 .quarter { width: 25%; }
 .fifth { width: calc(100% / 5); }
 
-.quarter, .fifth {
-}
-
 .flex { display: flex; flex-direction: row; }
 .flex-wrap { display: flex; flex-wrap: wrap; }
 
@@ -2445,9 +2438,6 @@ a  {
   transition: opacity 500ms;
   cursor: pointer; 
   cursor: hand; 
-}
-
-.bg-yellow {
 }
 
 .line-height-small {
@@ -2527,10 +2517,6 @@ img  { max-width: 100%; }
 
 .box-shadow {
   box-shadow: 5px 7px 50px rgba(0,0,0,.2);
-}
-
-.terminal-chrome__close {
-  content: '\c02715';
 }
 
 .terminal-chrome-top {
@@ -2897,7 +2883,7 @@ img  { max-width: 100%; }
   }
 
 .message--collapsed {
-  max-height: 0px;
+  max-height: 0;
 }
 
 .message__close {
@@ -3318,7 +3304,7 @@ ul.docs li:before {
 table {
   font-size: .9em;
   width: 100%;
-  border-spacing: 0px;
+  border-spacing: 0;
 }
 
 table th {
@@ -3480,7 +3466,7 @@ fieldset.form  {
             background-image: -webkit-linear-gradient(top, #1A375A 0%, #21446D 100%);
             background-image: linear-gradient(top, #1A375A 0%, #21446D 100%);
             border: solid 1px #21446D;
-            box-shadow: inset 0px 0px 1px rgba(255,255,255,1), 1px 1px 1px rgba(0,0,0,0.3);
+            box-shadow: inset 0 0 1px rgba(255,255,255,1), 1px 1px 1px rgba(0,0,0,0.3);
             color: #fff;
             cursor: pointer;
             font-size: 1.25em;
@@ -3546,7 +3532,7 @@ fieldset.form  {
         .sexy-table th  {
             font-size: 1.25em;
             font-weight: normal;
-            padding: 5px 15px 0px 0px;
+            padding: 5px 15px 0 0;
             text-align:left;
         }
         

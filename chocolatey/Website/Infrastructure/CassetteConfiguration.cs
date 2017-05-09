@@ -34,8 +34,7 @@ namespace NuGetGallery
             bundles.AddPerIndividualFile<StylesheetBundle>("Content", new FileSearch
             {
                 Pattern = "*.css",
-                SearchOption = SearchOption.AllDirectories,
-                Exclude = new Regex("style\\.css$")
+                SearchOption = SearchOption.AllDirectories
             });
 #if DEBUG
             bundles.AddPerSubDirectory<ScriptBundle>("Scripts", new FileSearch
