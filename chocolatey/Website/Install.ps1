@@ -250,7 +250,11 @@ Write-Output 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
 $chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName)
 if ($chocoPath -eq $null -or $chocoPath -eq '') {
-  $chocoPath = 'C:\ProgramData\Chocolatey'
+  $chocoPath = "$env:ALLUSERSPROFILE\Chocolatey"
+}
+
+if (!(Test-Path ($chocoPath))) {
+  $chocoPath = "$env:SYSTEMDRIVE\ProgramData\Chocolatey"
 }
 
 $chocoExePath = Join-Path $chocoPath 'bin'
