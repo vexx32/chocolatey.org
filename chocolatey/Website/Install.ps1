@@ -185,7 +185,7 @@ $useWindowsCompression = $env:chocolateyUseWindowsCompression
 if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
   Write-Output 'Using built-in compression to unzip'
   $unzipMethod = 'builtin'
-} elseif (!Test-Path $7zaExe) {
+} elseif (-Not (Test-Path $7zaExe)) {
   Write-Output "Downloading 7-Zip commandline tool prior to extraction."
   # download 7zip
   Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
