@@ -791,6 +791,7 @@
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
+    <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModels\PasswordResetViewModel.cs" />
@@ -869,9 +870,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\ManagePackagesViewModel.cs">
       <Link>ViewModels\ManagePackagesViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\ViewModels\ListPackageItemViewModel.cs">
-      <Link>ViewModels\ListPackageItemViewModel.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\ViewModels\PasswordResetRequestViewModel.cs">
       <Link>ViewModels\PasswordResetRequestViewModel.cs</Link>
