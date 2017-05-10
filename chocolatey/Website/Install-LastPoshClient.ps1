@@ -1,4 +1,4 @@
-﻿# =====================================================================
+# =====================================================================
 # Copyright 2017 Chocolatey Software, Inc, and the
 # original authors/contributors from ChocolateyGallery
 # Copyright 2011 - 2017 RealDimensions Software, LLC, and the
@@ -17,6 +17,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =====================================================================
+
+# NOTE: Please leave this file as UTF8 w/out BOM - it causes issues with iwr -UseBasicParsing
 
 # Environment Variables, specified as $env:NAME in PowerShell.exe and %NAME% in cmd.exe.
 # For explicit proxy, please set $env:chocolateyProxyLocation and optionally $env:chocolateyProxyUser and $env:chocolateyProxyPassword

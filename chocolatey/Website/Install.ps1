@@ -1,4 +1,4 @@
-﻿# =====================================================================
+# =====================================================================
 # Copyright 2017 Chocolatey Software, Inc, and the
 # original authors/contributors from ChocolateyGallery
 # Copyright 2011 - 2017 RealDimensions Software, LLC, and the
