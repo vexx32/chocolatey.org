@@ -175,9 +175,11 @@ namespace NuGetGallery
 
             var imagelocation = _imagesService.CacheAndGetImage(originalUrl, packageId, version);
 
-            if (string.IsNullOrWhiteSpace(imagelocation)) return originalUrl;
-            
-            return string.Format("~/content/{0}/{1}",Constants.PackageImagesFolderName, Path.GetFileName(imagelocation));
+            if (string.IsNullOrWhiteSpace(imagelocation)) return null;
+
+            if (imagelocation.Equals(originalUrl, StringComparison.InvariantCultureIgnoreCase)) return originalUrl;
+
+            return string.Format("~/content/{0}/{1}", Constants.PackageImagesFolderName, Path.GetFileName(imagelocation));
         }
     }
 }
