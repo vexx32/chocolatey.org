@@ -328,10 +328,8 @@ choco install notepadplusplus.commandline -y
   new Clipboard('.copy-button');
 </script>
 <script language="javascript" type="text/javascript">
-  $(function () {
-    if (window.location.hash) {
-      $('#div-moreoptions').removeClass('hide');
-    }
-  });
+  if (window.location.hash) {
+    document.getElementById("div-moreoptions").classList.remove("hide");
+  }
 </script>
 </article>
