@@ -4,6 +4,7 @@
   //Bundles.Reference("Content/pricing.css");
   //Bundles.Reference("Content/pricing-mega-v1.css");
 }
+
 <section>
   <div class="container-wide p-b--l">
     <a name="editions"></a>
@@ -476,7 +477,19 @@
 </div>
 
 
-  @* <!-- Pricing Mega v1 -->
+@section BottomScripts {
+
+  <script language="javascript" type="text/javascript">
+    $(function () {
+      if (window.location.hash === '#compare') {
+        $('#div-compare').removeClass('hide');
+      } 
+    });
+  </script>
+
+}
+
+@* <!-- Pricing Mega v1 -->
     <div class="row no-space-pricing pricing-mega-v1">
       <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
         <div class="pricing hidden-area">
