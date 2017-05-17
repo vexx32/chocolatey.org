@@ -138,16 +138,16 @@
   </footer>
   @Bundles.RenderStylesheets("bottom")
   @Bundles.RenderScripts()
+  
   @RenderSection("BottomScripts", required: false)
-
-    <script>
+    
+  <script language="javascript" type="text/javascript">
     ((window.gitter = {}).chat = {}).options = {
       room: 'chocolatey/chocolatey.org'
     };
   </script>
 
   <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
-
 </body>
 @*
     <div id="layout-footer" class="group">
