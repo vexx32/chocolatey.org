@@ -10,6 +10,8 @@
 <ul>
 <li><a href="#general">General</a></li>
 <li><a href="#chocolatey-installation">Chocolatey Installation</a></li>
+<li><a href="#the-underlying-connection-was-closed">The underlying connection was closed</a></li>
+<li><a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-install-chocolatey">I&#39;m getting a 403 unauthorized issue attempting to install Chocolatey</a></li>
 <li><a href="#i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</a></li>
 <li><a href="#licensed-installation">Licensed Installation</a></li>
 <li><a href="#creating-packages">Creating Packages</a></li>
@@ -32,9 +34,24 @@
 <p>Also consider the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">frequently asked questions</a>.</p>
 <p><a id="markdown-chocolatey-installation" name="chocolatey-installation"></a></p>
 <h2 id="chocolatey-installation">Chocolatey Installation</h2>
+<p><a name="the-underlying-connection-was-closed"></a></p>
+<h3 id="the-underlying-connection-was-closed">The underlying connection was closed</h3>
+<p>If you see an error that looks similar to the following:</p>
+<pre><code class="nohighlight">Exception calling &quot;DownloadString&quot; with &quot;1&quot; argument(s): &quot;The underlying connection was closed: An unexpected error
+occurred on a receive.&quot;
+At line:1 char:1
++ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/in ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : WebException</code></pre>
+<p>It&#39;s possible that you are attempting to install from a server that needs to use TLS 1.1 or TLS 1.2.</p>
+<p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })#installing-with-restricted-tls">Installing with Restricted TLS</a></p>
+<p><a id="im-getting-a-403-unauthorized-issue-when-attempting-to-install-chocolatey"></a></p>
+<h3 id="im-getting-a-403-unauthorized-issue-attempting-to-install-chocolatey">I&#39;m getting a 403 unauthorized issue attempting to install Chocolatey</h3>
+<p>Please see <a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</a></p>
 <p><a id="markdown-i-am-having-trouble-with-powershell-to-install-chocolatey" name="i-am-having-trouble-with-powershell-to-install-chocolatey"></a></p>
 <h3 id="i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</h3>
-<p>See the More Options section of <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">installation</a>.</p>
+<p>See the More Options section of <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })#more-install-options">installation</a>.</p>
 <p><a id="markdown-licensed-installation" name="licensed-installation"></a></p>
 <h2 id="licensed-installation">Licensed Installation</h2>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">licensed installation</a>. If you are having issues, please see <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a> for details on how to get support.</p>

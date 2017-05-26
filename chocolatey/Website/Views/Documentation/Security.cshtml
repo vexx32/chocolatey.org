@@ -18,6 +18,7 @@
 <li><a href="#downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</a></li>
 </ul></li>
 <li><a href="#chocolatey-pro--chocolatey-for-business">Chocolatey Pro / Chocolatey for Business</a></li>
+<li><a href="#servers--ip-addresses">Chocolatey Servers / IP Addresses</a></li>
 <li><a href="#future-chocolatey-enhancements">Future Chocolatey Enhancements</a></li>
 <li><a href="#history">History</a></li>
 <li><a href="#past-security-concerns">Past Security Concerns</a></li>
@@ -107,7 +108,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 </blockquote>
 <p>It goes without stating that if you are a business and you are using Chocolatey, you should think long and hard before trusting an external source you have no control over (chocolatey.org packages, in addition to all of the binaries that download from official distribution channels over the internet). It is too easy to set up your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">own private feed</a> where you can vet packages and have complete control over the binaries and what gets installed. This also provides a complete offline solution that is reliable and trustworthy. This is what we recommend for businesses that use Chocolatey in production scenarios (and what many of them do). There is a <a href="https://chocolatey.org/blog/host-your-own-server">great article written up</a> on the reasoning and options for hosting your own server.</p>
 <h2 id="chocolateyorg-packages">Chocolatey.org Packages</h2>
-<p>Chocolatey.org has a community repository of packages known as the community feed / community package repository. These packages are created by folks in the community and due to distribution rights, they usually contain executable instructions on how to download software from official distribution points written in PowerShell.</p>
+<p>Chocolatey.org has a community repository of packages known as the community feed / community package repository. These packages are created by folks in the community and due to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">distribution rights</a>, they usually contain executable instructions on how to download software from official distribution points written in PowerShell.</p>
 <h3 id="security-for-the-community-package-repository">Security for the Community Package Repository:</h3>
 <ol>
 <li>Every package submitted to the community package repository (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>) since October 2014 undergoes a rigorous moderation process before it becomes live. Yes, every package, every version of a package is moderated and approved before they become live. See &quot;Rigorous Moderation Process&quot; below.</li>
@@ -138,6 +139,17 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li><a href="https://chocolatey.org/compare">Licensed editions of Chocolatey</a> perform runtime virus scan verification. We highly recommend folks concerned about security using the community feed or other packages that download resources from the internet to use Pro.</li>
 <li>For organizations, we highly recommend a security conscious company look at the features available in <a href="https://chocolatey.org/compare">Chocolatey for Business</a> for more security (and locking down of components, like locking down folders even more and other nice tweaks that a business would need to make). Please note that some features are still in development.</li>
 </ol>
+<h2 id="servers-ip-addresses">Servers / IP Addresses</h2>
+<p>For using Chocolatey, if you are using the community repository, you will need to whitelist the following servers:</p>
+<ul>
+<li><a href="https://chocolatey.org" class="uri">https://chocolatey.org</a></li>
+<li><a href="https://packages.chocolatey.org" class="uri">https://packages.chocolatey.org</a></li>
+<li><a href="https://licensedpackages.chocolatey.org" class="uri">https://licensedpackages.chocolatey.org</a> (licensed editions of Chocolatey)</li>
+<li><a href="https://files.chocolatey.org" class="uri">https://files.chocolatey.org</a> (licensed editions of Chocolatey)</li>
+</ul>
+<p>For specific IP addresses to whitelist, please see the following: <a href="https://www.cloudflare.com/ips/" class="uri">https://www.cloudflare.com/ips/</a></p>
+<p>If you are using open source Chocolatey, you would also need to whitelist the official distribution location for <strong>EVERY</strong> package that you intend to manage. This is due to distribution rights and the community repo being in the public domain (discussed above at <a href="#chocolateyorg-packages">Chocolatey.org Packages</a>), so those community packages are not able to embed binaries directly into the package and must download those resources at runtime. Licensed editions of Chocolatey take advantage of a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">CDN cache</a> of those downloaded resources, which is used instead of reaching out to those remote locations to ensure availability.</p>
+<p>Keep in mind that the Chocolatey CDN can only download resources for packages that it has been able to cache. While it is currently able to cache 70% of the existing packages (<a href="https://chocolatey.org/stats" class="uri">https://chocolatey.org/stats</a> for actuals - use PackagesCached divided by UniquePackages), we always recommend running <code>choco search pkgid</code> (or <code>choco info pkgid</code>) to determine if it has the &quot;Downloads cached for licensed users&quot; aspect, or look on the package page for the indicator that the packages are cached. If it does not, you would either need to go through the process of internalization for that package, or look to whitelisting whatever resources that package needed to download.</p>
 <h2 id="future-chocolatey-enhancements">Future Chocolatey Enhancements</h2>
 <ol>
 <li>Moderators will cryptographically sign packages with a PGP key that they own. This will allow folks to trust moderators.</li>

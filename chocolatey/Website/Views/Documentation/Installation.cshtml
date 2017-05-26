@@ -13,15 +13,19 @@
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
 <p>Chocolatey installs in seconds. You are just a few steps from running choco right now!</p>
 <ol>
-<li>First, ensure that you are using an <strong><em><a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">administrative shell</a></em></strong> - you can also install as a non-admin, check out <a href="#more-install-options">More Options</a>.</li>
+<li>First, ensure that you are using an <strong><em><a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">administrative shell</a></em></strong> - you can also install as a non-admin, check out <a href="#non-administrative-install" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">Non-Administrative Installation</a>.</li>
 <li>Copy the text specific to your command shell - <a href="#install-with-cmdexe">cmd.exe</a> or <a href="#install-with-powershellexe">powershell.exe</a>.</li>
 <li>Paste the copied text into your shell and press Enter.</li>
 <li>Wait a few seconds for the command to complete.</li>
 <li>If you don&#39;t see any errors, you are ready to use Chocolatey! Type <code>choco</code> or <code>choco -?</code> now.</li>
 </ol>
-<p><strong>NOTE</strong>: If you are behind a proxy, please see <a href="#more-install-options">More Options</a>.<br />
-<strong>NOTE</strong>: Need completely offline solution? See <a href="#more-install-options">More Options</a>.<br />
-<strong>NOTE</strong>: Installing the licensed edition? See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">install licensed edition</a>.</p>
+<p><strong>NOTES</strong>:</p>
+<ul>
+<li>If you are behind a proxy, please see <a href="#installing-behind-a-proxy" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">Installing behind a proxy</a>.</li>
+<li>Need completely offline solution? See <a href="#completely-offline-install" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">Completely Offline Install</a>.</li>
+<li>Installing the licensed edition? See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">install licensed edition</a>.</li>
+<li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">More Options</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a></li>
+</ul>
 <h4 id="install-with-cmdexe">Install with cmd.exe</h4>
 <p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
 <pre><code class="nohighlight">
@@ -323,13 +327,17 @@ choco install notepadplusplus.commandline -y
 
 <p>&nbsp;</p>
 
+
 <script language="javascript" type="text/javascript" src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js"></script>
 <script language="javascript" type="text/javascript">
   new Clipboard('.copy-button');
 </script>
+
 <script language="javascript" type="text/javascript">
   if (window.location.hash) {
     document.getElementById("div-moreoptions").classList.remove("hide");
   }
 </script>
+
+
 </article>
