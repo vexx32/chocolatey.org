@@ -13,7 +13,7 @@ will be removed by v1. In most cases you can still pass options and<br />
 switches with one dash (<code>-</code>). For more details, see<br />
 <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <p>A feed can be a local folder, a file share, the <a href="https://chocolatey.org/packages">community feed</a><br />
-(<a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a>), or a custom/private feed. For web<br />
+(<a href="https://push.chocolatey.org/" class="uri">https://push.chocolatey.org/</a>), or a custom/private feed. For web<br />
 feeds, it has a requirement that it implements the proper OData<br />
 endpoints required for NuGet packages.</p>
 <h2 id="usage">Usage</h2>
@@ -33,8 +33,8 @@ for instructions on saving your key:</p>
 <pre><code class="nohighlight">choco apikey -?</code></pre>
 <p>A common error is <code>Failed to process request. 'The specified API key   does not provide the authority to push packages.' The remote server   returned an error: (403) Forbidden..</code> This means the package already<br />
 exists with a different user (API key). The package could be unlisted.<br />
-You can verify by going to <a href="https://chocolatey.org/packages/packageName" class="uri">https://chocolatey.org/packages/packageName</a>.<br />
-Please contact the administrators of <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> if you see this<br />
+You can verify by going to <a href="https://push.chocolatey.org/packages/packageName" class="uri">https://push.chocolatey.org/packages/packageName</a>.<br />
+Please contact the administrators of <a href="https://push.chocolatey.org/" class="uri">https://push.chocolatey.org/</a> if you see this<br />
 and you don&#39;t see a good reason for it.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
@@ -133,8 +133,8 @@ out multiple package calls when wanting to pass specific options.</p>
        proxy bypass on local setting of &#39;True&#39;. Available in 0.10.4+.
 
  -s, --source=VALUE
-     Source - The source we are pushing the package to. Use 
-       https://chocolatey.org/ to push to [community feed](https://chocolatey.org/packages).
+     Source - The source we are pushing the package to. Use https://pus-
+       h.chocolatey.org/ to push to [community feed](https://chocolatey.org/packages).
 
  -k, --key, --apikey, --api-key=VALUE
      ApiKey - The api key for the source. If not specified (and not local 

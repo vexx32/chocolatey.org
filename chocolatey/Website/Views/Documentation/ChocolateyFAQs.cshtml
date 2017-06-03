@@ -18,6 +18,11 @@
 <li><a href="#where-does-chocolatey-install-by-default">Where does Chocolatey install by default?</a></li>
 <li><a href="#what-kind-of-package-types-does-chocolatey-support">What kind of package types does Chocolatey support?</a></li>
 <li><a href="#do-you-have-a-roadmap-i-can-see">Do you have a roadmap I can see?</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#is-chocolatey-secure">Is Chocolatey secure?</a></li>
+<li><a href="#why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this">Why do I have to confirm packages now? Is there a way to remove this?</a></li>
+<li><a href="#what-doesnt-the-website-implement-x-security-standard">What doesn&#39;t the website implement x security standard?</a></li>
+<li><a href="#i-have-other-security-questions">I have other security questions</a></li>
 <li><a href="#using-chocolatey">Using Chocolatey</a></li>
 <li><a href="#can-i-use-chocolatey-in-a-cmdexe-shell">Can I use Chocolatey in a cmd.exe shell?</a></li>
 <li><a href="#tab-completion">Tab-completion?</a></li>
@@ -45,6 +50,14 @@
 <li><a href="#i-would-like-to-use-chocolatey-in-my-organization-is-the-licensing-friendly">I would like to use Chocolatey in my organization, is the licensing friendly?</a></li>
 <li><a href="#should-my-organization-depend-on-use-the-community-feed-httpschocolateyorgpackages">Should my organization depend on (use) the community feed (https://chocolatey.org/packages)?</a></li>
 <li><a href="#chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization">Chocolatey is great! I need it to do something additional for my organization.</a></li>
+<li><a href="#licensed-editions">Licensed Editions</a></li>
+<li><a href="#what-is-the-difference-between-foss-and-the-licensed-editions">What is the difference between FOSS and the licensed editions?</a></li>
+<li><a href="#are-the-licensed-editions-costs-annual">Are the licensed editions costs annual?</a></li>
+<li><a href="#can-you-do-monthly">Can you do monthly?</a></li>
+<li><a href="#what-is-c4b">What is C4B?</a></li>
+<li><a href="#i-have-not-received-my-license">I have not received my license.</a></li>
+<li><a href="#i-just-purchased-and-i-need-my-license-sooner">I just purchased and I need my license sooner!</a></li>
+<li><a href="#i-have-a-different-question-about-the-licensed-edition">I have a different question about the licensed edition.</a></li>
 <li><a href="#packaging">Packaging</a></li>
 <li><a href="#what-can-a-chocolatey-package-consist-of">What can a Chocolatey Package consist of?</a></li>
 <li><a href="#tell-me-about-packaging">Tell me about packaging</a></li>
@@ -67,9 +80,6 @@
 <li><a href="#what-is-the-verifier">What is the verifier?</a></li>
 <li><a href="#what-is-the-package-scanner">What is the package scanner?</a></li>
 <li><a href="#what-is-the-package-cacher">What is the package cacher?</a></li>
-<li><a href="#security">Security</a></li>
-<li><a href="#is-chocolatey-secure">Is Chocolatey secure?</a></li>
-<li><a href="#why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this">Why do I have to confirm packages now? Is there a way to remove this?</a></li>
 <li><a href="#comparison">Comparison</a></li>
 <li><a href="#how-is-chocolatey-different-than-onegetpowershell-package-management">How is Chocolatey different than OneGet/PowerShell Package Management?</a></li>
 <li><a href="#how-is-chocolatey-different-than-ninite">How is Chocolatey different than Ninite?</a></li>
@@ -127,6 +137,30 @@
 <p><a id="markdown-do-you-have-a-roadmap-i-can-see" name="do-you-have-a-roadmap-i-can-see"></a></p>
 <h3 id="do-you-have-a-roadmap-i-can-see">Do you have a roadmap I can see?</h3>
 <p>We do, take a look at the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "roadmap" })">roadmap</a></p>
+<p><a id="markdown-security" name="security"></a></p>
+<h2 id="security">Security</h2>
+<p><a id="markdown-is-chocolatey-secure" name="is-chocolatey-secure"></a></p>
+<h3 id="is-chocolatey-secure">Is Chocolatey secure?</h3>
+<p>Yes, it is. You can read more at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })">security</a> to understand the important details.</p>
+<p><a id="markdown-why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this" name="why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this"></a></p>
+<h3 id="why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this">Why do I have to confirm packages now? Is there a way to remove this?</h3>
+<p>tl;dr - Yes, completely possible. Use <code>-y</code> or turn on <code>allowGlobalConfirmation</code>.</p>
+<p>Also check out the help menus now - <code>choco -h</code>, <code>choco install -h</code></p>
+<p>Longer answer, we&#39;ve moved a little closer towards other package managers for security reasons, where by default we stop and confirm if you are okay with the state change. We always communicate changes in the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">release notes</a> / <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">Changelog</a>, which also end up in the <a href="https://chocolatey.org/packages/chocolatey#releasenotes">nuspec file</a>, so we highly recommend folks scan at least one of those to see anything tagged breaking changes. Always scan from your current version up to the one you are upgrading to so that you catch all changes.</p>
+<p>The one that is the most important right now is the <code>x.y.z</code> release (in this case 0.9.9), once we reach v1 we will be fully SemVer compliant and breaking changes will constitute a major version bump (we&#39;re still SemVer in a less than v1), so you can scan breaking changes and major new features in an <code>x</code> release, new compatible features in a <code>.y</code> release, and <code>.z</code> releases will only contain compatible fixes for the current release.</p>
+<p>0.9.9 introduced a new compiled client that was/is a total rewrite. 0.9.10 will have complete feature parity with the older client - see <a href="https://github.com/chocolatey/choco/labels/FeatureParity">FeatureParity</a>. Why the rewrite? For a more maintainable, faster client that can run on mono now, so you are not completely tied to Windows. We&#39;ve started adding support for other install providers (like <a href="https://github.com/chocolatey/choco/issues/247">Scriptcs</a>).</p>
+<p>The <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })#099-march-3-2015">relevant bits of the release notes</a> for the FAQ:</p>
+<ul>
+<li>[Security] Prompt for confirmation: For security reasons, we now stop for confirmation before changing the state of the system on most commands. You can pass <code>-y</code> to confirm any prompts or set a value in the config that will globally confirm and behave like older versions of Chocolatey (<code>allowGlobalConfirmation</code>, see <code>choco feature -h</code> for how to enable).</li>
+</ul>
+<p>Some folks may find the change quite annoying. The perspective of some folks isn&#39;t the perspective of everyone and we have some very security-conscious folks that want a verification of what they requested is what they end up with. So this prompt is extremely important for them. We are moving to a more secure by default approach so this change was important to get us there. Security related changes are some of the only things you will see that affect Chocolatey in such a way.</p>
+<p>We spent many months stressing over this change because of the breaking part and decided it wasn&#39;t going to get easier to change later. We&#39;ve added the ability for you to set Chocolatey back to the way it was before with <code>allowGlobalConfirmation</code> and if the prompts annoy you, you should probably look at making this change.</p>
+<p><a id="markdown-what-doesnt-the-website-implement-x-security-standard" name="what-doesnt-the-website-implement-x-security-standard"></a></p>
+<h3 id="what-doesnt-the-website-implement-x-security-standard">What doesn&#39;t the website implement x security standard?</h3>
+<p>While we keep up with most security aspects, sometimes we miss things. Always feel free to reach out to us if you feel there is something we should implement to make that better.</p>
+<p><a id="markdown-i-have-other-security-questions" name="i-have-other-security-questions"></a></p>
+<h3 id="i-have-other-security-questions">I have other security questions</h3>
+<p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })">security</a>. Please reach out to us if you cannot find answers to what you are looking for.</p>
 <p><a id="markdown-using-chocolatey" name="using-chocolatey"></a></p>
 <h2 id="using-chocolatey">Using Chocolatey</h2>
 <p><a id="markdown-can-i-use-chocolatey-in-a-cmdexe-shell" name="can-i-use-chocolatey-in-a-cmdexe-shell"></a></p>
@@ -140,13 +174,13 @@
 <p>Great question, we have a comparison table listed at <a href="https://chocolatey.org/compare">compare</a>. There is also an FAQ section related specifically to licensing.</p>
 <p><a id="markdown-im-interested-in-c4b-chocolatey-for-business-but-i-have-questions" name="im-interested-in-c4b-chocolatey-for-business-but-i-have-questions"></a></p>
 <h3 id="im-interested-in-c4b-chocolatey-for-business-but-i-have-questions">I&#39;m interested in C4B (Chocolatey for Business) but I have questions.</h3>
-<p>Please see <a href="https://chocolatey.org/pricing">pricing</a> and the FAQ section. If it doesn&#39;t answer your questions, please feel free to reach out to the team from there!</p>
+<p>Please see <a href="#licensed-editions">licensed editions</a> section below.</p>
 <p><a id="markdown-does-chocolatey-require-administrative-permissions-to-run" name="does-chocolatey-require-administrative-permissions-to-run"></a></p>
 <h3 id="does-chocolatey-require-administrative-permissions-to-run">Does Chocolatey require administrative permissions to run?</h3>
 <p>It does by default - based on where it is installed. However there is an non-administrative installation for Chocolatey under More Options at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">installation</a>. Do keep in mind that there is pass through to what packages are doing that makes a determination for whether the package needs administrative permissions, and Chocolatey works within the context of Windows permissions, so you are not going to get around that (aside from what is provided with self-service, see question below).</p>
 <p><a id="markdown-i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations" name="i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations"></a></p>
 <h3 id="i-would-like-to-be-able-to-offer-my-non-admin-desktop-users-an-option-for-self-service-type-of-installations">I would like to be able to offer my non-admin desktop users an option for self-service type of installations.</h3>
-<p>Yes, we absolutely support that scenario in Chocolatey for Business.</p>
+<p>Yes, we absolutely support that scenario in Chocolatey for Business. See <a href="#licensed-editions">Licensed Editions</a> for more information.</p>
 <p><a id="markdown-can-i-use-chocolatey-with-existing-installs" name="can-i-use-chocolatey-with-existing-installs"></a></p>
 <h3 id="can-i-use-chocolatey-with-existing-installs">Can I use Chocolatey with existing installs?</h3>
 <p>Fantastic question, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "why" })#can-i-use-chocolatey-with-existing-software">Can I use Chocolatey with existing software?</a></p>
@@ -156,7 +190,7 @@
 <p><a id="markdown-what-can-i-install" name="what-can-i-install"></a></p>
 <h3 id="what-can-i-install">What can I install?</h3>
 <p>You can package and install anything on Windows using Chocolatey - if it can be automated, Chocolatey and PowerShell can install, upgrade, and uninstall it.</p>
-<p>However, if you are just curious on what is available, check out the community package repository at <a href="http://chocolatey.org/packages" class="uri">http://chocolatey.org/packages</a>.</p>
+<p>However, if you are just curious on what is available in the community, check out the community package repository at <a href="http://chocolatey.org/packages" class="uri">http://chocolatey.org/packages</a>. Note that it does have one large limitation, distribution rights, which makes the community package repository not fully reliable like an internal repository which is not subject to distribution rights.</p>
 <p>You can also install packages from other sources (nuget.org, rubygems.org, web pi tools, etc).</p>
 <p><a id="markdown-what-if-i-install-x-and-i-already-have-x-installed" name="what-if-i-install-x-and-i-already-have-x-installed"></a></p>
 <h3 id="what-if-i-install-x-and-i-already-have-x-installed">What if I install X and I already have X installed?</h3>
@@ -223,6 +257,42 @@ Installable applications end up where the native installer wants them to end up 
 <p><a id="markdown-chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization" name="chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization"></a></p>
 <h3 id="chocolatey-is-great-i-need-it-to-do-something-additional-for-my-organization">Chocolatey is great! I need it to do something additional for my organization.</h3>
 <p>Please see <a href="https://chocolatey.org/compare" class="uri">https://chocolatey.org/compare</a> - we may already support it doing that for the business edition. If not, feel free to reach out to our team.</p>
+<p>Also see the <a href="#licensed-editions">Licensed Editions</a> section below.</p>
+<p><a id="markdown-licensed-editions" name="licensed-editions"></a></p>
+<h2 id="licensed-editions">Licensed Editions</h2>
+<p><a id="markdown-what-is-the-difference-between-foss-and-the-licensed-editions" name="what-is-the-difference-between-foss-and-the-licensed-editions"></a></p>
+<h3 id="what-is-the-difference-between-foss-and-the-licensed-editions">What is the difference between FOSS and the licensed editions?</h3>
+<p>A lot of that is covered in the FAQ on the <a href="https://chocolatey.org/pricing#faq">pricing</a>, but also be sure to check out the <a href="https://chocolatey.org/pricing#compare">comparison table</a>.</p>
+<p><a id="markdown-are-the-licensed-editions-costs-annual" name="are-the-licensed-editions-costs-annual"></a></p>
+<h3 id="are-the-licensed-editions-costs-annual">Are the licensed editions costs annual?</h3>
+<p>They are, but we can also do multi-year if you need to support something closer to that model. We also have a perpetual for Chocolatey for Business. For more detail, please see the <a href="https://chocolatey.org/pricing#faq">pricing FAQ</a>.</p>
+<p><a id="markdown-can-you-do-monthly" name="can-you-do-monthly"></a></p>
+<h3 id="can-you-do-monthly">Can you do monthly?</h3>
+<p>Not at this current time. Please see the <a href="https://chocolatey.org/pricing#faq">pricing FAQ</a> for more details.</p>
+<p><a id="markdown-what-is-c4b" name="what-is-c4b"></a></p>
+<h3 id="what-is-c4b">What is C4B?</h3>
+<p>That is the short name for Chocolatey for Business.</p>
+<p><a id="markdown-i-have-not-received-my-license" name="i-have-not-received-my-license"></a></p>
+<h3 id="i-have-not-received-my-license">I have not received my license.</h3>
+<p>The license email is sent from a support email at chocolatey dot io with an xml file (the license) attachment within 1–3 business days. If it has been 3 business days and you have not received your business license, please reach through the <a href="https://chocolatey.org/contact">sales contact</a> (or any method you may already have for contacting sales) to get this resolved.</p>
+<p>Any number of things could have happened:</p>
+<ul>
+<li>The message could be block by your servers</li>
+<li>The message could be misidentified as spam</li>
+</ul>
+<p>To reduce these kind of occurrences, please make sure you have whitelisted the following email domains:</p>
+<ul>
+<li><code>realdimensions.net</code></li>
+<li><code>chocolatey.io</code></li>
+<li><code>chocolatey.org</code></li>
+</ul>
+<p>Once you receive a few emails from there, it will give you an idea of how to lock that down further to fewer email addresses.</p>
+<p><a id="markdown-i-just-purchased-and-i-need-my-license-sooner" name="i-just-purchased-and-i-need-my-license-sooner"></a></p>
+<h3 id="i-just-purchased-and-i-need-my-license-sooner">I just purchased and I need my license sooner!</h3>
+<p>Just reply to the order email you receive and let us know so we can bump the priority of your order.</p>
+<p><a id="markdown-i-have-a-different-question-about-the-licensed-edition" name="i-have-a-different-question-about-the-licensed-edition"></a></p>
+<h3 id="i-have-a-different-question-about-the-licensed-edition">I have a different question about the licensed edition.</h3>
+<p>Check out the FAQ on the <a href="https://chocolatey.org/pricing#faq">pricing</a>. If it doesn&#39;t answer your questions, please feel free to reach out to the sales team from there!</p>
 <p><a id="markdown-packaging" name="packaging"></a></p>
 <h2 id="packaging">Packaging</h2>
 <p><a id="markdown-what-can-a-chocolatey-package-consist-of" name="what-can-a-chocolatey-package-consist-of"></a></p>
@@ -330,24 +400,6 @@ Installable applications end up where the native installer wants them to end up 
 <p><a id="markdown-what-is-the-package-cacher" name="what-is-the-package-cacher"></a></p>
 <h3 id="what-is-the-package-cacher">What is the package cacher?</h3>
 <p>On the community repository, we have a CDN cache for those files that would be downloaded by packages - those remote urls are overridden by default in licensed editions of Chocolatey to use those cached binaries. This is to avoid 404 errors you would normally see if those urls changed or were removed. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Customer CDN Download Cache</a> for more details.</p>
-<p><a id="markdown-security" name="security"></a></p>
-<h2 id="security">Security</h2>
-<p><a id="markdown-is-chocolatey-secure" name="is-chocolatey-secure"></a></p>
-<h3 id="is-chocolatey-secure">Is Chocolatey secure?</h3>
-<p>Yes, it is. You can read more at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })">security</a> to understand the important details.</p>
-<p><a id="markdown-why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this" name="why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this"></a></p>
-<h3 id="why-do-i-have-to-confirm-packages-now-is-there-a-way-to-remove-this">Why do I have to confirm packages now? Is there a way to remove this?</h3>
-<p>tl;dr - Yes, completely possible. Use <code>-y</code> or turn on <code>allowGlobalConfirmation</code>.</p>
-<p>Also check out the help menus now - <code>choco -h</code>, <code>choco install -h</code></p>
-<p>Longer answer, we&#39;ve moved a little closer towards other package managers for security reasons, where by default we stop and confirm if you are okay with the state change. We always communicate changes in the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">release notes</a> / <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">Changelog</a>, which also end up in the <a href="https://chocolatey.org/packages/chocolatey#releasenotes">nuspec file</a>, so we highly recommend folks scan at least one of those to see anything tagged breaking changes. Always scan from your current version up to the one you are upgrading to so that you catch all changes.</p>
-<p>The one that is the most important right now is the <code>x.y.z</code> release (in this case 0.9.9), once we reach v1 we will be fully SemVer compliant and breaking changes will constitute a major version bump (we&#39;re still SemVer in a less than v1), so you can scan breaking changes and major new features in an <code>x</code> release, new compatible features in a <code>.y</code> release, and <code>.z</code> releases will only contain compatible fixes for the current release.</p>
-<p>0.9.9 introduced a new compiled client that was/is a total rewrite. 0.9.10 will have complete feature parity with the older client - see <a href="https://github.com/chocolatey/choco/labels/FeatureParity">FeatureParity</a>. Why the rewrite? For a more maintainable, faster client that can run on mono now, so you are not completely tied to Windows. We&#39;ve started adding support for other install providers (like <a href="https://github.com/chocolatey/choco/issues/247">Scriptcs</a>).</p>
-<p>The <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })#099-march-3-2015">relevant bits of the release notes</a> for the FAQ:</p>
-<ul>
-<li>[Security] Prompt for confirmation: For security reasons, we now stop for confirmation before changing the state of the system on most commands. You can pass <code>-y</code> to confirm any prompts or set a value in the config that will globally confirm and behave like older versions of Chocolatey (<code>allowGlobalConfirmation</code>, see <code>choco feature -h</code> for how to enable).</li>
-</ul>
-<p>Some folks may find the change quite annoying. The perspective of some folks isn&#39;t the perspective of everyone and we have some very security-conscious folks that want a verification of what they requested is what they end up with. So this prompt is extremely important for them. We are moving to a more secure by default approach so this change was important to get us there. Security related changes are some of the only things you will see that affect Chocolatey in such a way.</p>
-<p>We spent many months stressing over this change because of the breaking part and decided it wasn&#39;t going to get easier to change later. We&#39;ve added the ability for you to set Chocolatey back to the way it was before with <code>allowGlobalConfirmation</code> and if the prompts annoy you, you should probably look at making this change.</p>
 <p><a id="markdown-comparison" name="comparison"></a></p>
 <h2 id="comparison">Comparison</h2>
 <p><a id="markdown-how-is-chocolatey-different-than-onegetpowershell-package-management" name="how-is-chocolatey-different-than-onegetpowershell-package-management"></a></p>

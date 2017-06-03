@@ -1,0 +1,104 @@
+﻿@{
+  ViewBag.Title = "ChocolateyConfiguration";
+}
+
+<article>
+<h1 id="chocolatey-configuration">Chocolatey Configuration</h1>
+<p>There are settings and features that can customize the way that Chocolatey works for you. The following is a list of config settings and features and their default values.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#config-settings">Config Settings</a></li>
+<li><a href="#general">General</a></li>
+<li><a href="#proxy">Proxy</a></li>
+<li><a href="#config-settings---licensed-edition">Config Settings - Licensed Edition</a></li>
+<li><a href="#general-1">General</a></li>
+<li><a href="#virus-scanning">Virus Scanning</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#general-2">General</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#other">Other</a></li>
+<li><a href="#features---licensed-edition">Features - Licensed Edition</a></li>
+<li><a href="#general-3">General</a></li>
+<li><a href="#package-synchronizer">Package Synchronizer</a></li>
+<li><a href="#self-service--background-mode">Self-Service / Background Mode</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="config-settings">Config Settings</h2>
+<p>Config settings are adjusted using <code>choco config set --name &lt;nameFromBelow&gt; --value &lt;value&gt;</code> and set back to default with <code>choco config unset --name &lt;nameFromBelow&gt;</code>. For more information see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })"><code>choco config</code> command</a> or run <code>choco config -?</code>.</p>
+<h3 id="general">General</h3>
+<ul>
+<li><code>cacheLocation</code> = <strong>&#39;&#39;</strong> - Cache location if not TEMP folder. Replaces <code>$env:TEMP</code> value.</li>
+<li><code>containsLegacyPackageInstalls</code> = <strong>&#39;true&#39;</strong> - Install has packages installed prior to 0.9.9 series.</li>
+<li><code>commandExecutionTimeoutSeconds</code> = <strong>&#39;2700&#39;</strong> - Default timeout for command execution. &#39;0&#39; for infinite (starting in 0.10.4).</li>
+<li><code>webRequestTimeoutSeconds</code> = <strong>&#39;45&#39;</strong> - Default timeout for web requests. Available in 0.9.10+.</li>
+</ul>
+<h3 id="proxy">Proxy</h3>
+<ul>
+<li><code>proxy</code> = <strong>&#39;&#39;</strong> - Explicit proxy location. Available in 0.9.9.9+.</li>
+<li><code>proxyUser</code> = <strong>&#39;&#39;</strong> - Optional proxy user. Available in 0.9.9.9+.</li>
+<li><code>proxyPassword</code> = <strong>&#39;&#39;</strong> - Optional proxy password. Encrypted. Available in 0.9.9.9+.</li>
+<li><code>proxyBypassList</code> = <strong>&#39;&#39;</strong> - Optional proxy bypass list. Comma separated. Available in 0.10.4+.</li>
+<li><code>proxyBypassOnLocal</code> = <strong>&#39;true&#39;</strong> - Bypass proxy for local connections. Available in 0.10.4+.</li>
+</ul>
+<h2 id="config-settings---licensed-edition">Config Settings - Licensed Edition</h2>
+<h3 id="general-1">General</h3>
+<ul>
+<li><code>maximumDownloadRateBitsPerSecond</code> = <strong>&#39;&#39;</strong> - The maximum download rate in bits per second. &#39;0&#39; or empty means no maximum. A number means that will be the maximum download rate in bps. Defaults to &#39;&#39;. Available in licensed editions v1.10+ only. See <a href="https://chocolatey.org/docs/features-download-throttle" class="uri">https://chocolatey.org/docs/features-download-throttle</a></li>
+</ul>
+<h3 id="virus-scanning">Virus Scanning</h3>
+<ul>
+<li><code>virusCheckMinimumPositives</code> = <strong>&#39;5&#39;</strong> - Minimum numer of scan result positives before flagging a binary as a possible virus. Used when virusScannerType is VirusTotal. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-virus-check" class="uri">https://chocolatey.org/docs/features-virus-check</a></li>
+<li><code>virusScannerType</code> = <strong>&#39;VirusTotal&#39;</strong> - Virus Scanner Type (Generic or VirusTotal). Defaults to VirusTotal for Pro. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-virus-check" class="uri">https://chocolatey.org/docs/features-virus-check</a></li>
+<li><code>genericVirusScannerPath</code> = <strong>&#39;&#39;</strong> - The full path to the command line virus scanner executable. Used when virusScannerType is Generic. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-virus-check" class="uri">https://chocolatey.org/docs/features-virus-check</a></li>
+<li><code>genericVirusScannerArgs</code> = <strong>&#39;[[File]]&#39;</strong> - The arguments to pass to the generic virus scanner. Use [[File]] for the file path placeholder. Used when virusScannerType is Generic. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-virus-check" class="uri">https://chocolatey.org/docs/features-virus-check</a></li>
+<li><code>genericVirusScannerValidExitCodes</code> = <strong>&#39;0&#39;</strong> - The exit codes for the generic virus scanner when a file is not flagged. Separate with comma, defaults to 0. Used when virusScannerType is Generic. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-virus-check" class="uri">https://chocolatey.org/docs/features-virus-check</a></li>
+</ul>
+<h2 id="features">Features</h2>
+<p>Features are adjusted using <code>choco feature enable|disable -n &lt;nameFromBelow&gt;</code>. For more information see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-feature" })"><code>choco feature</code> command</a> or run <code>choco feature -?</code>.</p>
+<p>A checkbox means this feature is turned on by default.</p>
+<h3 id="general-2">General</h3>
+<ul>
+<li>[x] <code>autoUninstaller</code> - Uninstall from programs and features without requiring an explicit uninstall script.</li>
+<li>[ ] <code>failOnAutoUninstaller</code> - Fail if automatic uninstaller fails.</li>
+<li>[x] <code>powershellHost</code> - Use Chocolatey&#39;s built-in PowerShell host. Available in 0.9.10+.</li>
+<li>[ ] <code>logEnvironmentValues</code> - Log Environment Values - will log values of environment before and after install (could disclose sensitive data). Available in 0.9.10+.</li>
+<li>[x] <code>ignoreInvalidOptionsSwitches</code> - Ignore Invalid Options/Switches - If a switch or option is passed that is not recognized, should choco fail? Available in 0.9.10+.</li>
+<li>[x] <code>usePackageExitCodes</code> - Use Package Exit Codes - Package scripts can provide exit codes. With this on, package exit codes will be what choco uses for exit when non-zero (this value can come from a dependency package). Chocolatey defines valid exit codes as 0, 1605, 1614, 1641, 3010. With this feature off, choco will exit with a 0 or a 1 (matching previous behavior). Available in 0.9.10+.</li>
+<li>[x] <code>showNonElevatedWarnings</code> - Show Non-Elevated Warnings - Display non-elevated warnings. Available in 0.10.4+.</li>
+<li>[x] <code>showDownloadProgress</code> - Show Download Progress - Show download progress percentages in the CLI. Available in 0.10.4+.</li>
+<li>[ ] <code>stopOnFirstPackageFailure</code> - Stop On First Package Failure - stop running install, upgrade or uninstall on first package failure instead of continuing with others. As this will affect upgrade all, it is normally recommended to leave this off. Available in 0.10.4+.</li>
+<li>[ ] <code>useRememberedArgumentsForUpgrades</code> - Use Remembered Arguments For Upgrades - when running upgrades, use arguments for upgrade that were used for installation (&#39;remembered&#39;). This is helpful when running upgrade for all packages. Available in 0.10.4+. This is considered in preview for 0.10.4 and will be flipped to on by default in a future release.</li>
+</ul>
+<h3 id="security">Security</h3>
+<ul>
+<li>[ ] <code>allowGlobalConfirmation</code> - Prompt for confirmation in scripts or bypass.</li>
+<li>[ ] <code>useFipsCompliantChecksums</code> - Use FIPS Compliant Checksums - Ensure checksumming done by choco uses FIPS compliant algorithms. Not recommended unless required by FIPS Mode. Enabling on an existing installation could have unintended consequences related to upgrades/uninstalls. Available in 0.9.10+.</li>
+<li>[x] <code>checksumFiles</code> - Checksum files when pulled in from internet (based on package).</li>
+<li>[ ] <code>allowEmptyChecksums</code> - Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Enabling is not recommended if using sources that download resources from the internet. Available in 0.10.0+.</li>
+<li>[x] <code>allowEmptyChecksumsSecure</code> - Allow packages to have empty/missing checksums for downloaded resources from secure locations (HTTPS). Available in 0.10.0+.</li>
+</ul>
+<h3 id="other">Other</h3>
+<ul>
+<li>[ ] <code>failOnStandardError</code> - Fail if install provider writes to stderr. Available in 0.9.10+.</li>
+<li>[ ] <code>failOnInvalidOrMissingLicense</code> - Fail On Invalid Or Missing License - allows knowing when a license is expired or not applied to a machine. Available in 0.9.10+.</li>
+<li>[ ] <code>scriptsCheckLastExitCode</code> - Scripts Check $LastExitCode (external commands) - Leave this off unless you absolutely need it while you fix your package scripts to use <code>throw 'error message'</code> or <code>Set-PowerShellExitCode #</code> instead of <code>exit #</code>. This behavior started in 0.9.10 and produced hard to find bugs. If the last external process exits successfully but with an exit code of not zero, this could cause hard to detect package failures. Available in 0.10.3+. Will be removed in 0.11.0.</li>
+</ul>
+<h2 id="features---licensed-edition">Features - Licensed Edition</h2>
+<h3 id="general-3">General</h3>
+<ul>
+<li>[x] <code>virusCheck</code> - Virus Check - perform virus checking on downloaded files. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-virus-check" class="uri">https://chocolatey.org/docs/features-virus-check</a></li>
+<li>[x] <code>downloadCache</code> - Download Cache - use the private download cache if available for a package. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-private-cdn" class="uri">https://chocolatey.org/docs/features-private-cdn</a></li>
+<li>[ ] <code>internalizeAppendUseOriginalLocation</code> - Package Internalizer - When <code>Install-ChocolateyPackage</code> is internalized, append the <code>-UseOriginalLocation</code> parameter to the function. Business editions only (licensed version 1.7.0+). Requires at least Chocolatey v0.10.1 for <code>Install-ChocolateyPackage</code> to recognize the switch appropriately. See <a href="https://chocolatey.org/docs/features-automatically-recompile-packages" class="uri">https://chocolatey.org/docs/features-automatically-recompile-packages</a></li>
+<li>[ ] <code>allowPreviewFeatures</code> - Allow Preview Features - Turns on Preview Features. Some features become available for preview before they are released for testing purposes. Please note these should not be used for production systems as they could mess up a system. Licensed editions only (version 1.9.0+).</li>
+</ul>
+<h3 id="package-synchronizer">Package Synchronizer</h3>
+<ul>
+<li>[x] <code>allowSynchronization</code> - Synchronization - Keep Chocolatey packages in sync with changes in Programs and Features. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-synchronize" class="uri">https://chocolatey.org/docs/features-synchronize</a></li>
+<li>[ ] <code>showAllPackagesInProgramsAndFeatures</code> - Package Synchronizer - Packages In Programs And Features Synchronization - Show all packages in Programs and Features, not just packages that use a native installer. Business editions only (version 1.10.0+).</li>
+</ul>
+<h3 id="self-service-background-mode">Self-Service / Background Mode</h3>
+<ul>
+<li>[ ] <code>useBackgroundService</code> - Use Background Service - For some commands like install and upgrade, use a background service instead of running the command directly. Business editions only (licensed version 1.8.4+). Uninstall requires Chocolatey v0.10.4. Requires the package chocolatey-agent (choco install chocolatey-agent). See <a href="https://chocolatey.org/docs/features-agent-service" class="uri">https://chocolatey.org/docs/features-agent-service</a></li>
+<li>[x] <code>useBackgroundServiceWithSelfServiceSourcesOnly</code> - Use Background Service With Self-Service Sources Only - When using Self-Service, opt-in only sources configured to be used with self-service. This allows for other sources only an admin can use. Business editions only (version 1.9.7+). Requires Chocolatey 0.10.4+ for enabling sources with self-service only.</li>
+</ul>
+</article>

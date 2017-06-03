@@ -3,6 +3,16 @@
 }
 
 <article>
+<!-- TOC depthTo:2 -->
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installing-chocolatey">Installing Chocolatey</a></li>
+<li><a href="#more-install-options">More Install Options</a></li>
+<li><a href="#upgrading-chocolatey">Upgrading Chocolatey</a></li>
+<li><a href="#uninstalling-chocolatey">Uninstalling Chocolatey</a></li>
+<li><a href="#faqs">FAQs</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Windows 7+ / Windows Server 2003+</li>
@@ -27,9 +37,9 @@
 <li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">More Options</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a></li>
 </ul>
 <h4 id="install-with-cmdexe">Install with cmd.exe</h4>
-<p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
+<p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
 <pre><code class="nohighlight">
-@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
+@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
 <h4 id="install-with-powershellexe">Install with PowerShell.exe</h4>
 <p>With PowerShell, there is an additional step. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
@@ -324,6 +334,23 @@ choco install notepadplusplus.commandline -y
 <pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
 <h2 id="uninstalling-chocolatey">Uninstalling Chocolatey</h2>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "uninstallation" })">uninstall</a>.</p>
+<h2 id="faqs">FAQs</h2>
+<h3 id="im-having-trouble-installing-chocolatey">I&#39;m having trouble installing Chocolatey</h3>
+<p>Make sure you&#39;ve reviewed <a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">More Install Options</a> and looked over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a>. If you&#39;ve done those things, reach out over the mailing list or over the chat (Gitter). The links to those can be found in the open source section of <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a>.</p>
+<h3 id="im-getting-a-403-attempting-to-install">I&#39;m getting a 403 attempting to install</h3>
+<p>This is addressed in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a>.</p>
+<h3 id="why-isnt-there-an-msi">Why isn&#39;t there an MSI?</h3>
+<p><strong>tl;dr</strong> - Chocolatey installs as a nupkg like everything else, a PowerShell install script just ensures that.</p>
+<p>Chocolatey was born out of providing automation for Windows and doing that with packages, packages that could surround an installer but didn&#39;t necessarily need to. The Chocolatey install scripts use the Chocolatey package (a nupkg file itself) to be installed and upgraded as just another package. This means Chocolatey is &quot;eating its own dogfood&quot; and it is unlikely we&#39;d offer it as an MSI (native installer)as it would fly a bit in the face of what Chocolatey represents (although it is something that we would not rule out).</p>
+<p>The installation actually ensures a couple of things:</p>
+<ul>
+<li><p>PowerShell is installed and is set up properly.</p>
+<p>PowerShell is a requirement for using Chocolatey, not just for install. It is what drives the package installation process in most cases. Every package can have binaries and/or installation/uninstallation scripts (written in PowerShell). Chocolatey is the framework and each package gets to define how it is installed, upgraded, and uninstalled. It&#39;s an extremely flexible framework that has been proven to meet the insanity that is the Windows software installation ecosystem. That flexibility would not be easily achieved without PowerShell.</p>
+<p>We do recognize there are a few organizations that disable PowerShell, so it&#39;s very likely in the future our <a href="https://chocolatey.org/pricing#compare">Business Edition</a> will meet that need. PowerShell is a staple of Windows automation, so it is not the norm for an organization in this day and age to disable PowerShell.</p>
+<p>Having an install process that uses PowerShell helps you determine quickly if Chocolatey will be able to be used in your environment.</p></li>
+<li><p>You are open to doing things in a slightly different way, e.g.&nbsp; working with packages as opposed to installers.</p>
+<p>You are open to the concept of using packages. Some folks might say this means we are asking folks to learn to &#39;do things &quot;our way&quot; because we know better&#39;. It&#39;s less about &quot;knowing better&quot; and more about learning that Chocolatey does things in a slightly different way. It does that because the world of software is not just installers. Software goes beyond Programs and Features and a system that can track all of that also needs to as well. Package management is not a new concept in the world of software, perhaps just newer to Windows. If folks are not open to that, then they are probably not going to be open to Chocolatey. And that&#39;s completely fine. Chocolatey is not for everyone. We may eventually get to more of a masses approach. Right now we are targeting a specific type of audience - those that are looking for better ways to manage software on Windows and open to looking for the best process of doing that.</p></li>
+</ul>
 
 <p>&nbsp;</p>
 

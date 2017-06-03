@@ -39,6 +39,7 @@
 <h2 id="host-your-own-server">Host your own server</h2>
 <p>There are three types of package repositories, <a href="#local-folder--unc-share">folder/unc share</a>, <a href="#simple-server">simple server</a>, and the sophisticated <a href="#package-gallery">package gallery</a>.</p>
 <h3 id="known-hosting-options">Known Hosting Options</h3>
+<p>Some of these options also work from a non-Windows hosting perspective. See <a href="#non-windows-hosting">Non-Windows Hosting</a>.</p>
 <ul>
 <li>File Share\UNC share (below)</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Chocolatey.Server</a> (supported by Chocolatey Software with your Chocolatey for Business subscription)</li>
@@ -47,14 +48,18 @@
 <li><a href="https://www.jfrog.com/artifactory/">Artifactory Pro</a> - see <a href="http://www.jfrog.com/confluence/display/RTF/NuGet+Repositories">Artifactory NuGet Repositories</a></li>
 <li><a href="https://www.myget.org/">MyGet</a> - MyGet has free public and paid for public/private cloud-hosting options if you don&#39;t want to handle all of the pain of setup and administration. MyGet offers some stellar options like multi-feed aggregation, mirroring, and source package build services!</li>
 <li><a href="https://www.jetbrains.com/teamcity/">TeamCity</a> has built-in Simple Server</li>
-<li><a href="https://github.com/themotleyfool/Klondike">Klondike</a> - Ember front-end that builds on NuGet.Lucene for private NuGet package hosting</li>
-<li><a href="http://www.kendar.org/?p=/dotnet/phpnuget">PHP NuGet</a> - Simple server built in PHP</li>
-<li><a href="https://github.com/MPIB/hazel">Hazel</a> - Simple server built in Rust</li>
 <li>NuGet.Server</li>
 <li><a href="https://github.com/NuGet/NuGetGallery/wiki/Hosting-the-NuGet-Gallery-Locally-in-IIS">NuGet Gallery</a></li>
 <li>Chocolatey Gallery</li>
 </ul>
-<p>Some of these options also work from a non-Windows hosting perspective. See <a href="#non-windows-hosting">Non-Windows Hosting</a>.</p>
+<h4 id="others">Others</h4>
+<p>These are other known servers, but we don&#39;t know the quality or compatibility of these frameworks as they relate to Chocolatey packages.</p>
+<ul>
+<li><a href="https://github.com/themotleyfool/Klondike">Klondike</a> - Ember front-end that builds on NuGet.Lucene for private NuGet package hosting</li>
+<li><a href="http://www.kendar.org/?p=/dotnet/phpnuget">PHP NuGet</a> - Simple server built in PHP</li>
+<li><a href="https://github.com/ikkentim/LaGet">LaGet</a> - A NuGet server written using the Laravel PHP Framework</li>
+<li><a href="https://github.com/MPIB/hazel">Hazel</a> - Simple server built in Rust</li>
+</ul>
 <h2 id="package-version-immutability">Package Version Immutability</h2>
 <p>A package version is immutable on some sources. This means that everybody&#39;s version 1.0.1 of a particular package is the same. You do not need to worry about this when updating with newer versions of packages, because each package version compiled nupkg has the unique version in the name (e.g <code>bob.1.0.0.nupkg</code> vs <code>bob.1.0.1.nupkg</code> ).</p>
 <p>Package immutability is usually desired, because then you know that everyone on v1.0.0 of a package has exactly the same code as does even everyone else. Even a broken version v1.0.0 gives you a global understanding that everyone who has v1.0.0 has exactly the same bits. This really simplifies administration. Without immutability, there is no guarantee that a version of a package installed is the same as the version of the package at the source.</p>

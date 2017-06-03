@@ -52,21 +52,16 @@
 <li><strong>Testing should probably be done on a Virtual Machine</strong></li>
 <li>In your package directory, use:
 <ul>
-<li><code>choco install package-name -s &quot;$pwd&quot; -f</code> - powershell</li>
-<li><code>choco install package-name -s '%cd%' -f</code> - everywhere else</li>
+<li><code>choco install package-name -s .</code> (package-name is the id element in the nuspec)</li>
 </ul></li>
-<li>Otherwise, use the full path:
-<ul>
-<li><code>choco install package-name -source 'c:\path\to\Package\' -f</code></li>
-</ul></li>
-<li><strong>Push the package</strong> to the Chocolatey community feed repository:</li>
+<li><strong>Push the package</strong> to the Chocolatey community package repository:</li>
 <li>Get a Chocolatey account:
 <ul>
 <li><a href="https://chocolatey.org/account/register">Register</a></li>
 </ul></li>
 <li>Copy the API key from <a href="https://chocolatey.org/account">your Chocolatey account</a>.</li>
-<li><code>choco apikey -k [API_KEY_HERE] -source https://chocolatey.org/</code></li>
-<li><code>choco push package-name.1.1.0.nupkg -s https://chocolatey.org/</code> - packagename can be omitted</li>
+<li><code>choco apikey -k [API_KEY_HERE] -source https://push.chocolatey.org/</code></li>
+<li><code>choco push package-name.1.1.0.nupkg -s https://push.chocolatey.org/</code> - nupkg file can be ommitted if it is the only one in the directory.</li>
 </ul>
 <h2 id="common-mistakes">Common Mistakes</h2>
 <ul>
@@ -84,9 +79,10 @@
 <li><code>%ChocolateyInstall%</code> - Chocolatey installation directory</li>
 <li><code>%ChocolateyInstall%\lib\package-name</code> - Package directory</li>
 <li><code>%cd%</code> or <code>$pwd</code> - current directory</li>
+<li>Environment variable reference available in the README when using <code>choco new</code> or <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })#variables">online</a>.</li>
 </ul>
 <h2 id="examples">Examples</h2>
-<p>Here are some simple examples.</p>
+<p>Here are some simple examples. <strong>NOTE</strong>: This needs updated with checksums and newer package concepts. Please run <code>choco new</code> when creating packages as it contains all of the most up to date notes.</p>
 <h3 id="chocolateyinstallps1-for-exe-installer">chocolateyInstall.ps1 for .exe installer</h3>
 <pre><code class="powershell">$name = &#39;Package Name&#39;
 $installerType = &#39;exe&#39;

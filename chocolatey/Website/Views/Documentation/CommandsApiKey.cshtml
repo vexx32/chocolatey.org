@@ -13,15 +13,28 @@ source so it doesn&#39;t need to be specified every time.</p>
 choco setapikey [&lt;options/switches&gt;]</code></pre>
 <h2 id="examples">Examples</h2>
 <pre><code class="nohighlight">choco apikey
-choco apikey -s&quot;https://somewhere/out/there&quot;
-choco apikey -s&quot;https://somewhere/out/there/&quot; -k=&quot;value&quot;
-choco apikey -s&quot;https://chocolatey.org/&quot; -k=&quot;123-123123-123&quot;</code></pre>
-<h2 id="connecting-to-chocolateyorg">Connecting to Chocolatey.org</h2>
-<p>In order to save your API key for <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a>,<br />
+choco apikey -s https://somewhere/out/there
+choco apikey -s=&quot;https://somewhere/out/there/&quot; -k=&quot;value&quot;
+choco apikey -s &quot;https://push.chocolatey.org/&quot; -k=&quot;123-123123-123&quot;
+choco apikey -s &quot;http://internal_nexus&quot; -k=&quot;user:password&quot;</code></pre>
+<p>For source location, this can be a folder/file share or an<br />
+http location. When it comes to urls, they can be different from the packages<br />
+url (where packages are searched and installed from). As an example, for<br />
+Chocolatey&#39;s community package package repository, the package url is<br />
+<a href="https://chocolatey.org/api/v2" class="uri">https://chocolatey.org/api/v2</a>, but the push url is <a href="https://push.chocolatey.org" class="uri">https://push.chocolatey.org</a><br />
+(and the deprecated <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> as a push url). Check the<br />
+documentation for your choice of repository to learn what the push url is.</p>
+<p>For the key, this can be an apikey that is provided by your source repository.<br />
+With some sources, like Nexus, this can be a NuGet API key or it could be a<br />
+user name and password specified as &#39;user:password&#39; for the API key. Please see<br />
+your repository&#39;s documentation (for Nexus, please see<br />
+<a href="https://bit.ly/nexus2apikey" class="uri">https://bit.ly/nexus2apikey</a>).</p>
+<h2 id="connecting-to-chocolateyorg-community-package-repository">Connecting to Chocolatey.org (Community Package Repository)</h2>
+<p>In order to save your API key for <a href="https://push.chocolatey.org/" class="uri">https://push.chocolatey.org/</a>,<br />
 log in (or register, confirm and then log in) to<br />
-<a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a>, go to <a href="https://chocolatey.org/account" class="uri">https://chocolatey.org/account</a>,<br />
+<a href="https://push.chocolatey.org/" class="uri">https://push.chocolatey.org/</a>, go to <a href="https://push.chocolatey.org/account" class="uri">https://push.chocolatey.org/account</a>,<br />
 copy the API Key, and then use it in the following command:</p>
-<pre><code class="nohighlight">choco apikey -k &lt;your key here&gt; -s https://chocolatey.org/</code></pre>
+<pre><code class="nohighlight">choco apikey -k &lt;your key here&gt; -s https://push.chocolatey.org/</code></pre>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -122,7 +135,10 @@ out multiple package calls when wanting to pass specific options.</p>
      Source [REQUIRED] - The source location for the key
 
  -k, --key, --apikey, --api-key=VALUE
-     ApiKey - The api key for the source.
+     ApiKey - The API key for the source. This is the authentication that 
+       identifies you and allows you to push to a source. With some sources 
+       this is either a key or it could be a user name and password specified 
+       as &#39;user:password&#39;.
 </code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco apikey -h</code>.</p>

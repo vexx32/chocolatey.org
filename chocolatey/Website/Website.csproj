@@ -1486,6 +1486,8 @@
     <Content Include="Views\Documentation\CommandsSync.cshtml" />
     <Content Include="Views\Documentation\CommandsSynchronize.cshtml" />
     <Content Include="Views\Documentation\Troubleshooting.cshtml" />
+    <Content Include="Views\Documentation\ChocolateyConfiguration.cshtml" />
+    <Content Include="Views\Documentation\FeaturesPackageThrottle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

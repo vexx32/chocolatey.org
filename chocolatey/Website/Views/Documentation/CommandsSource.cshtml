@@ -17,12 +17,16 @@ choco sources [list]|add|remove|disable|enable [&lt;options/switches&gt;]</code>
 <h2 id="examples">Examples</h2>
 <pre><code class="nohighlight">choco source
 choco source list
-choco source add -n=bob -s&quot;https://somewhere/out/there/api/v2/&quot;
-choco source add -n=bob -s&quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -cert=\Users\bob\bob.pfx
-choco source add -n=bob -s&quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -u=bob -p=12345
+choco source add -n=bob -s=&quot;https://somewhere/out/there/api/v2/&quot;
+choco source add -n=bob -s &quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -cert=\Users\bob\bob.pfx
+choco source add -n=bob -s &quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -u=bob -p=12345
 choco source disable -n=bob
 choco source enable -n=bob
 choco source remove -n=bob</code></pre>
+<p>When it comes to the source location, this can be a folder/file share or an http<br />
+location. If it is a url, it will be a location you can go to in a browser and<br />
+it returns OData with something that says Packages in the browser, similar to<br />
+what you see when you go to <a href="https://chocolatey.org/api/v2/" class="uri">https://chocolatey.org/api/v2/</a>.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />
@@ -124,7 +128,11 @@ out multiple package calls when wanting to pass specific options.</p>
        empty.
 
  -s, --source=VALUE
-     Source - The source. Defaults to empty.
+     Source - The source. This can be a folder/file share or an http locatio-
+       n. If it is a url, it will be a location you can go to in a browser and 
+       it returns OData with something that says Packages in the browser, 
+       similar to what you see when you go to https://chocolatey.org/api/v2/. 
+       Defaults to empty.
 
  -u, --user=VALUE
      User - used with authenticated feeds. Defaults to empty.
