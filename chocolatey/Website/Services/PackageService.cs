@@ -1184,15 +1184,17 @@ namespace NuGetGallery
             indexingSvc.UpdatePackage(package);
         }
 
-        private void InvalidateCache(PackageRegistration package)
+        private void InvalidateCache(PackageRegistration packageRegistration)
         {
-            Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("packageDownload-{0}", package.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, package.Key));
-            Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
+            Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", packageRegistration.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", packageRegistration.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", packageRegistration.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", packageRegistration.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("packageDownload-{0}", packageRegistration.Id.to_lower()));
+            Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, packageRegistration.Key));
+            // these are package key specific
+            //Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", packageRegistration.Key));
+            //Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", packageRegistration.Key));
         }
 
         private void NotifyForModeration(Package package, string comments)
