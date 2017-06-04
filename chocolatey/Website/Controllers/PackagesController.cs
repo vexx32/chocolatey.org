@@ -171,7 +171,6 @@ namespace NuGetGallery
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
 
             var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
-
             if (package == null) return PackageNotFound(id, version);
 
             var scanResults = packageSvc.GetPackageScanResults(id, version, useCache:false);
