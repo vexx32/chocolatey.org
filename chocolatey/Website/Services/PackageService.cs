@@ -119,6 +119,7 @@ namespace NuGetGallery
 
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
+            Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", package.Key));
             NotifyIndexingService();
 
             return package;
@@ -147,6 +148,7 @@ namespace NuGetGallery
 
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
+            Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", package.Key));
             NotifyIndexingService(package);
         }
 
@@ -194,7 +196,7 @@ namespace NuGetGallery
                                                             .Include(p => p.Authors)
                                                             .Include(p => p.PackageRegistration)
                                                             .Include(p => p.PackageRegistration.Owners)
-                                                            .Include(p => p.Files)
+                                                            //.Include(p => p.Files)
                                                             //.Include(p => p.PackageScanResults)
                                                             .Include(p => p.Dependencies)
                                                             .Include(p => p.SupportedFrameworks)
@@ -302,6 +304,22 @@ namespace NuGetGallery
             }
 
             return scanResults;
+        }
+
+        public IEnumerable<PackageFile> GetPackageFiles(Package package, bool useCache = true)
+        {
+            IEnumerable<PackageFile> packageFilesQuery = packageFilesRepo.GetAll()
+                        .Where(p => (p.PackageKey == package.Key)
+                        );
+
+            var packageFiles = useCache
+                          ? Cache.Get(
+                              string.Format("packageFiles-{0}", package.Key),
+                              DateTime.UtcNow.AddMinutes(DEFAULT_CACHE_TIME_MINUTES_PACKAGES),
+                              () => packageFilesQuery.ToList())
+                          : packageFilesQuery.ToList();
+
+            return packageFiles;
         }
 
         public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
@@ -581,6 +599,7 @@ namespace NuGetGallery
                 }
             }
 
+            package.Files = GetPackageFiles(package, useCache: false).ToList();
             foreach (var item in package.Files.OrEmptyListIfNull().ToList())
             {
                 packageFilesRepo.DeleteOnCommit(item);

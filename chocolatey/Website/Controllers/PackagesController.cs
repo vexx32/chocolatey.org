@@ -158,6 +158,7 @@ namespace NuGetGallery
             if (package == null) return PackageNotFound(id, version);
 
             var scanResults = packageSvc.GetPackageScanResults(id, package.Version);
+            package.Files = packageSvc.GetPackageFiles(package).ToList();
             var model = new DisplayPackageViewModel(package, scanResults);
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
@@ -172,7 +173,9 @@ namespace NuGetGallery
             var package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
 
             if (package == null) return PackageNotFound(id, version);
-            var scanResults = packageSvc.GetPackageScanResults(id, version,useCache:false);
+
+            var scanResults = packageSvc.GetPackageScanResults(id, version, useCache:false);
+            package.Files = packageSvc.GetPackageFiles(package, useCache: false).ToList();
             var model = new DisplayPackageViewModel(package, scanResults);
 
             var packageRegistration = package.PackageRegistration;
@@ -319,7 +322,8 @@ namespace NuGetGallery
 
             //grab updated package
             package = packageSvc.FindPackageByIdAndVersion(id, version, allowPrerelease: true, useCache: false);
-            scanResults = packageSvc.GetPackageScanResults(id, version, useCache:false);
+            scanResults = packageSvc.GetPackageScanResults(id, version, useCache: false);
+            package.Files = packageSvc.GetPackageFiles(package, useCache: false).ToList();
             model = new DisplayPackageViewModel(package, scanResults);
 
             TempData["Message"] = "Changes to package status have been saved.";
