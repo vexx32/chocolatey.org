@@ -25,19 +25,35 @@ namespace NuGetGallery
                      version: 1,
                      name: userName,
                      issueDate: DateTime.UtcNow,
-                     expiration: DateTime.UtcNow.AddMinutes(30),
+                     expiration: DateTime.UtcNow.AddMinutes(4320),
                      isPersistent: createPersistentCookie,
                      userData: formattedRoles
             );
 
             string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+            //var sslRequired = ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
+
             var formsCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+            //todo switch to HttpOnly
+            //{
+            //    HttpOnly = true,
+            //    Secure = sslRequired
+            //};
+
             context.Response.Cookies.Add(formsCookie);
         }
 
         public void SignOut()
         {
             FormsAuthentication.SignOut();
+            var context = HttpContext.Current;
+            var formsCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (formsCookie != null)
+            {
+                formsCookie.Expires = DateTime.UtcNow.AddDays(-1);
+                context.Response.Cookies.Add(formsCookie);
+            }
         }
     }
 }
