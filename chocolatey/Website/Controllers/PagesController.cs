@@ -169,7 +169,7 @@ Company: {4}
             var message = @"
 Hello {0},
 
-Thanks for requesting a discount. Please see the link below for that discount:
+Thanks for requesting a discount. Please see the link below:
 
 [Discount Link]({1})".format_with(discountForm.FirstName, discountLink);
 
