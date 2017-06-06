@@ -215,6 +215,28 @@ Package Url: {6}
                 mailMessage.To.Add(to);
                 SendMessage(mailMessage);
             }
+        } 
+        
+        public void Discount(string message, string emailTo, string fullName, string discountType)
+        {
+            string subject = "Chocolatey Discount for {0}".format_with(discountType);
+            string body = @"{0}
+
+
+Thanks,
+The {1} Team".format_with(message, settings.GalleryOwnerName);
+
+            var fromAddress = new MailAddress(Configuration.ReadAppSettings("ContactUsEmail"));
+            var toAddress = new MailAddress(emailTo, fullName);
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(toAddress);
+                SendMessage(mailMessage);
+            }
         }
 
         public void SendContactOwnersMessage(

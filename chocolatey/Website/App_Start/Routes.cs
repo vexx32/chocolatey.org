@@ -67,6 +67,13 @@ namespace NuGetGallery
                     controller = "Pages",
                     Action = "Pricing"
                 });
+            
+            var pricingDiscountRoute = routes.MapRoute(
+                RouteName.Discount, "discount", new
+                {
+                    controller = "Pages",
+                    Action = "Discount"
+                });
 
             routes.Redirect(r => r.MapRoute(RouteName.Compare, "compare")).To(pricingRoute);
 

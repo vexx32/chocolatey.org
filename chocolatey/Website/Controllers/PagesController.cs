@@ -16,6 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
@@ -133,7 +134,48 @@ Company: {4}
 
             messageService.ContactUs(from, contactForm.MessageTo, message, contactForm.CompanyName);
 
-            TempData["Message"] = "Your message has been sent.";
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }    
+        
+        [HttpGet]
+        public ActionResult Discount()
+        {
+            return View("~/Views/Pages/Discount.cshtml", new DiscountViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        public virtual ActionResult Discount(DiscountViewModel discountForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/Discount.cshtml", discountForm);
+
+            if (discountForm.DiscountType == "StudentDiscount" && !discountForm.Email.EndsWith(".edu"))
+            {
+                ModelState.AddModelError(string.Empty, "Must use edu email address for student discount.");
+                return View("~/Views/Pages/Discount.cshtml", discountForm);
+            }
+
+            var discountLink = string.Empty;
+            try
+            {
+               discountLink = Configuration.ReadAppSettings(discountForm.DiscountType);
+            }
+            catch (Exception)
+            {
+                // hackers
+            }
+
+            var message = @"
+Hello {0},
+
+Thanks for requesting a discount. Please see the link below for that discount:
+
+[Discount Link]({1})".format_with(discountForm.FirstName, discountLink);
+
+            messageService.Discount(message, discountForm.Email, "{0} {1}".format_with(discountForm.FirstName, discountForm.LastName), discountForm.DiscountType);
+
+            TempData["Message"] = "Check your inbox! You should receive an email with more information momentarily! Email is sent from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
 
             return View("~/Views/Pages/Thanks.cshtml");
         }

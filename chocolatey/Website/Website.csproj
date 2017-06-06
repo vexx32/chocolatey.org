@@ -791,6 +791,7 @@
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
+    <Compile Include="ViewModels\DiscountViewModel.cs" />
     <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
@@ -1488,6 +1489,7 @@
     <Content Include="Views\Documentation\Troubleshooting.cshtml" />
     <Content Include="Views\Documentation\ChocolateyConfiguration.cshtml" />
     <Content Include="Views\Documentation\FeaturesPackageThrottle.cshtml" />
+    <Content Include="Views\Pages\Discount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
