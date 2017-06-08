@@ -39,7 +39,8 @@ namespace NuGetGallery
         private readonly IConfiguration settings;
         //private const int MAX_ALLOWED_CONTENT_LENGTH = 209715200; // 200 MB
         //private const int MAX_ALLOWED_CONTENT_LENGTH = 104857600; // 100 MB
-        private const int MAX_ALLOWED_CONTENT_LENGTH = 157286400; // 150 MB
+        //private const int MAX_ALLOWED_CONTENT_LENGTH = 157286400; // 150 MB
+        private const int MAX_ALLOWED_CONTENT_LENGTH = 367001600; // 350 MB
         private const int ONE_MB = 1048576;
 
         public ApiController(IPackageService packageSvc, IScanService scanSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration settings)
