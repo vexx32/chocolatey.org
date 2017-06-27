@@ -30,7 +30,7 @@
 <li><a href="#im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</a></li>
 <li><a href="#i-have-puppet-or-some-other-configuration-management-tool-rmm-tool-infrastructure-automation-tool-etc-that-also-runs-chocolatey-can-i-configure-it-to-skip-background-mode">I have Puppet or some other configuration management tool (RMM tool, infrastructure automation tool, etc.) that also runs Chocolatey. Can I configure it to skip background mode?</a></li>
 <li><a href="#how-does-it-work">How does it work?</a></li>
-<li><a href="#whats-the-minimum-chocolatey-licensed-edition-version-that-i-need-to-install-the-agent">What&#39;s the minimum Chocolatey licensed edition version that I need to install the agent?</a></li>
+<li><a href="#whats-the-minimum-chocolatey-licensed-extension-version-that-i-need-to-install-the-agent">What&#39;s the minimum Chocolatey licensed extension version that I need to install the agent?</a></li>
 <li><a href="#how-is-it-secure">How is it secure?</a></li>
 <li><a href="#do-you-have-an-example-of-a-message-that-goes-across-the-agent-service-named-pipe-from-the-client">Do you have an example of a message that goes across the agent service named pipe, from the client?</a></li>
 <li><a href="#what-is-the-purpose-of-the-hash-that-is-used-to-protect-the-named-pipe">What is the purpose of the hash that is used to protect the named pipe?</a></li>
@@ -42,8 +42,8 @@
 <h3 id="requirements">Requirements</h3>
 <ul>
 <li>Chocolatey v0.10.3+ - v0.10.4+ is recommended for better compatibility.</li>
-<li>Chocolatey Licensed Edition (<code>chocolatey.extension</code>) v1.8.4+. For chocolatey-agent v0.5.0+, licensed edition v1.9.0+.</li>
-<li>Chocolatey for Business edition</li>
+<li>Chocolatey for Business (C4B) Edition</li>
+<li>Chocolatey Licensed Extension (<code>chocolatey.extension</code>) v1.8.4+. For chocolatey-agent v0.5.0+, licensed edition v1.9.0+.</li>
 </ul>
 <h3 id="setup">Setup</h3>
 <p>To install the Chocolatey agent service, you need to install the <code>chocolatey-agent</code> package. The chocolatey agent is only available for business edition customers to install from the licensed source (customers trialling the business edition will also be provided instructions on how to install).</p>
@@ -53,6 +53,7 @@
 <li><code>choco install chocolatey-agent &lt;options&gt;</code></li>
 <li><code>choco feature enable -n useBackgroundService</code></li>
 <li><code>choco feature disable -n showNonElevatedWarnings</code> - Chocolatey v0.10.4+</li>
+<li>You also need to opt in sources in for self-service packages. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">choco source</a> (and <code>--allow-self-service</code>). Alternatively, you can allow any configured source to be used for self-service by running the following: <code>choco disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code> - Chocolatey Extension v1.10+.</li>
 </ul>
 <p>This will install Chocolatey Agent as LocalSystem (<code>SYSTEM</code>). To change the user, edit the username/password in the services management console on <code>Chocolatey Agent</code> properties and restart the service. Currently you will need to do this on upgrade as well.</p>
 <h3 id="chocolatey-background-service-self-service-installer">Chocolatey Background Service / Self-Service Installer</h3>
@@ -132,9 +133,13 @@ This image shows running `choco install adobereader -y`.
 <p>Once you have the agent service installed and Chocolatey for Business configured for background mode, most tools that use Chocolatey will automatically use the background service.</p>
 <h3 id="i-have-puppet-or-some-other-configuration-management-tool-rmm-tool-infrastructure-automation-tool-etc-that-also-runs-chocolatey-can-i-configure-it-to-skip-background-mode">I have Puppet or some other configuration management tool (RMM tool, infrastructure automation tool, etc.) that also runs Chocolatey. Can I configure it to skip background mode?</h3>
 <p>Yes! Add <code>--run-actual</code> to your install options. Most likely your tool won&#39;t need to be reconfigured though as it will just work with background mode. You will need Chocolatey v0.10.3+ installed across your environment so Chocolatey handles the unknown arguments appropriately.</p>
+<h3 id="im-getting-the-following-there-are-no-sources-enabled-for-packages-and-none-were-passed-as-arguments">I&#39;m getting the following: &quot;There are no sources enabled for packages and none were passed as arguments.&quot;</h3>
+<p>This means you need to opt a source into self-service (new in Chocolatey Extension v1.10).</p>
+<p>This just involves ensuring a source is set so that it allows self-service. To do this you run <code>choco source add -n name -s location &lt;--other details need repeated&gt; --allow-self-service</code>. Editing a source happens when the name is the same in <code>choco source add</code>.</p>
+<p>To change this behavior back to the way it was previously, simply run <code>choco disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code>. For feature options, run <code>choco feature list</code> or see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })#self-service-background-mode">Self-Service Feature Configuration</a></p>
 <h3 id="how-does-it-work">How does it work?</h3>
 <p>As a background service, it is able to call Chocolatey with an administrative account that is configured by you. It is secure communication that only starts once Chocolatey is configured to work with the background service.</p>
-<h3 id="whats-the-minimum-chocolatey-licensed-edition-version-that-i-need-to-install-the-agent">What&#39;s the minimum Chocolatey licensed edition version that I need to install the agent?</h3>
+<h3 id="whats-the-minimum-chocolatey-licensed-extension-version-that-i-need-to-install-the-agent">What&#39;s the minimum Chocolatey licensed extension version that I need to install the agent?</h3>
 <p>You need <code>chocolatey.extension</code> version 1.8.4+.</p>
 <h3 id="how-is-it-secure">How is it secure?</h3>
 <p>For background mode / self-service installer:</p>

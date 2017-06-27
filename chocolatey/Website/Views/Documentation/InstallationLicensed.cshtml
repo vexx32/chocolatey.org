@@ -11,11 +11,19 @@
 <li><a href="#how-do-i-know-when-the-license-is-installed">How Do I Know When the License is Installed?</a></li>
 <li><a href="#see-it-in-action">See It In Action</a></li>
 <li><a href="#how-do-i-install-the-licensed-edition">How Do I Install The Licensed Edition?</a></li>
-<li><a href="#how-do-i-install-the-trial-edition">How Do I Install The Trial Edition?</a></li>
+<li><a href="#how-do-i-install-the-trial-edition">How Do I Install The Trial Edition?</a>
+<ul>
+<li><a href="#notes-on-the-trial-version">Notes on the Trial Version</a></li>
+</ul></li>
 <li><a href="#upgrading">Upgrading</a></li>
 <li><a href="#how-do-i-upgrade-the-trial-edition">How Do I Upgrade The Trial Edition?</a></li>
 <li><a href="#installing--upgrading-in-secure-environments--without-internet-access">Installing / Upgrading In Secure Environments / Without Internet Access</a></li>
 <li><a href="#set-up-licensed-edition-with-puppet">Set Up Licensed Edition With Puppet</a></li>
+<li><a href="#install-the-chocolatey-agent-service">Install the Chocolatey Agent Service</a></li>
+<li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a></li>
+<li><a href="#exception-of-type-rhinolicensinglicensenotfoundexception-was-thrown">Exception of type &#39;Rhino.Licensing.LicenseNotFoundException&#39; was thrown.</a></li>
+<li><a href="#error-the-term-install-chocolateywindowsservice-is-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">ERROR: The term &#39;Install-ChocolateyWindowsService&#39; is not recognized as the name of a cmdlet, function, script file, or operable program.</a></li>
+<li><a href="#unable-to-load-licensed-version-extensions-and-commands">Unable to load licensed version extensions and commands.</a></li>
 </ul>
 <!-- /TOC -->
 <h2 id="some-administrative-actions">Some Administrative Actions</h2>
@@ -29,10 +37,14 @@
 <p>Installing a licensed edition requires two parts</p>
 <ul>
 <li>The properly placed license file</li>
-<li>Installing/upgrading the licensed code.</li>
+<li>Installing/upgrading the licensed package - Chocolatey Licensed Extension (<code>chocolatey.extension</code>)</li>
 </ul>
-<p>When you have performed all parts correctly, running <code>choco</code> will produce a message like<br />
-<code>Chocolatey v0.10.3 Professional</code> / <code>Chocolatey v0.10.3 Business</code></p>
+<p>When you have performed all parts correctly, running <code>choco</code> will produce a message like one of the following:</p>
+<ul>
+<li><code>Chocolatey v0.10.7 Professional</code></li>
+<li><code>Chocolatey v0.10.7 Business</code></li>
+</ul>
+<p>If you do not see the edition next to the name and version, you need to check over your installation procedure again to ensure you&#39;ve completed it properly. See below.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p>Here&#39;s the whole process for installing your license and installing the licensed code.</p>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install_pro.gif" alt="install" /></p>
@@ -57,6 +69,9 @@
 <li>Instead download the <code>chocolatey.extension</code> (licensed package) from the provided download link location and remember where you saved it.</li>
 <li>Now run this command: <code>choco upgrade chocolatey.extension --pre --source c:\folder\where\downloaded\nupkg\resides</code> (or you can use <code>install</code> instead of <code>upgrade</code>). <strong>Note</strong>: Source location is not <code>--source c:\downloads\chocolatey.extension.1.8.1.nupkg</code>, it is <code>--source c:\downloads</code>.</li>
 </ul>
+<h4 id="notes-on-the-trial-version">Notes on the Trial Version</h4>
+<p>In the trial, package authoring features have nag warnings that require someone to manually hit the Enter key a random number of times. Do not attempt to automate Package Internalizer / Package Builder or <code>choco sync</code> when using a trial of C4B. Execute those things directly and see how well they work for you.</p>
+<p>There are no trial type messages for runtime features unless they need to use Package Builder (like <code>choco sync</code> does), which should allow you to test those features with other integration tools.</p>
 <h2 id="upgrading">Upgrading</h2>
 <p>To upgrade the licensed edition just run the following code:</p>
 <ul>
@@ -138,4 +153,37 @@ package { &#39;chocolatey.extension&#39;:
   source   =&gt; &#39;internal_chocolatey&#39;,
   require  =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
 }</code></pre>
+<h2 id="install-the-chocolatey-agent-service">Install the Chocolatey Agent Service</h2>
+<p>For C4B (Chocolatey for Business) customers, there is an optional agent service you can install. The agent service allows for things like background mode, setting up maintenance windows (future), and hooking up to Chocolatey Central Management (future).</p>
+<p>To be able to install it, you must first have the licensed edition properly installed. Once you have <a href="#how-do-i-know-when-the-license-is-installed">verified your install</a>, you can run the following:</p>
+<ul>
+<li><code>choco install chocolatey-agent &lt;options&gt;</code></li>
+</ul>
+<p>For more on the agent service, please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Agent Service</a>.</p>
+<h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
+<p>When you are attempting to install the licensed edition, you may run into some errors depending on your configuration. Here are some common ones we&#39;ve seen.</p>
+<h3 id="exception-of-type-rhinolicensinglicensenotfoundexception-was-thrown">Exception of type &#39;Rhino.Licensing.LicenseNotFoundException&#39; was thrown.</h3>
+<p>If you run into this error, it means you are on an older version of Chocolatey and you need to upgrade.</p>
+<ol>
+<li>Remove the license file.</li>
+<li>Upgrade the <code>chocolatey</code> package - <code>choco upgrade chocolatey &lt;options&gt;</code></li>
+<li>Set the license file back and proceed with the install or upgrade process as above.</li>
+</ol>
+<h3 id="error-the-term-install-chocolateywindowsservice-is-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">ERROR: The term &#39;Install-ChocolateyWindowsService&#39; is not recognized as the name of a cmdlet, function, script file, or operable program.</h3>
+<p>You can get this if you are attempting to install the <code>chocolatey-agent</code> package, but you don&#39;t have a verified installation of a licensed edition of Chocolatey. You must resolve that prior to attempting to install the <code>chocolatey-agent</code> package. See <a href="#how-do-i-know-when-the-license-is-installed">How Do I Know When the License is Installed?</a>.</p>
+<h3 id="unable-to-load-licensed-version-extensions-and-commands">Unable to load licensed version extensions and commands.</h3>
+<p>You may see a message like this: <code>Unable to load licensed version extensions and commands. Please make sure the version of Chocolatey you are on is up to date and meets the minimum requirements of the licensed version. If that version is in beta, that means the latest avaialble version.</code> followed by the actual error that may look something like this: <code>Could not load type 'chocolatey.infrastructure.app.services.Isomething' from assembly 'choco, Version=0.10.7.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb'. 0.10.7</code>.</p>
+<p>If you see this, it is typically due to an incompatibility between Chocolatey and the licensed extension (Chocolatey.Extension). As these two are tightly integrated to each other, sometimes there are incompatibilities introduced. Chocolatey Software will inform customers of these issues and ways to get around that, typically ahead of releases on the customer advisory list (the link for this is sent with the email that contained the license).</p>
+<p>First steps:</p>
+<ul>
+<li>Try <code>choco upgrade chocolatey.extension -y</code></li>
+</ul>
+<p>If that is successful, you are good to go.</p>
+<p>If not, the following steps should remedy the situation:</p>
+<ul>
+<li>Remove the license file - rename the <code>license</code> folder to <code>licensed</code>.</li>
+<li>Run <code>choco uninstall chocolatey.extension</code></li>
+<li>Add the license file again - rename the <code>licensed</code> folder back to <code>license</code>.</li>
+<li>Run <code>choco upgrade chocolatey.extension</code>.</li>
+</ul>
 </article>

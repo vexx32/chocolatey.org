@@ -32,6 +32,8 @@
 <p>These are the benefits of creating a shim:</p>
 <ul>
 <li>Provides an exe file that calls a target executable.</li>
+<li>Runs the target executable where it is, which means all dependencies and other things used are all in the original location</li>
+<li>When items require elevated privileges, shims will raise UAC prompts.</li>
 <li>The exe can be called from powershell, bash, cmd.exe, or other shells just like you would call the target.</li>
 <li>Blocks and waits for command line apps to finish running, exits immediately when running a GUI app.</li>
 <li>Uses the icon of the target if the target exists on creation.</li>
@@ -73,7 +75,8 @@ The image shows installing ruby.portable, then running `ruby -v` followed by `ru
 <h3 id="how-does-it-work">How does it work?</h3>
 <p>Chocolatey uses a tool called ShimGen that inspects an executable and creates a small binary, known as a &quot;shim&quot;, that simply calls the executable. Then it places that shim in the <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code>. It creates the shim by generating it at runtime based on the actual binary&#39;s information.</p>
 <h3 id="how-is-this-better-than-symlinks">How is this better than symlinks?</h3>
-<p>When you symlink a file on Windows, you must symlink all of its dependencies like dlls and config files. If you put that all into the <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code> folder to take advantage of being on the PATH, you can quickly see that you will get into a form of &quot;DLL hell&quot; when other executables depend on different versions of the same DLL. Shimming by design does not run into this issue.</p>
+<p>When you symlink a file on Windows, you must symlink all of its dependencies like dlls and config files. If you put that all into the <code>&quot;$($env:ChocolateyInstall)\bin&quot;</code> folder to take advantage of being on the PATH, you can quickly see that you will get into a form of &quot;DLL hell&quot; when other executables depend on different versions of the same DLL. You would also need to symlink folders and files for things like plugins, extensions, skins, and other things that are in the original directory. If you are trying to create a symlink to not add more locations to your PATH environment variable, then this particular shortcoming defeats that purpose entirely.</p>
+<p>Shimming by design does not run into this issue.</p>
 <h3 id="does-it-require-admin-rights">Does it require admin rights?</h3>
 <p>No, and this is another thing that sets it apart from symlinks. To create symlinks on Windows, you need to have <code>SeCreateSymbolicLinkPrivilege</code>, which is one of the privileges granted to Administrators.</p>
 <h3 id="does-the-shim-work-with-uac">Does the shim work with UAC?</h3>
