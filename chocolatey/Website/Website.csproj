@@ -1112,6 +1112,7 @@
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
     <Content Include="Content\Images\docs\features\features_auto_uninstall.png" />
     <Content Include="Content\Images\docs\features\features_choco_sync.png" />
+    <Content Include="Content\Images\docs\features\features_direct_installer.png" />
     <Content Include="Content\Images\docs\features\features_install_upgrade_refreshenv.png" />
     <Content Include="Content\Images\docs\features\features_non_admin_custom_source_error.png" />
     <Content Include="Content\Images\docs\features\features_non_admin_installer.png" />
