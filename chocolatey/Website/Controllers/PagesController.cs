@@ -132,7 +132,13 @@ Company: {4}
               contactForm.CompanyName, 
               contactForm.Message);
 
-            messageService.ContactUs(from, contactForm.MessageTo, message, contactForm.CompanyName);
+            var additionalSubject = contactForm.CompanyName;
+            if (string.IsNullOrWhiteSpace(additionalSubject))
+            {
+                additionalSubject = "{0} {1}".format_with(contactForm.FirstName, contactForm.LastName);
+            }
+
+            messageService.ContactUs(from, contactForm.MessageTo, message, additionalSubject);
 
             TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
 
@@ -152,7 +158,7 @@ Company: {4}
 
             if (discountForm.DiscountType == "StudentDiscount" && !discountForm.Email.EndsWith(".edu"))
             {
-                ModelState.AddModelError(string.Empty, "Must use edu email address for student discount.");
+                ModelState.AddModelError(string.Empty, "You must use an email ending in '.edu' for student discount self-service. If your educational institution email address doesn't end in that, please reach out through the Countact Us (link in bottom navigation) and choose 'Student Discount'.");
                 return View("~/Views/Pages/Discount.cshtml", discountForm);
             }
 

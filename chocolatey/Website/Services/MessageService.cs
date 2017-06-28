@@ -200,10 +200,10 @@ Package Url: {6}
             string body = message;
 
             var to = Configuration.ReadAppSettings("ContactUsEmail");
-            //refactor this a bit
+            //refactor this a bit - magic strings! 
             if (contactType == "Website")
             {
-                subject = "Chocolatey - Contact Form - {0}".format_with(contactType);
+                subject = "Chocolatey - Contact Form - {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
                 to = Configuration.ReadAppSettings("ModeratorEmail");
             }
 

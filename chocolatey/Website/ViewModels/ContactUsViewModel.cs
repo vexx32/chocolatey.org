@@ -62,6 +62,7 @@ namespace NuGetGallery
             {
                 yield return new SelectListItem { Text = "Sales / Demo / Trial", Value = "Sales" };
                 yield return new SelectListItem { Text = "Partnership Opportunities", Value = "Partner" };
+                yield return new SelectListItem { Text = "Student Discount", Value = "StudentDiscount" };
                 yield return new SelectListItem { Text = "Press Request", Value = "PressRequest" };
                 yield return new SelectListItem { Text = "Software Vendor Opt Out", Value = "VendorOptOut" };
                 yield return new SelectListItem { Text = "Website", Value = "Website" };
