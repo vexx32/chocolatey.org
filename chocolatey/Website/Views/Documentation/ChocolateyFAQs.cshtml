@@ -313,6 +313,22 @@ Installable applications end up where the native installer wants them to end up 
 <li>the actual install location if using an installer</li>
 <li>MSI cache for MSIs - Windows caches the complete MSI binaries (and now you know where all that space went)</li>
 </ul>
+<p>If you on a licensed edition of Chocolatey, you can go up in size if you turn on Package Deflater (see <a href="https://chocolatey.org/pricing#compare" class="uri">https://chocolatey.org/pricing#compare</a>). This changes the above:</p>
+<ul>
+<li>nupkg file is reduced to 5KB or less, no matter the size on install</li>
+</ul>
+<p>Any of the following file extensions are removed from the package directory if they are found:</p>
+<ul>
+<li>7z / zip / rar / gz / tar / sfx</li>
+<li>iso</li>
+<li>msi / msu / msp</li>
+<li>exe files if they are detected to be an installer</li>
+</ul>
+<p>So your foot print is more:</p>
+<ul>
+<li>the actual install location (package directory, Program Files, etc)</li>
+<li>MSI cache for MSIs</li>
+</ul>
 <p><a id="markdown-videos--reference" name="videos--reference"></a></p>
 <h2 id="videos-reference">Videos / Reference</h2>
 <p><a id="markdown-where-can-i-learn-more" name="where-can-i-learn-more"></a></p>

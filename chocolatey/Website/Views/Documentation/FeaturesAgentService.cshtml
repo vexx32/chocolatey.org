@@ -29,33 +29,38 @@
 <li><a href="#how-do-i-take-advantage-of-chocolatey-agent">How do I take advantage of Chocolatey Agent?</a></li>
 <li><a href="#im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</a></li>
 <li><a href="#i-have-puppet-or-some-other-configuration-management-tool-rmm-tool-infrastructure-automation-tool-etc-that-also-runs-chocolatey-can-i-configure-it-to-skip-background-mode">I have Puppet or some other configuration management tool (RMM tool, infrastructure automation tool, etc.) that also runs Chocolatey. Can I configure it to skip background mode?</a></li>
+<li><a href="#im-getting-the-following-there-are-no-sources-enabled-for-packages-and-none-were-passed-as-arguments">I&#39;m getting the following: &quot;There are no sources enabled for packages and none were passed as arguments.&quot;</a></li>
 <li><a href="#how-does-it-work">How does it work?</a></li>
 <li><a href="#whats-the-minimum-chocolatey-licensed-extension-version-that-i-need-to-install-the-agent">What&#39;s the minimum Chocolatey licensed extension version that I need to install the agent?</a></li>
 <li><a href="#how-is-it-secure">How is it secure?</a></li>
 <li><a href="#do-you-have-an-example-of-a-message-that-goes-across-the-agent-service-named-pipe-from-the-client">Do you have an example of a message that goes across the agent service named pipe, from the client?</a></li>
 <li><a href="#what-is-the-purpose-of-the-hash-that-is-used-to-protect-the-named-pipe">What is the purpose of the hash that is used to protect the named pipe?</a></li>
 <li><a href="#does-the-agent-service-or-chocolatey-stop-installation-from-unconfigured-sources">Does the agent service or Chocolatey stop installation from unconfigured sources?</a></li>
+<li><a href="#im-having-trouble-seeing-packages-on-a-file-share-source">I&#39;m having trouble seeing packages on a file share source</a></li>
 </ul>
 <!-- /TOC -->
 <h2 id="usage">Usage</h2>
 <p>The Chocolatey agent enables two simultaneous modes of operation, one as an agent for a central console and the other as a background service for use in controlled environments. You can configure one or both modes.</p>
 <h3 id="requirements">Requirements</h3>
 <ul>
-<li>Chocolatey v0.10.3+ - v0.10.4+ is recommended for better compatibility.</li>
+<li>Chocolatey (<code>chocolatey</code> package) v0.10.3+ - v0.10.4+ for better compatibility. Chocolatey v0.10.7+ is recommended and required in newer versions.</li>
 <li>Chocolatey for Business (C4B) Edition</li>
-<li>Chocolatey Licensed Extension (<code>chocolatey.extension</code>) v1.8.4+. For chocolatey-agent v0.5.0+, licensed edition v1.9.0+.</li>
+<li>Chocolatey Licensed Extension (<code>chocolatey.extension</code> package) v1.8.4+. For chocolatey-agent v0.5.0+, licensed extension v1.9.0+. For <code>chocolatey-agent</code> v0.7.0+, licensed extension v1.11.0+.</li>
+<li>Chocolatey Agent Service (<code>chocolatey-agent</code> package) - 0.7.0+ is recommended.</li>
 </ul>
+<p>For use with Chocolatey GUI, you must be on Chocolatey v0.10.7+, Chocolatey Licensed Extension v1.11.0+, and Chocolatey Agent v0.7.0+.</p>
 <h3 id="setup">Setup</h3>
-<p>To install the Chocolatey agent service, you need to install the <code>chocolatey-agent</code> package. The chocolatey agent is only available for business edition customers to install from the licensed source (customers trialling the business edition will also be provided instructions on how to install).</p>
+<p>To install the Chocolatey agent service, you need to install the <code>chocolatey-agent</code> package. The Chocolatey Agent is only available for business edition customers to install from the licensed source (customers trialling the business edition will also be provided instructions on how to install).</p>
 <h4 id="background-mode-setup">Background Mode Setup</h4>
 <p>To set Chocolatey in background mode, you need to run the following:</p>
 <ul>
-<li><code>choco install chocolatey-agent &lt;options&gt;</code></li>
+<li><code>choco upgrade chocolatey-agent &lt;options&gt;</code></li>
+<li><code>choco feature disable -n showNonElevatedWarnings</code> - requires Chocolatey v0.10.4+ to set.</li>
 <li><code>choco feature enable -n useBackgroundService</code></li>
-<li><code>choco feature disable -n showNonElevatedWarnings</code> - Chocolatey v0.10.4+</li>
-<li>You also need to opt in sources in for self-service packages. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">choco source</a> (and <code>--allow-self-service</code>). Alternatively, you can allow any configured source to be used for self-service by running the following: <code>choco disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code> - Chocolatey Extension v1.10+.</li>
+<li>You also need to opt in sources in for self-service packages. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">choco source</a> (and <code>--allow-self-service</code>). Alternatively, you can allow any configured source to be used for self-service by running the following: <code>choco disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code> (requires Chocolatey Extension v1.10.0+).</li>
+<li>If you want self-service to apply only to non-administrators, run <code>choco feature enable -n useBackgroundServiceWithNonAdministratorsOnly</code> (requires Chocolatey Extension v1.11.1+).</li>
 </ul>
-<p>This will install Chocolatey Agent as LocalSystem (<code>SYSTEM</code>). To change the user, edit the username/password in the services management console on <code>Chocolatey Agent</code> properties and restart the service. Currently you will need to do this on upgrade as well.</p>
+<p><strong>Note:</strong> This will install Chocolatey Agent as LocalSystem (<code>SYSTEM</code>). To change the user, edit the username/password in the services management console on <code>Chocolatey Agent</code> properties and restart the service. Currently you will need to do this on upgrade as well.</p>
 <h3 id="chocolatey-background-service-self-service-installer">Chocolatey Background Service / Self-Service Installer</h3>
 <p>When an administrator installs the agent, they can configure Chocolatey to use background mode so that non-administrators can still perform installations of approved software as configured by an administrator.</p>
 <p>Why this is desirable:</p>
@@ -172,4 +177,8 @@ This image shows running `choco install adobereader -y`.
 <p>The agent stops unconfigured sources from installation. Right now it simply logs those abuses to the log file (that is locked down to admins for modify). The log file can be slurped into a tool like Splunk. Alternatively considering this is preview and we are waiting for feedback, we can look to providing those alerts in a different way, like the event log. We welcome any feedback on how you might like to see this.</p>
 <p>Chocolatey doesn&#39;t stop unconfigured sources for install, it lets the agent do so. Once Chocolatey is in background mode, all commands for install/upgrade go through the agent service.</p>
 <p>The one exception is when someone calls <code>--run-actual</code> in their arguments. But there is no escalation of privilege here because they would be running that under their own user context and thus only have the permissions granted to them already.</p>
+<h3 id="im-having-trouble-seeing-packages-on-a-file-share-source">I&#39;m having trouble seeing packages on a file share source</h3>
+<p>The Chocolatey Agent service installs as LocalSystem by default, which may not have access to UNC shares. We recommend changing the service to a named account that is a local admin that would also have network access. You can do that in the Service Manager properties for the service itself (future state through package parameters). Please note you would need to make this change on each upgrade of the Agent until it is supported in the packaging itself.</p>
+<p>So if you&#39;ve set up a source like <code>choco source add -n=&quot;'name'&quot; -s=&quot;'\\unc\packages'&quot; --priority=1</code>, by default this won&#39;t work with the Chocolatey Agent. You would need to grant access to machines or anonymous access to the share (Everyone Read is likely not enough).</p>
+<p>A great read on your options can be found at <a href="https://serverfault.com/q/135867/79259">Stack Exchange</a>.</p>
 </article>
