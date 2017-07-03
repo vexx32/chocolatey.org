@@ -3,7 +3,7 @@
 }
 
 <article>
-<h1 id="chocolatey-agent-service">Chocolatey Agent Service</h1>
+<h1 id="chocolatey-agent-service-business-editions-only">Chocolatey Agent Service (Business Editions Only)</h1>
 <blockquote>
 <p>Empower your users and give your IT folks the precious gift of time to invest into taking your organization to the next level!</p>
 </blockquote>
@@ -135,9 +135,10 @@ This image shows running `choco install adobereader -y`.
 <h3 id="how-do-i-take-advantage-of-chocolatey-agent">How do I take advantage of Chocolatey Agent?</h3>
 <p>You must have a <a href="https://chocolatey.org/compare">Business edition of Chocolatey</a>. Business editions are great for organizations that need to manage the total software lifecycle.</p>
 <h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
-<p>Once you have the agent service installed and Chocolatey for Business configured for background mode, most tools that use Chocolatey will automatically use the background service.</p>
+<p>Once you have the agent service installed and Chocolatey for Business configured for background mode (see <a href="#setup">Setup</a> above), most tools that use Chocolatey will automatically use the background service.</p>
 <h3 id="i-have-puppet-or-some-other-configuration-management-tool-rmm-tool-infrastructure-automation-tool-etc-that-also-runs-chocolatey-can-i-configure-it-to-skip-background-mode">I have Puppet or some other configuration management tool (RMM tool, infrastructure automation tool, etc.) that also runs Chocolatey. Can I configure it to skip background mode?</h3>
 <p>Yes! Add <code>--run-actual</code> to your install options. Most likely your tool won&#39;t need to be reconfigured though as it will just work with background mode. You will need Chocolatey v0.10.3+ installed across your environment so Chocolatey handles the unknown arguments appropriately.</p>
+<p>Another way to handle this as of Chocolatey Extension v1.12.0, turn on the <code>useBackgroundServiceWithNonAdministratorsOnly</code> feature to make self-service apply only to non-administrators. See <a href="#background-mode-setup">Background Mode Setup</a> for details.</p>
 <h3 id="im-getting-the-following-there-are-no-sources-enabled-for-packages-and-none-were-passed-as-arguments">I&#39;m getting the following: &quot;There are no sources enabled for packages and none were passed as arguments.&quot;</h3>
 <p>This means you need to opt a source into self-service (new in Chocolatey Extension v1.10).</p>
 <p>This just involves ensuring a source is set so that it allows self-service. To do this you run <code>choco source add -n name -s location &lt;--other details need repeated&gt; --allow-self-service</code>. Editing a source happens when the name is the same in <code>choco source add</code>.</p>
@@ -180,5 +181,19 @@ This image shows running `choco install adobereader -y`.
 <h3 id="im-having-trouble-seeing-packages-on-a-file-share-source">I&#39;m having trouble seeing packages on a file share source</h3>
 <p>The Chocolatey Agent service installs as LocalSystem by default, which may not have access to UNC shares. We recommend changing the service to a named account that is a local admin that would also have network access. You can do that in the Service Manager properties for the service itself (future state through package parameters). Please note you would need to make this change on each upgrade of the Agent until it is supported in the packaging itself.</p>
 <p>So if you&#39;ve set up a source like <code>choco source add -n=&quot;'name'&quot; -s=&quot;'\\unc\packages'&quot; --priority=1</code>, by default this won&#39;t work with the Chocolatey Agent. You would need to grant access to machines or anonymous access to the share (Everyone Read is likely not enough).</p>
-<p>A great read on your options can be found at <a href="https://serverfault.com/q/135867/79259">Stack Exchange</a>.</p>
+<p>A great read on your options can be found at the following Stack Exchange links:</p>
+<ul>
+<li><a href="https://serverfault.com/q/135867/79259" class="uri">https://serverfault.com/q/135867/79259</a></li>
+<li><a href="https://serverfault.com/q/41130/79259" class="uri">https://serverfault.com/q/41130/79259</a></li>
+</ul>
+<p>A way to do this with LocalSystem (the default):</p>
+<ol>
+<li>Create a global group on the Domain
+<ul>
+<li>add all machines to this group</li>
+</ul></li>
+<li>Add this group to the share permissions with &quot;Read&quot; Access</li>
+<li>Add this group to the NTFS permissions with &quot;Read&quot; Access</li>
+</ol>
+<p><strong>Note</strong>: You&#39;ll need to add this group itself and not nest it inside of another one.</p>
 </article>

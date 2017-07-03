@@ -62,7 +62,8 @@
 <li><a href="#what-can-a-chocolatey-package-consist-of">What can a Chocolatey Package consist of?</a></li>
 <li><a href="#tell-me-about-packaging">Tell me about packaging</a></li>
 <li><a href="#how-do-i-create-packages">How do I create packages?</a></li>
-<li><a href="#im-creating-offline-packages-what-do-i-need">I&#39;m creating offline packages, what do I need?</a></li>
+<li><a href="#im-created-packages-with-the-software-contained-in-the-package">I&#39;m created packages with the software contained in the package.</a></li>
+<li><a href="#im-creating-internal-or-offline-packages-what-do-i-need">I&#39;m creating internal or offline packages, what do I need?</a></li>
 <li><a href="#videos--reference">Videos / Reference</a></li>
 <li><a href="#where-can-i-learn-more">Where can I learn more?</a></li>
 <li><a href="#do-you-have-any-references-or-videos-i-can-see">Do you have any references or videos I can see?</a></li>
@@ -304,8 +305,11 @@ Installable applications end up where the native installer wants them to end up 
 <p><a id="markdown-how-do-i-create-packages" name="how-do-i-create-packages"></a></p>
 <h3 id="how-do-i-create-packages">How do I create packages?</h3>
 <p>Try running <code>choco new test</code> from a command shell and inspect the output. You will find quite a bit of helpful information and just in time documentation in there.</p>
-<p><a id="markdown-im-creating-offline-packages-what-do-i-need" name="im-creating-offline-packages-what-do-i-need"></a></p>
-<h3 id="im-creating-offline-packages-what-do-i-need">I&#39;m creating offline packages, what do I need?</h3>
+<p><a id="markdown-im-created-packages-with-the-software-contained-in-the-package" name="im-created-packages-with-the-software-contained-in-the-package"></a></p>
+<h3 id="im-created-packages-with-the-software-contained-in-the-package">I&#39;m created packages with the software contained in the package.</h3>
+<p>Great! This is the most reliable use of Chocolatey, to embed the binaries directly in the package. See the next question for more details.</p>
+<p><a id="markdown-im-creating-internal-or-offline-packages-what-do-i-need" name="im-creating-internal-or-offline-packages-what-do-i-need"></a></p>
+<h3 id="im-creating-internal-or-offline-packages-what-do-i-need">I&#39;m creating internal or offline packages, what do I need?</h3>
 <p>Well, if you are not creating packages for the community package repository, you have different rules that apply. Embed as much as possible into the package (as long as it is under 500MB you should see no issues). We typically recommend 500MB as the threshhold for organizations for the following reasons:</p>
 <ul>
 <li>a nupkg file size takes up some space</li>
@@ -313,22 +317,7 @@ Installable applications end up where the native installer wants them to end up 
 <li>the actual install location if using an installer</li>
 <li>MSI cache for MSIs - Windows caches the complete MSI binaries (and now you know where all that space went)</li>
 </ul>
-<p>If you on a licensed edition of Chocolatey, you can go up in size if you turn on Package Deflater (see <a href="https://chocolatey.org/pricing#compare" class="uri">https://chocolatey.org/pricing#compare</a>). This changes the above:</p>
-<ul>
-<li>nupkg file is reduced to 5KB or less, no matter the size on install</li>
-</ul>
-<p>Any of the following file extensions are removed from the package directory if they are found:</p>
-<ul>
-<li>7z / zip / rar / gz / tar / sfx</li>
-<li>iso</li>
-<li>msi / msu / msp</li>
-<li>exe files if they are detected to be an installer</li>
-</ul>
-<p>So your foot print is more:</p>
-<ul>
-<li>the actual install location (package directory, Program Files, etc)</li>
-<li>MSI cache for MSIs</li>
-</ul>
+<p>If you are on a licensed edition of Chocolatey, you can turn on Package Reducer and the first two items above no longer take up any significant space. This can reduce space usage in the order of GBs for some installations of Chocolatey. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-reducer" })">Package Reducer</a> for more details.</p>
 <p><a id="markdown-videos--reference" name="videos--reference"></a></p>
 <h2 id="videos-reference">Videos / Reference</h2>
 <p><a id="markdown-where-can-i-learn-more" name="where-can-i-learn-more"></a></p>
