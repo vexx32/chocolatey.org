@@ -156,7 +156,7 @@ Company: {4}
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/Discount.cshtml", discountForm);
 
-            if (discountForm.DiscountType == "StudentDiscount" && !discountForm.Email.EndsWith(".edu"))
+            if (discountForm.DiscountType == "StudentDiscount" && !discountForm.Email.EndsWith(".edu") && !discountForm.Email.Contains(".edu."))
             {
                 ModelState.AddModelError(string.Empty, "You must use an email ending in '.edu' for student discount self-service. If your educational institution email address doesn't end in that, please reach out through the Countact Us (link in bottom navigation) and choose 'Student Discount'.");
                 return View("~/Views/Pages/Discount.cshtml", discountForm);
