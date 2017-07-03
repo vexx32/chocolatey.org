@@ -21,7 +21,7 @@
   @RenderSection("TopScripts", required: false)
 }
 <body class="bg-one">
-  <main class="docs">
+<main class="docs">
     <aside>
       <a class="logo" href="@Url.Home()">
         <img class=" hide-on-small" alt="Logo" src="@Url.Content("~/content/images/logo_square.svg")">
@@ -34,20 +34,29 @@
 
       <p><strong>Features</strong></p>
       <ul>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer - Synchronize with Programs and Features</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Background Mode - Allow Non-Administrators To Install/Upgrade Software!</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder - Create Packages Automatically from Installers!</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer - Automatically Internalize Existing Packages (Recompile)!</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">Runtime Malware Protection</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Private CDN Cache</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Install Directory Override</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Infrastructure Automation Integration</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Server</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-shim" })">Shims - Automatically add executables to PATH w/out clutter</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Create Custom Package Templates</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">Extend Chocolatey With PowerShell Modules (extensions)</a></li>
+        <li><u><strong>Free</strong></u></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create your own packages</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host packages internally</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Integrates with everything</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-shim" })">Package Shims</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Custom Package Templates</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">Package Extensions</a></li>
+        <li>Automatic Uninstaller</li>
+        <li><u><strong>Paid</strong></u></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">Runtime Malware Protection (Pro+)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Download CDN Cache (Pro+)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-reducer" })">Package Reducer (Pro+)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Ubiquitous Install Directory Option (Pro+)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-throttle" })">Package Throttle (Pro+)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer (Pro+ Auto / C4B Sync Command)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Self-Service / Background Mode (C4B)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder (C4B)</a></li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer (C4B)</a></li>
+        <li>Direct Installer (C4B) - install/upgrade directly from msi / exe installers</li>
+        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-audit" })">Package Audit (C4B)</a></li>
+        <li>Windows Service Management PowerShell Functions (C4B)</li>
       </ul>
-
+      
       <p><strong>General</strong></p>
       <ul>
         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">Release Notes</a></li>
@@ -149,21 +158,22 @@
 
     @RenderBody()
   </main>
-  @Bundles.RenderStylesheets("bottom")
-  @Bundles.RenderScripts()
+@Bundles.RenderStylesheets("bottom")
+@Bundles.RenderScripts()
 
-    <script type="text/javascript">
-        window.onload = function () {
-            // remove leading linebreaks from code blocks.
-            var pre = document.getElementsByTagName("code");
-            for (var i = 0, len = pre.length; i < len; i++) {
-                var text = pre[i].firstChild.nodeValue;
-                pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
-            }
-        }
-        hljs.initHighlightingOnLoad();
+<script type="text/javascript">
+  window.onload = function () {
+    // remove leading linebreaks from code blocks.
+    var pre = document.getElementsByTagName("code");
+    for (var i = 0, len = pre.length; i < len; i++) {
+      var text = pre[i].firstChild.nodeValue;
+      pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
+    }
+  }
+  hljs.initHighlightingOnLoad();
 
-        anchors.options.placement = 'left';
-        anchors.add();
-    </script>
+  anchors.options.placement = 'left';
+  anchors.add();
+</script>
+
 </body>
