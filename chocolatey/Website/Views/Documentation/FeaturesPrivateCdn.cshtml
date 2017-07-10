@@ -34,7 +34,11 @@
 <p>When you install, you will see a message similar to the following when the cached content is used:</p>
 <p><img src="@Url.Content("~/content/images/docs/choco_install_cached.png")" alt="Pro install with CDN cache" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
-<p>The following options are added to install and upgrade commands.</p>
+<p>Global Feature:</p>
+<ul>
+<li><code>downloadCache</code> - Download Cache - use the private download cache if available for a package.</li>
+</ul>
+<p><code>choco install</code> / <code>choco upgrade</code> provide the following option(s):</p>
 <pre><code class="nohighlight">     --sdc, --skipdownloadcache, --skip-download-cache
      Skip Download Cache - Use the original download even if a
        private CDN cache is available for a package.

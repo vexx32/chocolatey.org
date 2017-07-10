@@ -1121,6 +1121,10 @@
     <Content Include="Content\Images\docs\features\features_override_install_directory.png" />
     <Content Include="Content\Images\docs\features\features_packages_from_installers.png" />
     <Content Include="Content\Images\docs\features\features_packages_in_programs_and_features.png" />
+    <Content Include="Content\Images\docs\features\features_package_audit.png" />
+    <Content Include="Content\Images\docs\features\features_package_reducer.png" />
+    <Content Include="Content\Images\docs\features\features_package_reducer_optimize.png" />
+    <Content Include="Content\Images\docs\features\features_package_throttle.png" />
     <Content Include="Content\Images\docs\features\features_recompile_packages.png" />
     <Content Include="Content\Images\docs\features\features_shimgen.png" />
     <Content Include="Content\Images\docs\features\features_software_audit.png" />
