@@ -54,6 +54,14 @@
           </td>
         </tr>
         <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td><strong>Other Editions</strong></td>
+          <td><strong>MSP</strong> - $3/machine/year (min 200 licenses) <br /><a href="#faq-msp">Learn more</a></td>
+          <td><strong>Architect</strong> (for DevOps consultants) <br /><a href="#faq-architect">Learn more</a></td>
+        </tr> 
+        <tr>
           <td colspan="3"><h2><a onclick="$('#div-compare').removeClass('hide')">Compare Editions</a></h2></td>
         </tr>
       </tbody>
@@ -69,11 +77,13 @@
         <th>&nbsp;</th>
         <th>Open Source</th>
         <th>Pro / MSP</th>
+        <th>Architect</th>
         <th>Business (C4B)</th>
       </thead>
       <tbody>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Packaging Templates</a></td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
@@ -83,9 +93,11 @@
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Integration with other tools</a> - Chocolatey works with all infrastructure management and RMM tools!</td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
@@ -95,9 +107,11 @@
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade all software with one command</a> - it's like Windows Update, but for all your internal and 3rd party software!</td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
@@ -107,9 +121,11 @@
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">Package Extensions</a> - Extend Chocolatey with your own PowerShell Modules (extensions)!</td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
@@ -119,12 +135,14 @@
           <td>Enhanced functionality, additional PowerShell functions - giving you more control, reliability, smoother usage, and covering more scenarios that make sense for organizations!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
          <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> - Convert existing packages for complete offline / reliable use (removes need for internet access from existing packages)!</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td><span class="text-red icon-ban"></span> / <span class="text-green icon-check"></span> </td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
@@ -132,9 +150,11 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
           <td>Direct Installer (aka Package-less Install) - Install and upgrade directly from exe/msi files!</td>
+          <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
@@ -144,9 +164,11 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Background Mode / Self-Service Installer</a> - Chocolatey as a background service so admins and non-admins alike can manage software!</td>
+          <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
@@ -155,11 +177,13 @@
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Central Console Management UI</a> - Reporting and management of software for your entire organization from one location!</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>(est early Q3 2017 - July 2017 for first availability)</td>
+          <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span> (est early Q3 2017 - July 2017 for first availability)</td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder UI</a> - A visual interface to create packages!</td>
           <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
@@ -167,16 +191,19 @@
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer - Automatic Sync</a> - keep installed packages synced up with software they are tracking when upgrades and uninstalls are performed outside of Chocolatey!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })#sync-command">Package Synchronizer - Sync Command</a> - create packages out of Programs and Features and bring existing software installations under Chocolatey management!</td>
           <td>&nbsp;</td>
           <td>(est Q3/Q4 2017, search in sources for existing packages only)</td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>    
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-audit" })">Package Audit</a> - see who installed what/when!</td>
+          <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
@@ -185,35 +212,41 @@
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-reducer" })">Package Reducer</a> - reduce the size of your package directories automatically!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>  
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-throttle" })">Package Throttle</a> - reduce download speeds for low bandwidth environments!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Install Directory Override</a> - one switch for all installers!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Download CDN Cache</a> - no more 404s!</td>
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">Runtime Malware/Virus Protection</a> - stay protected!</td>
           <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span> / MSP only has Generic option</td>
+          <td><span class="text-green icon-check"></span> / MSP has Generic option only</td>
+          <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
         </tr> 
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">Package Downloader</a> - download existing packages with an easy command!</td>
           <td>&nbsp;</td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>       
@@ -222,15 +255,18 @@
           <td>&nbsp;</td>
           <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
+          <td><span class="text-green icon-check"></span></td>
         </tr>      
         <tr>
           <td>Packaging Support Services - You upload your troublesome installers, we provide you fully automated packages</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>Add-on at any time</td>
+          <td><span class="text-red icon-ban"></span> / Cost per use</td>
+          <td>Cost per use at any time</td>
+          <td>Cost per use at any time</td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Support for Community Packages</a></td>
+          <td>N/A</td>
           <td>N/A</td>
           <td>N/A</td>
           <td>N/A</td>
@@ -238,11 +274,13 @@
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Support)">Email Support</a></td>
           <td>&nbsp;</td>
-          <td>4 incidents</td>
+          <td>8 incidents annually</td>
+          <td><span class="text-green icon-check"></span></td>
           <td><span class="text-green icon-check"></span></td>
         </tr>
         <tr>
           <td><a href="@Url.RouteUrl(RouteName.Support)">Phone Support</a></td>
+          <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>Available add-on w/Premium Support</td>
@@ -256,6 +294,7 @@
           <td>
             <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284622' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
           </td>
+          <td><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a></td>
           <td>
             <ul>
               <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us for a demo, special pricing, or more information</a></li>
@@ -266,7 +305,7 @@
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="4">&nbsp;</td>
         </tr>
       </tbody>
     </table>
@@ -461,7 +500,7 @@
     <h2>DevOps Consultant / Contract-Organizations</h2>
     
     <h3>I'm an organization that provides CI / CD / DevOps services to external organizations/customers. What should I choose?</h3>
-    <p>You are likely going to be most interested in Chocolatey Architect Edition, which has all of the fantastic packaging and build time features, but does not carry a runtime count as part of the licensing costs. That allows packages to be deployed to environments that your organization doesn't control, whether to environments that have Chocolatey open source or licensed.</p>
+    <p>You are likely going to be most interested in Chocolatey Architect Edition, which has all of the fantastic packaging and build time features, but does not carry a runtime count as part of the licensing costs (nor runtime features). That allows packages to be deployed to environments that your organization doesn't control, whether to environments that have Chocolatey open source or licensed.</p>
     
     <h3>What is the difference between Business and Architect?</h3>
     <p>Architect edition is for creating packages for external organizations or customers. Business edition is when those packages are being deployed to environments in your organization.</p>
@@ -492,7 +531,7 @@
     <h3>What is the difference between the MSP and Business editions?</h3>
     <ul class="m-b p--s p-l--l docs">
       <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The MSP edition only has the features that you see in Pro (minus the VirusTotal integration). See the <a href="#compare" onclick="$('#div-compare').removeClass('hide')">comparison table</a> for details.</li>
-      <li>Support - Support in the MSP edition is limited to 4 support incidents annually, where Business editions come with standard support.</li>
+      <li>Support - Support in the MSP edition is limited to 8 support incidents annually, where Business editions come with standard support.</li>
       <li>Pricing - The pricing for Business editions are around $1.30 per license per month (price drops based on volume) where the MSP edition is priced at $0.25 per license per month.</li>
     </ul>
 
@@ -503,7 +542,7 @@
     <p>We understand the MSP model in this aspect, however at this time we can only offer annual pricing. In an effort to keep pricing lower for you, we recommend you determine what number you think you will be at for the year, and then purchase more as you need them. Keep in mind that once purchased, you will have that number of licenses for the year (you can only go back down when you renew).</p>
 
     <h3>How does support work for the MSP Edition?</h3>
-    <p>You are limited to 4 support incidents annually. If an incident is found to be a bug with Chocolatey, it will not count towards your incident count.</p>
+    <p>You are limited to 8 support incidents annually. If an incident is found to be a bug with Chocolatey, it will not count towards your incident count.</p>
     
     <h3>We are an MSP, can we purchase the Business Edition for the better features and support?</h3>
     <p>Absolutely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for more details.</p>
