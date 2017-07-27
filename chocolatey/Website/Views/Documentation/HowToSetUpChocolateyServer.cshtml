@@ -10,6 +10,10 @@
 <li><a href="#setup-with-puppet">Setup with Puppet</a></li>
 <li><a href="#setup-normally">Setup Normally</a></li>
 <li><a href="#additional-configuration">Additional Configuration</a></li>
+<li><a href="#performance">Performance</a>
+<ul>
+<li><a href="#future">Future</a></li>
+</ul></li>
 </ul>
 <!-- /TOC -->
 <h2 id="what-is-chocolateyserver">What is Chocolatey.Server?</h2>
@@ -51,4 +55,22 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <h2 id="additional-configuration">Additional Configuration</h2>
 <p>Looking for where the apikey is and how it is changed, that is all done through the web.config. The config is pretty well-documented on each of the appSettings key values.</p>
 <p>To update the apiKey, it is kept in the web.config, search for that value and update it. If you reach out to the server on <a href="https://localhost" class="uri">https://localhost</a> (it will show you what the apikey is, only locally though).</p>
+<h3 id="performance">Performance</h3>
+<p>To configure for performance, you will want to do the following:</p>
+<ul>
+<li>Keep the site warm (<a href="https://serverfault.com/a/595215/79259" class="uri">https://serverfault.com/a/595215/79259</a>):</li>
+<li>Turn on Application Initialization in Windows Features under Web Server (IIS) -&gt; Web Server -&gt; Application Development -&gt; Application Initialization (you can also try <code>choco install IIS-ApplicationInit --source windowsfeatures</code>)</li>
+<li>Application Pool Advanced Settings:
+<ul>
+<li>General: Start Mode -&gt; Always Running</li>
+<li>Process Model: Idle Time-out (minutes) -&gt; 0</li>
+<li>Recycling: Regular Time Interval (minutes) -&gt; 0</li>
+</ul></li>
+<li>Under the Site&#39;s Advanced Settings:
+<ul>
+<li>Preload Enabled -&gt; True</li>
+</ul></li>
+</ul>
+<h4 id="future">Future</h4>
+<p>We are looking to add support for the package source to automatically handle this aspect - <a href="http://blog.nuget.org/20150922/Accelerate-Package-Source.html" class="uri">http://blog.nuget.org/20150922/Accelerate-Package-Source.html</a></p>
 </article>

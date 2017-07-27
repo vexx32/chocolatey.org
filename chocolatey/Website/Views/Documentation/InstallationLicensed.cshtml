@@ -185,7 +185,8 @@ package { &#39;chocolatey.extension&#39;:
 <p>If not, the following steps should remedy the situation:</p>
 <ul>
 <li>Remove the license file - rename the <code>license</code> folder to <code>licensed</code>.</li>
-<li>Run <code>choco uninstall chocolatey.extension</code></li>
+<li>In the <code>extensions</code> folder, delete the <code>chocolatey</code> folder.</li>
+<li>Run <code>choco uninstall chocolatey.extension</code>.</li>
 <li>Add the license file again - rename the <code>licensed</code> folder back to <code>license</code>.</li>
 <li>Run <code>choco upgrade chocolatey.extension</code>.</li>
 </ul>
