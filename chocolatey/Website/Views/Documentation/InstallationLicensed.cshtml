@@ -183,11 +183,14 @@ package { &#39;chocolatey.extension&#39;:
 </ul>
 <p>If that is successful, you are good to go.</p>
 <p>If not, the following steps should remedy the situation:</p>
+<p><strong>NOTE</strong>: Running choco in an unlicensed sense will reset/remove all licensed configuration.</p>
 <ul>
-<li>Remove the license file - rename the <code>license</code> folder to <code>licensed</code>.</li>
-<li>In the <code>extensions</code> folder, delete the <code>chocolatey</code> folder.</li>
+<li>Make a backup of the <code>chocolatey.config</code> (typically at &quot;C:\ProgramData\chocolatey\config\chocolatey.config&quot;).</li>
+<li>Remove the license file - rename the <code>license</code> folder to <code>licensed</code> (typically at &quot;C:\ProgramData\chocolatey\license&quot;).</li>
+<li>In the <code>extensions</code> folder, delete the <code>chocolatey</code> folder (typically at &quot;C:\ProgramData\chocolatey\extensions\chocolatey&quot;).</li>
 <li>Run <code>choco uninstall chocolatey.extension</code>.</li>
 <li>Add the license file again - rename the <code>licensed</code> folder back to <code>license</code>.</li>
 <li>Run <code>choco upgrade chocolatey.extension</code>.</li>
+<li>Compare the current <code>chocolatey.config to your backed up</code>chocolatey.config` and set anything that was reset in this process.</li>
 </ul>
 </article>
