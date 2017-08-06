@@ -14,6 +14,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <p class="message">Your package file will be uploaded and hosted on the Chocolatey Gallery server (chocolatey.org).</p>
+        <p class="message warning">Warning: Do not use this upload form for bigger sized packages. Use choco push command line when uploading packages from 2 MB - 200 MB. See <a href="@Url.Action(MVC.Users.Account())">account</a> for details on associating your API key with your local Chocolatey install.</p>
         <div class="form-field">
             <label for="PackageFile">Choose a package...</label>
             <input type="file" name="UploadFile" />
