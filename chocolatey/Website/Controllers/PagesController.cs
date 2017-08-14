@@ -20,6 +20,7 @@ using System;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.UI;
 using PoliteCaptcha;
@@ -151,14 +152,16 @@ Company: {4}
             return View("~/Views/Pages/Discount.cshtml", new DiscountViewModel());
         }
 
+        readonly Regex _studentEmailAddressRegex = new Regex(@".*\.edu[.\w{2}]?$|.*\.ac.uk$|.*k12\.\w{2}\.us$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult Discount(DiscountViewModel discountForm)
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/Discount.cshtml", discountForm);
 
-            if (discountForm.DiscountType == "StudentDiscount" && !discountForm.Email.EndsWith(".edu") && !discountForm.Email.Contains(".edu."))
+            if (discountForm.DiscountType == "StudentDiscount" && !_studentEmailAddressRegex.IsMatch(discountForm.Email))
             {
-                ModelState.AddModelError(string.Empty, "You must use an email ending in '.edu' for student discount self-service. If your educational institution email address doesn't end in that, please reach out through the Countact Us (link in bottom navigation) and choose 'Student Discount'.");
+                ModelState.AddModelError(string.Empty, "You must use an email ending in '.edu' or 'ac.uk' for student discount \"self-service\". If your educational institution email address doesn't end in one of these, please reach out through the Countact Us (link in bottom navigation) and choose 'Student Discount'.");
                 return View("~/Views/Pages/Discount.cshtml", discountForm);
             }
 
