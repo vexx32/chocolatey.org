@@ -56,6 +56,7 @@ namespace NuGetGallery
             return View(
                 "~/Views/Users/Account.cshtml", new AccountViewModel
                 {
+                    UserName = user.Username,
                     ApiKey = user.ApiKey.ToString(),
                     CuratedFeeds = curatedFeeds.Select(cf => cf.Name),
                 });
