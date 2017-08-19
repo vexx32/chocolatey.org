@@ -134,9 +134,13 @@ out multiple package calls when wanting to pass specific options.</p>
        explicity proxy (`--proxy` or config setting). Overrides the default 
        proxy bypass on local setting of &#39;True&#39;. Available in 0.10.4+.
 
+     --log-file=VALUE
+     Log File to output to in addition to regular loggers. Available in 0.1-
+       0.8+.
+
  -s, --source=VALUE
-     Source - Source location for install. Can include special &#39;webpi&#39;. 
-       Defaults to sources.
+     Source - Source location for install. Can use special &#39;webpi&#39; or 
+       &#39;windowsfeatures&#39; sources. Defaults to sources.
 
  -l, --lo, --localonly, --local-only
      LocalOnly - Only search against local machine items.
@@ -216,6 +220,10 @@ out multiple package calls when wanting to pass specific options.</p>
 
      --detail, --detailed
      Detailed - Alias for verbose. Available in 0.9.10+.
+
+     --audit, --showaudit, --show-audit, --show-audit-info
+     Show Audit Information - Display auditing information for a package. 
+       Available in business editions 1.12.0+. 
 </code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco search -h</code>.</p>

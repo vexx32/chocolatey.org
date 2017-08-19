@@ -33,6 +33,7 @@
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">download</a> - downloads packages - optionally internalizing all remote resources</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-synchronize" })">synchronize</a> - synchronizes against system installed software - generates missing packages</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sync" })">sync</a> - synchronizes against system installed software - generates missing packages</li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-optimize" })">optimize</a> - optimizes installation, reducing space usage</li>
 </ul>
 <p>Please run chocolatey with <code>choco command -help</code> for specific help on<br />
 each command.</p>
@@ -169,6 +170,10 @@ out multiple package calls when wanting to pass specific options.</p>
      Proxy Bypass On Local - Bypass proxy for local connections. Requires 
        explicity proxy (`--proxy` or config setting). Overrides the default 
        proxy bypass on local setting of &#39;True&#39;. Available in 0.10.4+.
+
+     --log-file=VALUE
+     Log File to output to in addition to regular loggers. Available in 0.1-
+       0.8+.
 </code></pre>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco -h</code>.</p>
 </article>

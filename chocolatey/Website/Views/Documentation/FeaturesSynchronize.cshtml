@@ -56,9 +56,11 @@
 </ul>
 <!-- /TOC -->
 <h2 id="automatic-synchronize">Automatic Synchronize</h2>
-<p>In licensed editions of Chocolatey, synchronize for existing packages that are tracking to software installed in Programs and Features happens automatically and takes effect prior to the command running.</p>
+<p>In licensed editions of Chocolatey, synchronize for installed packages that are tracking to software installed in Programs and Features happens automatically and takes effect prior to the command running.</p>
+<p>When you install a package, many times that package will install software into Programs and Features. If someone were to manually remove the software, upgrade it, or it automatically upgrades, automatic sync will ensure the package stays in sync with those changes happening outside of Chocolatey. This is one place where commercial editions have better system integration.</p>
 <h3 id="usage">Usage</h3>
 <p><img src="@Url.Content("~/content/images/docs/features/features_synchronize.png")" alt="Synchronize - if you are on https://chocolatey.org/docs/features-synchronize, see commented html below for detailed description of image" /></p>
+<p>In the image above, someone manually removed the 1Password software. On the next run of Chocolatey, auto sync sees the software has been removed, so it removes the package tracking to that software in response to those system changes.</p>
 <!--
 Text in the image above:
 

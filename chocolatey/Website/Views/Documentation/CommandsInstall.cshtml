@@ -208,10 +208,15 @@ out multiple package calls when wanting to pass specific options.</p>
        explicity proxy (`--proxy` or config setting). Overrides the default 
        proxy bypass on local setting of &#39;True&#39;. Available in 0.10.4+.
 
+     --log-file=VALUE
+     Log File to output to in addition to regular loggers. Available in 0.1-
+       0.8+.
+
  -s, --source=VALUE
      Source - The source to find the package(s) to install. Special sources 
-       include: ruby, webpi, cygwin, windowsfeatures, and python. Defaults to 
-       default feeds.
+       include: ruby, webpi, cygwin, windowsfeatures, and python. To specify 
+       more than one source, pass it with a semi-colon separating the values (-
+       e.g. &quot;&#39;source1;source2&#39;&quot;). Defaults to default feeds.
 
      --version=VALUE
      Version - A specific version to install. Defaults to unspecified.
@@ -398,7 +403,27 @@ out multiple package calls when wanting to pass specific options.</p>
        bits per second. &#39;0&#39; or empty means no maximum. A number means that will 
        be the maximum download rate in bps. Defaults to config setting of &#39;0&#39;. 
        Available in [licensed editions](https://chocolatey.org/compare) v1.10+ only. See https://chocolate-
-       y.org/docs/features-download-throttle  
+       y.org/docs/features-package-throttle  
+
+     --reduce, --reduce-package-size, --deflate, --deflate-package-size
+     Reducer Installed Package Size (Package Reducer) - Reduce size of the 
+       nupkg file to very small and remove extracted archives and installers. 
+       Overrides the default feature &#39;reduceInstalledPackageSpaceUsage&#39; set to 
+       &#39;True&#39;. [Licensed editions](https://chocolatey.org/compare) only (version 1.12.0+). See https://chocolate-
+       y.org/docs/features-package-reducer 
+
+     --no-reduce, --no-reduce-package-size, --no-deflate, --no-deflate-package-size
+     Do Not Reduce Installed Package Size - Leave the nupkg and files alone 
+       in the package. Overrides the default feature 
+       &#39;reduceInstalledPackageSpaceUsage&#39; set to &#39;True&#39;. [Licensed editions](https://chocolatey.org/compare) only 
+       (version 1.12.0+). See https://chocolatey.org/docs/features-package-
+       reducer 
+
+     --reduce-nupkg-only, --deflate-nupkg-only
+     Reduce Only Nupkg File Size - reduce only the size of nupkg file when 
+       using Package Reducer. Overrides the default feature 
+       &#39;reduceOnlyNupkgSize&#39; set to &#39;False&#39;. [Licensed editions](https://chocolatey.org/compare) only (version -
+       1.12.0+). See https://chocolatey.org/docs/features-package-reducer 
 </code></pre>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco install -h</code>.</p>

@@ -19,6 +19,7 @@
 <li><a href="#other">Other</a></li>
 <li><a href="#features---licensed-edition">Features - Licensed Edition</a></li>
 <li><a href="#general-3">General</a></li>
+<li><a href="#access-control--security">Access Control / Security</a></li>
 <li><a href="#package-synchronizer">Package Synchronizer</a></li>
 <li><a href="#self-service--background-mode">Self-Service / Background Mode</a></li>
 </ul>
@@ -44,6 +45,8 @@
 <h3 id="general-1">General</h3>
 <ul>
 <li><code>maximumDownloadRateBitsPerSecond</code> = <strong>&#39;&#39;</strong> - The maximum download rate in bits per second. &#39;0&#39; or empty means no maximum. A number means that will be the maximum download rate in bps. Defaults to &#39;&#39;. Available in licensed editions v1.10+ only. See <a href="https://chocolatey.org/docs/features-download-throttle" class="uri">https://chocolatey.org/docs/features-download-throttle</a></li>
+<li><code>serviceInstallsDefaultUserName</code> = <strong>ChocolateyLocalAdmin</strong> - The default user name to use for installing services when one is not specified. Defaults to &#39;ChocolateyLocalAdmin&#39;. The feature &#39;useLocalSystemForServiceInstalls&#39; must be set to &#39;false&#39; to use this field. Available in business editions v1.12.0+ only.</li>
+<li><code>serviceInstallsDefaultUserPassword</code> = **&#39;&#39;** - The default user password to use for installing services when one is not specified. Defaults to&#39;&#39;. When&#39;&#39;, the value will be generated as encrypted hash specific to the machine and will not be known. The feature &#39;useLocalSystemForServiceInstalls&#39; must be set to &#39;false&#39; to use this field. Available in business editions v1.12.0+ only.</li>
 </ul>
 <h3 id="virus-scanning">Virus Scanning</h3>
 <ul>
@@ -90,6 +93,15 @@
 <li>[x] <code>downloadCache</code> - Download Cache - use the private download cache if available for a package. Available in 0.9.10+. Licensed editions only. See <a href="https://chocolatey.org/docs/features-private-cdn" class="uri">https://chocolatey.org/docs/features-private-cdn</a></li>
 <li>[ ] <code>internalizeAppendUseOriginalLocation</code> - Package Internalizer - When <code>Install-ChocolateyPackage</code> is internalized, append the <code>-UseOriginalLocation</code> parameter to the function. Business editions only (licensed version 1.7.0+). Requires at least Chocolatey v0.10.1 for <code>Install-ChocolateyPackage</code> to recognize the switch appropriately. See <a href="https://chocolatey.org/docs/features-automatically-recompile-packages" class="uri">https://chocolatey.org/docs/features-automatically-recompile-packages</a></li>
 <li>[ ] <code>allowPreviewFeatures</code> - Allow Preview Features - Turns on Preview Features. Some features become available for preview before they are released for testing purposes. Please note these should not be used for production systems as they could mess up a system. Licensed editions only (version 1.9.0+).</li>
+<li>[x] <code>reduceInstalledPackageSpaceUsage</code> - Reduce Installed Package Size (Package Reducer) - Reduce size of the nupkg file to very small and remove extracted archives and installers. Licensed editions only (version 1.12.0+). See <a href="https://chocolatey.org/docs/features-package-reducer" class="uri">https://chocolatey.org/docs/features-package-reducer</a></li>
+<li>[ ] <code>reduceOnlyNupkgSize</code> - Reduce Only Nupkg File Size - reduce only the size of nupkg file when using Package Reducer. Licensed editions only (version 1.12.0+). Also requires &#39;reduceInstalledPackageSpaceUsage&#39; to be enabled. See <a href="https://chocolatey.org/docs/features-package-reducer" class="uri">https://chocolatey.org/docs/features-package-reducer</a></li>
+</ul>
+<h3 id="access-control-security">Access Control / Security</h3>
+<ul>
+<li>[ ] <code>adminOnlyExecutionForNewCommand</code> - Limit to Administrator Execution Only for New Command - If enabled, only administrators will be able to run &#39;choco new&#39;. Business editions only (version 1.10.0+).</li>
+<li>[ ] <code>adminOnlyExecutionForDownloadCommand</code> - Limit to Administrator Execution Only for Download Command - If enabled, only administrators will be able to run &#39;choco download&#39;. Business editions only (version 1.10.0+).</li>
+<li>[ ] <code>useBackgroundServiceWithNonAdministratorsOnly</code> - Use Background Service With Non-Administrators Only - When using Self-Service, only execute background mode for non-administrators. Business editions only (version 1.12.0+).</li>
+<li>[x] <code>useLocalSystemForServiceInstalls</code> - Use LocalSystem For Service Installs - When installing services that don&#39;t indicate a user/password, use the LocalSystem for those installations. When turned off, Chocolatey will manage a local admin with a password unique to the machine but will never know it. Business editions only (version 1.12.0+).</li>
 </ul>
 <h3 id="package-synchronizer">Package Synchronizer</h3>
 <ul>
@@ -100,5 +112,6 @@
 <ul>
 <li>[ ] <code>useBackgroundService</code> - Use Background Service - For some commands like install and upgrade, use a background service instead of running the command directly. Business editions only (licensed version 1.8.4+). Uninstall requires Chocolatey v0.10.4. Requires the package chocolatey-agent (choco install chocolatey-agent). See <a href="https://chocolatey.org/docs/features-agent-service" class="uri">https://chocolatey.org/docs/features-agent-service</a></li>
 <li>[x] <code>useBackgroundServiceWithSelfServiceSourcesOnly</code> - Use Background Service With Self-Service Sources Only - When using Self-Service, opt-in only sources configured to be used with self-service. This allows for other sources only an admin can use. Business editions only (version 1.9.7+). Requires Chocolatey 0.10.4+ for enabling sources with self-service only.</li>
+<li>[ ] <code>useBackgroundServiceWithNonAdministratorsOnly</code> - Use Background Service With Non-Administrators Only - When using Self-Service, only execute background mode for non-administrators. Business editions only (version 1.12.0+).</li>
 </ul>
 </article>

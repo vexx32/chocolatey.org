@@ -19,6 +19,8 @@ Get-ChocolateyUnzip when local or embedded file.</p>
   [-Checksum64 &lt;String&gt;] `
   [-ChecksumType64 &lt;String&gt;] `
   [-Options &lt;Hashtable&gt;] `
+  [-File &lt;String&gt;] `
+  [-File64 &lt;String&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
 <p>This will download a file from a url and unzip it on your machine.<br />
@@ -430,6 +432,74 @@ h='&#x25;&#x37;&#66;&#x25;&#x37;&#68;&#x25;&#x37;&#68;';a='&#64;';n='&#x25;&#x37
 document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'&#x7b;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#64;&#x7b;&#x7d;&#x7d;'+'<\/'+'a'+'>');
 // -->
 </script><noscript>&#x7b;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#64;&#x7b;&#x7d;&#x7d;&#32;&#40;&#x25;&#x37;&#66;&#72;&#x65;&#x61;&#100;&#x65;&#114;&#x73;&#x3d;&#32;&#x61;&#116;&#32;&#x25;&#x37;&#66;&#x25;&#x37;&#68;&#x25;&#x37;&#68;&#x29;</noscript></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="file-string">-File [&lt;String&gt;]</h3>
+<p>Will be used for Url if Url is empty. Available in 0.10.7+.</p>
+<p>This parameter provides compatibility, but should not be used directly<br />
+and not with the community package repository until January 2018.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td>fileFullPath</td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="file64-string">-File64 [&lt;String&gt;]</h3>
+<p>Will be used for Url64bit if Url64bit is empty. Available in 0.10.7+.</p>
+<p>This parameter provides compatibility, but should not be used directly<br />
+and not with the community package repository until January 2018.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td>fileFullPath64</td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>Accept Pipeline Input?</td>
