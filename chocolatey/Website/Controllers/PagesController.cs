@@ -152,7 +152,7 @@ Company: {4}
             return View("~/Views/Pages/Discount.cshtml", new DiscountViewModel());
         }
 
-        readonly Regex _studentEmailAddressRegex = new Regex(@".*\.edu[.\w{2}]?$|.*\.ac.uk$|.*k12\.\w{2}\.us$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+        readonly Regex _studentEmailAddressRegex = new Regex(@".*\.edu(\.\w{2})?$|.*\.ac.uk$|.*k12\.\w{2}\.us$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
         public virtual ActionResult Discount(DiscountViewModel discountForm)
