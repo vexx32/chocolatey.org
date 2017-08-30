@@ -1,0 +1,155 @@
+﻿@{
+  ViewBag.Title = "HelpersGetPackageParameters";
+}
+
+<article>
+<h1 id="get-packageparameters">Get-PackageParameters</h1>
+<!-- This documentation is automatically generated from https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Get-PackageParameters.ps1 using https://github.com/chocolatey/choco/tree/stable/GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
+<p>Parses a string and returns a hash table array of those values for use<br />
+in package scripts.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="powershell">Get-PackageParameters `
+  [-Parameters &lt;String&gt;] `
+  [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
+<h2 id="description">Description</h2>
+<p>This looks at a string value and parses it into a hash table array for<br />
+use in package scripts. By default this will look at<br />
+<code>$env:ChocolateyPackageParameters</code> (<code>--params=&quot;'/ITEM:value'&quot;</code>) and<br />
+<code>$env:ChocolateyPackageParametersSensitive</code><br />
+(<code>--package-parameters-sensitive=&quot;'/PASSWORD:value'&quot;</code> in commercial<br />
+editions).</p>
+<p>Learn more about using this at <a href="https://chocolatey.org/docs/how-to-parse-package-parameters-argument" class="uri">https://chocolatey.org/docs/how-to-parse-package-parameters-argument</a></p>
+<h2 id="notes">Notes</h2>
+<p>Available in 0.10.8+. If you need compatibility with older versions,<br />
+take a dependency on the <code>chocolatey-core.extension</code> package which<br />
+also provides this functionality. If you are pushing to the community<br />
+package repository (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>), you are required<br />
+to take a dependency on the core extension until January 2018. How to<br />
+do this is explained at <a href="https://chocolatey.org/docs/how-to-parse-package-parameters-argument#step-3---use-core-community-extension" class="uri">https://chocolatey.org/docs/how-to-parse-package-parameters-argument#step-3---use-core-community-extension</a>.</p>
+<p>The differences between this and the <code>chocolatey-core.extension</code> package<br />
+functionality is that the extension function can only do one string at a<br />
+time and it only looks at <code>$env:ChocolateyPackageParameters</code> by default.<br />
+It also only supports splitting by <code>:</code>, with this function you can<br />
+either split by <code>:</code> or <code>=</code>. For compatibility with the core extension,<br />
+build all docs with <code>/Item:Value</code>.</p>
+<h2 id="aliases">Aliases</h2>
+<p>None</p>
+<h2 id="examples">Examples</h2>
+<p><strong>EXAMPLE 1</strong></p>
+<pre><code class="powershell">
+# The default way of calling, uses `$env:ChocolateyPackageParameters`
+# and `$env:ChocolateyPackageParametersSensitive` - this is typically
+# how things are passed in from choco.exe
+$pp = Get-PackageParameters</code></pre>
+<p><strong>EXAMPLE 2</strong></p>
+<pre><code class="powershell">
+# see https://chocolatey.org/docs/how-to-parse-package-parameters-argument
+# command line call: `choco install &lt;pkg_id&gt; --params &quot;&#39;/LICENSE:value&#39;&quot;`
+$pp = Get-PackageParameters
+# Read-Host, PromptForChoice, etc are not blocking calls with Chocolatey.
+# Chocolatey has a custom PowerShell host that will time these calls
+# after 30 seconds, allowing headless operation to continue but offer
+# prompts to users to ask questions during installation.
+if (!$pp[&#39;LICENSE&#39;]) { $pp[&#39;LICENSE&#39;] = Read-Host &#39;License key?&#39; }
+# set a default if not passed
+if (!$pp[&#39;LICENSE&#39;]) { $pp[&#39;LICENSE&#39;] = &#39;1234&#39; }</code></pre>
+<p><strong>EXAMPLE 3</strong></p>
+<pre><code class="powershell">
+$pp = Get-PackageParameters
+# Requires 0.10.8 for Read-Host -AsSecureString
+if (!$pp[&#39;Password&#39;]) { $pp[&#39;Password&#39;] = Read-Host &quot;Enter password for $userName:&quot; -AsSecureString}
+# fail the install/upgrade if not value is not determined
+if (!$pp[&#39;Password&#39;]) { throw &quot;Package needs Password to install, that must be provided in params or in prompt.&quot; }</code></pre>
+<p><strong>EXAMPLE 4</strong></p>
+<pre><code class="powershell">
+# Pass in your own values
+Get-PackageParameters -Parameters &quot;/Shortcut /InstallDir:&#39;c:\program files\xyz&#39; /NoStartup&quot; | set r
+if ($r.Shortcut) {... }
+Write-Host $r.InstallDir</code></pre>
+<h2 id="inputs">Inputs</h2>
+<p>None</p>
+<h2 id="outputs">Outputs</h2>
+<p>None</p>
+<h2 id="parameters">Parameters</h2>
+<h3 id="parameters-string">-Parameters [&lt;String&gt;]</h3>
+<p>OPTIONAL - Specify a string to parse. If not set, will use<br />
+<code>$env:ChocolateyPackageParameters</code> and<br />
+<code>$env:ChocolateyPackageParametersSensitive</code> to parse values from.</p>
+<p>Parameters should be passed as &quot;/NAME:value&quot; or &quot;/NAME=value&quot;. For<br />
+compatibility with <code>chocolatey-core.extension</code>, use <code>:</code>.</p>
+<p>For example `-Parameters &quot;/ITEM1:value /ITEM2:value with spaces&quot;</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td>params</td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ignoredarguments-object">-IgnoredArguments [&lt;Object[]&gt;]</h3>
+<p>Allows splatting with arguments that do not apply and future expansion.<br />
+Do not use directly.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aliases</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Required?</td>
+<td>false</td>
+</tr>
+<tr class="odd">
+<td>Position?</td>
+<td>named</td>
+</tr>
+<tr class="even">
+<td>Default Value</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Accept Pipeline Input?</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commonparameters">&lt;CommonParameters&gt;</h3>
+<p>This cmdlet supports the common parameters: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -OutBuffer, and -OutVariable. For more information, see <code>about_CommonParameters</code> <a href="http://go.microsoft.com/fwlink/p/?LinkID=113216" class="uri">http://go.microsoft.com/fwlink/p/?LinkID=113216</a> .</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-package" })">Install-ChocolateyPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-install-package" })">Install-ChocolateyInstallPackage</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-zip-package" })">Install-ChocolateyZipPackage</a></li>
+</ul>
+<p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Function Reference</a></p>
+<p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>Import-Module &quot;$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1&quot; -Force; Get-Help Get-PackageParameters -Full</code>.</p>
+<p>View the source for <a href="https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Get-PackageParameters.ps1">Get-PackageParameters</a></p>
+</article>

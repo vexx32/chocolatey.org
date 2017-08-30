@@ -5,6 +5,29 @@
 <article>
 <h1 id="powershell-functions-aka-helpers-reference">PowerShell Functions aka Helpers Reference</h1>
 <!-- This documentation file is automatically generated from the files at $sourceFunctions using $($sourceLocation)GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
+<!-- TOC -->
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#main-functions">Main Functions</a></li>
+<li><a href="#error--success-functions">Error / Success Functions</a></li>
+<li><a href="#more-functions">More Functions</a></li>
+<li><a href="#administrative-access-functions">Administrative Access Functions</a></li>
+<li><a href="#non-administrator-safe-functions">Non-Administrator Safe Functions</a></li>
+<li><a href="#complete-list-alphabetical-order">Complete List (alphabetical order)</a></li>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#environment-variables">Environment Variables</a>
+<ul>
+<li><a href="#advanced-environment-variables">Advanced Environment Variables</a></li>
+<li><a href="#set-by-options-and-configuration">Set By Options and Configuration</a></li>
+<li><a href="#business-edition-variables">Business Edition Variables</a></li>
+<li><a href="#experimental-environment-variables">Experimental Environment Variables</a></li>
+<li><a href="#not-useful-or-anti-pattern-if-used">Not Useful Or Anti-Pattern If Used</a></li>
+</ul></li>
+</ul>
+<!-- /TOC -->
+<h2 id="summary">Summary</h2>
+<p>In your Chocolatey packaging, you have the ability to use these functions (and others with Chocolatey&#39;s <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">PowerShell Extensions</a>) to work with all aspects of software management. Keep in mind Chocolatey&#39;s automation scripts are just PowerShell, so you can do manage anything you want.</p>
+<p><strong>NOTE</strong>: These scripts are for package scripts, not for use directly in PowerShell. This is in the create packages section, not the using Chocolatey section.</p>
 <h2 id="main-functions">Main Functions</h2>
 <p>These functions call other functions and many times may be the only thing you need in your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1 file</a>.</p>
 <ul>
@@ -47,6 +70,7 @@
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-pinned-task-bar-item" })">Install-ChocolateyPinnedTaskBarItem</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-install-chocolatey-shortcut" })">Install-ChocolateyShortcut</a> - v0.9.9+</li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-update-session-environment" })">Update-SessionEnvironment</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-package-parameters" })">Get-PackageParameters</a> - v0.10.8+</li>
 </ul>
 <h2 id="complete-list-alphabetical-order">Complete List (alphabetical order)</h2>
 <ul>
@@ -58,6 +82,7 @@
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-environment-variable-names" })">Get-EnvironmentVariableNames</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-ftp-file" })">Get-FtpFile</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-o-s-architecture-width" })">Get-OSArchitectureWidth</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-package-parameters" })">Get-PackageParameters</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-tools-location" })">Get-ToolsLocation</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-u-a-c-enabled" })">Get-UACEnabled</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-get-uninstall-registry-key" })">Get-UninstallRegistryKey</a></li>

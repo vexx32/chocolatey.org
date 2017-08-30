@@ -14,6 +14,10 @@
 <ul>
 <li><a href="#future">Future</a></li>
 </ul></li>
+<li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a></li>
+<li><a href="#error-500">Error 500</a></li>
+<li><a href="#error-50019---the-requested-page-cannot-be-accessed-because-the-related-configuration-data-for-the-page-is-invalid">Error 500.19 - &quot;The requested page cannot be accessed because the related configuration data for the page is invalid.&quot;</a></li>
+<li><a href="#other-error">Other error</a></li>
 </ul>
 <!-- /TOC -->
 <h2 id="what-is-chocolateyserver">What is Chocolatey.Server?</h2>
@@ -40,9 +44,9 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <ul>
 <li>Install or upgrade the package - <code>choco upgrade chocolatey.server -y</code></li>
 <li>Ensure IIS is installed. You can try <code>choco install IIS-WebServer --source windowsfeatures</code></li>
-<li>Ensure that ASP.NET is installed. Try <code>choco install IIS-ASPNET45 --source windowsfeatures</code> (<code>IIS-ASPNET</code> for Windows 2008).</li>
+<li>Ensure that ASP.NET is installed. Try <code>choco install IIS-ASPNET45 --source windowsfeatures</code> (Windows Server 2012). Use <code>IIS-ASPNET</code> for Windows Server 2008, possibly <code>IIS-ASPNET46</code> for Windows Server 2016.</li>
 <li>Disable or remove the Default website</li>
-<li>Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is <code>v4.0</code>.</li>
+<li>Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is <code>v4.0</code> (or some version of 4).</li>
 <li>Set up an IIS website pointed to the install location and set it to use the app pool.</li>
 <li>Go to explorer and right click on <code>c:\tools\chocolatey.server</code> and add the following permissions:</li>
 <li><code>IIS_IUSRS</code> - Read</li>
@@ -73,4 +77,18 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 </ul>
 <h4 id="future">Future</h4>
 <p>We are looking to add support for the package source to automatically handle this aspect - <a href="http://blog.nuget.org/20150922/Accelerate-Package-Source.html" class="uri">http://blog.nuget.org/20150922/Accelerate-Package-Source.html</a></p>
+<h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
+<p>When you are attempting to install the Simple Server, you may run into some errors depending on your configuration. Here are some common ones we&#39;ve seen that you may get when you browse to the the site.</p>
+<h3 id="error-500">Error 500</h3>
+<p>Take a closer look at the error. It may be one of the other errors below.</p>
+<h3 id="error-50019---the-requested-page-cannot-be-accessed-because-the-related-configuration-data-for-the-page-is-invalid">Error 500.19 - &quot;The requested page cannot be accessed because the related configuration data for the page is invalid.&quot;</h3>
+<p>This can mean a couple of things:</p>
+<ul>
+<li>You missed ensuring the website is using an app pool that is at least .NET 4.0. Check the app pool that your site is using, then ensure that app pool has <code>32-bit</code> enabled and the managed runtime version is <code>v4.0</code> (or some version of 4).</li>
+<li>You have made a change to the xml file and it is not valid xml. This typically happens if you put an xml escape character into the password (<code>&amp;</code>). To do that you would need to set CData around the value or use a different password. It could also happen if you accidentallly change the xml and it is no longer valid.</li>
+</ul>
+<h3 id="other-error">Other error</h3>
+<p>Turn on customErrors under system.web - <customErrors mode="Off" /> - see this guide to set it - <a href="https://stackify.com/web-config-customerrors-asp-net/" class="uri">https://stackify.com/web-config-customerrors-asp-net/</a></p>
+<p>Then browse to the site to see if you can gather any more information.</p>
+<p>If so, and you are a commercial edition customer, please open a support ticket. If you are using open source Chocolatey, please open a ticket at <a href="https://github.com/chocolatey/simple-server/issues" class="uri">https://github.com/chocolatey/simple-server/issues</a>.</p>
 </article>

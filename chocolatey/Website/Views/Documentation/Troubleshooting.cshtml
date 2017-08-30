@@ -11,10 +11,11 @@
 <li><a href="#general">General</a></li>
 <li><a href="#chocolatey-installation">Chocolatey Installation</a></li>
 <li><a href="#the-underlying-connection-was-closed">The underlying connection was closed</a></li>
-<li><a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-install-chocolatey">I&#39;m getting a 403 unauthorized issue attempting to install Chocolatey</a></li>
+<li><a href="#im-getting-a-403-unauthorized-issue-attempting-to-install-chocolatey">I&#39;m getting a 403 unauthorized issue attempting to install Chocolatey</a></li>
 <li><a href="#i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</a></li>
 <li><a href="#licensed-installation">Licensed Installation</a></li>
 <li><a href="#creating-packages">Creating Packages</a></li>
+<li><a href="#install-chocolateypath-doesnt-seem-to-work">Install-ChocolateyPath doesn&#39;t seem to work.</a></li>
 <li><a href="#error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once">ERROR: Cannot bind parameter because parameter &#39;fileType&#39; is specified more than once.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture">ERROR: This package does not support 64 bit architecture.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</a></li>
@@ -26,6 +27,9 @@
 <li><a href="#im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</a></li>
 <li><a href="#a-package-is-broken-for-me">A package is broken for me</a></li>
 <li><a href="#the-package-install-failed-with-1603">The package install failed with 1603</a></li>
+<li><a href="#not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">Not recognized as the name of a cmdlet, function, script file, or operable program</a></li>
+<li><a href="#my-path-is-not-getting-updated">My PATH is not getting updated</a></li>
+<li><a href="#refreshenv-has-no-effect">RefreshEnv has no effect</a></li>
 </ul>
 <!-- /TOC -->
 <p><a id="markdown-general" name="general"></a></p>
@@ -34,7 +38,8 @@
 <p>Also consider the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">frequently asked questions</a>.</p>
 <p><a id="markdown-chocolatey-installation" name="chocolatey-installation"></a></p>
 <h2 id="chocolatey-installation">Chocolatey Installation</h2>
-<p><a name="the-underlying-connection-was-closed"></a></p>
+<p><a name="the-underlying-connection-was-closed"></a><br />
+<a id="markdown-the-underlying-connection-was-closed" name="the-underlying-connection-was-closed"></a></p>
 <h3 id="the-underlying-connection-was-closed">The underlying connection was closed</h3>
 <p>If you see an error that looks similar to the following:</p>
 <pre><code class="nohighlight">Exception calling &quot;DownloadString&quot; with &quot;1&quot; argument(s): &quot;The underlying connection was closed: An unexpected error
@@ -46,7 +51,8 @@ At line:1 char:1
     + FullyQualifiedErrorId : WebException</code></pre>
 <p>It&#39;s possible that you are attempting to install from a server that needs to use TLS 1.1 or TLS 1.2.</p>
 <p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })#installing-with-restricted-tls">Installing with Restricted TLS</a></p>
-<p><a id="im-getting-a-403-unauthorized-issue-when-attempting-to-install-chocolatey"></a></p>
+<p><a id="im-getting-a-403-unauthorized-issue-when-attempting-to-install-chocolatey"></a><br />
+<a id="markdown-im-getting-a-403-unauthorized-issue-attempting-to-install-chocolatey" name="im-getting-a-403-unauthorized-issue-attempting-to-install-chocolatey"></a></p>
 <h3 id="im-getting-a-403-unauthorized-issue-attempting-to-install-chocolatey">I&#39;m getting a 403 unauthorized issue attempting to install Chocolatey</h3>
 <p>Please see <a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</a></p>
 <p><a id="markdown-i-am-having-trouble-with-powershell-to-install-chocolatey" name="i-am-having-trouble-with-powershell-to-install-chocolatey"></a></p>
@@ -57,6 +63,9 @@ At line:1 char:1
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">licensed installation</a>. If you are having issues, please see <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a> for details on how to get support.</p>
 <p><a id="markdown-creating-packages" name="creating-packages"></a></p>
 <h2 id="creating-packages">Creating Packages</h2>
+<p><a id="markdown-install-chocolateypath-doesnt-seem-to-work" name="install-chocolateypath-doesnt-seem-to-work"></a></p>
+<h3 id="install-chocolateypath-doesnt-seem-to-work">Install-ChocolateyPath doesn&#39;t seem to work.</h3>
+<p>I added <code>Install-ChocolateyPath $binPath</code>, but after installing when I try to run the installed application I get &quot;not recognized as the name of a cmdlet, function, script file, or operable program.&quot; Please see <a href="#my-path-is-not-getting-updated">My PATH is not getting updated</a>.</p>
 <p><a id="markdown-error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once" name="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once"></a></p>
 <h3 id="error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once">ERROR: Cannot bind parameter because parameter &#39;fileType&#39; is specified more than once.</h3>
 <p>This error is seen sometimes on versions of Chocolatey older than 0.10.6. The problem is likely you have the following in your packaging:</p>
@@ -117,23 +126,26 @@ Install-ChocolateyPackage $packageArgs # this is incorrect and will pass the ent
 <h2 id="runtime">Runtime</h2>
 <p><a id="markdown-i-cant-get-the-powershell-tab-completion-working" name="i-cant-get-the-powershell-tab-completion-working"></a></p>
 <h3 id="i-cant-get-the-powershell-tab-completion-working">I can&#39;t get the PowerShell tab completion working.</h3>
+<p>See next question.</p>
 <p><a id="markdown-why-does-choco-intab-not-work-for-me" name="why-does-choco-intab-not-work-for-me"></a></p>
 <h3 id="why-does-choco-intab-not-work-for-me">Why does choco in{tab} not work for me?</h3>
 <p>This means the import failed during install/upgrade. Chocolatey does supply a warning when this happens in the install/upgrade log. Take a look there.</p>
+<p>The warning may look like: <code>&quot;Not setting tab completion: Profile file does not exist at 'C:\Users\garyc\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'.&quot;</code></p>
+<p>Once you&#39;ve looked at your log to determine what it said, here are some followup steps:</p>
 <ul>
 <li>If this is the same shell that the upgrade occurred in, the message states you need to update your profile - run <code>. $profile</code>. Try that first, then try restarting your shell and see if it takes hold.</li>
 <li>If it still doesn&#39;t work, it means there was a failure setting the profile with the module.</li>
 <li>This could be due to PowerShell Execution Policy settings. Run <code>Get-ExecutionPolicy</code> - if it is set to <code>Restricted</code> you need to adjust that to something like <code>RemoteSigned</code>. See about execution policies (link)</li>
-<li>If that is fine, then we need to look at your &quot;$profile&quot;. Run <code>type $profile</code>. Examine the output. You should have something like this in the file:</li>
-</ul>
-<pre><code class="powershell"># Chocolatey profile
-$ChocolateyProfile = &quot;$env:ChocolateyInstall\helpers\chocolateyProfile.psm1&quot;
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module &quot;$ChocolateyProfile&quot;
-}</code></pre>
-<ul>
+<li><p>If that is fine, then we need to look at your &quot;$profile&quot;. Run <code>type $profile</code>. Examine the output. You should have something like this in the file:<br />
+~~~ powershell</p>
+<h1 id="chocolatey-profile">Chocolatey profile</h1>
+$ChocolateyProfile = &quot;$env:ChocolateyInstall\helpers\chocolateyProfile.psm1&quot;<br />
+if (Test-Path($ChocolateyProfile)) {<br />
+Import-Module &quot;$ChocolateyProfile&quot;<br />
+}<br />
+~~~</li>
 <li>If you don&#39;t see that, let&#39;s add it. Run <code>Write-Host $profile</code> - note the location and open it up in an editor (anything but plain old notepad.exe for the love of..., well your favorite editor).</li>
-<li>Now let&#39;s add that text above to the profile. Save and close the file. Now type <code>. $profile</code> to update your current Shell. Give <code>choco in&lt;tab&gt;</code> a shot again. If it still doesn&#39;t work we&#39;ll need to examine something a bit more deeply about your environment. Please submit an issue so we can investigate.</li>
+<li><p>Now let&#39;s add that text above to the profile. Save and close the file. Now type <code>. $profile</code> to update your current Shell. Give <code>choco in&lt;tab&gt;</code> a shot again. If it still doesn&#39;t work we&#39;ll need to examine something a bit more deeply about your environment. Please submit an issue so we can investigate.</p></li>
 </ul>
 <p><a id="markdown-microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed" name="microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed"></a></p>
 <h3 id="microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed">Microsoft.Powershell_profile.ps1 cannot be loaded. The file is not digitally signed.</h3>
@@ -169,4 +181,24 @@ if (Test-Path($ChocolateyProfile)) {
 <li>The installer doesn&#39;t allow installing an older version</li>
 <li>etc - it&#39;s a generic error like we said</li>
 </ul>
+<p><a id="markdown-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program" name="not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program"></a></p>
+<h3 id="not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">Not recognized as the name of a cmdlet, function, script file, or operable program</h3>
+<ul>
+<li>With Chocolatey (choco) itself? Close and reopen the shell as the install didn&#39;t ensure the PATH was updated in the current shell.</li>
+<li>With something you installed? See <a href="#my-path-is-not-getting-updated">My PATH is not getting updated</a>.</li>
+</ul>
+<p><a id="markdown-my-path-is-not-getting-updated" name="my-path-is-not-getting-updated"></a></p>
+<h3 id="my-path-is-not-getting-updated">My PATH is not getting updated</h3>
+<p>First let&#39;s understand the scopes of the PATH environment variable. There is Machine, Current User (User), and Process environment variables. Process is a special scope that applies to the command shell (cmd.exe/powershell.exe). Process gathers Machine and User scopes when it first loads up <strong>AND <em>ONLY</em> when it first loads up</strong>. Yes, you read that right. This is a limitation of Windows, shells were never given the ability to see changes to environment variables and act accordingly. You traditionally need to install something, then close and reopen your shell to see it updated. That is a pretty clunky experience.</p>
+<p>To understand this, open Powershell, then install something that updates the PATH, and run the following in that already open PowerShell command shell:</p>
+<ul>
+<li><code>Write-Host &quot;$((Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name 'PATH').Path); $((Get-ItemProperty -Path 'HKCU:\Environment' -Name 'PATH').Path)&quot;</code> - This is Machine/User PATH pulled directly from the registry.</li>
+<li><code>$env:PATH</code> - This is Process PATH</li>
+</ul>
+<p>Contrast the two, notice there is a difference (there may be a lot of data to sift through).</p>
+<p>When you update the Machine/User environment variables, you would also need to update the Process environment variables as it doesn&#39;t not see those changes. Fortunately, with Chocolatey, we have a tool called <code>refreshenv</code> that does this for you so you don&#39;t need to close and reopen the shell. If you run <code>refreshenv</code> and it doesn&#39;t have any effect, see <a href="#refreshenv-has-no-effect">RefreshEnv has no effect</a>.</p>
+<p><a id="markdown-refreshenv-has-no-effect" name="refreshenv-has-no-effect"></a></p>
+<h3 id="refreshenv-has-no-effect">RefreshEnv has no effect</h3>
+<p>If you are in cmd.exe, it should just work. In PowerShell, you need to install the Chocolatey PowerShell profile first for the command to work.</p>
+<p>Take note of whether it says &quot;refreshing environment variables for <strong><em>cmd.exe</em></strong>&quot; or &quot;refreshing environment variables for <strong><em>powershell.exe</em></strong>&quot;. If you are in PowerShell and you see &quot;<strong><em>cmd.exe</em></strong>&quot; when you run <code>refreshenv</code>, then you need to do some additional work to get things set up. see <a href="#why-does-choco-intab-not-work-for-me">Why does choco in{tab} not work for me?</a>.</p>
 </article>

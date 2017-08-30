@@ -23,6 +23,7 @@
 <li><a href="#install-the-chocolatey-agent-service">Install the Chocolatey Agent Service</a></li>
 <li><a href="#ensure-the-chocolatey-agent-service-with-puppet">Ensure the Chocolatey Agent Service with Puppet</a></li>
 <li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a></li>
+<li><a href="#chocolatey-doesnt-recognize-the-license-file">Chocolatey doesn&#39;t recognize the license file</a></li>
 <li><a href="#exception-of-type-rhinolicensinglicensenotfoundexception-was-thrown">Exception of type &#39;Rhino.Licensing.LicenseNotFoundException&#39; was thrown.</a></li>
 <li><a href="#error-the-term-install-chocolateywindowsservice-is-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">ERROR: The term &#39;Install-ChocolateyWindowsService&#39; is not recognized as the name of a cmdlet, function, script file, or operable program.</a></li>
 <li><a href="#unable-to-load-licensed-version-extensions-and-commands">Unable to load licensed version extensions and commands.</a></li>
@@ -52,7 +53,7 @@
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install_pro.gif" alt="install" /></p>
 <h2 id="how-do-i-install-the-licensed-edition">How Do I Install The Licensed Edition?</h2>
 <ol>
-<li>Install a recent version of Chocolatey (0.9.10+) - <code>choco upgrade chocolatey</code>.</li>
+<li>Install a recent version of Chocolatey (0.10.7+) - <code>choco upgrade chocolatey</code> (due to a tight integration, <code>chocolatey.extension</code> may need a newer version than what is listed here).</li>
 <li>You received a license file in email.</li>
 <li>Take that license file and copy it to your Chocolatey install folder <code>license</code> subdirectory (you may need to create it first). For most folks that path would be <code>&quot;C:\ProgramData\chocolatey\license&quot;</code>. Alternatively, you can put the license in your user profile directory, e.g. <code>&quot;C:\Users\YourUserName\chocolatey.license.xml&quot;</code></li>
 </ol>
@@ -165,8 +166,16 @@ chocolateysource {&#39;chocolatey&#39;:
 }
 
 ## Disable the licensed source, it can&#39;t be removed
+## Disabled sources still need all other attributes until
+## https://tickets.puppetlabs.com/browse/MODULES-4449 is resolved.
+## Password is necessary with user, but not ensurable, so it should not
+## matter what it is set to here. If you ever do get into trouble here,
+## the password is your license GUID.
 chocolateysource {&#39;chocolatey.licensed&#39;:
   ensure   =&gt; disabled,
+  priority =&gt; &#39;10&#39;,
+  user     =&gt; &#39;customer&#39;,
+  password =&gt; &#39;1234&#39;,
   require  =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
 }
 
@@ -382,6 +391,20 @@ package {&#39;chocolateygui&#39;:
 }</code></pre>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
 <p>When you are attempting to install the licensed edition, you may run into some errors depending on your configuration. Here are some common ones we&#39;ve seen.</p>
+<h3 id="chocolatey-doesnt-recognize-the-license-file">Chocolatey doesn&#39;t recognize the license file</h3>
+<p>When you run <code>choco</code>, it doesn&#39;t show a commercial edition next to the name. Like &#39;Chocolatey v0.10.7 Professional&#39;. This means that Chocolatey is not detecting a license file. This could be an incorrectly placed or incorrectly named file. For troubleshooting, please perform the following:</p>
+<ol>
+<li>Open PowerShell and run the following command (verbatim): <code>Get-Content $env:ChocolateyInstall\license\chocolatey.license.xml</code></li>
+</ol>
+<p>You should see the output of the license file. If you do not see this, the license file is not placed correctly or misnamed. Please go back and set the license correctly to see if that fixes the issue.</p>
+<p>If you do see the expected output but Chocolatey is still not recognizing the file, please do the following:</p>
+<ol>
+<li>Run <code>cacls.exe C:\ProgramData\chocolatey\license</code></li>
+<li>Run <code>cacls.exe C:\ProgramData\chocolatey\license\chocolatey.license.xml</code></li>
+<li>Run <code>where.exe choco</code></li>
+<li>Please zip up <code>C:\ProgramData\chocolatey\logs\chocolatey.log</code></li>
+<li>Open a support ticket and send us the log and the output of the commands in this step.</li>
+</ol>
 <h3 id="exception-of-type-rhinolicensinglicensenotfoundexception-was-thrown">Exception of type &#39;Rhino.Licensing.LicenseNotFoundException&#39; was thrown.</h3>
 <p>If you run into this error, it means you are on an older version of Chocolatey and you need to upgrade.</p>
 <ol>

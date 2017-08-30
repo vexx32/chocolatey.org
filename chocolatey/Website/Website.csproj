@@ -1498,6 +1498,7 @@
     <Content Include="Views\Documentation\FeaturesPackageAudit.cshtml" />
     <Content Include="Views\Documentation\FeaturesPackageReducer.cshtml" />
     <Content Include="Views\Documentation\CommandsOptimize.cshtml" />
+    <Content Include="Views\Documentation\HelpersGetPackageParameters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
