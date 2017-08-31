@@ -52,17 +52,16 @@ if (!$pp[&#39;Password&#39;]) { throw &quot;Package needs parameter &#39;Passwor
 Main description here about the software
 
 ### Package Specific
-
 #### Package Parameters
 The following package parameters can be set:
 
- * `/Port` - determines what port to listen on - defaults to &quot;81&quot;
- * `/Edition` - What edition to install - defaults to &quot;LicenseKey&quot;
+ * `/Port:` - determines what port to listen on - defaults to &quot;81&quot;
+ * `/Edition:` - What edition to install - defaults to &quot;LicenseKey&quot;
  * `/AdditionalTools` - install additional tools
- * `/InstallationPath` - Where to install the binaries to - defaults to &quot;`$env:SystemDrive\temp`&quot;
+ * `/InstallationPath:` - Where to install the binaries to - defaults to &quot;`$env:SystemDrive\temp`&quot;
 
-These parameters can be passed to the installer with the use of `--params`.
-For example: `--params &quot;&#39;/Port:82 /AdditionalTools&#39;&quot;`.
+To pass parameters, use `--params &quot;&#39;&#39;&quot;` (e.g. `choco install packageID [other options] --params=&quot;&#39;/ITEM:value /ITEM2:value2 /FLAG_BOOLEAN&#39;&quot;`).
+To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.
     &lt;/description&gt;</code></pre>
 <p><strong>NOTE</strong>: Package parameters can be passed as <code>--params</code>, but also as a few different ways including <code>--package-parameters</code>. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install options</a>:</p>
 <pre><code class="nohighlight"> --params, --parameters, --pkgparameters, --packageparameters, --package-parameters=VALUE
