@@ -27,6 +27,7 @@
 <li><a href="#im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</a></li>
 <li><a href="#a-package-is-broken-for-me">A package is broken for me</a></li>
 <li><a href="#the-package-install-failed-with-1603">The package install failed with 1603</a></li>
+<li><a href="#already-referencing-a-newer-version-of-packagename">Already referencing a newer version of &#39;packagename&#39;</a></li>
 <li><a href="#not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">Not recognized as the name of a cmdlet, function, script file, or operable program</a></li>
 <li><a href="#my-path-is-not-getting-updated">My PATH is not getting updated</a></li>
 <li><a href="#refreshenv-has-no-effect">RefreshEnv has no effect</a></li>
@@ -181,6 +182,31 @@ Import-Module &quot;$ChocolateyProfile&quot;<br />
 <li>The installer doesn&#39;t allow installing an older version</li>
 <li>etc - it&#39;s a generic error like we said</li>
 </ul>
+<p><a id="markdown-already-referencing-a-newer-version-of-packagename" name="already-referencing-a-newer-version-of-packagename"></a></p>
+<h3 id="already-referencing-a-newer-version-of-packagename">Already referencing a newer version of &#39;packagename&#39;</h3>
+<p>So you are attempting to install or upgrade and you get this strange message. But you know you have a more up to date package than Chocolatey thinks you do, at least in this instance.</p>
+<p>This cryptic error typically means there is a stray nupkg somewhere in the structure. There is a tiny bug somewhere and rarely a nupkg will stick around when it should have been removed. Once we can determine where this happens we can fix it, until then we have a way to fix the issue manually.</p>
+<ul>
+<li>Open PowerShell and run the following script:</li>
+<li><code>gci -Path &quot;$env:ChocolateyInstall\lib&quot; -Recurse -Filter &quot;*.nupkg&quot; | %{ $_.FullName }</code></li>
+<li>Look for any nupkg files that should not be there. Typically this is probably going to be a nupkg with a version number in the name in a folder that doesn&#39;t have a version number in the name of the folder.</li>
+<li>Delete the offending nupkg from the folder.</li>
+<li>Then everything should be back to normal again.</li>
+</ul>
+<p>This script may be even more helpful in helping you isolate those stray nupkg files (thank you <a href="https://gist.github.com/ComFreek/87bc3af278c991f729c5135446278ac5">ComFreek</a>!):</p>
+<pre><code class="powershell"># This script automatically filters the suspected candidates which are to be removed.
+
+Get-ChildItem -Path &quot;$env:ChocolateyInstall\lib&quot; -Recurse -Filter &quot;*.nupkg&quot; | Where-Object {
+  # Filter packages with version number
+  $_.Name -match &quot;^.*\.(\d+|\.){2,}\.nupkg&quot;
+} | Where-Object {
+  # whose parent directory does not contain the same version number
+  $_.Directory.BaseName -ne $_.BaseName
+} | % {
+  # Remove -WhatIf after having run this script and having double-checked (!) each file listed in the previous
+  # run if it is really supposed to be removed (check the wiki link for information).
+  Remove-Item $_.FullName -WhatIf
+}</code></pre>
 <p><a id="markdown-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program" name="not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program"></a></p>
 <h3 id="not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">Not recognized as the name of a cmdlet, function, script file, or operable program</h3>
 <ul>
