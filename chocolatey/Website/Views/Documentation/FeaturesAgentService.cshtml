@@ -15,7 +15,6 @@
 <li><a href="#setup">Setup</a>
 <ul>
 <li><a href="#background-mode-setup">Background Mode Setup</a></li>
-<li><a href="#command-customization-consideration">Command Customization Consideration</a></li>
 </ul></li>
 <li><a href="#chocolatey-background-service--self-service-installer">Chocolatey Background Service / Self-Service Installer</a>
 <ul>
@@ -55,7 +54,7 @@
 <h4 id="background-mode-setup">Background Mode Setup</h4>
 <p>To set Chocolatey in background mode, you need to run the following:</p>
 <ul>
-<li><code>choco upgrade chocolatey-agent &lt;options&gt;</code> (see the note below for how to customize the user)</li>
+<li><code>choco upgrade chocolatey-agent &lt;options&gt;</code> (see <a href="#chocolatey-agent-install-options">agent install options</a>)</li>
 <li><code>choco feature disable -n showNonElevatedWarnings</code> - requires Chocolatey v0.10.4+ to set.</li>
 <li><code>choco feature enable -n useBackgroundService</code></li>
 <li>You also need to opt in sources in for self-service packages. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">choco source</a> (and <code>--allow-self-service</code>). Alternatively, you can allow any configured source to be used for self-service by running the following: <code>choco feature disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code> (requires Chocolatey Extension v1.10.0+).</li>
@@ -63,8 +62,17 @@
 <li>If you want to configure custom commands (not just install/upgrade), use something like <code>choco config set backgroundServiceAllowedCommands &quot;install,upgrade,pin,sync&quot;</code> (with the commands you want to allow, requires Chocolatey Extension v1.12.4+). See <a href="#command-customization-consideration">commands consideration</a> below.</li>
 <li>For use with Chocolatey GUI, you need Chocolatey Extension v1.12.4+, and at least Chocolatey GUI v0.14.0-unstable0345. If you already have an older version of the GUI installed, please uninstall that first, then run <code>choco upgrade chocolateygui -y --pre --source https://www.myget.org/F/chocolateygui/</code> (you will also need at least .NET 4.5.2 installed)</li>
 </ul>
-<p><strong>Note:</strong> In Chocolatey-Agent v0.8.0+, the service will install as a local administrative user <code>ChocolateyLocalAdmin</code> by default (and manage the password as well). However you can specify your own user with package parameters (or have it use LocalSystem). Pre <code>v0.8.0</code>: This will install Chocolatey Agent as LocalSystem (<code>SYSTEM</code>). To change the user, edit the username/password in the services management console on <code>Chocolatey Agent</code> properties and restart the service. Currently you will need to do this on upgrade as well.</p>
-<h4 id="command-customization-consideration">Command Customization Consideration</h4>
+<h5 id="chocolatey-agent-install-options">Chocolatey Agent Install Options</h5>
+<p>Starting with Chocolatey Agent v0.8.0+, the service will install as a local administrative user <code>ChocolateyLocalAdmin</code> by default (and manage the password as well). However you can specify your own user with package parameters (or have it use LocalSystem). Using a local administrator account allows for more things to be installed without issues. It also will allow easier shortcuts and other items to be put back on the correct user (the original requestor). You can specify a domain account as well. Prior to <code>v0.8.0</code>, Chocolatey Agent would install as LocalSystem (<code>SYSTEM</code>) and would require additional customization.</p>
+<p><strong>Package Parameters</strong>:</p>
+<ul>
+<li><code>/Username:</code> - provide username - intead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
+<li><code>/Password:</code> - optional password for the user.</li>
+<li><code>/EnterPassword</code> - receive the password at runtime as a secure string</li>
+<li><code>/UseDefaultChocolateyConfigUser</code> - use the default username from Chocolatey&#39;s configuration. This may be LocalSystem.</li>
+<li><code>/NoRestartService</code> - do not shut down and restart the service. You will need to restart later to take advantage of new service information.</li>
+</ul>
+<h5 id="command-customization-consideration">Command Customization Consideration</h5>
 <p>Starting with Chocolatey Licensed Extension v1.12.4, you are allowed to configure what commands can be routed through the background service. Please note that we default to install and upgrade as that is the most secure experience. However you can add uninstall and some other commands as well. Uninstall does have some security considerations as it would allow a non-administrator to remove software that you may have installed, including the background service itself.</p>
 <p><strong>Available Commands</strong>:</p>
 <ul>
