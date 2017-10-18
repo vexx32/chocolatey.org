@@ -24,18 +24,8 @@
 <p><strong><em>WARNING:</em></strong> Seriously, this script may destroy your machine and require a rebuild. Think twice before running this.</p>
 <p>If you also intend to delete the Chocolatey directory, remove the <code>-WhatIf</code>:</p>
 <pre><code class="powershell">Remove-Item -Recurse -Force &quot;$env:ChocolateyInstall&quot; -WhatIf
-[System.Text.RegularExpressions.Regex]::Replace( ` 
-[Microsoft.Win32.Registry]::CurrentUser.OpenSubKey(&#39;Environment&#39;).GetValue(&#39;PATH&#39;, &#39;&#39;,  `
-[Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames).ToString(),  `
-[System.Text.RegularExpressions.Regex]::Escape(&quot;$env:ChocolateyInstall\bin&quot;) + &#39;(?&gt;;)?&#39;, &#39;&#39;, `
-[System.Text.RegularExpressions.RegexOptions]::IgnoreCase) | `
-%{[System.Environment]::SetEnvironmentVariable(&#39;PATH&#39;, $_, &#39;User&#39;)}
-[System.Text.RegularExpressions.Regex]::Replace( `
-[Microsoft.Win32.Registry]::LocalMachine.OpenSubKey(&#39;SYSTEM\CurrentControlSet\Control\Session Manager\Environment\&#39;).GetValue(&#39;PATH&#39;, &#39;&#39;, `
-[Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames).ToString(),  `
-[System.Text.RegularExpressions.Regex]::Escape(&quot;$env:ChocolateyInstall\bin&quot;) + &#39;(?&gt;;)?&#39;, &#39;&#39;, `
-[System.Text.RegularExpressions.RegexOptions]::IgnoreCase) | `
-%{[System.Environment]::SetEnvironmentVariable(&#39;PATH&#39;, $_, &#39;Machine&#39;)}</code></pre>
+[System.Text.RegularExpressions.Regex]::Replace([Microsoft.Win32.Registry]::CurrentUser.OpenSubKey(&#39;Environment&#39;).GetValue(&#39;PATH&#39;, &#39;&#39;, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames).ToString(), [System.Text.RegularExpressions.Regex]::Escape(&quot;$env:ChocolateyInstall\bin&quot;) + &#39;(?&gt;;)?&#39;, &#39;&#39;, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase) | %{[System.Environment]::SetEnvironmentVariable(&#39;PATH&#39;, $_, &#39;User&#39;)}
+[System.Text.RegularExpressions.Regex]::Replace([Microsoft.Win32.Registry]::LocalMachine.OpenSubKey(&#39;SYSTEM\CurrentControlSet\Control\Session Manager\Environment\&#39;).GetValue(&#39;PATH&#39;, &#39;&#39;, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames).ToString(),  [System.Text.RegularExpressions.Regex]::Escape(&quot;$env:ChocolateyInstall\bin&quot;) + &#39;(?&gt;;)?&#39;, &#39;&#39;, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase) | %{[System.Environment]::SetEnvironmentVariable(&#39;PATH&#39;, $_, &#39;Machine&#39;)}</code></pre>
 <p>If you also intend to delete the tools directory that was managed by Chocolatey, remove both of the <code>-WhatIf</code> switches:</p>
 <pre><code class="powershell">if ($env:ChocolateyBinRoot -ne &#39;&#39; -and $env:ChocolateyBinRoot -ne $null) { Remove-Item -Recurse -Force &quot;$env:ChocolateyBinRoot&quot; -WhatIf }
 if ($env:ChocolateyToolsRoot -ne &#39;&#39; -and $env:ChocolateyToolsRoot -ne $null) { Remove-Item -Recurse -Force &quot;$env:ChocolateyToolsRoot&quot; -WhatIf }

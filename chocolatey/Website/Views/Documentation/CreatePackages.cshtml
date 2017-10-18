@@ -247,7 +247,7 @@ foreach ($file in $files) {
 <p>If you don&#39;t want to see a hanging window when you open an application from the command line that was set up with Chocolatey, you want to create a file next to the executable that is named exactly the same (<strong>case sensitive</strong>) with <code>.gui</code> suffixed on the end.</p>
 <p>Example: In the case of <code>Bob.exe</code> you would create a file named <code>Bob.exe.gui</code> and that file would be set up as a GUI application so the window will call it and then move on without waiting for it to finish. Again, <code>bob.exe.gui</code> would not work because it doesn&#39;t have the correct casing.</p>
 <h2 id="build-your-package">Build Your Package</h2>
-<p>Open a command line in the directory where the nuspec is and type <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pack" })">cpack</a>. That&#39;s it.</p>
+<p>Open a command line in the directory where the nuspec is and type <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pack" })"><code>choco pack</code></a>. That&#39;s it.</p>
 <h2 id="testing-your-package">Testing Your Package</h2>
 <p><strong>NOTE</strong>: We strongly suggest the following should be performed in a VM and not on your machine.</p>
 <p><strong>NOTE</strong>: Testing your package can be done in the same way as the verifier - take a look at <a href="https://github.com/chocolatey/package-verifier-vagrant">Chocolatey Verifier Testing</a>.</p>

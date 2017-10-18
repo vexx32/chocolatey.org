@@ -21,6 +21,7 @@
 <li>Update the package <strong>description</strong>: Why is the package being deprecated?</li>
 <li>Add a <strong><a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies">dependency</a> on the other package</strong> (if the package is being superseded).</li>
 <li><strong>Remove all files</strong> except the <code>.nuspec</code> from the Chocolatey Package.</li>
+<li>Replace <code>&lt;files&gt;...&lt;/files&gt;</code> section in <code>.nuspec</code> with <code>&lt;files /&gt;</code> tag to prevent any file from being included with the package.</li>
 <li><strong>Remove the iconUrl</strong>.</li>
 <li><strong>Unlist all versions</strong> from the package gallery, <strong><em>except</em></strong> the final deprecated version. The final deprecated version is required so that there is an update path to the new package.</li>
 </ul>

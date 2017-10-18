@@ -37,6 +37,14 @@
 <li><a href="#what-is-the-purpose-of-the-hash-that-is-used-to-protect-the-named-pipe">What is the purpose of the hash that is used to protect the named pipe?</a></li>
 <li><a href="#does-the-agent-service-or-chocolatey-stop-installation-from-unconfigured-sources">Does the agent service or Chocolatey stop installation from unconfigured sources?</a></li>
 <li><a href="#im-having-trouble-seeing-packages-on-a-file-share-source">I&#39;m having trouble seeing packages on a file share source</a></li>
+<li><a href="#we-want-to-set-up-the-chocolatey-agent-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this">We want to set up the chocolatey agent service to use a domain account that will have local admin on each box. Can we do this?</a></li>
+<li><a href="#we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-agent-what-do-we-need-to-do">We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Agent, what do we need to do?</a></li>
+<li><a href="#tell-me-more-about-the-chocolatey-managed-password">Tell me more about the Chocolatey managed password.</a></li>
+<li><a href="#is-the-managed-password-stored-or-logged-anywhere">Is the managed password stored or logged anywhere?</a></li>
+<li><a href="#is-the-managed-password-the-same-on-every-machine">Is the managed password the same on every machine?</a></li>
+<li><a href="#how-would-someone-potentially-get-access-to-the-managed-password">How would someone potentially get access to the managed password?</a></li>
+<li><a href="#do-you-rotate-the-managed-password-on-a-schedule">Do you rotate the managed password on a schedule?</a></li>
+<li><a href="#can-i-take-advantage-of-chocolatey-managed-passwords-with-my-own-windows-services">Can I take advantage of Chocolatey managed passwords with my own Windows services?</a></li>
 </ul>
 <!-- /TOC -->
 <h2 id="usage">Usage</h2>
@@ -57,10 +65,13 @@
 <li><code>choco upgrade chocolatey-agent &lt;options&gt;</code> (see <a href="#chocolatey-agent-install-options">agent install options</a>)</li>
 <li><code>choco feature disable -n showNonElevatedWarnings</code> - requires Chocolatey v0.10.4+ to set.</li>
 <li><code>choco feature enable -n useBackgroundService</code></li>
-<li>You also need to opt in sources in for self-service packages. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">choco source</a> (and <code>--allow-self-service</code>). Alternatively, you can allow any configured source to be used for self-service by running the following: <code>choco feature disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code> (requires Chocolatey Extension v1.10.0+).</li>
-<li>If you want self-service to apply only to non-administrators, run <code>choco feature enable -n useBackgroundServiceWithNonAdministratorsOnly</code> (requires Chocolatey Extension v1.11.1+).</li>
-<li>If you want to configure custom commands (not just install/upgrade), use something like <code>choco config set backgroundServiceAllowedCommands &quot;install,upgrade,pin,sync&quot;</code> (with the commands you want to allow, requires Chocolatey Extension v1.12.4+). See <a href="#command-customization-consideration">commands consideration</a> below.</li>
-<li>For use with Chocolatey GUI, you need Chocolatey Extension v1.12.4+, and at least Chocolatey GUI v0.14.0-unstable0345. <strong>Uninstall any version of the GUI you already have installed first</strong>, then run <code>choco upgrade chocolateygui -y --pre --version 0.14.0-unstable0345 --source https://www.myget.org/F/chocolateygui/ --allow-downgrade</code> (you will also need at least .NET 4.5.2 installed)</li>
+<li>You also need to opt in sources in for self-service packages. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">choco source</a> (and <code>--allow-self-service</code>).
+<ul>
+<li>OPTIONAL (not recommended): Alternatively, you can allow any configured source to be used for self-service by running the following: <code>choco feature disable -n useBackgroundServiceWithSelfServiceSourcesOnly</code> (requires Chocolatey Extension v1.10.0+). We do not recommend this as it could be a security finding if you shut it off.</li>
+</ul></li>
+<li>OPTIONAL (highly recommended): If you want self-service to apply only to non-administrators, run <code>choco feature enable -n useBackgroundServiceWithNonAdministratorsOnly</code> (requires Chocolatey Extension v1.11.1+). Do understand this means that a real non-administrator, not an administrator in a non-elevated UAC context (that scenario will go the normal route and will not go through background mode).</li>
+<li>OPTIONAL (varied recommendations): If you want to configure custom commands (not just install/upgrade), use something like <code>choco config set backgroundServiceAllowedCommands &quot;install,upgrade,pin,sync&quot;</code> (with the commands you want to allow, requires Chocolatey Extension v1.12.4+). See <a href="#command-customization-consideration">commands consideration</a> below.</li>
+<li>OPTIONAL (highly recommended): For use with Chocolatey GUI, you need Chocolatey Extension v1.12.4+, and at least Chocolatey GUI v0.14.0-unstable0345. <strong>Uninstall any version of the GUI you already have installed first</strong>, then run <code>choco upgrade chocolateygui -y --pre --version 0.14.0-unstable0345 --source https://www.myget.org/F/chocolateygui/ --allow-downgrade</code> (you will also need at least .NET 4.5.2 installed)</li>
 </ul>
 <h5 id="chocolatey-agent-install-options">Chocolatey Agent Install Options</h5>
 <p>Starting with Chocolatey Agent v0.8.0+, the service will install as a local administrative user <code>ChocolateyLocalAdmin</code> by default (and manage the password as well). However you can specify your own user with package parameters (or have it use LocalSystem). Using a local administrator account allows for more things to be installed without issues. It also will allow easier shortcuts and other items to be put back on the correct user (the original requestor). You can specify a domain account as well. Prior to <code>v0.8.0</code>, Chocolatey Agent would install as LocalSystem (<code>SYSTEM</code>) and would require additional customization.</p>
@@ -72,17 +83,26 @@
 <li><code>/UseDefaultChocolateyConfigUser</code> - use the default username from Chocolatey&#39;s configuration. This may be LocalSystem.</li>
 <li><code>/NoRestartService</code> - do not shut down and restart the service. You will need to restart later to take advantage of new service information.</li>
 </ul>
+<p><strong>Chocolatey Managed Password</strong></p>
+<p>When Chocolatey manages the password for a local administrator, it creates a very complex password:</p>
+<ul>
+<li>It is 32 characters long.</li>
+<li>It uses uppercase, lowercase, numbers, and symbols to meet very stringent complexity requirements.</li>
+<li>The password is different for every machine.</li>
+<li>Due to the way that it is generated, it is completely unguessable.</li>
+<li>No one at Chocolatey Software could even tell you what the password is for a particular machine without local access.</li>
+</ul>
 <h5 id="command-customization-consideration">Command Customization Consideration</h5>
-<p>Starting with Chocolatey Licensed Extension v1.12.4, you are allowed to configure what commands can be routed through the background service. Please note that we default to install and upgrade as that is the most secure experience. However you can add uninstall and some other commands as well. Uninstall does have some security considerations as it would allow a non-administrator to remove software that you may have installed, including the background service itself.</p>
+<p>Starting with Chocolatey Licensed Extension v1.12.4, you are allowed to configure what commands can be routed through the background service. Please note that Chocolatey Licensed defaults to <code>install</code> and <code>upgrade</code> as that is the most secure experience. However you can add uninstall and some other commands as well. Uninstall does have some security considerations as it would allow a non-administrator to remove software that you may have installed, including the background service itself.</p>
 <p><strong>Available Commands</strong>:</p>
 <ul>
 <li>info - do not add if you want sources hidden from non-admins</li>
 <li>list/search - do not add if you want sources hidden from non-admins</li>
-<li>install</li>
-<li>upgrade</li>
+<li>outdated - do not add if you want sources hidden from non-admins</li>
+<li>install - default</li>
+<li>upgrade - default</li>
 <li>uninstall - keep in mind there may be security implications for this</li>
 <li>optimize</li>
-<li>outdated - do not add if you want sources hidden from non-admins</li>
 <li>pin</li>
 <li>sync</li>
 </ul>
@@ -229,4 +249,36 @@ This image shows running `choco install adobereader -y`.
 <li>Add this group to the NTFS permissions with &quot;Read&quot; Access</li>
 </ol>
 <p><strong>Note</strong>: You&#39;ll need to add this group itself and not nest it inside of another one.</p>
+<h3 id="we-want-to-set-up-the-chocolatey-agent-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this">We want to set up the chocolatey agent service to use a domain account that will have local admin on each box. Can we do this?</h3>
+<p>Yes, absolutely. You will pass those credentials through at install/upgrade time , and you will also want to turn on the feature <code>useRememberedArgumentsForUpgrades</code> (see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })#features">configuration</a>) so that future upgrades will have that information available. The remembered arguments are stored encrypted on the box (that encryption is reversible so you may opt to pass that information each time).</p>
+<ul>
+<li><code>/Username:</code> - provide username - intead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
+<li><code>/Password:</code> - optional password for the user.</li>
+<li><code>/EnterPassword</code> - receive the password at runtime as a secure string</li>
+</ul>
+<p>You would pass something like <code>choco install chocolatey-agent -y --params=&quot;'/Username:domain\account /EnterPassword'&quot;</code> to securely pass the password at runtime. You could also run <code>choco install chocolatey-agent -y --params=&quot;'/Username:domain\account'&quot; --package-parameters-sensitive=&quot;'/Password:newpassword'&quot;</code> (or do it as part of <code>choco upgrade</code>).</p>
+<h3 id="we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-agent-what-do-we-need-to-do">We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Agent, what do we need to do?</h3>
+<p>Like with any service that uses rotating passwords, you will need to redeploy the service or go into the services management console and update the password. As it is much faster to deploy out that update, you can do something like <code>choco upgrade chocolatey-agent -y --params=&quot;'/Username:domain\account'&quot; --package-parameters-sensitive=&quot;'/Password:newpassword'&quot; --force</code> (the <code>--force</code> ensures the code is redeployed).</p>
+<h3 id="tell-me-more-about-the-chocolatey-managed-password">Tell me more about the Chocolatey managed password.</h3>
+<p>So you&#39;ve seen from above that</p>
+<ul>
+<li>It is 32 characters long.</li>
+<li>It uses uppercase, lowercase, numbers, and symbols to meet very stringent complexity requirements.</li>
+<li>The password is different for every machine.</li>
+<li>Due to the way that it is generated, it is completely unguessable.</li>
+<li>No one at Chocolatey Software could even tell you what the password is for a particular machine without local access.</li>
+</ul>
+<p>Chocolatey uses something unique about each system, along with an encrypted value in the licensed code base to generate base password, then it makes some other changes to ensure that the password meets complexity requirements. We won&#39;t give you the full algorithm of how the password is generated as knowing the algorithm would be a security issue - like having a partial picture of a key, you could start working on how to break in. Unlike a picture of a key, even knowing the full algorithm doesn&#39;t get you everything you need as you would need local access to each box to determine the password for <strong><em>each</em></strong> machine.</p>
+<h3 id="is-the-managed-password-stored-or-logged-anywhere">Is the managed password stored or logged anywhere?</h3>
+<p>No, that would reduce the security of the password. It exists in memory long enough to set the value on user and the service and then it is cleared.</p>
+<p>There is no storage of the password anywhere other than how Windows stores passwords.</p>
+<h3 id="is-the-managed-password-the-same-on-every-machine">Is the managed password the same on every machine?</h3>
+<p>No, it is different for every machine it is deployed to.</p>
+<h3 id="how-would-someone-potentially-get-access-to-the-managed-password">How would someone potentially get access to the managed password?</h3>
+<p>The Chocolatey licensed code base is encrypted, so only people that work at Chocolatey Software would be able to determine the password for a particular box (just that one) <strong><em>IF</em></strong> they have local access to that box. Even with all of the information and the algorithm, it&#39;s still going to take our folks a while to determine the password. That gets them access to one machine. Of course, Chocolatey folks are not going to do this for obvious reasons.</p>
+<p>So let&#39;s realize this to its full potential - If someone were able to hack the Chocolatey licensed codebase, they would be able to determine the full password algorithm. Then they&#39;d also need to hack into your infrastructure and get local access to every box that they wanted to get the Chocolatey-managed password so they could get admin access to just that box. Taking this out a bit further, it&#39;s reasonable to assume that if someone has hacked into your infrastructure, it&#39;s highly unlikely they are going to be using a non-administrator account to get local access to a box so they can get the password for an administrator account for just that one box. It&#39;s more likely they would would already have a local admin account for the boxes they are attacking, and are likely to seek other attack vectors that are much less sophisticated.</p>
+<h3 id="do-you-rotate-the-managed-password-on-a-schedule">Do you rotate the managed password on a schedule?</h3>
+<p>We are looking to do this in a future release. We may make the schedule configurable.</p>
+<h3 id="can-i-take-advantage-of-chocolatey-managed-passwords-with-my-own-windows-services">Can I take advantage of Chocolatey managed passwords with my own Windows services?</h3>
+<p>Yes, absolutely. If you use C4B&#39;s PowerShell Windows Services code, you will be able to install services and have Chocolatey manage the password for those as well.</p>
 </article>
