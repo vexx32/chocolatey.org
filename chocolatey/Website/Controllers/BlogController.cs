@@ -121,6 +121,13 @@ namespace NuGetGallery.Controllers
             {
                 return View("~/Views/Pages/MarkdownPostArticle.cshtml", "~/Views/Blog/_Layout.cshtml", GetPost(filePath, articleName));
             }
+            else
+            {
+                // check by urls
+
+                var post = GetPostsByMostRecentFirst().FirstOrDefault(p => p.UrlPath.Equals(articleName, StringComparison.OrdinalIgnoreCase));
+                if (post != null) return View("~/Views/Pages/MarkdownPostArticle.cshtml", "~/Views/Blog/_Layout.cshtml", post);
+            }
 
             return RedirectToAction("PageNotFound", "Error");
         }
@@ -151,7 +158,8 @@ namespace NuGetGallery.Controllers
                     contents = streamReader.ReadToEnd();
                 }
 
-                model.UrlPath = GetUrl(filePath, articleName);
+                model.UrlPath = GetPostMetadataValue("Url", contents);
+                if (string.IsNullOrEmpty(model.UrlPath)) model.UrlPath = GetUrl(filePath, articleName);
                 model.Title = GetPostMetadataValue("Title", contents);
                 model.Author = GetPostMetadataValue("Author", contents);
                 model.Keywords = GetPostMetadataValue("Keywords", contents);
