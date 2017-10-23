@@ -9,13 +9,16 @@
 <!-- TOC -->
 <ul>
 <li><a href="#definitions">Definitions</a></li>
-<li><a href="#requirements-and-guidelines">Requirements and Guidelines</a></li>
+<li><a href="#requirements-and-guidelines">Requirements and Guidelines</a>
+<ul>
 <li><a href="#existing-packages">Existing Packages</a>
 <ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#guidelines">Guidelines</a></li>
 </ul></li>
-<li><a href="#package-review-process">Package Review Process</a></li>
+</ul></li>
+<li><a href="#package-review-process">Package Review Process</a>
+<ul>
 <li><a href="#moderation-workflow">Moderation Workflow</a>
 <ul>
 <li><a href="#first-time-go-workflow">First Time Go Workflow</a></li>
@@ -27,14 +30,15 @@
 <ul>
 <li><a href="#moderator-review">Moderator Review</a></li>
 </ul></li>
-<li><a href="#roles">Roles</a>
-<ul>
-<li><a href="#becoming-a-maintainer">Becoming a Maintainer</a></li>
-<li><a href="#becoming-a-reviewer">Becoming a Reviewer</a></li>
-<li><a href="#becoming-a-moderator">Becoming a Moderator</a></li>
-<li><a href="#becoming-an-admin">Becoming an Admin</a></li>
 </ul></li>
+<li><a href="#roles">Roles</a><br />
+- <a href="#becoming-a-maintainer">Becoming a Maintainer</a><br />
+- <a href="#becoming-a-reviewer">Becoming a Reviewer</a><br />
+- <a href="#becoming-a-moderator">Becoming a Moderator</a><br />
+- <a href="#becoming-an-admin">Becoming an Admin</a>
+<ul>
 <li><a href="#new-reviewers--moderators">New Reviewers / Moderators</a></li>
+</ul></li>
 </ul>
 <!-- /TOC -->
 <h2 id="definitions">Definitions</h2>
@@ -63,7 +67,8 @@
 <li>The description should explicitly mention if this package installs trial software or software that needs a license present, or both.</li>
 <li>The tags field is not being abused - note this doesn&#39;t mean they are missing tags you believe they should have (that is a guideline).</li>
 <li>Tags do not include &quot;chocolatey&quot; (with the exception of the chocolatey packages)</li>
-<li>Look over the package files</li>
+<li>Look over the package files
+<ul>
 <li>If binaries are included in the package, does the maintainer have distribution rights? If they have explicit permission, a copy of that in PDF should be in the package contents.</li>
 <li><strong>Install/Uninstall scripts:</strong>
 <ul>
@@ -78,13 +83,16 @@
 <li>Does the package try to do anything that an existing Chocolatey function already covers? The maintainers would need a really good reason for diverging from that.</li>
 <li>If the package is a portable package (downloads a zip file or non-install archive, many times carries the .portable name), does it try to put that in Program Files? This is a no no because Program Files requires admin permissions to write to and is typically the place for natively installed software.</li>
 </ul></li>
+</ul></li>
 <li>Does the package install correctly?</li>
 <li>Does the package uninstall correctly? (this means the package, not the underlying software. We&#39;d like to have that as well but it&#39;s more a guideline at the moment than a requirement. Patience, we will get there).</li>
-<li>Brand New Packages <strong><em>ONLY</em></strong> (no approved or existing version in history, prereleases do not count)</li>
+<li>Brand New Packages <strong><em>ONLY</em></strong> (no approved or existing version in history, prereleases do not count)
+<ul>
 <li>Package Id naming - if the naming doesn&#39;t follow our conventions, it is grounds for rejecting immediately with the suggestion they resubmit with suggested name. Note that they may have had prereleases already, and it&#39;s still okay to move forward with the rejected status as long as the name of the name of package hasn&#39;t been previously approved. See <a href="https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package" class="uri">https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package</a>
 <ul>
 <li>suggest the id split if over 25 chars with no &quot;-&quot; in the id</li>
 <li>flag on &quot;.&quot;&quot; in name (unless .portable/.install)</li>
+</ul></li>
 </ul></li>
 </ul>
 <h4 id="guidelines">Guidelines</h4>
@@ -97,11 +105,13 @@
 <li>Suggest description get really filled out and they take full advantage of the use of markdown.</li>
 <li>Summary is important, but it doesn&#39;t show up on the package page.</li>
 <li>Tags could always use suggestions to add.</li>
-<li>Look over the package files</li>
+<li>Look over the package files
+<ul>
 <li><strong>Install / Uninstall Scripts:</strong>
 <ul>
 <li>Be familiar with things that have been deprecated and add a gentle reminder about those things for them to clean up.</li>
 <li>Are the commented lines from the template in there? Those should be cleaned up. It is not required to remove all comments, some comments are helpful. It&#39;s a bit subjective on what is helpful and what is noise.</li>
+</ul></li>
 </ul></li>
 <li>Something in the releaseNotes section would be great.</li>
 </ul>
@@ -153,14 +163,12 @@
 <li>You should see a new drop down near the top that allows you to change your view. This is the moderation queue. <img src="https://cloud.githubusercontent.com/assets/63502/7542991/b5032a38-f586-11e4-991a-7c7602d508aa.png" alt="Moderation Queue Dropdown" /></li>
 <li>You will see items arranged in order based on reviewed and resubmitted at the top, items ready for review in order based on when they were submitted, and at the end of the queue, you will see items that are waiting for maintainer response. <img src="https://cloud.githubusercontent.com/assets/63502/7543076/58d5530c-f587-11e4-8d73-1325074d6e58.png" alt="Moderation Queue" /></li>
 <li>You grab a package and head in and review it based on the following items in the requirements and guidelines.</li>
-<li>Ensure the verifier has run. It will have both comments in the review and a colored ball up next to the title of the package (see image below). The ball should be:
-<ul>
-<li><strong>Green</strong> if it is ready for review and approval.</li>
-<li><strong>Orange</strong> if still pending verification (has not yet run).</li>
-<li><strong>Red</strong> if it failed verification. The maintainer needs to fix or respond. If you find a package needs to skip verification, please contact an admin to do so. If you see a network issue from the log, you can rerun verification (see how in the next step).</li>
-<li><strong>Grey</strong> if a package skips verification for some reason (which will be listed by the admin that flagged the package to skip verification). If possible, you will need to run the install/uninstall yourself.<br />
+<li>Ensure the verifier has run. It will have both comments in the review and a colored ball up next to the title of the package (see image below). The ball should be:<br />
+- <strong>Green</strong> if it is ready for review and approval.<br />
+- <strong>Orange</strong> if still pending verification (has not yet run).<br />
+- <strong>Red</strong> if it failed verification. The maintainer needs to fix or respond. If you find a package needs to skip verification, please contact an admin to do so. If you see a network issue from the log, you can rerun verification (see how in the next step).<br />
+- <strong>Grey</strong> if a package skips verification for some reason (which will be listed by the admin that flagged the package to skip verification). If possible, you will need to run the install/uninstall yourself.<br />
 <img src="https://cloud.githubusercontent.com/assets/63502/11872220/bf58f590-a499-11e5-84bb-6fcf6d320227.png" alt="Passed Verifier" /></li>
-</ul></li>
 <li>Check over the verifier logs to be sure everything looks good (follow the link from the button). If necessary, you can rerun the verifier.<br />
 <img src="https://cloud.githubusercontent.com/assets/63502/11872329/4b8427ec-a49a-11e5-87ea-46e5e43e8140.png" alt="Rerun" /></li>
 <li>Go over the review log - shows history and review information so far. Note that when the validator runs it leaves comments. Look for it to have done the automated part of the requirements/guidelines checks. If it has not, you are responsible to check all <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#requirements-and-guidelines">requirements/guidelines</a> (see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#requirements-and-guidelines">Requirements and Guidelines</a> above).<br />
@@ -190,22 +198,28 @@
 <li>The description should explicitly mention if this package installs trial software or software that needs a license present, or both.</li>
 <li>The authors field (software author) is not being used for the maintainers field (exception: when the maintainer is also the author)</li>
 <li>The tags field is not being abused - note this doesn&#39;t mean they are missing tags you believe they should have (that is a guideline).</li>
-<li>Binaries</li>
+<li>Binaries
+<ul>
 <li>If binaries are included in the package, does the maintainer have distribution rights? If they require explicit permission, a copy of that in PDF form should be in the package contents.</li>
 <li>Find the checksum of the official binaries and verify they match the included binaries (listed on the package page).</li>
-<li>Automation scripts (the <code>ps1</code>/<code>psm1</code> files such as <code>chocolateyInstall.ps1</code>)</li>
+</ul></li>
+<li>Automation scripts (the <code>ps1</code>/<code>psm1</code> files such as <code>chocolateyInstall.ps1</code>)
+<ul>
 <li>Do the scripts try to do anything malicious? This is almost always immediate grounds for banning the maintainer and deleting their packages.</li>
 <li>Do the scripts set good defaults for silent args? A package should almost ALWAYS install completely silently by default. If a maintainer makes the argument that it is so folks can choose what to pass, remind them this already exists through install arguments (CommandsInstall#options-and-switches) and if they want to add package parameters (How-To-Parse-PackageParameters-Argument), they can also do that (and add them to the description).</li>
 <li>Is there anything in the scripts that would not work with POSH v2? (We are working on making this automatically checked by the validator - see <a href="https://github.com/chocolatey/package-validator/issues/1" class="uri">https://github.com/chocolatey/package-validator/issues/1</a>)</li>
 <li>If the package downloads anything, is it getting downloads from the proper location? Follow the projectUrl to the project site to see where it is downloading from - it should match the scripts. If not there needs to be a really, really good reason for not doing so.</li>
 <li>Does the download version match the package version?</li>
 <li>Does the download include both x86 and x64 urls if available?</li>
+</ul></li>
 <li>Not a package duplicating another existing package <strong><em>NOTE</em></strong>: December 2015: Do not look for duplicate packages at this time. The validator will start handling that after the backlog is manageable.</li>
-<li>Brand New Packages <strong><em>ONLY</em></strong> (no approved or existing version in history, prereleases do not count)</li>
+<li>Brand New Packages <strong><em>ONLY</em></strong> (no approved or existing version in history, prereleases do not count)
+<ul>
 <li>Package Id naming - if the naming doesn&#39;t follow our conventions, it is grounds for rejecting immediately with the suggestion they resubmit with suggested name. Note that they may have had prereleases already, and it&#39;s still okay to move forward with the rejected status as long as the name of the name of package hasn&#39;t been previously approved. See <a href="https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package" class="uri">https://github.com/chocolatey/choco/wiki/CreatePackages#naming-your-package</a>
 <ul>
 <li>suggest the id split if over 25 chars with no &quot;-&quot; in the id</li>
 <li>flag on &quot;.&quot;&quot; in name (unless .portable/.install)</li>
+</ul></li>
 </ul></li>
 </ul>
 <h5 id="guidelines-1">Guidelines</h5>
@@ -214,8 +228,10 @@
 <li>Trial software should include the #trial tag. (will become a requirement in Feb 2016)</li>
 <li>Software that requires a license should include a tag #license. (will become a requirement in Feb 2016)</li>
 <li>Tags could always use suggestions to add.</li>
-<li>Automation scripts (the <code>ps1</code>/<code>psm1</code> files such as <code>chocolateyInstall.ps1</code>)</li>
+<li>Automation scripts (the <code>ps1</code>/<code>psm1</code> files such as <code>chocolateyInstall.ps1</code>)
+<ul>
 <li>Do any scripts try to do anything that an existing Chocolatey function already covers? The maintainers would need a really good reason for diverging from that.</li>
+</ul></li>
 </ul>
 <h2 id="roles">Roles</h2>
 <ul>

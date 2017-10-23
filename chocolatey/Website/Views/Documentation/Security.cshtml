@@ -11,19 +11,23 @@
 <li><a href="#overall">Overall</a></li>
 <li><a href="#chocolatey-binaries-and-the-chocolatey-package">Chocolatey binaries and the Chocolatey package</a></li>
 <li><a href="#organizational-use-of-chocolatey">Organizational Use of Chocolatey</a></li>
-<li><a href="#chocolateyorg-packages">Chocolatey.org Packages</a></li>
+<li><a href="#chocolateyorg-packages">Chocolatey.org Packages</a>
+<ul>
 <li><a href="#security-for-the-community-package-repository">Security for the Community Package Repository:</a></li>
 <li><a href="#rigorous-moderation-process-for-community-packages">Rigorous Moderation Process for Community Packages</a>
 <ul>
 <li><a href="#downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</a></li>
 </ul></li>
+</ul></li>
 <li><a href="#chocolatey-pro--chocolatey-for-business">Chocolatey Pro / Chocolatey for Business</a></li>
 <li><a href="#servers--ip-addresses">Servers / IP Addresses</a></li>
 <li><a href="#future-chocolatey-enhancements">Future Chocolatey Enhancements</a></li>
-<li><a href="#history">History</a></li>
+<li><a href="#history">History</a>
+<ul>
 <li><a href="#past-security-concerns">Past Security Concerns</a></li>
 <li><a href="#what-about-a-non-administrative-installation-of-chocolatey-is-it-secure">What about a non-administrative installation of Chocolatey? Is it secure?</a></li>
 <li><a href="#security-scenarios-to-keep-in-mind--avoid">Security Scenarios to Keep in Mind / Avoid</a></li>
+</ul></li>
 <li><a href="#report-issue">Report Issue</a></li>
 </ul>
 <!-- /TOC -->
@@ -54,9 +58,12 @@
 <p>The binary <code>choco.exe</code> can be trusted (at least as far as you trust the Chocolatey maintainers, Chocolatey Software, Inc, and formerly RealDimensions Software, LLC).</p>
 <ul>
 <li><p><strong>Starting with 0.9.10.0</strong>, both the binaries and the PowerShell scripts are Authenticode signed. This certificate is only held by the lead Chocolatey maintainer (Rob). This provides quite a bit of trust that you are getting Chocolatey from the source and as intended.</p>
-<p>Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary):</p>
-<p>0.10.4+:</p>
-<pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+<pre><code class="nohighlight">Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary):
+
+0.10.4+:
+
+~~~sh
+C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 
 Subject      : CN=&quot;Chocolatey Software, Inc.&quot;, O=&quot;Chocolatey Software, Inc.&quot;, L=Topeka, S=Kansas, C=US
@@ -66,9 +73,13 @@ FriendlyName :
 NotBefore    : 3/27/2017 7:00:00 PM
 NotAfter     : 4/3/2018 7:00:00 AM
 Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid,
-              System.Security.Cryptography.Oid, System.Security.Cryptography.Oid...}</code></pre>
-<p>0.9.10 - 0.10.3:</p>
-<pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+              System.Security.Cryptography.Oid, System.Security.Cryptography.Oid...}
+~~~
+
+0.9.10 - 0.10.3:
+
+~~~sh
+C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 
 Subject      : CN=&quot;RealDimensions Software, LLC&quot;, O=&quot;RealDimensions Software,
@@ -82,16 +93,19 @@ NotAfter     : 3/28/2017 7:00:00 AM
 Extensions   : {System.Security.Cryptography.Oid,
               System.Security.Cryptography.Oid,
               System.Security.Cryptography.Oid,
-              System.Security.Cryptography.Oid...}</code></pre></li>
+              System.Security.Cryptography.Oid...}
+~~~</code></pre></li>
 <li><p>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</p></li>
 </ul>
 <p>Using a Visual Studio Command Prompt, you can verify the binary (the path below is the default install location, adjust if necessary). You can also download sn separately if necessary:</p>
-<p>~~~sh<br />
-C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe</p>
-<p>Microsoft (R) .NET Framework Strong Name Utility Version 4.0.30319.1<br />
-Copyright (c) Microsoft Corporation. All rights reserved.</p>
-<p>Public key token is 79d02ea9cad655eb<br />
-~~~</p>
+<pre><code class="nohighlight">~~~sh
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
+
+Microsoft (R) .NET Framework Strong Name Utility  Version 4.0.30319.1
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Public key token is 79d02ea9cad655eb
+~~~</code></pre>
 <ul>
 <li>Choco will warn if it is not signed with the right key (the FOSS project has a default key so that it can build appropriately) and require a user to pass <code>--allow-unofficial-build</code>. Over time we are going to increase this so that more places will restrict this (those a user can&#39;t just go change source of choco on and build).</li>
 <li>The code for Chocolatey is <a href="https://github.com/chocolatey/choco">open source</a>, so you can inspect to visually be sure it is not doing anything malicious to your machine - <a href="https://github.com/chocolatey/choco" class="uri">https://github.com/chocolatey/choco</a>.</li>
@@ -124,14 +138,12 @@ Copyright (c) Microsoft Corporation. All rights reserved.</p>
 </ol>
 <h3 id="rigorous-moderation-process-for-community-packages">Rigorous Moderation Process for Community Packages</h3>
 <p>In October 2014, the community feed had moderation turned on. All community packages (every version of a package) go through a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })">rigorous moderation process</a> prior to any public consumption:</p>
-<ul>
-<li>All package versions are run through an <a href="https://github.com/chocolatey/package-validator/wiki">automated validation process</a> to determine quality.</li>
-<li>All package versions are run through an <a href="https://github.com/chocolatey/package-verifier/wiki">automated verification process</a> to determine if they work correctly (install, etc).</li>
-<li>All packages versions are run through VirusTotal to determine if there are any flagging items. This includes downloading and unpacking any external resources (See the results on a package page in the Virus section - <a href="https://chocolatey.org/packages/chocolatey#virus" class="uri">https://chocolatey.org/packages/chocolatey#virus</a> as an example).</li>
-<li>A human <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">reviews every package version</a> that is not a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted package</a>. This process verifies that packages are pulling from official distro sources or checksumming items versus the official distros and checking over scripts for malicious behavior.</li>
-<li>We don&#39;t require cryptographically signing packages yet, that is a future enhancement</li>
-<li>Checksumming is a requirement for non-secure scenarios, but is not yet a requirement in some scenarios, so keep reading the next section.</li>
-</ul>
+<pre><code class="nohighlight"> * All package versions are run through an [automated validation process](https://github.com/chocolatey/package-validator/wiki) to determine quality.
+ * All package versions are run through an [automated verification process](https://github.com/chocolatey/package-verifier/wiki) to determine if they work correctly (install, etc).
+ * All packages versions are run through VirusTotal to determine if there are any flagging items. This includes downloading and unpacking any external resources (See the results on a package page in the Virus section - https://chocolatey.org/packages/chocolatey#virus as an example).
+ * A human <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">reviews every package version</a> that is not a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted package</a>. This process verifies that packages are pulling from official distro sources or checksumming items versus the official distros and checking over scripts for malicious behavior.
+ * We don&#39;t require cryptographically signing packages yet, that is a future enhancement
+ * Checksumming is a requirement for non-secure scenarios, but is not yet a requirement in some scenarios, so keep reading the next section.</code></pre>
 <h4 id="downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</h4>
 <p>With all of that said, you may want to ensure you build trust with each package as the software is coming from somewhere on the internet sometimes and moderators only validate that the package gets the software from those official distribution points, not necessarily the software itself. While VirusTotal provides a bit more of a validation against the binaries, if the maintainer is not using checksums in the package (checksums are required if the package downloads from non-secure locations), there isn&#39;t a guarantee that the software vendor did not pull a switch on the binary (the remote distribution source). If you are concerned about that you should look to Pro or Business (next section).</p>
 <h2 id="chocolatey-pro-chocolatey-for-business">Chocolatey Pro / Chocolatey for Business</h2>

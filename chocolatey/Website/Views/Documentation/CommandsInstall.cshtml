@@ -13,8 +13,8 @@ with options and switches. Add <code>-y</code> for previous behavior with no<br 
 prompt. In most cases you can still pass options and switches with one<br />
 dash (<code>-</code>). For more details, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="nohighlight">choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
-cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
+<pre><code class="nohighlight">  choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
+  cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
 <p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to install<br />
 all packages from a custom feed. Will not work with Chocolatey default<br />
 feed. THIS IS NOT YET REIMPLEMENTED.</p>
@@ -29,22 +29,22 @@ creation from installer files, automatic recompile support, runtime<br />
 malware protection, private CDN download cache, synchronize with<br />
 Programs and Features, etc - <a href="https://chocolatey.org/compare" class="uri">https://chocolatey.org/compare</a>.</p>
 <h2 id="examples">Examples</h2>
-<pre><code class="nohighlight">choco install sysinternals
-choco install notepadplusplus googlechrome atom 7zip
-choco install notepadplusplus --force --force-dependencies
-choco install notepadplusplus googlechrome atom 7zip -dvfy
-choco install git --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; -y
-choco install nodejs.install --version 0.10.35
-choco install git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
-choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
+<pre><code class="nohighlight">  choco install sysinternals
+  choco install notepadplusplus googlechrome atom 7zip
+  choco install notepadplusplus --force --force-dependencies
+  choco install notepadplusplus googlechrome atom 7zip -dvfy
+  choco install git --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; -y
+  choco install nodejs.install --version 0.10.35
+  choco install git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
+  choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
 <p>Choco can also install directly from a nuspec/nupkg file. This aids in<br />
 testing packages:</p>
-<pre><code class="nohighlight">choco install &lt;path/to/nuspec&gt;
-choco install &lt;path/to/nupkg&gt;</code></pre>
+<pre><code class="nohighlight">  choco install &lt;path/to/nuspec&gt;
+  choco install &lt;path/to/nupkg&gt;</code></pre>
 <p>Install multiple versions of a package using -m (AllowMultiple versions)</p>
-<pre><code class="nohighlight">choco install ruby --version 1.9.3.55100 -my
-choco install ruby --version 2.0.0.59800 -my
-choco install ruby --version 2.1.5 -my</code></pre>
+<pre><code class="nohighlight">  choco install ruby --version 1.9.3.55100 -my
+  choco install ruby --version 2.0.0.59800 -my
+  choco install ruby --version 2.1.5 -my</code></pre>
 <p>What is <code>-my</code>? See option bundling in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a><br />
 (<code>choco -?</code>).</p>
 <p><strong>NOTE:</strong> All of these will add to PATH variable. We&#39;ll be adding a special<br />

@@ -9,15 +9,19 @@
 <li><a href="#what-is-chocolateyserver">What is Chocolatey.Server?</a></li>
 <li><a href="#setup-with-puppet">Setup with Puppet</a></li>
 <li><a href="#setup-normally">Setup Normally</a></li>
-<li><a href="#additional-configuration">Additional Configuration</a></li>
+<li><a href="#additional-configuration">Additional Configuration</a>
+<ul>
 <li><a href="#performance">Performance</a>
 <ul>
 <li><a href="#future">Future</a></li>
 </ul></li>
-<li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a></li>
+</ul></li>
+<li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a>
+<ul>
 <li><a href="#error-500">Error 500</a></li>
 <li><a href="#error-50019---the-requested-page-cannot-be-accessed-because-the-related-configuration-data-for-the-page-is-invalid">Error 500.19 - &quot;The requested page cannot be accessed because the related configuration data for the page is invalid.&quot;</a></li>
 <li><a href="#other-error">Other error</a></li>
+</ul></li>
 </ul>
 <!-- /TOC -->
 <h2 id="what-is-chocolateyserver">What is Chocolatey.Server?</h2>
@@ -48,13 +52,17 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li>Disable or remove the Default website</li>
 <li>Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is <code>v4.0</code> (or some version of 4).</li>
 <li>Set up an IIS website pointed to the install location and set it to use the app pool.</li>
-<li>Go to explorer and right click on <code>c:\tools\chocolatey.server</code> and add the following permissions:</li>
+<li>Go to explorer and right click on <code>c:\tools\chocolatey.server</code> and add the following permissions:
+<ul>
 <li><code>IIS_IUSRS</code> - Read</li>
 <li><code>IUSR</code> - Read</li>
 <li><code>IIS APPPOOL\&lt;app pool name&gt;</code> - Read</li>
-<li>Right click on the <code>App_Data</code> subfolder and add the following permissions:</li>
+</ul></li>
+<li>Right click on the <code>App_Data</code> subfolder and add the following permissions:
+<ul>
 <li><code>IIS_IUSRS</code> - Modify</li>
 <li><code>IIS APPPOOL\&lt;app pool name&gt;</code> - Modify</li>
+</ul></li>
 </ul>
 <h2 id="additional-configuration">Additional Configuration</h2>
 <p>Looking for where the apikey is and how it is changed, that is all done through the web.config. The config is pretty well-documented on each of the appSettings key values.</p>
@@ -62,7 +70,8 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <h3 id="performance">Performance</h3>
 <p>To configure for performance, you will want to do the following:</p>
 <ul>
-<li>Keep the site warm (<a href="https://serverfault.com/a/595215/79259" class="uri">https://serverfault.com/a/595215/79259</a>):</li>
+<li>Keep the site warm (<a href="https://serverfault.com/a/595215/79259" class="uri">https://serverfault.com/a/595215/79259</a>):
+<ul>
 <li>Turn on Application Initialization in Windows Features under Web Server (IIS) -&gt; Web Server -&gt; Application Development -&gt; Application Initialization (you can also try <code>choco install IIS-ApplicationInit --source windowsfeatures</code>)</li>
 <li>Application Pool Advanced Settings:
 <ul>
@@ -73,6 +82,7 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li>Under the Site&#39;s Advanced Settings:
 <ul>
 <li>Preload Enabled -&gt; True</li>
+</ul></li>
 </ul></li>
 </ul>
 <h4 id="future">Future</h4>

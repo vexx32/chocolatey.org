@@ -16,80 +16,80 @@ Debug - Show debug messaging.</p>
 <p>-v, --verbose<br />
 Verbose - Show verbose messaging. Very verbose messaging, avoid using<br />
 under normal circumstances.</p>
-<pre><code class="nohighlight"> --trace
- Trace - Show trace messaging. Very, very verbose trace messaging. Avoid 
-   except when needing super low-level .NET Framework debugging. Available 
-   in 0.10.4+.
+<pre><code class="nohighlight">   --trace
+   Trace - Show trace messaging. Very, very verbose trace messaging. Avoid 
+     except when needing super low-level .NET Framework debugging. Available 
+     in 0.10.4+.
 
- --acceptlicense, --accept-license
- AcceptLicense - Accept license dialogs automatically. Reserved for 
-   future use.</code></pre>
+   --acceptlicense, --accept-license
+   AcceptLicense - Accept license dialogs automatically. Reserved for 
+     future use.</code></pre>
 <p>-y, --yes, --confirm<br />
 Confirm all prompts - Chooses affirmative answer instead of prompting.<br />
 Implies --accept-license</p>
 <p>-f, --force<br />
 Force - force the behavior. Do not use force during normal operation -<br />
 it subverts some of the smart behavior for commands.</p>
-<pre><code class="nohighlight"> --noop, --whatif, --what-if
- NoOp / WhatIf - Don&#39;t actually do anything.</code></pre>
+<pre><code class="nohighlight">   --noop, --whatif, --what-if
+   NoOp / WhatIf - Don&#39;t actually do anything.</code></pre>
 <p>-r, --limitoutput, --limit-output<br />
 LimitOutput - Limit the output to essential information</p>
-<pre><code class="nohighlight"> --timeout, --execution-timeout=VALUE
- CommandExecutionTimeout (in seconds) - The time to allow a command to 
-   finish before timing out. Overrides the default execution timeout in the 
-   configuration of 2700 seconds. &#39;0&#39; for infinite starting in 0.10.4.</code></pre>
+<pre><code class="nohighlight">   --timeout, --execution-timeout=VALUE
+   CommandExecutionTimeout (in seconds) - The time to allow a command to 
+     finish before timing out. Overrides the default execution timeout in the 
+     configuration of 2700 seconds. &#39;0&#39; for infinite starting in 0.10.4.</code></pre>
 <p>-c, --cache, --cachelocation, --cache-location=VALUE<br />
 CacheLocation - Location for download cache, defaults to %TEMP% or value<br />
 in chocolatey.config file.</p>
-<pre><code class="nohighlight"> --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
- AllowUnofficialBuild - When not using the official build you must set 
-   this flag for choco to continue.
+<pre><code class="nohighlight">   --allowunofficial, --allow-unofficial, --allowunofficialbuild, --allow-unofficial-build
+   AllowUnofficialBuild - When not using the official build you must set 
+     this flag for choco to continue.
 
- --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
- FailOnStandardError - Fail on standard error output (stderr), typically 
-   received when running external commands during install providers. This 
-   overrides the feature failOnStandardError.
+   --failstderr, --failonstderr, --fail-on-stderr, --fail-on-standard-error, --fail-on-error-output
+   FailOnStandardError - Fail on standard error output (stderr), typically 
+     received when running external commands during install providers. This 
+     overrides the feature failOnStandardError.
 
- --use-system-powershell
- UseSystemPowerShell - Execute PowerShell using an external process 
-   instead of the built-in PowerShell host. Should only be used when 
-   internal host is failing. Available in 0.9.10+.
+   --use-system-powershell
+   UseSystemPowerShell - Execute PowerShell using an external process 
+     instead of the built-in PowerShell host. Should only be used when 
+     internal host is failing. Available in 0.9.10+.
 
- --no-progress
- Do Not Show Progress - Do not show download progress percentages. 
-   Available in 0.10.4+.
+   --no-progress
+   Do Not Show Progress - Do not show download progress percentages. 
+     Available in 0.10.4+.
 
- --proxy=VALUE
- Proxy Location - Explicit proxy location. Overrides the default proxy 
-   location of &#39;&#39;. Available for config settings in 0.9.9.9+, this CLI 
-   option available in 0.10.4+.
+   --proxy=VALUE
+   Proxy Location - Explicit proxy location. Overrides the default proxy 
+     location of &#39;&#39;. Available for config settings in 0.9.9.9+, this CLI 
+     option available in 0.10.4+.
 
- --proxy-user=VALUE
- Proxy User Name - Explicit proxy user (optional). Requires explicity 
-   proxy (`--proxy` or config setting). Overrides the default proxy user of 
-   &#39;123&#39;. Available for config settings in 0.9.9.9+, this CLI option 
-   available in 0.10.4+.
+   --proxy-user=VALUE
+   Proxy User Name - Explicit proxy user (optional). Requires explicity 
+     proxy (`--proxy` or config setting). Overrides the default proxy user of 
+     &#39;123&#39;. Available for config settings in 0.9.9.9+, this CLI option 
+     available in 0.10.4+.
 
- --proxy-password=VALUE
- Proxy Password - Explicit proxy password (optional) to be used with 
-   username. Requires explicity proxy (`--proxy` or config setting) and 
-   user name.  Overrides the default proxy password (encrypted in settings 
-   if set). Available for config settings in 0.9.9.9+, this CLI option 
-   available in 0.10.4+.
+   --proxy-password=VALUE
+   Proxy Password - Explicit proxy password (optional) to be used with 
+     username. Requires explicity proxy (`--proxy` or config setting) and 
+     user name.  Overrides the default proxy password (encrypted in settings 
+     if set). Available for config settings in 0.9.9.9+, this CLI option 
+     available in 0.10.4+.
 
- --proxy-bypass-list=VALUE
- ProxyBypassList - Comma separated list of regex locations to bypass on 
-   proxy. Requires explicity proxy (`--proxy` or config setting). Overrides 
-   the default proxy bypass list of &#39;&#39;. Available in 0.10.4+.
+   --proxy-bypass-list=VALUE
+   ProxyBypassList - Comma separated list of regex locations to bypass on 
+     proxy. Requires explicity proxy (`--proxy` or config setting). Overrides 
+     the default proxy bypass list of &#39;&#39;. Available in 0.10.4+.
 
- --proxy-bypass-on-local
- Proxy Bypass On Local - Bypass proxy for local connections. Requires 
-   explicity proxy (`--proxy` or config setting). Overrides the default 
-   proxy bypass on local setting of &#39;True&#39;. Available in 0.10.4+.
+   --proxy-bypass-on-local
+   Proxy Bypass On Local - Bypass proxy for local connections. Requires 
+     explicity proxy (`--proxy` or config setting). Overrides the default 
+     proxy bypass on local setting of &#39;True&#39;. Available in 0.10.4+.
 
- --log-file=VALUE
- Log File to output to in addition to regular loggers. Available in 0.1-
-   0.8+.</code></pre>
+   --log-file=VALUE
+   Log File to output to in addition to regular loggers. Available in 0.1-
+     0.8+.</code></pre>
 <p>~~~</p>
 <p><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">Command Reference</a></p>
 <p><strong><em>NOTE:</em></strong> This documentation has been automatically generated from <code>choco support -h</code>.</p>

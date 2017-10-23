@@ -8,12 +8,14 @@
 <p>Package parameters provide a way for a package consumer to make choices about how they want things installed and configuration of the underlying software.</p>
 <p>You can use package parameters to set up arguments to the native installer, but that is typically done from the consumer end with Install Arguments. It does offer a nice way of providing that information for folks.</p>
 <ul>
-<li><a href="#walkthrough">Walkthrough</a></li>
+<li><a href="#walkthrough">Walkthrough</a>
+<ul>
 <li><a href="#step-1---determine-your-package-parameters">Step 1 - Determine Parameters</a></li>
 <li><a href="#step-2---add-package-parameters-to-the-description">Step 2 - Add to Package Description</a></li>
 <li><a href="#step-3---use-get-packageparameters">Step 3 - Use <code>Get-PackageParameters</code></a></li>
 <li><a href="#step-3-alternative---set-up-your-own-parsing">DEPRECATED - Step 3 (alternative) - Parse Your Own</a></li>
 <li><a href="#review-set-parameters">Review</a></li>
+</ul></li>
 <li><a href="#installing-with-package-parameters">Installing With Package Parameters</a></li>
 </ul>
 <p><strong>NOTE:</strong> There is also the concept of &quot;Install Arguments&quot;, or silent arguments you can pass through transparently to the native installer. This is more of a way for a package consumer to override the default silent arguments that are passed to the native installer.</p>

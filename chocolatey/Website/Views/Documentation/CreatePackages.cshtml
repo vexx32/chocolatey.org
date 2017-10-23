@@ -66,12 +66,10 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <li><strong>Use the UTF–8 character encoding</strong> for the <code>*.nuspec</code> and <code>*.ps1</code> files. If you don&#39;t respect this rule, some characters are not displayed correctly in the <a href="http://chocolatey.org/packages">Gallery on Chocolatey.org</a>, because the Gallery assumes <code>UTF-8</code>.</li>
 <li><strong>Do not save your <code>*.nuspec</code> files with a Byte Order Mark (BOM)</strong>. A <code>BOM</code> is neither required nor recommended for <code>UTF-8</code>, because it can lead to several issues.</li>
 <li><strong>PowerShell scripts need to be saved in UTF–8 with <code>BOM</code></strong>. PowerShell is ignoring the standards and needs a <code>BOM</code> in order to recognize scripts as <code>UTF-8</code>. Otherwise it processes non <code>ASCII</code> characters incorrectly.</li>
-<li>Don&#39;t use the default Windows Editor. In addition to its lack of features, it can&#39;t even save <code>UTF-8</code> files without <code>BOM</code>. Alternatives:
-<ul>
-<li><a href="https://chocolatey.org/packages/VisualStudioCode">Visual Studio Code</a></li>
-<li><a href="http://chocolatey.org/packages/notepadplusplus">Notepad++</a></li>
-<li><a href="http://chocolatey.org/packages/geany">Geany</a></li>
-</ul></li>
+<li>Don&#39;t use the default Windows Editor. In addition to its lack of features, it can&#39;t even save <code>UTF-8</code> files without <code>BOM</code>. Alternatives:<br />
+* <a href="https://chocolatey.org/packages/VisualStudioCode">Visual Studio Code</a><br />
+* <a href="http://chocolatey.org/packages/notepadplusplus">Notepad++</a><br />
+* <a href="http://chocolatey.org/packages/geany">Geany</a></li>
 <li>Use this <strong>XML declaration</strong>: <code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</code>.</li>
 </ul>
 <p><strong>Note:</strong> There is a lot of confusion in the world of character encodings: For example, <code>ANSI</code> is an incorrect term for the internal Windows character encodings, e.&nbsp; g. <code>Windows-1252</code>. But you should not use this encoding family anyway.</p>
@@ -141,9 +139,11 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
 <p><strong>See also:</strong> <a href="http://docs.nuget.org/docs/reference/versioning">NuGet Version Reference</a></p>
 <h2 id="but-for-real-how-do-i-create-a-package">But for real, how do I create a package?</h2>
 <ul>
-<li><strong>Generate new package</strong>:</li>
+<li><strong>Generate new package</strong>:
+<ul>
 <li><code>choco new -h</code> will get you started seeing options available to you.</li>
 <li>Once you figured out all of your options, you should move forward with generating your template.</li>
+</ul></li>
 </ul>
 <h2 id="install-only-on-some-versions-of-windows">Install Only On Some Versions of Windows</h2>
 <p>Right now if the software the package installs is only supported on particular versions of Windows, you should absolutely fail the package. An installed package indicates success. If you pass a warning message but don&#39;t also throw an error, that means the package installed successfully. Folks using the package are going to be confused because they will then expect that the underlying software is also installed. The software itself may throw a cryptic error, which will lead to questions from the community about why it is broken (when it is just unsupported). Do yourself a favor and check the version of Windows and throw an error if it is not a supported version. Under no circumstances should you bypass with a warning, because a warning is still a success.</p>

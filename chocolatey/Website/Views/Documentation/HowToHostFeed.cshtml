@@ -7,17 +7,22 @@
 <!-- TOC -->
 <ul>
 <li><a href="#why">Why?</a></li>
-<li><a href="#host-your-own-server">Host your own server</a></li>
+<li><a href="#host-your-own-server">Host your own server</a>
+<ul>
 <li><a href="#known-hosting-options">Known Hosting Options</a>
 <ul>
 <li><a href="#others">Others</a></li>
 </ul></li>
+</ul></li>
 <li><a href="#package-version-immutability">Package Version Immutability</a></li>
-<li><a href="#local-folder--unc-share-cifs">Local Folder / UNC Share (CIFS)</a></li>
+<li><a href="#local-folder--unc-share-cifs">Local Folder / UNC Share (CIFS)</a>
+<ul>
 <li><a href="#advantages">Advantages</a></li>
 <li><a href="#disadvantages">Disadvantages</a></li>
 <li><a href="#local-folder-share-setup">Local Folder Share Setup</a></li>
-<li><a href="#simple-server">Simple Server</a></li>
+</ul></li>
+<li><a href="#simple-server">Simple Server</a>
+<ul>
 <li><a href="#known-simple-server-options">Known Simple Server Options</a></li>
 <li><a href="#advantages-1">Advantages</a></li>
 <li><a href="#disadvantages-1">Disadvantages</a>
@@ -25,19 +30,22 @@
 <li><a href="#chocolateyserver-setup">Chocolatey.Server Setup</a></li>
 <li><a href="#nugetserver-setup">NuGet.Server Setup</a></li>
 </ul></li>
-<li><a href="#package-gallery">Package Gallery</a></li>
+</ul></li>
+<li><a href="#package-gallery">Package Gallery</a>
+<ul>
 <li><a href="#advantages-2">Advantages</a></li>
 <li><a href="#disadvantages-2">Disadvantages</a>
 <ul>
 <li><a href="#package-gallery-setup">Package Gallery Setup</a></li>
 </ul></li>
-<li><a href="#commercial-package-repositories">Commercial Package Repositories</a>
-<ul>
-<li><a href="#commercial-options">Commercial Options</a></li>
 </ul></li>
+<li><a href="#commercial-package-repositories">Commercial Package Repositories</a><br />
+- <a href="#commercial-options">Commercial Options</a>
+<ul>
 <li><a href="#advantages-3">Advantages</a></li>
 <li><a href="#disadvantages-3">Disadvantages</a></li>
 <li><a href="#commercial-repository-setup">Commercial Repository Setup</a></li>
+</ul></li>
 <li><a href="#non-windows-hosting">Non-Windows Hosting</a></li>
 </ul>
 <!-- /TOC -->
@@ -121,9 +129,11 @@
 <li>Setup can be really simple - just a website and IIS for some simple servers.</li>
 <li>Windows is not required - there are at least two pure Java versions (see <a href="#non-windows-hosting">Non-Windows Hosting</a>).</li>
 <li>Push over HTTP / HTTPS/TLS.</li>
-<li>Authentication / Authorization:</li>
+<li>Authentication / Authorization:
+<ul>
 <li>API key for pushing packages.</li>
 <li>Basic Authentication with IIS.</li>
+</ul></li>
 <li>No direct access to packages so security can be locked down to just modify through push.</li>
 <li>Package store is file system.</li>
 <li>Can manage PowerShell gallery type packages.</li>
@@ -203,14 +213,18 @@ Some notable references:</p>
 <li>Push over HTTP / HTTPS/TLS.</li>
 <li>API key for pushing packages.</li>
 <li>No direct access to packages so security can be locked down to just modify through push or upload.</li>
-<li>Authentication / Authorization:</li>
+<li>Authentication / Authorization:
+<ul>
 <li>Multiple api keys.</li>
 <li>Basic Authentication through IIS.</li>
 <li>RBAC (role-based access control) available in some options.</li>
 <li>LDAP authentication in some options (although Nuget/Chocolatey may not support this for package operations).</li>
+</ul></li>
 <li>Package stores can be file system, database, Azure blobs, and AWS S3 depending on the product.</li>
-<li>Website interface.</li>
+<li>Website interface.
+<ul>
 <li>Uploading packages can also be done through website.</li>
+</ul></li>
 <li>Multiple repositories in an instance.</li>
 <li>Multiple repository types (not limited to just NuGet/Chocolatey types).</li>
 <li>HA (High Availability) available in some options.</li>

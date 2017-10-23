@@ -9,12 +9,15 @@
 <!-- TOC -->
 <ul>
 <li><a href="#automatic-update-methods">Automatic update methods</a></li>
-<li><a href="#automatic-updater-au">Automatic Updater (AU)</a></li>
+<li><a href="#automatic-updater-au">Automatic Updater (AU)</a>
+<ul>
 <li><a href="#credits">Credits</a></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#setup">Setup</a></li>
 <li><a href="#everything-related-to-au">Everything Related to AU</a></li>
-<li><a href="#chocolatey-package-updater-aka-chocopkgup-deprecated">Chocolatey Package Updater aka chocopkgup [DEPRECATED]</a></li>
+</ul></li>
+<li><a href="#chocolatey-package-updater-aka-chocopkgup-deprecated">Chocolatey Package Updater aka chocopkgup [DEPRECATED]</a>
+<ul>
 <li><a href="#licensing">Licensing</a></li>
 <li><a href="#credits-1">Credits</a></li>
 <li><a href="#requirements-1">Requirements</a></li>
@@ -28,6 +31,7 @@
 <li><a href="#testing-ketarinchocopkgup">Testing Ketarin/ChocoPkgUp:</a></li>
 <li><a href="#troubleshootingnotes">Troubleshooting/Notes</a></li>
 <li><a href="#important-notes-for-files-hosted-on-sourceforge">Important notes for files hosted on SourceForge</a></li>
+</ul></li>
 </ul>
 <!-- /TOC -->
 <h2 id="automatic-update-methods">Automatic update methods</h2>
@@ -78,8 +82,10 @@
 <li>Check the config in <code>$env:ChocolateyInstall\lib\ChocolateyPackageUpdater\tools\chocopkgup\chocopkgup.exe.config</code>. The <code>PackagesFolder</code> key should point to where your repository is located.</li>
 <li>Create a scheduled task (in Windows). This is the command (edit the path to <code>cmd.exe</code> accordingly): <code>C:\Windows\System32\cmd.exe /c c:\tools\chocolateypackageupdater\ketarinupdate.cmd</code></li>
 <li><p>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:</p>
-<pre><code class="vb">Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
-objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True</code></pre></li>
+<pre><code class="nohighlight">~~~vb
+Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
+objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True
+~~~</code></pre></li>
 <li>Choose a schedule for the task. Some folks run the task about once an hour to catch updates as quickly as they happen.</li>
 <li>Open Ketarin. Choose <code>File</code> –&gt; <code>Settings</code>.</li>
 <li>Now Click Import...</li>
@@ -131,8 +137,10 @@ objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinJobSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text (replace <code>name</code> with the actual name of the meta package folder):</p>
-<pre><code class="cmd">chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot; /c &quot;{Checksum}&quot; /c64 &quot;{Checksumx64}&quot;
-REM /disablepush</code></pre></li>
+<pre><code class="nohighlight">~~~cmd
+chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot; /c &quot;{Checksum}&quot; /c64 &quot;{Checksumx64}&quot;
+REM /disablepush
+~~~</code></pre></li>
 <li><p>Check the bottom of this section to be sure it set to <strong>Command</strong>.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinCustomCommand.png")" title="Ketarin Settings Command" alt="Ketarin Settings Command" /></p></li>
 </ol>

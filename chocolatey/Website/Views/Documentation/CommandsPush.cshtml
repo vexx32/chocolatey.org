@@ -17,20 +17,20 @@ switches with one dash (<code>-</code>). For more details, see<br />
 feeds, it has a requirement that it implements the proper OData<br />
 endpoints required for NuGet packages.</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="nohighlight">choco push [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]
-cpush [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]</code></pre>
+<pre><code class="nohighlight">  choco push [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]
+  cpush [&lt;path to nupkg&gt;] [&lt;options/switches&gt;]</code></pre>
 <p><strong>NOTE:</strong> If there is more than one nupkg file in the folder, the command<br />
 will require specifying the path to the file.</p>
 <h2 id="examples">Examples</h2>
-<pre><code class="nohighlight">choco push --source https://chocolatey.org/
-choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -t 500
-choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;</code></pre>
+<pre><code class="nohighlight">  choco push --source https://chocolatey.org/
+  choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -t 500
+  choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;</code></pre>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>To use this command, you must have your API key saved for the community<br />
 feed (chocolatey.org) or the source you want to push to. Or you can<br />
 explicitly pass the apikey to the command. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsapikey" })"><code>apikey</code></a> command help<br />
 for instructions on saving your key:</p>
-<pre><code class="nohighlight">choco apikey -?</code></pre>
+<pre><code class="nohighlight">  choco apikey -?</code></pre>
 <p>A common error is <code>Failed to process request. 'The specified API key   does not provide the authority to push packages.' The remote server   returned an error: (403) Forbidden..</code> This means the package already<br />
 exists with a different user (API key). The package could be unlisted.<br />
 You can verify by going to <a href="https://push.chocolatey.org/packages/packageName" class="uri">https://push.chocolatey.org/packages/packageName</a>.<br />

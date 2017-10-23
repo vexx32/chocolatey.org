@@ -74,9 +74,11 @@
 <ul>
 <li>Ninite - no</li>
 <li>Chocolatey - yes and quite simple. Run <code>choco new test</code> and look at the output - keep in mind that many times it takes complex tasks for managing software installation down to 1 PowerShell function call. Consider windirstat is: <code>Install-ChocolateyPackage 'windirstat' 'exe' '/S' 'https://windirstat.info/wds_current_setup.exe' -Checksum 123456 -ChecksumType 'sha256'</code></li>
-<li>Chocolatey is building on technologies you may already know:</li>
+<li>Chocolatey is building on technologies you may already know:
+<ul>
 <li>PowerShell - take full advantage of PowerShell.</li>
 <li>Unattended installations / Silent installation</li>
+</ul></li>
 <li>Extend Chocolatey easily with PowerShell modules called <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">extension packages</a>.</li>
 <li>Use <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder</a> to point Chocolatey to an installer and have it auto-detect and generate a full software deployment.</li>
 <li>Use <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> to internalize existing community packages quickly.</li>

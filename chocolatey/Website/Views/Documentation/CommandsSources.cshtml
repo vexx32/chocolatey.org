@@ -12,17 +12,17 @@ a source, use <code>-name</code> in front of the option now. In most cases you<b
 can still pass options and switches with one dash (<code>-</code>). For more<br />
 details, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>).</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="nohighlight">choco source [list]|add|remove|disable|enable [&lt;options/switches&gt;]
-choco sources [list]|add|remove|disable|enable [&lt;options/switches&gt;]</code></pre>
+<pre><code class="nohighlight">  choco source [list]|add|remove|disable|enable [&lt;options/switches&gt;]
+  choco sources [list]|add|remove|disable|enable [&lt;options/switches&gt;]</code></pre>
 <h2 id="examples">Examples</h2>
-<pre><code class="nohighlight">choco source
-choco source list
-choco source add -n=bob -s=&quot;https://somewhere/out/there/api/v2/&quot;
-choco source add -n=bob -s &quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -cert=\Users\bob\bob.pfx
-choco source add -n=bob -s &quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -u=bob -p=12345
-choco source disable -n=bob
-choco source enable -n=bob
-choco source remove -n=bob</code></pre>
+<pre><code class="nohighlight">  choco source
+  choco source list
+  choco source add -n=bob -s=&quot;https://somewhere/out/there/api/v2/&quot;
+  choco source add -n=bob -s &quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -cert=\Users\bob\bob.pfx
+  choco source add -n=bob -s &quot;&#39;https://somewhere/out/there/api/v2/&#39;&quot; -u=bob -p=12345
+  choco source disable -n=bob
+  choco source enable -n=bob
+  choco source remove -n=bob</code></pre>
 <p>When it comes to the source location, this can be a folder/file share or an http<br />
 location. If it is a url, it will be a location you can go to in a browser and<br />
 it returns OData with something that says Packages in the browser, similar to<br />

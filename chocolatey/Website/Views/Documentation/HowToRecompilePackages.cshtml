@@ -32,12 +32,10 @@
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer - Automatically Internalize/Recompile Packages</a>.</p>
 <ul>
 <li>Have Chocolatey for Business (or Chocolatey for MSP).</li>
-<li>Call a command like the following:
-<ul>
-<li><code>choco download notepadplusplus.commandline --internalize</code></li>
-<li><code>choco download git.install --internalize --resources-location \\unc\share</code></li>
-<li><code>choco download nodejs.install --internalize --resources-location http://some/internal/url --internalize-all-urls</code>.</li>
-</ul></li>
+<li>Call a command like the following:<br />
+* <code>choco download notepadplusplus.commandline --internalize</code><br />
+* <code>choco download git.install --internalize --resources-location \\unc\share</code><br />
+* <code>choco download nodejs.install --internalize --resources-location http://some/internal/url --internalize-all-urls</code>.</li>
 <li>That&#39;s it! It does all of the manual steps below in a fraction of the time.</li>
 </ul>
 <p>Package Internalizer can be hooked up to continuous integration automation or scheduled tasks to really reduce manual work.</p>
