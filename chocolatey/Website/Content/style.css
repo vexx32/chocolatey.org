@@ -3428,6 +3428,7 @@ fieldset.form  {
             
             /* flyout Text */
             .field-hint-message,
+            .field-hint-message-visible,
             .field-validation-error  {
                 font-size: 1em;
                 left: 480px;
@@ -3443,7 +3444,12 @@ fieldset.form  {
                 display: none;
                 background-color: #eff7fa;
                 border: solid 1px #52a4ca;
-                
+            }
+            
+            .field-hint-message-visible  {
+              background-color: #eff7fa;
+              border: solid 1px #52a4ca;
+              width: 600px;
             }
             
             .field-validation-error  {

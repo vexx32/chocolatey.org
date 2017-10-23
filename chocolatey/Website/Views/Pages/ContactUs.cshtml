@@ -9,7 +9,7 @@
   <div class="p-b p-l">
     <h1 class="m-b">Contact Us</h1>
 
-    <p class="message">Please fill out the form below to contact us. If you have found an issue, please see <a href="@Url.RouteUrl(RouteName.ReportIssue)">report issue</a> or <a href="@Url.RouteUrl(RouteName.Support)">support</a> for details.</p>
+    <p class="message">Please fill out the form below to contact Chocolatey Software. If you have found an issue, please see <a href="@Url.RouteUrl(RouteName.ReportIssue)">report issue</a> / <a href="@Url.RouteUrl(RouteName.Support)">support</a> for details.</p>
     
     @using (Html.BeginForm())
     {
@@ -21,9 +21,11 @@
       <div class="form-field">
         @Html.LabelFor(m => m.MessageTo)
         @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems,"Select...")
-        <span class="field-hint-message">Who should we send this message to?</span>
+        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B. <br />Choose "Other" to contact Chocolatey Software directly. <br />Choose "Website" for site issues/access. <br /><em>Do not use this form to report an issue or a package issue (see above).</em></span>
         @Html.ValidationMessageFor(m => m.MessageTo)
       </div>
+      <br />
+      <br />
       <div class="form-field">
         @Html.LabelFor(m => m.FirstName)
         @Html.EditorFor(m => m.FirstName)
