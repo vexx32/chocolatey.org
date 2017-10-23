@@ -32,25 +32,25 @@ function Convert-SeoUrls($text) {
     # Write-Host "1 - $($_.Groups[1])"
     # Write-Host "url - $($_.Groups[2])"
     # Write-Host "hash - $($_.Groups[3])"
-    
+
     $fullMatchValue = $_.Groups[1]
     $matchUrl = $_.Groups[2]
     $matchUrlReplace = $matchUrl -creplace '([A-Z])', '-$1'
     $matchUrlReplace = $matchUrlReplace.ToLower().Replace("--","-")
     $matchUrlReplace = $matchUrlReplace.Replace("-f-a-q","-faq")
     $matchUrlReplace = $matchUrlReplace.Replace("-p-s1","-ps1")
-    
+
     $matchPound = $_.Groups[3]
     $matchPoundReplace = $matchPound -creplace '([A-Z])', '-$1'
     $matchPoundReplace = $matchPoundReplace.ToLower().Replace("--","-")
-    
+
     if ($matchUrlReplace -ne $null -and $matchUrlReplace -ne '') {
       $text = $text.Replace($fullMatchValue, "href=`"@Url.RouteUrl(RouteName.Docs, new { docName = `"$matchUrlReplace`" })$matchPoundReplace`"")
     }
   }
 
   $text = $text.Replace("`"-","`"")
-  
+
   Write-Output $text
 }
 
@@ -84,7 +84,7 @@ function Convert-FencedCode($text) {
   #$text = $text.Replace("class=`"yaml`"","class=`"brush: plain`"")
   #$text = $text.Replace("class=`"python`"","class=`"brush: python`"")
   #$text = $text.Replace("class=`"csharp`"","class=`"brush: csharp`"")
-  
+
   Write-Output $text
 }
 
@@ -96,7 +96,7 @@ function Convert-ImageUrls($text) {
 
 function Get-FirstLine($text) {
   $lineNumber = ($text | Select-String -pattern '@{' -SimpleMatch | Select -First 1).LineNumber
-  
+
   Write-Output $lineNumber
 }
 
@@ -113,7 +113,7 @@ Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.
   $firstLine -= 1
   Write-Debug "Line number is $firstLine"
   #[int]$firstLine = 13
-  $fileContent | 
+  $fileContent |
     Select -Index ($firstLine..$($fileContent.count -3)) |
     Set-Content $htmlFileName -Force -Encoding UTF8
 }
