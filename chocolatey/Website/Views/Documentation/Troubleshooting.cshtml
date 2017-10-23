@@ -31,6 +31,7 @@
 <li><a href="#not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">Not recognized as the name of a cmdlet, function, script file, or operable program</a></li>
 <li><a href="#my-path-is-not-getting-updated">My PATH is not getting updated</a></li>
 <li><a href="#refreshenv-has-no-effect">RefreshEnv has no effect</a></li>
+<li><a href="#options-andor-parameters-are-not-handled-correctly">Options and/or parameters are not handled correctly</a></li>
 </ul>
 <!-- /TOC -->
 <p><a id="markdown-general" name="general"></a></p>
@@ -227,4 +228,8 @@ Get-ChildItem -Path &quot;$env:ChocolateyInstall\lib&quot; -Recurse -Filter &quo
 <h3 id="refreshenv-has-no-effect">RefreshEnv has no effect</h3>
 <p>If you are in cmd.exe, it should just work. In PowerShell, you need to install the Chocolatey PowerShell profile first for the command to work.</p>
 <p>Take note of whether it says &quot;refreshing environment variables for <strong><em>cmd.exe</em></strong>&quot; or &quot;refreshing environment variables for <strong><em>powershell.exe</em></strong>&quot;. If you are in PowerShell and you see &quot;<strong><em>cmd.exe</em></strong>&quot; when you run <code>refreshenv</code>, then you need to do some additional work to get things set up. see <a href="#why-does-choco-intab-not-work-for-me">Why does choco in{tab} not work for me?</a>.</p>
+<p><a id="markdown-options-andor-parameters-are-not-handled-correctly" name="options-andor-parameters-are-not-handled-correctly"></a></p>
+<h3 id="options-andor-parameters-are-not-handled-correctly">Options and/or parameters are not handled correctly</h3>
+<p>This problem is most likely to be seen if cutting and pasting Chocolatey commands from a document, instead of typing them in directly. Some documentation tools (notably Microsoft Word, but there are others) think they know best and automatically convert certain characters. The hyphen (-) character may become an en-dash (–) or em-dash (--). Similarly standard quotation marks (&quot;) may be converted into distinct open and close variants (&quot;&quot;). Visually, the converted characters look very similar to the correct ones, but they are not functionally equivalent. Instead of cutting and pasting, try typing the command manually at the command prompt.</p>
+<p>For example, if the hyphen for the <code>-y</code> (confirm all prompts) option had been converted into a visually similar character you would get the message &quot;–y not installed. The package was not found with the source(s) listed.&quot;, and would also be prompted for confirmation before running scripts. Similarly, if you were using the <code>--params</code> option to pass parameters to the package, and suffered the same kind of cut and paste error, an attempt might be made to process the parameters string as if it were a package name, potentially resulting in an error like &quot;The given path&#39;s format is not supported.&quot;</p>
 </article>

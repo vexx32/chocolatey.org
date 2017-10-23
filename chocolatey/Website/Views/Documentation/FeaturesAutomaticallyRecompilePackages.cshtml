@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="package-internalizer">Package Internalizer</h1>
-<p>Automatically Internalize/Recompile Existing Packages (Business Editions Only)</p>
+<p>Automatically Internalize/Recompile Existing Packages (Business and MSP Editions Only)</p>
 <p>There are thousands of existing packages on the <a href="https://chocolatey.org/packages">community repository</a> that are a tremendous resource when it comes to creating packages that have software that can sometimes be tricky! Unfortunately you may be wary of using those packages without changes because many of those packages are subject to distribution rights and thus have an internet dependency (which creates both <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">trust and control issues</a>). There is a process for downloading and internalizing packages to use internal or embedded locations for that software that is called <strong>internalizing</strong> (also known as recompiling).</p>
 <p>Chocolatey for Business is able to automatically download packages and resources, edit the scripts, and recompile packages to internalize and remove internet dependencies from those packages, saving you hours of time in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">manually internalizing/recompiling packages</a>!</p>
 <!-- TOC -->
@@ -80,7 +80,7 @@ This image shows running `choco download --recompile git.install`.
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">download command</a> for more information.</p>
 <h2 id="faq">FAQ</h2>
 <h3 id="how-do-i-take-advantage-of-this-feature">How do I take advantage of this feature?</h3>
-<p>You must have a <a href="https://chocolatey.org/compare">Business edition of Chocolatey</a>. Business editions are great for organizations that need to manage the total software management lifecycle.</p>
+<p>You must have a <a href="https://chocolatey.org/compare">Business edition of Chocolatey</a> or Chocolatey for MSP. Business editions are great for organizations that need to manage the total software management lifecycle.</p>
 <h3 id="im-a-licensed-customer-now-what">I&#39;m a licensed customer, now what?</h3>
 <p>You can run <code>choco download</code> and point it to an existing package name on any remote resource, typically folks point to <code>https://chocolatey.org/api/v2/</code> and let Chocolatey do all of the work of getting the package and remote resources to recompile the package.</p>
 <h3 id="how-does-it-work">How does it work?</h3>

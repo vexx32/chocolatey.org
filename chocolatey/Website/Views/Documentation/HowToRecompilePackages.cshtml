@@ -31,12 +31,18 @@
 <h2 id="how-to-internalize-an-existing-package-automatically">How to Internalize An Existing Package Automatically</h2>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer - Automatically Internalize/Recompile Packages</a>.</p>
 <ul>
-<li>Have Chocolatey for Business</li>
-<li>Call <code>choco download notepadplusplus.commandline --recompile</code>, <code>choco download git.install --recompile --resources-location \\unc\share</code> or <code>choco download nodejs.install --recompile --resources-location http://some/internal/url</code>.</li>
+<li>Have Chocolatey for Business (or Chocolatey for MSP).</li>
+<li>Call a command like the following:
+<ul>
+<li><code>choco download notepadplusplus.commandline --internalize</code></li>
+<li><code>choco download git.install --internalize --resources-location \\unc\share</code></li>
+<li><code>choco download nodejs.install --internalize --resources-location http://some/internal/url --internalize-all-urls</code>.</li>
+</ul></li>
 <li>That&#39;s it! It does all of the manual steps below in a fraction of the time.</li>
 </ul>
+<p>Package Internalizer can be hooked up to continuous integration automation or scheduled tasks to really reduce manual work.</p>
 <h2 id="how-to-internalizerecompile-an-existing-package-manually">How To Internalize/Recompile An Existing Package Manually</h2>
-<p>Chocolatey&#39;s <a href="https://chocolatey.org/packages">community feed</a> has quite a few packages but they are geared towards community and use the internet for downloading from official distribution sites. However, they are attractive as they have everything necessary to install a piece of software on your machine. Through the recompiling process, by which you take a community package and bring all of the bits internal and/or embed them into the pacakge, you can completely internalize a package to host on an internal Chocolatey repository. This gives you complete control over a package and removes the aforementioned production trust and control issues.</p>
+<p>Chocolatey&#39;s <a href="https://chocolatey.org/packages">community feed</a> has quite a few packages but they are geared towards community and use the internet for downloading from official distribution sites due to copyright law and a publicly offered repository. However, they are attractive as they have everything necessary to install a piece of software on your machine. Through the internalization process, by which you take a community package and bring all of the bits internal and/or embed them into the pacakge, you can convert an existing package to be 100% offline and reliable and host it on an internal Chocolatey repository. This gives you complete control over a package and removes the aforementioned production trust and control issues.</p>
 <p>To make the existing package local, use these steps.</p>
 <p><code>1.</code> Download the package from Chocolatey&#39;s community feed by going to the <a href="https://chocolatey.org/packages/notepadplusplus.commandline">package page</a> and clicking the download link.</p>
 <p><img src="@Url.Content("~/content/images/docs/recompile/choco_npp_download.png")" alt="Download Link" /></p>

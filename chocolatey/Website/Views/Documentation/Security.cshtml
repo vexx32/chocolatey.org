@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="security">Security</h1>
-<p>Bottom line: If someone tells you Chocolatey <strong><em>is</em></strong> insecure, please respond with &quot;You mean Chocolatey <strong><em>used</em></strong> to be insecure. You may want to check out chocolatey dot org slash security and catch up with the last 2+ years. Or do you mean a <strong><em>community package</em></strong> may not be secure? Organizations don&#39;t typically use the community repository anyway and only use Chocolatey in a completely secure manner. Individuals looking for more protection with the community repository go Pro.&quot; Unfortunately some security features have significant recurring costs based on usage for the Chocolatey team, so they can&#39;t be offered for free.</p>
+<p>Bottom line: If someone tells you Chocolatey <strong><em>is</em></strong> insecure, please respond with &quot;You mean Chocolatey <strong><em>used</em></strong> to be insecure. You may want to check out chocolatey dot org slash security and catch up with the last 2+ years. Or do you mean a <strong><em>community package</em></strong> may not be secure? Organizations typically do not use the community repository anyway and only use Chocolatey in a completely secure manner. Individuals looking for more protection with the community repository go Pro.&quot; (Some of the paid security features have significant recurring costs based on usage, so they can&#39;t be offered for free).</p>
 <!-- TOC -->
 <ul>
 <li><a href="#summary">Summary</a></li>
@@ -28,7 +28,7 @@
 </ul>
 <!-- /TOC -->
 <h2 id="summary">Summary</h2>
-<p>We take security issues very seriously. Security falls into a few areas of the Chocolatey framework - the clients (choco.exe and Chocolatey GUI), and the community repository (aka <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>). While no one can give you a guarantee of complete security, we can provide information here for you to make the best decision for your use of Chocolatey. The most secure use of Chocolatey is when you use Chocolatey with packages that use embedded or local software resources. If you are super security conscious, you should understand the tradeoffs prior to using the community repository.</p>
+<p>We take security issues very seriously. Security falls into a few areas of the Chocolatey framework - the clients (choco.exe and ChocolateyGUI), and the community repository (aka <a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>). While no one can give you a guarantee of complete security, we can provide information here for you to make the best decision for your use of Chocolatey. The most secure use of Chocolatey is when you use Chocolatey with packages that use embedded or local software resources. If you are super security conscious, you should understand the tradeoffs prior to using the community repository.</p>
 <ul>
 <li>If you are an organization and you are using Chocolatey in the recommended way (internal repositories using packages that use internal resources only), Chocolatey is secure and reliable.</li>
 <li>Using the community repository (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>) is only as secure as the packages that you are using. While Chocolatey provides security features like checksumming, verification against VirusTotal (for packages and any binaries they contain or download), and moderation to be sure packages are using official binaries, there is no guarantee for what may be in the official distributions.</li>
@@ -38,7 +38,7 @@
 <h2 id="overall">Overall</h2>
 <p>Chocolatey has grown up quite a bit since the release of 0.9.9+ series and has continued moving towards a secure by default approach. What that means is that Chocolatey will set the more secure defaults and the user has to do something (e.g.&nbsp; set a switch, choose to install Chocolatey to a less secure location, etc.) to reduce the overall security of Chocolatey.</p>
 <ol>
-<li>Requires elevated permissions to make changes to the default location (<code>C:\ProgramData\chocolatey</code>). The default location is locked down to explicitly to Administrators starting in 0.9.10. This reduces escalation of privilege attacks.</li>
+<li>Requires elevated permissions to make changes to the default location (<code>C:\ProgramData\chocolatey</code>). The default location is locked down explicitly to Administrators starting in 0.9.10. This reduces escalation of privilege attacks.</li>
 <li>Requires elevated permissions to run <code>choco.exe</code> in the default installed location. This reduces escalation of privilege attacks.</li>
 <li>Requires administrative permission to add to the Machine PATH environment variable. This reduces escalation of privilege attacks.</li>
 <li>Chocolatey by default will stop and ask you to confirm before changing state of the system, showing you the script it wants to execute.</li>
@@ -47,11 +47,11 @@
 <li>Starting with v0.10.0, users can supply <a href="https://github.com/chocolatey/choco/issues/112">runtime checksums</a> so they are not required to just trust what the package supplies (or in the case a package has missing or incorrect checksums).</li>
 <li>Starting with v0.10.1, Chocolatey will detect whether an SSL/TLS download is available and automatically switch to that for more security.</li>
 <li>Choco will not allow you to push to the community package repository without using SSL/TLS (HTTPS). This reduces DNS poisoning issues and discovery of your Community repository API key.</li>
-<li>When you host internal packages, those packages can embed software and/or point to internal shares. You are not subject to software distribution rights like the packages on the community feed, so you can create packages that are more reliable and secure. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#what-are-chocolatey-packages">What are Chocolatey Packages</a> for more details.</li>
-<li>Chocolatey is run by a US-based company.</li>
+<li>When hosting internal packages, those packages can embed software and/or point to internal shares. Non-public packages are not subject to software distribution rights like the packages on the community feed, so you can create packages that are more reliable and secure. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#what-are-chocolatey-packages">What are Chocolatey Packages</a> for more details.</li>
+<li>Chocolatey is run by a US-based Delaware Corporation named Chocolatey Software.</li>
 </ol>
 <h2 id="chocolatey-binaries-and-the-chocolatey-package">Chocolatey binaries and the Chocolatey package</h2>
-<p>The binary <code>choco.exe</code> can be trusted (at least as far as you trust the Chocolatey maintainers, RealDimensions Software, LLC, and Chocolatey Software, Inc).</p>
+<p>The binary <code>choco.exe</code> can be trusted (at least as far as you trust the Chocolatey maintainers, Chocolatey Software, Inc, and formerly RealDimensions Software, LLC).</p>
 <ul>
 <li><p><strong>Starting with 0.9.10.0</strong>, both the binaries and the PowerShell scripts are Authenticode signed. This certificate is only held by the lead Chocolatey maintainer (Rob). This provides quite a bit of trust that you are getting Chocolatey from the source and as intended.</p>
 <p>Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary):</p>
@@ -86,19 +86,19 @@ Extensions   : {System.Security.Cryptography.Oid,
 <li><p>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</p></li>
 </ul>
 <p>Using a Visual Studio Command Prompt, you can verify the binary (the path below is the default install location, adjust if necessary). You can also download sn separately if necessary:</p>
-<pre><code class="nohighlight">C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
-
-Microsoft (R) .NET Framework Strong Name Utility  Version 4.0.30319.1
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-Public key token is 79d02ea9cad655eb</code></pre>
+<p>~~~sh<br />
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe</p>
+<p>Microsoft (R) .NET Framework Strong Name Utility Version 4.0.30319.1<br />
+Copyright (c) Microsoft Corporation. All rights reserved.</p>
+<p>Public key token is 79d02ea9cad655eb<br />
+~~~</p>
 <ul>
 <li>Choco will warn if it is not signed with the right key (the FOSS project has a default key so that it can build appropriately) and require a user to pass <code>--allow-unofficial-build</code>. Over time we are going to increase this so that more places will restrict this (those a user can&#39;t just go change source of choco on and build).</li>
 <li>The code for Chocolatey is <a href="https://github.com/chocolatey/choco">open source</a>, so you can inspect to visually be sure it is not doing anything malicious to your machine - <a href="https://github.com/chocolatey/choco" class="uri">https://github.com/chocolatey/choco</a>.</li>
 </ul>
 <p>For more information on the specifics, see <a href="https://github.com/chocolatey/choco/issues/36">#36</a> and <a href="https://github.com/chocolatey/choco/issues/501">#501</a>.</p>
 <h2 id="organizational-use-of-chocolatey">Organizational Use of Chocolatey</h2>
-<p>When you use Chocolatey in an organizational sense, do so in a manner that requires no internet access. Chocolatey doesn&#39;t require internet access at all. The default source (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>, aka the community package repository) that is available on installed is typically the first thing to go when organizations are using Chocolatey. This provides the utmost in security for organizations.</p>
+<p>When you use Chocolatey in an organizational sense, do so in a manner that requires no internet access. Chocolatey doesn&#39;t require internet access at all. The default source (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>, aka the community package repository) that is available on installed is typically the first thing to be removed when organizations are using Chocolatey. This provides the utmost in security for organizations.</p>
 <blockquote>
 <p>&quot;Hundreds of organizations use a packaging solution that requires zero internet access. It&#39;s pretty much the de facto for packaging software deployments on Windows. Have you looked at Chocolatey and building and hosting your own internal packages?&quot;</p>
 </blockquote>
@@ -106,7 +106,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <blockquote>
 <p><strong>&quot;Chocolatey != Chocolatey.org Packages&quot;</strong></p>
 </blockquote>
-<p>It goes without stating that if you are a business and you are using Chocolatey, you should think long and hard before trusting an external source you have no control over (chocolatey.org packages, in addition to all of the binaries that download from official distribution channels over the internet). It is too easy to set up your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">own private feed</a> where you can vet packages and have complete control over the binaries and what gets installed. This also provides a complete offline solution that is reliable and trustworthy. This is what we recommend for businesses that use Chocolatey in production scenarios (and what many of them do). There is a <a href="https://chocolatey.org/blog/host-your-own-server">great article written up</a> on the reasoning and options for hosting your own server.</p>
+<p>It goes without stating that if you are a business and you are using Chocolatey, you should think long and hard before trusting an external source you have no control over (chocolatey.org packages, in addition to all of the binaries that download from official distribution channels over the internet). It is both free and easy to set up your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">own private feed</a> where you can vet packages and have complete control over the binaries and what gets installed. This also provides a complete offline solution that is reliable and trustworthy. This is what we recommend for businesses that use Chocolatey in production scenarios (and what many of them do). There is a <a href="https://chocolatey.org/blog/host-your-own-server">great article written up</a> on the reasoning and options for hosting your own server.</p>
 <h2 id="chocolateyorg-packages">Chocolatey.org Packages</h2>
 <p>Chocolatey.org has a community repository of packages known as the community feed / community package repository. These packages are created by folks in the community and due to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">distribution rights</a>, they usually contain executable instructions on how to download software from official distribution points written in PowerShell.</p>
 <h3 id="security-for-the-community-package-repository">Security for the Community Package Repository:</h3>
@@ -117,7 +117,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>Packages that download binaries (installers, zip archives) are checked to ensure that the binary is coming from the official distribution source.</li>
 <li>Users can report malicious packages/software directly to the site administrators using a form found on every package page.</li>
 <li>Everything is enforced as HTTPS where it should be. This reduces DNS poisoning attacks.</li>
-<li>Packages are pushed to the site over HTTPS. The site grabs a SHA512 checksum of the package, then forwards it on to where packages are stored securely. You can see this package checksum in 0.9.10+ if you call <code>choco info packagename</code>.</li>
+<li>Packages are pushed to the site over HTTPS. The site grabs a SHA512 checksum of the package, then forwards it on to where packages are stored securely. You can see this package checksum in 0.9.10+ if you call <code>choco info &lt;packagename&gt;</code>.</li>
 <li>When installing a package, the site passes the package checksum and then the link for downloading the package. The Chocolatey binaries verify the package meets the package checksum.</li>
 <li>If the package automation scripts download binaries from official sources, the scripts used can provide checksums to verify those binaries (and are required for non-secure sources). If the package scripts have checksums for the downloads, it provides a further integrity check that the downloadable binaries are the exact same file that the maintainer based the package version on, the moderation process checked (including virus scans by all of the scanners set up with VirusTotal), and is the same binary that the user gets. Chocolatey <a href="https://github.com/chocolatey/choco/issues/112">v0.10.0+ enforces a checksum requirement for non-secure locations by default</a> and is hoping that secure downloads will also become a requirement in 2017 for all new packages and versions submitted to the community repository.</li>
 <li>Checksums of of included binaries are shown on the community package page to allow for folks to perform independent verification. The community has moved to adding an additional VERIFICATION.txt file for verifying the binaries.</li>
@@ -130,7 +130,7 @@ Public key token is 79d02ea9cad655eb</code></pre>
 <li>All packages versions are run through VirusTotal to determine if there are any flagging items. This includes downloading and unpacking any external resources (See the results on a package page in the Virus section - <a href="https://chocolatey.org/packages/chocolatey#virus" class="uri">https://chocolatey.org/packages/chocolatey#virus</a> as an example).</li>
 <li>A human <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">reviews every package version</a> that is not a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted package</a>. This process verifies that packages are pulling from official distro sources or checksumming items versus the official distros and checking over scripts for malicious behavior.</li>
 <li>We don&#39;t require cryptographically signing packages yet, that is a future enhancement</li>
-<li>Checksumming is not yet a requirement in some scenarios, so keep reading the next section.</li>
+<li>Checksumming is a requirement for non-secure scenarios, but is not yet a requirement in some scenarios, so keep reading the next section.</li>
 </ul>
 <h4 id="downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</h4>
 <p>With all of that said, you may want to ensure you build trust with each package as the software is coming from somewhere on the internet sometimes and moderators only validate that the package gets the software from those official distribution points, not necessarily the software itself. While VirusTotal provides a bit more of a validation against the binaries, if the maintainer is not using checksums in the package (checksums are required if the package downloads from non-secure locations), there isn&#39;t a guarantee that the software vendor did not pull a switch on the binary (the remote distribution source). If you are concerned about that you should look to Pro or Business (next section).</p>
