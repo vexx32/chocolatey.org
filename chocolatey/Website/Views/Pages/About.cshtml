@@ -13,7 +13,7 @@
         NuGet infrastructure currently using PowerShell as its focus for delivering packages
         from the distros to your door, err computer.
       </p>
-      <p>Chocolatey is a single, unified interface designed to easily work with all aspects of managing Windows software using a packaging framework that understands both versioning and dependency requirements. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file. Chocolatey packages can be used independently, but also integrate with configuration managers like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, and Chef</a>. Chocolatey is trusted by businesses all over the world to manage their software deployments on Windows. You’ve never had so much fun managing software!</p>
+      <p>Chocolatey is a single, unified interface designed to easily work with all aspects of managing Windows software (installers, zip archives, runtime binaries, internal and 3rd party software) using a packaging framework that understands both versioning and dependency requirements. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file. Chocolatey packages can be used independently, but also integrate with configuration managers like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, and Chef</a>. Chocolatey is trusted by businesses all over the world to manage their software deployments on Windows. You’ve never had so much fun managing software!</p>
       <p>
         Chocolatey is brought to you by the work and inspiration of the community, the work
         and thankless nights of the <a href="https://github.com/orgs/chocolatey/people">
@@ -80,12 +80,11 @@
 </div>
 <div class="bg-three p-t--l p-b--l">
   <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-      <h2 class="text-center m-b">About the Official Chocolatey Client</h2>
+      <h2 class="text-center m-b">About the Official Chocolatey Clients</h2>
       <p>
         The official Chocolatey client is the one you get from chocolatey.org on the <a href="https://chocolatey.org/packages/chocolatey">
-                                                                                       package page</a>. This is the only official client. Chocolatey GUI is a recognized
-        client that is an extension of the official client. It is recommended you use the
-        official client as it has the latest security fixes, the latest features, and is
+                                                                                       package page</a>. This and the Chocolatey GUI are the only recognized official
+        clients. It is recommended you use the official clients as they the latest security fixes, the latest features, and are
         supported by the Chocolatey team.
       </p>
       <p>
@@ -156,12 +155,12 @@
         you will find on this site because they have a low tolerance for breakages, and require a higher 
         trust and control over packages.<br /><br />
         Quite a few community folks use the packages on this site, which is a feed of packages provided and 
-        maintained by the community (it is also known as the community feed). Packages on the community 
-        feed usually download software from official distribution points. When software owners move 
-        download locations or other breakages occur because of the internet, the package is broken until 
-        the new location is specified in an updated version of the package.<br /><br />
+        maintained by the community (it is also known as the community package repository). Packages on the community 
+        repository usually need download software from official distribution points due to distribution rights. When 
+        software owners move download locations or other breakages occur because of the internet, the package could be 
+        broken until the new location is specified in an updated version of the package.<br /><br />
         For folks in the community that are not using Chocolatey for production purposes, it is fine to 
-        use the community feed. For organizations that have a low tolerance for breakages and require a 
+        use the community repo. For organizations that have a low tolerance for breakages and require a 
         higher level of security, control, and trust, a self-hosted Chocolatey server is the recommended 
         option. This guarantees that your installs, upgrades, and uninstalls will always work every 
         time. This gives you complete control over what software gets installed. Also because you are 
@@ -176,8 +175,9 @@
                                Package Triage Process</a> for details.
       </p>
       <p>
-        <strong>Who <em>owns</em> Chocolatey?</strong> The copyright for Chocolatey belongs
-        to RealDimensions Software, LLC. RealDimensions Software, LLC is a company that Rob formed to
+        <strong>Who <em>owns</em> Chocolatey?</strong> The copyright for Chocolatey belongs to 
+        Chocolatey Software, Inc, a US-based Delaware Corporation founded in 2016 as an offshoot of 
+        RealDimensions Software, LLC. RealDimensions Software, LLC is a company that Rob formed to
         support the development of FOSS software and libraries that further the ecosystem.
       </p>
       <p>
