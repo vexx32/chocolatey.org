@@ -43,6 +43,10 @@
 <li><a href="#does-it-work-with-zip-archive">Does it work with zip archive?</a></li>
 <li><a href="#does-this-work-with-keeping-the-installer-on-a-unc-share-or-elsewhere-yet">Does this work with keeping the installer on a UNC share or elsewhere yet?</a></li>
 </ul></li>
+<li><a href="#common-issues-and-resolutions">Common Issues and Resolutions</a>
+<ul>
+<li><a href="#i-get-name-is-required-please-pass-in-a-name-for-the-new-package">I get &quot;Name is required. Please pass in a name for the new package.&quot;</a></li>
+</ul></li>
 </ul>
 <!-- /TOC -->
 <h2 id="usage">Usage</h2>
@@ -158,4 +162,7 @@ Get-ChildItem -Path $path -Recurse | ?{
 <p>Yes, but somewhat naively. It will generate the packaging to unpack the archive for both 7z and zip files.</p>
 <h3 id="does-this-work-with-keeping-the-installer-on-a-unc-share-or-elsewhere-yet">Does this work with keeping the installer on a UNC share or elsewhere yet?</h3>
 <p>Yes, as of Licensed version v1.6.0+. Use <code>--use-original-location</code>.</p>
+<h2 id="common-issues-and-resolutions">Common Issues and Resolutions</h2>
+<h3 id="i-get-name-is-required-please-pass-in-a-name-for-the-new-package">I get &quot;Name is required. Please pass in a name for the new package.&quot;</h3>
+<p>This occurs when you are not running Chocolatey for Business or don&#39;t have your client properly licensed. Please see [licensed installation|Installation-Licensed]] for more details.</p>
 </article>
