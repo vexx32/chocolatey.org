@@ -106,7 +106,7 @@ Get-ChildItem -Path choco.wiki -Recurse -ErrorAction SilentlyContinue -Filter *.
   $htmlFileName = "chocolatey\Website\Views\Documentation\$($docName.Replace(`"-`", `"`")).cshtml"
 
   #+simple_tables+native_spans+native_divs+multiline_tables
-  & pandoc.exe --from markdown_github --tab-stop=2 --to html5 --old-dashes --no-highlight -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
+  & pandoc.exe --from markdown_github --normalize --tab-stop=2 --to html5 --old-dashes --no-highlight -V lang="en" -B docgen/header.txt -A docgen/footer.txt -o "$htmlFileName" "$($_.FullName)"
 
   $fileContent = Convert-SeoUrls (Convert-ImageUrls (Convert-FencedCode (Fix-MarkdownConversion (Convert-MarkdownLinks (CleanUpHeaderIds (Get-Content $htmlFileName).Replace("@","@@").Replace("{{AT}}","@").Replace("{{DocName}}",$docName))))))
   $firstLine = Get-FirstLine($fileContent)
