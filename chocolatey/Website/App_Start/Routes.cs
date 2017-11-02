@@ -68,7 +68,7 @@ namespace NuGetGallery
                     Action = "Pricing"
                 });
             
-            var pricingDiscountRoute = routes.MapRoute(
+            routes.MapRoute(
                 RouteName.Discount, "discount", new
                 {
                     controller = "Pages",
