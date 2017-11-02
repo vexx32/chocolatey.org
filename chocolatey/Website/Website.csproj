@@ -1170,6 +1170,7 @@
     <Content Include="Content\Images\green_ball_48.png" />
     <Content Include="Content\Images\grey_ball_48.png" />
     <Content Include="Content\Images\gui.png" />
+    <Content Include="Content\Images\ChocolateyGUI_main_screen.png" />
     <Content Include="Content\Images\headerbackground.png" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />

@@ -73,6 +73,38 @@
       </div>
     </section>
   </div>
+    <div class="bg-three p-t--l p-b--l">
+        <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
+            <div class="feature-sections__column">
+                <h2>Official Chocolatey tools</h2>
+                <ul class="check-list m-t">
+                    <li>The CLI client, choco.exe, was designed with security in mind. Know you are using Chocolatey from a trusted source when you are using the official Chocolatey clients.</li>
+                    <li>Use choco.exe to install, upgrade, uninstall, publish and search for packages (and much more).</li>
+                    <li>Use <a href="@Url.Package("ChocolateyGUI")" title="A visual of Chocolatey GUI">Chocolatey GUI</a> when you need a visual representation of packages.</li>
+                    <li>There is an <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })#powershell-packagemanagement">official provider</a> for Windows 10/Windows Server 2016's built-in package manager manager (PackageManagement/OneGet) in the works - no ETA on release date yet.</li>
+                </ul>
+            </div>
+          <div class="feature-sections__column">
+             <img src="@Url.Content("~/content/images/ChocolateyGUI_main_screen.png")" />
+          </div>
+        </section>
+    </div>
+ 
+    <div class="bg-two">
+        <section class="clearfix p-l p-r container-wide gene-bg">
+            <div class="feature-sections__column right p-t--l p-b--l">
+                <h2>Packages are independent deployment artifacts</h2>
+                <ul class="check-list m-t">
+                    <li>Chocolatey packages are not just fancy zip files with PowerShell, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
+                    <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
+                    <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
+                </ul>
+            </div>
+            <div class="feature-sections__column no-padding">
+            </div>
+        </section>
+    </div>
+    
     <div class="bg-three">
         <section class="clearfix p-l p-r container-wide">
             <div class="feature-sections__column m-t p-t--l p-b--l">
@@ -107,63 +139,8 @@
             </div>
         </section>
     </div>
- 
-    <div class="bg-two">
-        <section class="clearfix p-l p-r container-wide gene-bg">
-            <div class="feature-sections__column right p-t--l p-b--l">
-                <h2>Packages are independent deployment artifacts</h2>
-                <ul class="check-list m-t">
-                    <li>Chocolatey packages are not just fancy zip files with PowerShell, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
-                    <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
-                    <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
-                </ul>
-            </div>
-            <div class="feature-sections__column no-padding">
-            </div>
-        </section>
-    </div>
-     <div class="bg-three p-t--l p-b--l">
-        <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-            <div class="feature-sections__column">
-                <h2>Official Chocolatey tools</h2>
-                <ul class="check-list m-t">
-                    <li>The CLI client, choco.exe, was designed with security in mind. Know you are using Chocolatey from a trusted source when you are using the official Chocolatey clients.</li>
-                    <li>Use choco.exe to install, upgrade, uninstall, publish and search for packages (and much more).</li>
-                    <li>Use <a href="@Url.Package("ChocolateyGUI")" title="A visual of Chocolatey GUI">Chocolatey GUI</a> when you need a visual representation of packages.</li>
-                    <li>There is an <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })#powershell-packagemanagement">official provider</a> for Windows 10/Windows Server 2016's built-in package manager (PowerShell PackageManagement) coming soon.</li>
-                </ul>
-            </div>
-          <div class="feature-sections__column">
-             <img src="@Url.Content("~/content/images/Chocolatey_Future.png")" />
-            @*<div class="gui-mock">
-                    <div class="gui-mock__top">
-                    </div>
-                    <ul>
-                        <li>
-                            <span class="gui-mock__icon"></span>
-                            <span class="gui-mock__install">Install</span>
-                        </li>
-                        <li>
-                            <span class="gui-mock__icon"></span>
-                            <span class="gui-mock__install">Install</span>
-                        </li>
-                        <li>
-                            <span class="gui-mock__icon"></span>
-                            <span class="gui-mock__install">Install</span>
-                        </li>
-                        <li>
-                            <span class="gui-mock__icon"></span>
-                            <span class="gui-mock__install">Install</span>
-                        </li>
-                        <li>
-                            <span class="gui-mock__icon"></span>
-                            <span class="gui-mock__install">Install</span>
-                        </li>
-                    </ul>
-                </div>*@
-          </div>
-        </section>
-    </div>
+
+   
 </div>
 @*
     <section class="featured">
