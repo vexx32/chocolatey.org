@@ -44,6 +44,7 @@
 <li><a href="#what-is-the-purpose-of-the-hash-that-is-used-to-protect-the-named-pipe">What is the purpose of the hash that is used to protect the named pipe?</a></li>
 <li><a href="#does-the-agent-service-or-chocolatey-stop-installation-from-unconfigured-sources">Does the agent service or Chocolatey stop installation from unconfigured sources?</a></li>
 <li><a href="#we-want-to-set-up-the-chocolatey-agent-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this">We want to set up the chocolatey agent service to use a domain account that will have local admin on each box. Can we do this?</a></li>
+<li><a href="#is-the-password-stored-anywhere">Is the password stored anywhere?</a></li>
 <li><a href="#we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-agent-what-do-we-need-to-do">We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Agent, what do we need to do?</a></li>
 <li><a href="#tell-me-more-about-the-chocolatey-managed-password">Tell me more about the Chocolatey managed password.</a></li>
 <li><a href="#is-the-managed-password-stored-or-logged-anywhere">Is the managed password stored or logged anywhere?</a></li>
@@ -251,6 +252,9 @@ This image shows running `choco install adobereader -y`.
 <li><code>/EnterPassword</code> - receive the password at runtime as a secure string</li>
 </ul>
 <p>You would pass something like <code>choco install chocolatey-agent -y --params=&quot;'/Username:domain\account /EnterPassword'&quot;</code> to securely pass the password at runtime. You could also run <code>choco install chocolatey-agent -y --params=&quot;'/Username:domain\account'&quot; --package-parameters-sensitive=&quot;'/Password:newpassword'&quot;</code> (or do it as part of <code>choco upgrade</code>).</p>
+<h3 id="is-the-password-stored-anywhere">Is the password stored anywhere?</h3>
+<p>No, that would reduce the security of the password. It exists in memory long enough to set the value on user and the service and then it is cleared.</p>
+<p>There is no storage of the password anywhere other than how Windows stores passwords.</p>
 <h3 id="we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-agent-what-do-we-need-to-do">We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Agent, what do we need to do?</h3>
 <p>Like with any service that uses rotating passwords, you will need to redeploy the service or go into the services management console and update the password. As it is much faster to deploy out that update, you can do something like <code>choco upgrade chocolatey-agent -y --params=&quot;'/Username:domain\account'&quot; --package-parameters-sensitive=&quot;'/Password:newpassword'&quot; --force</code> (the <code>--force</code> ensures the code is redeployed).</p>
 <h3 id="tell-me-more-about-the-chocolatey-managed-password">Tell me more about the Chocolatey managed password.</h3>
