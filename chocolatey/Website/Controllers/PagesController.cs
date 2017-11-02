@@ -105,6 +105,12 @@ namespace NuGetGallery
         }
 
         [HttpGet]
+        public ActionResult Evaluation()
+        {
+            return View("~/Views/Pages/Evaluation.cshtml");
+        }
+
+        [HttpGet]
         public ActionResult ContactUs()
         {
             return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
