@@ -15,13 +15,14 @@
 <li><a href="#im-getting-a-403-unauthorized-issue-attempting-to-install-chocolatey">I&#39;m getting a 403 unauthorized issue attempting to install Chocolatey</a></li>
 <li><a href="#i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</a></li>
 </ul></li>
-<li><a href="#licensed-installation">Licensed Installation</a></li>
+<li><a href="#licensed-installation-and-issues">Licensed Installation and Issues</a></li>
 <li><a href="#creating-packages">Creating Packages</a>
 <ul>
 <li><a href="#install-chocolateypath-doesnt-seem-to-work">Install-ChocolateyPath doesn&#39;t seem to work.</a></li>
 <li><a href="#error-cannot-bind-parameter-because-parameter-filetype-is-specified-more-than-once">ERROR: Cannot bind parameter because parameter &#39;fileType&#39; is specified more than once.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture">ERROR: This package does not support 64 bit architecture.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</a></li>
+<li><a href="#my-package-cant-find-dependencies">My package can&#39;t find dependencies</a></li>
 </ul></li>
 <li><a href="#runtime">Runtime</a>
 <ul>
@@ -39,6 +40,8 @@
 <li><a href="#options-andor-parameters-are-not-handled-correctly">Options and/or parameters are not handled correctly</a></li>
 <li><a href="#chocolatey-is-selecting-an-older-version-of-a-dependency-on-upgrade">Chocolatey is selecting an older version of a dependency on upgrade</a></li>
 <li><a href="#chocolatey-is-attempting-to-downgrade-a-package-that-is-a-dependency-of-another-package-on-upgrade">Chocolatey is attempting to downgrade a package that is a dependency of another package on upgrade</a></li>
+<li><a href="#package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency">Package not installed. An error occurred during installation: Unable to resolve dependency</a></li>
+<li><a href="#package-not-installed-the-package-was-not-found-with-the-sources-listed">Package not installed. The package was not found with the source(s) listed.</a></li>
 </ul></li>
 </ul>
 <!-- /TOC -->
@@ -68,8 +71,8 @@ At line:1 char:1
 <p><a id="markdown-i-am-having-trouble-with-powershell-to-install-chocolatey" name="i-am-having-trouble-with-powershell-to-install-chocolatey"></a></p>
 <h3 id="i-am-having-trouble-with-powershell-to-install-chocolatey">I am having trouble with PowerShell to install Chocolatey</h3>
 <p>See the More Options section of <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })#more-install-options">installation</a>.</p>
-<p><a id="markdown-licensed-installation" name="licensed-installation"></a></p>
-<h2 id="licensed-installation">Licensed Installation</h2>
+<p><a id="markdown-licensed-installation-and-issues" name="licensed-installation-and-issues"></a></p>
+<h2 id="licensed-installation-and-issues">Licensed Installation and Issues</h2>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">licensed installation</a>. If you are having issues, please see <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a> for details on how to get support.</p>
 <p><a id="markdown-creating-packages" name="creating-packages"></a></p>
 <h2 id="creating-packages">Creating Packages</h2>
@@ -132,6 +135,9 @@ Install-ChocolateyPackage $packageArgs # this is incorrect and will pass the ent
 <h3 id="error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</h3>
 <p>This is similar to the above, the error is the same. In most cases it stems from setting up your package parameters for <code>Install-ChocolateyInstallPackage</code> but calling <code>Install-ChocolateyPackage</code> instead. Learn the differences at the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">PowerShell function reference</a>.</p>
 <p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com</a></p>
+<p><a id="markdown-my-package-cant-find-dependencies" name="my-package-cant-find-dependencies"></a></p>
+<h3 id="my-package-cant-find-dependencies">My package can&#39;t find dependencies</h3>
+<p>Please see <a href="#package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency">unable to resolve dependency</a>.</p>
 <p><a id="markdown-runtime" name="runtime"></a></p>
 <h2 id="runtime">Runtime</h2>
 <p><a id="markdown-i-cant-get-the-powershell-tab-completion-working" name="i-cant-get-the-powershell-tab-completion-working"></a></p>
@@ -267,5 +273,34 @@ foreach ($nuspec in $nuspecs) {
   }
 }</code></pre>
 <p>Inspect the results to see if you have anything restricting the version of your package to an older version.</p>
+<p>You may also wish to clean the cache to verify that things are good to go. The cache should get cleaned automatically, but take a look at <code>%LocalAppData%\NuGet\Cache</code> and clean out any nupkgs in there. Head to <code>%TEMP%</code> and look for &quot;NuGetScratch&quot; and &quot;x\NuGet&quot;, clean those up as well.</p>
+<p>If you have done this and are still seeing issues, it is time to capture a trace log and Fiddler or Wireshark output. Fiddler is a good place ot start. Start up one of those tools and make sure it is configured correctly to capture output (we won&#39;t go into that here). Now try your command again with <code>--trace</code> and pipe the output to a file. In cmd.exe, you simply add this to the end <code>&gt; installation.log</code>, with PowerShell, you pipe it like this: <code>| Out-File &quot;.\installation.log&quot;</code>. Save the output of Fiddler/Wireshark and provide those files back to the issues log or your support team.</p>
 <p>Also take a look at <a href="#already-referencing-a-newer-version-of-packagename">Already referencing a newer version of &#39;packagename&#39;</a>.</p>
+<p><a id="markdown-package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency" name="package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency"></a></p>
+<h3 id="package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency">Package not installed. An error occurred during installation: Unable to resolve dependency</h3>
+<ul>
+<li><p>Most Likely: This occurs when you have overridden default sources and/or have not specified enough sources explicitly.</p>
+<p>If you are installing from a local folder, you have likely passed in <strong>an explicit source</strong> (<code>-s|--source</code>), which <strong><em>overrides all default sources</em></strong>. So that dependency needs to be either already installed or sitting in one of the sources you explicitly specified.</p>
+<p><strong>Fix:</strong> If you are testing a package you may push to the community repository later, you may want to ensure you specify the source like this: <code>--source=&quot;'.;https://chocolatey.org/api/v2'&quot;</code>.</p></li>
+<li>Sometimes this occurs when the version or version range being specified for the dependency not being available. <strong>Fix:</strong> fix the packaging to use the right version range or ensure that their is a package available that meets the version constraints.</li>
+<li>Also check the package id of the dependency for typos. <strong>Fix:</strong> Make sure that package id does exist on the source repositories you are using.</li>
+<li>The dependency is a prerelease. <strong>Fix:</strong> Make sure you are using <code>--pre</code> so that it is discoverable.</li>
+<li><p>You are specifying sources but attempting to install from a path to a nupkg/nuspec.</p>
+<p>If you are calling <code>choco install .\path\to\pkg\name.version.nupkg</code>, this means the same as explicitly calling <code>chocho install &lt;name&gt; --version --source=&quot;'c:\full\path\to\pkg\'&quot;</code> (if it is on the &#39;c:\&#39; drive) as the source. So it doesn&#39;t matter if you also explicitly pass source locations, it will not work.</p>
+<p>By the way, calling install directly from a nupkg/nuspec can be an anti-pattern. Use it VERY rarely, like not at all if you can help it.</p>
+<p><strong>Fix:</strong> Stop pointing directly to the nupkg/nuspec. Call <code>choco install name -s .</code> instead.</p></li>
+</ul>
+<p>If you have determined all of this is good to go, take a look at what Chocolatey tells you when you run with <code>-dv --noop</code> and see how it is setting sources, etc.</p>
+<p><a id="markdown-package-not-installed-the-package-was-not-found-with-the-sources-listed" name="package-not-installed-the-package-was-not-found-with-the-sources-listed"></a></p>
+<h3 id="package-not-installed-the-package-was-not-found-with-the-sources-listed">Package not installed. The package was not found with the source(s) listed.</h3>
+<ul>
+<li>Look at the sources that were used.<br />
+* If you are using the default sources, ensure the package exists.<br />
+* If you are passing an explicit source, that is all that will be used. Make sure you</li>
+<li>Ensure you are not attempting to install a prerelease (identified by a <code>-</code> in the version, e.g. <code>1.2.3-a</code>).</li>
+<li><p>Make sure you have a compiled package. That ends in the extension &quot;.nupkg&quot;</p>
+<p>A &quot;.nuspec&quot; is part of an uncompiled package. For installation you need to ensure that is compiled. See <code>choco pack -?</code>.</p></li>
+<li><p>For your next step in troubleshooting, please see <a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">403 unauthorized issues</a>.</p></li>
+</ul>
+<p>If you have determined all of this is good to go, take a look at what Chocolatey tells you when you run with <code>-dv --noop</code> and see how it is setting sources, etc.</p>
 </article>

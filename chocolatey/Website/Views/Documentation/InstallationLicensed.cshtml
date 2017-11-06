@@ -52,16 +52,20 @@
 </ul>
 <p>When you have performed all parts correctly, running <code>choco</code> will produce a message like one of the following:</p>
 <ul>
-<li><code>Chocolatey v0.10.7 Professional</code></li>
-<li><code>Chocolatey v0.10.7 Business</code></li>
+<li><code>Chocolatey v0.10.8 Professional</code></li>
+<li><code>Chocolatey v0.10.8 Business</code></li>
 </ul>
-<p>If you do not see the edition next to the name and version, you need to check over your installation procedure again to ensure you&#39;ve completed it properly. See below.</p>
+<p>Additionally:</p>
+<ul>
+<li>You will not see &quot;Error when attempting to load chocolatey licensed assembly&quot; warning message.</li>
+</ul>
+<p>If you do not see the edition next to the name and version without an error, you need to check over your installation procedure again to ensure you&#39;ve completed it properly. See below.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p>Here&#39;s the whole process for installing your license and installing the licensed code.</p>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install_pro.gif" alt="install" /></p>
 <h2 id="how-do-i-install-the-licensed-edition">How Do I Install The Licensed Edition?</h2>
 <ol>
-<li>Install a recent version of Chocolatey (0.10.7+) - <code>choco upgrade chocolatey</code> (due to a tight integration, <code>chocolatey.extension</code> may need a newer version than what is listed here).</li>
+<li>Install a recent version of Chocolatey (0.10.7+) - <code>choco upgrade chocolatey</code> (due to a tight integration, <code>chocolatey.extension</code> may need a newer version than what is listed here). TRIAL? you need to do more as your license key will not be known by the server. See <a href="#how-do-i-install-the-trial-edition">Install the Trial Edition</a>.</li>
 <li>You received a license file in email.</li>
 <li><p>Take that license file and copy it to your Chocolatey install folder <code>license</code> subdirectory (you may need to create it first). For most folks that path would be <code>&quot;C:\ProgramData\chocolatey\license&quot;</code>. Alternatively, you can put the license in your user profile directory, e.g. <code>&quot;C:\Users\YourUserName\chocolatey.license.xml&quot;</code></p>
 <img src="https://cloud.githubusercontent.com/assets/63502/12741281/84a3df8e-c940-11e5-8818-456801728cf5.png" alt="license" /></li>

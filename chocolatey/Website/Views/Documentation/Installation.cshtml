@@ -351,7 +351,7 @@ package {&#39;dotnet4.5.2&#39;:
 SET DIR=%~dp0%
 
 ::download install.ps1
-%systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;((new-object net.webclient).DownloadFile(&#39;https://chocolatey.org/install.ps1&#39;,&#39;install.ps1&#39;))&quot;
+%systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;((new-object net.webclient).DownloadFile(&#39;https://chocolatey.org/install.ps1&#39;,&#39;%DIR%install.ps1&#39;))&quot;
 ::run installer
 %systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;&amp; &#39;%DIR%install.ps1&#39; %*&quot;</code></pre>
 <p>You can also get to this file by going to <a href="https://chocolatey.org/installchocolatey.cmd" class="uri">https://chocolatey.org/installchocolatey.cmd</a>.</p>
