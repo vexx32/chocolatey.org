@@ -21,9 +21,10 @@
       <div class="form-field">
         @Html.LabelFor(m => m.MessageTo)
         @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems,"Select...")
-        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B. <br />Choose "Other" to contact Chocolatey Software directly. <br />Choose "Website" for site issues/access. <br /><em>Do not use this form to report an issue or a package issue (see above).</em></span>
+        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B. <br />Choose "Partner" for reseller / channel partner.<br />Choose "Other" to contact Chocolatey Software directly. <br />Choose "Website" for site issues/access. <br /><em>Do not use this form to report an issue or a package issue (see above).</em></span>
         @Html.ValidationMessageFor(m => m.MessageTo)
       </div>
+      <br />
       <br />
       <br />
       <div class="form-field">
@@ -62,6 +63,10 @@
         @Html.TextAreaFor(m => m.Message,10, 50, null)
         @Html.ValidationMessageFor(m => m.Message)
       </div>
+      
+      <div class="form-field">
+        <input type="checkbox" required="required" id="chkNotSelling" name="chkNotSelling" /> <span for="chkNotSelling">I am not attempting to market software or services (such as SEO).</span>
+      </div>
           
       @*@Html.EditorForModel()*@
       @Html.SpamPreventionFields()
@@ -69,6 +74,7 @@
 
       <input type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
     </fieldset>
+      <p class="message warning">NOTE: Do not use this form in an attempt to market to us services and/or software. We will consider that s&zwj;pam and take appropriate action.</p>
     }
 
   </div>
