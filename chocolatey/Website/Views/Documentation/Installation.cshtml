@@ -98,8 +98,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/ins
 <li>You can put the chocolatey.nupkg on an internal package repository and then address that full path, similar to how you see in the Puppet provider - <a href="https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation" class="uri">https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation</a></li>
 <li><p>Then you would run a script similar to the below to address that local install. If it is on a repository somewhere, you will need to enhance the below script to get that file (the Chocolatey Puppet provider install script shows that).</p></li>
 </ol>
-<pre><code class="powershell"># based on local file, see above instructions for how you can obtain package
-# from internal repository and download it local
+<pre><code class="powershell"># use an internal repository to download Chocolatey nupkg to the local path:
+$packageRepo = &#39;&lt;INSERT REPO URL&gt;&#39;
+# uncomment if you want to download the file from a remote OData (HTTP/HTTPS) internal url (such as Artifactory, Nexus, ProGet, or Chocolatey.Server)
+#$searchUrl = ($packageRepo.Trim(&#39;/&#39;), &#39;Packages()?$filter=(Id%20eq%20%27chocolatey%27)%20and%20IsLatestVersion&#39;) -join &#39;/&#39;
+
+# UPDATE THIS PATH
 $localChocolateyPackageFilePath = &#39;c:\packages\chocolatey.0.10.0.nupkg&#39;
 
 $ChocoInstallPath = &quot;$($env:SystemDrive)\ProgramData\Chocolatey\bin&quot;
@@ -109,6 +113,22 @@ $DebugPreference = &quot;Continue&quot;;
 # if you really want to see debugging output related to the
 # installation, uncomment the next line
 #$env:ChocolateyEnvironmentDebug = &#39;true&#39;
+
+function Download-Package {
+param (
+  [string]$packageODataSearchUrl,
+  [string]$file
+ )
+  $downloader = new-object System.Net.WebClient
+  $downloader.Proxy.Credentials=[System.Net.CredentialCache]::DefaultNetworkCredentials;
+
+  Write-Output &quot;Querying latest package from $packageODataSearchUrl&quot;
+  [xml]$pkg = $downloader.DownloadString($packageODataSearchUrl)
+  $packageDownloadUrl = $pkg.feed.entry.content.src
+
+  Write-Output &quot;Downloading $packageDownloadUrl to $file&quot;
+  $downloader.DownloadFile($packageDownloadUrl, $file)
+}
 
 function Install-LocalChocolateyPackage {
 param (
@@ -162,6 +182,11 @@ param (
 
 # Idempotence - do not install Chocolatey if it is already installed
 if (!(Test-Path $ChocoInstallPath)) {
+  # download the package to the local path
+  if ($searchUrl) {
+    Download-Package $searchUrl $localChocolateyPackageFilePath
+  }
+
   # Install Chocolatey
   Install-LocalChocolateyPackage $localChocolateyPackageFilePath
 }</code></pre>
