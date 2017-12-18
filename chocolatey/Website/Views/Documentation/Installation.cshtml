@@ -93,7 +93,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/ins
 <ol>
 <li>The first step with offline is to obtain a copy of the Chocolatey Nupkg (nupkg files are just fancy zip files). Go to <a href="https://chocolatey.org/packages/chocolatey" class="uri">https://chocolatey.org/packages/chocolatey</a> and find a version you want.</li>
 <li><p>Click on Download to download that version&#39;s nupkg file.</p>
-<pre><code class="nohighlight">![download chocolatey.nupkg visual](images/DownloadChocolateyPackage.png)</code></pre></li>
+<p><img src="@Url.Content("~/content/images/docs/DownloadChocolateyPackage.png")" alt="download chocolatey.nupkg visual" /></p></li>
 <li>You can also download <a href="https://chocolatey.org/api/v2/package/chocolatey">the latest version directly</a>.</li>
 <li>You can put the chocolatey.nupkg on an internal package repository and then address that full path, similar to how you see in the Puppet provider - <a href="https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation" class="uri">https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation</a></li>
 <li><p>Then you would run a script similar to the below to address that local install. If it is on a repository somewhere, you will need to enhance the below script to get that file (the Chocolatey Puppet provider install script shows that).</p></li>
@@ -105,6 +105,14 @@ $packageRepo = &#39;&lt;INSERT REPO URL&gt;&#39;
 
 # UPDATE THIS PATH
 $localChocolateyPackageFilePath = &#39;c:\packages\chocolatey.0.10.0.nupkg&#39;
+# Determine unzipping method
+# 7zip is the most compatible, but you need an internally hosted 7za.exe.
+# Make sure the version matches for the arguments as well.
+# Built-in does not work with Server Core, but if you have PowerShell 5
+# it uses Expand-Archive instead of COM
+$unzipMethod = &#39;builtin&#39;
+#$unzipMethod = &#39;7zip&#39;
+#$7zipUrl = &#39;https://chocolatey.org/7za.exe&#39; (download this file, host internally, and update this to internal)
 
 $ChocoInstallPath = &quot;$($env:SystemDrive)\ProgramData\Chocolatey\bin&quot;
 $env:ChocolateyInstall = &quot;$($env:SystemDrive)\ProgramData\Chocolatey&quot;
@@ -114,13 +122,75 @@ $DebugPreference = &quot;Continue&quot;;
 # installation, uncomment the next line
 #$env:ChocolateyEnvironmentDebug = &#39;true&#39;
 
+function Get-Downloader {
+param (
+  [string]$url
+ )
+
+  $downloader = new-object System.Net.WebClient
+
+  $defaultCreds = [System.Net.CredentialCache]::DefaultCredentials
+  if ($defaultCreds -ne $null) {
+    $downloader.Credentials = $defaultCreds
+  }
+
+  $ignoreProxy = $env:chocolateyIgnoreProxy
+  if ($ignoreProxy -ne $null -and $ignoreProxy -eq &#39;true&#39;) {
+    Write-Debug &quot;Explicitly bypassing proxy due to user environment variable&quot;
+    $downloader.Proxy = [System.Net.GlobalProxySelection]::GetEmptyWebProxy()
+  } else {
+    # check if a proxy is required
+    $explicitProxy = $env:chocolateyProxyLocation
+    $explicitProxyUser = $env:chocolateyProxyUser
+    $explicitProxyPassword = $env:chocolateyProxyPassword
+    if ($explicitProxy -ne $null -and $explicitProxy -ne &#39;&#39;) {
+      # explicit proxy
+      $proxy = New-Object System.Net.WebProxy($explicitProxy, $true)
+      if ($explicitProxyPassword -ne $null -and $explicitProxyPassword -ne &#39;&#39;) {
+        $passwd = ConvertTo-SecureString $explicitProxyPassword -AsPlainText -Force
+        $proxy.Credentials = New-Object System.Management.Automation.PSCredential ($explicitProxyUser, $passwd)
+      }
+
+      Write-Debug &quot;Using explicit proxy server &#39;$explicitProxy&#39;.&quot;
+      $downloader.Proxy = $proxy
+
+    } elseif (!$downloader.Proxy.IsBypassed($url)) {
+      # system proxy (pass through)
+      $creds = $defaultCreds
+      if ($creds -eq $null) {
+        Write-Debug &quot;Default credentials were null. Attempting backup method&quot;
+        $cred = get-credential
+        $creds = $cred.GetNetworkCredential();
+      }
+
+      $proxyaddress = $downloader.Proxy.GetProxy($url).Authority
+      Write-Debug &quot;Using system proxy server &#39;$proxyaddress&#39;.&quot;
+      $proxy = New-Object System.Net.WebProxy($proxyaddress)
+      $proxy.Credentials = $creds
+      $downloader.Proxy = $proxy
+    }
+  }
+
+  return $downloader
+}
+
+function Download-File {
+param (
+  [string]$url,
+  [string]$file
+ )
+  #Write-Output &quot;Downloading $url to $file&quot;
+  $downloader = Get-Downloader $url
+
+  $downloader.DownloadFile($url, $file)
+}
+
 function Download-Package {
 param (
   [string]$packageODataSearchUrl,
   [string]$file
  )
-  $downloader = new-object System.Net.WebClient
-  $downloader.Proxy.Credentials=[System.Net.CredentialCache]::DefaultNetworkCredentials;
+  $downloader = Get-Downloader $packageODataSearchUrl
 
   Write-Output &quot;Querying latest package from $packageODataSearchUrl&quot;
   [xml]$pkg = $downloader.DownloadString($packageODataSearchUrl)
@@ -154,10 +224,52 @@ param (
 
   # unzip the package
   Write-Output &quot;Extracting $file to $tempDir...&quot;
-  $shellApplication = new-object -com shell.application
-  $zipPackage = $shellApplication.NameSpace($file)
-  $destinationFolder = $shellApplication.NameSpace($tempDir)
-  $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+  if ($unzipMethod -eq &#39;7zip&#39;) {
+    $7zaExe = Join-Path $tempDir &#39;7za.exe&#39;
+    if (-Not (Test-Path ($7zaExe))) {
+      Write-Output &quot;Downloading 7-Zip commandline tool prior to extraction.&quot;
+      # download 7zip
+      Download-File $7zipUrl &quot;$7zaExe&quot;
+    }
+
+    $params = &quot;x -o`&quot;$tempDir`&quot; -bd -y `&quot;$file`&quot;&quot;
+    # use more robust Process as compared to Start-Process -Wait (which doesn&#39;t
+    # wait for the process to finish in PowerShell v3)
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = New-Object System.Diagnostics.ProcessStartInfo($7zaExe, $params)
+    $process.StartInfo.RedirectStandardOutput = $true
+    $process.StartInfo.UseShellExecute = $false
+    $process.StartInfo.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
+    $process.Start() | Out-Null
+    $process.BeginOutputReadLine()
+    $process.WaitForExit()
+    $exitCode = $process.ExitCode
+    $process.Dispose()
+
+    $errorMessage = &quot;Unable to unzip package using 7zip. Perhaps try setting `$env:chocolateyUseWindowsCompression = &#39;true&#39; and call install again. Error:&quot;
+    switch ($exitCode) {
+      0 { break }
+      1 { throw &quot;$errorMessage Some files could not be extracted&quot; }
+      2 { throw &quot;$errorMessage 7-Zip encountered a fatal error while extracting the files&quot; }
+      7 { throw &quot;$errorMessage 7-Zip command line error&quot; }
+      8 { throw &quot;$errorMessage 7-Zip out of memory&quot; }
+      255 { throw &quot;$errorMessage Extraction cancelled by the user&quot; }
+      default { throw &quot;$errorMessage 7-Zip signalled an unknown error (code $exitCode)&quot; }
+    }
+  } else {
+    if ($PSVersionTable.PSVersion.Major -lt 5) {
+      try {
+        $shellApplication = new-object -com shell.application
+        $zipPackage = $shellApplication.NameSpace($file)
+        $destinationFolder = $shellApplication.NameSpace($tempDir)
+        $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+      } catch {
+        throw &quot;Unable to unzip package using built-in compression. Set `$env:chocolateyUseWindowsCompression = &#39;false&#39; and call install again to use 7zip to unzip. Error: `n $_&quot;
+      }
+    } else {
+      Expand-Archive -Path &quot;$file&quot; -DestinationPath &quot;$tempDir&quot; -Force
+    }
+  }
 
   # Call chocolatey install
   Write-Output &quot;Installing chocolatey on this machine&quot;

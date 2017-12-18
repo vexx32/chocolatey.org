@@ -23,6 +23,7 @@
 <li><a href="#error-this-package-does-not-support-64-bit-architecture">ERROR: This package does not support 64 bit architecture.</a></li>
 <li><a href="#error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</a></li>
 <li><a href="#my-package-cant-find-dependencies">My package can&#39;t find dependencies</a></li>
+<li><a href="#error-a-null-key-is-not-allowed-in-a-hash-literal">ERROR: A null key is not allowed in a hash literal.</a></li>
 </ul></li>
 <li><a href="#runtime">Runtime</a>
 <ul>
@@ -42,6 +43,7 @@
 <li><a href="#chocolatey-is-attempting-to-downgrade-a-package-that-is-a-dependency-of-another-package-on-upgrade">Chocolatey is attempting to downgrade a package that is a dependency of another package on upgrade</a></li>
 <li><a href="#package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency">Package not installed. An error occurred during installation: Unable to resolve dependency</a></li>
 <li><a href="#package-not-installed-the-package-was-not-found-with-the-sources-listed">Package not installed. The package was not found with the source(s) listed.</a></li>
+<li><a href="#access-to-the-path-is-denied">Access to the path is denied.</a></li>
 </ul></li>
 </ul>
 <!-- /TOC -->
@@ -138,6 +140,17 @@ Install-ChocolateyPackage $packageArgs # this is incorrect and will pass the ent
 <p><a id="markdown-my-package-cant-find-dependencies" name="my-package-cant-find-dependencies"></a></p>
 <h3 id="my-package-cant-find-dependencies">My package can&#39;t find dependencies</h3>
 <p>Please see <a href="#package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency">unable to resolve dependency</a>.</p>
+<p><a id="markdown-error-a-null-key-is-not-allowed-in-a-hash-literal" name="error-a-null-key-is-not-allowed-in-a-hash-literal"></a></p>
+<h3 id="error-a-null-key-is-not-allowed-in-a-hash-literal">ERROR: A null key is not allowed in a hash literal.</h3>
+<p>Typically you see this if you accidentally use a variable name on the left side of a hash:</p>
+<pre><code class="powershell">$packageArgs = @@{
+  packageName   = $env:ChocolateyPackageName
+  $file         = $fileLocation
+}</code></pre>
+<p>Note the use of <code>$file</code> on the left side, which should be just <code>file</code>. Once you fix that, things should start working appropriately.</p>
+<ul>
+<li><a href="https://stackoverflow.com/q/47438948/18475">Reference</a></li>
+</ul>
 <p><a id="markdown-runtime" name="runtime"></a></p>
 <h2 id="runtime">Runtime</h2>
 <p><a id="markdown-i-cant-get-the-powershell-tab-completion-working" name="i-cant-get-the-powershell-tab-completion-working"></a></p>
@@ -176,11 +189,19 @@ if (Test-Path($ChocolateyProfile)) {
 <li>You have a proxy that you need to configure</li>
 <li>It is being blocked in your organization</li>
 <li>We broke something (this is the least likely reason)</li>
-<li>CloudFlare has blocked your IP <a href="https://support.cloudflare.com/hc/en-us/articles/203366080-Why-do-I-see-a-captcha-or-challenge-page-Attention-Required-trying-to-visit-a-site-protected-by-Cloudflare-as-a-site-visitor-">due to reasons</a></li>
+<li><strong>CloudFlare has blocked your IP <a href="https://support.cloudflare.com/hc/en-us/articles/203366080-Why-do-I-see-a-captcha-or-challenge-page-Attention-Required-trying-to-visit-a-site-protected-by-Cloudflare-as-a-site-visitor-">due to reasons</a></strong> (99% of the time, this is the issue)</li>
 <li>The Chocolatey Community Team may have blocked access due to abuse (1M+ package installs over 30 days) see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })#excessive-use">excessive use for details</a></li>
 </ul>
-<p>You can use a tool like <a href="http://www.telerik.com/fiddler">Fiddler</a> (choco install for this would not be helpful in your case) to help determine what is going on.</p>
-<p>If you determine it is CloudFlare blocking your IP, we may be able to get you whitelisted for Chocolatey - see <a href="https://chocolatey.org/contact" class="uri">https://chocolatey.org/contact</a> (send message to &quot;Website&quot; in drop down). If you have been completely blocked, go to <a href="https://gitter.im/chocolatey/choco" class="uri">https://gitter.im/chocolatey/choco</a> and contact us there.</p>
+<p>You can use a tool like <a href="https://www.telerik.com/fiddler">Fiddler</a> to help determine what is going on.</p>
+<p>Cloudflare uses Project Honeypot to determine if your IP address is flagged, such as if you have malware on your box that is sending spam emails. Go to Project Honeypot and put in your IP address - <a href="http://www.projecthoneypot.org/search_ip.php" class="uri">http://www.projecthoneypot.org/search_ip.php</a>. Check to see if your IP is flagged here.</p>
+<p>If you determine it is CloudFlare blocking your IP (which is the issue 98% of the time), we may be able to get you whitelisted for Chocolatey:</p>
+<ul>
+<li>Go to <a href="https://chocolatey.org/contact" class="uri">https://chocolatey.org/contact</a> (NOTE: If you are completely blocked from accessing the site, contact us through <a href="https://gitter.im/chocolatey/choco">Gitter</a> instead)</li>
+<li>Select <strong><em>Website</em></strong> in &quot;Send message to&quot; drop down (this is important to get it routed to the right folks)</li>
+<li>Let us know what&#39;s going on along with your IP address so we can talk about whitelisting options and get you moving forward.</li>
+<li>Oh, and be sure to run some antivirus scans and remove any found malware (and maybe find a better antivirus scanner).</li>
+</ul>
+<p>Once this has been completed, you should have access to install Chocolatey and/or packages from the community repository.</p>
 <p><a id="markdown-im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on" name="im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on"></a></p>
 <h3 id="im-seeing-chocolatey-application-tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</h3>
 <p>The shims are generated as &quot;Any CPU&quot; programs, which depend on the <code>Enable64Bit</code> registry value to be set to <code>1</code>, which it is by default. A way to fix it is to issue the following command at the location where the prompt shows below:</p>
@@ -303,4 +324,14 @@ foreach ($nuspec in $nuspecs) {
 <li><p>For your next step in troubleshooting, please see <a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">403 unauthorized issues</a>.</p></li>
 </ul>
 <p>If you have determined all of this is good to go, take a look at what Chocolatey tells you when you run with <code>-dv --noop</code> and see how it is setting sources, etc.</p>
+<p><a id="markdown-access-to-the-path-is-denied" name="access-to-the-path-is-denied"></a></p>
+<h3 id="access-to-the-path-is-denied">Access to the path is denied.</h3>
+<p>You may be attempting to use Chocolatey or upgrade a package and suddenly you are getting access denied errors starting mid-install/upgrade.</p>
+<ul>
+<li><p>Run <code>cmd.exe /c cacls.exe &quot;%ChocolateyInstall%&quot;</code> and verify you are in one of the accounts that has permission.</p>
+<p>Chocolatey doesn&#39;t add any additional locking on files/folders under that (aside from the additional setting in the logs folder for file appending).</p></li>
+<li><p>Check to see if the folder has been locked by another process.</p>
+<p>If you&#39;ve verified you are an administrator and can not get into that folder, it&#39;s likely the folder was attempted to be deleted, but another process was accessing that folder and is holding a lock on it. You can use Handles (SysInternals) or something like LockHunter to attempt to find out if there is a lock on the folder. If there is, you normally would just need to close the process in question so the folder can be deleted.</p></li>
+</ul>
+<p>Unfortunately, this is likely to cause your install to be unusable until you fix the issue.</p>
 </article>
