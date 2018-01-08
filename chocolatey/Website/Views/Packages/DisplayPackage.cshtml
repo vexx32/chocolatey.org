@@ -23,7 +23,6 @@
 
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
     var moderator = User != null && User.IsModerator() && !maintainer;
-    var admin = User != null && User.IsAdmin() && !maintainer;
     var moderationRole = User != null && User.IsInAnyModerationRole() && !maintainer;
     var moderationRoleAndMaintaner = User != null && User.IsInAnyModerationRole() && maintainer;
     var anyPackageRole = User != null && (moderationRole || maintainer);
@@ -522,7 +521,7 @@
                         <div class="form-field" id="div-testexemptions">
                             <ul>
                                 <li>Exempting a package id from testing requires a reason.</li>
-                                @if (admin)
+                                @if (moderator)
                                 {
                                     <li>Use with care.</li>
                                     <li>Typically this is done when a package is installing drivers the testing computer does not have</li>
@@ -531,7 +530,7 @@
                                 }
                             </ul>
                             <br />
-                            @if (admin)
+                            @if (moderator)
                             {
                                 @Html.EditorFor(m => m.IsExemptedFromVerification)
                                 <label for="IsExemptedFromVerification" class="checkbox">
