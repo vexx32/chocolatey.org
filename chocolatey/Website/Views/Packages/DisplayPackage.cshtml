@@ -189,6 +189,10 @@
     </nav>
 }
 <div class="package-page">
+    @if (!User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
+    }
     @if (Model.Prerelease)
     {
         <p class="prerelease-message">This is a prerelease version of @Model.Title. </p>

@@ -35,20 +35,12 @@
                 </form>
             </div>
         </div>*@
-          
-        @if (@HttpContext.Current.Request.Cookies["chocolatey_hide_packages_disclaimer"] == null)
-        {
-            <div class="flex modal-closeable" id="package-disclaimer">
-                <div class="message-content">
-                    <p class="no-margin">
-                        Your use of the packages on this site means you understand they are not to be used for 
-                        organizational or production purposes and they are not supported or guaranteed in any 
-                        way. For more details why, <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">please read the disclaimer.</a>
-                    </p>
-                    <div class="close button"><i class="fa fa-fw fa-check-circle-o"></i>I Understand.</div>
-                </div>
-            </div>
-        }
+        <div>
+          <p class="no-margin">
+            Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new {docName="community-package-disclaimer"})">Learn more</a>.
+          </p>
+        </div>
+          @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
         </div>
       </div>
   }
@@ -62,15 +54,15 @@
     {
         <h1>
             Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
-            { <text>package</text> }
-            else
-            { <text>packages</text> }
+                                                                      { <text>package</text> }
+                                                                      else
+                                                                      { <text>packages</text> }
         </h1>
     }
     else
     {
-        if (moderationQueue)
-        {
+      if (moderationQueue)
+      {
             <h1>
                 @if (Model.TotalCount == 1)
                 { <text>There is @moderationCount package in moderation</text> }
@@ -78,16 +70,16 @@
                 { <text>There are @moderationCount packages in moderation</text> }
         </h1>
         <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
-        }
-        else
-        {
+      }
+      else
+      {
             <h1>
                 @if (Model.TotalCount == 1)
                 { <text>There is @Model.TotalCount community maintained package</text> }
                 else
                 { <text>There are @Model.TotalCount community maintained packages</text> }
         </h1>
-        }
+      }
 
     }
     @if (@Model.LastResultIndex > 0)
