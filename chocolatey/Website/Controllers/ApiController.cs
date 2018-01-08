@@ -160,6 +160,22 @@ namespace NuGetGallery
                             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version));
                     }
                 }
+                else if(!packageRegistration.Packages.Any(p => !p.IsPrerelease && p.Status == PackageStatusType.Approved)
+                      && packageRegistration.Packages.Any(p => p.Status == PackageStatusType.Submitted))
+                {
+                    return new HttpStatusCodeWithBodyResult(
+                        HttpStatusCode.Forbidden,
+                        string.Format("The package {0} have a previous version in a submitted state, and no approved stable releases.",
+                            packageToPush.Id),
+                        string.Format(@"
+Please wait until a minimum of 1 version of the {0} package have been approved,
+before pushing a new version.
+
+If the package is currently failing, please see any failure emails sent
+out on why it could be failing, as well as instructions on how to fix
+any moderation related failures.",
+                            packageToPush.Id));
+                }
             }
 
             try
