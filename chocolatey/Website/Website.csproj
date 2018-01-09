@@ -1271,9 +1271,7 @@
     <Content Include="opensearch.xml" />
     <Content Include="Scripts\anchorjs\anchor.min.js" />
     <Content Include="Scripts\bundle.txt" />
-    <Content Include="Scripts\closeable\bundle.txt" />
     <Content Include="Scripts\closeable\index.js" />
-    <Content Include="Scripts\CookiesNotice\bundle.txt" />
     <Content Include="Scripts\CookiesNotice\Index.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
