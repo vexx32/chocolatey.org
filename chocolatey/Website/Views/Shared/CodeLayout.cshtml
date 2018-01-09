@@ -23,17 +23,19 @@
 @RenderBody()
 
 @section BottomScripts {
-    <script type="text/javascript" language="javascript">
-        window.onload = function () {
-            // remove leading linebreaks from code blocks.
-            var pre = document.getElementsByTagName("code");
-            for (var i = 0, len = pre.length; i < len; i++) {
-                var text = pre[i].firstChild.nodeValue;
-                pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
-            }
+  <script type="text/javascript" language="javascript">
+    window.onload = function() {
+      // remove leading linebreaks from code blocks.
+      var pre = document.getElementsByTagName("code");
+      for (var i = 0, len = pre.length; i < len; i++) {
+        var text = pre[i].firstChild.nodeValue;
+        if (text != null) {
+          pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
         }
-        hljs.initHighlightingOnLoad();
-    </script>
-     
-@RenderSection("BottomScripts", required: false)
+      }
+    }
+    hljs.initHighlightingOnLoad();
+  </script>
+
+  @RenderSection("BottomScripts", required: false)
 }
