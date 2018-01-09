@@ -133,6 +133,9 @@
             });
 
             Closeable.modal("chocolatey_hide_packages_disclaimer");
+            if (!getCookie('chocolatey_hide_packages_disclaimer')) {
+              $(".modal-closeable").css('display', 'block');
+            }
         });
     </script>
 }

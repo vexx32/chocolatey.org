@@ -220,7 +220,7 @@ section.package .profile {
 
 .modal-closeable {
     position: fixed;
-    display: block;
+    display: none;
     z-index: 9999999;
     top: 0;
     left: 0;

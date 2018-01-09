@@ -5,7 +5,8 @@
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
-    Bundles.Reference("Scripts", "header");
+    Bundles.Reference("Scripts", "header"); 
+    Bundles.Reference("Scripts/closeable");
     
     var markdownGenerator = new Markdown
     {
@@ -929,7 +930,15 @@
     Disqus</span></a>
     
 @section BottomScripts {
-  <script type="text/javascript">
+  <script type="text/javascript" language="javascript">
+      $(function () {
+        Closeable.modal("chocolatey_hide_packages_disclaimer");
+        if (!getCookie('chocolatey_hide_packages_disclaimer')) {
+          $(".modal-closeable").css('display', 'block');
+        }
+      });
+  </script>
+  <script type="text/javascript" language="javascript">
     var disqus_shortname = '@disqusShortname';
 
     var disqus_url = '@disqusUrl';
@@ -950,7 +959,7 @@
       dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
-    </script>
+  </script>
 
     <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shCore.js")"></script>
     <script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/SyntaxHighlighter/shBrushPlain.js")"></script>

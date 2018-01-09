@@ -1265,7 +1265,7 @@ header.main {
 }
 
 .cookies-popup {
-    display: block;
+    display: none;
     position: fixed;
     bottom: 0px;
     padding: 1em;

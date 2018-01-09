@@ -155,8 +155,11 @@
 
   <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
   @RenderPage("_CookiePolicy.cshtml")
-  <script language="javascript">
-      CookiesNotice.modal("chocolatey_hide_cookies_notice");
+  <script language="javascript" type="text/javascript">
+    CookiesNotice.modal("chocolatey_hide_cookies_notice");
+    if (!getCookie('chocolatey_hide_cookies_notice')) {
+      $(".cookies-popup").css('display', 'block');
+    }
   </script>
 </body>
 @*
