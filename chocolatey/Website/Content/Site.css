@@ -216,7 +216,8 @@ header.main {
             padding: 0;
             vertical-align: top;
             position: absolute;
-            width: 100%;
+            float: right;
+            right: 0;
         }
 
             #searchBoxInput {
