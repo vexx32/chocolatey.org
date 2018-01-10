@@ -7,7 +7,7 @@
 <p>Chocolatey maintains its own state of the world, while Windows maintains the state of Programs and Features. If an application is upgraded or uninstalled outside of Chocolatey, such as is the case with Google Chrome and its auto updating utility, Chocolatey doesn&#39;t know about the change. The synchronize feature keeps Chocolatey&#39;s state in sync with Programs and Features, removing possible system-installed state drift.</p>
 <ul>
 <li><a href="#automatic-synchronize">Automatic Sync (All Licensed Editions)</a></li>
-<li><a href="#sync-command">Synchronize Command</a> (Business edition only until Q3 2017)</li>
+<li><a href="#sync-command">Synchronize Command</a> (currently Business edition only - check <a href="https://chocolatey.org/compare#compare" class="uri">https://chocolatey.org/compare#compare</a> for availability)</li>
 <li><a href="#all-packages-in-programs-and-features">All Packages in Programs And Features (C4B)</a></li>
 </ul>
 <hr />
@@ -91,7 +91,7 @@ This image shows running `choco list -lo`. Chocolatey for Business automatically
 <h4 id="how-does-it-work">How does it work?</h4>
 <p>Chocolatey tracks applications that it installs, so it is able to keep up with those applications as they are upgraded and uninstalled, even outside of Chocolatey.</p>
 <h2 id="sync-command">Sync Command</h2>
-<p>Starting in 1.9.0 of the licensed extension, sync has been added as a preview feature for organizations to try out. Currently Business edition only, but expected to be in Pro+ in Q3 2017.</p>
+<p>Starting in 1.9.0 of the licensed extension, sync has been added as a preview feature for organizations to try out. Currently Business edition only, but expected to be in Pro+ at some point - check <a href="https://chocolatey.org/compare#compare" class="uri">https://chocolatey.org/compare#compare</a> for availability.</p>
 <p>Sync looks at all software that is in Programs and Features that is not being managed with Chocolatey packages and brings them under management. This means you can run one command and suddenly, all of the software installed on a machine is under management by Chocolatey!</p>
 <h3 id="usage-1">Usage</h3>
 <p>To synchronize your system, Simply call <code>choco sync</code> and Chocolatey will ensure that all software in Programs and Features comes under Chocolatey management and provides you the packages/package sources so you can add them to source control for managing those packages over time.</p>
