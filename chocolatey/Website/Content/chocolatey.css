@@ -229,6 +229,7 @@ section.package .profile {
     padding: 1em 1em 0em 1em;
     margin: 0em;
     background-color: rgba(0,0,0,0.5);
+    overflow: scroll;
 }
 
 .modal-closeable .message-content {
