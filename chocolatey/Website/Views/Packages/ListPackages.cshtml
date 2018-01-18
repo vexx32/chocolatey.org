@@ -44,6 +44,7 @@
         </div>
       </div>
   }
+
 <div class="hgroup search">
     <div style="float:right">
         <a href="https://feeds.feedburner.com/chocolatey" title="Subscribe to package updates" rel="alternate" type="application/rss+xml"><img src="https://www.feedburner.com/fb/images/pub/feed-icon32x32.png" alt="RSS" style="border:0" />&nbsp;<span>Subscribe to updates</span></a>
@@ -54,32 +55,32 @@
     {
         <h1>
             Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
-                                                                      { <text>package</text> }
-                                                                      else
-                                                                      { <text>packages</text> }
+            { <text>package</text> }
+            else
+            { <text>packages</text> }
         </h1>
     }
     else
     {
-      if (moderationQueue)
-      {
+        if (moderationQueue)
+        {
             <h1>
                 @if (Model.TotalCount == 1)
-                { <text>There is @moderationCount package in moderation</text> }
-                else
-                { <text>There are @moderationCount packages in moderation</text> }
-        </h1>
-        <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
-      }
-      else
-      {
+            { <text>There is @moderationCount package in moderation</text> }
+            else
+            { <text>There are @moderationCount packages in moderation</text> }
+            </h1>
+            <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
+        }
+        else
+        {
             <h1>
                 @if (Model.TotalCount == 1)
-                { <text>There is @Model.TotalCount community maintained package</text> }
-                else
-                { <text>There are @Model.TotalCount community maintained packages</text> }
-        </h1>
-      }
+            { <text>There is @Model.TotalCount community maintained package</text> }
+            else
+            { <text>There are @Model.TotalCount community maintained packages</text> }
+            </h1>
+        }
 
     }
     @if (@Model.LastResultIndex > 0)
@@ -125,6 +126,8 @@
 </ol>
 
 @ViewHelpers.PreviousNextPager(Model.Pager)
+</div>
+
 @section BottomScripts {
     <script>
         $(function () {
@@ -137,5 +140,5 @@
               $(".modal-closeable").css('display', 'block');
             }
         });
-    </script>
+     </script>
 }
