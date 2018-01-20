@@ -8,8 +8,14 @@
 <section>
   <div class="p-b p-l">
     <h1 class="m-b">Contact Us</h1>
-
-    <p class="message">Please fill out the form below to contact Chocolatey Software. If you have found an issue, please see <a href="@Url.RouteUrl(RouteName.ReportIssue)">report issue</a> / <a href="@Url.RouteUrl(RouteName.Support)">support</a> for details.</p>
+    
+    <ul class="message warning">
+      <li>If you are getting 403 errors with the community repository or have other website issues/access, use "Website" below when you contact.</li>
+      <li>If you have found an issue or have questions (related to open source usage), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.</li>
+    </ul>
+    <br />
+    <h2 class="m-b">Reach out to us</h2>
+    <p class="message small">Please fill out the form below to contact Chocolatey Software. <strong><em>Only use this form for the purposes below.</em></strong> See above for other means of contact for things not related to this form.</p>
     
     @using (Html.BeginForm())
     {
@@ -21,7 +27,11 @@
       <div class="form-field">
         @Html.LabelFor(m => m.MessageTo)
         @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems,"Select...")
-        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B. <br />Choose "Partner" for reseller / channel partner.<br />Choose "Other" to contact Chocolatey Software directly. <br />Choose "Website" for site issues/access. <br /><em>Do not use this form to report an issue or a package issue (see above).</em></span>
+        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B. 
+        <br />Choose "Partner" for reseller / channel partner.
+        <br />Choose "Other" to contact Chocolatey Software directly. 
+        <br />Choose "Website" for site issues/access. 
+        <br /><em>Do not use this form to report an issue or a package issue (see above).</em></span>
         @Html.ValidationMessageFor(m => m.MessageTo)
       </div>
       <br />
@@ -65,16 +75,16 @@
       </div>
       
       <div class="form-field">
-        <input type="checkbox" required="required" id="chkNotSelling" name="chkNotSelling" /> <span for="chkNotSelling">I am not attempting to market software or services (such as SEO).</span>
-      </div>
-          
+        <input type="checkbox" required="required" id="chkNotSelling" name="chkNotSelling" /> <span for="chkNotSelling">I am not attempting to market software or services (such as SEO). I am also not requesting advertising space.</span>
+      </div> 
+
       @*@Html.EditorForModel()*@
       @Html.SpamPreventionFields()
       <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-
+      
       <input type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
     </fieldset>
-      <p class="message warning">NOTE: Do not use this form in an attempt to market to us services and/or software. We will consider that s&zwj;pam and take appropriate action.</p>
+      <p class="message warning small">NOTE: Do not use this form in an attempt to market to us services and/or software. We will consider that s&zwj;pam and take appropriate action.</p>
     }
 
   </div>
