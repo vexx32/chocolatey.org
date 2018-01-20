@@ -27,13 +27,16 @@
   }
 
 <div class="search-results">
-    <ul class="results-tab-list">
-        <li>Show Results For:</li>
-        <li class="tab packages-tab selected">Packages</li>
-        <li class="tab docs-tab">Documentation</li>
-    </ul>
-    <div class="packages-results">
-
+  <ul class="results-tab-list">
+    <li>Show Results For:</li>
+    <li class="tab docs-tab selected">Documentation</li>
+    <li class="tab packages-tab">Packages</li>
+  </ul>
+  <div class="docs-results">
+    <h1>Docs and Site Search Results</h1>
+    <gcse:searchresults-only></gcse:searchresults-only>
+  </div>
+  <div class="packages-results">
         <div class="hgroup search">
             <div class="rss-subscribe">
                 <a href="https://feeds.feedburner.com/chocolatey" title="Subscribe to package updates" rel="alternate" type="application/rss+xml"><img src="https://www.feedburner.com/fb/images/pub/feed-icon32x32.png" alt="RSS" style="border:0" />&nbsp;<span>Subscribe to updates</span></a>
@@ -118,11 +121,6 @@
         </ol>
 
         @ViewHelpers.PreviousNextPager(Model.Pager)
-    </div>
-
-    <div class="docs-results">
-        <h1>Docs and Site Search Results</h1>
-        <gcse:searchresults-only></gcse:searchresults-only>
     </div>
 </div>
 
