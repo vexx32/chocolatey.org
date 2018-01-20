@@ -56,7 +56,7 @@
       </ul>
       <form id="searchBox" role="search" action="@Url.SearchResults()" method="get">
           <input id="searchBoxSubmit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=" " />
-          <input name="q" id="searchBoxInput" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" />
+          <input name="q" id="searchBoxInput" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" />
       </form>
 
     </nav>
