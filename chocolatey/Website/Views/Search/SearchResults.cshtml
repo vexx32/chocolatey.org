@@ -11,21 +11,6 @@
     Bundles.Reference("Scripts/SearchResultsTabs");
 }
 
-
-  @if (!User.Identity.IsAuthenticated)
-  {
-<div class="p">
-    <div class="block full-width m-t p-b clearfix p">
-        <div>
-            <p class="no-margin">
-                Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new {docName=" community-package-disclaimer"})">Learn more</a>.
-            </p>
-        </div>
-        @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
-    </div>
-</div>
-  }
-
 <div class="search-results">
   <ul class="results-tab-list">
     <li>Show Results For:</li>
@@ -132,11 +117,6 @@
             $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
                 $(this).closest("form").submit();
             });
-
-            Closeable.modal("chocolatey_hide_packages_disclaimer");
-            if (!getCookie('chocolatey_hide_packages_disclaimer')) {
-              $(".modal-closeable").css('display', 'block');
-            }
         });
 
         (function () {
