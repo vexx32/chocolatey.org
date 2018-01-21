@@ -1,12 +1,8 @@
 ﻿@model PackageListViewModel
 @{
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
-    ViewBag.Tab = "Packages";
-    var moderationQueue = !string.IsNullOrWhiteSpace(Model.ModeratorQueue) && Model.ModeratorQueue.Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
-    var moderationCount = Model.ModerationUpdatedPackageCount + Model.ModerationSubmittedPackageCount + Model.ModerationWaitingPackageCount + Model.ModerationRespondedPackageCount;
-    var unreviewedCount = Model.TotalCount - moderationCount;
+    ViewBag.Tab = "Search";
 
-    var moderationRole = User != null && User.IsInAnyModerationRole();
     Bundles.Reference("Scripts/closeable");
     Bundles.Reference("Scripts/SearchResultsTabs");
 }
@@ -23,12 +19,7 @@
   </div>
   <div class="packages-results">
         <div class="hgroup search">
-            <div class="rss-subscribe">
-                <a href="https://feeds.feedburner.com/chocolatey" title="Subscribe to package updates" rel="alternate" type="application/rss+xml"><img src="https://www.feedburner.com/fb/images/pub/feed-icon32x32.png" alt="RSS" style="border:0" />&nbsp;<span>Subscribe to updates</span></a>
-                <br />
-                <form style="border:0px solid #ccc;padding:1px" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=chocolatey', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input type="hidden" value="chocolatey" name="uri" /><input type="hidden" name="loc" value="en_US" />Or subcribe by <input type="submit" value="email" /></form>
-            </div>
-            @if (!String.IsNullOrEmpty(Model.SearchTerm))
+            @if (!string.IsNullOrEmpty(Model.SearchTerm))
             {
             <h1>
                 Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
@@ -39,25 +30,13 @@
             }
             else
             {
-            if (moderationQueue)
-            {
-            <h1>
-                @if (Model.TotalCount == 1)
-                { <text>There is @moderationCount package in moderation</text> }
-                else
-                { <text>There are @moderationCount packages in moderation</text> }
-            </h1>
-            <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
-            }
-            else
-            {
             <h1>
                 @if (Model.TotalCount == 1)
                 { <text>There is @Model.TotalCount community maintained package</text> }
                 else
                 { <text>There are @Model.TotalCount community maintained packages</text> }
             </h1>
-            }
+           
 
             }
             @if (@Model.LastResultIndex > 0)
@@ -70,13 +49,6 @@
                 <legend>Sort Order</legend>
                 <input type="hidden" name="q" value="@Model.SearchTerm" />
                 <div class="form-field">
-                    <select name="moderatorQueue" id="moderatorQueue">
-                        @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
-                        @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
-                    </select>
-                </div>
-                <div class="form-field">
-
                     <select name="prerelease" id="prerelease">
                         @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
                         @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
