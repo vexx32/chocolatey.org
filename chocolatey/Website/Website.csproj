@@ -1327,7 +1327,7 @@
     <Content Include="Views\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <None Include="Views\Search\SearchResults.cshtml" />
+    <Content Include="Views\Search\SearchResults.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Packages\DisplayPackage.cshtml" />
     <Content Include="Web.config">
