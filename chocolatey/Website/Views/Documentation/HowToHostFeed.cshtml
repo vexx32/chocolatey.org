@@ -19,7 +19,11 @@
 <ul>
 <li><a href="#advantages">Advantages</a></li>
 <li><a href="#disadvantages">Disadvantages</a></li>
-<li><a href="#local-folder-share-setup">Local Folder Share Setup</a></li>
+<li><a href="#local-folder-share-setup">Local Folder Share Setup</a>
+<ul>
+<li><a href="#local-folder-or-share-structure">Local Folder Or Share Structure</a></li>
+<li><a href="#local-folder-permissions">Local Folder Permissions</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#simple-server">Simple Server</a>
 <ul>
@@ -104,7 +108,15 @@
 <li><strong>Big disadvantage</strong>: For a file share there is not a guarantee of package version immutability. Does not do anything to keep from package versions being overwritten. This provides no immutability of a package version and no guarantee that a version of a package installed is the same as the version in the source.</li>
 </ul>
 <h3 id="local-folder-share-setup">Local Folder Share Setup</h3>
-<p>No really, it&#39;s that easy. Just set your permissions appropriately and put packages in the folder (no subfolders). You are already done. Okay, one additional consideration:</p>
+<p>No really, it&#39;s that easy. Just set your permissions appropriately and put packages in the folder (no subfolders). You are already done. Okay, two additional considerations:</p>
+<ul>
+<li><a href="#local-folder-or-share-structure">Folder Structure</a></li>
+<li><a href="#local-folder-permissions">Permissions</a></li>
+</ul>
+<h4 id="local-folder-or-share-structure">Local Folder Or Share Structure</h4>
+<p>The structure should just be a flat folder or share (no subfolders) with nupkgs inside that folder. You get that when you choco push to that location. No subfolders, no <code>nuget add</code> type of setup will work for Chocolatey with those local folders and shares.</p>
+<p><strong>NOTE:</strong>* If you build a local NuGet folder repository using NuGet.exe v3.4+, where you use <code>nuget add</code>, you may find that it doesn&#39;t produce the results you might expect when you are using Chocolatey. It creates subfolders and adds those nupkgs in an optimized way for query. That is fine when there is a server like Chocolatey.Server that does that but has a way to translate that to an OData feed. When Chocolatey is querying those local folders and shares, it uses what is built into the Chocolatey client (choco.exe). That is currently a very enhanced version of NuGet v2, so it won&#39;t understand that optimized subfolder structure and you may get no results. So keep things simple and flat for those types of repositories.</p>
+<h4 id="local-folder-permissions">Local Folder Permissions</h4>
 <p>Permissions can be interesting with a file share. If you are using machine accounts like LocalSystem, they may not have access to network resources. However there is a way to handle that in domain environments. You would need to grant access to machines or anonymous access to the share (Everyone Read is likely not enough).</p>
 <p>A great read on your options can be found at the following Stack Exchange links:</p>
 <ul>
