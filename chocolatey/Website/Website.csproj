@@ -1510,7 +1510,7 @@
     <Content Include="Views\Pages\Evaluation.cshtml" />
     <Content Include="Views\Shared\_CookiePolicy.cshtml" />
     <Content Include="Views\Packages\_CommunityInfoDisclaimer.cshtml" />
-    <None Include="Views\Blog\GaryEwanParkJoinsChocolatey.md" />
+    <Content Include="Views\Blog\GaryEwanParkJoinsChocolatey.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
