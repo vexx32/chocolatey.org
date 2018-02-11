@@ -1216,6 +1216,7 @@
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
+    <Content Include="Content\Images\team\gary.png" />
     <Content Include="Content\Images\team\mukesh.png" />
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
