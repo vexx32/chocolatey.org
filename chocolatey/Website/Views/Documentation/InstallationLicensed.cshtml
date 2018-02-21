@@ -70,30 +70,43 @@
 <p>Here&#39;s the whole process for installing your license and installing the licensed code.</p>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install_pro.gif" alt="install" /></p>
 <h2 id="how-do-i-install-the-licensed-edition">How Do I Install The Licensed Edition?</h2>
+<p><strong>NOTE:</strong> Prior to install, see if there are any parameters (like turning off context menus) that you may want to set. See <a href="#install-options">install options</a>.</p>
 <ol>
-<li>Install a recent version of Chocolatey (0.10.7+) - <code>choco upgrade chocolatey</code> (due to a tight integration, <code>chocolatey.extension</code> may need a newer version than what is listed here). TRIAL? you need to do more as your license key will not be known by the server. See <a href="#how-do-i-install-the-trial-edition">Install the Trial Edition</a>.</li>
+<li>Install a recent version of Chocolatey (0.10.8+) - <code>choco upgrade chocolatey</code> (due to a tight integration, <code>chocolatey.extension</code> may need a newer version than what is listed here). TRIAL? You need to do more as your license key will not be known by the server. See <a href="#how-do-i-install-the-trial-edition">Install the Trial Edition</a>.</li>
 <li>You received a license file in email.</li>
-<li><p>Take that license file and copy it to your Chocolatey install folder <code>license</code> subdirectory (you may need to create it first). For most folks that path would be <code>&quot;C:\ProgramData\chocolatey\license&quot;</code>. Alternatively, you can put the license in your user profile directory, e.g. <code>&quot;C:\Users\YourUserName\chocolatey.license.xml&quot;</code></p>
-<img src="https://cloud.githubusercontent.com/assets/63502/12741281/84a3df8e-c940-11e5-8818-456801728cf5.png" alt="license" /></li>
-<li><p>Run this command: <code>choco upgrade chocolatey.extension</code> (or you can call <code>install</code> instead of <code>upgrade</code>). You will see an error you can safely ignore.</p>
-<img src="https://cloud.githubusercontent.com/assets/63502/13052159/e6d1be92-d3c2-11e5-8856-d7580e51e3b6.png" alt="install/upgrade" /></li>
-<li><p>That&#39;s it! You are good to go.</p></li>
+<li>Open PowerShell.exe as an administrative shell. You can type Windows Key + X + A (Windows 8+ - when that comes up if it is cmd.exe, simply type <code>powershell</code> to get into it).</li>
+<li>In PowerShell, run <code>New-Item $env:ChocolateyInstall\license -Type Directory -Force</code> - this creates the license directory. Alternatively, you can put the license in your user profile directory, e.g. <code>&quot;C:\Users\YourUserName\chocolatey.license.xml&quot;</code>, however we only recommend you do this for Professional licenses as for other licensing you may need it to be recognized by multiple users.</li>
+<li>Now place that license file in that license folder. You can do this manually, or you can adapt this PowerShell command - <code>Copy-Item &lt;c:\path\&gt;chocolatey.license.xml $env:ChocolateyInstall\license\chocolatey.license.xml -Force</code>. (See image below)</li>
+<li>Verify the license file is set properly. In PowerShell, run <code>type $env:ChocolateyInstall\license\chocolatey.license.xml.</code> If that returns something, it means you are good to go. If not, something is misspelled or misplaced somewhere.</li>
+<li>Run this command: <code>choco upgrade chocolatey.extension</code> (or you can call <code>install</code> instead of <code>upgrade</code>). You will see an error you can safely ignore.</li>
+<li><p>That&#39;s it! You are good to go.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/63502/12741281/84a3df8e-c940-11e5-8818-456801728cf5.png" alt="license" /></p>
+<p><img src="https://cloud.githubusercontent.com/assets/63502/13052159/e6d1be92-d3c2-11e5-8856-d7580e51e3b6.png" alt="install/upgrade" /></p></li>
 </ol>
+<p><strong>NOTE</strong>: Folks deploying the license out to many machines typically wrap the above logic into a Chocolatey package, embedding the license into the package. When they renew licenses, they just run an upgrade on the licensed package! Don&#39;t take a dependency on the <code>chocolatey.extension</code> package (Chocolatey Licensed Extension) as you need the license to be placed first to properly set everything when you install the licensed extension.</p>
 <h3 id="how-do-i-install-a-local-nupkg-file">How Do I Install a Local nupkg File?</h3>
 <p>See the next section</p>
 <h3 id="how-do-i-install-the-trial-edition">How Do I Install The Trial Edition?</h3>
-<p>If you&#39;ve received a trial license, you will also receive a link to download a recent version of the <code>chocolatey.extension</code> package. You will not be able to install or upgrade the licensed edition through regular means. Chocolatey may add the licensed source, but your license will not be recognized on the server.</p>
-<ul>
-<li>Follow all of the instructions above except the <code>choco upgrade chocolatey.extension</code> command, that will not work with the trial license as the license will not be recognized by the licensed source.</li>
-<li>Instead download the <code>chocolatey.extension</code> (licensed package) from the provided download link location and remember where you saved it.</li>
-<li>Now run this command: <code>choco upgrade chocolatey.extension --pre --source c:\folder\where\downloaded\nupkg\resides</code> (or you can use <code>install</code> instead of <code>upgrade</code>). <strong>Note</strong>: Source location is not <code>--source c:\downloads\chocolatey.extension.1.8.1.nupkg</code>, it is <code>--source c:\downloads</code>.</li>
-</ul>
+<p>If you&#39;ve received a trial license, you will also receive a link to download a recent version of the <code>chocolatey.extension</code> package. <strong><em>You will not be able to install or upgrade the licensed edition through regular means. Chocolatey may add the licensed source, but your license will not be recognized on the server.</em></strong></p>
+<p><strong>NOTE:</strong> Prior to install, see if there are any parameters (like turning off context menus) that you may want to set. See <a href="#install-options">install options</a>.</p>
+<ol>
+<li>Install a recent version of Chocolatey (0.10.8+) - <code>choco upgrade chocolatey</code> (due to a tight integration, <code>chocolatey.extension</code> may need a newer version than what is listed here).</li>
+<li>You received a license file in email. <strong>That email also contains links to download licensed nupkgs.</strong> If you received the license file from another party but not the email, please ask them to forward it over to you as you will need it.</li>
+<li>Obtain the <code>chocolatey.license.xml</code> and download the licensed nupkgs from the locations noted in the trial license email to a local folder. Note this location, you will need it later.</li>
+<li>Open PowerShell.exe as an administrative shell. You can type Windows Key + X + A (Windows 8+ - when that comes up if it is cmd.exe, simply type <code>powershell</code> to get into it).</li>
+<li>In PowerShell, run <code>New-Item $env:ChocolateyInstall\license -Type Directory -Force</code> - this creates the license directory. Alternatively, you can put the license in your user profile directory, e.g. <code>&quot;C:\Users\YourUserName\chocolatey.license.xml&quot;</code>, however we only recommend you do this for Professional licenses as for other licensing you may need it to be recognized by multiple users.</li>
+<li>Now place that license file in that license folder. You can do this manually, or you can adapt this PowerShell command - <code>Copy-Item &lt;c:\path\&gt;chocolatey.license.xml $env:ChocolateyInstall\license\chocolatey.license.xml -Force</code>. (See image below)</li>
+<li>Verify the license file is set properly. In PowerShell, run <code>type $env:ChocolateyInstall\license\chocolatey.license.xml.</code> If that returns something, it means you are good to go. If not, something is misspelled or misplaced somewhere.</li>
+<li>Run this command: <code>choco upgrade chocolatey.extension --pre --source c:\folder\where\downloaded\nupkg\resides</code> (or you can use <code>install</code> instead of <code>upgrade</code>). <strong>Note</strong>: Source location is not <code>--source c:\downloads\chocolatey.extension.1.8.1.nupkg</code>, it is <code>--source c:\downloads</code>. You will see an error you can safely ignore.</li>
+<li>That&#39;s it! You are good to go.</li>
+</ol>
+<p>See the difference between the trial install here and <a href="#how-do-i-install-the-licensed-edition">a fully licensed edition</a> (also see the pictures above).</p>
 <h4 id="notes-on-the-trial-version">Notes on the Trial Version</h4>
 <p>In the trial, package authoring features have nag warnings that require someone to manually hit the Enter key a random number of times. Do not attempt to automate Package Internalizer / Package Builder or <code>choco sync</code> when using a trial of C4B. Execute those things directly and see how well they work for you.</p>
 <p>There are no trial type messages for runtime features unless they need to use Package Builder (like <code>choco sync</code> does), which should allow you to test those features with other integration tools.</p>
 <h2 id="install-options">Install Options</h2>
 <h3 id="install-without-context-menus">Install Without Context Menus</h3>
-<p>As of Chocolatey Licensed Extension v1.12.2, you can install to client machines without the context menus (Right Click). Add the following to your installation : <code>--params &quot;'/NoContextMenu'&quot;</code>. Currently there isn&#39;t a way to remove context menus if you have already deployed them, but it is on the backlog to add that.</p>
+<p>As of Chocolatey Licensed Extension v1.12.2, you can install to client machines without the context menus (Right Click). Add the following to your installation : <code>--params=&quot;'/NoContextMenu'&quot;</code>. Currently there isn&#39;t a way to remove context menus if you have already deployed them, but it is on the backlog to add that. Example: <code>choco install chocolatey.extension -y --params=&quot;'/NoContextMenu'&quot;</code>.</p>
 <h2 id="upgrading">Upgrading</h2>
 <p>To upgrade the licensed edition just run the following code:</p>
 <ul>

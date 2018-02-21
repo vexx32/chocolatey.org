@@ -165,14 +165,14 @@ Install-ChocolateyPackage $packageArgs # this is incorrect and will pass the ent
 <li>If this is the same shell that the upgrade occurred in, the message states you need to update your profile - run <code>. $profile</code>. Try that first, then try restarting your shell and see if it takes hold.</li>
 <li>If it still doesn&#39;t work, it means there was a failure setting the profile with the module.</li>
 <li>This could be due to PowerShell Execution Policy settings. Run <code>Get-ExecutionPolicy</code> - if it is set to <code>Restricted</code> you need to adjust that to something like <code>RemoteSigned</code>. See about execution policies (link)</li>
-<li><p>If that is fine, then we need to look at your &quot;$profile&quot;. Run <code>type $profile</code>. Examine the output. You should have something like this in the file:</p>
-<pre><code class="nohighlight">~~~ powershell
-# Chocolatey profile
+<li>If that is fine, then we need to look at your &quot;$profile&quot;. Run <code>type $profile</code>. Examine the output. You should have something like this in the file:</li>
+</ul>
+<pre><code class="powershell"># Chocolatey profile
 $ChocolateyProfile = &quot;$env:ChocolateyInstall\helpers\chocolateyProfile.psm1&quot;
 if (Test-Path($ChocolateyProfile)) {
   Import-Module &quot;$ChocolateyProfile&quot;
-}
-~~~</code></pre></li>
+}</code></pre>
+<ul>
 <li>If you don&#39;t see that, let&#39;s add it. Run <code>Write-Host $profile</code> - note the location and open it up in an editor (anything but plain old notepad.exe for the love of..., well your favorite editor).
 <ul>
 <li>Now let&#39;s add that text above to the profile. Save and close the file. Now type <code>. $profile</code> to update your current Shell. Give <code>choco in&lt;tab&gt;</code> a shot again. If it still doesn&#39;t work we&#39;ll need to examine something a bit more deeply about your environment. Please submit an issue so we can investigate.</li>

@@ -1,0 +1,88 @@
+﻿@{
+  ViewBag.Title = "How-To-Setup-Offline-Installation";
+}
+
+<article>
+<h1 id="how-to-set-up-fully-offline-installation">How To Set Up Fully Offline Installation</h1>
+<!-- TOC -->
+<ul>
+<li><a href="#references">References</a></li>
+<li><a href="#exercise-0-prepare-for-offline">Exercise 0: Prepare for Offline</a></li>
+<li><a href="#exercise-1-set-up-offline-package-repository">Exercise 1: Set Up Offline Package Repository</a></li>
+<li><a href="#exercise-2-packages-in-the-repository">Exercise 2: Packages in the Repository</a></li>
+<li><a href="#exercise-3-installing-chocolatey-from-offline-repository">Exercise 3: Installing Chocolatey From Offline Repository</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://chocolatey.org/install#completely-offline-install">Offline Chocolatey Install</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">Licensed Install</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Package Server</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Set up Chocolatey Server</a></li>
+</ul>
+<h2 id="exercise-0-prepare-for-offline">Exercise 0: Prepare for Offline</h2>
+<p>The first thing we need to do is prepare. <strong>NOTE:</strong> This uses Chocolatey.Server, but you can use any of the known options in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">hosting your own package repository</a>.</p>
+<p>We need a machine with internet access. To set up Chocolatey for offline installation (air-gapped network if you will), first we need a way to obtain everything.</p>
+<p>So from the machine with internet access:</p>
+<ul>
+<li>Open PowerShell.exe as an administrative shell. You can type &quot;Windows Key + X + A&quot; (Windows 8+ - when that comes up if it is cmd.exe, simply type <code>powershell</code> to get into it).</li>
+<li>Type <code>c:\</code> and hit enter.</li>
+<li>Type <code>mkdir choco-setup</code> and enter followed by <code>cd choco-setup</code> and enter.</li>
+<li>In <code>c:\choco-setup</code>, type <code>mkdir files</code> and press enter.</li>
+<li>In <code>c:\choco-setup</code>, type <code>mkdir packages</code> and press enter.</li>
+<li>Type <code>cd packages</code> and press enter</li>
+<li>Now run <code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))</code> (this will get Chocolatey installed and it is what you see at <a href="https://chocolatey.org/install" class="uri">https://chocolatey.org/install</a>). It also makes choco available in that current shell.</li>
+<li>C4B / MSP / TRIAL: Obtain the <code>chocolatey.license.xml</code> from the email sent from the Chocolatey team and save the license file to <code>c:\choco-setup\files</code> so we can use it here and on the offline machines.</li>
+<li>TRIAL: grab a copy of the two nupkgs from the email. If you don&#39;t have that email with the download links, request it from whoever provided you the trial license. Save those two packages to <code>c:\choco-setup\packages</code>.</li>
+<li>C4B / MSP / TRIAL: Run this command <code>New-Item $env:ChocolateyInstall\license -Type Directory -Force</code> - this creates the license directory.</li>
+<li>C4B / MSP / TRIAL: Copy the license file (&quot;chocolatey.license.xml&quot;) into that folder that was just created. Run <code>Copy-Item c:\choco-setup\files\chocolatey.license.xml $env:ChocolateyInstall\license\chocolatey.license.xml -Force</code>.</li>
+<li>C4B / MSP / TRIAL: Verify the license is recognized - run choco. You should see something like &quot;Chocolatey v0.10.8 Business&quot;. You may also see an error about installing something. Ignore that for now.</li>
+<li>C4B / MSP: Run <code>choco upgrade chocolatey.extension -y</code> (it will have what looks like an error, but that is fine, it is considered a warning and will clear up as soon as this package finishes installing)</li>
+<li>TRIAL: Run <code>choco upgrade chocolatey.extension --pre --source c:\choco-setup\packages</code> (this is where you saved the nupkgs earlier).</li>
+<li>Download packages (choose one):
+<ul>
+<li>C4B / MSP / TRIAL: - Now run the following: <code>choco download chocolatey chocolatey.server dotnet4.6.1 --internalize</code>. This is going to take quite awhile.</li>
+<li>FOSS only - go download the following packages (internalize noted items with <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">manual walkthrough</a>):
+<ul>
+<li><a href="https://chocolatey.org/api/v2/package/chocolatey">Chocolatey</a></li>
+<li><a href="https://chocolatey.org/api/v2/package/chocolatey.server">Chocolatey.Server</a></li>
+<li><a href="https://chocolatey.org/api/v2/package/DotNet4.6">dotnet4.6</a> - internalize manually</li>
+<li><a href="https://chocolatey.org/api/v2/package/DotNet4.6.1">dotnet4.6.1</a> - internalize manually</li>
+<li><a href="https://chocolatey.org/api/v2/package/KB2919355">KB2919355</a> - internalize manually</li>
+<li><a href="https://chocolatey.org/api/v2/package/KB2919442">KB2919442</a> - internalize manually</li>
+</ul></li>
+</ul></li>
+<li>C4B / MSP - Run the following additionally: <code>choco download chocolatey.extension chocolatey-agent --internalize</code>. TRIAL - you should already have placed these nupkgs in the folder earlier.</li>
+<li>Now we should have several packages in <code>c:\choco-setup\packages</code>. If not, type <code>start .</code> and go copy the files here to that location.</li>
+<li>Obtain the PowerShell script from <a href="https://chocolatey.org/install#completely-offline-install" class="uri">https://chocolatey.org/install#completely-offline-install</a> and copy it to <code>c:\choco-setup\files</code> as &quot;ChocolateyLocalInstall.ps1&quot;. We will need this to install Chocolatey on the airgapped box.</li>
+<li>Open <code>c:\choco-setup\files\ChocolateyLocalInstall.ps1</code> in an editor like Notepad++ or Visual Studio Code (do not use Notepad.exe!!).</li>
+<li>Change this line <code>$localChocolateyPackageFilePath = 'c:\packages\chocolatey.0.10.0.nupkg'</code> to <code>$localChocolateyPackageFilePath = 'c:\choco-setup\packages\chocolatey.0.10.8.nupkg'</code> (adjust for the actual path to the Chocolatey package).</li>
+</ul>
+<p>Get those files over to that air-gapped network (USB key and sneakernet if you need to).</p>
+<h2 id="exercise-1-set-up-offline-package-repository">Exercise 1: Set Up Offline Package Repository</h2>
+<p>Now we&#39;ve finished the first Exercise and we have those files on our offline machine. We are going to set up the Chocolatey.Server (but you could set up something else here like Nexus, Artifactory Pro, or ProGet).</p>
+<ul>
+<li>Ensure the folders from the other drive are set in <code>c:\choco-setup</code> here on this machine.</li>
+<li>Let&#39;s get Chocolatey installed. Open up an administrative PowerShell.exe on this machine.</li>
+<li>Type <code>&amp; c:\choco-setup\files\ChocolateyLocalInstall.ps1</code> and press enter. This should install Chocolatey if you have everything set up correctly from the first set of instructions.</li>
+<li>Run <code>choco source remove -n=chocolatey</code>. This removes the default Chocolatey source.</li>
+<li>Run <code>choco source add --name=setup --source=c:\choco-setup\packages</code></li>
+<li>Follow the steps at <a href="https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally" class="uri">https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally</a></li>
+<li>Follow the steps at <a href="https://chocolatey.org/docs/how-to-set-up-chocolatey-server#additional-configuration" class="uri">https://chocolatey.org/docs/how-to-set-up-chocolatey-server#additional-configuration</a></li>
+<li>Open a web browser and navigate to <a href="http://localhost" class="uri">http://localhost</a>. Read over the site and take notes.</li>
+<li>You may wish to install an SSL certificate.</li>
+<li>You may wish to set up authentication to the repository (the SSL certificate is highly recommended to not pass passwords in cleartext).</li>
+</ul>
+<p><strong>NOTE:</strong> You may wish to use another repository server, like Artifactory Pro, Nexus, ProGet, etc. They have the concept of a proxy repository. Unlike NuGet repositories, you likely <strong><em>DO NOT WANT</em></strong> a proxied NuGet/Chocolatey repository pointing to the community repository. They only cache packages - <strong><em>cached</em> is not the same concept as <em>internalized</em></strong>. To reuse packages from the community repository in a reliable way, you need to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize them</a>. The community repository is subject to distribution rights, which means many packages need to download things from the internet at <strong><em>runtime</em></strong>. That&#39;s unreliable and a no go for many organizations. You can use Package Internalizer (as we are seeing above) or <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">manually internalize packages</a> you want to use from the community repository. More on <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">why (community packages repository notes)</a>.</p>
+<h2 id="exercise-2-packages-in-the-repository">Exercise 2: Packages in the Repository</h2>
+<ul>
+<li>Now we need to simply place the packages we have in <code>c:\choco-setup\packages</code> to the packages folder of the website, which is typically at <code>c:\tools\Chocolatey.Server\App_Data\Packages</code>.</li>
+<li>Make sure we have Chocolatey here, as the Chocolatey install script that Chocolatey Server offers is dynamic and we want it to use a local package instead of the Chocolatey package at <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a>.</li>
+</ul>
+<h2 id="exercise-3-installing-chocolatey-from-offline-repository">Exercise 3: Installing Chocolatey From Offline Repository</h2>
+<p>One thing Chocolatey.Server v0.2.3+ contains is an install script much like you see at <a href="https://chocolatey.org/install" class="uri">https://chocolatey.org/install</a> and <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a>.</p>
+<ul>
+<li>From a client, open a browser and navigate to the url of the package repository.</li>
+</ul>
+<p><strong>WORK IN PROGRESS, CHECK BACK LATER</strong></p>
+</article>
