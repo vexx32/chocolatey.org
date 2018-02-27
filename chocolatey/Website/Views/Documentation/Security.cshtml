@@ -138,12 +138,14 @@ Public key token is 79d02ea9cad655eb
 </ol>
 <h3 id="rigorous-moderation-process-for-community-packages">Rigorous Moderation Process for Community Packages</h3>
 <p>In October 2014, the community feed had moderation turned on. All community packages (every version of a package) go through a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })">rigorous moderation process</a> prior to any public consumption:</p>
-<pre><code class="nohighlight"> * All package versions are run through an [automated validation process](https://github.com/chocolatey/package-validator/wiki) to determine quality.
- * All package versions are run through an [automated verification process](https://github.com/chocolatey/package-verifier/wiki) to determine if they work correctly (install, etc).
- * All packages versions are run through VirusTotal to determine if there are any flagging items. This includes downloading and unpacking any external resources (See the results on a package page in the Virus section - https://chocolatey.org/packages/chocolatey#virus as an example).
- * A human <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">reviews every package version</a> that is not a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted package</a>. This process verifies that packages are pulling from official distro sources or checksumming items versus the official distros and checking over scripts for malicious behavior.
- * We don&#39;t require cryptographically signing packages yet, that is a future enhancement
- * Checksumming is a requirement for non-secure scenarios, but is not yet a requirement in some scenarios, so keep reading the next section.</code></pre>
+<ul>
+<li>All package versions are run through an <a href="https://github.com/chocolatey/package-validator/wiki">automated validation process</a> to determine quality.</li>
+<li>All package versions are run through an <a href="https://github.com/chocolatey/package-verifier/wiki">automated verification process</a> to determine if they work correctly (install, etc).</li>
+<li>All packages versions are run through VirusTotal to determine if there are any flagging items. This includes downloading and unpacking any external resources (See the results on a package page in the Virus section - <a href="https://chocolatey.org/packages/chocolatey#virus" class="uri">https://chocolatey.org/packages/chocolatey#virus</a> as an example).</li>
+<li>A human <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">reviews every package version</a> that is not a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })#what-is-a-trusted-package">trusted package</a>. This process verifies that packages are pulling from official distro sources or checksumming items versus the official distros and checking over scripts for malicious behavior.</li>
+<li>We don&#39;t require cryptographically signing packages yet, that is a future enhancement</li>
+<li>Checksumming is a requirement for non-secure scenarios, but is not yet a requirement in some scenarios, so keep reading the next section.</li>
+</ul>
 <h4 id="downloading-internet-resources-can-still-be-an-issue">Downloading Internet Resources Can Still Be An Issue</h4>
 <p>With all of that said, you may want to ensure you build trust with each package as the software is coming from somewhere on the internet sometimes and moderators only validate that the package gets the software from those official distribution points, not necessarily the software itself. While VirusTotal provides a bit more of a validation against the binaries, if the maintainer is not using checksums in the package (checksums are required if the package downloads from non-secure locations), there isn&#39;t a guarantee that the software vendor did not pull a switch on the binary (the remote distribution source). If you are concerned about that you should look to Pro or Business (next section).</p>
 <h2 id="chocolatey-pro-chocolatey-for-business">Chocolatey Pro / Chocolatey for Business</h2>

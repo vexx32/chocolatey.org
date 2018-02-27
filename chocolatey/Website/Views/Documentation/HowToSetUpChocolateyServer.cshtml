@@ -7,6 +7,7 @@
 <!-- TOC -->
 <ul>
 <li><a href="#what-is-chocolateyserver">What is Chocolatey.Server?</a></li>
+<li><a href="#requirements">Requirements</a></li>
 <li><a href="#setup-with-puppet">Setup with Puppet</a></li>
 <li><a href="#setup-normally">Setup Normally</a></li>
 <li><a href="#additional-configuration">Additional Configuration</a>
@@ -32,6 +33,15 @@
 <li>Allows packages up to 2GB. Package size can be controlled through <a href="https://msdn.microsoft.com/en-us/library/ms689462(v=vs.90).aspx">maxAllowedContentLength</a> and <a href="https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx">maxRequestLength</a>.</li>
 </ul>
 <p>When you install it, it will install the website typically to <code>c:\tools\chocolatey.server</code>.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>You need a Windows box with at least 50GB of free space (or where ever you are going to put the packages).</li>
+<li>50GB of free space for where ever you will put packages.</li>
+<li>We recommend at least 8GB RAM, but more if you can.</li>
+<li>Ability to set up an IIS site and unblock website ports.</li>
+<li>If you have an IIS site for WSUS administration, Chocolatey.Server website will not come up at all, even if everything looks right. We have not yet been able to determine the issue, but believe it is related to ASP.NET 4.6+. Installing all of the required components for Chocolatey.Server may also affect your WSUS admin site. Please seek a different box.</li>
+<li>If you can ensure your server is up to date with all of the Windows Updates, you will move through this process quite a bit quicker.</li>
+</ul>
 <h2 id="setup-with-puppet">Setup with Puppet</h2>
 <p>If you are using the Puppet module <a href="https://forge.puppet.com/chocolatey/chocolatey_server">chocolatey/chocolatey_server</a>, it will do all of the additional setup for this package and allow some customization.</p>
 <p>The module works with Windows Server 2008/2012.<br />
@@ -103,6 +113,7 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <ul>
 <li>You missed ensuring the website is using an app pool that is at least .NET 4.0. Check the app pool that your site is using, then ensure that app pool has <code>32-bit</code> enabled and the managed runtime version is <code>v4.0</code> (or some version of 4).</li>
 <li>You have made a change to the xml file and it is not valid xml. This typically happens if you put an xml escape character into the password (<code>&amp;</code>). To do that you would need to set CData around the value or use a different password. It could also happen if you accidentallly change the xml and it is no longer valid.</li>
+<li>You are attempting to set up Chocolatey Server next to WSUS Administration website. For an unknown reason, something won&#39;t register correctly with Chocolatey Server and its need for ASP.NET 4.6+. So we recommend not putting the Chocolatey Server next to that website. Find a machine with the WSUS administration site.</li>
 </ul>
 <h3 id="other-error">Other error</h3>
 <p>Turn on customErrors under system.web - <customErrors mode="Off" /> - see this guide to set it - <a href="https://stackify.com/web-config-customerrors-asp-net/" class="uri">https://stackify.com/web-config-customerrors-asp-net/</a></p>

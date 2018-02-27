@@ -83,6 +83,7 @@
 <p><img src="https://cloud.githubusercontent.com/assets/63502/12741281/84a3df8e-c940-11e5-8818-456801728cf5.png" alt="license" /></p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/13052159/e6d1be92-d3c2-11e5-8856-d7580e51e3b6.png" alt="install/upgrade" /></p></li>
 </ol>
+<p><strong>NOTE</strong>: Also note that order is <strong><em>very</em></strong> important here. You need license file placed, then chocolatey.extension, then any other licensed components. Expect issues if you don&#39;t follow this order exactly.</p>
 <p><strong>NOTE</strong>: Folks deploying the license out to many machines typically wrap the above logic into a Chocolatey package, embedding the license into the package. When they renew licenses, they just run an upgrade on the licensed package! Don&#39;t take a dependency on the <code>chocolatey.extension</code> package (Chocolatey Licensed Extension) as you need the license to be placed first to properly set everything when you install the licensed extension.</p>
 <h3 id="how-do-i-install-a-local-nupkg-file">How Do I Install a Local nupkg File?</h3>
 <p>See the next section</p>
@@ -100,6 +101,7 @@
 <li>Run this command: <code>choco upgrade chocolatey.extension --pre --source c:\folder\where\downloaded\nupkg\resides</code> (or you can use <code>install</code> instead of <code>upgrade</code>). <strong>Note</strong>: Source location is not <code>--source c:\downloads\chocolatey.extension.1.8.1.nupkg</code>, it is <code>--source c:\downloads</code>. You will see an error you can safely ignore.</li>
 <li>That&#39;s it! You are good to go.</li>
 </ol>
+<p><strong>NOTE</strong>: Also note that order is <strong><em>very</em></strong> important here. You need license file placed, then chocolatey.extension, then any other licensed components. Expect issues if you don&#39;t follow this order exactly.</p>
 <p>See the difference between the trial install here and <a href="#how-do-i-install-the-licensed-edition">a fully licensed edition</a> (also see the pictures above).</p>
 <h4 id="notes-on-the-trial-version">Notes on the Trial Version</h4>
 <p>In the trial, package authoring features have nag warnings that require someone to manually hit the Enter key a random number of times. Do not attempt to automate Package Internalizer / Package Builder or <code>choco sync</code> when using a trial of C4B. Execute those things directly and see how well they work for you.</p>
