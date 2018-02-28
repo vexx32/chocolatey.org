@@ -3738,23 +3738,6 @@ fieldset.form  {
     z-index: 99999;
 }
 
-#searchBoxInput:focus {
-    width: -webkit-calc(100% - 18em);
-    width:    -moz-calc(100% - 18em);
-    width:         calc(100% - 18em);
-    transition-property: width;
-    transition-duration: 0.5s;
-}
-
-@media(max-width: 800px) {
-    #searchBoxInput:focus {
-        width: -webkit-calc(100% - 5em);
-        width:    -moz-calc(100% - 5em);
-        width:         calc(100% - 5em);
-        transition-duration: 0.25s;
-    }
-}
-
 #searchBoxSubmit {
     background-color: #fff;
     background-image: url("../Content/Images/searchbutton.png");

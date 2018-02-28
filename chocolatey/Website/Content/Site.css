@@ -243,16 +243,6 @@ header.main {
 
             }
 
-            #searchBox:focus + #menu {
-                display: none;
-            }
-
-            #searchBoxInput:focus {
-                width: 910px;
-                transition-property: width;
-                transition-duration: 0.5s;
-            }
-
             #searchBoxSubmit {
                 border: none;
                 background-color: #fff;
