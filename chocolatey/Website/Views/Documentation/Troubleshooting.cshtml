@@ -99,7 +99,7 @@ Install-ChocolateyPackage @@packageArgs
 #Install-ChocolateyInstallPackage @@packageArgs # this is what you meant to use in this case.</code></pre>
 <p><code>Install-ChocolateyPackage</code> didn&#39;t have both a <code>File</code> parameter and a <code>FileType</code> parameter. PowerShell has a &quot;feature&quot; where it does partial matching of parameters. When you splat the parameters in, it tries to apply both <code>File</code> and <code>FileType</code> to <code>FileType</code> and throws the above error.</p>
 <p>Typically, when you are installing locally, you likely want to use <code>Install-ChocolateyInstallPackage</code> anyway.</p>
-<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/40736df7-7f3f-4be7-929d-1606be0e3a62%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/40736df7-7f3f-4be7-929d-1606be0e3a62%40googlegroups.com</a></p>
+<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/40736df7-7f3f-4be7-929d-1606be0e3a62%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/40736df7-7f3f-4be7-929d-1606be0e3a62%40googlegroups.com</a> (you will need to join the group to see the message)</p>
 <p><a id="markdown-error-this-package-does-not-support-64-bit-architecture" name="error-this-package-does-not-support-64-bit-architecture"></a></p>
 <h3 id="error-this-package-does-not-support-64-bit-architecture">ERROR: This package does not support 64 bit architecture.</h3>
 <p>This message is from <a href="https://github.com/chocolatey/choco/issues/527" class="uri">https://github.com/chocolatey/choco/issues/527</a> - it is when the url value chosen is empty. This is common when you are creating a package and you forget to use splatting, instead passing the variable in as the first positional parameter to a function.</p>
@@ -130,13 +130,13 @@ Install-ChocolateyPackage $packageArgs # this is incorrect and will pass the ent
 <p>References:</p>
 <ul>
 <li><a href="https://github.com/majkinetor/au/issues/70" class="uri">https://github.com/majkinetor/au/issues/70</a></li>
-<li><a href="https://groups.google.com/d/msgid/chocolatey/5c544e16-e1b2-4249-bad6-4591017df81b%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/5c544e16-e1b2-4249-bad6-4591017df81b%40googlegroups.com</a></li>
+<li><a href="https://groups.google.com/d/msgid/chocolatey/5c544e16-e1b2-4249-bad6-4591017df81b%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/5c544e16-e1b2-4249-bad6-4591017df81b%40googlegroups.com</a> (you will need to join the group to see the message)</li>
 <li><a href="https://github.com/chocolatey/chocolatey-coreteampackages/issues/439" class="uri">https://github.com/chocolatey/chocolatey-coreteampackages/issues/439</a> (separate issue)</li>
 </ul>
 <p><a id="markdown-error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary" name="error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary"></a></p>
 <h3 id="error-this-package-does-not-support-64-bit-architecture-when-trying-to-install-from-a-local-or-included-binary">&quot;ERROR: This package does not support 64 bit architecture.&quot; when trying to install from a local or included binary.</h3>
 <p>This is similar to the above, the error is the same. In most cases it stems from setting up your package parameters for <code>Install-ChocolateyInstallPackage</code> but calling <code>Install-ChocolateyPackage</code> instead. Learn the differences at the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">PowerShell function reference</a>.</p>
-<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com</a></p>
+<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/d11d8eb2-74b3-4c2c-b0bb-d1a1ed3df389%40googlegroups.com</a> (you will need to join the group to see the message)</p>
 <p><a id="markdown-my-package-cant-find-dependencies" name="my-package-cant-find-dependencies"></a></p>
 <h3 id="my-package-cant-find-dependencies">My package can&#39;t find dependencies</h3>
 <p>Please see <a href="#package-not-installed-an-error-occurred-during-installation-unable-to-resolve-dependency">unable to resolve dependency</a>.</p>
@@ -181,7 +181,7 @@ if (Test-Path($ChocolateyProfile)) {
 <p><a id="markdown-microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed" name="microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed"></a></p>
 <h3 id="microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed">Microsoft.Powershell_profile.ps1 cannot be loaded. The file is not digitally signed.</h3>
 <p>If you are seeing this, your PowerShell execution policy is either <code>AllSigned</code> or <code>Restricted</code>. You could be seeing this due to the addition of the Chocolatey profile (above question) for tab completion. You need to authenticode sign the PowerShell profile file, rename it, or remove it.</p>
-<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/58ef0ece-5e2a-4c2c-82a8-10e1711bdd3f%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/58ef0ece-5e2a-4c2c-82a8-10e1711bdd3f%40googlegroups.com</a></p>
+<p>Reference: <a href="https://groups.google.com/d/msgid/chocolatey/58ef0ece-5e2a-4c2c-82a8-10e1711bdd3f%40googlegroups.com">https://groups.google.com/d/msgid/chocolatey/58ef0ece-5e2a-4c2c-82a8-10e1711bdd3f%40googlegroups.com</a> (you will need to join the group to see the message)</p>
 <p><a id="markdown-im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository" name="im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository"></a></p>
 <h3 id="im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</h3>
 <p>It could be one of a few things:</p>

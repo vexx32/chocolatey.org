@@ -7,6 +7,7 @@
 <p>Congratulations on your recent purchase of a licensed edition of Chocolatey! If you are trialing, please pay particular attention to that section:</p>
 <!-- TOC -->
 <ul>
+<li><a href="#internal--organizational-chocolatey-deployments">Internal / Organizational Chocolatey Deployments</a></li>
 <li><a href="#some-administrative-actions">Some Administrative Actions</a></li>
 <li><a href="#how-do-i-know-when-the-license-is-installed">How Do I Know When the License is Installed?</a></li>
 <li><a href="#see-it-in-action">See It In Action</a></li>
@@ -43,6 +44,8 @@
 </ul></li>
 </ul>
 <!-- /TOC -->
+<h2 id="internal-organizational-chocolatey-deployments">Internal / Organizational Chocolatey Deployments</h2>
+<p>Refer to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">How To Set Up Chocolatey For Organizational/Internal Use</a> in tandem with this article.</p>
 <h2 id="some-administrative-actions">Some Administrative Actions</h2>
 <ul>
 <li>The email the license is sent to will automatically be subscribed to the customer advisory list. If there are other folks who need to be on that list for important notifications, please have them sign up at <a href="http://eepurl.com/b6zpGv">Chocolatey Customers</a>.</li>
@@ -84,7 +87,7 @@
 <p><img src="https://cloud.githubusercontent.com/assets/63502/13052159/e6d1be92-d3c2-11e5-8856-d7580e51e3b6.png" alt="install/upgrade" /></p></li>
 </ol>
 <p><strong>NOTE</strong>: Also note that order is <strong><em>very</em></strong> important here. You need license file placed, then chocolatey.extension, then any other licensed components. Expect issues if you don&#39;t follow this order exactly.</p>
-<p><strong>NOTE</strong>: Folks deploying the license out to many machines typically wrap the above logic into a Chocolatey package, embedding the license into the package. When they renew licenses, they just run an upgrade on the licensed package! Don&#39;t take a dependency on the <code>chocolatey.extension</code> package (Chocolatey Licensed Extension) as you need the license to be placed first to properly set everything when you install the licensed extension.</p>
+<p><strong>NOTE</strong>: Folks deploying the license out to many machines typically wrap the above logic into a Chocolatey package, embedding the license into the package. When they renew licenses, they just run an upgrade on the licensed package! Don&#39;t take a dependency on the <code>chocolatey.extension</code> package (Chocolatey Licensed Extension) as you need the license to be placed first to properly set everything when you install the licensed extension. Refer to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">How To Set Up Chocolatey For Organizational/Internal Use</a> where not only is this covered, but we have a script you can run that will create the license package automagically.</p>
 <h3 id="how-do-i-install-a-local-nupkg-file">How Do I Install a Local nupkg File?</h3>
 <p>See the next section</p>
 <h3 id="how-do-i-install-the-trial-edition">How Do I Install The Trial Edition?</h3>

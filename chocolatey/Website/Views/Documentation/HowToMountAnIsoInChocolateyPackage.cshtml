@@ -3,15 +3,48 @@
 }
 
 <article>
-<h2 id="the-problem">The Problem</h2>
-<p>Almost all Chocolatey Packages download a file from the internet, and then directly work with this file. This can be an EXE or an MSI, whose location is passed directly into the <code>Install-ChocolateyPackage</code> Helper method, or a zip file passed into the <code>Install-ChocolateyZipPackage</code> Helper method.</p>
-<p>However, there are times when using a file directly is not an option. From time to time, it is necessary to use an ISO file within your Chocolatey Package. In later versions of the Windows Operating System, PowerShell provides the ability to mount this ISO file directly using the <code>Mount-DiskImage</code> cmdlet. However, in earlier versions of Windows, this is not possible.</p>
-<p>In order to maintain backwards compatibility with older Operating Systems, when using an ISO file, you should use a single method that works everywhere.</p>
-<h2 id="the-solution">The Solution</h2>
-<p>ImDisk Virtual Disk Driver (imdisk) is a software package that allows an ISO file to be mounted, but more importantly, it works for Windows NT/2000/XP/Vista/7/8/8.1 or Windows Server 2003/2008/2012 (so basically, everything!). That means that you can use one, common, method, for mounting ISO files when required within your Chocolatey Packages.</p>
-<h2 id="code-sample">Code Sample</h2>
-<pre><code class="powershell">
-# First, download the ISO file from the internet (NOTE: you could equally use a locally stored ISO)
+<h1 id="mount-iso-image">Mount ISO image</h1>
+<!-- TOC -->
+<ul>
+<li><a href="#mounting-isos---the-problem">Mounting ISOs - The Problem</a></li>
+<li><a href="#imdisk">ImDisk</a>
+<ul>
+<li><a href="#step-1-get-imdisk-package">Step 1: Get ImDisk Package</a></li>
+<li><a href="#step-2-add-imdisk-dependency">Step 2: Add ImDisk Dependency</a></li>
+<li><a href="#step-3-add-imdisk-code">Step 3: Add ImDisk Code</a></li>
+</ul></li>
+<li><a href="#mount-diskimage">Mount-DiskImage</a>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#step-1-add-mount-diskimage-code">Step 1: Add Mount-DiskImage Code</a></li>
+</ul></li>
+</ul>
+<!-- /TOC -->
+<h2 id="mounting-isos---the-problem">Mounting ISOs - The Problem</h2>
+<p>There are times when using an installer file directly is not an option as what you need is contained in an ISO. In later versions of the Windows Operating System (defined in <a href="#mount-diskimage">Mount-DiskImage</a> below), PowerShell provides the ability to mount this ISO file directly using the <code>Mount-DiskImage</code> cmdlet. However, in earlier versions of Windows, this is not possible. In order to maintain backwards compatibility with older Operating Systems, when using an ISO file, you can use ImDisk Virtual Disk Driver.</p>
+<h2 id="imdisk">ImDisk</h2>
+<p>The most compatible with all versions of Windows option is to use ImDisk. ImDisk Virtual Disk Driver (imdisk) is a software package that allows an ISO file to be mounted, but more importantly, it works for Windows NT/2000/XP/Vista/7/8/8.1 or Windows Server 2003/2008/2012/2016 (so basically, everything!). That means that you can use one, common, method, for mounting ISO files when required within your Chocolatey Packages.</p>
+<h3 id="step-1-get-imdisk-package">Step 1: Get ImDisk Package</h3>
+<p>You will need to take a dependency on the <a href="https://chocolatey.org/packages/imdisk">ImDisk package</a>. If you are using Chocolatey in an organizational context, be sure to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize</a> (not cache) the ImDisk package and place it on your internal sources.</p>
+<ol>
+<li>MSP/C4B: Run <code>choco download imdisk --internalize</code></li>
+<li>FOSS: Download <a href="https://chocolatey.org/api/v2/package/imdisk">imdisk</a> - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize manually</a></li>
+<li>Deploy the package to your internal repository.</li>
+</ol>
+<p><strong>NOTE</strong>: MSP stands for Managed Service Provider. It along with Chocolatey for Business (C4B) are commercial editions of Chocolatey that come with <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> to convert existing packages to be 100% offline and reliable. FOSS (free open source software) is short for the open source edition.</p>
+<h3 id="step-2-add-imdisk-dependency">Step 2: Add ImDisk Dependency</h3>
+<p>Open your package&#39;s nuspec up and add a dependency on <code>imdisk</code>. This will be inserted just above the closing &quot;metadata&quot; tag (<code>&lt;/metadata&gt;</code>).</p>
+<pre><code class="xml">  &lt;dependencies&gt;
+      &lt;dependency id=&quot;imdisk&quot; version=&quot;2.0.9&quot; /&gt;
+  &lt;/dependencies&gt;</code></pre>
+<p><strong>NOTE:</strong> The above version is a minimum version dependency. Your version may be newer, you can substitute it there.</p>
+<h3 id="step-3-add-imdisk-code">Step 3: Add ImDisk Code</h3>
+<p>Now in your chocolateyInstall.ps1, you will want something similar to the following:</p>
+<pre><code class="powershell"># Internal use:
+# - Option 1: If the ISO is smaller than 1GB, embed the binary directly into the package for the most reliable use skip this
+# - Option 2: Store ISO on a file share and skip this
+# - Option 3: Download from internal sources, like a binary (raw) repository in Artifactory, Nexus, or ProGet.
+# Community repo: Download the ISO file from the internet if you don&#39;t have distribution rights or the file is larger than 250MB.
 Get-ChocolateyWebFile &#39;WindowsSDK2008&#39; &quot;$env:temp\winsdk2008.iso&quot; &#39;http://download.microsoft.com/download/f/e/6/fe6eb291-e187-4b06-ad78-bb45d066c30f/6.0.6001.18000.367-KRMSDK_EN.iso&#39;
 
 # Next, mount the ISO file, ready for using it&#39;s contents (NOTE: the last parameter here is the drive letter that will be assigned to the mounted ISO)
@@ -23,5 +56,37 @@ Install-ChocolateyInstallPackage &#39;WindowsSDK2008&#39; &#39;exe&#39; &#39;/q&
 # Unmount the ISO file when finished
 imdisk -d -m w:
 </code></pre>
-<p><strong>NOTE:</strong> Code sample was taken from this <a href="https://chocolatey.org/packages/WindowsSDK2008/6.0.6001">package</a>, thanks to <a href="https://chocolatey.org/profiles/dave42">dave42</a> for sharing</p>
+<h2 id="mount-diskimage">Mount-DiskImage</h2>
+<p><a href="https://docs.microsoft.com/en-us/powershell/module/storage/mount-diskimage">Mount-DiskImage</a><br />
+is an alternative that is built-in, so no package dependencies required. However it may need admin permission to perform (with VHDs it will) and is only available in certain versions of PowerShell/Windows.</p>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>PowerShell v3+</li>
+<li>Windows 8+/Windows Server 2012+</li>
+</ul>
+<p>It is both an Operating System version dependency <strong><em>and</em></strong> a PowerShell version dependency (although by default those operating systems will have the right version of PowerShell already available). The great news is if you have that, it becomes as simple as the following code.</p>
+<h3 id="step-1-add-mount-diskimage-code">Step 1: Add Mount-DiskImage Code</h3>
+<p>In your chocolateyInstall.ps1, you will want something similar to the following:</p>
+<pre><code class="powershell"># Internal use:
+# - Option 1: If the ISO is smaller than 1GB, embed the binary directly into the package for the most reliable use skip this
+# - Option 2: Store ISO on a file share and skip this
+# - Option 3: Download from internal sources, like a binary (raw) repository in Artifactory, Nexus, or ProGet.
+# Community repo: Download the ISO file from the internet if you don&#39;t have distribution rights or the file is larger than 250MB.
+Get-ChocolateyWebFile &#39;WindowsSDK2008&#39; &quot;$env:temp\winsdk2008.iso&quot; &#39;http://download.microsoft.com/download/f/e/6/fe6eb291-e187-4b06-ad78-bb45d066c30f/6.0.6001.18000.367-KRMSDK_EN.iso&#39;
+
+# Next, mount the ISO file, ready for using it&#39;s contents
+$iso = Get-Item &quot;$env:temp\winsdk2008.iso&quot;
+
+Mount-DiskImage -ImagePath $iso
+
+#Get the drive letter where iso is mounted
+$driveLetter = (Get-DiskImage $iso | Get-Volume).DriveLetter
+
+# Run commands against the mounted ISO, in this case, run the setup.exe
+Install-ChocolateyInstallPackage &#39;WindowsSDK2008&#39; &#39;exe&#39; &#39;/q&#39; &quot;${driveLetter}:\Setup.exe&quot;
+
+# Unmount the ISO file when finished
+Dismount-DiskImage -ImagePath $iso
+</code></pre>
+<p><strong>NOTE:</strong> Code sample was taken from this <a href="https://chocolatey.org/packages/WindowsSDK2008/6.0.6001">package</a>, thanks to <a href="https://chocolatey.org/profiles/dave42">dave42</a> for sharing.</p>
 </article>
