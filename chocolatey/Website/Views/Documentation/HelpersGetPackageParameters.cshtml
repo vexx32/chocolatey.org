@@ -33,7 +33,7 @@ It also only supports splitting by <code>:</code>, with this function you can<br
 either split by <code>:</code> or <code>=</code>. For compatibility with the core extension,<br />
 build all docs with <code>/Item:Value</code>.</p>
 <h2 id="aliases">Aliases</h2>
-<p>None</p>
+<p><code>Get-PackageParametersBuiltIn</code></p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
 <pre><code class="powershell">
@@ -57,7 +57,7 @@ if (!$pp[&#39;LICENSE&#39;]) { $pp[&#39;LICENSE&#39;] = &#39;1234&#39; }</code><
 <pre><code class="powershell">
 $pp = Get-PackageParameters
 if (!$pp[&#39;UserName&#39;]) { $pp[&#39;UserName&#39;] = &quot;$env:UserName&quot; }
-# Requires 0.10.8 for Read-Host -AsSecureString
+# Requires Choocolatey v0.10.8+ for Read-Host -AsSecureString
 if (!$pp[&#39;Password&#39;]) { $pp[&#39;Password&#39;] = Read-Host &quot;Enter password for $($pp[&#39;UserName&#39;]):&quot; -AsSecureString}
 # fail the install/upgrade if not value is not determined
 if (!$pp[&#39;Password&#39;]) { throw &quot;Package needs Password to install, that must be provided in params or in prompt.&quot; }</code></pre>
@@ -79,6 +79,11 @@ Write-Host $r.InstallDir</code></pre>
 <p>Parameters should be passed as &quot;/NAME:value&quot; or &quot;/NAME=value&quot;. For<br />
 compatibility with <code>chocolatey-core.extension</code>, use <code>:</code>.</p>
 <p>For example `-Parameters &quot;/ITEM1:value /ITEM2:value with spaces&quot;</p>
+<p>NOTE: In 0.10.9+, to maintain compatibility with the prior art of the<br />
+chocolatey-core.extension method, quotes and apostrophes surrounding<br />
+parameter values will be removed. When the param is used, those items<br />
+can be added back if desired, but it&#39;s most important to ensure that<br />
+existing packages are compatible on upgrade.</p>
 <table>
 <thead>
 <tr class="header">

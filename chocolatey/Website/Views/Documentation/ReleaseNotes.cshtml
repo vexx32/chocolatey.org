@@ -6,7 +6,7 @@
 <h1 id="chocolatey-release-notes---open-source">Chocolatey Release Notes - Open Source</h1>
 <p>This covers changes for the &quot;chocolatey&quot; and &quot;chocolatey.lib&quot; packages, which are available as FOSS.</p>
 <p><strong>NOTE</strong>: For licensed versions, refer to both this set of release notes and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes-licensed" })">Licensed Release Notes</a>.</p>
-<h2 id="unreleased"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.10.9+is%3Aclosed">0.10.9</a> (unreleased)</h2>
+<h2 id="march-25-2018"><a href="https://github.com/chocolatey/choco/issues?q=milestone%3A0.10.9+is%3Aclosed">0.10.9</a> (March 25, 2018)</h2>
 <p>The vendored 7Zip had a couple of security findings that necessitated a release. There is also a lot of goodness going into this release as well. We&#39;ve fixed XDT transforms not to keep extra data around (requiring manual fixes). We&#39;ve resolved some issues surrounding compatibility with Get-PackageParameters in the chocolatey-core.extension package and what&#39;s now built into Chocolatey. That should now work appropriately, and the built-in method should be preferred, so if you are using <code>--package-parameters-sensitive</code>, those will be added as well when you do have the chocolatey-core.extension package also installed.</p>
 <p>We&#39;ve also brought in the long desired logging with no colorization. You can set that as a switch or globally with a feature flipper. With outdated/upgrade, you can now ignore unfound packages along with already skipping pinned packages. That will help you reduce your output to only the things it finds upgrades for that can be upgraded.</p>
 <h3 id="bug-fixes">BUG FIXES</h3>
@@ -18,6 +18,7 @@
 <li>Fix - Get-PackageParameters - Resolve differences between chocolatey.core-extension and built-in method - see <a href="https://github.com/chocolatey/choco/issues/1490">#1490</a></li>
 <li>Fix - Get-PackageParameters - force built-in method to be preferred over chocolatey-core.extension method - see <a href="https://github.com/chocolatey/choco/issues/1476">#1476</a></li>
 <li>Fix - Get-PackageParameters should handle urls - see <a href="https://github.com/chocolatey/choco/issues/1459">#1459</a></li>
+<li>Fix - Setting output directory with proper quoting can result in &quot;The given path&#39;s format is not supported.&quot; - see <a href="https://github.com/chocolatey/choco/issues/1517">#1517</a></li>
 <li>Fix - Logging - PowerShell script contents logging should not error if they have contents mistaken for log formatting - see <a href="https://github.com/chocolatey/choco/issues/1489">#1489</a></li>
 <li>Fix - Incorrect documentation for Install-ChocolateyInstallPackage - see <a href="https://github.com/chocolatey/choco/issues/1416">#1416</a></li>
 <li>[API] Fix - Logging - Loggers should always be checked for initialization - see <a href="https://github.com/chocolatey/choco/issues/1447">#1447</a></li>
@@ -26,11 +27,14 @@
 <h3 id="improvements">IMPROVEMENTS</h3>
 <ul>
 <li>[Security] RAR extraction with older 7zip can cause memory corruption (CVE–2018–5996) / ZIP Shrink vulnerability (CVE–2017–17969) - see <a href="https://github.com/chocolatey/choco/issues/1478">#1478</a></li>
+<li>Provide friendly error messages on well-known exit codes - see <a href="https://github.com/chocolatey/choco/issues/1526">#1526</a></li>
+<li>Capture password securely during validation when only the user name has been provided - see <a href="https://github.com/chocolatey/choco/issues/1524">#1524</a></li>
 <li>Outdated/Upgrade - Option/feature to ignore unfound packages - see <a href="https://github.com/chocolatey/choco/issues/1398">#1398</a></li>
 <li>Installation/Setup: run choco once to initialize the config file - see <a href="https://github.com/chocolatey/choco/issues/1401">#1401</a></li>
 <li>Logging - Log access denied for config file to log file only - see <a href="https://github.com/chocolatey/choco/issues/1445">#1445</a></li>
 <li>Ability to pick x64/x86 runtime binaries for shimming by architecture without needing PowerShell scripts - see <a href="https://github.com/chocolatey/choco/issues/1365">#1365</a></li>
 <li>Logging - Add &#39;--no-color&#39; as a global option and &#39;logWithoutColor&#39; feature - see <a href="https://github.com/chocolatey/choco/issues/100">#100</a></li>
+<li>Reset colors after abnormal exit - see <a href="https://github.com/chocolatey/choco/issues/474">#474</a></li>
 <li>[API] Logging - Set logging levels debug/verbose/trace - see <a href="https://github.com/chocolatey/choco/issues/1448">#1448</a></li>
 <li>[API] Logging - Sync already logged items when setting custom logging - see <a href="https://github.com/chocolatey/choco/issues/1446">#1446</a></li>
 <li>[API] Fix - Ensure one instantiation of GetChocolatey at a time - see <a href="https://github.com/chocolatey/choco/issues/1400">#1400</a></li>
