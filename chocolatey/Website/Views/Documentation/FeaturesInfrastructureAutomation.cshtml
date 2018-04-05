@@ -8,6 +8,7 @@
 <p>With most of these tools, the interface you would interact with Chocolatey would be through the tool or through the interfaces of the tool, like in scripts.</p>
 <!-- TOC depthTo:2 -->
 <ul>
+<li><a href="#summary">Summary</a></li>
 <li><a href="#ansible">Ansible</a></li>
 <li><a href="#boxstarter">Boxstarter</a></li>
 <li><a href="#chef">Chef</a></li>
@@ -20,6 +21,80 @@
 <li><a href="#system-center-configuration-manager">System Center Configuration Manager</a></li>
 </ul>
 <!-- /TOC -->
+<h2 id="summary">Summary</h2>
+<h3 id="chocolatey-integration-implementation-with-common-configuration-managers">Chocolatey Integration Implementation with Common Configuration Managers</h3>
+<p>For common integrations, it&#39;s handy to refer to the table below to know what configuration manager to choose. Most of the implementations below are written and managed by the companies behind the product. These implementations are typically open source and each part could be added by community contributions for those familiar with the code implementations. If you are unable to provide code implementations for adding necessary functionality to the integrations, we find it best if you create issues/tickets with those organizations if you are a customer as you will have more leverage into getting them implemented. <strong>NOTE</strong>: If you are a configuration manager company identified in the table and you have implemented anything in the below or you find our information is incorrect, please let us know so we can get it fixed.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><a href="http://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">Ansible</a></th>
+<th><a href="https://docs.chef.io/resource_chocolatey_package.html">Chef</a> / <a href="https://supermarket.chef.io/cookbooks/chocolatey/">Cookbook</a></th>
+<th><a href="https://www.powershellgallery.com/packages/cChoco/2.3.1.0">PowerShell DSC</a></th>
+<th><a href="https://forge.puppet.com/puppetlabs/chocolatey">Puppet</a></th>
+<th><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html">Salt</a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Manage Packages</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">Install Chocolatey</a></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr class="odd">
+<td>Install Chocolatey from internal source</td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">Manage Sources</a></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Manage Source Type (Admin/Self-Service)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-feature" })">Manage Features</a></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">Manage Config Settings</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For most of these, those configuration managers have some sort of exec you could use to manage those additional aspects, but it would be best if they supported all aspects of configuration of Chocolatey as part of the provider implementations.</p>
 <h2 id="ansible">Ansible</h2>
 <p>Ansible has the <code>win_chocolatey</code> module that manages both packages and the installation of Chocolatey itself.</p>
 <pre><code class="yaml">win_chocolatey:

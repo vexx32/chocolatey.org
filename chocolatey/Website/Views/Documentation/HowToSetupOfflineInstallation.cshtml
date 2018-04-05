@@ -7,12 +7,27 @@
 <!-- TOC -->
 <ul>
 <li><a href="#summary">Summary</a></li>
+<li><a href="#notes-on-this-guide">Notes on This Guide</a></li>
 <li><a href="#references">References</a></li>
+<li><a href="#requirements">Requirements</a>
+<ul>
+<li><a href="#chocolatey-clients">Chocolatey Clients</a>
+<ul>
+<li><a href="#chocolatey-components">Chocolatey Components</a></li>
+<li><a href="#space-requirements">Space Requirements</a></li>
+<li><a href="#memory-requirements">Memory Requirements</a></li>
+</ul></li>
+<li><a href="#chocolatey-repository-servers">Chocolatey Repository Servers</a></li>
+<li><a href="#chocolatey-central-management">Chocolatey Central Management</a></li>
+</ul></li>
 <li><a href="#exercise-0-prepare-for-internal-use">Exercise 0: Prepare For Internal Use</a></li>
 <li><a href="#exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access">Exercise 1: Set Up Chocolatey Installation On A Machine Without Internet Access</a></li>
 <li><a href="#exercise-2-set-up-a-package-repository">Exercise 2: Set Up A Package Repository</a>
 <ul>
-<li><a href="#exercise-2a-set-up-chocolateyserver">Exercise 2A: Set Up Chocolatey.Server</a></li>
+<li><a href="#exercise-2a-set-up-chocolateyserver">Exercise 2A: Set Up Chocolatey.Server</a>
+<ul>
+<li><a href="#ensure-chocolateyserver-with-configuration-managers">Ensure Chocolatey.Server with Configuration Managers</a></li>
+</ul></li>
 <li><a href="#exercise-2b-set-up-a-different-repository">Exercise 2B: Set Up A Different Repository</a></li>
 <li><a href="#exercise-2c-set-up-a-file-share-repository">Exercise 2C: Set Up A File Share Repository</a></li>
 <li><a href="#exercise-3d-set-up-an-sccm-distribution-point-as-a-chocolatey-source">Exercise 3D: Set Up An SCCM Distribution Point As A Chocolatey Source</a></li>
@@ -23,7 +38,10 @@
 <li><a href="#exercise-6-installing-chocolatey-on-client-machines">Exercise 6: Installing Chocolatey On Client Machines</a>
 <ul>
 <li><a href="#exercise-6a-installing-chocolatey-on-clients-directly-using-powershell">Exercise 6A: Installing Chocolatey On Clients Directly Using PowerShell</a></li>
-<li><a href="#exercise-6b-installing-chocolatey-on-clients-with-infrastructure-management-tools">Exercise 6B: Installing Chocolatey On Clients with Infrastructure Management Tools</a></li>
+<li><a href="#exercise-6b-installing-chocolatey-on-clients-with-infrastructure-management-tools">Exercise 6B: Installing Chocolatey On Clients with Infrastructure Management Tools</a>
+<ul>
+<li><a href="#chocolatey-integration-implementation-with-configuration-managers">Chocolatey Integration Implementation with Configuration Managers</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#exercise-7-subscribe-to-release-announcements">Exercise 7: Subscribe To Release Announcements</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
@@ -43,6 +61,9 @@
 <li>Learn when new Chocolatey releases are out - register with the release announcements mailing list</li>
 </ul>
 </blockquote>
+<h2 id="notes-on-this-guide">Notes on This Guide</h2>
+<p>This guide is pretty much the essential how to guide to having a successful internal Chocolatey deployment. What you will find below are walkthrough steps and scripts (!!) to really help speed up that initial setup. Some (most) of what you will find here is not meant to be automated past what is already here, most are one-time things that need to be performed, so they don&#39;t lend themselves well to being automated further than they already are with the scripts here.</p>
+<p>That said, Exercises 2 and 6 do lend themselves well to automation with infrastructure management (configuration management) tools. You will find that Puppet likely has the most comprehensive set of ability to fully configure Chocolatey and Chocolatey.Server, with PowerShell DSC coming in there as well. Most configuration management tools do support managing the installation of Chocolatey and software packages, but side step Chocolatey configuration. We think that they should do more there, and we find it&#39;s best if you reach out to those folks to ask that they would support those things.</p>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://chocolatey.org/install#completely-offline-install">Offline Chocolatey Install</a></li>
@@ -52,6 +73,40 @@
 <li><a href="https://chocolatey.org/security">Security</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Community Package Repository Disclaimer</a></li>
 </ul>
+<h2 id="requirements">Requirements</h2>
+<h3 id="chocolatey-clients">Chocolatey Clients</h3>
+<p>With Chocolatey clients, we ensure that Chocolatey is going to run with low memory footprints because you will have all aspects of things you will need to manage and different space and memory available across all of those clients. Chocolatey has a very wide reach into where it can be installed.</p>
+<p>For Chocolatey clients, you will need the following:</p>
+<ul>
+<li>Windows 7+/Windows 2003+ (Server Core also, but not Windows Nano Server)</li>
+<li>Windows PowerShell v2+ (not PowerShell Core)</li>
+<li>.NET Framework 4.x+</li>
+</ul>
+<h4 id="chocolatey-components">Chocolatey Components</h4>
+<ul>
+<li>Chocolatey CLI aka choco (or choco.exe) is a client (not a Windows service) that provides the core of Chocolatey and the installation store for locally installed packages. This is important as Chocolatey manages packages, not Programs and Features directly - Programs and Features is limited only to software that has &quot;installers&quot; and Chocolatey treats all aspects of Windows software as first class citizens (zips, scripts, binaries, installers), thus it needs to track and manage those things separately.</li>
+<li>Chocolatey GUI is an application that runs when a user runs it (also not a Windows Service).</li>
+<li>Chocolatey Agent (aka chocolatey-agent) is a Windows service available in Chocolatey for Business. It is used for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Self-Service Installation</a> and Chocolatey Central Management.</li>
+</ul>
+<h4 id="space-requirements">Space Requirements</h4>
+<ul>
+<li>Chocolatey CLI has an impact of 15 MB on default install plus the space the installed packages use up.</li>
+<li>Chocolatey GUI takes up another 50–100 MB of space on default installation.</li>
+<li>Chocolatey Agent (aka chocolatey-agent) is a Windows service available in Chocolatey for Business - it has an impact of about 10 MB.</li>
+</ul>
+<p><strong>RECOMMENDATION</strong>: We recommend enough free space for the applications you will install plus another 1 GB for allowing Chocolatey to process that. You will want to turn on Package Reducer (commercial editions) if you have it to really reduce the impact of embedded packages, which bring reliability but also increase footprint (unless you have Package Reducer). If you don&#39;t have Package Reducer and you are embedding binaries into nupkgs, you will need 3 times the space of what you are installing unless you explicitly clean up the extracted installers/zips in your automated scripts - then you will need 2x the space when considering the nupkg will still contain embedded binaries (and the nupkg must stick around). Unfortunately, this is going to be a calculation to understand exact space requirements and it really depends on what you will install.</p>
+<h4 id="memory-requirements">Memory Requirements</h4>
+<ul>
+<li>Chocolatey CLI only runs when called. It falls into managed memory thus can work in environments with low amounts of memory provided that they have enough memory available to manage software installations.</li>
+<li>Chocolatey GUI only runs when the application is open and is also in managed memory. It can work on systems with low amounts of memory.</li>
+<li>Chocolatey Agent (aka chocolatey-agent) - it is always running but has a very low footprint unless it is processing something.</li>
+</ul>
+<p><strong>RECOMMENDATION</strong>: At least 2GB of RAM at a bare minimum, but recommend at least 8GB for managing installations.</p>
+<h3 id="chocolatey-repository-servers">Chocolatey Repository Servers</h3>
+<p>Unforunately it&#39;s harder to make recommendations here as it is really dependent on the repository that you choose and what requirements they have. It varies from a Windows deployment to Linux deployed repositories, from Java-based, to .NET-based, to PHP, and Rust-based repositories. The requirements vary wildly, plus you may use those repositories that address multiple types of packages and would need to figure out the space available for that.</p>
+<p><strong>SPACE RECOMMENDATION</strong>: Have enough space for 10x the size of the installers and other software you will store. This will allow for some default growth. We would recommend 100 GB at a minimum.</p>
+<h3 id="chocolatey-central-management">Chocolatey Central Management</h3>
+<p>Requirements coming soon. Just imagine normal recommendations for an ASP.NET IIS deployment, a SQL Server back end, and 1+ Windows Services (depending on scale).</p>
 <h2 id="exercise-0-prepare-for-internal-use">Exercise 0: Prepare For Internal Use</h2>
 <p>The first thing we need to do is prepare. To do that we need a Windows machine with internet access so it can gather everything. If you are setting up into an air gapped network, you will be completing this on one machine, then loading it to a USB or to something else to get it over to the air gapped network (which we&#39;ll set up in Exercise 1). Check with your security teams to see if you have other steps that need to be completed prior to taking files from internet sources to the air gapped network.</p>
 <p>From the machine with internet access:</p>
@@ -256,6 +311,13 @@ choco upgrade chocolatey.server -y --pre
 
 Write-Warning &quot;Follow the steps at https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally and  https://chocolatey.org/docs/how-to-set-up-chocolatey-server#additional-configuration for now.&quot;
 # more may be added later</code></pre>
+<h4 id="ensure-chocolateyserver-with-configuration-managers">Ensure Chocolatey.Server with Configuration Managers</h4>
+<ul>
+<li>Puppet has an automated way of managing a Chocolatey.Server setup (it may not be up to date as of this writing). See <a href="https://forge.puppet.com/chocolatey/chocolatey_server" class="uri">https://forge.puppet.com/chocolatey/chocolatey_server</a>.</li>
+<li>Ansible has a blog post at <a href="http://frostbyte.us/using-ansible-to-install-a-chocolatey-package-repository/" class="uri">http://frostbyte.us/using-ansible-to-install-a-chocolatey-package-repository/</a> with some things we&#39;d love to see wrapped into a module.</li>
+<li>Chef has a POC at <a href="https://github.com/galenemery/chocolatey_server" class="uri">https://github.com/galenemery/chocolatey_server</a></li>
+<li>Docker image at - <a href="https://github.com/takhyon/docker-chocolatey.server" class="uri">https://github.com/takhyon/docker-chocolatey.server</a>. Disclaimer: This is not a recommendation - we have no affiliation nor have we verified this</li>
+</ul>
 <h3 id="exercise-2b-set-up-a-different-repository">Exercise 2B: Set Up A Different Repository</h3>
 <p>If you are setting up something different than Chocolatey.Server, you may wish to read over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">How To Set Up an Internal Repository</a>. This will give you options and links to repositories like Artifactory Pro, Nexus, and ProGet. <strong>NOTE</strong>: Some repository server options don&#39;t require Windows.</p>
 <p><strong>NOTE:</strong> Many repositories have a concept of a proxy repository. Unlike NuGet repositories, you likely <strong><em>DO NOT WANT</em></strong> a proxied NuGet/Chocolatey repository pointing to the community repository. They only cache packages - <strong><em>cached</em> is not the same concept as <em>internalized</em></strong>. To reuse packages from the community repository in a reliable way, you need to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize them</a>. The community repository is subject to distribution rights, which means many packages need to download things from the internet at <strong><em>runtime</em></strong>. That&#39;s unreliable and a no go for many organizations. You can use Package Internalizer (as we are seeing above) or <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">manually internalize packages</a> you want to use from the community repository. More on <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">why (community packages repository notes)</a>.</p>
@@ -479,6 +541,79 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <p>This is likely to vary somewhat wildly based on what you have set up. We recommend choosing a tool and then looking at what is available.</p>
 <p>We have documentation for Puppet at <a href="https://chocolatey.org/docs/installation-licensed#set-up-licensed-edition-with-puppet" class="uri">https://chocolatey.org/docs/installation-licensed#set-up-licensed-edition-with-puppet</a>, with some great examples. What you would do to make that work with Ansible, Chef, Salt, or PowerShell DSC would be similar. All of the different options are covered at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Infrastructure Management Integration</a>.</p>
 <p>If you are using Chocolatey.Server, please login to that machine and check <a href="https://localhost" class="uri">https://localhost</a> for instructions specific to different infrastructure management tools in the admin section.</p>
+<h4 id="chocolatey-integration-implementation-with-configuration-managers">Chocolatey Integration Implementation with Configuration Managers</h4>
+<p>For common integrations, it&#39;s handy to refer to the table below to know what configuration manager to choose. Most of the implementations below are written and managed by the companies behind the product. These implementations are typically open source and each part could be added by community contributions for those familiar with the code implementations. If you are unable to provide code implementations for adding necessary functionality to the integrations, we find it best if you create issues/tickets with those organizations if you are a customer as you will have more leverage into getting them implemented. <strong>NOTE</strong>: If you are a configuration manager company identified in the table and you have implemented anything in the below or you find our information is incorrect, please let us know so we can get it fixed.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><a href="http://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">Ansible</a></th>
+<th><a href="https://docs.chef.io/resource_chocolatey_package.html">Chef</a> / <a href="https://supermarket.chef.io/cookbooks/chocolatey/">Cookbook</a></th>
+<th><a href="https://www.powershellgallery.com/packages/cChoco/2.3.1.0">PowerShell DSC</a></th>
+<th><a href="https://forge.puppet.com/puppetlabs/chocolatey">Puppet</a></th>
+<th><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html">Salt</a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Manage Packages</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">Install Chocolatey</a></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr class="odd">
+<td>Install Chocolatey from internal source</td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">Manage Sources</a></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Manage Source Type (Admin/Self-Service)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-feature" })">Manage Features</a></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">Manage Config Settings</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For most of these, those configuration managers have some sort of exec you could use to manage those additional aspects, but it would be best if they supported all aspects of configuration of Chocolatey as part of the provider implementations.</p>
 <h2 id="exercise-7-subscribe-to-release-announcements">Exercise 7: Subscribe To Release Announcements</h2>
 <p>In a fully internal environment, you need a way to know when new versions have been released and if they affect you so you can update those packages in your environment. Best to have a low traffic announce only type of email list you can join. Fortunately there is - <code>chocolatey-announce</code>.</p>
 <p>You can sign up for email delivery of new release announcements at <a href="https://groups.google.com/forum/#!forum/chocolatey-announce">chocolatey-announce</a>.</p>
