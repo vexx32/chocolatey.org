@@ -78,7 +78,8 @@ This image shows running `choco new --file .\installers\1Password-4.6.0.598.exe`
 <p>We&#39;ve prepared a short video going over the concepts:<br />
 <a href="https://www.youtube.com/watch?v=6TXY5Ie-3wg&amp;list=PLfn-TaDnc1us5X-PVlxW8M1h-6mXEXZSG&amp;index=1" title="Chocolatey&#39;s Package Builder - Package Builder CLI and Scripting"><img src="https://cloud.githubusercontent.com/assets/63502/20327872/b0caf0d8-ab54-11e6-8c40-8bdeeb8eb13c.png" alt="Chocolatey&#39;s Package Builder - Package Builder CLI and Scripting" /></a></p>
 <p>Quickly script out creating packages for your entire organization&#39;s cache of software, allowing you to completely automate your Windows installations in moments, not months. You can do that with a simple script:</p>
-<pre><code class="powershell">$path = &#39;\\company.file.server\installers&#39;
+<pre><code class="powershell"># Path to your installers, will navigate subdirectories
+$path = &#39;\\company.file.server\installers&#39;
 
 # Generate packages over supported types of files
 $supportedTypes = @@(&#39;.exe&#39;, &#39;.msi&#39;, &#39;.7z&#39;, &#39;.zip&#39;, &#39;.msu&#39;, &#39;.msp&#39;)
@@ -87,8 +88,17 @@ Get-ChildItem -Path $path -Recurse | ?{
   $supportedTypes.Contains($extension)
   } | %{
   Write-Host &quot;$($_.FullName)&quot;
+  # Run choco new against the installer
   &amp; choco new --file &quot;$($_.FullName)&quot; --build-package --outputdirectory $pwd
 }</code></pre>
+<p>As you see this script, it is doing the following:</p>
+<ul>
+<li>Taking a path to where installers, zips, etc are located (<code>$path = '\\company.file.server\installers'</code>)</li>
+<li>Setting up support types of files to use with Package Builder (<code>$supportedTypes = @@('.exe', '.msi', '.7z', '.zip', '.msu', '.msp')</code>)</li>
+<li>Looping over all that it finds in that folder and all subdirectories (<code>Get-ChildItem -Path $path -Recurse</code>)</li>
+<li>Find files that apply (<code>$supportedTypes.Contains($extension)</code>)</li>
+<li>Run choco new, but point it to the full path to the file (<code>&amp; choco new --file &quot;$($_.FullName)&quot;</code>), ask it to attempt to build the package (<code>--build-package</code>) and have the output in present working directory (<code>--outputdirectory $pwd</code>)</li>
+</ul>
 <h3 id="package-builder-ui-1">Package Builder UI</h3>
 <p>Not every person is going to love the command line or may not be familiar with the command line and at Chocolatey we realize this. We&#39;ve spent countless hours talking to customers and with their feedback we&#39;re introducing Package Builder UI. This also gives you an opportunity to transition from existing UI tools while taking advantage of powerful Chocolatey concepts!</p>
 <p>We&#39;ve prepared a short video to show the power of the UI:<br />

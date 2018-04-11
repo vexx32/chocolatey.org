@@ -7,7 +7,10 @@
 <!-- TOC -->
 <ul>
 <li><a href="#summary">Summary</a></li>
-<li><a href="#notes-on-this-guide">Notes on This Guide</a></li>
+<li><a href="#notes-on-this-guide">Notes on This Guide</a>
+<ul>
+<li><a href="#terminology">Terminology</a></li>
+</ul></li>
 <li><a href="#references">References</a></li>
 <li><a href="#requirements">Requirements</a>
 <ul>
@@ -64,6 +67,19 @@
 <h2 id="notes-on-this-guide">Notes on This Guide</h2>
 <p>This guide is pretty much the essential how to guide to having a successful internal Chocolatey deployment. What you will find below are walkthrough steps and scripts (!!) to really help speed up that initial setup. Some (most) of what you will find here is not meant to be automated past what is already here, most are one-time things that need to be performed, so they don&#39;t lend themselves well to being automated further than they already are with the scripts here.</p>
 <p>That said, Exercises 2 and 6 do lend themselves well to automation with infrastructure management (configuration management) tools. You will find that Puppet likely has the most comprehensive set of ability to fully configure Chocolatey and Chocolatey.Server, with PowerShell DSC coming in there as well. Most configuration management tools do support managing the installation of Chocolatey and software packages, but side step Chocolatey configuration. We think that they should do more there, and we find it&#39;s best if you reach out to those folks to ask that they would support those things.</p>
+<p>There are some exercises in here that won&#39;t apply:</p>
+<ul>
+<li>Exercise 1 almost never applies to most folks as machines they are setting up have some network access.</li>
+<li>Exercise 4 doesn&#39;t apply for open source, as you don&#39;t have a license file that you need to deploy. You can skip it.</li>
+</ul>
+<h3 id="terminology">Terminology</h3>
+<ul>
+<li>FOSS - Chocolatey open source edition</li>
+<li>C4B - Chocolatey for Business</li>
+<li>TRIAL - Chocolatey for Business Trial</li>
+<li>ARCHITECT - Chocolatey Architect Edition</li>
+<li>MSP - Chocolatey for Managed Service Providers</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://chocolatey.org/install#completely-offline-install">Offline Chocolatey Install</a></li>
@@ -149,7 +165,7 @@
 <li>Change this line <code>$localChocolateyPackageFilePath = 'c:\packages\chocolatey.0.10.0.nupkg'</code> to <code>$localChocolateyPackageFilePath = 'c:\choco-setup\packages\chocolatey.0.10.8.nupkg'</code> (adjust for the actual path to the Chocolatey package).</li>
 <li>Air Gapped Networks: Get those files over to that air gapped network (USB key and sneakernet if you need to).</li>
 </ol>
-<p>Here is a handy script you can use for MSP/C4B (FOSS, adjust appropriately):</p>
+<p>Here is a handy script you can use for MSP / C4B / TRIAL (TRIAL you have some adjustments noted). If you are an open source user (FOSS), you might as well go back up to the instructions, there isn&#39;t much you are going to be able to take advantage of here. Let&#39;s be honest, you will have more work on your hands overall, but that&#39;s kind of the spirit of open source (or free versus a commercial solution).</p>
 <pre><code class="powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
