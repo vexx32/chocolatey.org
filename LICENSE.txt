@@ -1,5 +1,6 @@
 Chocolatey.org
-Copyright (C) 2011- Present RealDimensions Software, LLC ("RDS")
+Copyright (c) 2017-2018 Chocolatey Software, Inc
+Copyright (C) 2011-2017 RealDimensions Software, LLC ("RDS")
 ===================================================================
 Basically this boils down to this, if you are a business and want to use the software this pertains to internally, you need to get a commercial license to do so.
 
