@@ -172,6 +172,6 @@
     <value>The package is already curated.</value>
   </data>
   <data name="InvalidApiKey" xml:space="preserve">
-    <value>The API key '{0}' is invalid.</value>
+    <value>The API key provided is invalid.</value>
   </data>
 </root>
