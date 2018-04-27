@@ -23,7 +23,7 @@ The chocolatey packages, known as files that end in "nupkg" (i.e. "packages") th
 ===================================================================
 User Content/Client License Exception
 ===================================================================
-The clients that access the server, i.e. the chocolatey command line client, are excluded from the reach of this license. 
+The clients that access the server, i.e. the chocolatey command line client, are excluded from the reach of this license.
 
 The user content pertaining strictly to that user is remains the property of the user. When they put it on chocolatey.org, they are granting chocolatey.org use of that information. When they no longer want it there anymore, they are permitted to delete it.
 

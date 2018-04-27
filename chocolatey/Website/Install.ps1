@@ -173,7 +173,6 @@ if ($url -eq $null -or $url -eq '') {
 }
 
 # Download the Chocolatey package
-
 Write-Output "Getting Chocolatey from $url."
 Download-File $url $file
 
