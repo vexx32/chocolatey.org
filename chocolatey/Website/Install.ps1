@@ -192,12 +192,6 @@ if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
   Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
 }
 
-#if ($useWindowsCompression -eq $null -or $windowsCompression -eq '') {
-#  Write-Output 'Using 7zip to unzip.'
-#  Write-Warning "The default is currently 7zip to better handle things like Server Core. This default will be changed to use built-in compression in December 2016. Please make sure if you need to use 7zip that you have adjusted your scripts to set `$env:chocolateyUseWindowsCompression = 'false' prior to calling the install."
-#  $unzipMethod = '7zip'
-#}
-
 # unzip the package
 Write-Output "Extracting $file to $tempDir..."
 if ($unzipMethod -eq '7zip') {
