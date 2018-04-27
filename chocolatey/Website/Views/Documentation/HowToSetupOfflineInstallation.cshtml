@@ -24,7 +24,7 @@
 <li><a href="#chocolatey-central-management">Chocolatey Central Management</a></li>
 </ul></li>
 <li><a href="#exercise-0-prepare-for-internal-use">Exercise 0: Prepare For Internal Use</a></li>
-<li><a href="#exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access">Exercise 1: Set Up Chocolatey Installation On A Machine Without Internet Access</a></li>
+<li><a href="#exercise-1-optional-set-up-chocolatey-installation-on-a-machine-without-network-access">Exercise 1 (Optional): Set Up Chocolatey Installation On A Machine Without Network Access</a></li>
 <li><a href="#exercise-2-set-up-a-package-repository">Exercise 2: Set Up A Package Repository</a>
 <ul>
 <li><a href="#exercise-2a-set-up-chocolateyserver">Exercise 2A: Set Up Chocolatey.Server</a>
@@ -67,7 +67,8 @@
 <h2 id="notes-on-this-guide">Notes on This Guide</h2>
 <p>This guide is pretty much the essential how to guide to having a successful internal Chocolatey deployment. What you will find below are walkthrough steps and scripts (!!) to really help speed up that initial setup. Some (most) of what you will find here is not meant to be automated past what is already here, most are one-time things that need to be performed, so they don&#39;t lend themselves well to being automated further than they already are with the scripts here.</p>
 <p>That said, Exercises 2 and 6 do lend themselves well to automation with infrastructure management (configuration management) tools. You will find that Puppet likely has the most comprehensive set of ability to fully configure Chocolatey and Chocolatey.Server, with PowerShell DSC coming in there as well. Most configuration management tools do support managing the installation of Chocolatey and software packages, but side step Chocolatey configuration. We think that they should do more there, and we find it&#39;s best if you reach out to those folks to ask that they would support those things.</p>
-<p>There are some exercises in here that won&#39;t apply:</p>
+<p>You also may not need to be an admin for some of this guide, there are some additional bits you will need to do to perform a non-administrative installation. Look for the <code>NONADMIN</code> tag for how to deal with these discrepancies.</p>
+<p>There may be some exercises in here that won&#39;t apply:</p>
 <ul>
 <li>Exercise 1 almost never applies to most folks as machines they are setting up have some network access.</li>
 <li>Exercise 4 doesn&#39;t apply for open source, as you don&#39;t have a license file that you need to deploy. You can skip it.</li>
@@ -79,6 +80,7 @@
 <li>TRIAL - Chocolatey for Business Trial</li>
 <li>ARCHITECT - Chocolatey Architect Edition</li>
 <li>MSP - Chocolatey for Managed Service Providers</li>
+<li>NONADMIN - steps for folks who are not administrators on their machines to perform</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
@@ -127,12 +129,13 @@
 <p>The first thing we need to do is prepare. To do that we need a Windows machine with internet access so it can gather everything. If you are setting up into an air gapped network, you will be completing this on one machine, then loading it to a USB or to something else to get it over to the air gapped network (which we&#39;ll set up in Exercise 1). Check with your security teams to see if you have other steps that need to be completed prior to taking files from internet sources to the air gapped network.</p>
 <p>From the machine with internet access:</p>
 <ol>
-<li>Open PowerShell.exe as an administrative shell. You can type &quot;Windows Key + X + A&quot; (Windows 8+ - when that comes up if it is cmd.exe, simply type <code>powershell</code> to get into it).</li>
+<li>Open PowerShell.exe as an administrative shell. You can type &quot;Windows Key + X + A&quot; (Windows 8+ - when that comes up if it is cmd.exe, simply type <code>powershell</code> to get into it). NONADMIN: Just open a PowerShell console with &quot;Windows Key + X&quot; and choose the non-admin version of cmd or PowerShell.</li>
 <li>Type <code>cd /</code> and hit enter.</li>
 <li>Type <code>New-Item -Path &quot;$env:SystemDrive\choco-setup&quot; -ItemType Directory -Force</code> and enter followed by <code>cd choco-setup</code> and enter.</li>
 <li>In <code>c:\choco-setup</code>, type <code>New-Item -Path &quot;$env:SystemDrive\choco-setup\files&quot; -ItemType Directory -Force</code> and press enter.</li>
 <li>In <code>c:\choco-setup</code>, type <code>New-Item -Path &quot;$env:SystemDrive\choco-setup\packages&quot; -ItemType Directory -Force</code> and press enter.</li>
 <li>Type <code>cd packages</code> and press enter.</li>
+<li>NONADMIN (<strong>only</strong>): We&#39;ll need to redirect Chocolatey not to install to the default location. Run <code>$env:ChocolateyInstall=&quot;$env:ProgramData\chocoportable&quot;</code> and press enter.</li>
 <li>Now run <code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))</code> (this will get Chocolatey installed and it is what you see at <a href="https://chocolatey.org/install" class="uri">https://chocolatey.org/install</a>). It also makes choco available in that current shell. If you run into proxy issues here, please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "proxy-settings-for-chocolatey" })">installing Chocolatey behind a proxy server</a>.</li>
 <li>C4B / MSP / TRIAL: Obtain the <code>chocolatey.license.xml</code> from the email sent from the Chocolatey team and save the license file to <code>c:\choco-setup\files</code> so we can use it here and on the offline machines.</li>
 <li>TRIAL: grab a copy of the two nupkgs from the email. If you don&#39;t have that email with the download links, request it from whoever provided you the trial license. Save those two packages to <code>c:\choco-setup\packages</code>.</li>
@@ -163,7 +166,7 @@
 <li>Obtain the PowerShell script from <a href="https://chocolatey.org/install#completely-offline-install" class="uri">https://chocolatey.org/install#completely-offline-install</a> and copy it to <code>c:\choco-setup\files</code> as &quot;ChocolateyLocalInstall.ps1&quot;. We will need this to install Chocolatey on the airgapped box.</li>
 <li>Open <code>c:\choco-setup\files\ChocolateyLocalInstall.ps1</code> in an editor like Notepad++ or Visual Studio Code (do not use Notepad.exe!!).</li>
 <li>Change this line <code>$localChocolateyPackageFilePath = 'c:\packages\chocolatey.0.10.0.nupkg'</code> to <code>$localChocolateyPackageFilePath = 'c:\choco-setup\packages\chocolatey.0.10.8.nupkg'</code> (adjust for the actual path to the Chocolatey package).</li>
-<li>Air Gapped Networks: Get those files over to that air gapped network (USB key and sneakernet if you need to).</li>
+<li>Air Gapped Networks / Machines without Network Access: Get those files over to that air gapped network (USB key and sneakernet if you need to).</li>
 </ol>
 <p>Here is a handy script you can use for MSP / C4B / TRIAL (TRIAL you have some adjustments noted). If you are an open source user (FOSS), you might as well go back up to the instructions, there isn&#39;t much you are going to be able to take advantage of here. Let&#39;s be honest, you will have more work on your hands overall, but that&#39;s kind of the spirit of open source (or free versus a commercial solution).</p>
 <pre><code class="powershell"># Ensure we can run everything
@@ -175,6 +178,8 @@ New-Item -Path &quot;$env:SystemDrive\choco-setup\files&quot; -ItemType Director
 New-Item -Path &quot;$env:SystemDrive\choco-setup\packages&quot; -ItemType Directory -Force
 
 # Install Chocolatey
+# NONADMIN - you&#39;ll need this uncommented to redirect to a different location:
+# $env:ChocolateyInstall=&quot;$env:ProgramData\chocoportable&quot;
 iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
 
 # Are you military, government, or for some other reason have FIPS compliance turned on?
@@ -223,7 +228,8 @@ choco download chocolatey.extension chocolatey-agent --internalize --output-dire
 $installScript = iwr -UseBasicParsing -Uri https://gist.githubusercontent.com/ferventcoder/d0aa1703a7d302fce79e7a4cc13797c0/raw/b1f7bad2441fa6c371b48b8475ef91cecb4d6370/ChocolateyLocalInstall.ps1 -UseDefaultCredentials
 $installScript | Out-File -FilePath &quot;$env:SystemDrive\choco-setup\files\ChocolateyLocalInstall.ps1&quot; -Encoding UTF8 -Force
 Write-Warning &quot;Check and adjust script at &#39;$env:SystemDrive\choco-setup\files\ChocolateyLocalInstall.ps1&#39; to ensure it points to the right version of Chocolatey in the choco-setup\packages folder.&quot;</code></pre>
-<h2 id="exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access">Exercise 1: Set Up Chocolatey Installation On A Machine Without Internet Access</h2>
+<p><a id="exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access" name="#exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access"></a></p>
+<h2 id="exercise-1-optional-set-up-chocolatey-installation-on-a-machine-without-network-access">Exercise 1 (Optional): Set Up Chocolatey Installation On A Machine Without Network Access</h2>
 <p>Now that we&#39;ve finished the first exercise and have those files over on our offline Windows machine, we need to get Chocolatey set up on this machine as well. This could be ultimately be a Chocolatey.Server Repository, or it could be something else. Note: <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Other repository servers don&#39;t necessarily require Windows</a>.</p>
 <p><strong>NOTE:</strong> If you are using the same machine from Exercise 0 for setting up your repository, you can skip this Exercise and go to Exercise 2 (in other words, your machine already has Chocolatey installed).</p>
 <ol>
