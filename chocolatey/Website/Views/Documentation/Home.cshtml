@@ -3,72 +3,34 @@
 }
 
 <article>
-<h2 id="chocolatey---kind-of-like-apt-get-but-for-windows">Chocolatey - kind of like apt-get, but for Windows</h2>
-<p><a href="https://chocolatey.org/packages/chocolatey"><img src="https://img.shields.io/chocolatey/dt/chocolatey.svg" /></a> <a href="https://chocolatey.org/packages/chocolatey"><img src="https://img.shields.io/chocolatey/v/chocolatey.svg" /></a> <a href="https://www.gratipay.com/Chocolatey/"><img src="https://img.shields.io/gratipay/Chocolatey.svg" /></a> <a href="https://www.openhub.net/p/chocolatey"><img src="https://www.openhub.net/p/chocolatey/widgets/project_thin_badge.gif" alt="Project Stats" /></a></p>
-<h5 id="notes">Notes:</h5>
-<ul>
-<li>Edit me at <a href="https://github.com/chocolatey/choco-wiki" class="uri">https://github.com/chocolatey/choco-wiki</a></li>
-</ul>
-<h2 id="build-status">Build Status</h2>
-<table>
-<thead>
-<tr class="header">
-<th>TeamCity</th>
-<th>AppVeyor</th>
-<th>Travis</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="http://teamcity.codebetter.com/viewType.html?buildTypeId=bt429"><img src="https://img.shields.io/teamcity/codebetter/bt429.svg" alt="TeamCity Build Status" /></a></td>
-<td><a href="https://ci.appveyor.com/project/ferventcoder/choco/branch/master"><img src="https://ci.appveyor.com/api/projects/status/jfxywa3xuwowt20w/branch/master?svg=true" alt="AppVeyor Build Status" /></a></td>
-<td><a href="https://travis-ci.org/chocolatey/choco"><img src="https://travis-ci.org/chocolatey/choco.svg?branch=master" alt="Travis Build Status" /></a></td>
-</tr>
-</tbody>
-</table>
-<h3 id="you-can-just-call-me-chocolatey">You can just call me Chocolatey.</h3>
+<h1 id="chocolatey---software-management-for-windows">Chocolatey - Software Management for Windows</h1>
 <p><img src="https://cdn.rawgit.com/chocolatey/choco/14a627932c78c8baaba6bef5f749ebfa1957d28d/docs/logo/chocolateyicon.gif" title="Chocolatey" alt="Chocolatey Logo" /></p>
-<h3 id="lets-get-chocolatey">Let&#39;s get Chocolatey!</h3>
-<p>&quot;I&#39;m a tools enabler, I&#39;m a global silent application installer. I configure stuff. Some people want to call me apt-get for Windows, I just want to get #chocolatey!&quot;</p>
+<!-- TOC -->
 <ul>
-<li><a href="https://chocolatey.org">Chocolatey Website and Community Package Repository</a></li>
-<li><a href="http://groups.google.com/group/chocolatey">Mailing List</a> / <a href="https://groups.google.com/group/chocolatey-announce">Release Announcements Only Mailing List</a> / <a href="http://groups.google.com/group/chocolatey-build-status">Build Status Mailing List</a></li>
-<li><a href="https://twitter.com/chocolateynuget">Twitter</a> / <a href="https://www.facebook.com/ChocolateySoftware">Facebook</a> / <a href="https://github.com/chocolatey">Github</a></li>
-<li><a href="https://chocolatey.org/blog">Blog</a> / <a href="https://chocolatey.us8.list-manage1.com/subscribe?u=86a6d80146a0da7f2223712e4&amp;id=73b018498d">Newsletter</a></li>
-<li><a href="https://chocolatey.org/docs">Documentation</a> / <a href="https://chocolatey.org/support">Support</a></li>
-</ul>
-<h2 id="chocolatey">Chocolatey?</h2>
-<p>Chocolatey is a global PowerShell execution engine using the NuGet packaging infrastructure. Think of it as the ultimate automation tool for Windows. Chocolatey is a package manager that can also embed/wrap native installers and has functions for downloading and checksumming resources from the internet - useful for when you have public packages, but don&#39;t have distribution rights for the underlying software that packages represent (seen all the time with publicly available packages on the community repository).</p>
-<p>Managing internal and external software is a breeze with Chocolatey! Chocolatey is a single, unified interface designed to easily work with all aspects of managing Windows software using a packaging framework that understands both versioning and dependency requirements. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file. Chocolatey packages can be used independently, but also integrate with configuration managers like SCCM, Puppet, and Chef. Chocolatey is trusted by businesses all over the world to manage their software deployments on Windows. You&#39;ve never had so much fun managing software!</p>
-<p>Chocolatey is beneficial for some of the following reasons:</p>
+<li><a href="#what-is-chocolatey">What is Chocolatey?</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#information">Information</a></li>
+<li><a href="#using-chocolatey">Using Chocolatey</a></li>
+<li><a href="#packages">Packages</a></li>
+<li><a href="#walkthroughs--how-to-links">Walkthroughs / How To Links</a></li>
+<li><a href="#road-map">Road Map</a>
 <ul>
-<li>You have a single, unified interface for installing, upgrading and uninstalling software on Windows.</li>
-<li>Packages are independent deployment artifacts that can easily be used across technologies like SCCM, Puppet, Chef, etc, but are not tied to those technologies. Developers could still use the same packages locally that are used with SCCM.</li>
-<li>You define dependencies between software so installation order is not a manual process.</li>
-<li>Chocolatey has some really great smarts built-in to be able to handle things like uninstalling software automatically.</li>
-<li>You can easily package your own internal software using technologies you are familiar with (PowerShell).</li>
-<li>Chocolatey has great PowerShell helper functions for many software scenarios, so many times a one line function call is all you need to handle complex installation software.</li>
-<li>You can define any additional functionality a native installer file may have missed setting up for you, such as putting some directory in the PATH variable.</li>
-<li>You control how installs, upgrades and uninstalls are handled.</li>
-<li>Package maintenance is quite simple.</li>
-<li>It makes Windows software easily scriptable.</li>
-<li>FOSS version is completely free with a business friendly license.</li>
-<li>Able to use completely internally building your own packages.</li>
-<li>Hosting your own internal packages is as simple as a file/folder share to as advanced as a custom package gallery - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Hosting your own server</a>.</li>
-<li>Can integrate with SCCM to deliver packages and software out to distribution points.</li>
-<li>Integrates with Puppet, Chef, Ansible, Saltstack and DSC.</li>
-<li>Auditing what is installed (and not just what&#39;s in Programs and Features).</li>
-<li>You can build your own internal packages that wrap native installers, but you can build more true package types that have the software in the package. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#what-are-chocolatey-packages">What are Chocolatey Packages?</a></li>
+<li><a href="#important-reference-links">Important Reference Links</a></li>
+</ul></li>
+<li><a href="#see-it-in-action">See It In Action</a></li>
+<li><a href="#who-are-we">Who Are We?</a></li>
 </ul>
-<p>Chocolatey is like apt-get, but built with Windows in mind (there are differences and limitations). For those unfamiliar with APT/Debian, think about Chocolatey as a global silent installer for applications and tools. It can also do configuration tasks and anything that you can do with PowerShell. The power you hold with a tool like Chocolatey is only limited by your imagination!</p>
-<p>Here&#39;s a good short explanation:</p>
-<blockquote>
-<p>Chocolatey is a software management tool that is also a package manager. It functions fantastically well when the runtime software is all included in the package and it doesn&#39;t make use of native installers. However to approach the Windows ecosystem a package manager also needs to know how to manage actual software installations, thus why Chocolatey does that as well. For publicly available packages, copyright keeps from having binaries embedded in packages, so Chocolatey is able to download from distribution points and checksum those binaries.</p>
-</blockquote>
-<p>What&#39;s the difference between NuGet and Chocolatey? Developers can use NuGet to get 3rd party libraries that they use to build the .NET tools and applications that they release with Chocolatey! But Chocolatey is not just for .NET tools. It&#39;s for nearly any Windows application/tool!</p>
-<p>Want to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">learn more?</a></p>
-<h2 id="see-it-in-action">See It In Action</h2>
-<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install.gif" alt="Chocolatey Install" /></p>
+<!-- /TOC -->
+<h2 id="what-is-chocolatey">What is Chocolatey?</h2>
+<p>Chocolatey is a software management solution unlike anything else you&#39;ve ever experienced on Windows. It focuses on simplicity, security, and scalability. You write a software deployment in PowerShell once for any software (not just installers), then you can deploy it everywhere you have Windows with any solution that can manage systems (configuration management, endpoint management, etc) and track and manage updates of that software over time. Manage software on-premise, in the &quot;Cloud&quot;, or in <a href="https://github.com/Microsoft/vsts-agent-docker/blob/f870fbf259a803c6a6d902e1c01f631936069d66/windows/servercore/10.0.14393/standard/VS2017/Dockerfile">Docker containers</a> with Chocolatey.</p>
+<p>Whew, that was a mouthful! For a bit more detail into what all of that means and more, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#what-is-chocolatey">What is Chocolatey?</a></p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Windows 7+/Windows 2003+ (Server Core also, but not Windows Nano Server)</li>
+<li>Windows PowerShell v2+ (not PowerShell Core aka PowerShell 6 yet)</li>
+<li>.NET Framework 4.x+</li>
+<li>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })#requirements">Requirements</a></li>
+</ul>
 <h2 id="information">Information</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">Frequently Asked Questions</a></li>
@@ -93,28 +55,26 @@
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">Package Function and Variable Reference</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Outdated packages? Triage process</a></li>
 </ul>
-<h2 id="how-tos">How-To&#39;s</h2>
+<h2 id="walkthroughs-how-to-links">Walkthroughs / How To Links</h2>
 <ul>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-parse-package-parameters-argument" })">Parse PackageParameters Argument</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-mount-an-iso-in-chocolatey-package" })">Mount an Iso in Chocolatey Package</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-deprecate-a-chocolatey-package" })">Deprecate a Chocolatey Package</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Feed</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">Deploy Chocolatey in an Organization</a></li>
 </ul>
-<h2 id="roadmap">RoadMap</h2>
+<h2 id="road-map">Road Map</h2>
 <p>Where are <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "road-map" })">we</a>? Where are we <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "road-map" })">going</a>?</p>
-<h2 id="google-group">Google Group</h2>
-<p>Chocolatey has a <a href="https://groups.google.com/group/chocolatey">Google Groups group</a>. Please join and ask questions and send feedback.</p>
-<p>If you have issues with a package (or it is out of date), please use the contact maintainers link on the package page itself. If the maintainer doesn&#39;t respond within a given time frame (say a day or two), please refer to the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package Triage Process</a>.</p>
-<h2 id="chat-room">Chat Room</h2>
-<p>Come join in the conversation about Chocolatey in our Gitter Chat Room</p>
-<p><a href="https://gitter.im/chocolatey/choco?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter" /></a></p>
-<p>Or, you can find us in IRC on Freenode at #chocolatey.</p>
-<h2 id="the-chocolatey-team">The Chocolatey Team</h2>
-<p>You can find all of the members of the Chocolatey Team <a href="https://github.com/orgs/chocolatey/people">here</a>.</p>
-<h2 id="requirements">Requirements</h2>
+<h3 id="important-reference-links">Important Reference Links</h3>
 <ul>
-<li>Windows 7+/Windows 2003+</li>
-<li>.NET Framework 4.0</li>
-<li>PowerShell 2.0</li>
+<li><a href="https://chocolatey.org">Chocolatey Website and Community Package Repository</a></li>
+<li><a href="http://groups.google.com/group/chocolatey">Mailing List</a> / <a href="https://groups.google.com/group/chocolatey-announce">Release Announcements Only Mailing List</a> / <a href="http://groups.google.com/group/chocolatey-build-status">Build Status Mailing List</a></li>
+<li><a href="https://twitter.com/chocolateynuget">Twitter</a> / <a href="https://www.facebook.com/ChocolateySoftware">Facebook</a> / <a href="https://github.com/chocolatey">Github</a></li>
+<li><a href="https://chocolatey.org/blog">Blog</a> / <a href="https://chocolatey.us8.list-manage1.com/subscribe?u=86a6d80146a0da7f2223712e4&amp;id=73b018498d">Newsletter</a></li>
+<li><a href="https://chocolatey.org/docs">Documentation</a> / <a href="https://chocolatey.org/support">Support</a> / <a href="https://gitter.im/chocolatey/choco?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter" /></a></li>
 </ul>
+<h2 id="see-it-in-action">See It In Action</h2>
+<p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install.gif" alt="Chocolatey Install" /></p>
+<h2 id="who-are-we">Who Are We?</h2>
+<p>You can find all of the members of the Chocolatey Team <a href="https://github.com/orgs/chocolatey/people">here</a>.</p>
 </article>
