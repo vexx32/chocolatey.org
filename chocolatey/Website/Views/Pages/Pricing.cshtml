@@ -28,13 +28,14 @@
           </td>
           <td>
             <ul class="docs p-l text-left">
-              <li>Annual Subscription:
+              <li><a href="#faq-pricing">Annual Subscription</a>:
                 <ul class="docs p-l text-left">
                   <li>Starter Pack (1-35 machines) - $600</li>
                   <li>Small (40-499) - $16 per license (retail)</li>
                   <li>Medium (500+) - $15.60 / license</li>
                   <li>Large (2,000+) - $15 / license</li>
                   <li>Enterprise (10,000+) - $14.50 / license</li>
+                  <li>Full cost matrix in <a href="#faq-pricing">pricing</a></li>
                 </ul>
               </li>
               <li>For perpetual pricing, discounts for education/non-profit, and how to determine license counts, see the <a href="#faq">FAQs</a> below</li>
@@ -322,6 +323,19 @@
   <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
     <a name="faq"></a>
     <h1>FAQ</h1>
+    
+    <ul>
+      <li><a href="#faq-features">Features</a></li>
+      <li><a href="#faq-licensing">Licensing</a></li>
+      <li><a href="#faq-pricing">Pricing</a></li>
+      <li><a href="#faq-purchasing">Purchasing</a></li>
+      <li><a href="#faq-support">Support</a></li>
+      <li><a href="#faq-pro">Professional Edition</a></li>
+      <li><a href="#faq-architect">Architect Edition (DevOps Consultants)</a></li>
+      <li><a href="#faq-msp">Managed Service Provider Edition (MSP)</a></li>
+      <li><a href="#faq-general">General</a></li>
+    </ul>
+
     <a name="faq-features"></a>
     <h2>Features</h2>
     
@@ -369,8 +383,17 @@
     <p>It is a violation of the Pro licensing to use it in an organizational context. We try to keep our offerings simple - Chocolatey for Business is what we offer for organizational use.</p>
     
     <h3>Do you have Perpetual Licensing available?</h3>
-    <p>Yes, we have that option for the Business edition! Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details. To give you a rough estimate, multiply the annual price by 2.5, then factor in a 20% annual maintenance fee.</p>
+    <p>Yes, we have that option for the Business edition! Please see the pricing matrix in the <a href="#faq-pricing">pricing table</a> below.</p>
     
+    <h3>What does support look like?</h3>
+    <p>Please see the <a href="#faq-support">Support</a> FAQ below.</p>
+    
+    <h3>What does the license agreement look like? Do you have anything I can review?</h3>
+    <p>Yes, please see <a href="@Url.RouteUrl(RouteName.Support)#business-legal">Chocolatey for Business - Legal</a> for those documents.</p>
+    
+    <h3>Do you allow transfer of licenses?</h3>
+    <p>Not by default, but we can talk options. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a> with your request.</p>
+
     <a name="faq-pricing"></a>
     <h2>Pricing</h2>
     <h3>How does pricing work with the Business edition?</h3>
@@ -382,7 +405,78 @@
       <li>Large - 2,000+ licenses - $15 / license / annually</li>
       <li>Enterprise - over 10,000 licenses - $14.50 / license / annually - <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details</li>
     </ul>
+   
+    <h3>Do you have Perpetual pricing available?</h3>
+    <p>Yes, we do have that option for the Business edition. See below for pricing.</p>
+
+    <h3>Can you show me what the pricing will be with different options?</h3>
+    <p>Absolutely, let's look at the different options you we have for standard and premium support with both subscription and perpetual.</p>
+    <table class="m-b--l compare-table">
+    <thead>
+      <th>Retail Cost Per License</th>
+      <th>40-499</th>
+      <th>500 - 1,999</th>
+      <th>2000 - 9,999</th>
+      <th>10,000+</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td><strong>Annual w/Standard Support</strong></td>
+      <td>$16</td>
+      <td>$15.60</td>
+      <td>$15</td>
+      <td>$14.50</td>
+    </tr>
+    <tr>
+      <td><strong>Annual for Education/Non-Profit</strong></td>
+      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+    </tr>
+    <tr>
+      <td><strong>Annual w/Premium Support</strong></td>
+      <td><span class="text-red icon-ban"></span></td>
+      <td>$21.84 w/1,500 license minimum</td>
+      <td>$21</td>
+      <td>$20.30</td>
+    </tr>
+    <tr>
+      <td><strong>Perpetual w/Standard Support</strong></td>
+      <td>$48 / $8 *</td>
+      <td>$46.80 / $7.80 *</td>
+      <td>$45 / $7.50 *</td>
+      <td>$43.50 / $7.25 *</td>
+    </tr>
+    <tr>
+      <td><strong>Perpetual w/Premium Support</strong></td>
+      <td>$75.60 / $19.60 * w/400 license minimum</td>
+      <td>$73.71 / $19.11 *</td>
+      <td>$70.875 / $18.375 *</td>
+      <td>$68.5125 / $17.7625 *</td>
+    </tr>
+    <tr>
+      <td colspan="5">NOTE: The numbers above are cost per license and represent the retail price.
+        <br />* The optional annual maintenance and support cost. The up front cost on the left has the first year of support and maintenance included (required).
+      </td>
+    </tr>
+    </tbody>
+    </table>
     
+    <h3>Why might I choose Perpetual Licensing over the Annual Subscription License Model?</h3>
+    <p>See the next question.</p>     
+   
+    <h3>What's the difference between the annual subscription and perpetual?</h3>
+    <ul class="m-b p--s p-l--l docs">
+      <li>The annual subscription is an all-inclusive price that includes the price of the software, support, and maintenance.</li>
+      <li>If you don't renew an annual subscription, the software will stop working when the license expires. This means you must replace the license on every machine as well.</li>
+      <li>The annual subscription is significantly cheaper, because it is based on a renewable subscription model.</li>
+      <li>A perpetual model has one price for the software, and then an annual maintenance and support cost.</li>
+      <li>A perpetual license will never expire, so the software will always work. You can upgrade to newer versions and continue to get access to support as long as you continue to renew the annual support and maintenance subscription.</li>
+      <li>The perpetual license has a higher up front cost, but yearly maintenance and support fees are significantly cheaper as compared to the annual subscription cost.</li>
+      <li>Annual subscriptions typically are budgeted in OPEX (operating expenses), where perpetual goes to CAPEX (capital expenditures).</li>
+    </ul>
+   
     <h3>Do you have special pricing available?</h3>
     <p>We do - <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details.</p>
     
@@ -392,9 +486,6 @@
     <h3>We don't have budget this year - can you help us out on pricing?</h3>
     <p>We can to a degree. If you can come within 60-90% of the pricing above, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a>.</p>
     
-    <h3>Do you have Perpetual pricing available?</h3>
-    <p>We do have that option for the Business edition. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details. To give you a rough estimate, multiply the annual price by 2.5, then factor in a 20% annual maintenance fee.</p>
-
     <h3>We use ____ for configuration management. Does that qualify us for discounts?</h3>
     <p>We do have special discounts based on agreements with other organizations. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</p>
   
@@ -464,6 +555,12 @@
     <h3>How do renewals work?</h3>
     <p>Typically you would purchase again using the same method as you used previously. The expire date for the new license will take the old expiration date into account.</p>
   
+    <h3>What does the license agreement look like? Do you have anything I can review?</h3>
+    <p>Yes, please see <a href="@Url.RouteUrl(RouteName.Support)#business-legal">Chocolatey for Business - Legal</a> for those documents.</p>
+
+    <h3>Do you allow transfer of licenses?</h3>
+    <p>Not by default, but we can talk options. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a> with your request.</p>
+
     <a name="faq-support"></a>
     <h2>Support</h2>
 
