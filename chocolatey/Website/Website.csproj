@@ -695,6 +695,10 @@
     <Compile Include="Migrations\201608282039043_SetUsersDefaultModerationNotifications.Designer.cs">
       <DependentUpon>201608282039043_SetUsersDefaultModerationNotifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805072106573_Add_UserItems.cs" />
+    <Compile Include="Migrations\201805072106573_Add_UserItems.Designer.cs">
+      <DependentUpon>201805072106573_Add_UserItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />

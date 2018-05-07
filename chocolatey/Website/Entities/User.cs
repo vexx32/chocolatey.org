@@ -42,6 +42,7 @@ namespace NuGetGallery
         public DateTime? PasswordResetTokenExpirationDate { get; set; }
         public bool EmailAllModerationNotifications { get; set; }
         public bool IsTrusted { get; set; }
+        public bool IsBanned { get; set; }
 
         public void ConfirmEmailAddress()
         {

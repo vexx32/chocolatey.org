@@ -73,6 +73,11 @@ namespace NuGetGallery
         public virtual ActionResult UploadPackage()
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
+            
+            if (currentUser.IsBanned)
+            {
+                return RedirectToRoute(RouteName.VerifyPackage);
+            }
 
             using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
@@ -176,6 +181,13 @@ namespace NuGetGallery
             var scanResults = packageSvc.GetPackageScanResults(id, version, useCache:false);
             package.Files = packageSvc.GetPackageFiles(package, useCache: false).ToList();
             var model = new DisplayPackageViewModel(package, scanResults);
+
+            if (currentUser.IsBanned)
+            {
+                TempData["Message"] = "Changes to package status have been saved.";
+
+                return View("~/Views/Packages/DisplayPackage.cshtml", model);
+            }
 
             var packageRegistration = package.PackageRegistration;
             var isMaintainer = packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key);
@@ -726,6 +738,12 @@ namespace NuGetGallery
         public virtual ActionResult VerifyPackage()
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
+
+            if (currentUser.IsBanned)
+            {
+                TempData["ErrorMessage"] = string.Format("Unable to find uploaded file for user '{0}'. Please try using choco.exe push instead.", currentUser.Username);
+                return RedirectToRoute(RouteName.UploadPackage);
+            }
 
             IPackage package;
             using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
