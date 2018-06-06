@@ -19,6 +19,7 @@
 </ul></li>
 <li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a>
 <ul>
+<li><a href="#error-404-on-push">Error 404 on Push</a></li>
 <li><a href="#error-500">Error 500</a></li>
 <li><a href="#error-50019---the-requested-page-cannot-be-accessed-because-the-related-configuration-data-for-the-page-is-invalid">Error 500.19 - &quot;The requested page cannot be accessed because the related configuration data for the page is invalid.&quot;</a></li>
 <li><a href="#other-error">Other error</a></li>
@@ -68,7 +69,7 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li>Ensure IIS is installed. You can try <code>choco install IIS-WebServer --source windowsfeatures</code></li>
 <li>Ensure that ASP.NET is installed. Try <code>choco install IIS-ASPNET45 --source windowsfeatures</code> (Windows Server 2012). Use <code>IIS-ASPNET</code> for Windows Server 2008, possibly <code>IIS-ASPNET46</code> for Windows Server 2016.</li>
 <li>Disable or remove the Default website</li>
-<li>Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is <code>v4.0</code> (or some version of 4).</li>
+<li>Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is <code>v4.0</code> (or some version of 4). Ensure it is &quot;Integrated&quot; and not &quot;Classic&quot;.</li>
 <li>Set up an IIS website pointed to the install location and set it to use the app pool.</li>
 <li>Go to explorer and right click on <code>c:\tools\chocolatey.server</code> and add the following permissions:
 <ul>
@@ -107,6 +108,8 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <p>We are looking to add support for the package source to automatically handle this aspect - <a href="http://blog.nuget.org/20150922/Accelerate-Package-Source.html" class="uri">http://blog.nuget.org/20150922/Accelerate-Package-Source.html</a></p>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
 <p>When you are attempting to install the Simple Server, you may run into some errors depending on your configuration. Here are some common ones we&#39;ve seen that you may get when you browse to the the site.</p>
+<h3 id="error-404-on-push">Error 404 on Push</h3>
+<p>If you can do everything except push packages, it is likely your application pool is set to Classic mode and can&#39;t find directories. It needs to be &quot;Integrated&quot;. Please change that to Integrated and then recycle the application pool. That should resolve the issue of pushing packages. Reference: <a href="https://stackoverflow.com/a/37702935/18475" class="uri">https://stackoverflow.com/a/37702935/18475</a>.</p>
 <h3 id="error-500">Error 500</h3>
 <p>Take a closer look at the error. It may be one of the other errors below.</p>
 <h3 id="error-50019---the-requested-page-cannot-be-accessed-because-the-related-configuration-data-for-the-page-is-invalid">Error 500.19 - &quot;The requested page cannot be accessed because the related configuration data for the page is invalid.&quot;</h3>
