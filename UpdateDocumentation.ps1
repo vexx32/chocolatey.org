@@ -3,7 +3,7 @@
 try {
   Get-Command pandoc | Out-Null
 } catch {
-  Write-Warning "Please install Pandoc - choco install pandoc -y"
+  Write-Warning "Please install Pandoc - choco install pandoc --version 1.17.0.2 -y"
   exit 1
 }
 
