@@ -18,22 +18,22 @@
 <h2 id="chocolatey">Chocolatey</h2>
 <ul>
 <li>Validation on choco pack (subset of the package-validator)</li>
-<li>Official support for OneGet/PackageManagement - Prioritizing</li>
-<li>GPG package signing - likely sometime in 2018</li>
+<li>GPG package signing for traceability - likely sometime in 2018</li>
 <li>Authenticode package signing - likely sometime in 2018</li>
 <li>Validating authenticode - see <a href="https://github.com/chocolatey/choco/issues/643">#643</a></li>
 <li><del>Not allowing package installs that don&#39;t have checksums by default when using non-secure resources like HTTP/FTP - see <a href="https://github.com/chocolatey/choco/issues/112">#112</a></del> released in 0.10.0</li>
 <li>Nuspec enhancements - supported versions of Windows, etc</li>
 <li>Packaging enhancements - like package version, architecture</li>
 <li><a href="https://github.com/chocolatey/chocolatey/issues/7">Virtual packages</a></li>
-<li>WSA Support</li>
-<li>Windows Nano Support - likely first half of 2018 (switching to .NET Standard/Core) to support running in that environment.</li>
+<li>WSA / AppX / MSIX Support</li>
+<li>Windows Nano Support - on hold, waiting for official stance from Microsoft</li>
+<li>Official support for OneGet/PackageManagement - on hold, waiting on OneGet to support upgrades</li>
 </ul>
 <p>Other items as noted at <a href="https://github.com/chocolatey/choco" class="uri">https://github.com/chocolatey/choco</a> - be sure to check the milestone for estimated release version.</p>
 <h2 id="licensed-chocolatey">Licensed Chocolatey</h2>
 <ul>
 <li><del><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Self-Service Installs (Non-Admins)</a></del> released in Jan 2017</li>
-<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Chocolatey Central Console</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Chocolatey Central Management Console</a></li>
 <li><del>Package Throttle - reduce download speeds for low bandwidth areas</del> - released in Q1 2017 (March)</li>
 <li>Package Modernizer</li>
 <li>Package Sync command:
