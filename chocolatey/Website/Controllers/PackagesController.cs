@@ -92,6 +92,11 @@ namespace NuGetGallery
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
 
+            if (currentUser.IsBanned)
+            {
+                return RedirectToRoute(RouteName.VerifyPackage);
+            }
+
             using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
             {
                 if (existingUploadFile != null) return new HttpStatusCodeResult(409, "Cannot upload file because an upload is already in progress.");
