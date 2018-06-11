@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -30,6 +31,7 @@ namespace NuGetGallery.MvcOverrides
             if (context == null) return false;
 
             if (context.Request.IsSecureConnection) return true;
+            if (ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase)) return true; 
 
             var protoHeaders = context.Request.Headers.GetValues("X-Forwarded-Proto");
             if (protoHeaders != null)
