@@ -52,6 +52,7 @@
 </ul>
 <!-- /TOC -->
 <h2 id="summary">Summary</h2>
+<p>This guide is for open source organizational users all the way up to Chocolatey for Business (C4B) customers. You can create and host your own packages with <strong><em>any</em></strong> edition of Chocolatey, even open source. You can even find good free solutions for package repositories that you either have on-premise which includes private cloud or hosted solutions.</p>
 <p>Most organizations need a Chocolatey environment that does not access the internet. Fortunately, Chocolatey is a fully offline solution, we&#39;ll just need to remove the default community repository and point it to internal repositories. This walkthrough will provide you everything you need to get setup. We also have steps in this walkthrough that deal with environments that are air gapped (no access to the internet).</p>
 <blockquote>
 <p>Chocolatey best practices for organizations / internal use:</p>
@@ -75,6 +76,7 @@
 </ul>
 <h3 id="terminology">Terminology</h3>
 <ul>
+<li>Internal - Areas your organization manages - this could be on premise or in a private cloud you manage</li>
 <li>FOSS - Chocolatey open source edition</li>
 <li>C4B - Chocolatey for Business</li>
 <li>TRIAL - Chocolatey for Business Trial</li>
@@ -649,5 +651,6 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <li><a href="https://github.com/ferventcoder/chocolatey-workshop">Learn Basic and Advanced Concepts For Software Management with Chocolatey</a></li>
 <li><a href="https://chocolatey.org/docs">Chocolatey Documentation</a></li>
 <li><a href="https://chocolatey.org/compare#compare">Compare Features In Different Editions</a></li>
+<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Automate Internalization of Community Packages</a> - allows you to have same near hands off approach to package/software updates you might have seen before if you were using community repository directly.</li>
 </ul>
 </article>
