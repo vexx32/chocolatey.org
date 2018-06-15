@@ -206,6 +206,10 @@ Package Url: {6}
                 subject = "Chocolatey - Contact Form - {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
                 to = Configuration.ReadAppSettings("ModeratorEmail");
             }
+            if (contactType == "WebsiteBlock")
+            {
+                subject = "Blocked IP{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            }
 
             using (var mailMessage = new MailMessage())
             {

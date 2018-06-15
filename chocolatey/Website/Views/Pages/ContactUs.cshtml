@@ -10,8 +10,8 @@
     <h1 class="m-b">Contact Us</h1>
     
     <ul class="message warning">
-      <li>If you are getting 403 errors with the community repository or have other website issues/access, use "Website" below when you contact.</li>
-      <li>If you have found an issue or have questions (related to open source usage), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.</li>
+      <li>If you are getting 403 errors with the community repository or have other website issues/access, use "Blocked IP Address" below when you contact.</li>
+      <li>If you have found an issue or have questions (related to open source usage or package install issues), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.</li>
     </ul>
     <br />
     <h2 class="m-b">Reach out to us</h2>
@@ -31,7 +31,7 @@
         <br />Choose "Partner" for reseller / channel partner.
         <br />Choose "Other" to contact Chocolatey Software directly. 
         <br />Choose "Website" for site issues/access. 
-        <br /><em>Do not use this form to report an issue or a package issue (see above).</em></span>
+        <br />Choose "Blocked IP Address" if you manage an IP address that has been blocked from using this site. 
         @Html.ValidationMessageFor(m => m.MessageTo)
       </div>
       <br />
@@ -76,8 +76,8 @@
       
       <div class="form-field">
         <input type="checkbox" required="required" id="chkNotSelling" name="chkNotSelling" /> <span for="chkNotSelling">I am not attempting to market software or services (such as SEO). I am also not requesting advertising space.</span>
-      </div> 
-
+      </div>  
+      
       @*@Html.EditorForModel()*@
       @Html.SpamPreventionFields()
       <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
