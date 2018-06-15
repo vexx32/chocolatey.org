@@ -167,7 +167,7 @@ Company: {4}
 
             if (discountForm.DiscountType == "StudentDiscount" && !_studentEmailAddressRegex.IsMatch(discountForm.Email))
             {
-                ModelState.AddModelError(string.Empty, "You must use an email ending in '.edu' or 'ac.uk' for student discount \"self-service\". If your educational institution email address doesn't end in one of these, please reach out through the Countact Us (link in bottom navigation) and choose 'Student Discount'.");
+                ModelState.AddModelError(string.Empty, "You must use an email ending in '.edu' or 'ac.uk' for student discount \"self-service\". If your educational institution email address doesn't end in one of these, please reach out through the Contact Us (link in bottom navigation) and choose 'Student Discount'.");
                 return View("~/Views/Pages/Discount.cshtml", discountForm);
             }
 
