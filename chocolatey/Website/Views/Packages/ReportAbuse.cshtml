@@ -51,6 +51,10 @@
         <div class="form-field">
             @Html.CheckBoxFor(m => m.CopySender)<label for="@Model.CopySender" class="for-checkbox">Send me a copy</label>
         </div>
+        
+      <div class="form-field">
+        <input type="checkbox" required="required" id="chkUnderstandVT" name="chkUnderstandVT" /> <span for="chkUnderstandVT">I understand that the community repository already runs packages and binaries through VirusTotal and I have reviewed that on the package page itself prior to reporting possible malware.</span>
+      </div> 
         @Html.SpamPreventionFields()
         <input type="submit" value="Report" title="Report '@Model.PackageId' for abuse" />
     </fieldset>
