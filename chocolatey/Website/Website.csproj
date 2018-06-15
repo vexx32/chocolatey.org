@@ -1089,6 +1089,7 @@
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
+    <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\boxstarter.png" />
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
@@ -1521,6 +1522,7 @@
     <Content Include="Views\Blog\GaryEwanParkJoinsChocolatey.md" />
     <Content Include="Views\Documentation\HowToSetupOfflineInstallation.cshtml" />
     <Content Include="Views\Blog\BoxstarterMovesUnderChocolateyGitHubOrganization.md" />
+    <Content Include="Views\Blog\SaveTheDateChocolateyFest.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
