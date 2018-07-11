@@ -1226,6 +1226,7 @@
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\team\gary.png" />
     <Content Include="Content\Images\team\mukesh.png" />
+    <Content Include="Content\Images\team\paul.png" />
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
     <Content Include="Content\Images\Turbo-on-Red.png" />
@@ -1523,6 +1524,7 @@
     <Content Include="Views\Documentation\HowToSetupOfflineInstallation.cshtml" />
     <Content Include="Views\Blog\BoxstarterMovesUnderChocolateyGitHubOrganization.md" />
     <Content Include="Views\Blog\SaveTheDateChocolateyFest.md" />
+    <Content Include="Views\Blog\PaulBroadwithJoinsChocolatey.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
