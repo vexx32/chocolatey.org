@@ -17,3 +17,5 @@ _AzurePackage
 .DS_Store
 Thumbs.db
 TestResults
+
+UpgradeLog*.htm
