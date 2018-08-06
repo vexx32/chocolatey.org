@@ -56,6 +56,17 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li>Ensures the IIS website is setup for chocolatey.server</li>
 <li>Ensures permissions for the site are set correctly.</li>
 </ul>
+<h2 id="setup-with-ansible">Setup with Ansible</ht>
+<p>If you are using Ansible, you can use the <a href="https://galaxy.ansible.com/jborean93/win_chocolatey_server">win_chocolatey_server</a> role to set up an Chocolatey.Server instance on a host running Windows Server 2008 R2 or newer.</p>
+<p>This Ansible role allows you to configure the following:</p>
+<ul>
+<li>The API token required to push packages</li>
+<li>Multiple credentials that can be used for basic authentication</li>
+<li>The location to install Chocolatey.Server to</li>
+<li>Binding settings for the Chocolatey.Server website such as the http and https port as well as the https certificate thumpbrint</li>
+<li>Generate a self-signed certificate alongside a https binding if a CA is not available</li>
+<li>Automatically install the Chocolatey nupkg from a path or a URL</li>
+</ul>
 <h2 id="setup-normally">Setup Normally</h2>
 <ul>
 <li>If your Windows updates are not up to date, there are two required Windows updates you are going to need (heads up they take awhile)<br />
