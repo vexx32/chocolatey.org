@@ -1157,6 +1157,10 @@
     <Content Include="Content\Images\docs\gifs\choco_upgrade_noop.gif" />
     <Content Include="Content\Images\docs\git-tfs.png" />
     <Content Include="Content\Images\docs\git-tfs2.png" />
+    <Content Include="Content\Images\docs\gui\in-action-with-branding.gif" />
+    <Content Include="Content\Images\docs\gui\in-action.gif" />
+    <Content Include="Content\Images\docs\gui\main-screen-with-branding.png" />
+    <Content Include="Content\Images\docs\gui\main-screen.png" />
     <Content Include="Content\Images\docs\hero.png" />
     <Content Include="Content\Images\docs\msysgit.png" />
     <Content Include="Content\Images\docs\msysgit2.png" />
@@ -1525,6 +1529,11 @@
     <Content Include="Views\Blog\BoxstarterMovesUnderChocolateyGitHubOrganization.md" />
     <Content Include="Views\Blog\SaveTheDateChocolateyFest.md" />
     <Content Include="Views\Blog\PaulBroadwithJoinsChocolatey.md" />
+    <Content Include="Views\Documentation\FeaturesBranding.cshtml" />
+    <Content Include="Views\Documentation\HelpersInstallChocolateyWindowsService.cshtml" />
+    <Content Include="Views\Documentation\HelpersStartChocolateyWindowsService.cshtml" />
+    <Content Include="Views\Documentation\HelpersStopChocolateyWindowsService.cshtml" />
+    <Content Include="Views\Documentation\HelpersUninstallChocolateyWindowsService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -65,14 +65,47 @@ $packageArgs = @@{
 
 Install-ChocolateyInstallPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
+<pre><code class="powershell">
+$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$fileLocation = Join-Path $toolsDir &#39;someinstaller.msi&#39;
+
+$packageArgs = @@{
+  packageName   = $packageName
+  fileType      = &#39;msi&#39;
+  file          = $fileLocation
+  silentArgs    = &quot;/qn /norestart MSIPROPERTY=`&quot;true`&quot;&quot;
+  validExitCodes= @@(0, 3010, 1641)
+  softwareName  = &#39;Bob*&#39;
+}
+
+Install-ChocolateyInstallPackage @@packageArgs</code></pre>
+<p><strong>EXAMPLE 4</strong></p>
+<pre><code class="powershell">
+$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$fileLocation = Join-Path $toolsDir &#39;someinstaller.msi&#39;
+$mstFileLocation = Join-Path $toolsDir &#39;transform.mst&#39;
+
+$packageArgs = @@{
+  packageName   = $packageName
+  fileType      = &#39;msi&#39;
+  file          = $fileLocation
+  silentArgs    = &quot;/qn /norestart TRANSFORMS=`&quot;$mstFileLocation`&quot;&quot;
+  validExitCodes= @@(0, 3010, 1641)
+  softwareName  = &#39;Bob*&#39;
+}
+
+Install-ChocolateyInstallPackage @@packageArgs</code></pre>
+<p><strong>EXAMPLE 5</strong></p>
 <pre><code class="powershell">Install-ChocolateyInstallPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot;
 </code></pre>
-<p><strong>EXAMPLE 4</strong></p>
+<p><strong>EXAMPLE 6</strong></p>
 <pre><code class="powershell">
 Install-ChocolateyInstallPackage -PackageName &#39;bob&#39; -FileType &#39;exe&#39; `
   -SilentArgs &#39;/S&#39; `
   -File &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\bob.exe&quot; `
-  -ValidExitCodes = @@(0)</code></pre>
+  -ValidExitCodes @@(0)</code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>
 <h2 id="outputs">Outputs</h2>
@@ -160,6 +193,21 @@ installer with out any arguments. That means a nonsilent installer.</p>
 are not setting up a silent/unattended package. Please note that if you<br />
 are submitting to the <a href="https://chocolatey.org/packages">community repository</a>, it is nearly a requirement<br />
 for the package to be completely unattended.</p>
+<p>When you are using this with an MSI, it will set up the arguments as<br />
+follows: <code>&quot;C:\Full\Path\To\msiexec.exe&quot; /i &quot;$fileFullPath&quot; $silentArgs</code>,<br />
+where <code>$fileFullPath</code> is <code>$file</code> or <code>$file64</code>, depending on what has been<br />
+decided to be used. Previous to 0.10.4, it will be just <code>$file</code> as<br />
+passing <code>$file64</code> would not have been available yet.</p>
+<p>When you use this with MSU, it is similar to MSI above in that it finds<br />
+the right executable to run.</p>
+<p>When you use this with executable installers, the <code>$fileFullPath</code> will<br />
+be <code>$file</code> (or <code>$file64</code> starting with 0.10.4+) and expects to be a full<br />
+path to the file. If the file is in the package, see the parameters for<br />
+&quot;File&quot; and &quot;File64&quot; to determine how you can get that path at runtime in<br />
+a deterministic way. SilentArgs is everything you call against that<br />
+file, as in <code>&quot;$fileFullPath&quot; $silentArgs&quot;</code>. An example would be<br />
+<code>&quot;c:\path\setup.exe&quot; /S</code>, where <code>$fileFullPath = &quot;c:\path\setup.exe&quot;</code><br />
+and <code>$silentArgs = &quot;/S&quot;</code>.</p>
 <table>
 <thead>
 <tr class="header">

@@ -17,15 +17,26 @@ takes an existing package and makes it available without any internet<br />
 requirement.</p>
 <p>See <a href="https://chocolatey.org/docs/features-automatically-recompile-packages" class="uri">https://chocolatey.org/docs/features-automatically-recompile-packages</a></p>
 <h2 id="usage">Usage</h2>
-<pre><code class="nohighlight">  choco download &lt;pkg&gt; [&lt;options/switches&gt;]</code></pre>
+<pre><code class="nohighlight">  choco download &lt;pkg&gt; [&lt;options/switches&gt;] [install_script_variable=value]
+
+  Install script variables are values that are discovered in the 
+   chocolateyInstall.ps1 (or a script it calls). When you find values
+   there maybe don&#39;t get found and replaced or they use a default 
+   value and you want to provide a value for them to use instead, you
+   can find them and then provide the value you want to pass instead.
+   For example, in the Firefox package, it uses a default value of 
+   &#39;en-US&#39; for `$locale`. If you want to change that, you can add 
+   `locale` and a value, which will replace `$locale` in the script,
+   e.g. `choco download firefox --internalize locale=en-GB`.</code></pre>
 <h2 id="examples">Examples</h2>
 <pre><code class="nohighlight">  choco download sysinternals
 
   #### [Chocolatey for Business](https://chocolatey.org/compare) / Chocolatey for MSP
-  choco download notepadplusplus.install --internalize
+  choco download notepadplusplus --internalize
   choco download notepadplusplus.install --internalize --resources-location \\server\share
   choco download notepadplusplus.install --internalize --resources-location http://somewhere/internal --append-useoriginallocation
-  choco download KB3033929 --internalize -internalize-all-urls --append-useoriginallocation</code></pre>
+  choco download KB3033929 --internalize -internalize-all-urls --append-useoriginallocation
+  choco download firefox --internalize locale=es-AR</code></pre>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p>Coming soon</p>
 <h2 id="options-and-switches">Options and Switches</h2>
@@ -200,7 +211,7 @@ out multiple package calls when wanting to pass specific options.</p>
        function. Business editions only (licensed version 1.7.0+). Requires at 
        least Chocolatey v0.10.1 for `Install-ChocolateyPackage` to recognize 
        the switch appropriately. Overrides the feature 
-       &#39;internalizeAppendUseOriginalLocation&#39; set to by default to &#39;False&#39;.
+       &#39;internalizeAppendUseOriginalLocation&#39; set to by default to &#39;True&#39;.
 
      --sdc, --skipdownloadcache, --skip-download-cache
      Skip Download Cache - Use the original download url even if a private 

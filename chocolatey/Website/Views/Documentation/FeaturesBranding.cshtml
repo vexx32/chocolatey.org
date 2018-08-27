@@ -1,0 +1,211 @@
+﻿@{
+  ViewBag.Title = "FeaturesBranding";
+}
+
+<article>
+<h1 id="branding-business-editions-only">Branding (Business Editions Only)</h1>
+<p>We are aware that some of customers want to be able to brand Chocolatey GUI so<br />
+that is &quot;looks&quot; like their own internal applications. Out of the box, Chocolatey<br />
+GUI&#39;s main screen looks like this:</p>
+<p><img src="@Url.Content("~/content/images/docs/gui/main-screen.png")" alt="Chocolatey GUI Main Screen" /></p>
+<p>However, with branding applied, Chocolatey GUI&#39;s main screen can instead look like<br />
+this:</p>
+<p><img src="@Url.Content("~/content/images/docs/gui/main-screen-with-branding.png")" alt="Chocolatey GUI Main Screen with Branding" /></p>
+<p>Here, the logo of a company called A Squared Software Ltd is being used, instead<br />
+of the main Chocolatey logo. In addition, a <em>Powered By Chocolatey</em> logo is added<br />
+to the bottom left corner of the application.</p>
+<h2 id="requirements-for-branding">Requirements for branding</h2>
+<p><strong>NOTE:</strong> Branding of Chocolatey GUI will only available to our Business License<br />
+customers, and requires a special build of Chocolatey GUI. The version of Chocolatey<br />
+GUI that ships on the Chocolatey Community Repository does not include the<br />
+ability to apply branidng. If you would like more information about the branded<br />
+version of Chocolatey GUI, please reach out to support via the normal channels.</p>
+<p>In order for branding to work, there are a number of image files that are required.<br />
+These have to be named exactly as the following:</p>
+<ul>
+<li>icon_256x256.ico</li>
+<li>logo_150_250.png</li>
+<li>splash_700x302.png</li>
+<li>splash_975_421.png</li>
+<li>splash_1250x540.png</li>
+</ul>
+<p><strong>NOTE:</strong> The reason that there are multiple splash screen images is because<br />
+Chocolatey GUI makes a decision, based on the resolution of the screen, which<br />
+splash screen image to display to the user.</p>
+<p>The numbers in the file names are a suggestion as to the width and height of each<br />
+image. While the images don&#39;t have to <em>exactly</em> match these dimensions, it is<br />
+recommended that they are as close as possible to these dimensions.</p>
+<h2 id="location-of-branding-files">Location of branding files</h2>
+<p>In order for your custom branding files to be applied, you must place the above<br />
+files into one of two specific places.</p>
+<h3 id="default-location">Default Location</h3>
+<p>By default, Chocolatey GUI will look for custom branding files in the Chocolatey<br />
+installation directory (normally <code>c:/programdata/chocolatey</code>, and then in a folder<br />
+called <code>branding/gui</code>. i.e.&nbsp; it will look in the following folder:</p>
+<p><code>c:/programdata/chocolatey/branding/gui</code></p>
+<h3 id="customer-location">Customer Location</h3>
+<p>It is possible to use a custom location by first settings an environment variable<br />
+called <code>ChocolateyBrandingLocation</code> to a new location. For example, if you created<br />
+this environment variable with a value of <code>c:/temp/branding</code>, then Chocolatey GUI<br />
+would then expect to find the above asset files in this location:</p>
+<p><code>c:/temp/branding/gui</code></p>
+<h2 id="chocolateyguibrandingdll">ChocolateyGuiBranding.dll</h2>
+<p>The first time a Business Licensed version of Chocolatey GUI is executed, and there<br />
+are the above asset files in one of the defined locations, a new file will<br />
+be generated in the same location called <code>ChocolateyGuiBranding.dll</code>. The new<br />
+file actually contains all the image files that were created, as they have been<br />
+embedded as resouces within this assembly file. This approach is used in order to<br />
+optimize the loading of the assets. Once this ChocolateyGuiBranding.dll has been<br />
+created, Chocolatey GUI will use it each time the application runs. The original<br />
+image asset files are actually no longer required, and can be removed. If at any<br />
+point you need to re-generate the branding that is being used, simply delete the<br />
+following two files:</p>
+<ul>
+<li>ChocolateyGuiBranding.dll</li>
+<li>ChocolateyGuiBranding.resources</li>
+</ul>
+<p>Then update, your image asset files, and re-run Chocolatey GUI and the branding<br />
+assembly will be re-generated.</p>
+<p>Using a single ChocolateyGuiBranding.dll as the source of branding makes it very<br />
+simple to generate and distribute this assembly to apply branding across your<br />
+entire organisation.</p>
+<h1 id="branding-in-action">Branding in action</h1>
+<p>The below GIF shows the default opening of the Chocolatey GUI application when<br />
+there is no branding applied.</p>
+<p><img src="@Url.Content("~/content/images/docs/gui/in-action.gif")" alt="Chocolatey GUI in action" /></p>
+<p>In this GIF, we see branding being applied to the Chocolatey GUI application.</p>
+<p><img src="@Url.Content("~/content/images/docs/gui/in-action-with-branding.gif")" alt="Chocolatey GUI in action with branding" /></p>
+<p>Notice that the splash screen image has been replaced, as well as the logo at the<br />
+top left of the application, and the icon in the taskbar.</p>
+<h1 id="deploying-branding">Deploying Branding</h1>
+<p>What follows is a suggestion on how a branded version of Chocolatey GUI can be<br />
+deployed out to your environment.</p>
+<p><strong>NOTE:</strong> In order for the below to work, you must have the privately released<br />
+version of Chocolatey GUI, not the version that is available on the Chocolatey<br />
+Community Repository. In addition, this package must be available on the same<br />
+source as the package that is produced below.</p>
+<ol>
+<li>Follow the steps above to place the branding image assets into the correct location.</li>
+<li>Run the Chocolatey GUI application to generate the ChocolateyGuiBranding.dll</li>
+<li>Create a new folder on your file system to house the branding Chocolatey Package</li>
+<li>In this folder, create a <code>tools</code> folder</li>
+<li>Copy the generated <code>ChocolateyGuiBranding.dll</code> into this folder</li>
+<li>Copy the following xml into a file called <code>chocolateygui-branding.nuspec</code>.<br />
+~~~xml<br />
+<?xml version="1.0" encoding="utf-8"?><br />
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd"><br />
+<metadata><br />
+<id>chocolateygui-branding</id><br />
+<version>0.1.0</version><br />
+<title>chocolateygui-branding (Install)</title><br />
+<authors><strong>REPLACE_AUTHORS_OF_SOFTWARE_COMMA_SEPARATED</strong></authors><br />
+<projectUrl><a href="https://_Software_Location_REMOVE_OR_FILL_OUT_" class="uri">https://_Software_Location_REMOVE_OR_FILL_OUT_</a></projectUrl><br />
+<tags>chocolateygui-branding SPACE_SEPARATED</tags><br />
+<summary><strong>REPLACE</strong></summary><br />
+<description>__REPLACE__MarkDown_Okay </description><br />
+<dependencies><br />
+<dependency id="chocolateygui" /><br />
+</dependencies><br />
+</metadata><br />
+<files><br />
+<file src="tools\**" target="tools" /><br />
+</files><br />
+</package><br />
+~~~</li>
+<li><p>Copy the following PowerShell into a file called <code>tools\chocolateyInstall.ps1</code><br />
+~~~powershell<br />
+$toolsDir = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;<br />
+$helpersFile = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;</p>
+<pre><code class="nohighlight">. $helpersFile
+
+$chocolateyGuiBrandingAssembly = Join-Path -Path $toolsDir -ChildPath &#39;ChocolateyGuiBranding.dll&#39;
+$chocolateyGuiBrandingLocation = Join-Path -Path (Get-BrandingLocation) -ChildPath &#39;gui&#39;
+
+if(!(Test-Path -Path $chocolateyGuiBrandingLocation)){
+  New-Item $chocolateyGuiBrandingLocation -ItemType Directory -Force | Out-Null
+}
+
+Copy-Item -Path $chocolateyGuiBrandingAssembly -Destination $chocolateyGuiBrandingLocation</code></pre>
+~~~</li>
+<li><p>Copy the following PowerShell into a file called <code>tools\chocolateyuninstall.ps1</code><br />
+~~~powershell<br />
+$toolsDir = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;<br />
+$helpersFile = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;</p>
+<pre><code class="nohighlight">. $helpersFile
+
+$chocolateyGuiBrandingLocation = Join-Path -Path (Get-BrandingLocation) -ChildPath &#39;gui&#39;
+$chocolateyGuiBrandingAssembly = Join-Path -Path $chocolateyGuiBrandingLocation -ChildPath &#39;ChocolateyGuiBranding.dll&#39;
+
+Remove-Item -Path $chocolateyGuiBrandingAssembly -Force -ErrorAction Continue | Out-Null</code></pre>
+~~~</li>
+<li><p>Copy the following PowerShell into a file called <code>tools\helpers.ps1</code><br />
+~~~powershell<br />
+function Get-BrandingLocation {<br />
+&lt;#<br />
+.SYNOPSIS<br />
+Gets the top level location for branding files used by Chocolatey<br />
+applications<br />
+.DESCRIPTION<br />
+Creates or uses an environment variable that a user can control to<br />
+communicate with packages about where they would like branding files to<br />
+be located.<br />
+.NOTES<br />
+Sets an environment variable called <code>ChocolateyBrandingLocation</code>.<br />
+.INPUTS<br />
+None<br />
+.OUTPUTS<br />
+None<br />
+#&gt;</p>
+<pre><code class="nohighlight">    $brandingLocation = $env:ChocolateyBrandingLocation
+
+    if ($null -eq $brandingLocation) {
+      $chocoInstallLocation = $env:ChocolateyInstall
+      $brandingLocation = Join-Path -Path $chocoInstallLocation -ChildPath &#39;branding&#39;
+    }
+
+    # Add a drive letter if one doesn&#39;t exist
+    if (-not($brandingLocation -imatch &quot;^\w:&quot;)) {
+      $brandingLocation = Join-Path $env:systemdrive $brandingLocation
+    }
+
+    if (-not($env:ChocolateyBrandingLocation -eq $brandingLocation)) {
+      try {
+        Set-EnvironmentVariable -Name &quot;ChocolateyBrandingLocation&quot; -Value $brandingLocation -Scope User
+      } catch {
+        if (Test-ProcessAdminRights) {
+          # sometimes User scope may not exist (such as with core)
+          Set-EnvironmentVariable -Name &quot;ChocolateyBrandingLocation&quot; -Value $brandingLocation -Scope Machine
+        } else {
+          throw $_.Exception
+        }
+      }
+    }
+
+    return $brandingLocation
+    }</code></pre>
+~~~</li>
+<li>Run the command <code>choco pack</code></li>
+<li>Deploy the generated <code>chocolateygui-branding.nupkg</code> to the repository that you are using</li>
+<li><p>Install the Chocolatey GUI Branding package</p></li>
+</ol>
+<h1 id="what-is-chocolatey-gui">What is Chocolatey GUI?</h1>
+<p>Chocolatey GUI is a WPF application that allows the installation, uninstallation,<br />
+updating, and searching for Chocolatey Packages. It is intended as a replacement<br />
+for the Chocolatey CLI for those that prefer interacting with an application,<br />
+rather than with commands.</p>
+<h1 id="what-functionality-is-offered-by-chocolatey-gui">What functionality is offered by Chocolatey GUI?</h1>
+<p>While Chocolatey GUI has a number of pieces of functionality, is doesn&#39;t have<br />
+everything that is offered by the Chocolatey CLI. Over time, additional functionality<br />
+will likely be added, but for the time being, the following is possible in<br />
+Chocolatey GUI:</p>
+<ul>
+<li>List Chocolatey Packages installed on local machine</li>
+<li>List Chocolatey Packages available for installation from remote sources</li>
+<li>Install/Uninstall/Update/Pin/Unpin Chocolatey Packages</li>
+<li>Add/Remove Chocolatey Sources</li>
+<li>Enable/disable Chocolatey Features</li>
+<li>Modify Chocolatey configuration values</li>
+<li>Visual indications provided when installed Chocolatey Packages are out of date</li>
+<li>List and Tile View of installed/available packages</li>
+</ul>
+</article>

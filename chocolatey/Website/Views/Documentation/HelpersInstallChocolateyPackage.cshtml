@@ -9,6 +9,9 @@
 <p>Installs software into &quot;Programs and Features&quot; based on a remote file<br />
 download. Use Install-ChocolateyInstallPackage when local or embedded<br />
 file.</p>
+<p>Building packages for an organization or for use internally? You want to<br />
+use Install-ChocolateyINSTALLPackage instead of this method (see links<br />
+below).</p>
 <h2 id="syntax">Syntax</h2>
 <pre><code class="powershell">Install-ChocolateyPackage `
   -PackageName &lt;String&gt; `
@@ -32,6 +35,9 @@ file.</p>
 machine. Has error handling built in.</p>
 <p>If you are embedding the file(s) directly in the package (or do not need<br />
 to download a file first), use Install-ChocolateyInstallPackage instead.</p>
+<p>Building packages for an organization or for use internally? You want to<br />
+use Install-ChocolateyINSTALLPackage instead of this method<br />
+(see links below).</p>
 <h2 id="notes">Notes</h2>
 <p>This command will assert UAC/Admin privileges on the machine.</p>
 <p>This is a native installer wrapper function. A &quot;true&quot; package will<br />
@@ -74,24 +80,70 @@ $packageArgs = @@{
 Install-ChocolateyPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
 <pre><code class="powershell">
+$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$url        = &#39;https://somewhere.com/file.msi&#39;
+$url64      = &#39;https://somewhere.com/file-x64.msi&#39;
+
+
+$packageArgs = @@{
+  packageName   = $packageName
+  fileType      = &#39;msi&#39;
+  url           = $url
+  url64bit      = $url64
+  silentArgs    = &quot;/qn /norestart MSIPROPERTY=`&quot;true`&quot;&quot;
+  validExitCodes= @@(0, 3010, 1641)
+  softwareName  = &#39;Bob*&#39;
+  checksum      = &#39;12345&#39;
+  checksumType  = &#39;sha256&#39;
+  checksum64    = &#39;123356&#39;
+  checksumType64= &#39;sha256&#39;
+}
+
+Install-ChocolateyPackage @@packageArgs</code></pre>
+<p><strong>EXAMPLE 3</strong></p>
+<pre><code class="powershell">
+$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$url        = &#39;https://somewhere.com/file.msi&#39;
+$url64      = &#39;https://somewhere.com/file-x64.msi&#39;
+$urlTransform = &#39;https://somewhere.com/file.mst&#39;
+$mstFileLocation = Join-Path $toolsDir &#39;transform.mst&#39;
+
+Get-ChocolateyWebFile -PackageName &#39;bob&#39; `
+                      -Url $urlTransform -FileFullPath $mstFileLocation `
+                      -Checksum &#39;1234&#39; -ChecksumType &#39;sha256&#39;
+
+$packageArgs = @@{
+  packageName   = $packageName
+  fileType      = &#39;msi&#39;
+  file          = $fileLocation
+  silentArgs    = &quot;/qn /norestart TRANSFORMS=`&quot;$mstFileLocation`&quot;&quot;
+  validExitCodes= @@(0, 3010, 1641)
+  softwareName  = &#39;Bob*&#39;
+}
+
+Install-ChocolateyInstallPackage @@packageArgs</code></pre>
+<p><strong>EXAMPLE 4</strong></p>
+<pre><code class="powershell">
 Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; `
  &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39; `
  &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;</code></pre>
-<p><strong>EXAMPLE 3</strong></p>
+<p><strong>EXAMPLE 5</strong></p>
 <pre><code class="powershell">
 Install-ChocolateyPackage &#39;mono&#39; &#39;exe&#39; &#39;/SILENT&#39; `
  &#39;http://somehwere/something.exe&#39; -ValidExitCodes @@(0,21)</code></pre>
-<p><strong>EXAMPLE 4</strong></p>
+<p><strong>EXAMPLE 6</strong></p>
 <pre><code class="powershell">
 Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; `
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe&#39; `
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe&#39; `
  -checksum &#39;9383f12958aafc425923e322460a84de&#39; -checksumType &#39;md5&#39; `
  -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</code></pre>
-<p><strong>EXAMPLE 5</strong></p>
+<p><strong>EXAMPLE 7</strong></p>
 <pre><code class="powershell">Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
 </code></pre>
-<p><strong>EXAMPLE 6</strong></p>
+<p><strong>EXAMPLE 8</strong></p>
 <pre><code class="powershell">
 $options =
 @@{
@@ -192,6 +244,19 @@ installer with out any arguments. That means a nonsilent installer.</p>
 are not setting up a silent/unattended package. Please note that if you<br />
 are submitting to the <a href="https://chocolatey.org/packages">community repository</a>, it is nearly a requirement<br />
 for the package to be completely unattended.</p>
+<p>When you are using this with an MSI, it will set up the arguments as<br />
+follows:<br />
+<code>&quot;C:\Full\Path\To\msiexec.exe&quot; /i &quot;$downloadedFileFullPath&quot; $silentArgs</code>,<br />
+where <code>$downloadedfileFullPath</code> is <code>$url</code> or <code>$url64</code>, depending on what<br />
+has been decided to be used.</p>
+<p>When you use this with MSU, it is similar to MSI above in that it finds<br />
+the right executable to run.</p>
+<p>When you use this with executable installers, the<br />
+<code>$downloadedFileFullPath</code> will also be <code>$url</code>/<code>$url64</code> SilentArgs is<br />
+everything you call against that file, as in<br />
+<code>&quot;$fileFullPath&quot; $silentArgs&quot;</code>. An example would be<br />
+<code>&quot;c:\path\setup.exe&quot; /S</code>, where<br />
+<code>$downloadedfileFullPath = &quot;c:\path\setup.exe&quot;</code> and <code>$silentArgs = &quot;/S&quot;</code>.</p>
 <table>
 <thead>
 <tr class="header">
