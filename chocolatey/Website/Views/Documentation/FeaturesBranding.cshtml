@@ -90,104 +90,99 @@ source as the package that is produced below.</p>
 <li>Create a new folder on your file system to house the branding Chocolatey Package</li>
 <li>In this folder, create a <code>tools</code> folder</li>
 <li>Copy the generated <code>ChocolateyGuiBranding.dll</code> into this folder</li>
-<li>Copy the following xml into a file called <code>chocolateygui-branding.nuspec</code>.<br />
-~~~xml<br />
-<?xml version="1.0" encoding="utf-8"?><br />
-<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd"><br />
-<metadata><br />
-<id>chocolateygui-branding</id><br />
-<version>0.1.0</version><br />
-<title>chocolateygui-branding (Install)</title><br />
-<authors><strong>REPLACE_AUTHORS_OF_SOFTWARE_COMMA_SEPARATED</strong></authors><br />
-<projectUrl><a href="https://_Software_Location_REMOVE_OR_FILL_OUT_" class="uri">https://_Software_Location_REMOVE_OR_FILL_OUT_</a></projectUrl><br />
-<tags>chocolateygui-branding SPACE_SEPARATED</tags><br />
-<summary><strong>REPLACE</strong></summary><br />
-<description>__REPLACE__MarkDown_Okay </description><br />
-<dependencies><br />
-<dependency id="chocolateygui" /><br />
-</dependencies><br />
-</metadata><br />
-<files><br />
-<file src="tools\**" target="tools" /><br />
-</files><br />
-</package><br />
-~~~</li>
-<li><p>Copy the following PowerShell into a file called <code>tools\chocolateyInstall.ps1</code><br />
-~~~powershell<br />
-$toolsDir = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;<br />
-$helpersFile = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;</p>
-<pre><code class="nohighlight">. $helpersFile
+<li>Copy the following xml into a file called <code>chocolateygui-branding.nuspec</code>.</li>
+</ol>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd&quot;&gt;
+  &lt;metadata&gt;
+    &lt;id&gt;chocolateygui-branding&lt;/id&gt;
+    &lt;version&gt;0.1.0&lt;/version&gt;
+    &lt;title&gt;chocolateygui-branding (Install)&lt;/title&gt;
+    &lt;authors&gt;__REPLACE_AUTHORS_OF_SOFTWARE_COMMA_SEPARATED__&lt;/authors&gt;
+    &lt;projectUrl&gt;https://_Software_Location_REMOVE_OR_FILL_OUT_&lt;/projectUrl&gt;
+    &lt;tags&gt;chocolateygui-branding SPACE_SEPARATED&lt;/tags&gt;
+    &lt;summary&gt;__REPLACE__&lt;/summary&gt;
+    &lt;description&gt;__REPLACE__MarkDown_Okay &lt;/description&gt;
+    &lt;dependencies&gt;
+      &lt;dependency id=&quot;chocolateygui&quot; /&gt;
+    &lt;/dependencies&gt;
+  &lt;/metadata&gt;
+  &lt;files&gt;
+    &lt;file src=&quot;tools\**&quot; target=&quot;tools&quot; /&gt;
+  &lt;/files&gt;
+&lt;/package&gt;</code></pre>
+<p><code>7.</code> Copy the following PowerShell into a file called <code>tools\chocolateyInstall.ps1</code></p>
+<pre><code class="powershell">  $toolsDir                      = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+  $helpersFile                   = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;
 
-$chocolateyGuiBrandingAssembly = Join-Path -Path $toolsDir -ChildPath &#39;ChocolateyGuiBranding.dll&#39;
-$chocolateyGuiBrandingLocation = Join-Path -Path (Get-BrandingLocation) -ChildPath &#39;gui&#39;
+  . $helpersFile
 
-if(!(Test-Path -Path $chocolateyGuiBrandingLocation)){
-  New-Item $chocolateyGuiBrandingLocation -ItemType Directory -Force | Out-Null
-}
+  $chocolateyGuiBrandingAssembly = Join-Path -Path $toolsDir -ChildPath &#39;ChocolateyGuiBranding.dll&#39;
+  $chocolateyGuiBrandingLocation = Join-Path -Path (Get-BrandingLocation) -ChildPath &#39;gui&#39;
 
-Copy-Item -Path $chocolateyGuiBrandingAssembly -Destination $chocolateyGuiBrandingLocation</code></pre>
-~~~</li>
-<li><p>Copy the following PowerShell into a file called <code>tools\chocolateyuninstall.ps1</code><br />
-~~~powershell<br />
-$toolsDir = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;<br />
-$helpersFile = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;</p>
-<pre><code class="nohighlight">. $helpersFile
+  if(!(Test-Path -Path $chocolateyGuiBrandingLocation)){
+    New-Item $chocolateyGuiBrandingLocation -ItemType Directory -Force | Out-Null
+  }
 
-$chocolateyGuiBrandingLocation = Join-Path -Path (Get-BrandingLocation) -ChildPath &#39;gui&#39;
-$chocolateyGuiBrandingAssembly = Join-Path -Path $chocolateyGuiBrandingLocation -ChildPath &#39;ChocolateyGuiBranding.dll&#39;
+  Copy-Item -Path $chocolateyGuiBrandingAssembly -Destination $chocolateyGuiBrandingLocation</code></pre>
+<p><code>8.</code> Copy the following PowerShell into a file called <code>tools\chocolateyuninstall.ps1</code></p>
+<pre><code class="powershell">  $toolsDir                      = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+  $helpersFile                   = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;
 
-Remove-Item -Path $chocolateyGuiBrandingAssembly -Force -ErrorAction Continue | Out-Null</code></pre>
-~~~</li>
-<li><p>Copy the following PowerShell into a file called <code>tools\helpers.ps1</code><br />
-~~~powershell<br />
-function Get-BrandingLocation {<br />
-&lt;#<br />
-.SYNOPSIS<br />
-Gets the top level location for branding files used by Chocolatey<br />
-applications<br />
-.DESCRIPTION<br />
-Creates or uses an environment variable that a user can control to<br />
-communicate with packages about where they would like branding files to<br />
-be located.<br />
-.NOTES<br />
-Sets an environment variable called <code>ChocolateyBrandingLocation</code>.<br />
-.INPUTS<br />
-None<br />
-.OUTPUTS<br />
-None<br />
-#&gt;</p>
-<pre><code class="nohighlight">    $brandingLocation = $env:ChocolateyBrandingLocation
+  . $helpersFile
 
-    if ($null -eq $brandingLocation) {
-      $chocoInstallLocation = $env:ChocolateyInstall
-      $brandingLocation = Join-Path -Path $chocoInstallLocation -ChildPath &#39;branding&#39;
-    }
+  $chocolateyGuiBrandingLocation = Join-Path -Path (Get-BrandingLocation) -ChildPath &#39;gui&#39;
+  $chocolateyGuiBrandingAssembly = Join-Path -Path $chocolateyGuiBrandingLocation -ChildPath &#39;ChocolateyGuiBranding.dll&#39;
 
-    # Add a drive letter if one doesn&#39;t exist
-    if (-not($brandingLocation -imatch &quot;^\w:&quot;)) {
-      $brandingLocation = Join-Path $env:systemdrive $brandingLocation
-    }
+  Remove-Item -Path $chocolateyGuiBrandingAssembly -Force -ErrorAction Continue | Out-Null</code></pre>
+<p><code>9.</code> Copy the following PowerShell into a file called <code>tools\helpers.ps1</code></p>
+<pre><code class="powershell">  function Get-BrandingLocation {
+    &lt;#
+    .SYNOPSIS
+    Gets the top level location for branding files used by Chocolatey
+    applications
+    .DESCRIPTION
+    Creates or uses an environment variable that a user can control to
+    communicate with packages about where they would like branding files to
+    be located.
+    .NOTES
+    Sets an environment variable called `ChocolateyBrandingLocation`.
+    .INPUTS
+    None
+    .OUTPUTS
+    None
+    #&gt;
 
-    if (-not($env:ChocolateyBrandingLocation -eq $brandingLocation)) {
-      try {
-        Set-EnvironmentVariable -Name &quot;ChocolateyBrandingLocation&quot; -Value $brandingLocation -Scope User
-      } catch {
-        if (Test-ProcessAdminRights) {
-          # sometimes User scope may not exist (such as with core)
-          Set-EnvironmentVariable -Name &quot;ChocolateyBrandingLocation&quot; -Value $brandingLocation -Scope Machine
-        } else {
-          throw $_.Exception
+      $brandingLocation = $env:ChocolateyBrandingLocation
+
+      if ($null -eq $brandingLocation) {
+        $chocoInstallLocation = $env:ChocolateyInstall
+        $brandingLocation = Join-Path -Path $chocoInstallLocation -ChildPath &#39;branding&#39;
+      }
+
+      # Add a drive letter if one doesn&#39;t exist
+      if (-not($brandingLocation -imatch &quot;^\w:&quot;)) {
+        $brandingLocation = Join-Path $env:systemdrive $brandingLocation
+      }
+
+      if (-not($env:ChocolateyBrandingLocation -eq $brandingLocation)) {
+        try {
+          Set-EnvironmentVariable -Name &quot;ChocolateyBrandingLocation&quot; -Value $brandingLocation -Scope User
+        } catch {
+          if (Test-ProcessAdminRights) {
+            # sometimes User scope may not exist (such as with core)
+            Set-EnvironmentVariable -Name &quot;ChocolateyBrandingLocation&quot; -Value $brandingLocation -Scope Machine
+          } else {
+            throw $_.Exception
+          }
         }
       }
-    }
 
-    return $brandingLocation
-    }</code></pre>
-~~~</li>
-<li>Run the command <code>choco pack</code></li>
-<li>Deploy the generated <code>chocolateygui-branding.nupkg</code> to the repository that you are using</li>
-<li><p>Install the Chocolatey GUI Branding package</p></li>
-</ol>
+      return $brandingLocation
+      }</code></pre>
+<p><code>10.</code> Run the command <code>choco pack</code></p>
+<p><code>11.</code> Deploy the generated <code>chocolateygui-branding.nupkg</code> to the repository that you are using</p>
+<p><code>12.</code> Install the Chocolatey GUI Branding package</p>
 <h1 id="what-is-chocolatey-gui">What is Chocolatey GUI?</h1>
 <p>Chocolatey GUI is a WPF application that allows the installation, uninstallation,<br />
 updating, and searching for Chocolatey Packages. It is intended as a replacement<br />
