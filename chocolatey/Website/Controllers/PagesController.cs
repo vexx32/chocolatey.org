@@ -121,6 +121,12 @@ namespace NuGetGallery
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
             
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty,"Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+            }
+
             var from = new MailAddress(contactForm.Email);
 
             var message = @"
