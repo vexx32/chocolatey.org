@@ -1162,6 +1162,8 @@
     <Content Include="Content\Images\docs\gui\main-screen-with-branding.png" />
     <Content Include="Content\Images\docs\gui\main-screen.png" />
     <Content Include="Content\Images\docs\hero.png" />
+    <Content Include="Content\Images\docs\internalizer\architecture-diagram.png" />
+    <Content Include="Content\Images\docs\internalizer\jenkins-ps-plugin.png" />
     <Content Include="Content\Images\docs\msysgit.png" />
     <Content Include="Content\Images\docs\msysgit2.png" />
     <Content Include="Content\Images\docs\recompile\choco_delete_pkg_files.png" />
