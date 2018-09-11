@@ -1,0 +1,425 @@
+﻿@{
+  ViewBag.Title = "How-To-Setup-Internal-Package-Repository";
+}
+
+<article>
+<h1 id="how-to-use-package-internalizer-to-create-internal-package-source-business-editions-only">How To Use Package Internalizer To Create Internal Package Source (Business Editions Only)</h1>
+<h2 id="summary">Summary</h2>
+<p>When running within an organization it is beneficial to use your own, internally controlled, package repository. But that doesn&#39;t mean you have to create all packages from scratch. Chocolatey allows you to create packages easily using the <a href="https://chocolatey.org/docs/features-create-packages-from-installers">package builder</a> but it also allows you to take packages from the Chocolatey Community Repository and recompile them for internal use - this is a process known as <a href="https://chocolatey.org/docs/features-automatically-recompile-packages">package internalization</a>. This guide shows you how to use that within your organization.</p>
+<h2 id="organizational-requirements">Organizational Requirements</h2>
+<p>When distributing software across your organization you need confidence and control of your package source. We do not recommend an organization use the <a href="https://chocolatey.org" title="Chocolatey Community Repository">Chocolatey Community Repository</a> for the following reasons:</p>
+<ul>
+<li>Trust.<br />
+When using packages within your organization you need to be sure that you can trust the creators and maintainers of those packages. While every package going through the Chocolatey Community Repository undergoes a <a href="https://github.com/chocolatey/choco/wiki/Moderation">moderation process</a>, the creators and maintainers are strangers to your organization.</li>
+<li>Stability.<br />
+You need a stable and reliable connection to wherever your packages are stored and it needs to be always available during your business hours.</li>
+<li>Control.<br />
+To ensure the packages work in your environment you need to be in control of the testing, approval and release process.</li>
+</ul>
+<p>For these reasons, we do not recommend that organizations use the Chocolatey Community Repository as a package source and encourage replacing it with your own internal package source.</p>
+<h3 id="architecture">Architecture</h3>
+<p>Chocolatey recommends you use an architecture that meets the <a href="#organizational-requirements">organizational requirements</a> as we have shown below.</p>
+<p><img src="@Url.Content("~/content/images/docs/internalizer/architecture-diagram.png")" alt="Chocolatey Architecture Diagram" /></p>
+<p>Let&#39;s break down the diagram:</p>
+<ol>
+<li>Package Internalizer - The package internalizer downloads approved packages from the Chocolatey Community Repository and software binaries from their source locations.</li>
+<li>Source Control - once packages have been internalized we recommend they are stored in source control.</li>
+<li>Test &#39;Internal Package Repository&#39; - once internalized by the Package Internalizer, packages are pushed to here for further processing such as being put through automated testing.</li>
+<li>Production &#39;Internal Package Repository&#39; - after the package has been processing in the Test &#39;Internal Package Repository&#39; it will be pushed to your production package source for release to your organization.</li>
+</ol>
+<p>While it&#39;s not explicitly specified the glue that holds all of this together is automation using a self-hosted CI / CD tool such as <a href="https://chocolatey.org/packages/jenkins">Jenkins</a>, <a href="https://chocolatey.org/packages/gocdserver">GoCD</a>, <a href="https://chocolatey.org/packages/teamcity">TeamCity</a> etc. While it may be possible to do this with externally hosted solutions using local build agents (such as <a href="https://visualstudio.microsoft.com/team-services/">VSTS</a>) your mileage may vary.</p>
+<p><strong>NOTE:</strong> The Chocolatey Architecture Diagram shows the services separated. But don&#39;t mistake the services for servers. All of these services, package internalizer, source control and package repositories can all be run on one server. There is a caveat however. <a href="https://chocolatey.org/docs/how-to-set-up-chocolatey-server">Chocolatey Server</a> can only run one package source per server, so if you use this with a test and production repository source, as we recommend, you will need to run each on separate servers. This limitation does not apply to <a href="https://www.sonatype.com/nexus-repository-sonatype">Sonatype Nexus</a>, <a href="https://jfrog.com/artifactory/">Artifactory</a>, <a href="https://inedo.com/proget">ProGet</a> and others.</p>
+<h2 id="building-your-internal-infrastructure">Building Your Internal Infrastructure</h2>
+<p>Lets build the internal infrastructure to support this process.</p>
+<h3 id="server-pre-requisites">Server Pre-Requisites</h3>
+<p>When creating each server follow these steps:</p>
+<ol>
+<li>Create a server with <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-system-center">Windows Server 2016</a> - this can be a virtual or physical server. Details on how to create a server are beyond the scope of this guide - <strong>don&#39;t forget to rename your server to the correct name</strong>;</li>
+<li><a href="https://chocolatey.org/install#installing-chocolatey">Install Chocolatey</a>;</li>
+<li>Install <code>baretail</code>, <code>notepadplusplus.install</code> and <code>7zip</code> with Chocolatey: <code>choco install baretail notepadplusplus.install 7zip -y</code>;</li>
+</ol>
+<h3 id="internal-package-repositories">Internal Package Repositories</h3>
+<p>For this guide we have chosen to use <a href="https://chocolatey.org/docs/how-to-set-up-chocolatey-server">Chocolatey Server</a> to host our internal package repository. However as we noted earlier this has the limitation of hosting only one repository per server. For anything more than a simple environment, we recommend you use <a href="https://www.sonatype.com/nexus-repository-sonatype">Sonatype Nexus</a>, <a href="https://jfrog.com/download-artifactory-pro/">Artifactory Pro</a> or <a href="https://inedo.com/proget">ProGet</a>.</p>
+<p>The repositories to setup are for <em>test</em> and <em>production</em> which we will call <code>testrepo-srv</code> and <code>prodrepo-srv</code>. There are full <a href="https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally">instructions for setting up Chocolatey server</a> but to make sure we end up with the same result we list specific instructions here. Follow these instructions for each server, <code>testrepo-srv</code> and <code>prodrepo-srv</code>:</p>
+<h4 id="install-and-configure-chocolatey-server">Install and Configure Chocolatey Server</h4>
+<p>Before starting, make sure you install Chocolatey Server on separate servers.</p>
+<ol>
+<li><a href="#server-pre-requisites">Create a server and ensure you have the pre-requisites</a> before continuing.</li>
+<li>Install <code>chocolatey.server</code> using Chocolatey: <code>choco install chocolatey.server -y</code>;</li>
+<li><p>To configure Chocolatey Server, run the following PowerShell code (see the comments in the code for more information):</p>
+<pre><code class="nohighlight">``` powershell
+# Step by step instructions here https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally
+# Import the right modules
+Import-Module WebAdministration
+# Disable or remove the Default website
+Get-Website -Name &#39;Default Web Site&#39; | Stop-Website
+Set-ItemProperty &quot;IIS:\Sites\Default Web Site&quot; serverAutoStart False    # disables website
+
+# Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is v4.0 (or some version of 4). Ensure it is &quot;Integrated&quot; and not &quot;Classic&quot;.
+New-WebAppPool -Name $appPoolName -Force
+Set-ItemProperty IIS:\AppPools\$appPoolName enable32BitAppOnWin64 True       # Ensure 32-bit is enabled
+Set-ItemProperty IIS:\AppPools\$appPoolName managedRuntimeVersion v4.0       # managed runtime version is v4.0
+Set-ItemProperty IIS:\AppPools\$appPoolName managedPipelineMode Integrated   # Ensure it is &quot;Integrated&quot; and not &quot;Classic&quot;
+Restart-WebAppPool -Name $appPoolName   # likely not needed ... but just in case
+
+# Set up an IIS website pointed to the install location and set it to use the app pool.
+New-Website -Name $siteName -ApplicationPool $appPoolName -PhysicalPath $sitePath
+
+# Add permissions to c:\tools\chocolatey.server:
+&#39;IIS_IUSRS&#39;, &#39;IUSR&#39;, &quot;IIS APPPOOL\$appPoolName&quot; | ForEach-Object {
+    $obj = New-AclObject -SamAccountName $_ -Permission &#39;ReadAndExecute&#39; -Inheritance &#39;ContainerInherit&#39;,&#39;ObjectInherit&#39;
+    Add-Acl -Path $sitePath -AceObject $obj
+}
+
+# Add the permissions to the App_Data subfolder:
+$appdataPath = Join-Path -Path $sitePath -ChildPath &#39;App_Data&#39;
+&#39;IIS_IUSRS&#39;, &quot;IIS APPPOOL\$appPoolName&quot; | ForEach-Object {
+    $obj = New-AclObject -SamAccountName $_ -Permission &#39;Modify&#39; -Inheritance &#39;ContainerInherit&#39;, &#39;ObjectInherit&#39;
+    Add-Acl -Path $appdataPath -AceObject $obj
+}
+```</code></pre></li>
+<li>We shouldn&#39;t need to reboot the server but let&#39;s do it so we know everything is ready to go;</li>
+<li>From the server, open the browser and visit <code>https://&lt;SERVER NAME&gt;/chocolatey</code> - you will see some instructions but you need to note the password near the bottom. As this is a test environment we don&#39;t need to change this however <strong>for a production environment you will the instructions to change the password</strong>;</li>
+<li><p>Finally test the Chocolatey Server is working. From the server use the command <code>choco list --source https://&lt;SERVER NAME&gt;/chocolatey</code> (eg. if you were doing this from the test repository server you would use the command <code>choco list --source https://testrepo-srv/chocolatey</code>);</p></li>
+</ol>
+<p>Once this is done for both servers, you will have two repositories:</p>
+<ol>
+<li><p>Test Repository:<br />
+* Name: <code>testrepo-srv</code><br />
+* push URL: <code>https://testrepo-srv/chocolatey</code></p></li>
+<li><p>Production Repository:<br />
+* Name: <code>prodrepo-srv</code><br />
+* Push URL: <code>https://prodrepo-srv/chocolatey</code></p></li>
+</ol>
+<h3 id="install-and-configure-jenkins-server">Install and Configure Jenkins Server</h3>
+<p><a href="https://jenkins.io/">Jenkins</a> is a Continuous Integration / Continuous Delivery (often called CI/CD) tool that does the automation required to automatically manage the packages between the test and production repositories.</p>
+<p>Jenkins requires several PowerShell scripts to automate the processes. Create a directory on the root of your System Drive (normally <code>C:\</code>) called <code>scripts</code> and create each script file there.</p>
+<h4 id="script-get-updatedpackageps1">Script: <code>Get-UpdatedPackage.ps1</code></h4>
+<pre><code class="powershell">[CmdletBinding()]
+Param (
+    [Parameter(Mandatory)]
+    [string]
+    $LocalRepo,
+
+    [Parameter(Mandatory)]
+    [string]
+    $LocalRepoApiKey,
+
+    [Parameter(Mandatory)]
+    [string]
+    $RemoteRepo
+)
+
+. .\ConvertTo-ChocoObject.ps1
+
+Write-Verbose &quot;Getting list of local packages from &#39;$LocalRepo&#39;.&quot;
+$localPkgs = choco list --source $LocalRepo | Select-Object -Skip 1 | Select-Object -SkipLast 1 | ConvertTo-ChocoObject
+Write-Verbose &quot;Retrieved list of $(($localPkgs).count) packages from &#39;$Localrepo&#39;.&quot;
+
+$localPkgs | ForEach-Object {
+    Write-Verbose &quot;Getting remote package information for &#39;$($_.name)&#39;.&quot;
+    $remotePkg = choco list $_.name --source $RemoteRepo --exact | Select-Object -Skip 1 | Select-Object -SkipLast 1 | ConvertTo-ChocoObject
+    if ([version]($remotePkg.version) -gt ([version]$_.version)) {
+        Write-Verbose &quot;Package &#39;$($_.name)&#39; has a remote version of &#39;$($remotePkg.version)&#39; which is later than the local version &#39;$($_.version)&#39;.&quot;
+        Write-Verbose &quot;Internalizing package &#39;$($_.name)&#39; with version &#39;$($remotePkg.version)&#39;.&quot;
+        $tempPath = Join-Path -Path $env:TEMP -ChildPath ([GUID]::NewGuid()).GUID
+        choco download $_.name --no-progress --internalize --force --internalize-all-urls --append-use-original-location --output-directory=$tempPath --source=$RemoteRepo
+
+        if ($LASTEXITCODE -eq 0) {
+            Write-Verbose &quot;Pushing package &#39;$($_.name)&#39; to local repository &#39;$LocalRepo&#39;.&quot;
+            (Get-Item -Path (Join-Path -Path $tempPath -ChildPath &quot;*.nupkg&quot;)).fullname | ForEach-Object {
+                choco push $_ --source $LocalRepo --api-key $LocalRepoApiKey --force
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Verbose &quot;Package &#39;$_&#39; pushed to &#39;$LocalRepo&#39;.&quot;
+                }
+                else {
+                    Write-Verbose &quot;Package &#39;$_&#39; could not be pushed to &#39;$LocalRepo&#39;.`nThis could be because it already exists in the repository at a higher version and can be mostly ignored. Check error logs.&quot;
+                }
+            }
+        }
+        else {
+            Write-Verbose &quot;Failed to download package &#39;$($_.name)&#39;&quot;
+        }
+    }
+    else {
+        Write-Verbose &quot;Package &#39;$($_.name)&#39; has a remote version of &#39;$($remotePkg.version)&#39; which is not later than the local version &#39;$($_.version)&#39;.&quot;
+    }
+}</code></pre>
+<h4 id="script-update-prodrepofromtestps1">Script: <code>Update-ProdRepoFromTest.ps1</code></h4>
+<pre><code class="powershell">[CmdletBinding()]
+Param (
+    [Parameter(Mandatory)]
+    [string]
+    $ProdRepo,
+
+    [Parameter(Mandatory)]
+    [string]
+    $ProdRepoApiKey,
+
+    [Parameter(Mandatory)]
+    [string]
+    $TestRepo
+)
+
+. .\ConvertTo-ChocoObject.ps1
+
+# get all of the packages from the test repo
+$testPkgs = choco list --source $TestRepo | Select-Object -Skip 1 | Select-Object -SkipLast 1 | ConvertTo-ChocoObject
+$prodPkgs = choco list --source $ProdRepo | Select-Object -Skip 1 | Select-Object -SkipLast 1 | ConvertTo-ChocoObject
+$tempPath = Join-Path -Path $env:TEMP -ChildPath ([GUID]::NewGuid()).GUID
+if ($null -eq $testPkgs) {
+    Write-Verbose &quot;Test repository appears to be empty. Nothing to push to production.&quot;
+}
+elseif ($null -eq $prodPkgs) {
+    $pkgs = $testPkgs
+}
+else {
+    $pkgs = Compare-Object -ReferenceObject $testpkgs -DifferenceObject $prodpkgs -Property name, version | Where-object SideIndicator -eq &#39;&lt;=&#39;
+}
+
+$pkgs | ForEach-Object {
+    Write-Verbose &quot;Downloading package &#39;$($_.name)&#39; to &#39;$tempPath&#39;.&quot;
+    choco download $_.name --no-progress --output-directory=$tempPath --source=$TestRepo
+
+    if ($LASTEXITCODE -eq 0) {
+        $pkgPath = (Get-Item -Path (Join-Path -Path $tempPath -ChildPath &#39;*.nupkg&#39;)).FullName
+
+        # #######################
+        # INSERT CODE HERE TO TEST YOUR PACKAGE
+        # #######################
+
+        # If package testing is successful ...
+        if ($LASTEXITCODE -eq 0) {
+            Write-Verbose &quot;Pushing downloaded package &#39;$(Split-Path -Path $pkgPath -Leaf)&#39; to production repository &#39;$ProdRepo&#39;.&quot;
+            choco push $pkgPath --source=$ProdRepo --api-key=$ProdRepoApiKey --force
+
+            if ($LASTEXITCODE -eq 0) {
+                Write-Verbose &quot;Pushed package successfully.&quot;
+            }
+            else {
+                Write-Verbose &quot;Could not push package.&quot;
+            }
+        }
+        else {
+            Write-Verbose &quot;Package testing failed.&quot;
+        }
+
+        Remove-Item -Path $pkgPath -Force
+    }
+    else {
+        Write-Verbose &quot;Could not download package.&quot;
+    }
+}</code></pre>
+<p>Note the section above where you should insert the code to test your packages before being pushed to the production repository. This testing should be on an image that is typical for your environment, often called a &#39;Gold Image&#39;.</p>
+<h4 id="script-convertto-chocoobjectps1">Script: <code>ConvertTo-ChocoObject.ps1</code></h4>
+<pre><code class="powershell">function ConvertTo-ChocoObject {
+    [CmdletBinding()]
+    Param (
+        [Parameter(ValueFromPipeline)]
+        [string]$InputObject
+    )
+
+    Process {
+        # format of the &#39;choco list&#39; output is:
+        # &lt;PACKAGE NAME&gt; &lt;VERSION&gt; (ie. adobereader 2015.6.7)
+        if (-not [string]::IsNullOrEmpty($InputObject)) {
+            $props = $_.split(&#39; &#39;)
+            New-Object -TypeName psobject -Property @@{ name = $props[0]; version = $props[1] }
+        }
+    }
+}</code></pre>
+<p>To install and configure Jenkins:</p>
+<ol>
+<li><a href="#server-pre-requisites">Create a server and ensure you have the pre-requisites</a> before continuing.</li>
+<li>Install Jenkins using Chocolatey: <code>choco install jenkins -y</code></li>
+<li>Once Jenkins is installed it will open a web browser and take you to the configuration web page (if it does not open for any reason, open the web browser and browse to <code>http://localhost:8080</code><br />
+* The first page will refresh once Jenkins is installed. If it does not click <code>ENABLE AUTO REFRESH</code> in the top left hand corner;<br />
+* Unlock Jenkins by following the instructions on the next page, finding the password and pasting it into the box and click <strong>Continue</strong>;<br />
+* For this guide, click <strong>Install Suggested Plugins</strong> and wait for them to install;<br />
+* On the <em>Create First Admin</em> page, click <strong>Continue as admin</strong>;<br />
+* On the <em>Instance Configuration</em> page, click <strong>Save and Finish</strong>;<br />
+* On the <em>Jenkins is ready!</em> page, click <strong>Start using Jenkins</strong>;</li>
+<li>As the code we will be running in the Jenkins jobs is PowerShell, we need to add the PowerShell plugin.<br />
+* On the home page, click <strong>Manage Jenkins</strong><br />
+* Click <strong>Manage Plugins</strong>;<br />
+<img src="@Url.Content("~/content/images/docs/internalizer/jenkins-ps-plugin.png")" alt="Jenkins PowerShell Plugin" /><br />
+* Click the <strong>Available</strong> tab;<br />
+* In the <em>Filter</em> box type <code>PowerShell</code>;<br />
+* Tick the <em>PowerShell</em> plugin and click <strong>Install without Restart</strong>;<br />
+* Click <strong>Go back to the top page</strong>;</li>
+<li>Copy your Chocolatey Business license to <code>ProgramData\chocolatey\license</code> in the root of the system drive;</li>
+<li>Run the command <code>choco install chocolatey.extension -y</code>;</li>
+</ol>
+<p>We&#39;re now ready to create the jobs to work with the repository.</p>
+<h4 id="create-jenkins-jobs">Create Jenkins Jobs</h4>
+<p>To allow us to automatically manage the test and production repository we will create three Jenkins jobs to:</p>
+<ul>
+<li>To automatically update any out of date packages in the test repository from the Community Repository;</li>
+<li>Allow us to download a package from the Community Repository and submit it to our test repository;</li>
+<li>To automatically determine which packages are new or updated on the test repository, test them and submit them to the production repository;</li>
+</ul>
+<p>Each job is detailed below. Use those details to create a new job:</p>
+<ol>
+<li>From the Jenkins home page, click <strong>New Item</strong>;</li>
+<li>Enter the item name, click <strong>Pipeline</strong> and click <strong>OK</strong>;</li>
+<li>Complete the details page for each job and click <strong>OK</strong>;</li>
+</ol>
+<h5 id="jenkins-job-details-update-test-repository">Jenkins Job Details: Update Test Repository</h5>
+<p>Below are the details for the Jenkins job to update the test repository from the Chocolatey Community Repository. This job will check the test repository against the Chocolatey Community Repository and download any updated packages, internalize them and submit them to the test repository. If successful it will then trigger the job named <strong>Update Production Repository</strong>.</p>
+<ul>
+<li><strong>General Tab</strong>
+<ul>
+<li><em>Pipeline Name</em>: <strong>Update test repository from Chocolatey Community Repository</strong></li>
+<li><em>Description</em>: <strong>Automatically update any out of date packages in the test repository from the Community Repository;.</strong></li>
+<li><em>Ticked Options</em>: <strong>This project is parameterized</strong> and <strong>Do not allow concurrent builds</strong>;</li>
+<li><em>Parameters</em>:
+<ul>
+<li><em>Parameter Type</em>: <strong>String parameter</strong></li>
+<li><em>Name</em>: <strong>P_LOCAL_REPO_URL</strong></li>
+<li><em>Default Value</em>: **<a href="http://testrepo-srv/chocolatey**" class="uri">http://testrepo-srv/chocolatey**</a></li>
+<li><p><em>Description</em>: <strong>Internal test repository.</strong></p></li>
+<li><em>Parameter Type</em>: <strong>String parameter</strong></li>
+<li><em>Name</em>: <strong>P_REMOTE_REPO_URL</strong></li>
+<li><em>Default Value</em>: **<a href="https://chocolatey.org/api/v2/**" class="uri">https://chocolatey.org/api/v2/**</a></li>
+<li><p><em>Description</em>: <strong>Remote repository containing updated package versions.</strong></p></li>
+<li><em>Parameter Type</em>: <strong>Password parameter</strong></li>
+<li><em>Name</em>: <strong>P_LOCAL_REPO_API_KEY</strong></li>
+<li><em>Default Value</em>: The test repository API Key - if you have not changed this it will be the default;</li>
+<li><p><em>Description</em>: <strong>API key for the internal test repository where updated packages will be pushed.</strong></p></li>
+</ul></li>
+</ul></li>
+<li><strong>Pipeline Tab</strong>
+<ul>
+<li><em>Definition</em>: <strong>Pipeline script</strong></li>
+<li><em>Script</em>:<br />
+<code>powershell   node {       powershell '''           Set-Location (Join-Path -Path $env:SystemDrive -ChildPath 'scripts')           .\\Get-UpdatedPackage.ps1 -localrepo $env:P_LOCAL_REPO_URL `               -LocalRepoApiKey $env:P_LOCAL_REPO_API_KEY `               -RemoteRepo $env:P_REMOTE_REPO_URL `               -Verbose           '''   }</code></li>
+</ul></li>
+</ul>
+<p>For this guide we will trigger each job manually, however in production you will want to add the <strong>Build Trigger</strong> option <strong>Build periodically</strong> and complete the <strong>Schedule</strong> field.</p>
+<h5 id="jenkins-job-details-internalize-package">Jenkins Job Details: Internalize Package</h5>
+<p>Below are the details for the Jenkins job to update the test repository from the Chocolatey Community Repository. This job will take a list of packages that you submit to the job, download and internalize those packages and push them to the test repository. Once this has been done it will trigger the job named <strong>Update Production Repository</strong> to test and push them to the production repository.</p>
+<ul>
+<li><strong>General Tab</strong>
+<ul>
+<li><em>Pipeline Name</em>: <strong>Internalize packages from the Community Repository</strong></li>
+<li><em>Description</em>: <strong>Add new packages for internalizing from the Community Respository;.</strong></li>
+<li><em>Ticked Options</em>: <strong>This project is parameterized</strong> and <strong>Do not allow concurrent builds</strong>;</li>
+<li><em>Parameters</em>:
+<ul>
+<li><em>Parameter Type</em>: <strong>String parameter</strong></li>
+<li><em>Name</em>: <strong>P_PKG_LIST</strong></li>
+<li><em>Default Value</em>: <strong><leave blank></strong></li>
+<li><p><em>Description</em>: <strong>List of Chocolatey packages to be internalized (semicolon separated)</strong></p></li>
+<li><em>Parameter Type</em>: <strong>String parameter</strong></li>
+<li><em>Name</em>: <strong>P_DST_URL</strong></li>
+<li><em>Default Value</em>: **<a href="http://testrepo-srv/chocolatey**" class="uri">http://testrepo-srv/chocolatey**</a></li>
+<li><p><em>Description</em>: <strong>Internal package repository URL.</strong></p></li>
+<li><em>Parameter Type</em>: <strong>Password parameter</strong></li>
+<li><em>Name</em>: <strong>P_API_KEY</strong></li>
+<li><em>Default Value</em>: The test repository API Key - if you have not changed this it will be the default;</li>
+<li><p><em>Description</em>: <strong>API key for the internal test repository.</strong></p></li>
+</ul></li>
+</ul></li>
+<li><strong>Pipeline Tab</strong>
+<ul>
+<li><em>Definition</em>: <strong>Pipeline script</strong></li>
+<li><em>Script</em>:<br />
+<code>powershell   node {       powershell '''           $temp = Join-Path -Path $env:TEMP -ChildPath ([GUID]::NewGuid()).Guid           $null = New-Item -Path $temp -ItemType Directory           Write-Output &quot;Created temporary directory '$temp'.&quot;           ($env:P_PKG_LIST).split(';') | ForEach-Object {               choco download $_ --no-progress --internalize --force --internalize-all-urls --append-use-original-location --output-directory=$temp --source='https://chocolatey.org/api/v2/'               if ($LASTEXITCODE -eq 0) {                   $package = (Get-Item -Path (Join-Path -Path $temp -ChildPath &quot;$_*.nupkg&quot;)).fullname                   choco push $package --source &quot;$($env:P_DST_URL)&quot; --api-key &quot;$($env:P_API_KEY)&quot; --force               }               else {                   Write-Output &quot;Failed to download package '$_'&quot;               }           }           Remove-Item -Path $temp -Force -Recurse       '''   }</code></li>
+</ul></li>
+</ul>
+<h5 id="jenkins-job-details-update-production-repository">Jenkins Job Details: Update Production Repository</h5>
+<p>Below are the details for the Jenkins job to update the production repository. This job will take any packages that are new or updated in the test repository, test them and, if successful, submit them to the production repository.</p>
+<ul>
+<li><strong>General Tab</strong>
+<ul>
+<li><em>Pipeline Name</em>: <strong>Update production repository</strong></li>
+<li><em>Description</em>: <strong>Determine new packages on the Test repository, test and submit them to the Production repository.</strong></li>
+<li><em>Ticked Options</em>: <strong>This project is parameterized</strong> and <strong>Do not allow concurrent builds</strong>;</li>
+<li><em>Parameters</em>:
+<ul>
+<li><em>Parameter Type</em>: <strong>String parameter</strong></li>
+<li><em>Name</em>: <strong>P_PROD_REPO_URL</strong></li>
+<li><em>Default Value</em>: **<a href="http://prodrepo-srv/chocolatey**" class="uri">http://prodrepo-srv/chocolatey**</a></li>
+<li><p><em>Description</em>: <strong>URL to the production repository.</strong></p></li>
+<li><em>Parameter Type</em>: <strong>Password parameter</strong></li>
+<li><em>Name</em>: <strong>P_PROD_REPO_API_KEY</strong></li>
+<li><em>Default Value</em>: The test repository API Key - if you have not changed this it will be the default;</li>
+<li><p><em>Description</em>: <strong>API key for the production repository.</strong></p></li>
+<li><em>Parameter Type</em>: <strong>String parameter</strong></li>
+<li><em>Name</em>: <strong>P_TEST_REPO_URL</strong></li>
+<li><em>Default Value</em>: **<a href="http://testrepo-srv/chocolatey**" class="uri">http://testrepo-srv/chocolatey**</a></li>
+<li><p><em>Description</em>: <strong>URL for the test repository.</strong></p></li>
+</ul></li>
+</ul></li>
+<li><strong>Build Triggers</strong>
+<ul>
+<li><em>Options</em>: <strong>Build after other projects are built</strong></li>
+<li><em>Projects to watch</em>: <strong>Internalize packages from the Community Repository</strong> and <strong>Update test repository from Chocolatey Community Repository</strong></li>
+<li><em>Project Options</em>: <strong>Trigger only if build is stable</strong></li>
+</ul></li>
+<li><strong>Pipeline Tab</strong>
+<ul>
+<li><em>Definition</em>: <strong>Pipeline script</strong></li>
+<li><em>Script</em>:<br />
+<code>powershell   node {       powershell '''           Set-Location (Join-Path -Path $env:SystemDrive -ChildPath 'scripts')           .\\Update-ProdRepoFromTest.ps1 `           -ProdRepo $env:P_PROD_REPO_URL `           -ProdRepoApiKey $env:P_PROD_REPO_API_KEY `           -TestRepo $env:P_TEST_REPO_URL `           -Verbose   '''   }</code></li>
+</ul></li>
+</ul>
+<p>For this guide we will trigger each job manually, however in production you will want to add the <strong>Build Trigger</strong> option <strong>Build periodically</strong> and complete the <strong>Schedule</strong> field.</p>
+<h2 id="test-the-jenkins-automation-exercises">Test the Jenkins Automation (Exercises)</h2>
+<p>To ensure our automation pipeline works, lets conduct tests.</p>
+<h3 id="submit-a-new-package">Submit a new package</h3>
+<p>Before submitting a new package lets make sure we have no packages in our test or production repositories:</p>
+<ol>
+<li>To check the test repository, enter this at the command line <code>choco list --source http://testrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of Chocolatey you see may be different):<br />
+<code>powershell   PS&gt; choco list --source http://testrepo-srv/chocolatey   Chocolatey v0.10.11 Business   0 packages found.</code></li>
+<li>To check the production repository, enter this at the command line <code>choco list --source http://prodrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of Chocolatey you see may be different):<br />
+<code>powershell   PS&gt; choco list --source http://prodrepo-srv/chocolatey   Chocolatey v0.10.11 Business   0 packages found.</code></li>
+</ol>
+<p>Follow these steps to add a new package:</p>
+<ol>
+<li>On the Jenkins homepage, click the little drop down arrow to the right of the <strong>Internalize packages from the Community Repository</strong> job and click <strong>Build with Parameters</strong>;</li>
+<li>In the parameters page enter <code>adobereader</code> in the <strong>P_PKG_LIST</strong> and click the <strong>Build</strong> button;</li>
+</ol>
+<p>You can check the progress of the job by click on the flashing blue circle next to the job number.</p>
+<p>This Jenkins job will run and then, if it is successful will trigger the job named <strong>Update production repository</strong> which will update the production repository with any new or updated packages in the test repository, in this case the <code>adobereader</code> package we just added. To see this:</p>
+<ol>
+<li>To check the test repository, enter this at the command line <code>choco list --source http://testrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of <code>adobereader</code> and Chocolatey you see may be different):<br />
+<code>powershell   PS&gt; choco list --source http://testrepo-srv/chocolatey   Chocolatey v0.10.11 Business   adobereader 2015.007.20033.02   1 packages found.</code></li>
+<li>To check the production repository, enter this at the command line <code>choco list --source http://prodrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of <code>adobereader</code> and Chocolatey you see may be different):<br />
+<code>powershell   PS&gt; choco list --source http://prodrepo-srv/chocolatey   Chocolatey v0.10.11 Business   adobereader 2015.007.20033.02   1 packages found.</code></li>
+</ol>
+<h3 id="updating-a-package-from-the-chocolatey-community-repository">Updating a package from the Chocolatey Community Repository</h3>
+<p>As packages get out of date in your test repository you need to update them from the Chocolatey Community Repository. Before we start let&#39;s add an older version of a package.</p>
+<ol>
+<li>Download and internalize the <code>putty.install</code> package to the current directory by entering this on the command line: <code>choco download putty.install --version 0.70 --internalize --force --internalize-all-urls --append-use-original-location --output-directory . --source https://chocolatey.org/api/v2/</code>;</li>
+<li>Submit the internalized package to the test repository by entering this on the command line: <code>cpush putty.install.0.70.nupkg --source http://testrepo-srv/chocolatey --api-key chocolateyrocks -force</code></li>
+<li>Go back to Jenkins and run the job <strong>Update production repository</strong> with default parameters. This will test the <code>putty.install</code> package and push it to the production repository.</li>
+<li><p>Go to the command line and run <code>choco list --source http://prodrepo-srv/chocolatey</code> and you should see these results (note that if you didn&#39;t follow the <a href="#submit-a-new-package">exercise above</a> then <code>adobereader</code> will not be in the list):</p>
+<pre><code class="nohighlight">``` powershell
+PS&gt; choco list --source http://prodrepo-srv/chocolatey
+Chocolatey v0.10.11 Business
+adobereader 2015.007.20033.02
+putty.install 0.70
+2 packages found.
+```</code></pre></li>
+<li>Go back to Jenkins and run the job <strong>Update test repository from Chocolatey Community Repository</strong>. This will check the test repository against the Chocolatey Community Repository and update out <code>putty.install</code> package;</li>
+<li><p>Go to the command line and run <code>choco list --source http://testrepo-srv/chocolatey --all-versions</code> and you should see these results (note that if you didn&#39;t follow the <a href="#submit-a-new-package">exercise above</a> then <code>adobereader</code> will not be in the list and the latest version of <code>putty.install</code> may be different):</p>
+<pre><code class="nohighlight">``` powershell
+PS&gt; choco list --source http://testrepo-srv/chocolatey
+Chocolatey v0.10.11 Business
+adobereader 2015.007.20033.02
+putty.install 0.70.0.20171219
+putty.install 0.70
+3 packages found.
+```</code></pre></li>
+<li><p>As the Jenkins job <strong>Update test repository from Chocolatey Community Repository</strong> we ran earlier triggers the job <strong>Update production repository</strong>, the <code>putty.install</code> package will be automatically tested and pushed to the production repository. To check this, run the following on the command line <code>choco list --source http://prodrepo-srv/chocolatey --all-versions</code> and you should see these results (note that if you didn&#39;t follow the <a href="#submit-a-new-package">exercise above</a> then <code>adobereader</code> will not be in the list and the latest version of <code>putty.install</code> may be different)</p>
+<pre><code class="nohighlight">``` powershell
+PS&gt; choco list --source http://prodrepo-srv/chocolatey
+Chocolatey v0.10.11 Business
+adobereader 2015.007.20033.02
+putty.install 0.70.0.20171219
+putty.install 0.70
+3 packages found.
+```</code></pre></li>
+</ol>
+</article>
