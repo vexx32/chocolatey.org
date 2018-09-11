@@ -1445,7 +1445,6 @@
     <Content Include="Views\Documentation\Legal.cshtml" />
     <Content Include="Views\Documentation\MigrateOldChocolateyDirectoryToProgramData.cshtml" />
     <Content Include="Views\Documentation\Moderation.cshtml" />
-    <Content Include="Views\Documentation\PackageMantainerHandover.cshtml" />
     <Content Include="Views\Documentation\PackageTriageProcess.cshtml" />
     <Content Include="Views\Documentation\PackagingNext.cshtml" />
     <Content Include="Views\Documentation\Presentations.cshtml" />
@@ -1537,6 +1536,7 @@
     <Content Include="Views\Documentation\HelpersStopChocolateyWindowsService.cshtml" />
     <Content Include="Views\Documentation\HelpersUninstallChocolateyWindowsService.cshtml" />
     <Content Include="Views\Documentation\HowToSetupInternalPackageRepository.cshtml" />
+    <Content Include="Views\Documentation\PackageMaintainerHandover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
