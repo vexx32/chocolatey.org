@@ -1090,6 +1090,7 @@
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
+    <Content Include="Content\Images\blog\chocolatey-fest.png" />
     <Content Include="Content\Images\boxstarter.png" />
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
