@@ -8,8 +8,10 @@
 <ul>
 <li><a href="#what-is-chocolateyserver">What is Chocolatey.Server?</a></li>
 <li><a href="#requirements">Requirements</a></li>
+<li><a href="#setup-with-ansible">Setup with Ansible</a></li>
 <li><a href="#setup-with-puppet">Setup with Puppet</a></li>
 <li><a href="#setup-normally">Setup Normally</a></li>
+<li><a href="#setup-with-powershell-script">Setup with PowerShell Script</a></li>
 <li><a href="#additional-configuration">Additional Configuration</a>
 <ul>
 <li><a href="#performance">Performance</a>
@@ -44,6 +46,17 @@
 <li>If you have an IIS site for WSUS administration, Chocolatey.Server website will not come up at all, even if everything looks right. We have not yet been able to determine the issue, but believe it is related to ASP.NET 4.6+. Installing all of the required components for Chocolatey.Server may also affect your WSUS admin site. Please seek a different box.</li>
 <li>If you can ensure your server is up to date with all of the Windows Updates, you will move through this process quite a bit quicker.</li>
 </ul>
+<p>Setup with Ansible<br />
+If you are using Ansible, you can use the <a href="https://galaxy.ansible.com/jborean93/win_chocolatey_server">win_chocolatey_server</a> role to set up an Chocolatey.Server instance on a host running Windows Server 2008 R2 or newer.</p>
+<p>This Ansible role allows you to configure the following:</p>
+<ul>
+<li>The API token required to push packages</li>
+<li>Multiple credentials that can be used for basic authentication</li>
+<li>The location to install Chocolatey.Server to</li>
+<li>Binding settings for the Chocolatey.Server website such as the http and https port as well as the https certificate thumpbrint</li>
+<li>Generate a self-signed certificate alongside a https binding if a CA is not available</li>
+<li>Automatically install the Chocolatey nupkg from a path or a URL</li>
+</ul>
 <h2 id="setup-with-puppet">Setup with Puppet</h2>
 <p>If you are using the Puppet module <a href="https://forge.puppet.com/chocolatey/chocolatey_server">chocolatey/chocolatey_server</a>, it will do all of the additional setup for this package and allow some customization.</p>
 <p>The module works with Windows Server 2008/2012.<br />
@@ -55,17 +68,6 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li>Ensures an app pool for the chocolatey.server site</li>
 <li>Ensures the IIS website is setup for chocolatey.server</li>
 <li>Ensures permissions for the site are set correctly.</li>
-</ul>
-<h2 id="setup-with-ansible">Setup with Ansible</ht>
-<p>If you are using Ansible, you can use the <a href="https://galaxy.ansible.com/jborean93/win_chocolatey_server">win_chocolatey_server</a> role to set up an Chocolatey.Server instance on a host running Windows Server 2008 R2 or newer.</p>
-<p>This Ansible role allows you to configure the following:</p>
-<ul>
-<li>The API token required to push packages</li>
-<li>Multiple credentials that can be used for basic authentication</li>
-<li>The location to install Chocolatey.Server to</li>
-<li>Binding settings for the Chocolatey.Server website such as the http and https port as well as the https certificate thumpbrint</li>
-<li>Generate a self-signed certificate alongside a https binding if a CA is not available</li>
-<li>Automatically install the Chocolatey nupkg from a path or a URL</li>
 </ul>
 <h2 id="setup-normally">Setup Normally</h2>
 <ul>
@@ -94,6 +96,79 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li><code>IIS APPPOOL\&lt;app pool name&gt;</code> - Modify</li>
 </ul></li>
 </ul>
+<h2 id="setup-with-powershell-script">Setup with PowerShell Script</h2>
+<p>To install and configure Chocolatey.Server using PowerShell run the following script in an <strong>elevated administrator session</strong>:</p>
+<pre><code class="powershell">$siteName = &#39;ChocolateyServer&#39;
+$appPoolName = &#39;ChocolateyServerAppPool&#39;
+$sitePath = &#39;c:\tools\chocolatey.server&#39;
+
+function Add-Acl {
+    [CmdletBinding()]
+    Param (
+        [string]$Path,
+        [System.Security.AccessControl.FileSystemAccessRule]$AceObject
+    )
+
+    Write-Verbose &quot;Retrieving existing ACL from $Path&quot;
+    $objACL = Get-ACL -Path $Path
+    $objACL.AddAccessRule($AceObject)
+    Write-Verbose &quot;Setting ACL on $Path&quot;
+    Set-ACL -Path $Path -AclObject $objACL
+}
+
+function New-AclObject {
+    [CmdletBinding()]
+    Param (
+        [string]$SamAccountName,
+        [System.Security.AccessControl.FileSystemRights]$Permission,
+        [System.Security.AccessControl.AccessControlType]$AccessControl = &#39;Allow&#39;,
+        [System.Security.AccessControl.InheritanceFlags]$Inheritance = &#39;None&#39;,
+        [System.Security.AccessControl.PropagationFlags]$Propagation = &#39;None&#39;
+    )
+
+    New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule($SamAccountName, $Permission, $Inheritance, $Propagation, $AccessControl)
+}
+
+if ($null -eq (Get-Command -Name &#39;choco.exe&#39; -ErrorAction SilentlyContinue)) {
+    Write-Warning &quot;Chocolatey not installed. Cannot install standard packages.&quot;
+    Exit 1
+}
+# Install Chocolatey.Server prereqs
+choco install IIS-WebServer --source windowsfeatures
+choco install IIS-ASPNET45 --source windowsfeatures
+
+# Install Chocolatey.Server
+choco upgrade chocolatey.server -y
+
+# Step by step instructions here https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally
+# Import the right modules
+Import-Module WebAdministration
+# Disable or remove the Default website
+Get-Website -Name &#39;Default Web Site&#39; | Stop-Website
+Set-ItemProperty &quot;IIS:\Sites\Default Web Site&quot; serverAutoStart False    # disables website
+
+# Set up an app pool for Chocolatey.Server. Ensure 32-bit is enabled and the managed runtime version is v4.0 (or some version of 4). Ensure it is &quot;Integrated&quot; and not &quot;Classic&quot;.
+New-WebAppPool -Name $appPoolName -Force
+Set-ItemProperty IIS:\AppPools\$appPoolName enable32BitAppOnWin64 True       # Ensure 32-bit is enabled
+Set-ItemProperty IIS:\AppPools\$appPoolName managedRuntimeVersion v4.0       # managed runtime version is v4.0
+Set-ItemProperty IIS:\AppPools\$appPoolName managedPipelineMode Integrated   # Ensure it is &quot;Integrated&quot; and not &quot;Classic&quot;
+Restart-WebAppPool -Name $appPoolName   # likely not needed ... but just in case
+
+# Set up an IIS website pointed to the install location and set it to use the app pool.
+New-Website -Name $siteName -ApplicationPool $appPoolName -PhysicalPath $sitePath
+
+# Add permissions to c:\tools\chocolatey.server:
+&#39;IIS_IUSRS&#39;, &#39;IUSR&#39;, &quot;IIS APPPOOL\$appPoolName&quot; | ForEach-Object {
+    $obj = New-AclObject -SamAccountName $_ -Permission &#39;ReadAndExecute&#39; -Inheritance &#39;ContainerInherit&#39;,&#39;ObjectInherit&#39;
+    Add-Acl -Path $sitePath -AceObject $obj
+}
+
+# Add the permissions to the App_Data subfolder:
+$appdataPath = Join-Path -Path $sitePath -ChildPath &#39;App_Data&#39;
+&#39;IIS_IUSRS&#39;, &quot;IIS APPPOOL\$appPoolName&quot; | ForEach-Object {
+    $obj = New-AclObject -SamAccountName $_ -Permission &#39;Modify&#39; -Inheritance &#39;ContainerInherit&#39;, &#39;ObjectInherit&#39;
+    Add-Acl -Path $appdataPath -AceObject $obj
+}</code></pre>
 <h2 id="additional-configuration">Additional Configuration</h2>
 <p>Looking for where the apikey is and how it is changed, that is all done through the web.config. The config is pretty well-documented on each of the appSettings key values.</p>
 <p>To update the apiKey, it is kept in the web.config, search for that value and update it. If you reach out to the server on <a href="https://localhost" class="uri">https://localhost</a> (it will show you what the apikey is, only locally though).</p>

@@ -13,6 +13,7 @@
 <li><a href="#boxstarter">Boxstarter</a></li>
 <li><a href="#chef">Chef</a></li>
 <li><a href="#octopus-deploy">Octopus Deploy</a></li>
+<li><a href="#otter">Otter</a></li>
 <li><a href="#powershell-dsc">PowerShell DSC</a></li>
 <li><a href="#powershell-packagemanagement">PowerShell PackageManagement</a></li>
 <li><a href="#psdeploy">PSDeploy</a></li>
@@ -33,11 +34,13 @@
 <th><a href="https://www.powershellgallery.com/packages/cChoco/2.3.1.0">PowerShell DSC</a></th>
 <th><a href="https://forge.puppet.com/puppetlabs/chocolatey">Puppet</a></th>
 <th><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html">Salt</a></th>
+<th><a href="https://inedo.com/den/inedox/chocolatey">Otter</a></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Manage Packages</td>
+<td>x</td>
 <td>x</td>
 <td>x</td>
 <td>x</td>
@@ -51,25 +54,29 @@
 <td>x</td>
 <td>x</td>
 <td>x</td>
+<td>x</td>
 </tr>
 <tr class="odd">
 <td>Install Chocolatey from internal source</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
 <td></td>
 <td>x</td>
-<td>x</td>
-<td>x</td>
-<td></td>
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">Manage Sources</a></td>
-<td></td>
+<td>x</td>
 <td></td>
 <td>x</td>
 <td>x</td>
 <td></td>
+<td>x</td>
 </tr>
 <tr class="odd">
 <td>Manage Source Type (Admin/Self-Service)</td>
+<td>x</td>
 <td></td>
 <td></td>
 <td></td>
@@ -78,18 +85,20 @@
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-feature" })">Manage Features</a></td>
-<td></td>
+<td>x</td>
 <td></td>
 <td>x</td>
 <td>x</td>
 <td></td>
+<td>x</td>
 </tr>
 <tr class="odd">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">Manage Config Settings</a></td>
-<td></td>
+<td>x</td>
 <td></td>
 <td></td>
 <td>x</td>
+<td></td>
 <td></td>
 </tr>
 </tbody>
@@ -142,6 +151,35 @@ end</code></pre>
 <h2 id="octopus-deploy">Octopus Deploy</h2>
 <p>Octopus is a friendly deployment automation tool for .NET developers. It integrates with lots of utilities, and they have a template for installing Chocolatey packages: <a href="https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package" class="uri">https://library.octopusdeploy.com/step-template/actiontemplate-chocolatey-install-package</a></p>
 <p><a href="https://octopus.com/">Read more...</a></p>
+<h2 id="otter">Otter</h2>
+<p>Otter has an <a href="https://github.com/Inedo/inedox-chocolatey">open source Chocolatey extension</a> that allows installing and uninstalling packages, specifying package versions, chocolatey sources, chocolatey features, and installing chocolatey istelf.</p>
+<p>Otter also keeps an inventory of Chocolatey packages installed on any or all servers.</p>
+<pre><code class="otter">Chocolatey::Ensure-Package
+(
+    Name: 7zip.install,
+    Version: 18.5,
+    Source: https://proget.local/chocolatey
+);
+
+Chocolatey::Ensure-Installed
+(
+    Version: latest,
+    Source: https://proget.local/chocolatey
+);
+
+Chocolatey::Ensure-Source
+(
+    Name: Internal,
+    Url: https://proget.local/chocolatey,
+    Credential: DomainCred
+);
+
+Chocolatey::Ensure-Feature
+(
+    Feature: checksumFiles,
+    Enabled: false
+);</code></pre>
+<p><a href="https://inedo.com/den/otter/chocolatey">Read More...</a></p>
 <h2 id="powershell-dsc">PowerShell DSC</h2>
 <p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
 <pre><code class="powershell">  cChocoInstaller installChoco
