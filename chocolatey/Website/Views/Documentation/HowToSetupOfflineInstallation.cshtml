@@ -339,7 +339,7 @@ Write-Warning &quot;Follow the steps at https://chocolatey.org/docs/how-to-set-u
 <h4 id="ensure-chocolateyserver-with-configuration-managers">Ensure Chocolatey.Server with Configuration Managers</h4>
 <ul>
 <li>Puppet has an automated way of managing a Chocolatey.Server setup (it may not be up to date as of this writing). See <a href="https://forge.puppet.com/chocolatey/chocolatey_server" class="uri">https://forge.puppet.com/chocolatey/chocolatey_server</a>.</li>
-<li>Ansible has a blog post at <a href="http://frostbyte.us/using-ansible-to-install-a-chocolatey-package-repository/" class="uri">http://frostbyte.us/using-ansible-to-install-a-chocolatey-package-repository/</a> with some things we&#39;d love to see wrapped into a module.</li>
+<li>Ansible has a unofficial role in Ansible Galaxy at <a href="https://galaxy.ansible.com/jborean93/win_chocolatey_server" class="uri"> that can be used to setup Chocolatey.Server with custom parameters. There is also a blog post at <a href="http://frostbyte.us/using-ansible-to-install-a-chocolatey-package-repository/" class="uri">http://frostbyte.us/using-ansible-to-install-a-chocolatey-package-repository/</a> that explains some of the steps.</li>
 <li>Chef has a POC at <a href="https://github.com/galenemery/chocolatey_server" class="uri">https://github.com/galenemery/chocolatey_server</a></li>
 <li>Docker image at - <a href="https://github.com/takhyon/docker-chocolatey.server" class="uri">https://github.com/takhyon/docker-chocolatey.server</a>. Disclaimer: This is not a recommendation - we have no affiliation nor have we verified this</li>
 </ul>
@@ -572,7 +572,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <thead>
 <tr class="header">
 <th></th>
-<th><a href="http://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">Ansible</a></th>
+<th><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">Ansible</a></th>
 <th><a href="https://docs.chef.io/resource_chocolatey_package.html">Chef</a> / <a href="https://supermarket.chef.io/cookbooks/chocolatey/">Cookbook</a></th>
 <th><a href="https://www.powershellgallery.com/packages/cChoco/2.3.1.0">PowerShell DSC</a></th>
 <th><a href="https://forge.puppet.com/puppetlabs/chocolatey">Puppet</a></th>
@@ -598,7 +598,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 </tr>
 <tr class="odd">
 <td>Install Chocolatey from internal source</td>
-<td></td>
+<td>x</td>
 <td>x</td>
 <td>x</td>
 <td>x</td>
@@ -606,7 +606,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">Manage Sources</a></td>
-<td></td>
+<td>x</td>
 <td></td>
 <td>x</td>
 <td>x</td>
@@ -614,7 +614,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 </tr>
 <tr class="odd">
 <td>Manage Source Type (Admin/Self-Service)</td>
-<td></td>
+<td>x</td>
 <td></td>
 <td></td>
 <td></td>
@@ -622,7 +622,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-feature" })">Manage Features</a></td>
-<td></td>
+<td>x</td>
 <td></td>
 <td>x</td>
 <td>x</td>
@@ -630,7 +630,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 </tr>
 <tr class="odd">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">Manage Config Settings</a></td>
-<td></td>
+<td>x</td>
 <td></td>
 <td></td>
 <td>x</td>
