@@ -230,7 +230,8 @@ choco download chocolatey.extension chocolatey-agent --internalize --output-dire
 
 # Download local install script - need at least PowerShell v3
 $installScript = iwr -UseBasicParsing -Uri https://gist.githubusercontent.com/ferventcoder/d0aa1703a7d302fce79e7a4cc13797c0/raw/b1f7bad2441fa6c371b48b8475ef91cecb4d6370/ChocolateyLocalInstall.ps1 -UseDefaultCredentials
-$installScript | Out-File -FilePath &quot;$env:SystemDrive\choco-setup\files\ChocolateyLocalInstall.ps1&quot; -Encoding UTF8 -Force
+
+$installScript.Content | Out-File -FilePath &quot;$env:SystemDrive\choco-setup\files\ChocolateyLocalInstall.ps1&quot; -Encoding UTF8 -Force
 Write-Warning &quot;Check and adjust script at &#39;$env:SystemDrive\choco-setup\files\ChocolateyLocalInstall.ps1&#39; to ensure it points to the right version of Chocolatey in the choco-setup\packages folder.&quot;</code></pre>
 <p><a id="exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access" name="#exercise-1-set-up-chocolatey-installation-on-a-machine-without-internet-access"></a></p>
 <h2 id="exercise-1-optional-set-up-chocolatey-installation-on-a-machine-without-network-access">Exercise 1 (Optional): Set Up Chocolatey Installation On A Machine Without Network Access</h2>
@@ -578,11 +579,13 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <th><a href="https://www.powershellgallery.com/packages/cChoco/2.3.1.0">PowerShell DSC</a></th>
 <th><a href="https://forge.puppet.com/puppetlabs/chocolatey">Puppet</a></th>
 <th><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html">Salt</a></th>
+<th><a href="https://inedo.com/den/inedox/chocolatey">Otter</a></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Manage Packages</td>
+<td>x</td>
 <td>x</td>
 <td>x</td>
 <td>x</td>
@@ -596,6 +599,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <td>x</td>
 <td>x</td>
 <td>x</td>
+<td>x</td>
 </tr>
 <tr class="odd">
 <td>Install Chocolatey from internal source</td>
@@ -604,6 +608,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <td>x</td>
 <td>x</td>
 <td></td>
+<td>x</td>
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">Manage Sources</a></td>
@@ -612,10 +617,12 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <td>x</td>
 <td>x</td>
 <td></td>
+<td>x</td>
 </tr>
 <tr class="odd">
 <td>Manage Source Type (Admin/Self-Service)</td>
 <td>x</td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -628,6 +635,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <td>x</td>
 <td>x</td>
 <td></td>
+<td>x</td>
 </tr>
 <tr class="odd">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">Manage Config Settings</a></td>
@@ -635,6 +643,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <td></td>
 <td></td>
 <td>x</td>
+<td></td>
 <td></td>
 </tr>
 </tbody>
