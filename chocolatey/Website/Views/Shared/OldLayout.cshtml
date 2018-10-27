@@ -2,7 +2,7 @@
 @using NuGetGallery;
 @using StackExchange.Profiling
 @{
-  var noticeText = @"Chocolatey Fest - Chocolatey's inaugural conference on Windows Automation (WinOps) is coming - <a href='https://chocolatey.org/blog/chocolatey-fest-conference-coming-october-8'>Learn more!</a>";
+  var noticeText = @"Notices: This section not yet converted to new layout. Download stats are rolling back out.";
 
     if (!ViewData.ContainsKey(Constants.ReturnUrlViewDataKey) || string.IsNullOrWhiteSpace((string)ViewData[Constants.ReturnUrlViewDataKey]))
     {
@@ -34,16 +34,16 @@
   </title>
     @Bundles.RenderStylesheets()
     @RenderSection("css", required: false)
- 
+
     @*<link href="@Url.Content("~/Content/site.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/chocolatey.css")" rel="stylesheet" />*@
     <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
     <link rel="nuget" type="application/atom+xml" title="Chocolatey" href="http://www.chocolatey.org/api/v2" />
     <link rel="search" type="application/opensearchdescription+xml" href="@Url.Content("~/opensearch.xml")" title="Chocolatey Search">
-  
+
     @RenderSection("ExtraHeaders", required: false)
     @Bundles.RenderScripts("header")
-    
+
     @MiniProfiler.RenderIncludes()
     @{
       var propertyId = ConfigurationManager.AppSettings["Gallery:GoogleAnalyticsPropertyId"];
@@ -105,7 +105,7 @@
             @if (TempData.ContainsKey("Message"))
             {
                 <p class="message">@TempData["Message"]</p>
-            } 
+            }
             @if (TempData.ContainsKey("ErrorMessage"))
             {
                 <p class="message error">@TempData["ErrorMessage"]</p>
@@ -194,7 +194,7 @@
     </div>
   @RenderPage("_CookiePolicy.cshtml")
   @Bundles.RenderScripts()
-  @RenderSection("BottomScripts", required: false) 
+  @RenderSection("BottomScripts", required: false)
 
   @if (!string.IsNullOrWhiteSpace(noticeText))
   {
