@@ -1,0 +1,248 @@
+﻿@{
+  ViewBag.Title = "FeaturesChocolateyCentralManagement";
+}
+
+<article>
+<h1 id="chocolatey-central-management-ccm-business-editions-only">Chocolatey Central Management (CCM) (Business Editions Only)</h1>
+<h2 id="usage">Usage</h2>
+<p>Chocolatey Central Management (CCM) works in conjunction with the <a href="https://chocolatey.org/docs/features-agent-service">Chocolatey<br />
+Agent Service</a> to bring full<br />
+details of all Chocolatey controlled machines in your environment into one<br />
+location, which is then accessible by the CCM Website. The Chocolatey Agent<br />
+Service will regularly report information about what is installed on each<br />
+machine, and whether any of that software is outdated, based on packages in<br />
+available sources.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Chocolatey (<code>chocolatey</code> package) v0.10.12+</li>
+<li>Chocolatey for Business (C4B) Edition</li>
+<li>Chocolatey Licensed Extension (<code>chocolatey.extension</code> package) v2.0.0+</li>
+<li>Chocolatey Agent Service (<code>chocolatey-agent</code> package) v0.9.0+</li>
+<li>Chocolatey Central Management Database (<code>chocolatey-management-web</code> package) v0.1.0+
+<ul>
+<li>This deploys the CCM database schema to the specified SQL Server instance</li>
+</ul></li>
+<li>Chocolatey Central Management Service (<code>chocolatey-management-service</code> package) v0.1.0+
+<ul>
+<li>This installs the CCM Windows Service, which the Chocolatey Agent Windows Service will communicate with.</li>
+</ul></li>
+<li>Chocolatey Central Management Web (<code>chocolatey-management-web</code> package) v0.1.0+
+<ul>
+<li>This is the CCM front end website that is the main user interface of the application</li>
+</ul></li>
+</ul>
+<h2 id="setup">Setup</h2>
+<p>While it is envisioned that CCM will be installed across multiple servers, it is<br />
+certainly possible to run CCM on a single server.</p>
+<h3 id="pre-requisites">Pre-Requisites</h3>
+<p>In order to install CCM, it is assumed that the following applications/software<br />
+are installed, either as a single server installation, or spread over multiple<br />
+servers.</p>
+<ol>
+<li>SQL Server Instance, with administrator access for initial database provision</li>
+<li>Internet Information Services</li>
+</ol>
+<h3 id="package-parameters">Package Parameters</h3>
+<h4 id="chocolatey-central-management-database">Chocolatey Central Management Database</h4>
+<p>This package creates the Chocolatey Central Management Database with the following defaults:</p>
+<ul>
+<li>Database Connection String: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
+</ul>
+<h5 id="parameters">Parameters</h5>
+<p>You can override the package defaults using the following parameters:</p>
+<ul>
+<li><code>/ConnectionString</code>
+<ul>
+<li>The SQL Server database connection string to be used to connect to the Chocolatey Central Management database.</li>
+<li><strong>NOTE:</strong> Default Value: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
+</ul></li>
+<li><code>/Database</code>
+<ul>
+<li>Name of the SQL Server database to use. Note that if you do not also pass <code>/ConnectionString</code>, it will be generated using this parameter value and <code>/SqlServerInstance</code> (using defaults for missing parameters);</li>
+<li><strong>NOTE:</strong> Default Value: <strong>ChocolateyManagement</strong></li>
+</ul></li>
+<li><code>/SqlServerInstance</code>
+<ul>
+<li>Instance name of the SQL Server database to connect to. Note that if you do not also pass <code>/ConnectionString</code>, it will be generated using this parameter value and <code>/Database</code> (using defaults for missing parameters);</li>
+<li><strong>NOTE:</strong> Default Value: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
+</ul></li>
+</ul>
+<h5 id="example">Example</h5>
+<p>Let&#39;s assume that you want to install the Chocolatey Central Management Database<br />
+onto a machine that will access a SQL Server instance called <code>SQLSERVERCCM</code>, on<br />
+a domain machine called <code>MACHINE1</code> which is part of the domain <code>ccmtest</code>, using a specific user name (ccmservice) and password<br />
+combination. In this scenario, the installation command would look like the<br />
+following:</p>
+<pre><code class="nohighlight">choco install chocolatey-management-database --package-parameters-sensitive=&quot;&#39;/ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;Integrated Security=SSPI;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
+<p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that<br />
+the sensitive information is not leaked out into log files.</p>
+<p><strong>NOTE:</strong> There is an assumption here that the username and password being used have the necessary permissions in order to create the CCM database in the destination SQL Server instance.</p>
+<h4 id="chocolatey-central-management-service">Chocolatey Central Management Service</h4>
+<p>This package creates the Chocolatey Central Management Service with the following defaults:</p>
+<ul>
+<li>Service Name: <strong>chocolatey-management-service</strong></li>
+<li>Service Displayname <strong>Chocolatey Management Service</strong></li>
+<li>Description: <strong>Chocolatey Management Service is a background service for Chocolatey.</strong></li>
+<li>Service Startup: <strong>Automatic</strong></li>
+<li>Service Username: <strong>ChocolateyLocalAdmin</strong></li>
+<li>Database Connection String: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
+<li>Service Listening Port: <strong>24040</strong></li>
+<li>Self-Signed Certificate Domain Name: <strong>DNS name of the local computer</strong></li>
+</ul>
+<h5 id="parameters-1">Parameters</h5>
+<p>You can override the package defaults using the following parameters:</p>
+<ul>
+<li><code>/Username</code>
+<ul>
+<li>Username to install the management service as;</li>
+<li><strong>NOTE:</strong> Default Value: <strong>ChocolateyLocalAdmin</strong></li>
+</ul></li>
+<li><code>/Password</code>
+<ul>
+<li>Password to use for the management service account;</li>
+<li><strong>NOTE:</strong> Automatically generated secure password</li>
+</ul></li>
+<li><code>/EnterPassword</code>
+<ul>
+<li>This will prompt you to enter the password, during install, for the username (provided via the <code>/Username</code> parameter) the management service will run under;</li>
+<li><strong>NOTE:</strong> Default Value: Not provided</li>
+</ul></li>
+<li><code>/ConnectionString</code>
+<ul>
+<li>The SQL Server database connection string to be used to connect to the Chocolatey Central Management database;</li>
+<li><strong>NOTE:</strong> Default Value: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
+</ul></li>
+<li><code>/Database</code>
+<ul>
+<li>Name of the SQL Server database to use. Note that if you do not also pass <code>/ConnectionString</code>, it will be generated using this parameter value and <code>/SqlServerInstance</code> (using defaults for missing parameters);</li>
+<li><strong>NOTE:</strong> Default Value: <strong>ChocolateyManagement</strong></li>
+</ul></li>
+<li><code>/SqlServerInstance</code>
+<ul>
+<li>Instance name of the SQL Server database to connect to. Note that if you do not also pass <code>/ConnectionString</code>, it will be generated using this parameter value and <code>/Database</code> (using defaults for missing parameters);</li>
+<li><strong>NOTE:</strong> Default Value: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
+</ul></li>
+<li><code>/PortNumber</code>
+<ul>
+<li>The port the Chocolatey Management Service will listen on. This will automatically create a rule to open the firewall on this port;</li>
+<li><strong>NOTE:</strong> Default Value <strong>24040</strong></li>
+</ul></li>
+<li><code>/CertificateDnsName</code>
+<ul>
+<li>The DNS name of the self-signed certificate that is generated if no existing certificate thumbprint is provided using the <code>/CertificateThumbprint</code> parameter is provided;</li>
+<li><strong>NOTE:</strong> Default Value: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
+</ul></li>
+<li><code>/CertificateThumbprint</code>
+<ul>
+<li>By default the Chocolatey Central Management service uses a self-signed SSL certificate to secure communication with the clients. Use this parameter to provide the thumbprint of a certificate to use instead. <strong>Note that is you use this the certificate must already be in the LocalMachine\TrustedPeople Certificate Store on the Chocolatey Management Service computer</strong>;</li>
+<li><strong>NOTE:</strong> Default Value: Not applicable as if not provided, a new Self Signed Certificate will be generated</li>
+</ul></li>
+<li><code>/NoRestartService</code>
+<ul>
+<li>Explicit request not to restart the service</li>
+<li><strong>NOTE:</strong> Default Value: Not provided</li>
+</ul></li>
+<li><code>/DoNotReinstallService</code>
+<ul>
+<li>Explicit request not to reinstall the service</li>
+<li><strong>NOTE:</strong> Default Value: Not provided</li>
+</ul></li>
+</ul>
+<h5 id="example-1">Example</h5>
+<p>Let&#39;s assume that you want to install the CCM Windows Service with a specific<br />
+connection string in order to connect to the CCM Database, as well as configure<br />
+the CCM Service to use a specific user name and password, as well as alter the<br />
+Port number that the CCM Service will be hosted on. The necessary installation<br />
+command would look like the following:</p>
+<pre><code class="nohighlight">choco install chocolatey-management-service --package-parameters-sensitive=&quot;&#39;/PortNumber=24041 /Username=ccmtest\ccmservice /Password=Password01 /ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;Integrated Security=SSPI;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
+<p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that<br />
+the sensitive information is not leaked out into log files.</p>
+<h4 id="chocolatey-management-web">Chocolatey Management Web</h4>
+<p>This package creates the Chocolatey Central Management Website and Application Pool with the following defaults:</p>
+<ul>
+<li>IIS Web Application Pool: <strong>ChocolateyCentralManagement</strong>
+<ul>
+<li>enable32BitAppOnWin64: <strong>True</strong></li>
+<li>managedPipelineMode: <strong>Integrated</strong></li>
+<li>managedRuntimeVersion: &lt;blank&gt;</li>
+<li>startMode: <strong>AlwaysRunning</strong></li>
+<li>processModel.idleTimeout: <strong>0</strong></li>
+<li>recycling.periodicRestart.schedule: <strong>Disabled</strong></li>
+<li>recycling.periodicRestart.time: <strong>0</strong></li>
+</ul></li>
+<li>Website Name: <strong>ChocolateyCentralManagement</strong>
+<ul>
+<li>PortBinding: <strong>80</strong></li>
+<li>applicationDefaults.preloadEnabled: <strong>True</strong></li>
+</ul></li>
+<li>SQL Server Instance: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
+<li>Connection String: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
+</ul>
+<h5 id="parameters-2">Parameters</h5>
+<p>You can override the package defaults using the following parameters:</p>
+<ul>
+<li><code>/ConnectionString</code>
+<ul>
+<li>The SQL Server database connection string to be used to connect to the Chocolatey Central Management database;</li>
+<li><strong>NOTE:</strong> Default Value: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
+</ul></li>
+<li><code>/Database</code>
+<ul>
+<li>Name of the SQL Server database to use. Note that if you do not also pass <code>/ConnectionString</code>, it will be generated using this parameter value and <code>/SqlServerInstance</code> (using defaults for missing parameters);</li>
+<li><strong>NOTE:</strong> Default Value: <strong>ChocolateyManagement</strong></li>
+</ul></li>
+<li><code>/SqlServerInstance</code>
+<ul>
+<li>Instance name of the SQL Server database to connect to. Note that if you do not also pass <code>/ConnectionString</code>, it will be generated using this parameter value and <code>/Database</code> (using defaults for missing parameters);</li>
+<li><strong>NOTE:</strong> Default Value: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
+</ul></li>
+<li><code>/Username</code>
+<ul>
+<li>The username that the IIS WebApplicationPool will run under. If this is not provided the pool will run under the default account. Note that if you provide this you must also provide either the <code>/Password</code> or <code>/EnterPassword</code> parameter;</li>
+<li><strong>NOTE:</strong> Default Value: <strong>IIS APPPOOL\ChocolateyCentralManagement</strong></li>
+</ul></li>
+<li><code>/Password</code>
+<ul>
+<li>The password for the username (provided via the <code>/Username</code> parameter) the IIS WebApplicationPool will run under;</li>
+<li><strong>NOTE:</strong> Automatically generated secure password</li>
+</ul></li>
+<li><code>/EnterPassword</code>
+<ul>
+<li>This will prompt you to enter the password, during install, for the username (provided via the <code>/Username</code> parameter) the IIS WebApplicationPool will run under;</li>
+<li><strong>NOTE:</strong> Default Value: Not provided</li>
+</ul></li>
+</ul>
+<h5 id="example-2">Example</h5>
+<p>Let&#39;s assume that you want to install the CCM Web Site with a specific<br />
+connection string in order to connect to the CCM Database, as well as configure<br />
+the IIS Application Pool to use a specific user name and password. The<br />
+necessary installation command would look like the following:</p>
+<pre><code class="nohighlight">choco install chocolatey-management-web --package-parameters-sensitive=&quot;&#39;/ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot; /Username=ccmwebserver\ccmserviceuser /Password=Password01&#39;&quot;`</code></pre>
+<p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that<br />
+the sensitive information is not leaked out into log files.</p>
+<p><strong>NOTE:</strong> Once installed, when you access the CCM Web Site you will be prompted to provide a username<br />
+and password to access the site. By default, the username is <code>ccmadmin</code> and the password is <code>123qwe</code>.<br />
+After you input this, you will be prompted to change the password.</p>
+<h4 id="chocolatey-clients">Chocolatey Clients</h4>
+<p>Once CCM has been set up and configured, each machine that you want to report<br />
+into CCM will have to be enabled. This can be done by doing the following:</p>
+<pre><code class="powershell">choco config set CentralManagementServiceUrl https://ccmsrvserver:24041/ChocolateyManagementService
+choco feature enable -n useChocolateyCentralManagement</code></pre>
+<p>Here, the full URL, including the port number, to where the CCM service was<br />
+installed to is being set, and then the <code>useChocolateyCentralManagement</code> feature<br />
+is being enabled. In your environment you would replace <code>https://ccmsrvserver:24041</code> with the DNS name of your server and the port you set.</p>
+<p><strong>NOTE:</strong> By default, this feature is disabled, and will need to be turned on.</p>
+<p>Additional configuration exists for CCM Service, which allows fine grained<br />
+control of how Chocolatey Agent will report into CCM. For example:</p>
+<pre><code class="powershell">choco config set centralManagementReportPackagesTimerIntervalInSeconds 60
+choco config set centralManagementReceiveTimeoutInSeconds 60
+choco config set centralManagementSendTimeoutInSeconds 60
+choco config set centralManagementCertificateValidationMode &quot;PeerOrChainTrust&quot;</code></pre>
+<h2 id="faq">FAQ</h2>
+<h3 id="will-this-become-available-for-lower-editions-of-chocolatey">Will this become available for lower editions of Chocolatey?</h3>
+<p>The Chocolatey Central Management system will only be available in C4B (Chocolatey for Business).</p>
+<h3 id="whats-the-minimum-version-of-the-chocolatey-packages-i-need-to-use-ccm">What&#39;s the minimum version of the Chocolatey packages I need to use CCM?</h3>
+<p>See <a href="#requirements">Requirements</a>.</p>
+<h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
+<p>As common issues are encountered and resolved, we will list them here.</p>
+</article>
