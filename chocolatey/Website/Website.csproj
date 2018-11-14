@@ -1302,9 +1302,12 @@
     </None>
     <Content Include="opensearch.xml" />
     <Content Include="Scripts\anchorjs\anchor.min.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bundle.txt" />
+    <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\closeable\index.js" />
     <Content Include="Scripts\CookiesNotice\Index.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
     <Content Include="Scripts\highlight\highlight.pack.js" />
