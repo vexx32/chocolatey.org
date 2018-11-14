@@ -1,96 +1,115 @@
 ﻿@model PackageListViewModel
 @{
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Search";
 
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/packages.css");
+    Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/closeable");
-    Bundles.Reference("Scripts/SearchResultsTabs");
+    Bundles.Reference("Scripts/CookiesNotice");
 }
 
-<div class="search-results">
-  <ul class="results-tab-list">
-    <li>Show Results For:</li>
-    <li class="tab packages-tab selected">Packages</li>
-    <li class="tab docs-tab">Documentation</li>
-  </ul>
-  <div class="docs-results">
-    <h1>Docs and Site Search Results</h1>
-    <gcse:searchresults-only></gcse:searchresults-only>
-  </div>
-  <div class="packages-results">
-        <div class="hgroup search">
-            @if (!string.IsNullOrEmpty(Model.SearchTerm))
-            {
-            <h1>
-                Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
-                { <text>package</text> }
-                else
-                { <text>packages</text> }
-            </h1>
-            }
-            else
-            {
-            <h1>
-                @if (Model.TotalCount == 1)
-                { <text>There is @Model.TotalCount community maintained package</text> }
-                else
-                { <text>There are @Model.TotalCount community maintained packages</text> }
-            </h1>
-           
-
-            }
-            @if (@Model.LastResultIndex > 0)
-            {
-            <h2>Displaying results @Model.FirstResultIndex - @Model.LastResultIndex.</h2>
-            }
+<section id="package" class="container py-5">
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="callout callout-warning">
+                    <p class="mb-0">Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Learn more</a>.</p>
+                </div>
+            </div>
         </div>
-        <form method="get" action="">
-            <fieldset class="form search">
-                <legend>Sort Order</legend>
-                <input type="hidden" name="q" value="@Model.SearchTerm" />
-                <div class="form-field">
-                    <select name="prerelease" id="prerelease">
-                        @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
-                        @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
-                    </select>
+        @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
+    }
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item mr-2">
+            <a class="nav-link active" id="packages-tab" data-toggle="tab" href="#packages-results" role="tab" aria-controls="packages-results" aria-selected="true">View Packages</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="documentation-tab" data-toggle="tab" href="#documentation-results" role="tab" aria-controls="documentation-results" aria-selected="false">View Documentation</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="packages-results" role="tabpanel" aria-labelledby="packages-tab">
+            <div class="row py-4">
+                <div class="col-12">
+                    @if (!string.IsNullOrEmpty(Model.SearchTerm))
+                    {
+                        <h1>Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1){ <text>package</text> }else{ <text>packages</text> }</h1>
+                    }
+                    else
+                    {
+                        <h1>@if (Model.TotalCount == 1){<text>There is @Model.TotalCount community maintained package</text>}else{<text>There are @Model.TotalCount community maintained packages</text>}</h1>
+                    }
                 </div>
-                <div class="form-field">
-                    <label for="sortOrder">Sort By</label>
-                    <select name="sortOrder" id="sortOrder">
-                        @if (!Model.SearchTerm.IsEmpty())
-                        {
-                            @ViewHelpers.Option(Constants.RelevanceSortOrder, "Relevance", Model.SortOrder)
-                        }
-                        @ViewHelpers.Option(Constants.PopularitySortOrder, "Popularity", Model.SortOrder)
-                        @ViewHelpers.Option(Constants.AlphabeticSortOrder, "A-Z", Model.SortOrder)
-                        @ViewHelpers.Option(Constants.RecentSortOrder, "Recent", Model.SortOrder)
-                    </select>
+                <div class="col-xl-4">
+                    @if (@Model.LastResultIndex > 0)
+                    {
+                        <h3 class="mb-0">Displaying results @Model.FirstResultIndex - @Model.LastResultIndex.</h3>
+                    }
+                    <ul class="list-unstyled list-inline mb-0">
+                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/grey_ball_48.png")" title="This package is exempted from verification. Please see reason below." /> Unknown/Exempt</li>
+                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /> Invalid</li>
+                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" /> Pending</li>
+                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /> Passing</li>
+                    </ul>
                 </div>
-            </fieldset>
-        </form>
-        <ol id="searchResults">
-            @foreach (var package in Model.Items)
-            {
-            <li>
-                @Html.Partial(MVC.Packages.Views._ListPackage, package)
-            </li>
-            }
-        </ol>
+                <div class="col-xl-8">
+                    <form method="get" action="">
+                        <fieldset class="form search mt-3 text-center text-xl-right">
+                            <legend class="d-none">Sort Order</legend>
+                            <input type="hidden" name="q" value="@Model.SearchTerm" />
+                            <div class="form-field">
+                                <select class="rounded" name="moderatorQueue" id="moderatorQueue" aria-label="Sort by Normal View or Moderator Queue">
+                                    @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
+                                    @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
+                                </select>
 
-        @ViewHelpers.PreviousNextPager(Model.Pager)
+                                <select class="rounded" name="prerelease" id="prerelease" aria-label="Sort by the inclusion of Prerelease Packages">
+                                    @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
+                                    @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
+                                </select>
+
+                                <label class="d-none d-lg-inline-block mb-0" for="sortOrder">Sort By</label>
+                                <select class="rounded" name="sortOrder" id="sortOrder" aria-label="Sort Order">
+                                    @if (!Model.SearchTerm.IsEmpty())
+                                    {
+                                        @ViewHelpers.Option(Constants.RelevanceSortOrder, "Relevance", Model.SortOrder)
+                                    }
+                                    @ViewHelpers.Option(Constants.PopularitySortOrder, "Popularity", Model.SortOrder)
+                                    @ViewHelpers.Option(Constants.AlphabeticSortOrder, "A-Z", Model.SortOrder)
+                                    @ViewHelpers.Option(Constants.RecentSortOrder, "Recent", Model.SortOrder)
+                                </select>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var package in Model.Items)
+                {
+                    @Html.Partial(MVC.Packages.Views._ListPackage, package)
+                }
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    @ViewHelpers.PreviousNextPager(Model.Pager)
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="documentation-results" role="tabpanel" aria-labelledby="documentation-tab">
+            <h1 class="pt-4">Docs and Site Search Results</h1>
+            <gcse:searchresults-only></gcse:searchresults-only>
+        </div>
     </div>
-</div>
+</section>
 
 @section BottomScripts {
-<script>
-        $(function () {
-            SearchResultsTabs();
-
-            $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
-                $(this).closest("form").submit();
-            });
-        });
-
+    
+    <script>
         (function () {
             var cx = '013536524443644524775:xv95wv156yw';
             var gcse = document.createElement('script');
@@ -100,5 +119,5 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(gcse, s);
         })();
-</script>
+    </script>
 }

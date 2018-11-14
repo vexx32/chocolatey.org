@@ -1,134 +1,142 @@
 ﻿@model ListPackageItemViewModel
 @{
     var isSubmitted = Model.Status == PackageStatusType.Submitted;
-    
+
     var submittedStatus = Model.SubmittedStatus;
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
 
     var ballImageUrl = "~/content/images/grey_ball_48.png";
     switch (Model.PackageTestResultsStatus)
     {
-         case PackageAutomatedReviewResultStatusType.Pending:
-            ballImageUrl ="~/content/images/yellow_ball_48.png";
-                break;
-         case PackageAutomatedReviewResultStatusType.Failing:
+        case PackageAutomatedReviewResultStatusType.Pending:
+            ballImageUrl = "~/content/images/yellow_ball_48.png";
+            break;
+        case PackageAutomatedReviewResultStatusType.Failing:
             ballImageUrl = "~/content/images/red_ball_48.png";
-                break;
-         case PackageAutomatedReviewResultStatusType.Passing:
+            break;
+        case PackageAutomatedReviewResultStatusType.Passing:
             ballImageUrl = "~/content/images/green_ball_48.png";
-                break;
-     }
-    
-}
-<section class="package @if (Model.IsOwner(User)) {<text>my-package </text>} @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
-    @if (isSubmitted)
-    {
-        <div class="moderator-side">
-            @switch (submittedStatus)
-            {
-                case PackageSubmittedStatusType.Pending:
-                    <span class="ready">Pending Automated Review</span>
-                    break;
-                case PackageSubmittedStatusType.Ready:
-                    <span class="ready">Ready</span>
-                    break;
-                case PackageSubmittedStatusType.Updated:
-                    <span class="updated">Updated</span>
-                    @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
-                    break;
-                case PackageSubmittedStatusType.Responded:
-                    <span class="responded">Responded</span>
-                     if (!string.IsNullOrWhiteSpace(Model.ReviewerEmailAddress))
-                     {
-                        @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)    
-                     }
-                    
-                    break;
-                default:
-                    <span class="waiting">Waiting for Maintainer</span>
-                    @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
-                    break;
-            }
-        </div>        
+            break;
     }
-    <div class="side">
-        <a href="@Url.Package(Model)" title="View more about @Model.Title">
-            <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
-        </a>
-    </div>
-    <div class="main">
-        <header> 
-            <div class="nuget-badge-small">
-                <code><span>C:\&gt; </span>choco install @Model.Id.ToLower()
-                    @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                    { <text> --version @Model.Version</text> }
-                    @if (Model.Prerelease)
-                    {<text> --pre </text>}</code>
+
+}
+<div class="col-lg-6 col-xl-4 mb-4">
+    <div class="package h-100 shadow @if (Model.Status == PackageStatusType.Unknown) {<text> unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
+        @if (Model.Status == PackageStatusType.Unknown)
+        {
+            <div class="moderator-side text-white d-flex align-items-center">
+                <span>Unknown Status</span>
             </div>
-            <h1><img class="package-testing" src="@Url.Content(ballImageUrl)" title="Package testing. See package page for more details." alt="Package testing. See package page for more details." /> <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)">@Model.Title @Model.Version</a></h1>
-            @*<pre>cinst @Model.Id</pre>*@
-            <h2>By:</h2>
-            <ul class="owners">
-                @foreach (var owner in Model.Owners) {
-                    <li><a href="@Url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">@owner.Username</a></li>
-                }
-            </ul>
-        </header>
-
-        <p>
-            @if (isSubmitted)
-            {
-                <span>Published: @Model.PublishedDate.ToShortDateString()</span>
-                if (Model.ReviewedDate.HasValue)
+        }
+        @if (isSubmitted)
+        {
+            <div class="moderator-side text-white d-flex align-items-center">
+                @switch (submittedStatus)
                 {
-                    <br />
-                    <span>Reviewed: @Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</span>
-                }
-                if (!string.IsNullOrWhiteSpace(Model.ReviewerUserName))
-                {
-                    <br />
-                    <span>Reviewer: @Model.ReviewerUserName</span>
-                }
-            }
-            else
-            {
-                @*if (!string.IsNullOrEmpty(Model.Summary))
-                    {
-                        @Model.Summary
-                    }
-                    else
-                    {*@
-                if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 350)
-                {
-                    @Model.Description
-                }
-                else
-                {
-                    @Model.Description.Substring(0, 350)<text>... </text><a href="@Url.Package(Model)">More information</a>
-
-                }
-                @*}*@
-            }
-           
-        </p>
-
-        <footer>
-            <p class="downloads">
-                @Model.TotalDownloadCount.ToString("n0") downloads
-            </p>
-            
-            @if (@Model.Tags.AnySafe())
-            {
-                <div class="tags">
-                    <h2>Tags</h2>
-                    <ul class="tags">
-                        @foreach (var tag in Model.Tags)
+                    case PackageSubmittedStatusType.Pending:
+                        <span>Pending Automated Review</span>
+                        break;
+                    case PackageSubmittedStatusType.Ready:
+                        <span>Ready</span>
+                        break;
+                    case PackageSubmittedStatusType.Updated:
+                        <span>Updated</span>
+                        @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
+                        break;
+                    case PackageSubmittedStatusType.Responded:
+                        <span>Responded</span>
+                        if (!string.IsNullOrWhiteSpace(Model.ReviewerEmailAddress))
                         {
-                            <li><a href="@Url.Search("tag:" + tag)" title="Search for @tag">@tag</a></li>
+                            @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
+                        }
+
+                        break;
+                    default:
+                        <span>Waiting for Maintainer</span>
+                        @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
+                        break;
+                }
+            </div>
+        }
+        <div class="box bg-white p-3 h-100 d-flex justify-content-start flex-row flex-wrap">
+            <div class="row overflow-hidden">
+                <div class="col-3 text-center pr-0">
+                    <a href="@Url.Package(Model)" title="View more about @Model.Title">
+                        <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                    </a>
+                </div>
+                <div class="col-9">
+                    <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="View more about @Model.Title">
+                        <h3>@Model.Title</h3>
+                        <p class="m-0"><img class="package-testing d-inline mr-1" src="@Url.Content(ballImageUrl)" title="Package testing. See package page for more details." alt="Package testing. See package page for more details." /><strong>@Model.Version</strong></p>
+                    </a>
+                </div>
+                <div class="col-12 mt-2">
+                    @if (Model.IsOwner(User))
+                    {
+                        <span class="badge badge-dark p-2">My Package</span>
+                    }
+                    <ul class="list-unstyled list-inline mb-0">
+                        <li class="list-inline-item mr-0">By: </li>
+                        @foreach (var owner in Model.Owners)
+                        {
+                            <li class="list-inline-item"><a href="@Url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">@owner.Username</a></li>
                         }
                     </ul>
+                    @if (@Model.Tags.AnySafe())
+                    {
+                        <ul class="list-unstyled list-inline mb-0">
+                            <li class="list-inline-item mr-0">Tags: </li>
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <li class="list-inline-item"><a href="@Url.Search("tag:" + tag)" title="Search for @tag">@tag</a></li>
+                            }
+                        </ul>
+                    }
+                    @if (isSubmitted)
+                    {
+                        <span>Published: @Model.PublishedDate.ToShortDateString()</span>
+                        if (Model.ReviewedDate.HasValue)
+                        {
+                            <span>| Reviewed: @Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</span>
+                        }
+                        if (!string.IsNullOrWhiteSpace(Model.ReviewerUserName))
+                        {
+                            <p class="mb-0">Reviewer: @Model.ReviewerUserName</p>
+                        }
+                        <p class="mb-0">Downloads: @Model.TotalDownloadCount.ToString("n0")</p>
+                    }
+                    else
+                    {
+                        <p class="mb-0">Downloads: @Model.TotalDownloadCount.ToString("n0")</p>
+                        if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 250)
+                        {
+                            <p class="mt-3">@Model.Description</p>
+                        }
+                        else
+                        {
+                            <p class="mt-3">@Model.Description.Substring(0, 250)<text>... </text><a href="@Url.Package(Model)">More information</a></p>
+
+                        }
+                    }
                 </div>
-            }
-        </footer>
+                <div class="col-12 d-flex flex-column flex-nowrap justify-content-start mt-auto">
+                    <span class="copyBox overflow-hidden w-100 rounded">
+                        > choco install @Model.Id.ToLower()
+                        @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                        {<text> --version @Model.Version</text>}
+                        @if (Model.Prerelease)
+                        {<text> --pre </text>}
+                        <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="choco install @Model.Id.ToLower()
+                        @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                        {<text> --version @Model.Version</text>}
+                        @if (Model.Prerelease)
+                        {<text> --pre </text>}">
+                            <i class="icon-clipboard" alt="Copy to Clipboard"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+</div>

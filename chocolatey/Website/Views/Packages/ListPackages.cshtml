@@ -7,138 +7,122 @@
     var unreviewedCount = Model.TotalCount - moderationCount;
 
     var moderationRole = User != null && User.IsInAnyModerationRole();
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/packages.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 }
 
-@*
-
-    //todo NEWSITE finish search box integration
-    <div id="searchBox" role="search">
-      <form action="@Url.PackageList()" method="get">
-        <input name="q" id="searchBoxInput" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" autofocus />
-        <input id="searchBoxSubmit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=" " />
-      </form>
-    </div>
-
-*@
-
-
-  @if (!User.Identity.IsAuthenticated)
-  {
-      <div class="p">
-        <div class="block full-width m-t p-b clearfix p">
-          @* <div class="m-b h3">
-            <div class="package-search m-r border-radius">
-                <form class="p full-width" action="@Url.PackageList()" method="get">
-                    <input name="q" id="search" type="search" class="p full-width" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search community packages..." value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" />
-                    <input id="searchBoxSubmit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=" " />
-                </form>
+<section class="container py-5">
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="callout callout-warning">
+                    <p class="mb-0">Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Learn more</a>.</p>
+                </div>
             </div>
-        </div>*@
-        <div>
-          <p class="no-margin">
-            Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new {docName="community-packages-disclaimer"})">Learn more</a>.
-          </p>
         </div>
-          @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
-        </div>
-      </div>
-  }
+        @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
+    }
+    <div class="row">
+        <div class="col-12">
+            @if (!String.IsNullOrEmpty(Model.SearchTerm))
+            {
+                <h1>
+                    Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
+                    {<text>package</text> }
+                else
+                { <text>packages</text>}
+                </h1>
+            }
+            else
+            {
+                if (moderationQueue)
+                {
+                    <h1>
+                        @if (Model.TotalCount == 1)
+                        {<text>There is @moderationCount package in moderation</text> }
+                    else
+                    { <text>There are @moderationCount packages in moderation</text>}
+                    </h1>
+                    <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
+                }
+                else
+                {
+                    <h1>
+                        @if (Model.TotalCount == 1)
+                        {<text>There is @Model.TotalCount community maintained package</text> }
+                    else
+                    { <text>There are @Model.TotalCount community maintained packages</text>}
+                    </h1>
+                }
 
-<div class="hgroup search">
+            }
+        </div>
+        <div class="col-xl-4">
+            @if (@Model.LastResultIndex > 0)
+            {
+                <h3 class="mb-0">Displaying results @Model.FirstResultIndex - @Model.LastResultIndex.</h3>
+            }
+            <ul class="list-unstyled list-inline mb-0">
+                <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/grey_ball_48.png")" title="This package is exempted from verification. Please see reason below." alt="This package is exempted from verification. Please see reason below." /> Unknown/Exempt</li>
+                <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /> Invalid</li>
+                <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" /> Pending</li>
+                <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /> Passing</li>
+            </ul>
+        </div>
+        <div class="col-xl-8">
+            <form method="get" action="">
+                <fieldset class="form search mt-3 text-center text-xl-right">
+                    <legend class="d-none">Sort Order</legend>
+                    <input type="hidden" name="q" value="@Model.SearchTerm" />
+                    <div class="form-field">
+                        <select class="rounded" name="moderatorQueue" id="moderatorQueue" aria-label="Sort by Normal View or Moderator Queue">
+                            @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
+                            @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
+                        </select>
+
+                        <select class="rounded" name="prerelease" id="prerelease" aria-label="Sort by the inclusion of Prerelease Packages">
+                            @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
+                            @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
+                        </select>
+
+                        <label class="d-none d-lg-inline-block mb-0" for="sortOrder">Sort By</label>
+                        <select class="rounded" name="sortOrder" id="sortOrder" aria-label="Sort Order">
+                            @if (!Model.SearchTerm.IsEmpty())
+                            {
+                                @ViewHelpers.Option(Constants.RelevanceSortOrder, "Relevance", Model.SortOrder)
+                            }
+                            @ViewHelpers.Option(Constants.PopularitySortOrder, "Popularity", Model.SortOrder)
+                            @ViewHelpers.Option(Constants.AlphabeticSortOrder, "A-Z", Model.SortOrder)
+                            @ViewHelpers.Option(Constants.RecentSortOrder, "Recent", Model.SortOrder)
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>
+@*<div class="hgroup search">
     <div style="float:right">
         <a href="https://feeds.feedburner.com/chocolatey" title="Subscribe to package updates" rel="alternate" type="application/rss+xml"><img src="https://www.feedburner.com/fb/images/pub/feed-icon32x32.png" alt="RSS" style="border:0" />&nbsp;<span>Subscribe to updates</span></a>
         <br />
         <form style="border:0px solid #ccc;padding:1px;text-align:center;" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=chocolatey', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input type="hidden" value="chocolatey" name="uri" /><input type="hidden" name="loc" value="en_US" />Or subcribe by <input type="submit" value="email" /></form>
     </div>
-    @if (!String.IsNullOrEmpty(Model.SearchTerm))
-    {
-        <h1>
-            Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
-            { <text>package</text> }
-            else
-            { <text>packages</text> }
-        </h1>
-    }
-    else
-    {
-        if (moderationQueue)
+</div>*@
+<section id="package" class="container pb-5">
+    <div class="row">
+        @foreach (var package in Model.Items)
         {
-            <h1>
-                @if (Model.TotalCount == 1)
-            { <text>There is @moderationCount package in moderation</text> }
-            else
-            { <text>There are @moderationCount packages in moderation</text> }
-            </h1>
-            <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
+             @Html.Partial(MVC.Packages.Views._ListPackage, package)
         }
-        else
-        {
-            <h1>
-                @if (Model.TotalCount == 1)
-            { <text>There is @Model.TotalCount community maintained package</text> }
-            else
-            { <text>There are @Model.TotalCount community maintained packages</text> }
-            </h1>
-        }
-
-    }
-    @if (@Model.LastResultIndex > 0)
-    {
-        <h2>Displaying results @Model.FirstResultIndex - @Model.LastResultIndex.</h2>
-    }
-</div>
-<form method="get" action="">
-    <fieldset class="form search">
-        <legend>Sort Order</legend>
-        <input type="hidden" name="q" value="@Model.SearchTerm" />
-        <div class="form-field">
-            <select name="moderatorQueue" id="moderatorQueue">
-                @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
-                @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
-            </select>
-
-            <select name="prerelease" id="prerelease">
-                @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
-                @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
-            </select>
-
-            <label for="sortOrder">Sort By</label>
-            <select name="sortOrder" id="sortOrder">
-                @if (!Model.SearchTerm.IsEmpty())
-                {
-                    @ViewHelpers.Option(Constants.RelevanceSortOrder, "Relevance", Model.SortOrder)
-                }
-                @ViewHelpers.Option(Constants.PopularitySortOrder, "Popularity", Model.SortOrder)
-                @ViewHelpers.Option(Constants.AlphabeticSortOrder, "A-Z", Model.SortOrder)
-                @ViewHelpers.Option(Constants.RecentSortOrder, "Recent", Model.SortOrder)
-            </select>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            @ViewHelpers.PreviousNextPager(Model.Pager)
         </div>
-    </fieldset>
-</form>
-<ol id="searchResults">
-    @foreach (var package in Model.Items)
-    {
-        <li>
-            @Html.Partial(MVC.Packages.Views._ListPackage, package)
-        </li>
-    }
-</ol>
-
-@ViewHelpers.PreviousNextPager(Model.Pager)
-</div>
-
-@section BottomScripts {
-    <script>
-        $(function () {
-            $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
-                $(this).closest("form").submit();
-            });
-
-            Closeable.modal("chocolatey_hide_packages_disclaimer");
-            if (!getCookie('chocolatey_hide_packages_disclaimer')) {
-              $(".modal-closeable").css('display', 'block');
-            }
-        });
-     </script>
-}
+    </div>
+</section>
