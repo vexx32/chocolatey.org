@@ -36,6 +36,7 @@ Array.from(els).forEach(copyToClipboard);
 
 var tmpElement = document.createElement('input');
 tmpElement.className = 'invisible-input';
+tmpElement.setAttribute('aria-label', 'Invisible Input');
 try {
   document.body.appendChild(tmpElement);
 } catch (error) {

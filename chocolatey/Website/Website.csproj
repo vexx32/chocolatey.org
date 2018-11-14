@@ -1557,6 +1557,7 @@
     <Content Include="Views\Documentation\FeaturesChocolateyCentralManagement.cshtml" />
     <Content Include="Views\Blog\ChocolateyFestReturns2020.md" />
     <Content Include="Views\Documentation\ReleaseNotesAgent.cshtml" />
+    <Content Include="Views\Shared\PackagesLayout.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesCentralManagement.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesExtension.cshtml" />
   </ItemGroup>
