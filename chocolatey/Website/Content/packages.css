@@ -1,0 +1,156 @@
+﻿/*Form- Filters on Packages Page*/
+.form-field select {
+    width: 32%;
+}
+.form-field select, .form-field label {
+    color: #21446d !important;
+    border-color: #5c9fd8;
+}
+/*Search Result Main Top Tabs*/
+.nav-tabs .nav-link {
+    background: #e9ecef;
+    border: 1px solid #dee2e6;
+}
+.nav-tabs .nav-link.active {
+    background: #f8f9fa;
+    border-color: #dee2e6 #dee2e6 transparent;
+}
+/*Search Results: View Documentation*/
+body, .gsc-control-cse, .gsc-control-cse .gsc-table-result {
+    font-family: Open Sans,"Segoe UI","Trebuchet MS",Verdana,Helvetica,Sans-Serif !important;
+    font-size: 18px !important;
+    line-height: 1.6em !important;
+    color: #202f3c !important;
+}
+.gsc-control-cse, .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult, .gsc-webResult.gsc-result:hover, .gsc-imageResult:hover, .gsc-results .gsc-cursor-box .gsc-cursor-page {
+    border-color: #f8f9fa !important;
+    background-color: #f8f9fa !important;
+}
+
+.gsc-above-wrapper-area {
+    border-bottom: none !important;
+}
+
+.cse .gsc-control-cse, .gsc-control-cse, .gsc-table-result, .gsc-thumbnail-inside, .gsc-url-top, .gsc-result-info {
+    padding: 0 !important;
+}
+
+.gsc-control-cse .gs-spelling, .gsc-control-cse .gs-result .gs-title, .gsc-control-cse .gs-result .gs-title * {
+    font-size: 1.4rem !important;
+    height: 1.3em !important;
+}
+
+.gsc-results .gsc-cursor-box .gsc-cursor-page, .gs-webResult.gs-result a.gs-title:link {
+    color: #5c9fd8 !important;
+}
+
+.gs-webResult div.gs-visibleUrl, .gs-imageResult div.gs-visibleUrl {
+    color: #36bc98 !important;
+}
+
+.gs-webResult.gs-result a.gs-title:link b {
+    color: #5585a8 !important;
+}
+
+.gs-result .gs-title, .gs-result .gs-title * {
+    text-decoration: none !important;
+}
+
+.gsc-selected-option-container {
+    font-weight: 400 !important;
+    font-size: 18px !important;
+    background-image: none !important;
+    background-color: white !important;
+    border-color: #5c9fd8 !important;
+}
+/*Package*/
+#package .box .col-9 a {
+    color: #1a375a;
+}
+#package img {
+    width: 60px;
+}
+img.package-testing {
+    width: 15px !important;
+    height: 15px;
+}
+.copyBox {
+    height: 40px;
+    padding: 5px 0 0 10px;
+    border: 1px solid #5c9fd8;
+    position: relative;
+}
+.copyBox button {
+    height: 100%;
+    width: 38px;
+    background: #5c9fd8;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+}
+.copyBox button:hover {
+    transition: 300ms;
+    cursor: pointer;
+    background: #5585a8;
+}
+.copyBox button:active:focus {
+    border: none;
+}
+/*Package Moderation*/
+.package .moderator-side, .package .my-package {
+    font-weight: bold;
+    padding: 5px 15px;
+}
+.package.ready, .package.responded, .package.pending,
+.package.waiting, .package.updated, .package.unknown-status {
+    padding-bottom: 38px;
+}
+.package.ready .moderator-side {
+    background: #28a745;
+}
+.package.updated .moderator-side {
+    background: #fd7e14
+}
+.package.pending .moderator-side {
+    background: #ffc107;
+}
+.package.waiting .moderator-side {
+    background: #f4516c;
+}
+.package.responded .moderator-side {
+    background: #6f42c1;
+}
+.package.unknown-status .moderator-side {
+    background: #6c757d;
+}
+.package .moderator-side span {
+    padding-right: 5px;
+}
+.package .moderator-side .owner-image {
+    height: 25px;
+    width: 25px !important;
+}
+.package .my-package {
+    background: #5c9fd8;
+}
+/*Add to Builder*/
+.alert-builder {
+    display: none;
+    background: #36bc98;
+    border-color: #36bc98;
+    color: white;
+}
+.package .box .btn {
+    width: 210px;
+}
+/*Pagination*/
+ul.pager li.previous {
+    border-right: solid 1px #1a375a;
+}
+@media (min-width: 768px) {
+    .form-field select {
+        width: 225px;
+    }
+}

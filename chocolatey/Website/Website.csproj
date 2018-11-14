@@ -1004,6 +1004,7 @@
     </EmbeddedResource>
     <Content Include="7za.exe" />
     <Content Include="cloudflare-ratelimited.html" />
+    <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\chocolatey.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\highlight\agate.css" />
@@ -1259,12 +1260,14 @@
     <Content Include="Content\Images\xmark.png" />
     <Content Include="Content\Images\yellow_ball_48.png" />
     <Content Include="Content\Images\YourPackage.png" />
+    <Content Include="Content\packages.css" />
     <Content Include="Content\pricing-mega-v1.css" />
     <Content Include="Content\pricing.css" />
     <Content Include="Content\Site.css" />
     <Content Include="..\..\nugetgallery\Website\api\Web.config">
       <Link>api\Web.config</Link>
     </Content>
+    <Content Include="Content\style-base.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\SyntaxHighlighter\shCore.css" />
     <Content Include="Content\SyntaxHighlighter\shCoreDefault.css" />
