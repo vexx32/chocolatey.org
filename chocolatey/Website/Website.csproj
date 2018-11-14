@@ -1309,9 +1309,7 @@
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
     <Content Include="Scripts\highlight\highlight.pack.js" />
     <Content Include="Scripts\home\bundle.txt" />
-    <Content Include="Scripts\jquery-1.8.3.js" />
-    <Content Include="Scripts\jquery-ui-1.9.1.custom.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
     <Content Include="Scripts\SearchResultsTabs\SearchResultsTabs.js" />
