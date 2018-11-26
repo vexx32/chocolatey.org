@@ -1117,6 +1117,9 @@
     <Content Include="Content\Images\docs\choco_install_cached.png" />
     <Content Include="Content\Images\docs\cinst.png" />
     <Content Include="Content\Images\docs\clistExample.png" />
+    <Content Include="Content\Images\docs\cloudflare_ratelimiting.png" />
+    <Content Include="Content\Images\docs\cloudflare_ratelimiting_choco.png" />
+    <Content Include="Content\Images\docs\cloudflare_ratelimiting_choco_install.png" />
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
