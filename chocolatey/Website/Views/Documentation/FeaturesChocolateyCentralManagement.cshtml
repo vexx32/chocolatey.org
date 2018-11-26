@@ -4,6 +4,30 @@
 
 <article>
 <h1 id="chocolatey-central-management-ccm-business-editions-only">Chocolatey Central Management (CCM) (Business Editions Only)</h1>
+<!-- TOC -->
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#setup">Setup</a>
+<ul>
+<li><a href="#pre-requisites">Pre-Requisites</a></li>
+<li><a href="#package-parameters">Package Parameters</a>
+<ul>
+<li><a href="#chocolatey-central-management-database">Chocolatey Central Management Database</a></li>
+<li><a href="#chocolatey-central-management-service">Chocolatey Central Management Service</a></li>
+<li><a href="#chocolatey-management-web">Chocolatey Management Web</a></li>
+<li><a href="#chocolatey-configuration-for-chocolatey-central-management">Chocolatey Configuration for Chocolatey Central Management</a></li>
+<li><a href="#chocolatey-clients">Chocolatey Clients</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#faq">FAQ</a>
+<ul>
+<li><a href="#will-this-become-available-for-lower-editions-of-chocolatey">Will this become available for lower editions of Chocolatey?</a></li>
+<li><a href="#whats-the-minimum-version-of-the-chocolatey-packages-i-need-to-use-ccm">What&#39;s the minimum version of the Chocolatey packages I need to use CCM?</a></li>
+</ul></li>
+<li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="usage">Usage</h2>
 <p>Chocolatey Central Management (CCM) works in conjunction with the <a href="https://chocolatey.org/docs/features-agent-service">Chocolatey<br />
 Agent Service</a> to bring full<br />
@@ -34,6 +58,13 @@ available sources.</p>
 <h2 id="setup">Setup</h2>
 <p>While it is envisioned that CCM will be installed across multiple servers, it is<br />
 certainly possible to run CCM on a single server.</p>
+<p>Currently, the CCM packages do not provision the SQL Server Database Permissions that are required for the CCM components to function. It is assumed that the necessary permissions have already been provided. By default, two users will require read/write permissions to the CCM Database:</p>
+<ul>
+<li>ChocolateyLocalAdmin - which runs the CCM Windows Service</li>
+<li>IIS APPPOOL/ChocolateyCentralManagment - which runs the CCM IIS Application Pool</li>
+</ul>
+<p><strong>NOTE:</strong> If either of these users are changed during the installation of either of these components, the database permissions will need to be updated to reflect this.</p>
+<p>Or, the required username/password for connecting to the CCM database are added as part of the connection string that is passed into the CCM packages during installation.</p>
 <h3 id="pre-requisites">Pre-Requisites</h3>
 <p>In order to install CCM, it is assumed that the following applications/software<br />
 are installed, either as a single server installation, or spread over multiple<br />
@@ -86,7 +117,7 @@ the sensitive information is not leaked out into log files.</p>
 <li>Service Startup: <strong>Automatic</strong></li>
 <li>Service Username: <strong>ChocolateyLocalAdmin</strong></li>
 <li>Database Connection String: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
-<li>Service Listening Port: <strong>24040</strong></li>
+<li>Service Listening Port: <strong>24020</strong></li>
 <li>Self-Signed Certificate Domain Name: <strong>DNS name of the local computer</strong></li>
 </ul>
 <h5 id="parameters-1">Parameters</h5>
@@ -125,7 +156,7 @@ the sensitive information is not leaked out into log files.</p>
 <li><code>/PortNumber</code>
 <ul>
 <li>The port the Chocolatey Management Service will listen on. This will automatically create a rule to open the firewall on this port;</li>
-<li><strong>NOTE:</strong> Default Value <strong>24040</strong></li>
+<li><strong>NOTE:</strong> Default Value <strong>24020</strong></li>
 </ul></li>
 <li><code>/CertificateDnsName</code>
 <ul>
@@ -154,7 +185,7 @@ connection string in order to connect to the CCM Database, as well as configure<
 the CCM Service to use a specific user name and password, as well as alter the<br />
 Port number that the CCM Service will be hosted on. The necessary installation<br />
 command would look like the following:</p>
-<pre><code class="nohighlight">choco install chocolatey-management-service --package-parameters-sensitive=&quot;&#39;/PortNumber=24041 /Username=ccmtest\ccmservice /Password=Password01 /ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;Integrated Security=SSPI;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
+<pre><code class="nohighlight">choco install chocolatey-management-service --package-parameters-sensitive=&quot;&#39;/PortNumber=24021 /Username=ccmtest\ccmservice /Password=Password01 /ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;Integrated Security=SSPI;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
 <p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that<br />
 the sensitive information is not leaked out into log files.</p>
 <h4 id="chocolatey-management-web">Chocolatey Management Web</h4>
@@ -223,15 +254,36 @@ the sensitive information is not leaked out into log files.</p>
 <p><strong>NOTE:</strong> Once installed, when you access the CCM Web Site you will be prompted to provide a username<br />
 and password to access the site. By default, the username is <code>ccmadmin</code> and the password is <code>123qwe</code>.<br />
 After you input this, you will be prompted to change the password.</p>
+<h4 id="chocolatey-configuration-for-chocolatey-central-management">Chocolatey Configuration for Chocolatey Central Management</h4>
+<p>The following configuration values, with their default values, are added into the chocolatey.config file after installing Chocolatey Central Management and it&#39;s dependent packages.</p>
+<h5 id="centralmanagementreportpackagestimerintervalinseconds">centralManagementReportPackagesTimerIntervalInSeconds</h5>
+<p>This is the length of time, in seconds, that the Chocolatey Background Agent will wait between each attempt to report into Chocolatey Central Management.</p>
+<p><strong>Default Value:</strong> 1800</p>
+<h5 id="centralmanagementserviceurl">centralManagementServiceUrl</h5>
+<p>This is the URL that is used by the Chocolatey Background Agent to report into Chocolatey Central Management, and also by the Chocolatey Central Management Service to register the URL that it is listening for incoming reports on.</p>
+<p><strong>Default Value:</strong> <em>blank</em></p>
+<p><strong>NOTE:</strong> If left blank, the Chocolatey Central Management Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on.</p>
+<p><strong>NOTE:</strong> Due to the fact that both the Chocolatey Background Agent and Chocolatey Central Management Service use this configuration value, if both of these services are located on the same machine, they Chocolatey Background Service on that machine has to report into the Chocolatey Central Management Service on that machine. It can&#39;t report into another instance.</p>
+<h5 id="centralmanagementreceivetimeoutinseconds">centralManagementReceiveTimeoutInSeconds</h5>
+<p>This is the length of time, in seconds, that a connection to Chocolatey Central Management can remain inactive, during which no application messages are received, before it is dropped.</p>
+<p><strong>Default Value:</strong> 30</p>
+<h5 id="centralmanagementsendtimeoutinseconds">centralManagementSendTimeoutInSeconds</h5>
+<p>This is the length of time, in seconds, that a write operation against Chocolatey Central Management has to complete before the transport raises an exception.</p>
+<p><strong>Default Value:</strong> 30</p>
+<h5 id="centralmanagementcertificatevalidationmode">centralManagementCertificateValidationMode</h5>
+<p>This captures the options for determining the validity of the Chocolatey Central Management Service certificate obtained using SSL/TLS negotiation.</p>
+<p><strong>Default Value:</strong> PeerOrChainTrust</p>
+<p><strong>Valid Values:</strong> None, PeerTrust, ChainTrust, PeerOrChainTrust, Custom</p>
 <h4 id="chocolatey-clients">Chocolatey Clients</h4>
 <p>Once CCM has been set up and configured, each machine that you want to report<br />
 into CCM will have to be enabled. This can be done by doing the following:</p>
-<pre><code class="powershell">choco config set CentralManagementServiceUrl https://ccmsrvserver:24041/ChocolateyManagementService
+<pre><code class="powershell">choco config set CentralManagementServiceUrl https://ccmsrvserver:24021/ChocolateyManagementService
 choco feature enable -n useChocolateyCentralManagement</code></pre>
 <p>Here, the full URL, including the port number, to where the CCM service was<br />
 installed to is being set, and then the <code>useChocolateyCentralManagement</code> feature<br />
-is being enabled. In your environment you would replace <code>https://ccmsrvserver:24041</code> with the DNS name of your server and the port you set.</p>
+is being enabled. In your environment you would replace <code>https://ccmsrvserver:24021</code> with the FQDN name of your server and the port you set.</p>
 <p><strong>NOTE:</strong> By default, this feature is disabled, and will need to be turned on.</p>
+<p><strong>NOTE:</strong> If not set, the Chocolatey Central Management Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on.</p>
 <p>Additional configuration exists for CCM Service, which allows fine grained<br />
 control of how Chocolatey Agent will report into CCM. For example:</p>
 <pre><code class="powershell">choco config set centralManagementReportPackagesTimerIntervalInSeconds 60

@@ -152,7 +152,7 @@
 <li>C4B / MSP / TRIAL: Run <code>choco feature enable --name=&quot;'internalizeAppendUseOriginalLocation'&quot;</code>. This sets Package Internalizer to append <code>-UseOriginalLocation</code> to the end of <code>Install-ChocolateyPackage</code> to make it behave more like <code>Install-ChocolateyInstallPackage</code>. Since the files are local, we won&#39;t need it copying them to temp prior to running it.</li>
 <li>C4B / MSP / TRIAL: Run <code>choco feature enable --name=&quot;'reduceInstalledPackageSpaceUsage'&quot;</code> to ensure Package Reducer is turned on.</li>
 <li>Set proxy configuration, virus scan configuration, or other configuration as described at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })">Chocolatey configuration</a>.</li>
-<li>C4B / MSP: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre</code> and then follow the link in the first sentence for other settings you will need to configure.</li>
+<li>C4B: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre</code> and then follow the link in the first sentence for other settings you will need to configure.</li>
 <li>TRIAL: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre --source c:\choco-setup\packages</code> (this is where you saved the nupkgs earlier). Then follow the link in the first sentence for other settings you will need to configure.</li>
 <li>Download packages (choose one):<br />
 * C4B / MSP / TRIAL: - Run the following: <code>choco download chocolatey chocolatey.server dotnet4.6.1 chocolateygui --internalize</code>. This is going to take quite awhile.<br />
@@ -165,7 +165,8 @@
 * <a href="https://chocolatey.org/api/v2/package/DotNet4.6.1">dotnet4.6.1</a> - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize manually</a><br />
 * <a href="https://chocolatey.org/api/v2/package/KB2919355">KB2919355</a> - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize manually</a><br />
 * <a href="https://chocolatey.org/api/v2/package/KB2919442">KB2919442</a> - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">internalize manually</a></li>
-<li>C4B / MSP - Run the following additionally: <code>choco download chocolatey.extension chocolatey-agent --internalize</code>. TRIAL - you should already have placed these nupkgs in the folder earlier.</li>
+<li>C4B - Run the following additionally: <code>choco download chocolatey.extension chocolatey-agent --internalize</code>. TRIAL - you should already have placed these nupkgs in the folder earlier.</li>
+<li>MSP - Run the following additionally: <code>choco download chocolatey.extension --internalize</code>. TRIAL - you should already have placed these nupkgs in the folder earlier.</li>
 <li>Now we should have several packages in <code>c:\choco-setup\packages</code>. If not, type <code>start .</code> and go copy the files here to that location.</li>
 <li>Obtain the PowerShell script from <a href="https://chocolatey.org/install#completely-offline-install" class="uri">https://chocolatey.org/install#completely-offline-install</a> and copy it to <code>c:\choco-setup\files</code> as &quot;ChocolateyLocalInstall.ps1&quot;. We will need this to install Chocolatey on the airgapped box.</li>
 <li>Open <code>c:\choco-setup\files\ChocolateyLocalInstall.ps1</code> in an editor like Notepad++ or Visual Studio Code (do not use Notepad.exe!!).</li>
@@ -214,7 +215,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 #TODO: Add other items you would configure here
 # https://chocolatey.org/docs/chocolatey-configuration
 
-#TODO: Are we installing the Chocolatey Agent Service?
+#TODO: Are we installing the Chocolatey Agent Service? C4B Only
 # https://chocolatey.org/docs/features-agent-service#setup
 # choco upgrade chocolatey-agent -y --pre
 #choco feature disable --name=&quot;&#39;showNonElevatedWarnings&#39;&quot;
@@ -226,7 +227,10 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 # Download and internalize packages.
 choco download chocolatey chocolatey.server dotnet4.6.1 chocolateygui --internalize --output-directory=&quot;$env:SystemDrive\choco-setup\packages&quot; --source=&quot;&#39;https://chocolatey.org/api/v2/&#39;&quot;
 # TRIAL: skip this next step
+# C4B - use this
 choco download chocolatey.extension chocolatey-agent --internalize --output-directory=&quot;$env:SystemDrive\choco-setup\packages&quot; --source=&quot;&#39;https://licensedpackages.chocolatey.org/api/v2/&#39;&quot; # will fail on trial
+# MSP - use this
+#choco download chocolatey.extension --internalize --output-directory=&quot;$env:SystemDrive\choco-setup\packages&quot; --source=&quot;&#39;https://licensedpackages.chocolatey.org/api/v2/&#39;&quot; # will fail on trial
 
 # Download local install script - need at least PowerShell v3
 $installScript = iwr -UseBasicParsing -Uri https://gist.githubusercontent.com/ferventcoder/d0aa1703a7d302fce79e7a4cc13797c0/raw/b1f7bad2441fa6c371b48b8475ef91cecb4d6370/ChocolateyLocalInstall.ps1 -UseDefaultCredentials
@@ -252,7 +256,7 @@ Write-Warning &quot;Check and adjust script at &#39;$env:SystemDrive\choco-setup
 <li>C4B / MSP / TRIAL: Run <code>choco feature enable --name=&quot;'internalizeAppendUseOriginalLocation'&quot;</code>. This sets Package Internalizer to append <code>-UseOriginalLocation</code> to the end of <code>Install-ChocolateyPackage</code> to make it behave more like <code>Install-ChocolateyInstallPackage</code>. Since the files are local, we won&#39;t need it copying them to temp prior to running it.</li>
 <li>C4B / MSP / TRIAL: Run <code>choco feature enable --name=&quot;'reduceInstalledPackageSpaceUsage'&quot;</code> to ensure Package Reducer is turned on.</li>
 <li>Set proxy configuration, virus scan configuration, or other configuration as described at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })">Chocolatey configuration</a>.</li>
-<li>C4B / MSP / TRIAL: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre</code> and then follow the link for other settings you will need to configure.</li>
+<li>C4B / TRIAL: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre</code> and then follow the link for other settings you will need to configure.</li>
 </ol>
 <pre><code class="powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -291,7 +295,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 # https://chocolatey.org/docs/chocolatey-configuration
 
 
-#TODO: Are we installing the Chocolatey Agent Service?
+#TODO: Are we installing the Chocolatey Agent Service? C4B Only
 # https://chocolatey.org/docs/features-agent-service#setup
 # choco upgrade chocolatey-agent -y --pre
 #choco feature disable --name=&quot;&#39;showNonElevatedWarnings&#39;&quot;

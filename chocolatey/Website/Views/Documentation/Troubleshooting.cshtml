@@ -31,6 +31,7 @@
 <li><a href="#why-does-choco-intab-not-work-for-me">Why does choco in{tab} not work for me?</a></li>
 <li><a href="#microsoftpowershell_profileps1-cannot-be-loaded-the-file-is-not-digitally-signed">Microsoft.Powershell_profile.ps1 cannot be loaded. The file is not digitally signed.</a></li>
 <li><a href="#im-getting-a-403-unauthorized-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 403 unauthorized issue when attempting to use the community package repository.</a></li>
+<li><a href="#im-getting-a-429-too-many-requests-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 429 too many requests issue when attempting to use the community package repository.</a></li>
 <li><a href="#im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</a></li>
 <li><a href="#a-package-is-broken-for-me">A package is broken for me</a></li>
 <li><a href="#the-package-install-failed-with-1603">The package install failed with 1603</a></li>
@@ -198,10 +199,18 @@ if (Test-Path($ChocolateyProfile)) {
 <ul>
 <li>Go to <a href="https://chocolatey.org/contact" class="uri">https://chocolatey.org/contact</a> (NOTE: If you are completely blocked from accessing the site, contact us through <a href="https://gitter.im/chocolatey/choco">Gitter</a> instead)</li>
 <li>Select <strong><em>Blocked IP Address</em></strong> in &quot;Send message to&quot; drop down (this is important to get it routed to the right folks)</li>
-<li>Let us know what&#39;s going on along with your IP address so we can talk about whitelisting options and get you moving forward.</li>
+<li><strong>IMPORTANT</strong>: Let us know what&#39;s going on along with your IP address so we can talk about whitelisting options and get you moving forward.</li>
 <li>Oh, and be sure to run some antivirus scans and remove any found malware (and maybe find a better antivirus scanner).</li>
 </ul>
 <p>Once this has been completed, you should have access to install Chocolatey and/or packages from the community repository.</p>
+<p><a id="markdown-im-getting-a-429-too-many-requests-issue-when-attempting-to-use-the-community-package-repository" name="im-getting-a-429-too-many-requests-issue-when-attempting-to-use-the-community-package-repository"></a></p>
+<h3 id="im-getting-a-429-too-many-requests-issue-when-attempting-to-use-the-community-package-repository">I&#39;m getting a 429 too many requests issue when attempting to use the community package repository.</h3>
+<p>This means your IP address has been flagged for too many requests. Please see [rate limiting for details|CommunityPackagesDisclaimer#rate-limiting]].</p>
+<p>Reference Errors:</p>
+<ul>
+<li><code>Exception calling &quot;DownloadFile&quot; with &quot;2&quot; argument(s): The remote server returned an error: (429) Too Many Requests</code></li>
+<li><code>The remote server returned an error: (429) Too Many Requests. Too Many Requests</code></li>
+</ul>
 <p><a id="markdown-im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on" name="im-seeing-chocolatey--application--tool-using-32-bit-to-run-instead-of-x64-what-is-going-on"></a></p>
 <h3 id="im-seeing-chocolatey-application-tool-using-32-bit-to-run-instead-of-x64-what-is-going-on">I&#39;m seeing Chocolatey / <em>application</em> / <em>tool</em> using 32 bit to run instead of x64. What is going on?</h3>
 <p>The shims are generated as &quot;Any CPU&quot; programs, which depend on the <code>Enable64Bit</code> registry value to be set to <code>1</code>, which it is by default. A way to fix it is to issue the following command at the location where the prompt shows below:</p>
