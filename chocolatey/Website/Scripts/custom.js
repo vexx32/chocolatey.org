@@ -1,7 +1,22 @@
+// Preloader 
+$(window).on('load', function () {
+    $('#shape').fadeOut();
+    $('#shadow').fadeOut();
+    $('#loader').delay(350).fadeOut('slow');
+    $('body').delay(350).css({ 'overflow': 'visible' });
+});
+
 // Active state in nav
 $("nav .nav-link").on("click", function () {
     $("nav").find(".active").removeClass("active");
     $(this).addClass("active");
+});
+
+//Makes :contains case insensitive
+$.expr[":"].contains = $.expr.createPseudo(function (arg) {
+    return function (elem) {
+        return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+    };
 });
 
 //Tooltip

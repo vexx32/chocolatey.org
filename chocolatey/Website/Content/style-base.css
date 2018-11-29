@@ -1,4 +1,80 @@
-﻿@font-face {
+﻿/*Pre-Loader*/
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #f8f9fa 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#f8f9fa 100%);
+    background: radial-gradient(ellipse at center, #ffffff 0%,#f8f9fa 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f8f9fa',GradientType=1 );
+    z-index: 9999;
+}
+
+@keyframes loader {
+    0% {
+        left: -100px;
+    }
+
+    100% {
+        left: 110%;
+    }
+}
+
+#shape {
+    width: 50px;
+    height: 50px;
+    background: #5c9fd8;
+    animation: animate 0.5s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 3px;
+}
+
+@keyframes animate {
+    17% {
+        border-bottom-right-radius: 3px;
+    }
+
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+
+    50% {
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+#shadow {
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    border-radius: 50%;
+    animation: shadow 0.5s linear infinite;
+}
+
+@keyframes shadow {
+    50% {
+        transform: scale(1.2, 1);
+    }
+}
+@font-face {
     font-family: 'FontAwesome';
     src: url('fonts/fontawesome-webfont.eot?v=4.6.2');
     src: url('fonts/fontawesome-webfont.eot?#iefix&v=4.6.2') format('embedded-opentype'), url('fonts/fontawesome-webfont.woff2?v=4.6.2') format('woff2'), url('fonts/fontawesome-webfont.woff?v=4.6.2') format('woff'), url('fonts/fontawesome-webfont.ttf?v=4.6.2') format('truetype'), url('fonts/fontawesome-webfont.svg?v=4.6.2#fontawesomeregular') format('svg');
@@ -26,7 +102,19 @@ strong {
 .overflow-hidden {
     overflow: hidden;
 }
-/*Backgrounds*/
+/*Scrollbars*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color:rgba(0,0,0,.1)
+}
+/*Backgrounds & Text*/
 .bg-secondary {
     background: #e9ecef !important;
 }
@@ -49,7 +137,22 @@ strong {
 .bg-primary a:not(.btn), .bg-medium a:not(.btn) {
     color: white;
 }
+.text-primary {
+    color: #5c9fd8 !important;
+}
+.text-success {
+    color: #36bc98 !important;
+}
+.text-danger {
+    color: #f4516c !important;
+}
 /*Buttons*/
+a.btn:hover {
+    opacity: 1 !important;
+}
+.btn-sm {
+    padding: 0 6px;
+}
 .btn-dark {
     background: #1a375a;
     border-color: #1a375a;
@@ -58,15 +161,15 @@ strong {
     background: #f4516c;
     border-color: #f4516c;
 }
-.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger:active:focus {
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger:active:focus, .btn-danger:not(:disabled):not(.disabled):active {
     background: #b73d51;
     border-color: #b73d51;
 }
-.btn-info {
+.btn-success {
     background: #36bc98;
     border-color: #36bc98;
 }
-.btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
+.btn-success:hover, .btn-success:active, .btn-success:focus, .btn-success:active:focus, .btn-success:not(:disabled):not(.disabled):active {
     background: #288d72;
     border-color: #288d72;
 }
@@ -74,9 +177,42 @@ strong {
     background: #5c9fd8;
     border-color: #5c9fd8;
 }
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus {
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary:not(:disabled):not(.disabled):active {
     background: #5585a8;
     border-color: #5585a8;
+}
+/*Callouts- Custom Alerts*/
+[class*="callout-"] {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: white;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+    position: relative;
+}
+[class*="callout-"]:not(.callout) {
+    padding: .5rem 1rem;
+    box-shadow: none;
+}
+[class*="callout-"] p:last-child {
+    margin-bottom: 0;
+}
+.callout-warning {
+    border-left: 6px solid #ffc107;
+}
+.callout-danger {
+    border-left: 6px solid #f4516c;
+}
+.callout-primary {
+    border-left: 6px solid #5c9fd8;
+}
+.callout-secondary {
+    border-left: 6px solid #6c757d;
+}
+.callout-dark {
+    border-left: 6px solid #343a40;
+}
+.callout-success {
+    border-left: 6px solid #36bc98;
 }
 /*Alerts and Cookies Notifications*/
 .alert {
@@ -170,18 +306,31 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    border-color: #80bdff;
+    background: #fff;
+    border: 1px solid #80bdff;
     outline: 0;
     -webkit-text-fill-color: #202f3c;
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;
 }
+/*Add to Builder*/
+.alert-builder {
+    display: none;
+    background: #36bc98;
+    border-color: #36bc98;
+    color: white;
+}
+/*Collapse*/
+a + .collapse.show, a + .collapsing {
+    margin-left: 30px;
+}
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;
 }
+
 /*Icons*/
-[class^="icon-"]:before, [class*=" icon-"]:before {
+[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before {
     font-family: 'FontAwesome';
     font-style: normal;
     font-weight: normal;
@@ -222,6 +371,9 @@ footer {
 .icon-upload:before {
     content: "\f093";
 }
+.icon-download:before {
+    content: "\f019";
+}
 .icon-user:before {
     content: "\f007";
 }
@@ -233,6 +385,24 @@ footer {
 }
 .icon-share:before {
     content: "\f064";
+}
+.icon-angle-down:before, a[data-toggle="collapse"]:before {
+    content: "\f107";
+}
+.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before {
+    content: "\f105";
+}
+.icon-check:before {
+    content: "\f00c";
+}
+.icon-save:before {
+    content: "\f0c7";
+}
+.icon-check-circle-o:before {
+    content: "\f05d";
+}
+.icon-times-circle-o:before {
+    content: "\f05c";
 }
 .icon-youtube:before {
     content: "\f167";
