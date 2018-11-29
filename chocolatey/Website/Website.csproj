@@ -1263,6 +1263,7 @@
     <Content Include="Content\packages.css" />
     <Content Include="Content\pricing-mega-v1.css" />
     <Content Include="Content\pricing.css" />
+    <Content Include="Content\prism\prism.css" />
     <Content Include="Content\Site.css" />
     <Content Include="..\..\nugetgallery\Website\api\Web.config">
       <Link>api\Web.config</Link>
@@ -1318,6 +1319,7 @@
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
+    <Content Include="Scripts\prism\prism.js" />
     <Content Include="Scripts\SearchResultsTabs\SearchResultsTabs.js" />
     <Content Include="Scripts\SyntaxHighlighter\bundle.txt" />
     <Content Include="Scripts\validation\bundle.txt" />
