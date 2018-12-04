@@ -1,35 +1,39 @@
 ﻿@model ResendConfirmationEmailViewModel
 @{
-  ViewBag.Title = "Resend Email Confirmation";
-  Bundles.Reference("Scripts/validation");
+    ViewBag.Title = "Resend Email Confirmation";
+    Layout = "~/Views/Shared/MinimalLayout.cshtml";
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/account.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/validation");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 
-<section>
-<div class="p-b p-l">
-  <h1 class="m-b">Resend Email Confirmation</h1>
-
-  <p>
-    We are sorry to hear you did not get our confirmation email. Enter your email below 
-    and we will resend the confirmation email. Alternatively you might have been 
-    redirected to this page because the confirmation link you clicked was old and needs 
-    to be updated. Enter your email address and a new one will be sent, sorry for the 
-    inconvenience. 
-  </p>
-
-  @using (Html.BeginForm()) {
-      <fieldset class="form">
-        <legend>Resend Email Confirmation</legend>
-
+<h3 class="text-center">Resend Email Confirmation</h3>
+<p>
+    We are sorry to hear you did not get our confirmation email. Enter your email below
+    and we will resend the confirmation email. Alternatively you might have been
+    redirected to this page because the confirmation link you clicked was old and needs
+    to be updated. Enter your email address and a new one will be sent, sorry for the
+    inconvenience.
+</p>
+<hr class="mb-0" />
+@using (Html.BeginForm())
+{
+    <fieldset class="form">
+        <legend class="d-none">Resend Email Confirmation</legend>
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-              
-        @Html.EditorForModel()
-
-        <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-
-        <input type="submit" value="Send" title="Resend Email Confirmation" />
-        <a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a>
-      </fieldset>
-  }
-</div>
-</section>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Email) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.Email)
+            <span class="field-hint-message">The Email field is required.</span>
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+        <input class="btn btn-primary font-weight-bold mx-auto mt-3 d-block" type="submit" value="Send" title="Resend Email Confirmation" />
+        <p class="mb-0 mt-2 text-center"><small><a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a></small></p>
+    </fieldset>
+}

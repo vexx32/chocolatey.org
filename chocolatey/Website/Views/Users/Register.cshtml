@@ -1,8 +1,14 @@
 ﻿@model RegisterRequest
 @{
     ViewBag.Title = "Register";
-    //Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
+    Layout = "~/Views/Shared/MinimalLayout.cshtml";
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/account.css");
+    Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/validation");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 @section TopScripts {
     <script>
@@ -12,30 +18,47 @@
     </script>
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
-
-<section>
-  <div class="p-b p-l">
-    <h1 class="m-b">Create A New Account</h1>
-
-    @using (Html.BeginForm()) {
-        <fieldset class="form">
-          <legend>Register Form</legend>
-
-          @Html.AntiForgeryToken()
-          @Html.ValidationSummary(true)
-          <div class="form-field">
+<h3 class="text-center">Create a New Account</h3>
+<p class="text-center"><small>Already have an account? <a href="@Url.LogOn()">Log On.</a></small></p>
+<hr class="mb-0" />
+@using (Html.BeginForm())
+{
+    <fieldset class="form">
+        <legend class="d-none">Register Form</legend>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="form-field">
+            @Html.LabelFor(m => m.EmailAddress) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.EmailAddress)
+            <span class="field-hint-message">Your email will not be public unless you choose to disclose it. It is required to verify your registration and for password retrieval, important notifications, etc.</span>
+            @Html.ValidationMessageFor(m => m.EmailAddress)
+        </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Username) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.Username)
+            <span class="field-hint-message">Choose something unique so others will know which contributions are yours.</span>
+            @Html.ValidationMessageFor(m => m.Username)
+        </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Password) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.Password)
+            <span class="field-hint-message">Passwords must be at least 7 characters long.</span>
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.ConfirmPassword) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.ConfirmPassword)
+            <span class="field-hint-message">Please reenter your password and ensure that it matches the one above.</span>
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+        </div>
+        <div class="form-field">
             @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-          </div>
-          @Html.EditorForModel()
-
-          <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-          <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Register" title="Register" />
-        </fieldset>
-    }
-
-    <p>You may also be interested in our <a href="http://eepurl.com/4qUJH">newsletter</a>. Subscribe so you are the first to know about announcements and details related to Chocolatey!</p>
-  </div>
-</section>
+        </div>
+        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+        <input class="btn btn-primary font-weight-bold mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Register" title="Register" />
+        <p class="mb-0 mt-2 text-center"><small><a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a></small></p>
+    </fieldset>
+}
 
 @section BottomScripts {
     <script type="text/javascript">

@@ -1004,6 +1004,7 @@
     </EmbeddedResource>
     <Content Include="7za.exe" />
     <Content Include="cloudflare-ratelimited.html" />
+    <Content Include="Content\account.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\chocolatey.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -1564,6 +1565,7 @@
     <Content Include="Views\Blog\ChocolateyFestReturns2020.md" />
     <Content Include="Views\Documentation\ReleaseNotesAgent.cshtml" />
     <Content Include="Views\Shared\PackagesLayout.cshtml" />
+    <Content Include="Views\Shared\MinimalLayout.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesCentralManagement.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesExtension.cshtml" />
   </ItemGroup>

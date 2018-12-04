@@ -1,9 +1,15 @@
 ﻿@using NuGetGallery;
-
 @model SignInRequest
 @{
-  ViewBag.Title = "Log On";
-  Bundles.Reference("Scripts/validation");
+    ViewBag.Title = "Log On";
+    Layout = "~/Views/Shared/MinimalLayout.cshtml";
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/account.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/validation");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 @section TopScripts {
     <script>
@@ -14,44 +20,40 @@
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
 
-<section>
-  <div class="p-b p-l">
-     <h1 class="m-b">Log In</h1>
-
-<p>
-    Don't have an account yet? <a href="@Url.Action(MVC.Users.Register())">Register now.</a>
-</p>
-
-@using (Html.BeginForm()) {
+<h3 class="text-center">Chocolatey Community Login</h3>
+<p class="text-center"><small>Don't have an account yet? <a href="@Url.Action(MVC.Users.Register())">Register now.</a></small></p>
+<hr class="mb-0" />
+@using (Html.BeginForm())
+{
     <fieldset class="form">
-        <legend>Log On Form</legend>
-
+        <legend class="d-none">Log On Form</legend>
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         @Html.Hidden("ReturnUrl", ViewData[Constants.ReturnUrlViewDataKey])
-        @if (ViewBag.ConfirmationRequired != null && ViewBag.ConfirmationRequired) {
-            <p class="validation-summary-errors">
-                Before you can log on, you&#8217;ll need to confirm your account. When you registered, 
-                we sent you an email with a URL you can click to confirm your account. 
-                Please check your spam folder if you did not receive the confirmation email.
-            </p>
-            <p class="validation-summary-errors">
-                @Html.ActionLink("Lost your confirmation email?", "ResendConfirmation", "Users")
-            </p>
+        @if (ViewBag.ConfirmationRequired != null && ViewBag.ConfirmationRequired)
+        {
+            <div class="callout-danger validation-summary-errors">
+                <p>Before you can log on, you&#8217;ll need to confirm your account. When you registered, we sent you an email with a URL you can click to confirm your account. Please check your spam folder if you did not receive the confirmation email.</p>
+                <p class="mb-0">@Html.ActionLink("Lost your confirmation email?", "ResendConfirmation", "Users")</p>
+            </div>
         }
-
-        @Html.EditorForModel()
-
-        <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-        <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Log On" title="Log On" />
-        @Html.ActionLink("Lost your Password?", "ForgotPassword", "Users")
+        <div class="form-field">
+            @Html.LabelFor(m => m.UserNameOrEmail) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.UserNameOrEmail)
+            <span class="field-hint-message">Enter your username or email address.</span>
+            @Html.ValidationMessageFor(m => m.UserNameOrEmail)
+        </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Password) <span class="icon-asterisk"></span>
+            @Html.EditorFor(m => m.Password)
+            <span class="field-hint-message">Passwords must be at least 7 characters long.</span>
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+        <input class="btn btn-primary font-weight-bold mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Log In" title="Log In" />
+	    <p class="mb-0 mt-2 text-center"><small>@Html.ActionLink("Lost your Password?", "ForgotPassword", "Users")</small></p>
     </fieldset>
-}
-
-    <p><a href="/compare">Pro</a> (for individuals like <em><strong>you</strong></em> that want more out of Chocolatey) and <a href="/compare">Chocolatey for Business</a> now available! Get your copy now!</p>
-    <p>Have you signed up for the <a href="http://eepurl.com/4qUJH">newsletter</a>? Subscribe so you are the first to know about announcements and details related to Chocolatey!</p>
-  </div>
-</section>
+}     
 @section BottomScripts {
     <script type="text/javascript">
         $(document).ready(function () {

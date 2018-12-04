@@ -1,0 +1,129 @@
+﻿#account .logo {
+    max-width: 200px;
+    transform: translateY(.10em) rotate(10deg) scale(1) translateX(0);
+    margin-top: 10px;
+}
+#account label:not(.checkbox), .field-hint-message, #account .field-validation-error {
+    font-size: 80%;
+}
+#account input:not(.btn):not(.check-box) {
+    width: 100%;
+    padding: 3px 6px;
+    border-radius: .25rem;
+    border: 1px solid #81b5e2;
+}
+#account label:not(.checkbox) {
+    margin-top: 1rem;
+    margin-bottom: .3rem;
+}
+#account .field-hint-message {
+    display: none;
+}
+#account .validation-summary-errors ul {
+    list-style-type: none;
+    padding-left: 1rem;
+    border-left: 6px solid #f4516c;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+#account .validation-summary-errors ul li, #account .field-hint-message, #account .field-validation-error {
+    color: #f4516c;
+    font-weight: bold;
+}
+#account .input-validation-error {
+    border: 1px solid #f4516c !important;
+}
+#account input .valid {
+    border: 1px solid #36bc98 !important;
+}
+/*Account- Edit Profile & Checkbox styling*/
+#account .checkbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/* Hide the browser's default checkbox */
+#account .checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+/* Create a custom checkbox */
+#account .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+/* On mouse-over, add a grey background color */
+#account .checkbox:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+#account .checkbox input:checked ~ .checkmark {
+    background-color: #81b5e2;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+#account .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+/* Show the checkmark when checked */
+#account .checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+/* Style the checkmark/indicator */
+#account .checkbox .checkmark:after {
+    left: 10px;
+    top: 6px;
+    width: 5px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#account.edit-profile form {
+    display: block;
+}
+#account.edit-profile {
+    background: white;
+}
+#account.edit-profile .border-left {
+    border: none !important;
+}
+@media (min-width: 992px) {
+    #account.edit-profile {
+        background: transparent;
+    }
+    #account.edit-profile form {
+        display: flex;
+        align-items: center;
+        background: white;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+    #account.edit-profile .col-lg-6 {
+        margin-bottom: 110px;
+    }
+    #account.edit-profile .col-12 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    #account.edit-profile .border-left {
+        border-left: 1px solid #dee2e6 !important;
+    }
+}

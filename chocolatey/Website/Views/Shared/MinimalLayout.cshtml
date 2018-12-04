@@ -1,0 +1,143 @@
+﻿@using System.Configuration
+@{
+    Layout = "_BaseLayout.cshtml";
+}
+@section css
+{
+    @RenderSection("css", required: false)
+}
+@{
+    var noticeText = ("");
+}
+@section ExtraHeaders
+{
+    @RenderSection("ExtraHeaders", required: false)
+}
+@section TopScripts
+{
+    @RenderSection("TopScripts", required: false)
+}
+
+<body class="bg-light">
+    <div id="loader">
+        <div id="shadow"></div>
+        <div id="shape"></div>
+    </div>
+    <header>
+        <div class="alert alert-primary alert-dismissible fade show mb-0 @if (string.IsNullOrEmpty(noticeText)) { <text> d-none</text> }" role="alert" aria-atomic="true">
+            <strong><i class="icon-exclamation-triangle m-r"></i>@Html.Raw(noticeText)</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </header>
+    <main class="my-auto">
+        @if (TempData.ContainsKey("Message"))
+        {
+            <div class="modal fade" id="package-save" tabindex="-1" role="dialog" aria-labelledby="package-save" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <i class="icon-check-circle-o display-1" alt="Saved Successfully"></i>
+                            <h3>@TempData["Message"]</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            <div class="modal fade" id="package-save" tabindex="-1" role="dialog" aria-labelledby="package-save" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <i class="icon-times-circle-o display-1" alt="Saved Successfully"></i>
+                            <h3>@TempData["ErrorMessage"]</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <section id="account" class="container py-3 py-md-5">
+            <div class="row">
+                <div class="col-sm-9 col-lg-6 col-xl-4 m-auto">
+                    <div class="card border-0 rounded-0 shadow">
+                        <div class="card-header text-center bg-primary rounded-0">
+                            <img class="logo" alt="Chocolatey Software" src="@Url.Content("~/content/images/just-type-logo.svg")" />
+                        </div>
+                        <div class="card-body">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-medium text-white">
+        <section class="container-fluid bg-medium-dark text-center py-3">
+            <div class="row">
+                <div class="col-12">
+                    <p>
+                        <strong>&copy; 2017 - @DateTime.UtcNow.Year</strong> Chocolatey Software, Inc.<br />
+                        <strong>&copy; 2011 - 2017</strong> RealDimensions Software, LLC.
+                    </p>
+                    @{
+                        string commitId = ConfigurationManager.AppSettings["appharbor.commit_id"];
+                        string worker = ConfigurationManager.AppSettings["appharbor.worker_name"];
+                    }
+                    <p id="releaseTag" class="mb-0">
+                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. Page generated @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </footer>
+    @RenderPage("_CookiePolicy.cshtml")
+
+    @Bundles.RenderStylesheets("bottom")
+    @Bundles.RenderScripts()
+
+    @RenderSection("BottomScripts", required: false)
+
+    <script language="javascript" type="text/javascript">
+        ((window.gitter = {}).chat = {}).options = {
+            room: 'chocolatey/chocolatey.org'
+        };
+    </script>
+
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script language="javascript" type="text/javascript">
+        CookiesNotice.modal("chocolatey_hide_cookies_notice");
+        if (!getCookie('chocolatey_hide_cookies_notice')) {
+            $(".cookies-popup").css('display', 'block');
+        }
+    </script>
+    <script>
+        $(function () {
+            $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
+                $(this).closest("form").submit();
+            });
+            Closeable.modal("chocolatey_hide_packages_disclaimer");
+            if (!getCookie('chocolatey_hide_packages_disclaimer')) {
+                $(".modal-closeable").css('display', 'block');
+            }
+        });
+    </script>
+</body>

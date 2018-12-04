@@ -86,6 +86,9 @@ body {
     font-size: 18px;
     line-height: 1.6em;
     color: #202f3c;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 a {
     color: #5c9fd8;
@@ -341,6 +344,11 @@ footer {
     text-align: center;
     line-height: 1em;
 }
+.icon-asterisk:before {
+    content: "\f069";
+    color: #5c9fd8;
+    font-size: .65em;
+}
 .icon-clipboard:before {
     content: "\f0ea";
 }
@@ -403,6 +411,13 @@ footer {
 }
 .icon-times-circle-o:before {
     content: "\f05c";
+}
+.icon-question-circle:before {
+    content: "\f059";
+    color: #5c9fd8;
+}
+.icon-question-circle:hover {
+    cursor: pointer;
 }
 .icon-youtube:before {
     content: "\f167";
