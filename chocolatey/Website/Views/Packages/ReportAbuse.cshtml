@@ -1,7 +1,9 @@
 ﻿@model ReportAbuseViewModel
 @{
-  ViewBag.Tab = "Packages";
-  Bundles.Reference("Scripts/validation");
+    ViewBag.Tab = "Packages";
+    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when converting to new layout
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/validation");
 }
 @section TopScripts {
     <script>
@@ -12,7 +14,6 @@
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
 <h1 class="page-heading">Report Abuse for <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
-
 <p class="message">
     Important: This form is for reporting <em>abusive</em> packages such as
     packages containing <em>malicious code</em> or spam. If "@Model.PackageId" simply doesn't
@@ -21,34 +22,32 @@
     <br /><br />
     Note: If you need to contact the <em>site administrators for any other reason</em> (including package triage / become a co-maintainer) for this package, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.PackageId, version = Model.PackageVersion })" title="Contact Site Admins">contact the admins.</a>
 </p>
-
 <p class="message error">
-  Are you a software vendor? Please read this first - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Have my distribution rights been violated?</a>
-   <br />If you are here to request/ask about helping with package maintenance, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.PackageId, version = Model.PackageVersion })" title="Contact Site Admins">contact the admins.</a>
+    Are you a software vendor? Please read this first - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Have my distribution rights been violated?</a>
+    <br />If you are here to request/ask about helping with package maintenance, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.PackageId, version = Model.PackageVersion })" title="Contact Site Admins">contact the admins.</a>
 </p>
-
 <p class="message warning">
     Do not share sensitive information with this form. <br />
 </p>
-
 <p>Please provide a detailed abuse report. Include exactly what the package did.</p>
-
 @using (Html.BeginForm())
 {
     <fieldset class="form">
         <legend>Report Abuse</legend>
         @Html.AntiForgeryToken()
         <div class="form-field">
-        @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-        @if (!Model.ConfirmedUser) {
-            @Html.LabelFor(m => m.Email)
-            @Html.EditorFor(m => m.Email)
-            <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
-            @Html.ValidationMessageFor(m => m.Email)
-        }
-        else {
-            <input type="hidden" name="Email" value="test@example.com" />
-        }
+            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
+            @if (!Model.ConfirmedUser)
+            {
+                @Html.LabelFor(m => m.Email)
+                @Html.EditorFor(m => m.Email)
+                <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
+                @Html.ValidationMessageFor(m => m.Email)
+            }
+            else
+            {
+                <input type="hidden" name="Email" value="test@example.com" />
+            }
         </div>
         <div class="form-field">
             @Html.LabelFor(m => m.Message)

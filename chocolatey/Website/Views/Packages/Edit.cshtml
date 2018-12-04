@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Tab = "Packages";
+    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when switched to new PackagesLayout
 }
 
 <h1 class="page-heading">Edit @Model.Title Package</h1>
@@ -7,8 +8,8 @@
     To edit the metadata for a package, please <a href="@Url.UploadPackage()">upload an updated version of the package</a>.
 </p>
 <p>
-    NuGet currently does not allow updating package metadata on the website. This helps ensure 
-    that the package itself (and the source used to build the package) remains the one true 
+    NuGet currently does not allow updating package metadata on the website. This helps ensure
+    that the package itself (and the source used to build the package) remains the one true
     source of package metadata.
 </p>
 <p>

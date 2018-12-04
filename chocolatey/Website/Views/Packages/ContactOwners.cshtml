@@ -1,7 +1,9 @@
 ﻿@model ContactOwnersViewModel
 @{
-  ViewBag.Tab = "Packages";
-  Bundles.Reference("Scripts/validation");
+    ViewBag.Tab = "Packages";
+    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when converting to new layout
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/validation");
 }
 @section TopScripts {
     <script>
@@ -13,24 +15,25 @@
 }
 
 <h1 class="page-heading">Contact the Maintainers of <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
-@if (Model.Owners.Any()) {
+@if (Model.Owners.Any())
+{
     <p class="message">
         By submitting this form, you agree to <em>disclose your email address</em>
         to the package maintainers listed below so they can reply to you.
     </p>
     <p class="message warning">
-      Do not share sensitive information with this form. <br />
+        Do not share sensitive information with this form. <br />
     </p>
     <div class="message error">
         Is the package broken? and/or outdated?
-     <ul>
-       <li>First, please read over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#package-is-broken">the package is broken / outdated</a>.</li>
-       <li>Provide a link to a gist with the output of running your command. Please add '-debug -verbose' to your command when reporting as most maintainers will ask for the debugging output.</li>
-    </ul>
+        <ul>
+            <li>First, please read over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#package-is-broken">the package is broken / outdated</a>.</li>
+            <li>Provide a link to a gist with the output of running your command. Please add '-debug -verbose' to your command when reporting as most maintainers will ask for the debugging output.</li>
+        </ul>
     </div>
 
-  using (Html.BeginForm())
-  {
+    using (Html.BeginForm())
+    {
         <fieldset class="form">
             <legend>Contact Maintainers</legend>
             @Html.AntiForgeryToken()
@@ -40,17 +43,17 @@
                 @Html.ValidationMessageFor(m => m.SpamValidationResponse)
             </div>
             <div class="form-field">
-                 @if (!Model.ConfirmedUser)
-                 {
+                @if (!Model.ConfirmedUser)
+                {
                     @Html.LabelFor(m => m.Email)
                     @Html.EditorFor(m => m.Email)
                     <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
                     @Html.ValidationMessageFor(m => m.Email)
-                 }
-                 else
-                 {
+                }
+                else
+                {
                     <input type="hidden" id="Email" name="Email" value="test@example.com" />
-                 }
+                }
             </div>
             <div class="form-field">
                 @Html.LabelFor(m => m.Message)
@@ -62,7 +65,7 @@
             </div>
             <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send" title="Send your message to the maintainers of '@Model.PackageId'" />
         </fieldset>
-  }
+    }
 
 }
 else

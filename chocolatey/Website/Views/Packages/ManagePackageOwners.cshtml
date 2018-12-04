@@ -1,36 +1,35 @@
 ﻿@model ManagePackageOwnersViewModel
 @{
     ViewBag.Tab = "Packages";
+    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when converting to new layout
     var moderator = User != null && User.IsModerator();
+    Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/manageowners");
 }
 
-
 <h1 class="page-heading">Manage Maintainers for <a href="@Url.Package(Model.Id,  null)">@Model.Title</a></h1>
 <div class="error message" data-bind="text: message, visible: message"></div>
-
 <h2>Current Maintainers</h2>
 <ul id="package-owner-list" data-bind="foreach: owners">
     <li>
-        <span data-bind="text: name"></span> <em data-bind="visible: current">(that&#8217;s you!)</em> 
-        <em data-bind="visible: pending">(pending approval)</em> 
+        <span data-bind="text: name"></span> <em data-bind="visible: current">(that&#8217;s you!)</em>
+        <em data-bind="visible: pending">(pending approval)</em>
         @if (moderator)
         {
             <a href="#" title="Remove as maintainer of @Model.Title" data-bind="click: remove">Remove</a>
         }
         else
-        { 
+        {
             <a href="#" title="Remove as maintainer of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
-        }  
+        }
         <input type="checkbox" data-bind="visible: false, checked: addDirectly" />
     </li>
 </ul>
-
 <h2>Add Maintainer</h2>
 <p>
     Enter a maintainer's username to add them as a package maintainer.
 </p>
- <p class="message">
+<p class="message">
     NOTE: All package maintainers have full control over their packages,
     including the ability to remove other users as maintainers.
 </p>
@@ -48,14 +47,12 @@
             <input type="checkbox" name="newOwnerAddDirectly" data-bind="checked: newOwner().addDirectly" />
             <label for="newOwnerAddDirectly">Add Without Pending</label>
         }
-     </fieldset>
+    </fieldset>
 }
 
-
-
 @section bottomScripts {
-<script src="@Url.Content("~/json/JsonApi?json")"></script>
-<script>
+    <script src="@Url.Content("~/json/JsonApi?json")"></script>
+    <script>
     $(function () {
         //TODO Move this to its own script file when we set up QUnit tests
         var failHandler = function () {
@@ -67,7 +64,7 @@
             owners: ko.observableArray([]),
             newOwner: ko.observable(new Owner(null)),
             message: ko.observable(''),
-            
+
             addOwner: function () {
                 var ownerInputModel = viewModel.newOwner().toJS();
                 ownerInputModel.id = viewModel.package.id;
@@ -126,6 +123,5 @@
             };
         }
     });
-</script>
+    </script>
 }
-

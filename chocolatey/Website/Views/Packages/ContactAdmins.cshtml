@@ -1,7 +1,8 @@
 ﻿@model ContactAdminsViewModel
 @{
-  ViewBag.Tab = "Packages";
-  Bundles.Reference("Scripts/validation");
+    ViewBag.Tab = "Packages";
+    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when switched to new PackagesLayout
+    Bundles.Reference("Scripts/validation");
 }
 @section TopScripts {
     <script>
@@ -11,9 +12,7 @@
     </script>
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
-
 <h1 class="page-heading">Contact Website Administrators about <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
-
 <p class="message">
     Important: This form is for contacting site administrators about packages that are seriously neglected or to work through the package triage process to become a co-maintainer. If "@Model.PackageId" simply doesn't
     appear to work or work correctly, please
@@ -23,10 +22,9 @@
     <br /><br />
     If you are contacting the admins for a package that is outdated, please be sure you have contacted the maintainers of the package first and waited the allotted time prior to continuing the package triage process.
 </p>
-
 <p class="message error">
-  Are you a software vendor? Please read this first - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Have my distribution rights been violated?</a>
-  <br />If you are here to request/ask about helping with package maintenance, you've come to the right place!
+    Are you a software vendor? Please read this first - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Have my distribution rights been violated?</a>
+    <br />If you are here to request/ask about helping with package maintenance, you've come to the right place!
 </p>
 
 
@@ -35,25 +33,27 @@
 </p>
 
 <p>Please provide a detailed report.</p>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     <fieldset class="form">
         <legend>Contact Admins</legend>
         @Html.AntiForgeryToken()
         <div class="form-field">
-        @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-        @if (!Model.ConfirmedUser) {
-            @Html.LabelFor(m => m.Email)
-            @Html.EditorFor(m => m.Email)
-            <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
-            @Html.ValidationMessageFor(m => m.Email)
-        }
-        else {
-            <input type="hidden" name="Email" value="test@example.com" />
-        }
+            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
+            @if (!Model.ConfirmedUser)
+            {
+                @Html.LabelFor(m => m.Email)
+                @Html.EditorFor(m => m.Email)
+                <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
+                @Html.ValidationMessageFor(m => m.Email)
+            }
+            else
+            {
+                <input type="hidden" name="Email" value="test@example.com" />
+            }
         </div>
         <div class="form-field">
-           <label for="Message">Contact Admins</label>
+            <label for="Message">Contact Admins</label>
             @Html.TextAreaFor(m => m.Message, 10, 50, null)
             @Html.ValidationMessageFor(m => m.Message)
         </div>
@@ -63,7 +63,6 @@
         <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Contact" title="Contact Admins about '@Model.PackageId'" />
     </fieldset>
 }
-
 @section BottomScripts {
     <script type="text/javascript">
         $(document).ready(function () {
