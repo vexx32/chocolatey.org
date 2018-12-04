@@ -1319,6 +1319,7 @@
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
+    <Content Include="Scripts\manageowners\knockout.3.5.0.js" />
     <Content Include="Scripts\packages\package-details.js" />
     <Content Include="Scripts\prism\prism.js" />
     <Content Include="Scripts\SearchResultsTabs\SearchResultsTabs.js" />
@@ -1326,7 +1327,6 @@
     <Content Include="Scripts\validation\bundle.txt" />
     <Content Include="Scripts\validation\jquery.validate.js" />
     <Content Include="Scripts\validation\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\manageowners\knockout-latest.js" />
     <Content Include="Scripts\home\stats.js" />
     <Content Include="Scripts\SyntaxHighlighter\shAutoloader.js" />
     <Content Include="Scripts\SyntaxHighlighter\shBrushAppleScript.js" />
