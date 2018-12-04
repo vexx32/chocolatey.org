@@ -1327,7 +1327,6 @@
     <Content Include="Scripts\SyntaxHighlighter\bundle.txt" />
     <Content Include="Scripts\validation\bundle.txt" />
     <Content Include="Scripts\validation\jquery.validate.js" />
-    <Content Include="Scripts\validation\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\home\stats.js" />
     <Content Include="Scripts\SyntaxHighlighter\shAutoloader.js" />
     <Content Include="Scripts\SyntaxHighlighter\shBrushAppleScript.js" />
