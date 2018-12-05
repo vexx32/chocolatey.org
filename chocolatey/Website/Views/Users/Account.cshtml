@@ -1,113 +1,117 @@
 ﻿@model AccountViewModel
 @{
     ViewBag.Tab = "Contribute";
-    Layout = "~/Views/Shared/OldLayout.cshtml";
-    Bundles.Reference("Scripts/ZeroClipboard");
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/prism/prism.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
+    Bundles.Reference("Scripts/prism");
 }
 
-<h1 class="page-heading">My Account (@Model.UserName)</h1>
-
-<section id="actions">
-    <h1>Actions</h1>
-    <ul>
-        <li id="uploadPackage">
-            <h2><a href="@Url.UploadPackage()">Upload Package</a></h2>
-            <p>
-                Upload and publish your package for other Chocolatey users to download and enjoy. 
-                You can upload multiple revisions of the same package, as long as the version 
-                is different.
-            </p>
-        </li>
-        @if (Model.CuratedFeeds.Any())
-        {
-        <li id="manageCuratedFeeds">
-            <h2>Manage My Curated Feeds</h2>
-            <p>Click a curated feed to manage the included packages.</p>
-            <ul>
-            @foreach(var curatedFeed in Model.CuratedFeeds)
+<section class="container py-3 py-xl-5">
+    <div class="row">
+        <div class="col-xl-8 mx-auto">
+            <div class="row align-items-center">
+                <div class="col-xl-7 h-100 text-center text-xl-left mb-3 mb-xl-0">
+                    <h2 class="mb-0">My Account (@Model.UserName)</h2>
+                </div>
+                <div class="col-xl-5 h-100 text-center text-xl-right">
+                    <a href="@Url.Action(MVC.Users.Edit())" class="btn btn-primary font-weight-bold">Edit Profile</a>
+                    <a href="@Url.Action(MVC.Users.ChangePassword())" class="btn btn-primary font-weight-bold">Change Password</a>
+                </div>
+            </div>
+            <hr class="mb-3 mb-xl-5" />
+            <div class="row" id="actions">
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div class="card border-0 rounded-0 shadow h-100">
+                        <div class="card-body">
+                            <h3 class="text-center"><i class="icon-upload" alt="Upload"></i> Upload Package</h3>
+                            <p class="mb-0">
+                                Upload and publish your package for other Chocolatey users to download and enjoy.
+                                You can upload multiple revisions of the same package, as long as the version
+                                is different.
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white pt-0 pb-4 border-0 text-center">
+                            <a href="@Url.UploadPackage()" class="btn btn-primary font-weight-bold">Upload Package</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 rounded-0 shadow h-100">
+                        <div class="card-body">
+                            <h3 class="text-center"><i class="icon-cogs" alt="Manage"></i> Manage My Packages</h3>
+                            <p class="mb-0">Edit package details or Remove packages that you have previously uploaded.</p>
+                        </div>
+                        <div class="card-footer bg-white pt-0 pb-4 border-0 text-center">
+                            <a href="@Url.Action(MVC.Users.Packages())" class="btn btn-primary font-weight-bold">Manage Packages</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3 my-xl-5" />
+            @if (Model.CuratedFeeds.Any())
             {
-                <li><a href="@Url.RouteUrl(RouteName.CuratedFeed, new { name = curatedFeed })">@curatedFeed</a></li>
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Manage Curated Feeds</h2>
+                        <p>Click a curated feed to manage the included packages.</p>
+                        <ul class="mb-0">
+                            @foreach (var curatedFeed in Model.CuratedFeeds)
+                            {
+                                <li><a href="@Url.RouteUrl(RouteName.CuratedFeed, new { name = curatedFeed })">@curatedFeed</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <hr class="mt-4 mb-3 my-xl-5" />
             }
-            </ul>
-        </li>
-        }
-        <li id="managePackages">
-            <h2><a href="@Url.Action(MVC.Users.Packages())">Manage My Packages</a></h2>
-            <p>Edit package details or Remove packages that you have previously uploaded.</p>
-        </li>
-        <li id="editProfile">
-            <h2><a href="@Url.Action(MVC.Users.Edit())">Edit Profile</a></h2>
-            <p>Edit your public profile.</p>
-        </li>
-        <li id="changePassword">
-            <h2><a href="@Url.Action(MVC.Users.ChangePassword())">Change Password</a></h2>
-            <p>Change your password.</p>
-        </li>
-    </ul>
-</section>
-
-
-
-<section id="apiKey">
-<h1>API Key</h1>
-    <p>
-        Your API key provides you with a token that identifies you to the gallery. 
-        Keep this a secret. You can always regenerate your key at any time (invalidating 
-        previous keys) if your token is accidentally revealed.
-    </p>
-    
-    <div id="generateKey">
-        <h2>Your API key is:</h2>
-        
-        <div>
-            <p>
-              <span id="key">@Model.ApiKey</span> 
-              <input type="button" id="copyButton" class="copy-button" title="Copy To Clipboard" />
-              @*<button title="Copy to clipboard" class="icon-clipboard copy-button" data-clipboard-text="@Model.ApiKey"></button>*@
-            </p>
-
-            <fieldset class="form">
-                <legend>Generate New API Key</legend>
-                @using (Html.BeginForm("GenerateApiKey", "Users", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Generate New API Key" />
-                }
-            </fieldset>
-
-            <h2>Example usage:</h2>
-            <p>
-              <pre><code>
-choco apikey --key @Model.ApiKey --source https://push.chocolatey.org/
-choco push MyPackage.1.0.nupkg --source https://push.chocolatey.org/
-                </code></pre>
-            </p>
-        </div>
-
-        <div id="overlayWrapper" title="Click to show API Key">
-            Your key is hidden for privacy, click to show.
+            <div class="row mt-4" id="apiKey">
+                <div class="col-12">
+                    <h2>API Key</h2>
+                    <p>
+                        Your API key provides you with a token that identifies you to the gallery.
+                        Keep this a secret. You can always regenerate your key at any time (invalidating
+                        previous keys) if your token is accidentally revealed.
+                    </p>
+                    <p class="text-danger font-weight-bold">Your key is hidden for privacy, click to show.</p>
+                    <button type="button" class="btn btn-secondary font-weight-bold">Show API Key</button>
+                    <div id="generateKey" class="d-none">
+                        <h3 class="mt-4">Your API key is:</h3>
+                        <div class="d-flex flex-column flex-nowrap justify-content-start mt-auto">
+                            <span class="copyBox overflow-hidden w-100 rounded">
+                                @Model.ApiKey
+                                <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="@Model.ApiKey">
+                                    <i class="icon-clipboard" alt="Copy to Clipboard"></i>
+                                </button>
+                            </span>
+                            <fieldset class="form mt-2">
+                                <legend class="d-none">Generate New API Key</legend>
+                                @using (Html.BeginForm("GenerateApiKey", "Users", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input class="btn btn-primary font-weight-bold" type="submit" value="Generate New API Key" />
+                                }
+                            </fieldset>
+                        </div>
+                        <h3 class="mt-4">Example Usage:</h3>
+                        <pre class="py-2 mb-0 border line-numbers language-powershell"><code class="language-powershell">choco apikey --key @Model.ApiKey --source https://push.chocolatey.org/</code><code class="language-powershell">choco push MyPackage.1.0.nupkg --source https://push.chocolatey.org/</code></pre>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 @section BottomScripts {
     <script type="text/javascript">
-
-        $(document).ready(function() {
-            $("#overlayWrapper").click(function() {
-                $("#overlayWrapper").fadeOut();
-                return false;
-            });
-
-            ZeroClipboard.setMoviePath('@Url.Content("~/Scripts/ZeroClipboard/ZeroClipboard.swf")');
-            var clip = new ZeroClipboard.Client();
-            clip.setText('@HttpUtility.JavaScriptStringEncode(Model.ApiKey.ToString())');
-            clip.setHandCursor(true);
-            clip.glue('copyButton');
-
-            $(window).resize(function() {
-                clip.reposition();
-            });
+        $('#apiKey .btn-secondary').click(function() {
+            $('#apiKey .btn-secondary').addClass('d-none');
+            $('#apiKey .text-danger').addClass('d-none');
+            $('#generateKey').removeClass('d-none').addClass('d-block');
         });
     </script>
 }
