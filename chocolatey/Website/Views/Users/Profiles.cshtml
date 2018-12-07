@@ -3,7 +3,12 @@
 @model UserProfileModel
 @{
     ViewBag.Title = @Model.Username;
-    Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
     var markdownGenerator = new Markdown
     {
         AutoHyperlink = true,
@@ -14,151 +19,156 @@
     };
 }
 
-
-@section SideColumn {
-    @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 128)
-     <div id="stats">
-        <div class="stat">
-            <p class="stat-number">@Model.PackagesModerationQueue.Count.ToString("n0")</p>
-            <p class="stat-label">Packages in Queue</p>
-        </div> 
-        <div class="stat">
-            <p class="stat-number">@Model.Packages.Count.ToString("n0")</p>
-            <p class="stat-label">Packages</p>
+<section class="container py-3 py-md-5">
+    <div id="package-sidebar" class="row">
+        @*Desktop Sidebar*@
+        <div class="col-md-3 col-xl-2 d-none d-md-block">
+            @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 128)
+            <p class="mb-0 mt-3"><strong>Packages in Queue:</strong></p>
+            <h3 class="mb-3">@Model.PackagesModerationQueue.Count.ToString("n0")</h3>
+            <p class="mb-0"><strong>Packages:</strong></p>
+            <h3 class="mb-3">@Model.Packages.Count.ToString("n0")</h3>
+            <p class="mb-0"><strong>Downloads of @Model.Username's packages:</strong></p>
+            <h3 class="mb-3">@Model.TotalPackageDownloadCount.ToString("n0")</h3>
+            @if (Model.UserProfiles.Count >= 1)
+            {
+                <p class="mb-2"><strong>External Links:</strong></p>
+                <ul class="list-unstyled">
+                    @foreach (var siteProfile in Model.UserProfiles)
+                    {
+                        <li class="mb-2">
+                            <a class="d-flex align-items-center flex-row" href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
+                                <img style="max-width: 25px;" class="mr-1" src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
+                                <p class="mb-0">@siteProfile.Name</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
-        <div class="stat">
-            <p class="stat-number">@Model.TotalPackageDownloadCount.ToString("n0")</p>
-            <p class="stat-label">Downloads of @Model.Username's packages</p>
+        @*Mobile Sidebar*@
+        <div class="col-12 d-md-none">
+            <div class="justify-content-center align-items-center d-flex mb-3">
+                @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 40)
+                <h4 class="mb-0">@Model.Username's Profile</h4>
+            </div>
+            <div class="row border-bottom">
+                <div class="col">
+                    <p class="mb-0"><small>Queued Packages:</small></p>
+                    <p class="mb-1">@Model.PackagesModerationQueue.Count.ToString("n0")</p>
+                </div>
+                <div class="col">
+                    <p class="mb-0"><small>Packages:</small></p>
+                    <p class="mb-1">@Model.Packages.Count.ToString("n0")</p>
+                </div>
+            </div>
+            <div class="border-bottom pb-2">
+                <p class="mb-0"><small>Downloads of @Model.Username's packages:</small></p>
+                <p class="mb-1">@Model.TotalPackageDownloadCount.ToString("n0")</p>
+            </div>
+            @if (Model.UserProfiles.Count >= 1)
+            {
+                <div class="border-bottom">
+                    <p class="mb-0"><small>External Links:</small></p>
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var siteProfile in Model.UserProfiles)
+                        {
+                            <li class="mb-2">
+                                <a class="d-flex align-items-center flex-row" href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
+                                    <img style="max-width: 25px;" class="mr-1" src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
+                                    <p class="mb-0">@siteProfile.Name</p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+        @*Main*@
+        <div class="col-md-9 col-xl-10 profile-packages">
+            <h2 class="d-none d-md-block">@Model.Username's Profile</h2>
+            <hr class="mb-3 mb-md-5 d-none d-md-block" />
+            @if (Model.PackagesModerationQueue.Any())
+            {
+                <h3 class="mb-4 mt-4 mt-md-0">Packages in Moderation:</h3>
+                <div class="row">
+                    @foreach (var package in Model.PackagesModerationQueue)
+                    {
+                        var submittedStatus = "Reviewed, waiting for user action";
+
+                        switch (package.SubmittedStatus)
+                        {
+                            case PackageSubmittedStatusType.Ready:
+                                submittedStatus = "Ready";
+                                break;
+                            case PackageSubmittedStatusType.Updated:
+                                submittedStatus = "Updated";
+                                break;
+                            case PackageSubmittedStatusType.Responded:
+                                submittedStatus = "Responded";
+                                break;
+                            default:
+                                break;
+                        }
+                        var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
+                        <div class="col-lg-6 col-xl-4 mb-4">
+                            <a href="@Url.Package(package.Id, package.Version)" title="View more about @package.Title" target="_blank">
+                                <div class="card border-0 rounded-0 shadow h-100">
+                                    <div class="card-header bg-white border-0 d-flex align-items-center pt-3">
+                                        <img width="35" class="mr-1" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                                        <h4 class="mb-0">@package.Title</h4>
+                                    </div>
+                                    <div class="card-body pt-0 pb-3">
+                                        <ul class="list-unstyled mb-0">
+                                            <li><strong>Package Status:</strong> @submittedStatus</li>
+                                            <li><strong>Submitted Date:</strong> @package.PublishedDate.ToShortDateString()</li>
+                                            @if (package.ReviewedDate != null)
+                                            {
+                                                <li><strong>Reviewed:</strong> @package.ReviewedDate.GetValueOrDefault().ToShortDateString()</li>
+                                            }
+                                            else
+                                            {
+                                                <li><strong>Reviewed:</strong> Waiting for Review</li>
+                                            }
+                                        </ul>
+                                        @if (String.IsNullOrEmpty(package.ReviewComments))
+                                        {
+                                            <p class="mt-3 mb-0">@Html.Raw(markdownGenerator.Transform(package.ReviewComments.clean_html()))</p>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+                <hr class="mb-4"/>
+            }
+            <h3 class="mb-4">Packages:</h3>
+            <div class="row">
+                @foreach (var package in Model.Packages)
+                {
+                    var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
+                    <div class="col-lg-4 mb-4">
+                        <a href="@Url.Package(package.Id)" title="View more about @package.Title" target="_blank">
+                            <div class="card border-0 rounded-0 shadow h-100">
+                                <div class="card-header bg-white border-0 d-flex align-items-center pt-3">
+                                    <img width="35" class="mr-1" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                                    <h4 class="mb-0">@package.Title</h4>
+                                </div>
+                                <div class="card-body pt-0 pb-3">
+                                    @if (!string.IsNullOrEmpty(package.Summary))
+                                    {
+                                    @Html.Raw(markdownGenerator.Transform(package.Summary.clean_html()))
+                                    }
+                                </div>
+                                <div class="card-footer">
+                                    <p class="mb-0 font-weight-bold">@package.TotalDownloadCount.ToString("n0") downloads</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-}
-
-<h1>@Model.Username's Profile</h1>
-<h2>External Sites</h2>
- 
-<ul id="profileResults">
-    @foreach (var siteProfile in Model.UserProfiles)
-    {
-        <li>
-            <section class="package">
-                <div class="profile">
-                    <a href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
-                        <img src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
-                    </a>
-                </div>
-                <div class="main">
-                    <h2><a href="@siteProfile.Url" target="_blank">@siteProfile.Name</a></h2>
-                </div>
-            </section>
-        </li>
-    }
-    @if (Model.UserProfiles.Count == 0)
-    {
-        <li>
-            <section class="package">
-                <div class="main">
-                    <h2>User has not linked any external sites</h2>
-                </div>
-            </section>
-        </li>
-    }
-
-</ul>
-
-@if (Model.PackagesModerationQueue.Any())
-{
-<h2>Packages In Moderation</h2>
-<ul class="searchResults">
-    @foreach (var package in Model.PackagesModerationQueue)
-    {
-        var submittedStatus = "Reviewed, waiting for user action";
-       
-         switch (package.SubmittedStatus)
-         {
-             case PackageSubmittedStatusType.Ready:
-                submittedStatus = "Ready";
-                break;
-             case PackageSubmittedStatusType.Updated:
-                submittedStatus = "Updated";
-                break;
-             case PackageSubmittedStatusType.Responded:
-                submittedStatus = "Responded";
-                break;
-             default:
-                break;
-         }
-
-         var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
-        
-        <li>
-            <section class="package">
-                <div class="side">
-                    <a href="@Url.Package(package.Id, package.Version)" title="View more about @package.Title">
-                        <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
-                    </a>
-                </div>
-                <div class="main">
-                    <h1><a href="@Url.Package(package.Id, package.Version)">@package.Title</a></h1>
-                
-                    <p>
-                        @if (String.IsNullOrEmpty(package.ReviewComments))
-                        {
-                            @Html.Raw(markdownGenerator.Transform(package.ReviewComments.clean_html()))
-                        }
-                    </p>
-                    
-                    <footer>
-                            <ol>
-                                <li><strong>Package Status:</strong> @submittedStatus</li>
-                                <li><strong>Submitted Date:</strong> @package.PublishedDate.ToShortDateString()</li>
-                                @if (package.ReviewedDate != null)
-                                {
-                                    <li><strong>Reviewed:</strong> @package.ReviewedDate.GetValueOrDefault().ToShortDateString()</li>
-                                }
-                                else
-                                {
-                                    <li><strong>Reviewed:</strong> Waiting for Review</li>
-                                }
-                            </ol> 
-                      
-                    </footer>
-                </div>
-            </section>
-        </li>
-    }
-</ul>
-}
-
-
-<h2>Packages</h2>
-<ul class="searchResults">
-    @foreach (var package in Model.Packages)
-    {
-        var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
-        <li>
-            <section class="package">
-                <div class="side">
-                    <a href="@Url.Package(package.Id)" title="View more about @package.Title">
-                        <img src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
-                    </a>
-                </div>
-                <div class="main">
-                    <h1><a href="@Url.Package(package.Id)">@package.Title</a></h1>
-                
-                    <p>
-                        @if (!string.IsNullOrEmpty(package.Summary))
-                        {
-                             @Html.Raw(markdownGenerator.Transform(package.Summary.clean_html()))
-                        }
-                    </p>
-
-                    <footer>
-                        <p class="downloads">
-                            @package.TotalDownloadCount.ToString("n0") downloads
-                        </p>
-                    </footer>
-                </div>
-            </section>
-        </li>
-    }
-</ul>
+</section>

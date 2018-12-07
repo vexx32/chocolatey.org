@@ -85,10 +85,13 @@ body {
     font-family: Open Sans,"Segoe UI","Trebuchet MS",Verdana,Helvetica,Sans-Serif;
     font-size: 18px;
     line-height: 1.6em;
-    color: #202f3c;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+body, .profile-packages a {
+    color: #202f3c;
+    font-weight: 400;
 }
 a {
     color: #5c9fd8;
@@ -335,6 +338,10 @@ a + .collapse.show, a + .collapsing {
     border-color: #5c9fd8;
     background: #5c9fd8;
     color: white;
+}
+/*Cards*/
+.card-body p:last-child {
+    margin-bottom: 0;
 }
 /*Copy Code Box*/
 .copyBox {
