@@ -6,13 +6,17 @@
 #account label:not(.checkbox), .field-hint-message, #account .field-validation-error {
     font-size: 80%;
 }
-#account input:not(.btn):not(.check-box) {
+#account input:not(.btn):not(.check-box):not(.form-control), textarea {
     width: 100%;
     padding: 3px 6px;
     border-radius: .25rem;
     border: 1px solid #81b5e2;
 }
-#account label:not(.checkbox) {
+#account #Email {
+    max-width: 400px;
+    display: block;
+}
+#account label:not(.checkbox):not(.input-group-btn) {
     margin-top: 1rem;
     margin-bottom: .3rem;
 }
@@ -26,8 +30,10 @@
     margin-top: 1rem;
     margin-bottom: 0;
 }
-#account .validation-summary-errors ul li, #account .field-hint-message, #account .field-validation-error {
+#account .validation-summary-errors ul li, #account .field-hint-message, #account .field-validation-error, #account .was-validated .form-check-input:invalid ~ .form-check-label {
     color: #f4516c;
+}
+#account .validation-summary-errors ul li, #account .field-hint-message, #account .field-validation-error {
     font-weight: bold;
 }
 #account .input-validation-error {
@@ -36,8 +42,11 @@
 #account input .valid {
     border: 1px solid #36bc98 !important;
 }
+#account .was-validated .form-check-input:valid ~ .form-check-label {
+    color: #202f3c;
+}
 /*Account- Edit Profile & Checkbox styling*/
-#account .checkbox {
+#account .checkbox, #account .form-check label {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -50,7 +59,7 @@
     user-select: none;
 }
 /* Hide the browser's default checkbox */
-#account .checkbox input {
+#account .checkbox input, #account .form-check input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -67,11 +76,11 @@
     background-color: #eee;
 }
 /* On mouse-over, add a grey background color */
-#account .checkbox:hover input ~ .checkmark {
+#account .checkbox:hover input ~ .checkmark, #account .form-check:hover .checkmark:not(.checked) {
     background-color: #ccc;
 }
 /* When the checkbox is checked, add a blue background */
-#account .checkbox input:checked ~ .checkmark {
+#account .checkbox input:checked ~ .checkmark, #account .form-check .checked {
     background-color: #81b5e2;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -81,11 +90,11 @@
     display: none;
 }
 /* Show the checkmark when checked */
-#account .checkbox input:checked ~ .checkmark:after {
+#account .checkbox input:checked ~ .checkmark:after, #account .form-check .checked:after {
     display: block;
 }
 /* Style the checkmark/indicator */
-#account .checkbox .checkmark:after {
+#account .checkbox .checkmark:after, #account .form-check .checked:after {
     left: 10px;
     top: 6px;
     width: 5px;
