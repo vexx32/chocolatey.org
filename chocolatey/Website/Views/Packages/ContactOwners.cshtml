@@ -1,9 +1,13 @@
 ﻿@model ContactOwnersViewModel
 @{
     ViewBag.Tab = "Packages";
-    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when converting to new layout
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/account.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/validation");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 @section TopScripts {
     <script>
@@ -14,67 +18,74 @@
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
 
-<h1 class="page-heading">Contact the Maintainers of <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
-@if (Model.Owners.Any())
-{
-    <p class="message">
-        By submitting this form, you agree to <em>disclose your email address</em>
-        to the package maintainers listed below so they can reply to you.
-    </p>
-    <p class="message warning">
-        Do not share sensitive information with this form. <br />
-    </p>
-    <div class="message error">
-        Is the package broken? and/or outdated?
-        <ul>
-            <li>First, please read over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#package-is-broken">the package is broken / outdated</a>.</li>
-            <li>Provide a link to a gist with the output of running your command. Please add '-debug -verbose' to your command when reporting as most maintainers will ask for the debugging output.</li>
-        </ul>
+<section class="container py-3 py-xl-5" id="account">
+    <div class="row">
+        <div class="col-xl-8 mx-auto">
+            <h2 class="text-center text-xl-left">Contact the Maintainers of <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h2>
+            <hr class="mb-3 mb-md-5" />
+            @if (Model.Owners.Any())
+            {
+                <div class="callout callout-secondary">
+                    <p><strong>Is the package broken? and/or outdated?</strong></p>
+                    <ul class="mb-0">
+                        <li>First, please read over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#package-is-broken">the package is broken / outdated</a>.</li>
+                        <li>Provide a link to a gist with the output of running your command. Please add '-debug -verbose' to your command when reporting as most maintainers will ask for the debugging output.</li>
+                    </ul>
+                </div>
+                <div class="callout callout-warning">
+                    <p>
+                        By submitting this form, you agree to <em>disclose your email address</em>
+                        to the package maintainers listed below so they can reply to you.
+                    </p>
+                </div>
+                <div class="callout callout-danger">
+                    <p><strong>Do not share sensitive information with this form.</strong></p>
+                </div>
+                using (Html.BeginForm())
+                {
+                    <fieldset class="form">
+                        <legend class="d-none">Contact Maintainers</legend>
+                        @Html.AntiForgeryToken()
+                        <div class="form-field d-flex align-items-center">
+                            <h3 class="mb-0">To:</h3>
+                            <input class="border-0 p-0 ml-1 bg-transparent h3 mb-0" name="NotUsed" type="text" value="@Model.Owners.Flatten(@<text>@item.Username</text>)" disabled="disabled" />
+                        </div>
+                        <div class="form-field">
+                            @if (!Model.ConfirmedUser)
+                            {
+                                @Html.LabelFor(m => m.Email) <span class="icon-asterisk"></span>
+                                @Html.EditorFor(m => m.Email)
+                                <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
+                                @Html.ValidationMessageFor(m => m.Email)
+                            }
+                            else
+                            {
+                                <input type="hidden" id="Email" name="Email" value="test@example.com" />
+                            }
+                        </div>
+                        <div class="form-field mt-3">
+                            @Html.LabelFor(m => m.Message) <span class="icon-asterisk"></span>
+                            @Html.TextAreaFor(m => m.Message, new { @rows = 5 })
+                            @Html.ValidationMessageFor(m => m.Message)
+                        </div>
+                        <div class="form-field my-3">
+                            <label class="for-checkbox checkbox">
+                                @Html.CheckBoxFor(m => m.CopySender, new { @class = "check-box" })
+                                Send me a copy
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-field">
+                            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
+                        </div>
+                        <p class="mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+                        <input class="btn btn-primary font-weight-bold g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send Message" title="Send your message to the maintainers of '@Model.PackageId'" />
+                    </fieldset>
+                }
+            }
+        </div>
     </div>
-
-    using (Html.BeginForm())
-    {
-        <fieldset class="form">
-            <legend>Contact Maintainers</legend>
-            @Html.AntiForgeryToken()
-            <div class="form-field">
-                <label for="NotUsed">To</label>
-                <input name="NotUsed" type="text" value="@Model.Owners.Flatten(@<text>@item.Username</text>)" disabled="disabled" />
-                @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-            </div>
-            <div class="form-field">
-                @if (!Model.ConfirmedUser)
-                {
-                    @Html.LabelFor(m => m.Email)
-                    @Html.EditorFor(m => m.Email)
-                    <span class="field-hint-message">Provide your email address so we can follow up with you.</span>
-                    @Html.ValidationMessageFor(m => m.Email)
-                }
-                else
-                {
-                    <input type="hidden" id="Email" name="Email" value="test@example.com" />
-                }
-            </div>
-            <div class="form-field">
-                @Html.LabelFor(m => m.Message)
-                @Html.TextAreaFor(m => m.Message, 10, 50, null)
-                @Html.ValidationMessageFor(m => m.Message)
-            </div>
-            <div class="form-field">
-                @Html.CheckBoxFor(m => m.CopySender)<label for="@Model.CopySender" class="for-checkbox">Send me a copy</label>
-            </div>
-            <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send" title="Send your message to the maintainers of '@Model.PackageId'" />
-        </fieldset>
-    }
-
-}
-else
-{
-    <p class="error message">
-        Sorry, the maintainers of this package do not allow contacting them through this form.
-        Try visiting the project home page for "@Model.PackageId" in order to contact the package maintainer.
-    </p>
-}
+</section>
 
 @section BottomScripts {
     <script type="text/javascript">
