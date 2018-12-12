@@ -1,54 +1,66 @@
 ﻿@model ManagePackageOwnersViewModel
 @{
     ViewBag.Tab = "Packages";
-    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this when converting to new layout
     var moderator = User != null && User.IsModerator();
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/account.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/manageowners");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 
-<h1 class="page-heading">Manage Maintainers for <a href="@Url.Package(Model.Id,  null)">@Model.Title</a></h1>
-<div class="error message" data-bind="text: message, visible: message"></div>
-<h2>Current Maintainers</h2>
-<ul id="package-owner-list" data-bind="foreach: owners">
-    <li>
-        <span data-bind="text: name"></span> <em data-bind="visible: current">(that&#8217;s you!)</em>
-        <em data-bind="visible: pending">(pending approval)</em>
-        @if (moderator)
-        {
-            <a href="#" title="Remove as maintainer of @Model.Title" data-bind="click: remove">Remove</a>
-        }
-        else
-        {
-            <a href="#" title="Remove as maintainer of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
-        }
-        <input type="checkbox" data-bind="visible: false, checked: addDirectly" />
-    </li>
-</ul>
-<h2>Add Maintainer</h2>
-<p>
-    Enter a maintainer's username to add them as a package maintainer.
-</p>
-<p class="message">
-    NOTE: All package maintainers have full control over their packages,
-    including the ability to remove other users as maintainers.
-</p>
-@using (Html.BeginForm())
-{
-    <fieldset class="form">
-        <legend>Add Maintainer</legend>
-        <div class="form-field">
-            <label for="newOwnerUserName">Username</label>
-            <input type="text" name="newOwnerUserName" data-bind="value: newOwner().name" />
+<section class="container py-3 py-xl-5" id="account">
+    <div class="row">
+        <div class="col-xl-8 mx-auto">
+            <h2 class="text-center text-xl-left">Manage Maintainers for <a href="@Url.Package(Model.Id,  null)">@Model.Title</a></h2>
+            <hr class="mb-3 mb-md-5" />
+            <h3>Current Maintainers</h3>
+            <ul class="mb-5" id="package-owner-list" data-bind="foreach: owners">
+                <li>
+                    <span data-bind="text: name"></span> <em data-bind="visible: current">(that&#8217;s you!)</em>
+                    <em data-bind="visible: pending">(pending approval)</em>
+                    @if (moderator)
+                    {
+                        <a class="text-danger" href="#" title="Remove as maintainer of @Model.Title" data-bind="click: remove">Remove</a>
+                    }
+                    else
+                    {
+                        <a class="text-danger" href="#" title="Remove as maintainer of @Model.Title" data-bind="visible: !current, click: remove">Remove</a>
+                    }
+                    <input type="checkbox" data-bind="visible: false, checked: addDirectly" />
+                </li>
+            </ul>
+            <h3 class="mb-3">Add Maintainer</h3>
+            <div class="callout callout-secondary mb-0">
+                <p><strong>Note:</strong> All package maintainers have full control over their packages, including the ability to remove other users as maintainers.</p>
+            </div>
+            <div class="error message callout callout-danger mb-0 mt-3" data-bind="text: message, visible: message"></div>
+            @using (Html.BeginForm())
+            {
+                <fieldset class="form">
+                    <legend class="d-none">Add Maintainer</legend>
+                    <div class="form-field mb-3">
+                        <label for="newOwnerUserName">Enter a maintainer's username to add them as a package maintainer:</label>
+                        <input id="Email" type="text" placeholder="Type username here" name="newOwnerUserName" data-bind="value: newOwner().name" />
+                    </div>
+                    @if (moderator)
+                    {
+                        <div class="form-field mb-3">
+                            <label class="checkbox">
+                                <input class="check-box" type="checkbox" name="newOwnerAddDirectly" data-bind="checked: newOwner().addDirectly" />
+                                Add Without Pending
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    }
+                    <button class="btn btn-primary font-weight-bold" type="submit" value="Add" title="Add the user as a maintainer to @Model.Title" data-bind="click: addOwner">Add Maintainer</button>
+                </fieldset>
+            }
         </div>
-        <input type="submit" value="Add" title="Add the user as a maintainer to @Model.Title" data-bind="click: addOwner" />
-        @if (moderator)
-        {
-            <input type="checkbox" name="newOwnerAddDirectly" data-bind="checked: newOwner().addDirectly" />
-            <label for="newOwnerAddDirectly">Add Without Pending</label>
-        }
-    </fieldset>
-}
+    </div>
+</section>
 
 @section bottomScripts {
     <script src="@Url.Content("~/json/JsonApi?json")"></script>
