@@ -77,7 +77,7 @@
                             }
                             else
                             {
-                                <a href="@Url.EditPackage(package)" title="Edit" class="editPackageLink"><img src="@Links.Content.Images.editIcon_png" alt="Edit" /></a>
+                                <a href="@Url.EditPackage(package)" title="Edit" class="editPackageLink" data-toggle="modal" data-target="#package-edit"><img src="@Links.Content.Images.editIcon_png" alt="Edit" /></a>
                                 <a href="@Url.DeletePackage(package)" title="Delete" class="deletePackageLink"><img src="@Links.Content.Images.trash_png" alt="Delete" /></a>
                             }
                         </td>
@@ -104,4 +104,29 @@
             </tfoot>
         </table>
     </div>
+    foreach (var package in packages)
+    {
+        <div class="modal fade" id="package-edit" tabindex="-1" role="dialog" aria-labelledby="package-edit" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <h2 class="mb-0">Edit @package.Title Package</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>To edit the metadata for a package, please upload an updated version of the package.</strong></p>
+                        <p>
+                            Chocolatey's Community Package Repository currently does not allow updating package metadata on the website. This helps ensure
+                            that the package itself (and the source used to build the package) remains the one true
+                            source of package metadata.
+                        </p>
+                        <p class="mb-0">This does require that you increment the package version.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <a href="@Url.UploadPackage()" class="btn btn-success font-weight-bold"><i class="icon-upload" alt="Upload"></i> Upload Updated Package</a>
+                        <button type="button" class="btn btn-danger font-weight-bold" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
+}

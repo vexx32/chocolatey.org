@@ -1592,7 +1592,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Packages\Download.cshtml" />
-    <Content Include="Views\Packages\Edit.cshtml" />
     <Content Include="Views\Packages\ListPackages.cshtml" />
     <Content Include="Views\Packages\ManagePackageOwners.cshtml" />
     <Content Include="Views\Packages\ReportAbuse.cshtml" />

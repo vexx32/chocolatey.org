@@ -247,6 +247,9 @@ a.btn:hover {
     background: rgba(0,0,0,.7);
     overflow: auto;
 }
+.modal.fade .modal-dialog {
+    transform: translate(0,50%);
+}
 .modal .modal-footer button.close {
     color: #fff;
     background-color: #6c757d;
