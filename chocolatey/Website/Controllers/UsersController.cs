@@ -24,7 +24,6 @@ using System.Web.Mvc;
 using System.Web.UI;
 using NuGet;
 using NuGetGallery.MvcOverrides;
-using PoliteCaptcha;
 
 namespace NuGetGallery
 {
@@ -134,7 +133,7 @@ namespace NuGetGallery
             return View();
         }
 
-        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
         public virtual ActionResult Register(RegisterRequest request)
         {
             // TODO: consider client-side validation for unique username
