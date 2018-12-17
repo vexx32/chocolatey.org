@@ -1,16 +1,18 @@
-﻿@using PoliteCaptcha
-@model RegisterRequest
+﻿@model RegisterRequest
 @{
     ViewBag.Title = "Register";
     //Layout = "~/Views/Shared/TwoColumnLayout.cshtml";
     Bundles.Reference("Scripts/validation");
 }
-
-@*@section SideColumn {
-    <p>With your account, you’ll be able to achieve all kinds of fame and glory by submitting your own packages.</p>
-    <p>Already have an account? <a href="@Url.LogOn()">Log On.</a></p>
+@section TopScripts {
+    <script>
+        function onSubmit(token) {
+            document.getElementById("i-recaptcha").submit();
+        }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
-*@
+
 <section>
   <div class="p-b p-l">
     <h1 class="m-b">Create A New Account</h1>
@@ -25,8 +27,7 @@
           @Html.EditorForModel()
 
           <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-          @Html.SpamPreventionFields()
-          <input type="submit" value="Register" title="Register" />
+          <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Register" title="Register" />
         </fieldset>
     }
   
@@ -35,5 +36,9 @@
 </section>
 
 @section BottomScripts {
-    @Html.SpamPreventionScript()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('fieldset').parent().attr('id', 'i-recaptcha');
+        });
+    </script>
 }
