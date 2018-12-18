@@ -467,6 +467,9 @@ footer {
 .icon-cogs:before {
     content: "\f085";
 }
+.icon-arrow-left:before {
+    content: "\f060";
+}
 .icon-youtube:before {
     content: "\f167";
 }
