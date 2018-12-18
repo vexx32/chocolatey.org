@@ -1,28 +1,78 @@
 ﻿@using NuGetGallery
-@{
-    Layout = "~/Views/Shared/OldLayout.cshtml"; //Delete this section entirely when switching to new PackageLayout, will automatically pull new template
-}
 @model SubmitPackageRequest
 @{
     ViewBag.Tab = "Upload Your Package";
+    Bundles.Reference("Content/bootstrap/bootstrap.css");
+    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/account.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 
-<h1 class="page-heading">Upload Your Package</h1>
-
-@ViewHelpers.UploadSequence(1)
-
-@using(Html.BeginForm("UploadPackage", "Packages", FormMethod.Post, new { enctype="multipart/form-data"})){
-    <fieldset class="form">
-        <legend>Upload a Package</legend>
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <p class="message">Your package file will be uploaded and hosted on the Chocolatey Gallery server (chocolatey.org).</p>
-        <p class="message warning">Warning: Do not use this upload form for bigger sized packages. Use choco push command line when uploading packages from 2 MB - 200 MB. See <a href="@Url.Action(MVC.Users.Account())">account</a> for details on associating your API key with your local Chocolatey install.</p>
-        <div class="form-field">
-            <label for="PackageFile">Choose a package...</label>
-            <input type="file" name="UploadFile" />
+<section id="account" class="container upload-package py-3 py-md-5">
+    <div class="row">
+        <div class="col-sm-9 col-xl-6 m-auto">
+            <div class="card border-0 rounded-0 shadow">
+                <div class="card-body">
+                    @Html.Partial("~/Views/Packages/_UploadSteps.cshtml")
+                    <p class="text-center"><strong>Your package file will be uploaded and hosted on the Chocolatey Gallery server (chocolatey.org).</strong></p>
+                    <hr />
+                    <div class="callout-warning">
+                        <strong>Warning:</strong> Do not use this upload form for bigger sized packages. Use choco push command line when uploading packages from 2 MB - 200 MB. See <a href="@Url.Action(MVC.Users.Account())">account</a> for details on associating your API key with your local Chocolatey install.
+                    </div>
+                    @using (Html.BeginForm("UploadPackage", "Packages", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <fieldset class="form mt-4">
+                            <legend class="d-none">Upload a Package</legend>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="form-field">
+                                <div class="input-group type-file">
+                                    <label class="input-group-btn mb-0">
+                                        <span class="btn btn-secondary font-weight-bold">
+                                            Browse&hellip; <input type="file" name="UploadFile" style="display: none;" multiple>
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <button class="btn btn-success mt-3 font-weight-bold d-none" type="submit" value="Upload" title="Upload the package."><i class="icon-upload" alt="Upload"></i> Upload</button>
+                        </fieldset>
+                    }
+                </div>
+            </div>
         </div>
+    </div>
+</section>
 
-        <input type="submit" value="Upload" title="Upload the package." />
-    </fieldset>
+@section BottomScripts {
+    <script>
+        $(function () {
+            // Allow file select and then show upload button
+            $(document).on('change', ':file', function () {
+                var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+
+                if ($(input).length >= 1) {
+                    $('.upload-package .btn-success').removeClass('d-none').addClass('d-block');
+                }
+            });
+            // Display name of file selected
+            $(document).ready(function () {
+                $(':file').on('fileselect', function (event, numFiles, label) {
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log) alert(log);
+                    }
+                });
+            });
+        });
+    </script>
 }

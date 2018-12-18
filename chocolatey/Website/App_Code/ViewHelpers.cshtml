@@ -36,27 +36,6 @@
     <option value="@value" @if (value == currentValue) {<text>selected="selected"</text>}>@label</option>    
 }
 
-@helper UploadSequence(int currentStep) {
-    <ol class="sequence">
-        @SequenceStep(1, "Upload", currentStep)
-        @SequenceStep(2, "Verify Details", currentStep)
-        @SequenceStep(3, "Enjoy", currentStep)
-    </ol>
-    <div class="clear-fix"><!--Sad Panda--></div>
-}
-
-@helper SequenceStep(int step, string caption, int currentStep) {
-    if (currentStep > step) {
-        <li class="past">@caption</li>
-    }
-    else if (currentStep == step) {
-        <li class="current">@caption</li>
-    }
-    else {
-        <li>@caption</li>
-    }    
-}
-
 @helper OwnersGravatar(IEnumerable<User> owners, int size, UrlHelper url, bool showName = true) {
     <ul class="list-unstyled mb-2 mb-md-0">
     @foreach (var owner in owners) {

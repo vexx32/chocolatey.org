@@ -1362,6 +1362,7 @@
     <Content Include="Scripts\ZeroClipboard\bundle.txt" />
     <Content Include="Scripts\ZeroClipboard\ZeroClipboard.js" />
     <Content Include="Scripts\ZeroClipboard\ZeroClipboard.swf" />
+    <Content Include="Views\Packages\UploadPackage.cshtml" />
     <Content Include="Views\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -1566,6 +1567,7 @@
     <Content Include="Views\Shared\PackagesLayout.cshtml" />
     <Content Include="Views\Shared\MinimalLayout.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesCentralManagement.cshtml" />
+    <Content Include="Views\Packages\_UploadSteps.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesExtension.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1595,7 +1597,6 @@
     <Content Include="Views\Packages\ListPackages.cshtml" />
     <Content Include="Views\Packages\ManagePackageOwners.cshtml" />
     <Content Include="Views\Packages\ReportAbuse.cshtml" />
-    <Content Include="Views\Packages\UploadPackage.cshtml" />
     <Content Include="Views\Packages\VerifyPackage.cshtml" />
     <Content Include="Views\Pages\Privacy.cshtml" />
     <Content Include="Views\Pages\Terms.cshtml" />

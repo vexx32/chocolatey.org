@@ -114,6 +114,85 @@
 #account.edit-profile .border-left {
     border: none !important;
 }
+/*Step Counter Tabs*/
+.step_tabs {
+    counter-reset: step;
+}
+.step_tabs li:first-child:nth-last-child(3),
+.step_tabs li:first-child:nth-last-child(3) ~ li {
+    width: 30.3333%;
+}
+.step_tabs li {
+    list-style: none;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+}
+.step_tabs li p {
+    font-weight: 600;
+}
+.step_tabs li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 60px;
+    height: 60px;
+    line-height: 58px;
+    font-size: 30px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+}
+.step_tabs li:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    top: 26px;
+    left: -50%;
+}
+.step_tabs li:first-child:after {
+    content: none;
+}
+.step_tabs li.step_active,
+.step_tabs li.step_inactive,
+.step_tabs li.step_active p,
+.step_tabs li.step_inactive p {
+    color: #36bc98;
+}
+.step_tabs li.step_active:before {
+    border-color: #36bc98;
+}
+.step_tabs li.step_inactive:before {
+    border-color: #36bc98;
+    background-color: #36bc98;
+    color: #fff;
+    content: "\f00c";
+    font-family: 'FontAwesome';
+    font-size: 30px;
+}
+.step_tabs li.step_inactive + li:after {
+    background-color: #36bc98;
+}
+/*Input File*/
+.type-file .btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.type-file .form-control {
+    max-width: 350px;
+    background: white;
+}
+#account.upload-package .validation-summary-errors ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
 @media (min-width: 992px) {
     #account.edit-profile {
         background: transparent;
