@@ -1006,6 +1006,7 @@
     <Content Include="Content\account.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\chocolatey.css" />
+    <Content Include="Content\dist\chocolatey.slim.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\highlight\agate.css" />
     <Content Include="Content\highlight\androidstudio.css" />
@@ -1293,6 +1294,7 @@
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="googled7980ca724c3d811.html" />
+    <Content Include="gulpfile.js" />
     <Content Include="Install-LastPoshClient.ps1" />
     <None Include="Cassette.targets" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -1301,6 +1303,13 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="chocolatey-media-kit.zip" />
+    <Content Include="Content\scss\chocolatey.scss" />
+    <Content Include="Content\scss\purge.scss" />
+    <Content Include="Content\scss\_base.scss" />
+    <Content Include="Content\scss\_callouts.scss" />
+    <Content Include="Content\scss\_chocolatey-variables.scss" />
+    <Content Include="Content\scss\_icons.scss" />
+    <Content Include="Content\scss\_preloader.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1580,6 +1589,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="package-lock.json" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
@@ -1679,4 +1690,13 @@
   <Target Name="Bundle" AfterTargets="Build">
     <Exec Command="&quot;$(msbuildtoolspath)\msbuild.exe&quot; &quot;$(ProjectDir)cassette.targets&quot; /p:OutputPath=$(OutputPath) /p:WebProjectOutputDir=&quot;$(WebProjectOutputDir)&quot; /t:Bundle /nr:false" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if "%25USERNAME:~0,5%25"=="apphb" (
+  call npm install gulp -g
+)
+
+cd $(SolutionDir)chocolatey\Website
+call npm install
+call "%25appdata%25\npm\gulp"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

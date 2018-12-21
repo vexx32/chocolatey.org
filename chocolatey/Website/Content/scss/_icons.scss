@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'FontAwesome';
+    font-display: swap;
+    src: url('../fonts/fontawesome-webfont.eot?v=4.6.2');
+    src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.2') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.6.2') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.6.2') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.6.2') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.6.2#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    text-align: center;
+    line-height: 1em;
+}
+
+.icon-asterisk:before {
+    content: "\f069";
+    color: $primary;
+    font-size: .65em;
+}
+
+.icon-clipboard:before {
+    content: "\f0ea";
+}
+
+.icon-search:before {
+    content: "\f002";
+}
+
+.icon-facebook:before {
+    content: "\f09a";
+}
+
+.icon-github:before {
+    content: "\f09b";
+}
+
+.icon-twitter:before {
+    content: "\f099";
+}
+
+.icon-plus-circle:before {
+    content: "\f055";
+}
+
+.icon-minus-circle:before {
+    content: "\f056";
+}
+
+.icon-sign-in:before {
+    content: "\f090";
+}
+
+.icon-sign-out:before {
+    content: "\f08b";
+}
+
+.icon-upload:before {
+    content: "\f093";
+}
+
+.icon-download:before {
+    content: "\f019";
+}
+
+.icon-user:before {
+    content: "\f007";
+}
+
+.icon-user-plus:before {
+    content: "\f234";
+}
+
+.icon-eye:before {
+    content: "\f06e";
+}
+
+.icon-share:before {
+    content: "\f064";
+}
+
+.icon-angle-down:before, a[data-toggle="collapse"]:before {
+    content: "\f107";
+}
+
+.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before {
+    content: "\f105";
+}
+
+.icon-check:before {
+    content: "\f00c";
+}
+
+.icon-save:before {
+    content: "\f0c7";
+}
+
+.icon-check-circle-o:before {
+    content: "\f05d";
+}
+
+.icon-times-circle-o:before {
+    content: "\f05c";
+}
+
+.icon-question-circle:before {
+    content: "\f059";
+    color: $primary;
+}
+
+.icon-question-circle:hover {
+    cursor: pointer;
+}
+
+.icon-cogs:before {
+    content: "\f085";
+}
+
+.icon-arrow-left:before {
+    content: "\f060";
+}
+
+.icon-youtube:before {
+    content: "\f167";
+}

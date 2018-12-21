@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-purgecss": "^1.1.1",
+    "gulp-sass": "^4.0.2",
+    "node-sass": "^4.11.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1"
+  }
+}

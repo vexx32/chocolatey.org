@@ -1,0 +1,38 @@
+/*Callouts*/
+[class*="callout-"] {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: $white;
+    box-shadow: $box-shadow-sm;
+    position: relative;
+    border-left: 6px solid;
+}
+
+[class*="callout-"]:not(.callout) {
+    padding: .5rem 1rem;
+    box-shadow: none;
+}
+
+[class*="callout-"] p:last-child {
+    margin-bottom: 0;
+}
+
+.callout-warning {
+    border-color: $warning;
+}
+
+.callout-danger {
+    border-color: $danger;
+}
+
+.callout-primary {
+    border-color: $primary;
+}
+
+.callout-secondary {
+    border-color: $secondary;
+}
+
+.callout-success {
+    border-color: $success;
+}

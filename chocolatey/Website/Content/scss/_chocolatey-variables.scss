@@ -1,0 +1,49 @@
+// Variables
+$font-weight-bold: 700 !default;
+$gray-100: #f8f9fa;
+$white: #ffffff;
+
+// Default Colors
+$blue: #5c9fd8;
+$red: #f4516c;
+$green: #36bc98;
+$gray-800: #202f3c; // dark
+$medium-light: #e9ecef;
+$medium: #2f6492;
+$medium-dark: #1a375a;
+
+// Body
+$enable-responsive-font-sizes: true;
+$body-bg: $gray-100;
+
+// Links
+$link-hover-decoration: none;
+
+// Buttons
+$input-btn-padding-y-sm: 0;
+$input-btn-padding-x-sm: 6px;
+$btn-font-weight: $font-weight-bold;
+
+// Tooltips
+$tooltip-bg: darken($blue, 15%);
+
+// Cards
+$card-border-radius: 0;
+$card-inner-border-radius: 0;
+$card-border-width: 0;
+
+// Alerts
+$alert-border-radius: 0;
+
+// Custom Select
+$custom-select-indicator: "";
+$input-border-color: $blue;
+$input-disabled-bg: $white;
+
+// Container Widths
+$container-max-widths: (
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+  xl: 1800px
+);

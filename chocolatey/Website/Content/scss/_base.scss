@@ -1,0 +1,212 @@
+body {
+    font-family: Open Sans,"Segoe UI","Trebuchet MS",Verdana,Helvetica,Sans-Serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.profile-packages a {
+    color: $gray-900;
+    font-weight: $font-weight-normal;
+}
+
+a {
+    font-weight: $font-weight-bold;
+    transition: 0 .5s;
+}
+
+/*Scrollbars*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0,0,0,.1)
+}
+
+/*Buttons*/
+.btn {
+    white-space: nowrap;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+/*Backgrounds & Text*/
+.bg-medium-light {
+    background: $medium-light;
+}
+
+.bg-dark, .bg-medium-dark, .bg-primary, .bg-medium, .bg-primary a:not(.btn), .bg-medium a:not(.btn) {
+    color: $white;
+}
+
+.bg-medium-dark {
+    background: $medium-dark;
+    border-top: 4px solid #21446d;
+}
+
+.bg-medium {
+    background: $medium;
+}
+
+/*Alerts and Cookies Notifications*/
+.alert {
+    z-index: 2;
+}
+
+.alert-primary .alert-link {
+    color: $primary;
+    text-decoration: underline;
+}
+
+.cookies-popup {
+    display: none;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.modal {
+    background: rgba(0,0,0,.7);
+    overflow: auto;
+}
+
+.modal.fade .modal-dialog {
+    transform: translate(0,50%);
+}
+
+.modal .modal-footer button.close {
+    color: $white;
+    background-color: $secondary;
+    border-color: $secondary;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    opacity: 1;
+}
+
+.modal .modal-footer button.close:hover, .modal .modal-footer .close:not(:disabled):not(.disabled):hover, .modal .modal-footer .close:not(:disabled):not(.disabled):focus {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/*Navigation*/
+.navbar-brand img {
+    transform: translateY(-.5em) rotate(-5deg) scale(1) translateX(0);
+    transition: transform 200ms;
+    margin-top: 20px;
+    height: 55px;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background: #fff;
+    border: 1px solid #80bdff;
+    outline: 0;
+    -webkit-text-fill-color: #202f3c;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="text"]:disabled {
+    cursor: pointer;
+}
+
+/*Copy Boxes with Prepend Item*/
+.input-group {
+    .input-group-prepend {
+        .input-group-text {
+            background: white;
+            padding-right: 0;
+            border-right: 0;
+        }
+
+        + input {
+            border-left: none;
+            padding-left: .25rem;
+        }
+    }
+}
+
+/*Collapse*/
+a + .collapse.show, a + .collapsing {
+    margin-left: 30px;
+}
+
+/*Account Overview*/
+#generateKey pre.language-powershell {
+    white-space: normal;
+}
+
+.table .thead-dark th {
+    border-color: $primary;
+    background: $primary;
+    color: $white;
+}
+
+/*Cards*/
+.card {
+    box-shadow: $box-shadow;
+
+    .card-body p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/*Copy Code Box*/
+.copyBox {
+    max-width: 800px;
+}
+
+/*Footer*/
+footer {
+    border-top: 5px solid #81b5e2;
+}
+
+@media (min-width: 768px) {
+    .navbar-brand img {
+        height: 75px;
+    }
+}
+
+@media (min-width: 992px) {
+    .copyBox {
+        max-width: 550px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .navbar-expand-xl {
+        padding: 1.5rem;
+    }
+
+    .navbar-brand img {
+        height: 62px;
+        position: absolute;
+        z-index: 9999;
+        top: 10px;
+    }
+}
+
+@media (min-width: 1310px) {
+    .navbar-brand img {
+        height: 125px;
+    }
+}

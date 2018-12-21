@@ -16,7 +16,7 @@
     border-color: #dee2e6 #dee2e6 transparent;
 }
 /*Search Results: View Documentation*/
-body, .gsc-control-cse, .gsc-control-cse .gsc-table-result {
+.gsc-control-cse, .gsc-control-cse .gsc-table-result {
     font-family: Open Sans,"Segoe UI","Trebuchet MS",Verdana,Helvetica,Sans-Serif !important;
     font-size: 18px !important;
     line-height: 1.6em !important;

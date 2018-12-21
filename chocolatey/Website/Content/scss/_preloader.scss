@@ -1,0 +1,75 @@
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #f8f9fa 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#f8f9fa 100%);
+    background: radial-gradient(ellipse at center, #ffffff 0%,#f8f9fa 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f8f9fa',GradientType=1 );
+    z-index: 9999;
+}
+
+@keyframes loader {
+    0% {
+        left: -100px;
+    }
+
+    100% {
+        left: 110%;
+    }
+}
+
+#shape {
+    width: 50px;
+    height: 50px;
+    background: #5c9fd8;
+    animation: animate 0.5s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 3px;
+}
+
+@keyframes animate {
+    17% {
+        border-bottom-right-radius: 3px;
+    }
+
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+
+    50% {
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+#shadow {
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    border-radius: 50%;
+    animation: shadow 0.5s linear infinite;
+}
+
+@keyframes shadow {
+    50% {
+        transform: scale(1.2, 1);
+    }
+}
