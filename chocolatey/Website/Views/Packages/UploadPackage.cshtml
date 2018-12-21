@@ -2,8 +2,7 @@
 @model SubmitPackageRequest
 @{
     ViewBag.Tab = "Upload Your Package";
-    Bundles.Reference("Content/bootstrap/bootstrap.css");
-    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/account.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/CookiesNotice");
@@ -55,7 +54,6 @@
                     numFiles = input.get(0).files ? input.get(0).files.length : 1,
                     label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                 input.trigger('fileselect', [numFiles, label]);
-
                 if ($(input).length >= 1) {
                     $('.upload-package .btn-success').removeClass('d-none').addClass('d-block');
                 }

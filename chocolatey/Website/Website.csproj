@@ -1004,7 +1004,6 @@
     <Content Include="7za.exe" />
     <Content Include="cloudflare-ratelimited.html" />
     <Content Include="Content\account.css" />
-    <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\chocolatey.css" />
     <Content Include="Content\dist\chocolatey.slim.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -1269,7 +1268,6 @@
     <Content Include="..\..\nugetgallery\Website\api\Web.config">
       <Link>api\Web.config</Link>
     </Content>
-    <Content Include="Content\style-base.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\SyntaxHighlighter\shCore.css" />
     <Content Include="Content\SyntaxHighlighter\shCoreDefault.css" />

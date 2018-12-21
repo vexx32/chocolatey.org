@@ -7,8 +7,7 @@
     var unreviewedCount = Model.TotalCount - moderationCount;
 
     var moderationRole = User != null && User.IsInAnyModerationRole();
-    Bundles.Reference("Content/bootstrap/bootstrap.css");
-    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/CookiesNotice");

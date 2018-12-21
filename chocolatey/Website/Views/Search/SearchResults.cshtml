@@ -4,8 +4,7 @@
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Search";
 
-    Bundles.Reference("Content/bootstrap/bootstrap.css");
-    Bundles.Reference("Content/style-base.css");
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/closeable");
