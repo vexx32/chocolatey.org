@@ -1,4 +1,7 @@
-﻿#account .logo {
+﻿#account .icon-question-circle:hover {
+    cursor: pointer;
+}
+#account .logo {
     max-width: 200px;
     transform: translateY(.10em) rotate(10deg) scale(1) translateX(0);
     margin-top: 10px;

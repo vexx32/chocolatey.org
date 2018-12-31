@@ -1,0 +1,77 @@
+﻿/*Pricing- Tables*/
+.table td, .table th {
+    vertical-align: middle;
+}
+.icon-check, .plus strong {
+    color: #36bc98;
+}
+.table td .icon-ban {
+    color: #f4516c;
+}
+#compare tbody td, #faq-pricing tbody td {
+    text-align: center;
+}
+#compare tbody > tr > :nth-child(2), #compare tbody > tr > :nth-child(4), #editions .card .card-header p {
+    background: #e9ecef;
+}
+#compare tbody > tr > :nth-child(3), #compare tbody > tr > :nth-child(5) {
+    background: #fff;
+}
+#compare thead > tr > :not(:nth-child(1)), #faq-pricing thead > tr > :not(:nth-child(1)) {
+    width: 15%;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+#compare thead > tr > :nth-child(2) {
+    background: #2f6492;
+}
+#compare thead > tr > :nth-child(3) {
+    background: #1a375a;
+}
+#compare thead > tr > :nth-child(4) {
+    background: #6c757d;
+}
+#compare thead > tr > :nth-child(5) {
+    background: #5c9fd8;
+}
+/*Pricing- Editions*/
+#editions .card .card-header p {
+    color: #202f3c;
+}
+#editions .card .card-body h1 {
+    line-height: .75em;
+}
+#editions h6, #editions .h6 {
+    font-weight: 600;
+}
+#editions .active h6:first-child {
+    margin-left: -90px;
+}
+/*Documentation*/
+.docs-left {
+    border-right: none;
+    z-index: 1;
+}
+.docs-left a {
+    color: #202f3c;
+    line-height: 1.2rem;
+    display: block;
+    padding: .75rem;
+}
+.docs-left a:hover {
+    opacity: 1 !important;
+    background: #e6f3ff;
+}
+.docs-left a:not([data-toggle]) {
+    font-weight: 500;
+    font-size: 85%;
+}
+.docs-left li.active {
+    background: #cce5ff;
+}
+@media (min-width: 768px) {
+    .docs-left {
+        border-right: 1px solid #dee2e6;
+    }
+}

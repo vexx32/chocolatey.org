@@ -15,6 +15,10 @@ a {
     transition: 0 .5s;
 }
 
+.sticky-top:not(th) {
+    top: 1rem;
+}
+
 /*Scrollbars*/
 ::-webkit-scrollbar {
     width: 8px;

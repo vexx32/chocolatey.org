@@ -1,1159 +1,742 @@
 ﻿@{
-  ViewBag.Title = "Pricing";
-                //css
-                //Bundles.Reference("Content/pricing.css");
-                //Bundles.Reference("Content/pricing-mega-v1.css");
+    ViewBag.Title = "Pricing";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Content/pages.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
-<section>
-  <div class="container-wide p-b--l">
-    <a name="editions"></a>
-    <h1 class="text-center">Editions</h1>
-  
-    <table class="m-b--l pricing-table">
-      <thead>
-        <th>Open Source</th>
-        <th>Pro (Personal)</th>
-        <th>Business (C4B)</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>For everyone (<a href="#faq-general">organizations as well</a>)</td>
-          <td><strong>Personal, Named License for Individuals</strong> (not for organizational use)</td>
-          <td><strong>For Organizations</strong> - Chocolatey for Business (C4B)</td>
-        </tr> 
-        <tr>
-          <td>Free - No limit on machines</td>
-          <td>$96 / year - Up to 8 of your own personal machines <br />
-          <a href="@Url.RouteUrl(RouteName.Discount)">Student pricing available</a>
-          </td>
-          <td>
-            <ul class="docs p-l text-left">
-              <li><a href="#faq-pricing">Annual Subscription</a>:
-                <ul class="docs p-l text-left">
-                  <li>Starter Pack (1-35 machines) - $600</li>
-                  <li>Small (40-499) - $16 per license (retail)</li>
-                  <li>Medium (500+) - $15.60 / license</li>
-                  <li>Large (2,000+) - $15 / license</li>
-                  <li>Enterprise (10,000+) - $14.50 / license</li>
-                  <li>Full cost matrix in <a href="#faq-pricing">pricing</a></li>
-                </ul>
-              </li>
-              <li>For perpetual pricing, discounts for education/non-profit, and how to determine license counts, see the <a href="#faq">FAQs</a> below</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Contribute:<br />
-            (coming back soon - our previous platform Gratipay shut down at the end of 2017)<br />
-          </td>
-          <td>
-            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284622' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /><br />(Renew)</a>
-          </td>
-          <td>
-            <ul>
-              <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us for a demo/trial, special pricing, or more information</a></li>
-            </ul>
-            OR:<br />
-            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284618' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /><br />(Renew)</a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td><strong>Other Editions</strong></td>
-          <td><strong>MSP</strong> - $3/machine/year (min 200 licenses) <br /><a href="#faq-msp">Learn more</a></td>
-          <td><strong>Architect</strong> (for DevOps consultants) $2,495/year (1st user), $200/year for additional users<br /><a href="#faq-architect">Learn more</a></td>
-        </tr> 
-        <tr>
-          <td colspan="3"><h2><a onclick="$('#div-compare').removeClass('hide')">Compare Editions</a></h2></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-   <a name="compare"></a>
-  <div class="container-wide p-b--l" id="div-compare">
-    <h1 class="text-center">Compare</h1>
-  
-    <table class="m-b--l compare-table">
-      <thead>
-        <th>&nbsp;</th>
-        <th>Open Source</th>
-        <th>Pro / MSP</th>
-        <th>Architect</th>
-        <th>Business (C4B)</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Packaging Templates</a></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Package Repository</a> - Chocolatey supports <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">multiple package sources</a> including your own internal (private and/or authenticated) feeds!</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Integration with other tools</a> - Chocolatey works with all infrastructure management and RMM tools!</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-shim" })">Package Shims</a> - Adds exes to known PATH, use immediately after installing!</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade all software with one command</a> - it's like Windows Update, but for all your internal and 3rd party software!</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">30+ built-in PowerShell functions</a> - turns complex software management tasks into one line function calls!</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">Package Extensions</a> - Extend Chocolatey with your own PowerShell Modules (extensions)!</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <!-- reliability, security, -->
-        <tr>
-          <td>Enhanced functionality, additional PowerShell functions - giving you more control, reliability, smoother usage, and covering more scenarios that make sense for organizations!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-         <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> - Convert existing packages for complete offline / reliable use (removes need for internet access from existing packages)!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-red icon-ban"></span> / <span class="text-green icon-check"></span> </td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder</a> - Detect and create full software deployments in 5-10 seconds!</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td>Direct Installer (aka Package-less Install) - Install and upgrade directly from exe/msi files!</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Generate Packages from Programs and Features</a> - create packages for all current installs in under 60 seconds?!</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Background Mode / Self-Service Installer</a> - Chocolatey as a background service so admins and non-admins alike can manage software!</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Central Console Management UI</a> - Reporting and management of software for your entire organization from one location!</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span> (Reporting In Preview)</td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder UI</a> - A visual interface to create packages!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer - Automatic Sync</a> - keep installed packages synced up with software they are tracking when upgrades and uninstalls are performed outside of Chocolatey!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })#sync-command">Package Synchronizer - Sync Command</a> - create packages out of Programs and Features and bring existing software installations under Chocolatey management!</td>
-          <td>&nbsp;</td>
-          <td></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>    
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-audit" })">Package Audit</a> - see who installed what/when!</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>  
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-reducer" })">Package Reducer</a> - reduce the size of your package directories automatically!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>  
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-throttle" })">Package Throttle</a> - reduce download speeds for low bandwidth environments!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Install Directory Override</a> - one switch for all installers!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Download CDN Cache</a> - no more 404s!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">Runtime Malware/Virus Protection</a> - stay protected!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span> / MSP has Generic option only</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr> 
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">Package Downloader</a> - download existing packages with an easy command!</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>       
-        <tr>
-          <td>Priorization of Bugs and Features</td>
-          <td>&nbsp;</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>      
-        <tr>
-          <td>Packaging Support Services - You upload your troublesome installers, we provide you fully automated packages</td>
-          <td>&nbsp;</td>
-          <td><span class="text-red icon-ban"></span> / Cost per use</td>
-          <td>Cost per use at any time</td>
-          <td>Cost per use at any time</td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Support for Community Packages</a></td>
-          <td>N/A</td>
-          <td>N/A</td>
-          <td>N/A</td>
-          <td>N/A</td>
-        </tr>        
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Support)">Email Support</a></td>
-          <td>&nbsp;</td>
-          <td>8 incidents annually</td>
-          <td><span class="text-green icon-check"></span></td>
-          <td><span class="text-green icon-check"></span></td>
-        </tr>
-        <tr>
-          <td><a href="@Url.RouteUrl(RouteName.Support)">Phone Support</a></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>Available add-on w/Premium Support</td>
-        </tr> 
-        <tr>
-          <td>Licensing &amp; Terms</td>
-          <td><a href="https://github.com/chocolatey/choco/blob/master/LICENSE">Apache v2.0</a></td>
-          <td><a href="https://github.com/chocolatey/choco/blob/master/LICENSE">Apache v2.0</a> + Additional EULA</td>
-          <td><a href="https://chocolatey.box.com/shared/static/juxrqlamujp9llm2x90m5ah9jp89megf.pdf">Master Software License Agreement</a></td>
-          <td><a href="https://chocolatey.box.com/shared/static/juxrqlamujp9llm2x90m5ah9jp89megf.pdf">Master Software License Agreement</a> (redline signature format available on request)</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>
-            Contribute:<br />
-            (coming back soon - our previous platform Gratipay shut down at the end of 2017)<br />
-          </td>
-          <td>
-            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284622' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
-          </td>
-          <td><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a></td>
-          <td>
-            <ul>
-              <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us for a demo, special pricing, or more information</a></li>
-            </ul>
-            OR:<br />
-            <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284618' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td colspan="4">&nbsp;</td>
-        </tr> 
-        <tr>
-          <td colspan="5">* <span class="very-small"><strong>Disclaimer:</strong> Estimated release dates do not constitute, and should not be construed as, a promise or commitment by Chocolatey Software, Inc (Chocolatey Software) to develop, market, or deliver any particular product, feature, or function. The timing and content of Chocolatey Software future product releases could differ materially from the expectations discussed here. Chocolatey Software reserves the right to change product plans or roadmap at any time.</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
- </section>
-<div class="bg-two p-t--l p-b--l">
-  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-    <a name="faq"></a>
-    <h1>FAQ</h1>
-    
-    <ul>
-      <li><a href="#faq-features">Features</a></li>
-      <li><a href="#faq-licensing">Licensing</a></li>
-      <li><a href="#faq-pricing">Pricing</a></li>
-      <li><a href="#faq-purchasing">Purchasing</a></li>
-      <li><a href="#faq-renewing">Renewing</a></li>
-      <li><a href="#faq-support">Support</a></li>
-      <li><a href="#faq-pro">Professional Edition</a></li>
-      <li><a href="#faq-architect">Architect Edition (DevOps Consultants)</a></li>
-      <li><a href="#faq-msp">Managed Service Provider Edition (MSP)</a></li>
-      <li><a href="#faq-general">General</a></li>
-    </ul>
 
-    <a name="faq-features"></a>
-    <h2>Features</h2>
-    
-    <h3>Explain the difference between open source and Chocolatey for Business (C4B) in a couple of sentences. Go!</h3>
-    <p>Open source Chocolatey is strictly about package management. C4B takes that to the next level with complete software management. We are moving C4B to a complete batteries included approach with our upcoming central management web interface (Chocolatey Central Console).</p>
-    
-    <h3>Do I need to pay to create packages?</h3>
-    <p>Absolutely not, you can do this with open source. See <a href="#compare" onclick="$('#div-compare').removeClass('hide')">the comparison table.</a></p>
-    
-    <h3>Do I need to pay to have internal sources or host my own package repository?</h3>
-    <p>No you do not, you can do that completely free (depending on what you use for a source repository). See <a href="#compare" onclick="$('#div-compare').removeClass('hide')">the comparison table.</a></p>
-
-    <h3>What features do I get in Pro? In Chocolatey for Business (C4B)?</h3>
-    <p>See <a href="#compare" onclick="$('#div-compare').removeClass('hide')">the comparison table.</a></p>
-    
-    <h3>That's a LOT of features! Are there any upcoming features?</h3>
-    <p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "road-map" })">our roadmap</a> (however, we do keep some upcoming features secret).<br />
-    <strong>NOTE:</strong> Upcoming features could be changed, reprioritized and/or removed without notice.</p>
-    
-    <a name="faq-licensing"></a>
-    <h2>Licensing</h2>
-    
-    <h3>Do I install Chocolatey on every machine where I manage software?</h3>
-    <p>Yes, Chocolatey has a local client install on every machine where you will manage software with Chocolatey.</p>
-
-    <h3>What Counts As a License?</h3>
-    <p>We try to keep licensing very simple. <strong>Every machine that has or will have Chocolatey installed is part of the license count, whether that is for building packages, taking advantage of runtime features, or receiving packages built with Package Builder / Package Internalizer. Those machines can be physical, virtual, in the cloud, or in test environments. It does not matter if you deploy the license to these machines, they are still part of the count for licensing costs.</It> An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshold.</p>
-    
-    <p><strong>Note</strong>: Chocolatey Architect edition is the only exception, where the package you build are deployed to machines in external organizations that your organization has no control over (Chocolatey Architect Edition will be listed with pricing soon).</p>
- 
-    <h3>Tell Me More About Licensed Editions</h3>
-    <ul class="m-b p--s p-l--l docs">
-      <li><strong>Pro</strong> is for individuals (like <em><strong>you</strong></em>) that want the ultimate Chocolatey experience! Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 8 machines for $8/month (about the price of a single lunch outing). You can use Chocolatey Pro at work provided you do not go over the 8 machine limit and are not using it for organizational use. When you purchase a Pro license, you are supporting the community - your money goes towards infrastructure costs/improvements surrounding the community repository!</li>
-      <li><strong>Chocolatey for Business (C4B)</strong> is for organizations and enterprises that need a complete software management lifecycle solution and want to really get a handle on the chaos of software management on Windows.</li>
-      <li><strong>Chocolatey Architect Edition</strong> is for devops consulting organizations, where software is being deployed to machines the organization does not own.  Please see <a href="#faq-architect">Architect FAQ</a> for more details.</li>
-      <li><strong>Chocolatey MSP Edition</strong> is for Managed Service Providers that may not need the all the features in C4B. Please see <a href="#faq-msp">MSP FAQ</a> for more details.</li>
-    </ul>
-
-    <p>All licensed versions build on top of the already great features that are available in the FOSS version. When you need more features and better integration with Windows systems, Pro, MSP, C4B, and Architect editions have you covered.</p>
-
-    <h3>How long does it take to get my licenses?</h3>
-    <p>Once we have received your order successfully, you will receive your licenses within 1-3 business days.</p>
-    
-    <h3>We're an organization, can we deploy Chocolatey Pro?</h3>
-    <p>It is a violation of the Pro licensing to use it in an organizational context. We try to keep our offerings simple - Chocolatey for Business is what we offer for organizational use.</p>
-    
-    <h3>Do you have Perpetual Licensing available?</h3>
-    <p>Yes, we have that option for the Business edition! Please see the pricing matrix in the <a href="#faq-pricing">pricing table</a> below.</p>
-    
-    <h3>What does support look like?</h3>
-    <p>Please see the <a href="#faq-support">Support</a> FAQ below.</p>
-    
-    <h3>What does the license agreement look like? Do you have anything I can review?</h3>
-    <p>Yes, please see <a href="@Url.RouteUrl(RouteName.Support)#business-legal">Chocolatey for Business - Legal</a> for those documents.</p>
-    
-    <h3>Do you allow transfer of licenses?</h3>
-    <p>Not by default, but we can talk options. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a> with your request.</p>
-
-    <a name="faq-pricing"></a>
-    <h2>Pricing</h2>
-    <h3>How does pricing work with the Business edition?</h3>
-    <p>We are excited to offer the following Business editions at a cost to you of around $16 per license annually, depending on volume. Retail costs:</p>
-    <ul class="m-b p--s p-l--l docs">
-      <li>Starter Pack - $600 covers you for 1-35 licenses / annually</li>
-      <li>Small - $16 / license / annually</li>
-      <li>Medium - 500+ licenses - $15.60 / license / annually</li>
-      <li>Large - 2,000+ licenses - $15 / license / annually</li>
-      <li>Enterprise - over 10,000 licenses - $14.50 / license / annually - <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details</li>
-    </ul>
-   
-    <h3>Do you have Perpetual pricing available?</h3>
-    <p>Yes, we do have that option for the Business edition. See below for pricing.</p>
-
-    <h3>Can you show me what the pricing will be with different options?</h3>
-    <p>Absolutely, let's look at the different options you we have for standard and premium support with both subscription and perpetual.</p>
-    <table class="m-b--l compare-table">
-    <thead>
-      <th>Retail Cost Per License</th>
-      <th>40-499</th>
-      <th>500 - 1,999</th>
-      <th>2000 - 9,999</th>
-      <th>10,000+</th>
-    </thead>
-    <tbody>
-    <tr>
-      <td><strong>Annual w/Standard Support</strong></td>
-      <td>$16</td>
-      <td>$15.60</td>
-      <td>$15</td>
-      <td>$14.50</td>
-    </tr>
-    <tr>
-      <td><strong>Annual for Education/Non-Profit</strong></td>
-      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
-      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
-      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
-      <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
-    </tr>
-    <tr>
-      <td><strong>Annual w/Premium Support</strong></td>
-      <td><span class="text-red icon-ban"></span></td>
-      <td>$21.84 w/1,500 license minimum</td>
-      <td>$21</td>
-      <td>$20.30</td>
-    </tr>
-    <tr>
-      <td><strong>Perpetual w/Standard Support</strong></td>
-      <td>$48 / $8*</td>
-      <td>$46.80 / $7.80*</td>
-      <td>$45 / $7.50*</td>
-      <td>$43.50 / $7.25*</td>
-    </tr>
-    <tr>
-      <td><strong>Perpetual w/Premium Support</strong></td>
-      <td>$75.60 / $19.60* w/400 license minimum</td>
-      <td>$73.71 / $19.11*</td>
-      <td>$70.875 / $18.375*</td>
-      <td>$68.5125 / $17.7625*</td>
-    </tr>
-    <tr>
-      <td colspan="5">NOTE: The numbers above are cost per license and represent the retail price. Amendments to <a href="@Url.RouteUrl(RouteName.Support)#business-legal">our license agreement</a> may require custom pricing to accommodate.
-        <br />* The optional annual maintenance and support cost. The up front cost on the left has the first year of support and maintenance included (required).
-      </td>
-    </tr>
-    </tbody>
-    </table>
-    
-    <h3>Why might I choose Perpetual Licensing over the Annual Subscription License Model?</h3>
-    <p>See the next question.</p>     
-   
-    <h3>What's the difference between the annual subscription and perpetual?</h3>
-    <ul class="m-b p--s p-l--l docs">
-      <li>The annual subscription is an all-inclusive price that includes the price of the software, support, and maintenance.</li>
-      <li>If you don't renew an annual subscription, the software will stop working when the license expires. This means you must replace the license on every machine as well.</li>
-      <li>The annual subscription is significantly cheaper, because it is based on a renewable subscription model.</li>
-      <li>A perpetual model has one price for the software, and then an annual maintenance and support cost.</li>
-      <li>A perpetual license will never expire, so the software will always work. You can upgrade to newer versions and continue to get access to support as long as you continue to renew the annual support and maintenance subscription.</li>
-      <li>The perpetual license has a higher up front cost, but yearly maintenance and support fees are significantly cheaper as compared to the annual subscription cost.</li>
-      <li>Annual subscriptions typically are budgeted in OPEX (operating expenses), where perpetual goes to CAPEX (capital expenditures).</li>
-    </ul>
-   
-    <h3>Do you have special pricing available?</h3>
-    <p>We do - <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details.</p>
-    
-    <h3>We are a non-profit/education/government institution. What special pricing do you have available?</h3>
-    <p>Depending on volume, we have varying levels of special discounts available. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</p>
-    
-    <h3>We don't have budget this year - can you help us out on pricing?</h3>
-    <p>We can to a degree. If you can come within 60-90% of the pricing above, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a>.</p>
-    
-    <h3>We use ____ for configuration management. Does that qualify us for discounts?</h3>
-    <p>We do have special discounts based on agreements with other organizations. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</p>
-  
-    <h3>My organization only has 20 machines. Do I really have to buy the full Starter Pack for $600? It seems like a waste if I don't get to use it for 35 machines</h3>
-    <p>For smaller organizations, the value of Package Builder alone is over $5,000 per year (based on an ops engineer manually deploying 15 applications per month to 20 machines), however you get to take advantage of it (and all of the other features) for only $600! We have a minimum purchase required which allows you to take advantage of awesome features and you get access to support!</p>
-
-    <h3>I have one machine I will use with Package Builder / Package Internalizer. How many licenses do I need?</h3>
-    <p>See the license counts answer above. The answer is everywhere you have Chocolatey installed counts in licensing. Every machine where you will deploy those packages to, plus where you are running Package Builder / Package Internalizer.</p>
-    
-    <h3>Can I just buy Package Builder? Package Internalizer?</h3>
-    <p>Package Builder / Package Internalizer are part of Chocolatey for Business. In short, you can purchase C4B to get Package Builder. We try to keep things very simple and use common sense as far as costs go. You purchase our C4B offering for the number of appropriate licenses (see licensing FAQs above) and that will get you Package Builder.</p>
-
-    <h3>How are license counts kept track of?</h3>
-    <p>It's an honor system. Most organizations have departments that handle license inventories. Instead of building some sort of DRM, we decided to focus on features to make Chocolatey better for you!</p>
-    
-    <h3>Can I temporarily go over my license count without cost?</h3>
-    <p>Sure - our policy is that on average over the span of a week, you will be within the licensing counts.</p>
-    
-    <h3>I want to purchase Pro for my personal use, but I have 10 devices. Do I need to buy 2 licenses?</h3>
-    <p>No, just one license is required.</p>
-    
-    <a name="faq-purchasing"></a>
-    <h2>Purchasing</h2>
-
-    <h3>Can I get a quote?</h3>
-    <p>Absolutely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us for an official quotation</a> (organizational purchases only).</p>
-    
-    <h3>Can I get a trial?</h3>
-    <p>We offer trials for the Business edition. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us to get that started</a>.</p>
-    
-    <h3>I need an invoice after purchase.</h3>
-    <p>We can hook you up.</p>
-    
-    <h3>Do you accept purchase orders?</h3>
-    <p>Yes, we do for organizational purchases</p>    
-    
-    <h3>Can I pay by Credit Card, ACH, Wire transfer, check, etc?</h3>
-    <p>For organizations, we support many payment methods. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> or reach out over phone/email.</p>
-    
-    <h3>What are your payment terms?</h3>
-    <p>We default to NET 30 from the date the invoice is sent, but we can work with your organization if you require longer payment terms.</p>
-    
-    <h3>Are you a US-based business?</h3>
-    <p>Yes, we are a Delaware C-Corporation.</p>
-    
-    <h3>I am purchasing C4B. I need your W-9.</h3>
-    <p>Of course you do. When we get to the purchasing aspect, we can provide that.</p>
-    
-    <h3>Can I purchase perpetual?</h3>
-    <p>Yes - please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details.</p>
-    
-    <h3>Can I purchase multi-year?</h3>
-    <p>Yes you can.</p>
-
-    <h3>We'd like to do ___ regarding purchasing. Can you support that?</h3>
-    <p>Most likely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us with questions</a>.</p>
-    
-    <h3>I need to work through a reseller. Is that possible?</h3>
-    <p>Absolutely. Have the reseller <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> so we can get everything set up.</p>
-
-    <h3>I have a client that is interested or ready to purchase Chocolatey for Business. What are my options?</h3>
-    <p>Review our <a href="@Url.RouteUrl(RouteName.Partner)">Chocolatey Partner Ecosystem</a> page, then <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> (select "Partnership Opportunities") so we can provide you with the most up to date options.</p>
-    
-    <h3>What is the refund policy?</h3>
-    <p>For Pro, we provide a full refund the first 30 days. If you are an organization that purchases a starter pack without a trial, you are also granted a 30 day period. Please note we provide business trials so you can know it is right for your organization prior to an annual commitment.</p>
-
-    <h3>What does the license agreement look like? Do you have anything I can review?</h3>
-    <p>Yes, please see <a href="@Url.RouteUrl(RouteName.Support)#business-legal">Chocolatey for Business - Legal</a> for those documents.</p>
-
-    <h3>Do you allow transfer of licenses?</h3>
-    <p>Not by default, but we can talk options. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a> with your request.</p>
-    
-    <h3>Will you sign our NDA?</h3>
-    <p>Sure, once our legal team reviews it.</p>
-
-    <h3>We'll need to you to fill out security assessment or other forms for us to review.</h3>
-    <p>That's great, and we'll be happy to fill out those forms once you've evaluated Chocolatey for Business and are moving forward pending the completion of those forms. We won't do it up front, but we can get creative with your team if you do need that up front.</p>
-    
-    <h3>We need to see your financials to do business with you.</h3>
-    <p>We are keen to finding ways to help you find ways to get you what you really need and address any concerns you have, but under no circumstances will share our private financial data. We can provide as much information as possible to mitigate your risks and concerns, we may even be able to work through one of our channel partners who are open to sharing liability and their financials. If there is no way to workaround this need, that's fine - you simply will not be purchasing our product.</p>
-
-    <h3>I see by default, Chocolatey only carries a liability up to the cost of the licensing. We'll need more, is that possible?</h3>
-    <p>Sure, we can discuss how this affects pricing due to the added risk exposure for Chocolatey Software.</p>
-
-    <a name="faq-renewing"></a>
-    <h2>Renewing</h2>
-
-    <h3>How do renewals work?</h3>
-    <p>Typically you would purchase again using the same method as you used previously. The expire date for the new license will take the old expiration date into account.</p>
-  
-    <h3>What happens if I don't renew?</h3>
-    <p>If you have annual licensing, the commercial features will stop working at the end of the license. This means it should go back to open source. If you have perpetual licensing, you won't be able to get new versions and support, but the product should continue to work.</p>
-    <ul class="m-b p--s p-l--l docs">
-      <li>Annual - Features stop working / support and maintenance expires.</li>
-      <li>Perpetual - Features continue to work / support and maintenance expires (can no longer get new versions of commercial software).</li>
-    </ul>
-
-    <h3>What is the cost of a maintenance renewal?</h3>
-    <p>Maintenance renewals are typically seen with Perpetual only. As annual licensing is more common, it's likely you are renewing annual licensing (which include maintenance and support in one cost), and should be similar in pricing to what you paid previously.</p>
-    
-    <h3>What are the start and end dates for a renewal?</h3>
-    <p>This depends on when you execute the renewal (execute means use above links to purchase or send a purchase order for the renewal). Perhaps the best way to illustrate is a couple of examples.</p>
-    <p>Annual Licensing</p>
-    <ul class="m-b p--s p-l--l docs">
-      <li>You have an annual license that expires on 01 Feb 2018.</li>
-      <li>If you execute a renewal for 1 year on 20 Jan 2018, the start date is within 3 business days of that, but the end date is 1 year after the prior license end date (01 Feb 2019).</li>
-      <li>If you execute the renewal on 25 Feb 2018, the start date is within 3 business days of that, and the end date is one year from the new start date. So that might be like 26 FEB 2018 through 26 FEB 2019.</li>
-      <li>If you execute the renewal on 01 Feb 2018, it's likely you might experience a disruption in service, but it will follow the same dates as one year from the new start date.</li>
-    </ul>
-    
-    <p>Perpetual Licensing</p>
-    <ul class="m-b p--s p-l--l docs">
-      <li>You have maintenance and support that expires on 01 Feb 2018.</li>
-      <li>If you execute a renewal for 1 year on 20 Jan 2018, the start date is within 3 business days of that, but the end date is 1 year after the prior maintenance end date (01 Feb 2019).</li>
-      <li>If you execute the renewal on 25 Feb 2018, the start date is within 3 business days of that, and the end date is one year from the new start date. So that might be like 26 FEB 2018 through 26 FEB 2019.</li>
-      <li>If you execute the renewal on 01 Feb 2018, you can continue using support/maintenance with the same start and end dates as previous without any disruption in service.</li>
-    </ul>
-  
-    <a name="faq-support"></a>
-    <h2>Support</h2>
-
-    <h3>How does support work?</h3>
-    <p>See our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
-    
-    <h3>What levels of support do you offer?</h3>
-    <p>Please see our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details. 
-     <ul class="m-b p--s p-l--l docs">
-      <li>Pro - included automatically for Professional customers</li>
-      <li>Business Standard - included automatically for all organizational customers</li>
-      <li>Business Standard+ - included automatically for all organizational customers with 100 licenses or more</li>
-      <li>Business Premium - available for larger organizational customers at an additional cost</li>
-    </ul>
-    </p>
-    
-    <h3>Do you have 24/7 support available?</h3>
-    <p>We do for premium customers. Please see the <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
-
-    <h3>How do I get support for a package?</h3>
-    <p>We do not have support for packages found on Chocolatey.org - those are considered community packages and should not be used for commercial purposes. Package issues should follow the package triage proces. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Read more...</a></p>
-    <p>If you need support with packaging a piece of software and you are a business customer, please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a>.</p>
-  
-    <a name="faq-pro"></a>
-    <h2>Pro</h2>
-    
-    <h3>What is Chocolatey Pro?</h3>
-    <p>Chocolatey Professional or <strong>Chocolatey Pro</strong> is for individuals (like <em><strong>you</strong></em>) that want the ultimate Chocolatey experience! <br />
-      Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 8 machines for $8/month (about the price of a single lunch outing). <br />
-      You can use Chocolatey Pro at work provided you do not go over the 8 machine limit and are not using it for organizational use. <br />
-      When you purchase a Pro license, you are supporting the community - your money goes towards infrastructure costs/improvements surrounding the community repository!
-    </p>
-
-    <h3>What gives - why doesn't Pro have all of the features of the Business Edition?</h3>
-    <p>It's simple - not all of the features in the business edition make sense for personal use. Also some features ensure Chocolatey for Business is attractive for organizations.</p>
-
-    <h3>As an organization that is using Chocolatey, should I get Business or Pro?</h3>
-    <p>Organizations cannot purchase Pro, only organizational options like MSP, C4B, or Architect. Pro is for individual use only, so it would be a violation of licensing to use Pro in an organizational context.</p>  
-    
-    <h3>I want to purchase Pro for my personal use, but I have 10 devices. Do I need to buy 2 licenses?</h3>
-    <p>No, just one license is required.</p>
-
-    <a name="faq-architect"></a>
-    <h2>DevOps Consultant / Contract-Organizations</h2>
-    
-    <h3>I'm an organization that provides CI / CD / DevOps services to external organizations/customers. What should I choose?</h3>
-    <p>You are likely going to be most interested in Chocolatey Architect Edition, which has all of the fantastic packaging and build time features, but does not carry a runtime count as part of the licensing costs (nor runtime features). That allows packages to be deployed to environments that your organization doesn't control, whether to environments that have Chocolatey open source or licensed.</p>
-    
-    <h3>What is the difference between Business and Architect?</h3>
-    <p>Architect edition is for creating packages for external organizations or customers. Business edition is when those packages are being deployed to environments in your organization.</p>
-    
-    <h3>As an organization that is using Chocolatey, should I get Business or Architect?</h3>
-    <p>If your organization owns or controls the environments, you should purchase Chocolatey for Business. It is a violation of licensing to deploy packages built by Architect edition into your environments, except for testing before providing those packages to your external customers.</p>
-    
-    <h3>What is the difference between the Architect and Business editions?</h3>
-    <ul class="m-b p--s p-l--l docs">
-      <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The Architect edition only has enhanced package creation / package internalization and build time features. See the <a href="#compare" onclick="$('#div-compare').removeClass('hide')">comparison table</a> for details.</li>
-      <li>Support - Support in the Architect Edition is the same standard support you see in Chocolatey for Business.</li>
-      <li>Licensing - All other licensed editions are a per agent (node) license. Architect is a per seat license, as we know you can't control where the packages you create for organizations get deployed.</li>
-      <li>Pricing - Yes, that is different as well. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for details.</li>
-    </ul>
-    
-    <h3>How does support work for the Architect Edition?</h3>
-    <p>Chocolatey Architect carries the same standard support as the Business editions.</p>
- 
-    <h3>How do we purchase Chocolatey Architect Edition?</h3>
-    <p>Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for details.</p>
-
-    <a name="faq-msp"></a>
-    <h2>Managed Service Providers</h2>
-   
-    <h3>I'm an MSP. Is there an edition for managed service providers?</h3>
-    <p>Yes, there is!</p>
-
-    <h3>What is the difference between the MSP and Business editions?</h3>
-    <ul class="m-b p--s p-l--l docs">
-      <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The MSP edition only has the features that you see in Pro (minus the VirusTotal integration). See the <a href="#compare" onclick="$('#div-compare').removeClass('hide')">comparison table</a> for details.</li>
-      <li>Support - Support in the MSP edition is limited to 8 support incidents annually, where Business editions come with standard support.</li>
-      <li>Pricing - The pricing for Business editions are around $1.30 per license per month (price drops based on volume) where the MSP edition is priced at $0.25 per license per month.</li>
-    </ul>
-
-    <h3>How is the MSP Edition priced?</h3>
-    <p>The pricing for Chocolatey MSP Edition is competitively priced at $0.25 per license per month with features that service providers are looking to provide for their constituents. You must purchase a minimum of 200 licenses at an annual rate.</p>
-  
-    <h3>Monthly subscriptions match how we bill our clients. Can we pay monthly instead of annually?</h3>
-    <p>We understand the MSP model in this aspect, however at this time we can only offer annual pricing. In an effort to keep pricing lower for you, we recommend you determine what number you think you will be at for the year, and then purchase more as you need them. Keep in mind that once purchased, you will have that number of licenses for the year (you can only go back down when you renew).</p>
-
-    <h3>How does support work for the MSP Edition?</h3>
-    <p>You are limited to 8 support incidents annually. If an incident is found to be a bug with Chocolatey, it will not count towards your incident count.</p>
-    
-    <h3>We are an MSP, can we purchase the Business Edition for the better features and support?</h3>
-    <p>Absolutely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for more details.</p>
-    
-    <h3>How do we purchase Chocolatey MSP Edition?</h3>
-    <p>Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> or use the following: <br />
-      <a href='https://www.bluesnap.com/jsp/buynow.jsp?contractId=3307686' title='Secure Online Payments by BlueSnap'><img src='https://www.bluesnap.com/images/BuyNowBtns/b_order_s_icons.png' alt='Secure Online Payments and Credit Card Processing by BlueSnap' border='0' /></a>
-    </p>
-    
-    <a name="faq-general"></a>
-    <h2>General</h2>
-
-    <h3>I'm an organization ordering licenses for my development staff, any recommendations?</h3>
-    <p>While you can purchase Pro licenses for each of your developers, we recommend you take a look at the Starter pack edition of the Business license. It is going to give you the best option at only $600 per year for up to 35 machines.</p>
-    
-    <h3>Will Package Builder / Package Internalizer / Package Synchronizer ever be in open source?</h3>
-    <p>Unfortunately, they will not be. While some features we create do have a planned trickle down to FOSS, certain features are unlikely to ever be freely available. Chocolatey's ecosystem has significant costs to run and to ensure longevity of Chocolatey not all features can be offered for free.</p>
-    
-    <h3>Will Package Builder be offered in Pro?</h3>
-    <p>Unfortunately we look at some features and determine where they go based on feasibility for a person versus an organization. If a feature makes sense in an organizational context only, that's where it ends up. Package Builder is great for rapidly building packages, which is something organizations highly need.</p>
-
-    <h3>Is the open source license business friendly?</h3>
-    <p>Yes, it is. Chocolatey carries a FOSS Apache 2.0 license, which is business friendly. You can use Chocolatey and most of its infrastructure without cost. However the Business edition offers better features and support that far outweigh any initial expenses! Given the Business features supporting package creation and maintenance alone, the time-savings is far greater than the cost!</p>
-   
- </section>
-</div>
-@section BottomScripts {
-
-  <script language="javascript" type="text/javascript">
-    $(function () {
-      if (window.location.hash === '#compare') {
-        $('#div-compare').removeClass('hide');
-      }
-    });
-  </script>
-
-}
-@* <!-- Pricing Mega v1 -->
-    <div class="row no-space-pricing pricing-mega-v1">
-      <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-        <div class="pricing hidden-area">
-          <div class="pricing-head ">
-            <h4 class="price">Monthly Price</h4>
-          </div>
-          <ul  class="pricing-content list-unstyled">
-          <li>
-            <i class="fa fa-users"></i>Pricing Details
-          </li>
-          <ul  class="pricing-content list-unstyled">
-            <li class="bg-color">
-              <i class="fa fa-users"></i>Advance Payment
-            </li>
-            <li>
-              <i class="fa fa-cloud-upload"></i>Diskspace
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-briefcase"></i>Subdomains
-            </li>
-            <li>
-              <i class="fa fa-envelope"></i>Email Addresses
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-inbox"></i> MySQL Databases
-            </li>
-            <li>
-              <i class="fa fa-gift"></i>Google AdWords Credits
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-leaf"></i>Remote Desktop Widge
-            </li>
-            <li>
-              <i class="fa fa-location-arrow"></i>Message from Users List
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-globe"></i>Google Adwords Voucher
-            </li>
-            <li>
-              <i class="fa fa-dashboard"></i>Scheduled Lock Screen
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-wrench"></i>Customisable Toolbar
-            </li>
-            <li>
-              <i class="fa fa-cogs"></i>Ports Controls
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-gavel"></i>Premium DNS
-            </li>
-            <li>
-              <i class="fa fa-umbrella"></i>SSL Certificate
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-phone"></i>Worldwide Phone Support
-            </li>
-          </ul>
+<section id="editions" class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row text-center pb-4">
+            <div class="col-12">
+                <h1>Chocolatey Editions</h1>
+            </div>
         </div>
-      </div>
-      <div class="col-md-2 col-sm-6 block">
-        <div class="pricing">
-          <div class="pricing-head">
-            <h3>
-              FOSS<span>yeah</span>
-            </h3>
-            <h4 class="price">
-              <i>$</i>0<i></i>
-              <span class="hidden-md hidden-lg">Per Month</span>
-            </h4>
-          </div>
-          <ul class="pricing-content list-unstyled ">
-            <li>
-              <span class="hidden-md hidden-lg">Detailed Pricing</span>
-            </li>
-            <li class="bg-color">
-              <span class="hidden-md hidden-lg">Credit Card Requirement</span>
-            </li>
-            <li>
-              5 GB<span class="hidden-md hidden-lg">Diskspace</span>
-            </li>
-            <li class="bg-color">
-              10<span class="hidden-md hidden-lg">Subdomains</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Email Addresses</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg"> MySQL Databases</span>
-            </li>
-            <li>
-              $50<span class="hidden-md hidden-lg">Google AdWords Credits</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Remote Desktop Widge</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Message from Users List</span>
-            </li>
-            <li class="bg-color">
-              $25<span class="hidden-md hidden-lg">Google Adwords Voucher</span>
-            </li>
-            <li>
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Scheduled Lock Screen</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-times">
-              </i><span class="hidden-md hidden-lg">Customisable Toolbar</span>
-            </li>
-            <li>
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Ports Controls</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Premium DNS</span>
-            </li>
-            <li>
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">SSL Certificate</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Worldwide Phone Support</span>
-            </li>
-          </ul>
-          <div class="btn-group btn-group-justified">
-            <button type="button" class="btn-u btn-block dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-shopping-cart"></i>
-              Sign Up
-              <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">14 day Free Trial </a></li>
-              <li><a href="#">$ 9.48 One Month</a></li>
-              <li><a href="#">$ 50.00 Six Month</a></li>
-              <li><a href="#">$ 99.99 One Year</a></li>
-            </ul>
-          </div>
+        <div class="row">
+            <div class="col-lg-4 pt-5 pb-5 pb-lg-0">
+                <div class="card h-100">
+                    <div class="card-header bg-medium p-0 text-center">
+                        <h3 class="p-3 text-white mb-0"><strong>Open Source</strong></h3>
+                        <p class="p-2 mb-0"><strong>For Everyone (Organizations as well)</strong></p>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="text-center display-4 pt-2"><strong>Free</strong></h1>
+                        <p class="text-center pb-2">No Limit on Machines</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="icon-check"></span> Create Packages</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Host Your Own Package Repository</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Integration with Other Tools</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Package Shims</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Upgrade all software with one command</li>
+                            <li class="list-group-item"><span class="icon-check"></span> 30+ Build-in PowerShell Functions</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Package Extensions</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer pt-0 text-center bg-white">
+                        <a href="@Url.RouteUrl(RouteName.Install)" class="btn btn-outline-secondary" target="_blank">Install Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 active">
+                <div class="card h-100">
+                    <div class="card-header bg-primary p-0 text-center">
+                        <h3 class="p-3 mb-0"><strong>Business (C4B)</strong></h3>
+                        <p class="p-2 mb-0"><strong>For Organizations - Chocolatey for Business</strong></p>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="pt-2 text-center"><i>Prices Starting at</i></h6>
+                        <h1 class="text-center display-4"><strong>$16<span class="h6 align-top">/license per year</span></strong></h1>
+                        <p class="text-center pb-2"><a href="#faq-pricing">Click to See Pricing Matrix</a></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="icon-check"></span> Package Builder</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Direct Installer</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Background Mode / Self-Service Installer</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Central Console Management UI</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Package Synchronizer - Sync Command</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Package Audit</li>
+                            <li class="list-group-item"><strong><span class="icon-check"></span> Perpetual Pricing & Discounts for Education / Non-profit Available</strong></li>
+                            <li class="list-group-item plus"><strong><span class="icon-plus"></span> All Pro Features & More!</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card-footer pt-0 text-center bg-white">
+                        <a href="#compare" class="btn btn-outline-secondary">Compare</a>
+                        <a href="https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284618" rel="noreferrer" title="Secure Online Payments by BlueSnap" alt="Secure Online Payments and Credit Card Processing by BlueSnap" class="btn btn-primary" target="_blank">Purchase</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 pt-5">
+                <div class="card h-100">
+                    <div class="card-header bg-medium-dark p-0 text-center">
+                        <h3 class="p-3 mb-0"><strong>Pro (Personal)</strong></h3>
+                        <p class="p-2 mb-0"><strong>Personal, Named License for Individuals</strong></p>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="text-center display-4 pt-2"><strong>$96<span class="h6 align-top">/year</span></strong></h1>
+                        <p class="text-center pb-2">Up to 8 of Your Own Personal Machines</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="icon-check"></span> Enchanced Functionality & Additional PowerShell Functions</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Package Builder UI</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Runtime Malware / Virus Protection</li>
+                            <li class="list-group-item"><span class="icon-check"></span> Download CDN Cache</li>
+                            <li class="list-group-item"><strong><span class="icon-check"></span> Student Pricing Available</strong></li>
+                            <li class="list-group-item plus"><strong><span class="icon-plus"></span> All Open Source Features & More!</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card-footer pt-0 text-center bg-white">
+                        <a href="#compare" class="btn btn-outline-secondary">Compare</a>
+                        <a href="https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284622" rel="noreferrer" title="Secure Online Payments by BlueSnap" alt="Secure Online Payments and Credit Card Processing by BlueSnap" class="btn btn-dark" target="_blank">Purchase</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-2 col-sm-6 block">
-        <div class="pricing">
-          <div class="pricing-head">
-            <h3>
-              Pro <span>Officia deserunt mollitia</span>
-            </h3>
-            <h4 class="price">
-              <i>$</i>8<i>.00</i>
-              <span class="hidden-md hidden-lg">Per Month</span>
-            </h4>
-          </div>
-          <ul class="pricing-content list-unstyled ">
-            <li>
-              <span class="hidden-md hidden-lg">Detailed Pricing</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Credit Card Requirement</span>
-            </li>
-            <li>
-              15 GB<span class="hidden-md hidden-lg">Diskspace</span>
-            </li>
-            <li class="bg-color">
-              50<span class="hidden-md hidden-lg">Subdomains</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Email Addresses</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg"> MySQL Databases</span>
-            </li>
-            <li>
-              $100<span class="hidden-md hidden-lg">Google AdWords Credits</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Remote Desktop Widge</span>
-            </li>
-            <li>
-              <i class="fa fa-check">
-              </i><span class="hidden-md hidden-lg">Message from Users List</span>
-            </li>
-            <li class="bg-color">
-              $75<span class="hidden-md hidden-lg">Google Adwords Voucher</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Scheduled Lock Screen</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Customisable Toolbar</span>
-            </li>
-            <li>
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Ports Controls</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-times">
-              </i><span class="hidden-md hidden-lg">Premium DNS</span>
-            </li>
-            <li>
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">SSL Certificate</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Worldwide Phone Support</span>
-            </li>
-          </ul>
-          <div class="btn-group btn-group-justified">
-            <button type="button" class="btn-u btn-block dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-shopping-cart"></i>
-              Sign Up
-              <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">14 Day Free Trial </a></li>
-              <li><a href="#">$ 29.95 One Month</a></li>
-              <li><a href="#">$ 99.00 Six Month</a></li>
-              <li><a href="#">$ 180.99 One Year</a></li>
-            </ul>
-          </div>
+        <div class="row text-center pt-5">
+            <div class="col-12">
+                <h3 class="mb-0">Other Chocolatey Editions include <a href="#faq-msp" data-toggle="tooltip" data-placement="top" title="$3/machine/year (minimum of 200 licenses). Click to learn more!">MSP (Managed Service Providers)</a> and <a href="#faq-architect" data-toggle="tooltip" data-placement="top" title="$2,495/year (1st user), $200/year for additional users. Click to learn more!">Architect (for DevOps consultants)</a>.</h3>
+                <h4 class="mb-0">Questions? <a href="@Url.RouteUrl(RouteName.ContactUs)" target="_blank">Contact us</a> for a demo/trial, special pricing, or more information.</h4>
+            </div>
         </div>
-      </div>
-      <div class="col-md-2 col-sm-6 block">
-        <div class="pricing">
-          <div class="pricing-head">
-            <h3>
-              Business <span>Officia deserunt mollitia</span>
-            </h3>
-            <h4 class="price">
-              <i>$</i>50<i>+</i>
-              <span class="hidden-md hidden-lg">Per Month</span>
-            </h4>
-          </div>
-          <ul class="pricing-content list-unstyled ">
-            <li>
-              <button type="button" class="btn-u btn-block dropdown-toggle" data-toggle="dropdown">
-                Details
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li>Startup $50/mo</li>
-                <li>Small $200/mo/pack</li>
-                <li>Medium $650/mo/pack</li>
-                <li>Large $2,500/mo/pack</li>
-              </ul>
-              <span class="hidden-md hidden-lg">Detailed Pricing</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Credit Card Requirement</span>
-            </li>
-            <li>
-              50 GB<span class="hidden-md hidden-lg">Diskspace</span>
-            </li>
-            <li class="bg-color">
-              150<span class="hidden-md hidden-lg">Subdomains</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Email Addresses</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg"> MySQL Databases</span>
-            </li>
-            <li>
-              $200<span class="hidden-md hidden-lg">Google AdWords Credits</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Remote Desktop Widge</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Message from Users List</span>
-            </li>
-            <li class="bg-color">
-              $250<span class="hidden-md hidden-lg">Google Adwords Voucher</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Scheduled Lock Screen</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Customisable Toolbar</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Ports Controls</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">Premium DNS</span>
-            </li>
-            <li>
-              <i class="fa fa-times"></i>
-              <span class="hidden-md hidden-lg">SSL Certificate</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Worldwide Phone Support</span>
-            </li>
-          </ul>
-          <div class="btn-group btn-group-justified">
-            <button type="button" class="btn-u btn-block dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-shopping-cart"></i>
-              Sign Up
-              <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">14 Day Free Trial </a></li>
-              <li><a href="#">$ 69.99 One Month</a></li>
-              <li><a href="#">$ 250.50 Six Month</a></li>
-              <li><a href="#">$ 420.99 One Year</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-2 col-sm-6 block">
-        <div class="pricing">
-          <div class="pricing-head">
-            <h3>
-              Enterprise <span>Officia deserunt mollitia</span>
-            </h3>
-            <h4 class="price">
-              <i>$</i>12.5<i>K</i>
-              <span class="hidden-md hidden-lg">Per Month</span>
-            </h4>
-          </div>
-          <ul class="pricing-content list-unstyled ">
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Detailed Pricing</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Credit Card Requirement</span>
-            </li>
-            <li>
-              Unlimited<span class="hidden-md hidden-lg">Diskspace</span>
-            </li>
-            <li class="bg-color">
-              2000<span class="hidden-md hidden-lg">Subdomains</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Email Addresses</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg"> MySQL Databases</span>
-            </li>
-            <li>
-              $500<span class="hidden-md hidden-lg">Google AdWords Credits</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Remote Desktop Widge</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Message from Users List</span>
-            </li>
-            <li class="bg-color">
-              $750<span class="hidden-md hidden-lg">Google Adwords Voucher</span>
-            </li>
-            <li>
-              <i class="fa fa-check">
-              </i><span class="hidden-md hidden-lg">Scheduled Lock Screen</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Customisable Toolbar</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Ports Controls</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Premium DNS</span>
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">SSL Certificate</span>
-            </li>
-            <li class="bg-color">
-              <i class="fa fa-check"></i>
-              <span class="hidden-md hidden-lg">Worldwide Phone Support</span>
-            </li>
-          </ul>
-          <div class="btn-group btn-group-justified">
-            <button type="button" class="btn-u btn-block dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-shopping-cart"></i>
-              Sign Up
-              <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">14 Day Free Trial </a></li>
-              <li><a href="#">$ 99.99 One Month</a></li>
-              <li><a href="#">$ 500.50 Six Month</a></li>
-              <li><a href="#">$ 800.99 One Year</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
-    <!-- End Pricing Mega v1 -->*@
+</section>
+<div class="bg-white">
+    <section class="container py-3 py-lg-5" id="compare">
+        <div class="row">
+            <div class="col-12 text-center pb-5">
+                <h1>Compare Chocolatey Editions</h1>
+            </div>
+            <div class="col-12">
+                <table class="table table-bordered border-0">
+                    <thead>
+                        <tr>
+                            <th class="border-0" scope="col"></th>
+                            <th class="h4 sticky-top" scope="col">Open Source</th>
+                            <th class="h4 sticky-top" scope="col">Pro / MSP</th>
+                            <th class="h4 sticky-top" scope="col">Architect</th>
+                            <th class="h4 sticky-top" scope="col">Business (C4B)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Packaging Templates</a></th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Package Repository</a> - Chocolatey supports <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">multiple package sources</a> including your own internal (private and/or authenticated) feeds!</th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Integration with other tools</a> - Chocolatey works with all infrastructure management and RMM tools!</th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-shim" })">Package Shims</a> - Adds exes to known PATH, use immediately after installing!</th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade all software with one command</a> - it's like Windows Update, but for all your internal and 3rd party software!</th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">30+ built-in PowerShell functions</a> - turns complex software management tasks into one line function calls!</th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-extensions" })">Package Extensions</a> - Extend Chocolatey with your own PowerShell Modules (extensions)!</th>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Enhanced functionality, additional PowerShell functions - giving you more control, reliability, smoother usage, and covering more scenarios that make sense for organizations!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> - Convert existing packages for complete offline / reliable use (removes need for internet access from existing packages)!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span> / <span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder</a> - Detect and create full software deployments in 5-10 seconds!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Direct Installer (aka Package-less Install) - Install and upgrade directly from exe/msi files!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Generate Packages from Programs and Features</a> - create packages for all current installs in under 60 seconds?!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Background Mode / Self-Service Installer</a> - Chocolatey as a background service so admins and non-admins alike can manage software!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Central Console Management UI</a> - Reporting and management of software for your entire organization from one location!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span> (Reporting in Preview)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder UI</a> - A visual interface to create packages!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer - Automatic Sync</a> - keep installed packages synced up with software they are tracking when upgrades and uninstalls are performed outside of Chocolatey!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })#sync-command">Package Synchronizer - Sync Command</a> - create packages out of Programs and Features and bring existing software installations under Chocolatey management!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-audit" })">Package Audit</a> - see who installed what/when!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-reducer" })">Package Reducer</a> - reduce the size of your package directories automatically!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-throttle" })">Package Throttle</a> - reduce download speeds for low bandwidth environments!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">Install Directory Override</a> - one switch for all installers!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Download CDN Cache</a> - no more 404s!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">Runtime Malware/Virus Protection</a> - stay protected!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span> / MSP has Generic Option Only</td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">Package Downloader</a> - download existing packages with an easy command!</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Priorization of Bugs and Features</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Packaging Support Services - You upload your troublesome installers, we provide you fully automated packages</th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span> / Cost Per Use</td>
+                            <td>Cost Per Use at Any Time</td>
+                            <td>Cost Per Use at Any Time</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Support for Community Packages</a></th>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Support)">Email Support</a></th>
+                            <td><span class="icon-ban"></span></td>
+                            <td>8 Incidents Annually</td>
+                            <td><span class="icon-check"></span></td>
+                            <td><span class="icon-check"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="@Url.RouteUrl(RouteName.Support)">Phone Support</a></th>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td><span class="icon-ban"></span></td>
+                            <td>Available add-on w/Premium Support</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Licensing &amp; Terms</th>
+                            <td><a href="https://github.com/chocolatey/choco/blob/master/LICENSE" rel="noreferrer">Apache v2.0</a></td>
+                            <td><a href="https://github.com/chocolatey/choco/blob/master/LICENSE" rel="noreferrer">Apache v2.0</a> + Additional EULA</td>
+                            <td><a href="https://chocolatey.box.com/shared/static/juxrqlamujp9llm2x90m5ah9jp89megf.pdf" rel="noreferrer">Master Software License Agreement</a></td>
+                            <td><a href="https://chocolatey.box.com/shared/static/juxrqlamujp9llm2x90m5ah9jp89megf.pdf" rel="noreferrer">Master Software License Agreement</a> (redline signature format available on request)</td>
+                        </tr>
+                        <tr>
+                            <th class="border-0" scope="row"></th>
+                            <td><a href="@Url.RouteUrl(RouteName.Install)" class="btn btn-outline-secondary" target="_blank">Install Now</a></td>
+                            <td><a href="https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284622" rel="noreferrer" title="Secure Online Payments by BlueSnap" alt="Secure Online Payments and Credit Card Processing by BlueSnap" class="btn btn-dark" target="_blank">Get Started</a></td>
+                            <td><a href="@Url.RouteUrl(RouteName.ContactUs)" title="Contact Us" alt="Contact Us" class="btn btn-secondary" target="_blank">Contact Us</a></td>
+                            <td><a href="https://www.bluesnap.com/jsp/buynow.jsp?contractId=3284618" rel="noreferrer" title="Secure Online Payments by BlueSnap" alt="Secure Online Payments and Credit Card Processing by BlueSnap" class="btn btn-primary" target="_blank">Get Started</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p><small><strong>* Disclaimer: </strong>Estimated release dates do not constitute, and should not be construed as, a promise or commitment by Chocolatey Software, Inc (Chocolatey Software) to develop, market, or deliver any particular product, feature, or function. The timing and content of Chocolatey Software future product releases could differ materially from the expectations discussed here. Chocolatey Software reserves the right to change product plans or roadmap at any time.</small></p>
+                <h4 class="mb-0 text-center">Questions? <a href="@Url.RouteUrl(RouteName.ContactUs)" target="_blank">Contact us</a> for a demo/trial, special pricing, or more information.</h4>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2 docs-left p-0">
+            <div class="vertical-nav sticky-top">
+                <ul class="mt-3 list-unstyled">
+                    <li class="pl-2"><strong>Table of Contents:</strong></li>
+                    <li><a href="#faq-features">Features</a></li>
+                    <li><a href="#faq-licensing">Licensing</a></li>
+                    <li><a href="#faq-pricing">Pricing</a></li>
+                    <li><a href="#faq-purchasing">Purchasing</a></li>
+                    <li><a href="#faq-renewing">Renewing</a></li>
+                    <li><a href="#faq-support">Support</a></li>
+                    <li><a href="#faq-pro">Professional Edition</a></li>
+                    <li><a href="#faq-architect">Architect Edition (DevOps Consultants)</a></li>
+                    <li><a href="#faq-msp">Managed Service Provider Edition (MSP)</a></li>
+                    <li><a href="#faq-general">General</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-10 py-3 py-lg-5 pl-lg-5">
+            <h1 id="faq-features" class="mb-4">Features</h1>
+
+            <h3 class="mt-4">Explain the difference between open source and Chocolatey for Business (C4B) in a couple of sentences. Go!</h3>
+            <p>Open source Chocolatey is strictly about package management. C4B takes that to the next level with complete software management. We are moving C4B to a complete batteries included approach with our upcoming central management web interface (Chocolatey Central Console).</p>
+
+            <h3 class="mt-4">Do I need to pay to create packages?</h3>
+            <p>Absolutely not, you can do this with open source. See <a href="#compare">the comparison table.</a></p>
+
+            <h3 class="mt-4">Do I need to pay to have internal sources or host my own package repository?</h3>
+            <p>No you do not, you can do that completely free (depending on what you use for a source repository). See <a href="#compare">the comparison table.</a></p>
+
+            <h3 class="mt-4">What features do I get in Pro? In Chocolatey for Business (C4B)?</h3>
+            <p>See <a href="#compare">the comparison table.</a></p>
+
+            <h3 class="mt-4">That's a LOT of features! Are there any upcoming features?</h3>
+            <p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "road-map" })">our roadmap</a> (however, we do keep some upcoming features secret).</p>
+            <p class="mb-0"><strong>NOTE:</strong> Upcoming features could be changed, reprioritized and/or removed without notice.</p>
+
+            <h1 id="faq-licensing" class="mt-5">Licensing</h1>
+
+            <h3 class="mt-4">Do I install Chocolatey on every machine where I manage software?</h3>
+            <p>Yes, Chocolatey has a local client install on every machine where you will manage software with Chocolatey.</p>
+
+            <h3 class="mt-4">What counts as a license?</h3>
+            <p>We try to keep licensing very simple. <strong>Every machine that has or will have Chocolatey installed is part of the license count, whether that is for building packages, taking advantage of runtime features, or receiving packages built with Package Builder / Package Internalizer. Those machines can be physical, virtual, in the cloud, or in test environments. It does not matter if you deploy the license to these machines, they are still part of the count for licensing costs.</strong> An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshold.</p>
+            <p><strong>Note</strong>: Chocolatey Architect edition is the only exception, where the package you build are deployed to machines in external organizations that your organization has no control over (Chocolatey Architect Edition will be listed with pricing soon).</p>
+
+            <h3 class="mt-4">Tell me more about Licensed Editions</h3>
+            <ul>
+                <li><strong>Pro</strong> is for individuals (like <em><strong>you</strong></em>) that want the ultimate Chocolatey experience! Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 8 machines for $8/month (about the price of a single lunch outing). You can use Chocolatey Pro at work provided you do not go over the 8 machine limit and are not using it for organizational use. When you purchase a Pro license, you are supporting the community - your money goes towards infrastructure costs/improvements surrounding the community repository!</li>
+                <li><strong>Chocolatey for Business (C4B)</strong> is for organizations and enterprises that need a complete software management lifecycle solution and want to really get a handle on the chaos of software management on Windows.</li>
+                <li><strong>Chocolatey Architect Edition</strong> is for devops consulting organizations, where software is being deployed to machines the organization does not own.  Please see <a href="#faq-architect">Architect FAQ</a> for more details.</li>
+                <li><strong>Chocolatey MSP Edition</strong> is for Managed Service Providers that may not need the all the features in C4B. Please see <a href="#faq-msp">MSP FAQ</a> for more details.</li>
+            </ul>
+            <p>All licensed versions build on top of the already great features that are available in the FOSS version. When you need more features and better integration with Windows systems, Pro, MSP, C4B, and Architect editions have you covered.</p>
+
+            <h3 class="mt-4">How long does it take to get my licenses?</h3>
+            <p>Once we have received your order successfully, you will receive your licenses within 1-3 business days.</p>
+
+            <h3 class="mt-4">We're an organization, can we deploy Chocolatey Pro?</h3>
+            <p>It is a violation of the Pro licensing to use it in an organizational context. We try to keep our offerings simple - Chocolatey for Business is what we offer for organizational use.</p>
+
+            <h3 class="mt-4">Do you have Perpetual Licensing available?</h3>
+            <p>Yes, we have that option for the Business edition! Please see the pricing matrix in the <a href="#faq-pricing">pricing table</a> below.</p>
+
+            <h3 class="mt-4">What does support look like?</h3>
+            <p>Please see the <a href="#faq-support">Support</a> FAQ below.</p>
+
+            <h3 class="mt-4">What does the license agreement look like? Do you have anything I can review?</h3>
+            <p>Yes, please see <a href="@Url.RouteUrl(RouteName.Support)#business-legal">Chocolatey for Business - Legal</a> for those documents.</p>
+
+            <h3 class="mt-4">Do you allow transfer of licenses?</h3>
+            <p class="mb-0">Not by default, but we can talk options. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a> with your request.</p>
+
+            <h1 id="faq-pricing" class="mt-5">Pricing</h1>
+
+            <h3 class="mt-4">How does pricing work with the Business edition?</h3>
+            <p>We are excited to offer the following Business editions at a cost to you of around $16 per license annually, depending on volume. Retail costs:</p>
+            <ul>
+                <li>Starter Pack - $600 covers you for 1-35 licenses / annually</li>
+                <li>Small - $16 / license / annually</li>
+                <li>Medium - 500+ licenses - $15.60 / license / annually</li>
+                <li>Large - 2,000+ licenses - $15 / license / annually</li>
+                <li>Enterprise - over 10,000 licenses - $14.50 / license / annually - <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details</li>
+            </ul>
+
+            <h3 class="mt-4">Can you show me what the pricing will be with different options?</h3>
+            <p>Absolutely, let's look at the different options you we have for standard and premium support with both subscription and perpetual.</p>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class=" h4 first" scope="col" style="width: 40%;">Retail Cost Per License</th>
+                        <th class="h4" scope="col" style="width: 15%;">40 - 499</th>
+                        <th class="h4" scope="col" style="width: 15%;">500 - 1,999</th>
+                        <th class="h4" scope="col" style="width: 15%;">2,000 - 9,999</th>
+                        <th class="h4" scope="col" style="width: 15%;">10,000 +</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Annual w/Standard Support</th>
+                        <td>$16</td>
+                        <td>$15.60</td>
+                        <td>$15</td>
+                        <td>$14.50</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Annual for Education/Non-Profit</th>
+                        <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+                        <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+                        <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+                        <td>(<a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a>)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Annual w/Premium Support</th>
+                        <td><span class="icon-ban"></span></td>
+                        <td>$21.84 w/1,500 license minimum</td>
+                        <td>$21</td>
+                        <td>$20.30</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Perpetual w/Standard Support</th>
+                        <td>$48 / $8*</td>
+                        <td>$46.80 / $7.80*</td>
+                        <td>$45 / $7.50*</td>
+                        <td>$43.50 / $7.25*</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Perpetual w/Premium Support</th>
+                        <td>$75.60 / $19.60* w/400 license minimum</td>
+                        <td>$73.71 / $19.11*</td>
+                        <td>$70.875 / $18.375*</td>
+                        <td>$68.5125 / $17.7625*</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>NOTE: </strong>The numbers above are cost per license and represent the retail price. Amendments to <a href="@Url.RouteUrl(RouteName.Support)#business-legal">our license agreement</a> may require custom pricing to accommodate.</p>
+            <p><small>* The optional annual maintenance and support cost. The up front cost on the left has the first year of support and maintenance included (required).</small></p>
+
+            <h3 class="mt-4">Why might I choose Perpetual Licensing over the Annual Subscription License Model?</h3>
+            <p>See the next question.</p>
+
+            <h3 class="mt-4">What's the difference between the annual subscription and perpetual?</h3>
+            <ul>
+                <li>The annual subscription is an all-inclusive price that includes the price of the software, support, and maintenance.</li>
+                <li>If you don't renew an annual subscription, the software will stop working when the license expires. This means you must replace the license on every machine as well.</li>
+                <li>The annual subscription is significantly cheaper, because it is based on a renewable subscription model.</li>
+                <li>A perpetual model has one price for the software, and then an annual maintenance and support cost.</li>
+                <li>A perpetual license will never expire, so the software will always work. You can upgrade to newer versions and continue to get access to support as long as you continue to renew the annual support and maintenance subscription.</li>
+                <li>The perpetual license has a higher up front cost, but yearly maintenance and support fees are significantly cheaper as compared to the annual subscription cost.</li>
+                <li>Annual subscriptions typically are budgeted in OPEX (operating expenses), where perpetual goes to CAPEX (capital expenditures).</li>
+            </ul>
+
+            <h3 class="mt-4">Do you have special pricing available?</h3>
+            <p>We do - <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details.</p>
+
+            <h3 class="mt-4">We are a non-profit/education/government institution. What special pricing do you have available?</h3>
+            <p>Depending on volume, we have varying levels of special discounts available. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</p>
+
+            <h3 class="mt-4">We don't have budget this year - can you help us out on pricing?</h3>
+            <p>We can to a degree. If you can come within 60-90% of the pricing above, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a>.</p>
+
+            <h3 class="mt-4">We use ____ for configuration management. Does that qualify us for discounts?</h3>
+            <p>We do have special discounts based on agreements with other organizations. <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> for details.</p>
+
+            <h3 class="mt-4">My organization only has 20 machines. Do I really have to buy the full Starter Pack for $600? It seems like a waste if I don't get to use it for 35 machines...</h3>
+            <p>For smaller organizations, the value of Package Builder alone is over $5,000 per year (based on an ops engineer manually deploying 15 applications per month to 20 machines), however you get to take advantage of it (and all of the other features) for only $600! We have a minimum purchase required which allows you to take advantage of awesome features and you get access to support!</p>
+
+            <h3 class="mt-4">I have one machine I will use with Package Builder / Package Internalizer. How many licenses do I need?</h3>
+            <p>See the license counts answer above. The answer is everywhere you have Chocolatey installed counts in licensing. Every machine where you will deploy those packages to, plus where you are running Package Builder / Package Internalizer.</p>
+
+            <h3 class="mt-4">Can I just buy Package Builder? Package Internalizer?</h3>
+            <p>Package Builder / Package Internalizer are part of Chocolatey for Business. In short, you can purchase C4B to get Package Builder. We try to keep things very simple and use common sense as far as costs go. You purchase our C4B offering for the number of appropriate licenses (see licensing FAQs above) and that will get you Package Builder.</p>
+
+            <h3 class="mt-4">How are license counts kept track of?</h3>
+            <p>It's an honor system. Most organizations have departments that handle license inventories. Instead of building some sort of DRM, we decided to focus on features to make Chocolatey better for you!</p>
+
+            <h3 class="mt-4">Can I temporarily go over my license count without cost?</h3>
+            <p>Sure - our policy is that on average over the span of a week, you will be within the licensing counts.</p>
+
+            <h3 class="mt-4">I want to purchase Pro for my personal use, but I have 10 devices. Do I need to buy 2 licenses?</h3>
+            <p class="mb-0">No, just one license is required.</p>
+
+            <h1 id="faq-purchasing" class="mt-5">Purchasing</h1>
+
+            <h3 class="mt-4">Can I get a quote?</h3>
+            <p>Absolutely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us for an official quotation</a> (organizational purchases only).</p>
+
+            <h3 class="mt-4">Can I get a trial?</h3>
+            <p>We offer trials for the Business edition. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us to get that started</a>.</p>
+
+            <h3 class="mt-4">I need an invoice after purchase.</h3>
+            <p>We can hook you up.</p>
+
+            <h3 class="mt-4">Do you accept purchase orders?</h3>
+            <p>Yes, we do for organizational purchases.</p>
+
+            <h3 class="mt-4">Can I pay by Credit Card, ACH, Wire transfer, check, etc?</h3>
+            <p>For organizations, we support many payment methods. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> or reach out over phone/email.</p>
+
+            <h3 class="mt-4">What are your payment terms?</h3>
+            <p>We default to NET 30 from the date the invoice is sent, but we can work with your organization if you require longer payment terms.</p>
+
+            <h3 class="mt-4">Are you a US-based business?</h3>
+            <p>Yes, we are a Delaware C-Corporation.</p>
+
+            <h3 class="mt-4">I am purchasing C4B. I need your W-9.</h3>
+            <p>Of course you do. When we get to the purchasing aspect, we can provide that.</p>
+
+            <h3 class="mt-4">Can I purchase perpetual?</h3>
+            <p>Yes - please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details.</p>
+
+            <h3 class="mt-4">Can I purchase multi-year?</h3>
+            <p>Yes you can.</p>
+
+            <h3 class="mt-4">We'd like to do ___ regarding purchasing. Can you support that?</h3>
+            <p>Most likely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us with questions</a>.</p>
+
+            <h3 class="mt-4">I need to work through a reseller. Is that possible?</h3>
+            <p>Absolutely. Have the reseller <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> so we can get everything set up.</p>
+
+            <h3 class="mt-4">I have a client that is interested or ready to purchase Chocolatey for Business. What are my options?</h3>
+            <p>Review our <a href="@Url.RouteUrl(RouteName.Partner)">Chocolatey Partner Ecosystem</a> page, then <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> (select "Partnership Opportunities") so we can provide you with the most up to date options.</p>
+
+            <h3 class="mt-4">What is the refund policy?</h3>
+            <p>For Pro, we provide a full refund the first 30 days. If you are an organization that purchases a starter pack without a trial, you are also granted a 30 day period. Please note we provide business trials so you can know it is right for your organization prior to an annual commitment.</p>
+
+            <h3 class="mt-4">What does the license agreement look like? Do you have anything I can review?</h3>
+            <p>Yes, please see <a href="@Url.RouteUrl(RouteName.Support)#business-legal">Chocolatey for Business - Legal</a> for those documents.</p>
+
+            <h3 class="mt-4">Do you allow transfer of licenses?</h3>
+            <p>Not by default, but we can talk options. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">Contact "Sales"</a> with your request.</p>
+
+            <h3 class="mt-4">Will you sign our NDA?</h3>
+            <p>Sure, once our legal team reviews it.</p>
+
+            <h3 class="mt-4">We'll need to you to fill out security assessment or other forms for us to review.</h3>
+            <p>That's great, and we'll be happy to fill out those forms once you've evaluated Chocolatey for Business and are moving forward pending the completion of those forms. We won't do it up front, but we can get creative with your team if you do need that up front.</p>
+
+            <h3 class="mt-4">We need to see your financials to do business with you.</h3>
+            <p>We are keen to finding ways to help you find ways to get you what you really need and address any concerns you have, but under no circumstances will share our private financial data. We can provide as much information as possible to mitigate your risks and concerns, we may even be able to work through one of our channel partners who are open to sharing liability and their financials. If there is no way to workaround this need, that's fine - you simply will not be purchasing our product.</p>
+
+            <h3 class="mt-4">I see by default, Chocolatey only carries a liability up to the cost of the licensing. We'll need more, is that possible?</h3>
+            <p>Sure, we can discuss how this affects pricing due to the added risk exposure for Chocolatey Software.</p>
+
+            <h1 id="faq-renewing" class="mt-5">Renewing</h1>
+
+            <h3 class="mt-4">How do renewals work?</h3>
+            <p>Typically you would purchase again using the same method as you used previously. The expire date for the new license will take the old expiration date into account.</p>
+
+            <h3 class="mt-4">What happens if I don't renew?</h3>
+            <p>If you have annual licensing, the commercial features will stop working at the end of the license. This means it should go back to open source. If you have perpetual licensing, you won't be able to get new versions and support, but the product should continue to work.</p>
+            <ul>
+                <li>Annual - Features stop working / support and maintenance expires.</li>
+                <li>Perpetual - Features continue to work / support and maintenance expires (can no longer get new versions of commercial software).</li>
+            </ul>
+
+            <h3 class="mt-4">What is the cost of a maintenance renewal?</h3>
+            <p>Maintenance renewals are typically seen with Perpetual only. As annual licensing is more common, it's likely you are renewing annual licensing (which include maintenance and support in one cost), and should be similar in pricing to what you paid previously.</p>
+
+            <h3 class="mt-4">What are the start and end dates for a renewal?</h3>
+            <p>Maintenance renewals are typically seen with Perpetual only. As annual licensing is more common, it's likely you are renewing annual licensing (which include maintenance and support in one cost), and should be similar in pricing to what you paid previously.</p>
+
+            <h3 class="mt-4">What is the cost of a maintenance renewal?</h3>
+            <h4>Annual Licensing</h4>
+            <ul>
+                <li>You have an annual license that expires on 01 Feb 2018.</li>
+                <li>If you execute a renewal for 1 year on 20 Jan 2018, the start date is within 3 business days of that, but the end date is 1 year after the prior license end date (01 Feb 2019).</li>
+                <li>If you execute the renewal on 25 Feb 2018, the start date is within 3 business days of that, and the end date is one year from the new start date. So that might be like 26 FEB 2018 through 26 FEB 2019.</li>
+                <li>If you execute the renewal on 01 Feb 2018, it's likely you might experience a disruption in service, but it will follow the same dates as one year from the new start date.</li>
+            </ul>
+            <h4>Perpetual Licensing</h4>
+            <ul class="mb-0">
+                <li>You have maintenance and support that expires on 01 Feb 2018.</li>
+                <li>If you execute a renewal for 1 year on 20 Jan 2018, the start date is within 3 business days of that, but the end date is 1 year after the prior maintenance end date (01 Feb 2019).</li>
+                <li>If you execute the renewal on 25 Feb 2018, the start date is within 3 business days of that, and the end date is one year from the new start date. So that might be like 26 FEB 2018 through 26 FEB 2019.</li>
+                <li>If you execute the renewal on 01 Feb 2018, you can continue using support/maintenance with the same start and end dates as previous without any disruption in service.</li>
+            </ul>
+
+            <h1 id="faq-support" class="mt-5">Support</h1>
+
+            <h3 class="mt-4">How does support work?</h3>
+            <p>See our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
+
+            <h3 class="mt-4">What levels of support do you offer?</h3>
+            <p>Please see our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
+            <ul>
+                <li>Pro - included automatically for Professional customers</li>
+                <li>Business Standard - included automatically for all organizational customers</li>
+                <li>Business Standard+ - included automatically for all organizational customers with 100 licenses or more</li>
+                <li>Business Premium - available for larger organizational customers at an additional cost</li>
+            </ul>
+
+            <h3 class="mt-4">Do you have 24/7 support available?</h3>
+            <p>We do for premium customers. Please see the <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
+
+            <h3 class="mt-4">How do I get support for a package?</h3>
+            <p>We do not have support for packages found on Chocolatey.org - those are considered community packages and should not be used for commercial purposes. Package issues should follow the package triage proces. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Read more...</a></p>
+            <p class="mb-0">If you need support with packaging a piece of software and you are a business customer, please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a>.</p>
+
+            <h1 id="faq-pro" class="mt-5">Pro</h1>
+
+            <h3 class="mt-4">What is Chocolatey Pro?</h3>
+            <p>Chocolatey Professional or <strong>Chocolatey Pro</strong> is for individuals (like <em><strong>you</strong></em>) that want the ultimate Chocolatey experience!</p>
+            <p>Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 8 machines for $8/month (about the price of a single lunch outing).</p>
+            <p>You can use Chocolatey Pro at work provided you do not go over the 8 machine limit and are not using it for organizational use.</p>
+            <p>When you purchase a Pro license, you are supporting the community - your money goes towards infrastructure costs/improvements surrounding the community repository!</p>
+
+            <h3 class="mt-4">What gives - why doesn't Pro have all of the features of the Business Edition?</h3>
+            <p>It's simple - not all of the features in the business edition make sense for personal use. Also some features ensure Chocolatey for Business is attractive for organizations.</p>
+
+            <h3 class="mt-4">As an organization that is using Chocolatey, should I get Business or Pro?</h3>
+            <p>Organizations cannot purchase Pro, only organizational options like MSP, C4B, or Architect. Pro is for individual use only, so it would be a violation of licensing to use Pro in an organizational context.</p>
+
+            <h3 class="mt-4">I want to purchase Pro for my personal use, but I have 10 devices. Do I need to buy 2 licenses?</h3>
+            <p class="mb-0">No, just one license is required.</p>
+
+            <h1 id="faq-architect" class="mt-5">DevOps Consultant / Contract-Organizations</h1>
+
+            <h3 class="mt-4">I'm an organization that provides CI / CD / DevOps services to external organizations/customers. What should I choose?</h3>
+            <p>
+                You are likely going to be most interested in Chocolatey Architect Edition, which has all of the fantastic packaging and build time features, but does not carry a runtime count as part of the licensing costs (nor runtime features).
+                That allows packages to be deployed to environments that your organization doesn't control, whether to environments that have Chocolatey open source or licensed.
+            </p>
+
+            <h3 class="mt-4">What is the difference between Business and Architect?</h3>
+            <p>Architect edition is for creating packages for external organizations or customers. Business edition is when those packages are being deployed to environments in your organization.</p>
+
+            <h3 class="mt-4">As an organization that is using Chocolatey, should I get Business or Architect?</h3>
+            <p>If your organization owns or controls the environments, you should purchase Chocolatey for Business. It is a violation of licensing to deploy packages built by Architect edition into your environments, except for testing before providing those packages to your external customers.</p>
+
+            <h3 class="mt-4">What is the difference between the Architect and Business editions?</h3>
+            <ul>
+                <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The Architect edition only has enhanced package creation / package internalization and build time features. See the <a href="#compare">comparison table</a> for details.</li>
+                <li>Support - Support in the Architect Edition is the same standard support you see in Chocolatey for Business.</li>
+                <li>Licensing - All other licensed editions are a per agent (node) license. Architect is a per seat license, as we know you can't control where the packages you create for organizations get deployed.</li>
+                <li>Pricing - Yes, that is different as well. Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for details.</li>
+            </ul>
+
+            <h3 class="mt-4">How does support work for the Architect Edition?</h3>
+            <p>Chocolatey Architect carries the same standard support as the Business editions.</p>
+
+            <h3 class="mt-4">How do we purchase Chocolatey Architect Edition?</h3>
+            <p>Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for details.</p>
+
+            <h1 id="faq-msp" class="mt-5">Managed Service Providers</h1>
+
+            <h3 class="mt-4">I'm an MSP. Is there an edition for managed service providers?</h3>
+            <p>Yes, there is!</p>
+
+            <h3 class="mt-4">What is the difference between the MSP and Business editions?</h3>
+            <ul>
+                <li>Features - The Business edition has features for managing and controlling the entire software management lifecycle. The MSP edition only has the features that you see in Pro (minus the VirusTotal integration). See the <a href="#compare">comparison table</a> for details.</li>
+                <li>Support - Support in the MSP edition is limited to 8 support incidents annually, where Business editions come with standard support.</li>
+                <li>Pricing - The pricing for Business editions are around $1.30 per license per month (price drops based on volume) where the MSP edition is priced at $0.25 per license per month.</li>
+            </ul>
+
+            <h3 class="mt-4">How is the MSP Edition priced?</h3>
+            <p>The pricing for Chocolatey MSP Edition is competitively priced at $0.25 per license per month with features that service providers are looking to provide for their constituents. You must purchase a minimum of 200 licenses at an annual rate.</p>
+
+            <h3 class="mt-4">Monthly subscriptions match how we bill our clients. Can we pay monthly instead of annually?</h3>
+            <p>We understand the MSP model in this aspect, however at this time we can only offer annual pricing. In an effort to keep pricing lower for you, we recommend you determine what number you think you will be at for the year, and then purchase more as you need them. Keep in mind that once purchased, you will have that number of licenses for the year (you can only go back down when you renew).</p>
+
+            <h3 class="mt-4">How does support work for the MSP Edition?</h3>
+            <p>You are limited to 8 support incidents annually. If an incident is found to be a bug with Chocolatey, it will not count towards your incident count.</p>
+
+            <h3 class="mt-4">We are an MSP, can we purchase the Business Edition for the better features and support?</h3>
+            <p>Absolutely, <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> for more details.</p>
+
+            <h3 class="mt-4">How do we purchase Chocolatey MSP Edition?</h3>
+            <p>Please <a href="@Url.RouteUrl(RouteName.ContactUs)">contact sales</a> or click below:</p>
+            <a href="https://www.bluesnap.com/jsp/buynow.jsp?contractId=3307686" rel="noreferrer" title="Secure Online Payments by BlueSnap" alt="Secure Online Payments and Credit Card Processing by BlueSnap" class="btn btn-primary" target="_blank">Get Started</a>
+
+            <h1 id="faq-general" class="mt-5">General</h1>
+
+            <h3 class="mt-4">I'm an organization ordering licenses for my development staff, any recommendations?</h3>
+            <p>While you can purchase Pro licenses for each of your developers, we recommend you take a look at the Starter pack edition of the Business license. It is going to give you the best option at only $600 per year for up to 35 machines.</p>
+
+            <h3 class="mt-4">Will Package Builder / Package Internalizer / Package Synchronizer ever be in open source?</h3>
+            <p>Unfortunately, they will not be. While some features we create do have a planned trickle down to FOSS, certain features are unlikely to ever be freely available. Chocolatey's ecosystem has significant costs to run and to ensure longevity of Chocolatey not all features can be offered for free.</p>
+
+            <h3 class="mt-4">Will Package Builder be offered in Pro?</h3>
+            <p>Unfortunately we look at some features and determine where they go based on feasibility for a person versus an organization. If a feature makes sense in an organizational context only, that's where it ends up. Package Builder is great for rapidly building packages, which is something organizations highly need.</p>
+
+            <h3 class="mt-4">Is the open source license business friendly?</h3>
+            <p class="mb-0">
+                Yes, it is. Chocolatey carries a FOSS Apache 2.0 license, which is business friendly. You can use Chocolatey and most of its infrastructure without cost. However the Business edition offers better features and support that far outweigh any initial expenses!
+                Given the Business features supporting package creation and maintenance alone, the time-savings is far greater than the cost!
+            </p>
+        </div>
+    </div>
+</div>
