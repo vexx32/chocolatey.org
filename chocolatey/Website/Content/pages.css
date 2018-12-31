@@ -75,3 +75,18 @@
         border-right: 1px solid #dee2e6;
     }
 }
+/*Kickstarter- Sponsors*/
+#sponsors .card .card-body img {
+    max-width: 100%;
+    max-height: 150px;
+}
+/*Kickstarter- Sponsors*/
+@media (min-width: 576px) {
+    #sponsors .card .card-body {
+        height: 300px;
+    }
+    #sponsors .card .card-body img {
+        max-height: 250px;
+        max-width: 100%;
+    }
+}

@@ -1246,6 +1246,7 @@
     <Content Include="Content\Images\team\gary.png" />
     <Content Include="Content\Images\team\mukesh.png" />
     <Content Include="Content\Images\team\paul.png" />
+    <Content Include="Content\Images\team\rob-sq.jpg" />
     <Content Include="Content\Images\team\stephanie-1.jpg" />
     <Content Include="Content\Images\team\stephanie-2.jpg" />
     <Content Include="Content\Images\trash.png" />
@@ -1309,6 +1310,7 @@
     <Content Include="Content\scss\_chocolatey-variables.scss" />
     <Content Include="Content\scss\_icons.scss" />
     <Content Include="Content\scss\_preloader.scss" />
+    <Content Include="Content\scss\_testimonials.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
