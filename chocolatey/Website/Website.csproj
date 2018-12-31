@@ -151,8 +151,8 @@
       <HintPath>..\..\packages\Markdig.0.9.0\lib\net40\Markdig.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\MarkDownSharp\MarkdownSharp.dll</HintPath>
+    <Reference Include="MarkdownSharp, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MarkdownSharp.2.0.5\lib\net40\MarkdownSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
