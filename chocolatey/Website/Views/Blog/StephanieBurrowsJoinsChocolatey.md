@@ -5,6 +5,7 @@ Author: Chocolatey Events Team
 Tags: News, Press-Release
 Keywords: chocolatey, stephanie burrows, web design, front-end developer
 Summary: For immediate release: Stephanie Burrows joins Chocolatey as a full-time Front-End Web Developer.
+Image: <img src="/content/images/team/stephanie-1.jpg" alt="Stephanie Burrows, Front-End Web Developer" title="Stephanie Burrows, Front-End Web Developer">
 ---
 We are excited to announce that Stephanie Burrows has joined the Chocolatey Team as a Front-End Web Developer!
 

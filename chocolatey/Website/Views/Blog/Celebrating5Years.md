@@ -4,6 +4,7 @@ Author: Rob Reynolds
 Tags: News
 Keywords: 5 years, chocolatey, history
 Summary: The Chocolatey team remembers the last 5 years with Chocolatey. Did you know that Chocolatey derives its name from NuGet?
+Image: <img src="https://pbs.twimg.com/media/CbnRP_CVIAETF3j.jpg:large" alt="Chocolatey usage by downloads over the years 2013-2015" />
 ---
 **Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/). *Reposted with permission.*
 

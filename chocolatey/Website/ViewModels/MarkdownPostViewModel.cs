@@ -30,5 +30,6 @@ namespace NuGetGallery
         public string Tags { get; set; }
         public string Keywords { get; set; }
         public string Summary { get; set; }
+        public string Image { get; set; }
     }
 }

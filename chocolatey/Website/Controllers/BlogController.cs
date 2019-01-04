@@ -166,7 +166,8 @@ namespace NuGetGallery.Controllers
                 model.Summary = GetPostMetadataValue("Summary", contents);
                 model.Tags = GetPostMetadataValue("Tags", contents);
                 model.Published = DateTime.ParseExact(GetPostMetadataValue("Published", contents), "yyyyMMdd", CultureInfo.InvariantCulture);
-                model.Post = Markdig.Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
+                model.Post = Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
+                model.Image = Markdown.ToHtml(GetPostMetadataValue("Image", contents), MarkdownPipeline);
             }
 
             return model;

@@ -5,6 +5,7 @@ Published: 20180711
 Tags: News, Press-Release
 Keywords: chocolatey, paul broadwith, engineer, senior technical engineer
 Summary: For immediate release: Long time community member Paul Broadwith joins Chocolatey full time as Senior Technical Engineer.
+Image: <img src="/content/images/team/paul.png" alt="Paul Broadwith, Senior Technical Engineer" title="Paul Broadwith, Senior Software Engineer">
 ---
 We are excited to announce that Paul Broadwith, long term member of the Chocolatey community, has joined the team as a Senior Technical Engineer.
 

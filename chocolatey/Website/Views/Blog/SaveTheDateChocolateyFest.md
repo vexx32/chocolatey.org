@@ -4,7 +4,8 @@ Author: Chocolatey Events Team
 Published: 20180615
 Tags: News, Press-Release, Announcements, Conference
 Keywords: chocolatey, chocolatey fest, conference, winops, windows, automation
-Summary: For immediate release: Chocolatey announces inaugural conference focused on Windows Automation (WinOps)
+Summary: For immediate release: Chocolatey announces inaugural conference focused on Windows Automation (WinOps).
+Image: <img src="/content/images/blog/chocolatey-fest-announce.png" alt="Chocolatey Fest - A sweet conference focused on Windows automation (WinOps)! 08 October 2018, Park Central Hotel, San Francisco" title="Chocolatey Fest 2018 - join us for awesome talks, some actual chocolate, and maybe even an appearance by Willy Wonka!" />
 ---
 
 It’s been a big year already for Chocolatey Software! We've expanded our staff, we're launching our Chocolatey Central Management for Chocolatey for Business, and have started a philanthropy for giving back to our community. We were also officially recognized by Microsoft at the recent Microsoft BUILD 2018 conference and now [Microsoft is participating/collaborating in our community!](https://blogs.msdn.microsoft.com/commandline/2018/05/08/join-us-for-a-hot-cup-o-chocolatey/) Details on all those exciting areas are going to be coming out in the coming weeks, but we wanted to take a moment to give you a heads up about what we have in store that is really the Chocolatey icing on the cake!
