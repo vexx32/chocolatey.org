@@ -80,6 +80,18 @@
     max-width: 100%;
     max-height: 150px;
 }
+/*Blog- List*/
+#blogList img {
+    width: 100%;
+}
+/*Blog- Post*/
+.post img {
+    margin: 2px;
+    padding: 5px;
+}
+.blogShare li {
+    height: 28px;
+}
 /*Kickstarter- Sponsors*/
 @media (min-width: 576px) {
     #sponsors .card .card-body {
