@@ -23,7 +23,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.UI;
-using PoliteCaptcha;
 
 namespace NuGetGallery
 {
@@ -116,7 +115,7 @@ namespace NuGetGallery
             return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
         }
 
-        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult ContactUs(ContactUsViewModel contactForm)
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
@@ -166,7 +165,7 @@ Company: {4}
 
         readonly Regex _studentEmailAddressRegex = new Regex(@".*\.edu(\.\w{2})?$|.*\.ac.uk$|.*k12\.\w{2}\.us$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-        [HttpPost, ValidateAntiForgeryToken, ValidateSpamPrevention]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Discount(DiscountViewModel discountForm)
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/Discount.cshtml", discountForm);

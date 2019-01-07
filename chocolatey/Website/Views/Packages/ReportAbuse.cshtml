@@ -1,10 +1,16 @@
-﻿@using PoliteCaptcha
-@model ReportAbuseViewModel
+﻿@model ReportAbuseViewModel
 @{
   ViewBag.Tab = "Packages";
   Bundles.Reference("Scripts/validation");
 }
-
+@section TopScripts {
+    <script>
+        function onSubmit(token) {
+            document.getElementById("i-recaptcha").submit();
+        }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+}
 <h1 class="page-heading">Report Abuse for <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
 
 <p class="message">
@@ -54,12 +60,14 @@
         
       <div class="form-field">
         <input type="checkbox" required="required" id="chkUnderstandVT" name="chkUnderstandVT" /> <span for="chkUnderstandVT">I understand that the community repository already runs packages and binaries through VirusTotal and I have reviewed that on the package page itself prior to reporting possible malware.</span>
-      </div> 
-        @Html.SpamPreventionFields()
-        <input type="submit" value="Report" title="Report '@Model.PackageId' for abuse" />
+      </div>
+        <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Report" title="Report '@Model.PackageId' for abuse" />
     </fieldset>
 }
-
 @section BottomScripts {
-    @Html.SpamPreventionScript()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('fieldset').parent().attr('id', 'i-recaptcha');
+        });
+    </script>
 }

@@ -1,10 +1,18 @@
-﻿@using PoliteCaptcha
-@using NuGetGallery
+﻿@using NuGetGallery
 @model ContactUsViewModel
 @{
     ViewBag.Title = "Contact Us";
     Bundles.Reference("Scripts/validation");
 }
+@section TopScripts {
+    <script>
+        function onSubmit(token) {
+            document.getElementById("i-recaptcha").submit();
+        }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+}
+
 <section>
   <div class="p-b p-l">
     <h1 class="m-b">Contact Us</h1>
@@ -79,10 +87,9 @@
       </div>  
       
       @*@Html.EditorForModel()*@
-      @Html.SpamPreventionFields()
       <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
       
-      <input type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
+      <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
     </fieldset>
       <p class="message warning small">NOTE: Do not use this form in an attempt to market to us services and/or software. We will consider that s&zwj;pam and take appropriate action.</p>
     }
@@ -90,5 +97,9 @@
   </div>
 </section>
 @section BottomScripts {
-  @Html.SpamPreventionScript()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('fieldset').parent().attr('id', 'i-recaptcha');
+        });
+    </script>
 }

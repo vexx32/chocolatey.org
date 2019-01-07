@@ -1,8 +1,15 @@
-﻿@using PoliteCaptcha
-@model ReportAbuseViewModel
+﻿@model ReportAbuseViewModel
 @{
   ViewBag.Tab = "Packages";
   Bundles.Reference("Scripts/validation");
+}
+@section TopScripts {
+    <script>
+        function onSubmit(token) {
+            document.getElementById("i-recaptcha").submit();
+        }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
 
 <h1 class="page-heading">Contact Website Administrators about <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
@@ -52,11 +59,14 @@
         <div class="form-field">
             @Html.CheckBoxFor(m => m.CopySender)<label for="@Model.CopySender" class="for-checkbox">Send me a copy</label>
         </div>
-        @Html.SpamPreventionFields()
-        <input type="submit" value="Contact" title="Contact Admins about '@Model.PackageId'" />
+        <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Contact" title="Contact Admins about '@Model.PackageId'" />
     </fieldset>
 }
 
 @section BottomScripts {
-    @Html.SpamPreventionScript()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('fieldset').parent().attr('id', 'i-recaptcha');
+        });
+    </script>
 }
