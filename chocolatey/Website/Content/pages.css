@@ -8,32 +8,48 @@
 .table td .icon-ban {
     color: #f4516c;
 }
-#compare tbody td, #faq-pricing tbody td {
+#compare tbody td, #faq-pricing tbody td, #faq-support-schedule tbody > tr td {
     text-align: center;
+    width: 15%;
 }
-#compare tbody > tr > :nth-child(2), #compare tbody > tr > :nth-child(4), #editions .card .card-header p {
+#compare tbody > tr > :nth-child(2), #compare tbody > tr > :nth-child(4), #editions .card .card-header p, #faq-support-schedule tbody > tr > :nth-child(even) {
     background: #e9ecef;
 }
-#compare tbody > tr > :nth-child(3), #compare tbody > tr > :nth-child(5) {
+#compare tbody > tr > :nth-child(3), #compare tbody > tr > :nth-child(5), #faq-support-schedule tbody > tr > :nth-child(odd):not(:nth-child(1)) {
     background: #fff;
 }
-#compare thead > tr > :not(:nth-child(1)), #faq-pricing thead > tr > :not(:nth-child(1)) {
+#compare thead > tr > :not(:nth-child(1)), #faq-pricing thead > tr > :not(:nth-child(1)), #faq-support-schedule thead > tr > :not(:nth-child(1)) {
     width: 15%;
     color: white;
     font-weight: bold;
     text-align: center;
 }
+#faq-support-schedule tbody > tr > :nth-child(2) {
+    border-right: 1px solid #9b9ea1;
+}
 #compare thead > tr > :nth-child(2) {
     background: #2f6492;
 }
-#compare thead > tr > :nth-child(3) {
+#compare thead > tr > :nth-child(3), #faq-support-schedule thead > tr > :nth-child(2) {
     background: #1a375a;
 }
 #compare thead > tr > :nth-child(4) {
     background: #6c757d;
 }
-#compare thead > tr > :nth-child(5) {
+#compare thead > tr > :nth-child(5), #faq-support-schedule thead > tr > :nth-child(3) {
     background: #5c9fd8;
+}
+#faq-support-schedule tbody .sticky-top {
+    top: 52px;
+}
+#faq-support-schedule tbody > tr:nth-child(1) > :nth-child(3) {
+    background: #deebf7;
+}
+#faq-support-schedule tbody > tr:nth-child(1) > :nth-child(4) {
+    background: #bdd8ef;
+}
+#faq-support-schedule tbody > tr:nth-child(1) > :nth-child(5) {
+    background: #8cbbe3;
 }
 /*Pricing- Editions*/
 #editions .card .card-header p {
