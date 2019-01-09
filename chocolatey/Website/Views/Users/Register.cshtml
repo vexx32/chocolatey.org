@@ -23,7 +23,9 @@
 
           @Html.AntiForgeryToken()
           @Html.ValidationSummary(true)
-              
+          <div class="form-field">
+            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
+          </div>
           @Html.EditorForModel()
 
           <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />

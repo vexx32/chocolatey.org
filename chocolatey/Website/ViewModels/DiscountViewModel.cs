@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
-    public class DiscountViewModel
+    public class DiscountViewModel : ISpamValidationModel
     {
         [Required(ErrorMessage = "Please enter your email address.")]
         [StringLength(4000)]
@@ -24,6 +25,9 @@ namespace NuGetGallery
         [Display(Name = "Discount Requested")]
         [Required(ErrorMessage = "Please make a selection.")]
         public string DiscountType { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string SpamValidationResponse { get; set; }
 
         public IEnumerable<SelectListItem> DiscountTypeItems
         {

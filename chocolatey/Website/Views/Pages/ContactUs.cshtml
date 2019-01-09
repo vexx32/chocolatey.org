@@ -51,6 +51,7 @@
         @Html.EditorFor(m => m.FirstName)
         <span class="field-hint-message">Enter your first name.</span>
         @Html.ValidationMessageFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.SpamValidationResponse)
       </div>
       <div class="form-field">
         @Html.LabelFor(m => m.LastName)

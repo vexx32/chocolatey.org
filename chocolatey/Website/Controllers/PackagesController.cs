@@ -31,6 +31,7 @@ using Elmah;
 using NuGet;
 using NuGetGallery.MvcOverrides;
 using NugetGallery;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
@@ -503,7 +504,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/ReportAbuse.cshtml", model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
         public virtual ActionResult ReportAbuse(string id, string version, ReportAbuseViewModel reportForm)
         {
             if (!ModelState.IsValid) return ReportAbuse(id, version);
@@ -549,7 +550,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/ContactAdmins.cshtml", model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
         public virtual ActionResult ContactAdmins(string id, string version, ReportAbuseViewModel reportForm)
         {
             if (!ModelState.IsValid) return ContactAdmins(id, version);
@@ -595,7 +596,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/ContactOwners.cshtml", model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
         public virtual ActionResult ContactOwners(string id, ContactOwnersViewModel contactForm)
         {
             if (!ModelState.IsValid) return ContactOwners(id);

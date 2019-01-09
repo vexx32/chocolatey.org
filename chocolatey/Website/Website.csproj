@@ -223,9 +223,6 @@
     <Reference Include="QueryInterceptor">
       <HintPath>..\..\packages\QueryInterceptor.0.1.4237.2400\lib\net40\QueryInterceptor.dll</HintPath>
     </Reference>
-    <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="RouteMagic, Version=1.1.3.0, Culture=neutral, PublicKeyToken=84b59be021aa4cee, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\RouteMagic.1.1.3\lib\net40\RouteMagic.dll</HintPath>
@@ -677,8 +674,11 @@
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Infrastructure\Captcha.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
     <Compile Include="Infrastructure\CSharpRazorViewEngine.cs" />
+    <Compile Include="Infrastructure\ISpamValidationModel.cs" />
+    <Compile Include="Infrastructure\ValidateFormResponseAttribute.cs" />
     <Compile Include="Infrastructure\Routing\HyphenatedRouteHandler.cs" />
     <Compile Include="Infrastructure\Routing\SeoRoute.cs" />
     <Compile Include="Migrations\201608281925093_TrackPackageCreator.cs" />

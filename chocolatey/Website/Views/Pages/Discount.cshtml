@@ -31,6 +31,7 @@
         @Html.DropDownListFor(m => m.DiscountType, Model.DiscountTypeItems, "Select...")
         <span class="field-hint-message">What kind of special pricing are you requesting?</span>
         @Html.ValidationMessageFor(m => m.DiscountType)
+        @Html.ValidationMessageFor(m => m.SpamValidationResponse)
       </div>
       <div class="form-field">
         @Html.LabelFor(m => m.FirstName)
@@ -50,6 +51,7 @@
         <span class="field-hint-message">Enter your email address.</span>
         @Html.ValidationMessageFor(m => m.Email)
       </div>
+
       @*@Html.EditorForModel()*@
       <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
 

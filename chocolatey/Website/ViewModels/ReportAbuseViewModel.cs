@@ -18,10 +18,11 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
-    public class ReportAbuseViewModel
+    public class ReportAbuseViewModel : ISpamValidationModel
     {
         public string PackageId { get; set; }
         public string PackageVersion { get; set; }
@@ -42,5 +43,8 @@ namespace NuGetGallery
         public string Email { get; set; }
 
         public bool ConfirmedUser { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string SpamValidationResponse { get; set; }
     }
 }

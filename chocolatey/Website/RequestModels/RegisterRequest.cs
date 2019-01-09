@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
-    public class RegisterRequest
+    public class RegisterRequest : ISpamValidationModel
     {
         [Required]
         [StringLength(255)]
@@ -33,5 +34,8 @@ namespace NuGetGallery
         [Display(Name = "Password Confirmation")]
         [Hint("Please reenter your password and ensure that it matches the one above.")]
         public string ConfirmPassword { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string SpamValidationResponse { get; set; }
     }
 }

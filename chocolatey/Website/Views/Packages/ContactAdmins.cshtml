@@ -41,6 +41,7 @@
         <legend>Contact Admins</legend>
         @Html.AntiForgeryToken()
         <div class="form-field">
+        @Html.ValidationMessageFor(m => m.SpamValidationResponse)
         @if (!Model.ConfirmedUser) {
             @Html.LabelFor(m => m.Email)
             @Html.EditorFor(m => m.Email)

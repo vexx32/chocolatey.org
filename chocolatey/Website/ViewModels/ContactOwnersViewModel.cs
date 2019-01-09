@@ -19,11 +19,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
     [Bind(Include = "Message,CopySender,Email,ConfirmedUser")]
-    public class ContactOwnersViewModel
+    public class ContactOwnersViewModel : ISpamValidationModel
     {
         public string PackageId { get; set; }
 
@@ -44,5 +45,8 @@ namespace NuGetGallery
         public string Email { get; set; }
 
         public bool ConfirmedUser { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string SpamValidationResponse { get; set; }
     }
 }

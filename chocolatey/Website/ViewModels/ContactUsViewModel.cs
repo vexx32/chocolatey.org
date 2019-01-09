@@ -19,10 +19,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
-    public class ContactUsViewModel
+    public class ContactUsViewModel : ISpamValidationModel
     {
         [AllowHtml]
         [Display(Name = "Enter your message")]
@@ -55,6 +56,9 @@ namespace NuGetGallery
         [Display(Name = "Send message to")]
         [Required(ErrorMessage = "Please make a selection.")]
         public string MessageTo { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string SpamValidationResponse { get; set; }
 
         public IEnumerable<SelectListItem> MessageToItems
         {
