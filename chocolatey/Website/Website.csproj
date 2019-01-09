@@ -1238,6 +1238,8 @@
     <Content Include="Content\Images\team\gary.png" />
     <Content Include="Content\Images\team\mukesh.png" />
     <Content Include="Content\Images\team\paul.png" />
+    <Content Include="Content\Images\team\stephanie-1.jpg" />
+    <Content Include="Content\Images\team\stephanie-2.jpg" />
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
     <Content Include="Content\Images\Turbo-on-Red.png" />
@@ -1543,6 +1545,7 @@
     <Content Include="Views\Documentation\HowToSetupInternalPackageRepository.cshtml" />
     <Content Include="Views\Documentation\PackageMaintainerHandover.cshtml" />
     <Content Include="Views\Blog\ChocolateyFestComingSoon.md" />
+    <Content Include="Views\Blog\StephanieBurrowsJoinsChocolatey.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
