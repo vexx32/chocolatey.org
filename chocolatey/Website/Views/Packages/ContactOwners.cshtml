@@ -15,7 +15,7 @@
 <h1 class="page-heading">Contact the Maintainers of <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
 @if (Model.Owners.Any()) {
     <p class="message">
-        By submitting this form, you agree to <em>disclose your email address</em> 
+        By submitting this form, you agree to <em>disclose your email address</em>
         to the package maintainers listed below so they can reply to you.
     </p>
     <p class="message warning">
@@ -28,7 +28,7 @@
        <li>Provide a link to a gist with the output of running your command. Please add '-debug -verbose' to your command when reporting as most maintainers will ask for the debugging output.</li>
     </ul>
     </div>
-    
+
   using (Html.BeginForm())
   {
         <fieldset class="form">
@@ -51,7 +51,7 @@
                     <input type="hidden" id="Email" name="Email" value="test@example.com" />
                  }
             </div>
-            <div class="form-field"> 
+            <div class="form-field">
                 @Html.LabelFor(m => m.Message)
                 @Html.TextAreaFor(m => m.Message, 10, 50, null)
                 @Html.ValidationMessageFor(m => m.Message)

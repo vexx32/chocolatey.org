@@ -15,25 +15,25 @@
 <h1 class="page-heading">Contact Website Administrators about <a href="@Url.Package(Model.PackageId,  null)">@Model.PackageId</a></h1>
 
 <p class="message">
-    Important: This form is for contacting site administrators about packages that are seriously neglected or to work through the package triage process to become a co-maintainer. If "@Model.PackageId" simply doesn't 
-    appear to work or work correctly, please 
-    <a href="@Url.Action(MVC.Packages.ContactOwners(Model.PackageId))" title="contact the maintainers">contact the maintainers of "@Model.PackageId".</a> 
+    Important: This form is for contacting site administrators about packages that are seriously neglected or to work through the package triage process to become a co-maintainer. If "@Model.PackageId" simply doesn't
+    appear to work or work correctly, please
+    <a href="@Url.Action(MVC.Packages.ContactOwners(Model.PackageId))" title="contact the maintainers">contact the maintainers of "@Model.PackageId".</a>
     <br /><br />
     Note: If you want to report abuse, please <a href="@Url.Action(MVC.Packages.ReportAbuse(Model.PackageId, Model.PackageVersion))" title="Report Abuse">report abuse</a>.
     <br /><br />
     If you are contacting the admins for a package that is outdated, please be sure you have contacted the maintainers of the package first and waited the allotted time prior to continuing the package triage process.
-</p>    
+</p>
 
 <p class="message error">
   Are you a software vendor? Please read this first - <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Have my distribution rights been violated?</a>
   <br />If you are here to request/ask about helping with package maintenance, you've come to the right place!
-</p>                       
+</p>
 
- 
+
 <p class="message warning">
     Do not share sensitive information with this form. <br />
 </p>
-                       
+
 <p>Please provide a detailed report.</p>
 
 @using (Html.BeginForm()) {

@@ -18,14 +18,14 @@
     <h1 class="m-b">Special Pricing</h1>
 
     <p class="message">Please fill out the form below to receive discount</p>
-    
+
     @using (Html.BeginForm())
     {
     <fieldset class="form">
       <legend>Special pricing form</legend>
       @Html.AntiForgeryToken()
       @Html.ValidationSummary(true)
-      
+
       <div class="form-field">
         @Html.LabelFor(m => m.DiscountType)
         @Html.DropDownListFor(m => m.DiscountType, Model.DiscountTypeItems, "Select...")
@@ -49,8 +49,7 @@
         @Html.EditorFor(m => m.Email)
         <span class="field-hint-message">Enter your email address.</span>
         @Html.ValidationMessageFor(m => m.Email)
-      </div>  
-          
+      </div>
       @*@Html.EditorForModel()*@
       <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
 

@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -72,7 +72,7 @@ namespace NuGetGallery
         public virtual ActionResult UploadPackage()
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
-            
+
             if (currentUser.IsBanned)
             {
                 return RedirectToRoute(RouteName.VerifyPackage);
@@ -143,7 +143,7 @@ namespace NuGetGallery
                         ModelState.AddModelError(String.Empty, string.Format("This package has been {0} and can no longer be submitted.", package.Status.GetDescriptionOrValue().ToLower()));
                         return View("~/Views/Packages/UploadPackage.cshtml");
                     case PackageStatusType.Submitted:
-                        //continue on 
+                        //continue on
                         break;
                     default:
                         ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
@@ -245,11 +245,11 @@ namespace NuGetGallery
             }
 
             var reviewedPlusOneHour = package.ReviewedDate.GetValueOrDefault().AddHours(1);
-            if (!User.IsAdmin() 
-                && package.Status != status 
-                && reviewedPlusOneHour < DateTime.UtcNow 
-                && (package.Status == PackageStatusType.Approved 
-                                      || package.Status == PackageStatusType.Exempted 
+            if (!User.IsAdmin()
+                && package.Status != status
+                && reviewedPlusOneHour < DateTime.UtcNow
+                && (package.Status == PackageStatusType.Approved
+                                      || package.Status == PackageStatusType.Exempted
                                       || package.Status == PackageStatusType.Rejected
                    )
                 )
@@ -316,17 +316,17 @@ namespace NuGetGallery
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
                 newComments += "Virus Scanner has ben set to rerun";
             }
-            
+
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;
 
-            packageSvc.ChangePackageStatus(package, status, package.ReviewComments, newComments, currentUser, 
-                moderator, sendMaintainerEmail, 
-                isModerationRole ? 
-                    changeSubmittedStatus ? 
-                        PackageSubmittedStatusType.Waiting 
-                        : package.SubmittedStatus 
-                    : PackageSubmittedStatusType.Responded, 
+            packageSvc.ChangePackageStatus(package, status, package.ReviewComments, newComments, currentUser,
+                moderator, sendMaintainerEmail,
+                isModerationRole ?
+                    changeSubmittedStatus ?
+                        PackageSubmittedStatusType.Waiting
+                        : package.SubmittedStatus
+                    : PackageSubmittedStatusType.Responded,
                     assignReviewer: true
             );
 
@@ -467,10 +467,10 @@ namespace NuGetGallery
                    cacheTime,
                    () => results.Data.ToList());
             }
-            
+
             if (page == 1 && !packagesToShow.Any())
             {
-                // In the event the index wasn't updated, we may get an incorrect count. 
+                // In the event the index wasn't updated, we may get an incorrect count.
                 totalHits = 0;
             }
 
@@ -850,7 +850,7 @@ namespace NuGetGallery
             var searchFilter = new SearchFilter
             {
                 SearchTerm = q,
-                Skip = (page - 1) * Constants.DefaultPackageListPageSize, // pages are 1-based. 
+                Skip = (page - 1) * Constants.DefaultPackageListPageSize, // pages are 1-based.
                 Take = Constants.DefaultPackageListPageSize,
                 IncludePrerelease = includePrerelease
             };
