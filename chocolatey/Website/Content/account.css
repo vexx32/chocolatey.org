@@ -16,7 +16,7 @@
     border: 1px solid #81b5e2;
 }
 #account #Email {
-    max-width: 400px;
+    max-width: 530px;
     display: block;
 }
 #account label:not(.checkbox):not(.input-group-btn) {
