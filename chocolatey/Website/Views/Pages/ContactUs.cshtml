@@ -35,11 +35,12 @@
       <div class="form-field">
         @Html.LabelFor(m => m.MessageTo)
         @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems,"Select...")
-        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B. 
-        <br />Choose "Partner" for reseller / channel partner.
-        <br />Choose "Other" to contact Chocolatey Software directly. 
-        <br />Choose "Website" for site issues/access. 
-        <br />Choose "Blocked IP Address" if you manage an IP address that has been blocked from using this site. 
+        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B.
+          <br />Choose "Partner" for reseller / channel partner.
+          <br />Choose "Other" to contact Chocolatey Software directly.
+          <br />Choose "Website" for site issues/access.
+          <br />Choose "Blocked IP Address" if you manage an IP address that has been blocked from using this site.
+        </span>
         @Html.ValidationMessageFor(m => m.MessageTo)
       </div>
       <br />
