@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,6 +23,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.UI;
+using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
@@ -115,11 +116,11 @@ namespace NuGetGallery
             return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
         public virtual ActionResult ContactUs(ContactUsViewModel contactForm)
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
-            
+
             if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
             {
                 ModelState.AddModelError(string.Empty,"Please use an alternative email address. This domain is known to send spam.");
@@ -139,9 +140,9 @@ Company: {4}
 {5}
 ".format_with(contactForm.FirstName,
               contactForm.LastName,
-              contactForm.Email, 
-              contactForm.PhoneNumber, 
-              contactForm.CompanyName, 
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
               contactForm.Message);
 
             var additionalSubject = contactForm.CompanyName;
@@ -155,8 +156,8 @@ Company: {4}
             TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
 
             return View("~/Views/Pages/Thanks.cshtml");
-        }    
-        
+        }
+
         [HttpGet]
         public ActionResult Discount()
         {
@@ -165,7 +166,7 @@ Company: {4}
 
         readonly Regex _studentEmailAddressRegex = new Regex(@".*\.edu(\.\w{2})?$|.*\.ac.uk$|.*k12\.\w{2}\.us$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
         public virtual ActionResult Discount(DiscountViewModel discountForm)
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/Discount.cshtml", discountForm);
@@ -277,41 +278,41 @@ SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
                     AverageModerationWaitTimeHours = stats.AverageModerationWaitTimeHours.ToString("n0"),
                     UpToDatePackages = stats.UpToDatePackages.ToString("n0"),
                     OlderThanOneYearPackages = stats.OlderThanOneYearPackages.ToString("n0"),
-                    ApprovedPackages = stats.ApprovedPackages.ToString("n0"), 
-                    TotalApprovedPackages = stats.TotalApprovedPackages.ToString("n0"), 
-                    ManuallyApprovedPackages = stats.ManuallyApprovedPackages.ToString("n0"), 
-                    TotalManuallyApprovedPackages = stats.TotalManuallyApprovedPackages.ToString("n0"), 
-                    TrustedPackages = stats.TrustedPackages.ToString("n0"), 
-                    TotalTrustedPackages = stats.TotalTrustedPackages.ToString("n0"), 
-                    TotalRejectedPackages = stats.TotalRejectedPackages.ToString("n0"), 
-                    ExemptedPackages = stats.ExemptedPackages.ToString("n0"), 
-                    TotalExemptedPackages = stats.TotalExemptedPackages.ToString("n0"), 
-                    UnknownPackages = stats.UnknownPackages.ToString("n0"), 
-                    TotalUnknownPackages = stats.TotalUnknownPackages.ToString("n0"), 
-                    LatestPackagePrerelease = stats.LatestPackagePrerelease.ToString("n0"), 
-                    TotalUnlistedPackages = stats.TotalUnlistedPackages.ToString("n0"), 
-                    PackagesWithPackageSource = stats.PackagesWithPackageSource.ToString("n0"), 
-                    PackagesPassingVerification = stats.PackagesPassingVerification.ToString("n0"), 
-                    PackagesFailingVerification = stats.PackagesFailingVerification.ToString("n0"), 
-                    PackagesPassingValidation = stats.PackagesPassingValidation.ToString("n0"), 
-                    PackagesFailingValidation = stats.PackagesFailingValidation.ToString("n0"), 
-                    PackagesCached = stats.PackagesCached.ToString("n0"), 
-                    TotalPackagesCached = stats.TotalPackagesCached.ToString("n0"), 
-                    PackagesCachedAvailable = stats.PackagesCachedAvailable.ToString("n0"), 
-                    TotalPackagesCachedAvailable = stats.TotalPackagesCachedAvailable.ToString("n0"), 
-                    PackagesCachedInvestigate = stats.PackagesCachedInvestigate.ToString("n0"), 
-                    TotalPackagesCachedInvestigate = stats.TotalPackagesCachedInvestigate.ToString("n0"), 
-                    PackagesScanned = stats.PackagesScanned.ToString("n0"), 
-                    TotalPackagesScanned = stats.TotalPackagesScanned.ToString("n0"), 
-                    PackagesScannedNotFlagged = stats.PackagesScannedNotFlagged.ToString("n0"), 
-                    TotalPackagesScannedNotFlagged = stats.TotalPackagesScannedNotFlagged.ToString("n0"), 
-                    PackagesScannedFlagged = stats.PackagesScannedFlagged.ToString("n0"), 
-                    TotalPackagesScannedFlagged = stats.TotalPackagesScannedFlagged.ToString("n0"), 
-                    PackagesScannedExempted = stats.PackagesScannedExempted.ToString("n0"), 
-                    TotalPackagesScannedExempted = stats.TotalPackagesScannedExempted.ToString("n0"), 
-                    PackagesScannedInvestigate = stats.PackagesScannedInvestigate.ToString("n0"), 
-                    TotalPackagesScannedInvestigate = stats.TotalPackagesScannedInvestigate.ToString("n0"), 
-                    TotalFileScanOverlaps = stats.TotalFileScanOverlaps.ToString("n0"), 
+                    ApprovedPackages = stats.ApprovedPackages.ToString("n0"),
+                    TotalApprovedPackages = stats.TotalApprovedPackages.ToString("n0"),
+                    ManuallyApprovedPackages = stats.ManuallyApprovedPackages.ToString("n0"),
+                    TotalManuallyApprovedPackages = stats.TotalManuallyApprovedPackages.ToString("n0"),
+                    TrustedPackages = stats.TrustedPackages.ToString("n0"),
+                    TotalTrustedPackages = stats.TotalTrustedPackages.ToString("n0"),
+                    TotalRejectedPackages = stats.TotalRejectedPackages.ToString("n0"),
+                    ExemptedPackages = stats.ExemptedPackages.ToString("n0"),
+                    TotalExemptedPackages = stats.TotalExemptedPackages.ToString("n0"),
+                    UnknownPackages = stats.UnknownPackages.ToString("n0"),
+                    TotalUnknownPackages = stats.TotalUnknownPackages.ToString("n0"),
+                    LatestPackagePrerelease = stats.LatestPackagePrerelease.ToString("n0"),
+                    TotalUnlistedPackages = stats.TotalUnlistedPackages.ToString("n0"),
+                    PackagesWithPackageSource = stats.PackagesWithPackageSource.ToString("n0"),
+                    PackagesPassingVerification = stats.PackagesPassingVerification.ToString("n0"),
+                    PackagesFailingVerification = stats.PackagesFailingVerification.ToString("n0"),
+                    PackagesPassingValidation = stats.PackagesPassingValidation.ToString("n0"),
+                    PackagesFailingValidation = stats.PackagesFailingValidation.ToString("n0"),
+                    PackagesCached = stats.PackagesCached.ToString("n0"),
+                    TotalPackagesCached = stats.TotalPackagesCached.ToString("n0"),
+                    PackagesCachedAvailable = stats.PackagesCachedAvailable.ToString("n0"),
+                    TotalPackagesCachedAvailable = stats.TotalPackagesCachedAvailable.ToString("n0"),
+                    PackagesCachedInvestigate = stats.PackagesCachedInvestigate.ToString("n0"),
+                    TotalPackagesCachedInvestigate = stats.TotalPackagesCachedInvestigate.ToString("n0"),
+                    PackagesScanned = stats.PackagesScanned.ToString("n0"),
+                    TotalPackagesScanned = stats.TotalPackagesScanned.ToString("n0"),
+                    PackagesScannedNotFlagged = stats.PackagesScannedNotFlagged.ToString("n0"),
+                    TotalPackagesScannedNotFlagged = stats.TotalPackagesScannedNotFlagged.ToString("n0"),
+                    PackagesScannedFlagged = stats.PackagesScannedFlagged.ToString("n0"),
+                    TotalPackagesScannedFlagged = stats.TotalPackagesScannedFlagged.ToString("n0"),
+                    PackagesScannedExempted = stats.PackagesScannedExempted.ToString("n0"),
+                    TotalPackagesScannedExempted = stats.TotalPackagesScannedExempted.ToString("n0"),
+                    PackagesScannedInvestigate = stats.PackagesScannedInvestigate.ToString("n0"),
+                    TotalPackagesScannedInvestigate = stats.TotalPackagesScannedInvestigate.ToString("n0"),
+                    TotalFileScanOverlaps = stats.TotalFileScanOverlaps.ToString("n0"),
                     TotalFileScans = stats.TotalFileScans.ToString("n0")
                 }, JsonRequestBehavior.AllowGet);
         }
