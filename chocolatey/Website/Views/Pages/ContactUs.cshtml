@@ -2,7 +2,13 @@
 @model ContactUsViewModel
 @{
     ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Content/account.css");
+    Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/validation");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 @section TopScripts {
     <script>
@@ -13,92 +19,113 @@
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
 
-<section>
-  <div class="p-b p-l">
-    <h1 class="m-b">Contact Us</h1>
-
-    <ul class="message warning">
-      <li>If you are getting 403 errors with the community repository or have other website issues/access, use "Blocked IP Address" below when you contact.</li>
-      <li>If you have found an issue or have questions (related to open source usage or package install issues), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.</li>
-    </ul>
-    <br />
-    <h2 class="m-b">Reach out to us</h2>
-    <p class="message small">Please fill out the form below to contact Chocolatey Software. <strong><em>Only use this form for the purposes below.</em></strong> See above for other means of contact for things not related to this form.</p>
-
-    @using (Html.BeginForm())
-    {
-    <fieldset class="form">
-      <legend>Question or comments?</legend>
-      @Html.AntiForgeryToken()
-      @Html.ValidationSummary(true)
-
-      <div class="form-field">
-        @Html.LabelFor(m => m.MessageTo)
-        @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems,"Select...")
-        <span class="field-hint-message-visible">Choose "Sales" for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B.
-          <br />Choose "Partner" for reseller / channel partner.
-          <br />Choose "Other" to contact Chocolatey Software directly.
-          <br />Choose "Website" for site issues/access.
-          <br />Choose "Blocked IP Address" if you manage an IP address that has been blocked from using this site.
-        </span>
-        @Html.ValidationMessageFor(m => m.MessageTo)
-      </div>
-      <br />
-      <br />
-      <br />
-      <div class="form-field">
-        @Html.LabelFor(m => m.FirstName)
-        @Html.EditorFor(m => m.FirstName)
-        <span class="field-hint-message">Enter your first name.</span>
-        @Html.ValidationMessageFor(m => m.FirstName)
-        @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-      </div>
-      <div class="form-field">
-        @Html.LabelFor(m => m.LastName)
-        @Html.EditorFor(m => m.LastName)
-        <span class="field-hint-message">Enter your last name.</span>
-        @Html.ValidationMessageFor(m => m.LastName)
-      </div>
-      <div class="form-field">
-        @Html.LabelFor(m => m.Email)
-        @Html.EditorFor(m => m.Email)
-        <span class="field-hint-message">Enter your email address.</span>
-        @Html.ValidationMessageFor(m => m.Email)
-      </div>
-      <div class="form-field">
-        @Html.LabelFor(m => m.PhoneNumber)
-        @Html.EditorFor(m => m.PhoneNumber)
-        <span class="field-hint-message">Your phone number is optional but recommended.</span>
-        @Html.ValidationMessageFor(m => m.PhoneNumber)
-      </div>
-      <div class="form-field">
-        @Html.LabelFor(m => m.CompanyName)
-        @Html.EditorFor(m => m.CompanyName)
-        <span class="field-hint-message">Provide your company or leave empty if not an organizational request.</span>
-        @Html.ValidationMessageFor(m => m.CompanyName)
-      </div>
-
-      <div class="form-field">
-        @Html.LabelFor(m => m.Message)
-        @Html.TextAreaFor(m => m.Message,10, 50, null)
-        @Html.ValidationMessageFor(m => m.Message)
-      </div>
-
-      <div class="form-field flex flex-align-center">
-          @Html.CheckBoxFor(m => m.CheckBox)
-          <label for="@Model.CheckBox" class="for-checkbox no-margin-bottom">I am not attempting to market software or services (such as SEO). I am also not requesting advertising space.</label>
-          @Html.ValidationMessageFor(m => m.CheckBox)
-      </div>
-      @*@Html.EditorForModel()*@
-      <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
-
-      <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
-    </fieldset>
-      <p class="message warning small">NOTE: Do not use this form in an attempt to market to us services and/or software. We will consider that s&zwj;pam and take appropriate action.</p>
-    }
-
-  </div>
+<section class="container py-3 py-xl-5 contact" id="account">
+    <div class="row">
+        <div class="col-xl-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center">Contact Us</h1>
+                    <div class="callout-warning">
+                        <p><strong>If you are getting 403 errors</strong> with the community repository or have other website issues/access, use "Blocked IP Address" below when you contact.</p>
+                        <p>
+                            <strong>If you have found an issue or have questions</strong> (related to open source usage or package install issues), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.
+                        </p>
+                    </div>
+                    <div class="callout-secondary mt-3">
+                        <p>Please fill out the form below to contact Chocolatey Software. <strong><i>Only use this form for the purposes below.</i></strong> See above for other means of contact for things not related to this form.</p>
+                    </div>
+                    <hr />
+                    <h3>Send Message to...</h3>
+                    <p><strong>"Sales" </strong>for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B.</p>
+                    <p><strong>"Partner" </strong>for reseller / channel partner.</p>
+                    <p><strong>"Other" </strong>to contact Chocolatey Software directly.</p>
+                    <p><strong>"Website" </strong>for site issues/access. </p>
+                    <p><strong>"Blocked IP Address" </strong>if you manage an IP address that has been blocked from using this site.</p>
+                    <hr class="mb-0"/>
+                    @using (Html.BeginForm())
+                    {
+                        <fieldset class="form">
+                            <legend class="d-none">Question or comments?</legend>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-field d-flex flex-column">
+                                        <div>@Html.LabelFor(m => m.MessageTo) <span class="icon-asterisk"></span></div>
+                                        @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems, "Select...")
+				                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-field">
+                                        @Html.LabelFor(m => m.CompanyName)
+                                        @Html.EditorFor(m => m.CompanyName)
+                                        <span class="field-hint-message">Provide your company or leave empty if not an organizational request.</span>
+                                        @Html.ValidationMessageFor(m => m.CompanyName)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-field">
+                                        @Html.LabelFor(m => m.FirstName) <span class="icon-asterisk"></span>
+                                        @Html.EditorFor(m => m.FirstName)
+                                        <span class="field-hint-message">Enter your first name.</span>
+                                        @Html.ValidationMessageFor(m => m.FirstName)
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-field">
+                                        @Html.LabelFor(m => m.LastName) <span class="icon-asterisk"></span>
+                                        @Html.EditorFor(m => m.LastName)
+                                        <span class="field-hint-message">Enter your last name.</span>
+                                        @Html.ValidationMessageFor(m => m.LastName)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-field">
+                                        @Html.LabelFor(m => m.Email) <span class="icon-asterisk"></span>
+                                        @Html.EditorFor(m => m.Email, new { @class = "w-100" })
+                                        <span class="field-hint-message">Enter your email address.</span>
+                                        @Html.ValidationMessageFor(m => m.Email)
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-field">
+                                        @Html.LabelFor(m => m.PhoneNumber)
+                                        @Html.EditorFor(m => m.PhoneNumber)
+                                        <span class="field-hint-message">Your phone number is optional but recommended.</span>
+                                        @Html.ValidationMessageFor(m => m.PhoneNumber)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                @Html.LabelFor(m => m.Message) <span class="icon-asterisk"></span>
+                                @Html.TextAreaFor(m => m.Message, new { @rows = 5 })
+                                @Html.ValidationMessageFor(m => m.Message)
+                            </div>
+                            <div class="form-field mt-3">
+                            	<label class="for-checkbox checkbox mb-0">
+                                    @Html.CheckBoxFor(m => m.CheckBox, new { @class = "check-box" })
+                            	    I am not attempting to market software or services (such as SEO). I am also not requesting advertising space. <span class="icon-asterisk"></span>
+                            	    <span class="checkmark"></span>
+                                </label>
+                                @Html.ValidationMessageFor(m => m.CheckBox)
+                            </div>
+                            <div class="form-field">
+                                @Html.ValidationMessageFor(m => m.SpamValidationResponse)
+                            </div>
+                            <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+        	                <input class="btn btn-primary mt-3 mx-auto d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send Message" title="Send us a message. We'll be in touch soon!" />
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
 @section BottomScripts {
     <script type="text/javascript">
         $(document).ready(function () {

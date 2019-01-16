@@ -9,13 +9,17 @@
 #account label:not(.checkbox), .field-hint-message, #account .field-validation-error {
     font-size: 80%;
 }
-#account input:not(.btn):not(.check-box):not(.form-control), textarea {
+#account input:not(.btn):not(.check-box):not(.form-control), textarea, #MessageTo {
     width: 100%;
     padding: 3px 6px;
     border-radius: .25rem;
     border: 1px solid #81b5e2;
 }
-#account #Email {
+#account textarea {
+    padding: 1rem;
+    font-size: 100%;
+}
+#account #Email:not(#account.contact #Email) {
     max-width: 530px;
     display: block;
 }
