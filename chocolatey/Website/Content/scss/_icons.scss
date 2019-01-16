@@ -93,7 +93,7 @@
     content: "\f105";
 }
 
-.icon-check:before {
+.icon-check:before, ul.check-list li::before {
     content: "\f00c";
 }
 
@@ -140,4 +140,8 @@
 
 .icon-plus:before {
     content: "\f067";
+}
+
+.icon-rocket:before {
+    content: "\f135";
 }

@@ -1205,7 +1205,7 @@
     <Content Include="Content\Images\icon_slogan.png" />
     <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
-    <Content Include="Content\Images\integration_points.png" />
+    <Content Include="Content\Images\integration_points-dark.png" />
     <Content Include="Content\Images\invalidBG.png" />
     <Content Include="Content\Images\just-type-logo.svg" />
     <Content Include="Content\Images\kickstarter\Chef.png" />

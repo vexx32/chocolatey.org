@@ -148,6 +148,81 @@ input[type="text"]:disabled {
     }
 }
 
+/*Header*/
+#header {
+    border-top: 1px solid rgba(255,255,255,.2);
+}
+
+/*Curve*/
+.shape-border {
+    position: relative;
+    overflow: hidden;
+    height: 80px;
+}
+
+.shape-border:before {
+    border-radius: 100%;
+    position: absolute;
+    right: -200px;
+    left: -200px;
+    content: '';
+}
+
+.shape-border-bottom::before {
+    background: $light;
+    bottom: -200px;
+    top: 0;
+}
+
+.shape-border-top::before {
+    background: $white;
+    top: -200px;
+    bottom: 0;
+}
+
+.shape-border-white::before {
+    background: $white;
+}
+
+.shape-border-light::before {
+    background: $light;
+}
+
+/*Terminal*/
+#terminal .maximize {
+    border: 2px solid;
+    height: .78em;
+    width: .78em;
+}
+
+#terminal .terminal-body {
+    height: 300px;
+}
+
+/*Home Page Images*/
+#trusted img, #tools img {
+    max-width: 600px;
+}
+
+/*Checklist*/
+ul.check-list {
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+ul.check-list li {
+    margin-bottom: 1rem;
+}
+
+ul.check-list li::before {
+    font-family: 'FontAwesome';
+    position: absolute;
+    left: 8px;
+    font-size: 1.2em;
+    margin-left: 15px;
+    color: #36bc98;
+}
+
 /*Collapse*/
 a + .collapse.show, a + .collapsing {
     margin-left: 30px;
@@ -193,6 +268,11 @@ footer {
     .copyBox {
         max-width: 550px;
     }
+
+    #artifacts {
+        background: url(/Content/images/gene.svg) 100% no-repeat;
+        background-position-x: 3%;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -206,6 +286,14 @@ footer {
         position: absolute;
         z-index: 9999;
         top: 10px;
+    }
+
+    #artifacts {
+        background-position-x: 25%;
+    }
+
+    .neg-mt-xl-3 {
+        margin-top: -1.75rem;
     }
 }
 
