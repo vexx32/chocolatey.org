@@ -2365,7 +2365,7 @@ small, .very-small { font-size: .7em !important; }
 
 .flex { display: flex; flex-direction: row; }
 .flex-wrap { display: flex; flex-wrap: wrap; }
-
+.flex-align-center { align-items: center;}
 .inline-list {
   list-style: none;
 }

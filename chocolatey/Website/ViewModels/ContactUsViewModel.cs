@@ -57,6 +57,9 @@ namespace NuGetGallery
         [Required(ErrorMessage = "Please make a selection.")]
         public string MessageTo { get; set; }
 
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Please check the box to agree to terms of this form.")]
+        public bool CheckBox { get; set; }
+
         [ScaffoldColumn(false)]
         public string SpamValidationResponse { get; set; }
 

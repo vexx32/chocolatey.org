@@ -1067,7 +1067,12 @@ header.main {
             .form-field textarea.input-validation-error {
                 border-left: solid 5px #ca5252;
             }
-
+            .form-field.required-box input {
+                float: left;
+            }
+            .form-field.required-box label {
+                width: 95%;
+            }
             /* flyout Text */
             .field-hint-message,
             .field-validation-error {
@@ -1149,6 +1154,12 @@ header.main {
         .validation-summary-errors {
             font-size: 1.25em;
             font-weight: 600;
+        }
+        .form-field.required-box .field-validation-error {
+            clear: both;
+            position: relative;
+            left: 0;
+            top: 0;
         }
 
 /* Errors */

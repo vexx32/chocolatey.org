@@ -84,10 +84,11 @@
         @Html.ValidationMessageFor(m => m.Message)
       </div>
 
-      <div class="form-field">
-        <input type="checkbox" required="required" id="chkNotSelling" name="chkNotSelling" /> <span for="chkNotSelling">I am not attempting to market software or services (such as SEO). I am also not requesting advertising space.</span>
+      <div class="form-field flex flex-align-center">
+          @Html.CheckBoxFor(m => m.CheckBox)
+          <label for="@Model.CheckBox" class="for-checkbox no-margin-bottom">I am not attempting to market software or services (such as SEO). I am also not requesting advertising space.</label>
+          @Html.ValidationMessageFor(m => m.CheckBox)
       </div>
-
       @*@Html.EditorForModel()*@
       <img src="@Url.Content("~/content/images/required.png")" alt="Blue border on left means required." />
 

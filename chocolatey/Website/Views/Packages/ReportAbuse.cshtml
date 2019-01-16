@@ -58,10 +58,11 @@
         <div class="form-field">
             @Html.CheckBoxFor(m => m.CopySender)<label for="@Model.CopySender" class="for-checkbox">Send me a copy</label>
         </div>
-
-      <div class="form-field">
-        <input type="checkbox" required="required" id="chkUnderstandVT" name="chkUnderstandVT" /> <span for="chkUnderstandVT">I understand that the community repository already runs packages and binaries through VirusTotal and I have reviewed that on the package page itself prior to reporting possible malware.</span>
-      </div>
+        <div class="form-field required-box">
+            @Html.CheckBoxFor(m => m.CheckBox)
+            <label for="@Model.CheckBox" class="for-checkbox no-margin-bottom">I understand that the community repository already runs packages and binaries through VirusTotal and I have reviewed that on the package page itself prior to reporting possible malware.</label>
+            @Html.ValidationMessageFor(m => m.CheckBox)
+        </div>
         <input class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Report" title="Report '@Model.PackageId' for abuse" />
     </fieldset>
 }
