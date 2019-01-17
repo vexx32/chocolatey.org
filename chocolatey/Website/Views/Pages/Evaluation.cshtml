@@ -1,9 +1,12 @@
 ﻿@{
     ViewBag.Title = "Chocolatey for Business Registration Form";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 
-<section>
-  <div class="container-wide p-b--l">
+<section class="container py-3 py-xl-5">
     <script type="text/javascript" src="https://form.jotform.com/jsform/91124580699162"></script>
-  </div>
 </section>

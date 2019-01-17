@@ -1,13 +1,23 @@
 ﻿@{
     ViewBag.Title = "Media";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
 
-<section>
-  <div class="container-wide p-b--l">
-    <h1 class="text-center m-b">Media Kit</h1>
-
-    - Media Kit with files
-    - Rules on using the media kit
-    <p>Coming Soon!</p>
-  </div>
+<section class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center pb-4">Media Kit</h1>
+                <ul>
+                    <li>Media Kit with files</li>
+                    <li>Rules on using the media kit</li>
+                </ul>
+                <p>Coming Soon!</p>
+            </div>
+        </div>
+    </div>
 </section>
