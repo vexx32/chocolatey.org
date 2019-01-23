@@ -36,6 +36,9 @@ namespace NuGetGallery
         [Display(Name = "Send me a copy")]
         public bool CopySender { get; set; }
 
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Please check the box to agree to terms of this form.")]
+        public bool CheckBox { get; set; }
+
         [Required(ErrorMessage = "Please enter your email address.")]
         [StringLength(4000)]
         [DataType(DataType.EmailAddress)]
