@@ -13,12 +13,12 @@
 <li>In an <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })">Upgrade</a> scenario, the install script for the new package will be run after any <code>chocolateyBeforeModify.ps1</code> script associated with the previous version of the package.</li>
 </ul>
 <h3 id="example">Example?</h3>
-<p>This is what it takes to install <a href="https://github.com/ferventcoder/nugetpackages/blob/master/StExBar/tools/chocolateyInstall.ps1">StExBar</a>:</p>
+<p>This is what it takes to install <a href="https://chocolatey.org/packages/stexbar">StExBar</a>:</p>
 <pre><code class="powershell">$name   = &#39;StExBar&#39;
 $url = &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39;
 $url64 = &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;
 $silent = &#39;/quiet&#39;
 
 Install-ChocolateyPackage $name &#39;msi&#39; $silent $url $url64</code></pre>
-<p>The Install-ChocolateyPackage helper uses the url, msi, and silent args to download and silently install and update stexbar.</p>
+<p>The Install-ChocolateyPackage helper uses the url, msi, and silent args to download and silently install and update StExBar.</p>
 </article>
