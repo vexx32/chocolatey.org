@@ -48,7 +48,7 @@ namespace NuGetGallery.Infrastructure
             {
                 filterContext.Controller.ViewData.ModelState.AddModelError(
                     "SpamValidationResponse",
-                    string.Format("Unable to correctly valid spam validation response: {0}", response.ErrorMessage[0]));
+                    string.Format("Unable to correctly validate spam validation response: {0}", response.ErrorMessage[0]));
             }
         }
     }
