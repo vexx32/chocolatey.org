@@ -1244,6 +1244,7 @@
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\team\gary.png" />
+    <Content Include="Content\Images\team\mukesh-sq.png" />
     <Content Include="Content\Images\team\mukesh.png" />
     <Content Include="Content\Images\team\paul.png" />
     <Content Include="Content\Images\team\rob-sq.jpg" />

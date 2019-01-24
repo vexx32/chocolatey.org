@@ -1,38 +1,64 @@
 ﻿@{
     ViewBag.Title = "Partnership";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
-<section>
-  <div class="container-wide p-b--l">
-    <h1 class="text-center m-b">Chocolatey Partner Ecosystem</h1>
-    <h3 class="text-center">Help your customers. Enhance your solutions. Drive new revenue streams.</h3>
-    <p class="text-center"><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us about partnership opportunities</a></p>
-  </div>
+
+<div id="header" class="bg-medium-dark @if (!User.Identity.IsAuthenticated) {<text>neg-mt-xl-3</text>}">
+    <section class="py-3 py-lg-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-3">Chocolatey Partner Ecosystem</h1>
+                    <h1>Help your customers. Enhance your solutions. Drive new revenue streams.</h1>
+                    <a class="btn btn-lg btn-primary mt-3" href="@Url.RouteUrl(RouteName.ContactUs)">Become a Partner</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="shape-border shape-border-bottom"></div>
+</div>
+<section class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-3 text-center"><strong>Solution Provider Program</strong></h2>
+                <p>Chocolatey's Partner Network offers resources, support and training to differentiate your business from your competition and increase your profitability with new revenue streams.</p>
+                <p>Solution Providers use their technical skills and market knowledge to resell Chocolatey for Business, either as part of an existing Windows project or an IT automation solution. Partnering with Chocolatey will mark you as a market leader in modern Windows automation and DevOps.</p>
+                <ul>
+                    <li><strong>Referral</strong> - Simply engage with our sales team to inform us of customers interested in Chocolatey and we will offer you an attractive referral fee for any customers that purchase Chocolatey for Business.</li>
+                    <li><strong>Silver</strong> - Receive an attractive discount by signing up to our partner program. Register your opportunities, undertake training and work with us on driving new business. At least one Chocolatey trained professional required.</li>
+                    <li><strong>Gold</strong> - Receive an increased discount over our Silver level. Work with us on a business plan in return for leads and marketing support. At least two Chocolatey trained professionals required.</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="card w-75 mx-auto testimonial">
+                    <div class="card-body">
+                        <img class="rounded-circle border text-center" src="/content/images/team/mukesh-sq.png" alt="Mukesh Sharma, COO of Chocolatey" title="Mukesh Sharma, COO of Chocolatey" />
+                        <h3 class="mt-2 mb-0 text-primary"><small>Mukesh Sharma</small></h3>
+                        <p><small><i>COO of Chocolatey</i></small></p>
+                        <q class="mb-0">Our goal is to support you with training and and sales support to give you the resources needed to deliver automation solutions to your customers.</q>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-<div class="bg-two p-t--l p-b--l">
-  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-    <h2 class="text-center m-b">Solution Provider Program</h2>
-    
-    <p>Chocolatey's Partner Network offers resources, support and training to differentiate your business from your competition and increase your profitability with new revenue streams.</p>
-
-    <blockquote>"Our goal is to support you with training and and sales support to give you the resources needed to deliver automation solutions to your customers." - Mukesh Sharma, COO</blockquote>
-
-    <p>Solution Providers use their technical skills and market knowledge to resell Chocolatey for Business, either as part of an existing Windows project or an IT automation solution. Partnering with Chocolatey will mark you as a market leader in modern Windows automation and DevOps.</p>
-
-    <ul style="list-style-type: disc; padding-left: 2em;">
-      <li><span class="text-underline">Referral</span> - Simply engage with our sales team to inform us of customers interested in Chocolatey and we will offer you an attractive referral fee for any customers that purchase Chocolatey for Business.</li>
-      <li><span class="text-underline">Silver</span> - Receive an attractive discount by signing up to our partner program. Register your opportunities, undertake training and work with us on driving new business. At least one Chocolatey trained professional required.</li>
-      <li><span class="text-underline">Gold</span> - Receive an increased discount over our Silver level. Work with us on a business plan in return for leads and marketing support. At least two Chocolatey trained professionals required.</li>
-    </ul>
-
-  </section>
-</div>
-<div class="bg-three p-t--l p-b--l kickstarter">
-  <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-    <h2 class="text-center m-b">Technology Alliances</h2>
-    <p>Chocolatey integrates with leading configuration managers and automation solutions such as Puppet, Chef, Microsoft SCCM, and Ansible (Red Hat).</p>
-
-    <p>Our customers are keen to extend their usage and compatibility with other leading technology offerings.  We are keen to work with other leading software vendors to build joint solutions to help customers simplify and automate their Windows experience.</p>
-	
-    <h3 class="text-center huge p-t--l"><a href="@Url.RouteUrl(RouteName.ContactUs)">Become a Partner</a></h3>
-  </section>
-</div>
+<section id="trusted" class="py-3 py-lg-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center">
+                <img class="w-100" src="@Url.Content("~/content/images/integration_points-dark.png")" alt="Chocolatey Integrations" />
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-3 text-center"><strong>Technology Alliances</strong></h2>
+                <p>Chocolatey integrates with leading configuration managers and automation solutions such as Puppet, Chef, Microsoft SCCM, and Ansible (Red Hat).</p>
+                <p>Our customers are keen to extend their usage and compatibility with other leading technology offerings.  We are keen to work with other leading software vendors to build joint solutions to help customers simplify and automate their Windows experience.</p>
+                <div class="text-center"><a class="btn btn-primary mt-3" href="@Url.RouteUrl(RouteName.ContactUs)">Become a Partner</a></div>
+            </div>
+        </div>
+    </div>
+</section>
