@@ -179,13 +179,18 @@ a.btn:hover {
     background: #288d72;
     border-color: #288d72;
 }
-.btn-primary {
+.btn-primary, .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary:active:focus, .btn-outline-primary:not(:disabled):not(.disabled):active {
     background: #5c9fd8;
     border-color: #5c9fd8;
+    color: white;
 }
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary:not(:disabled):not(.disabled):active {
     background: #5585a8;
     border-color: #5585a8;
+}
+.btn-outline-primary {
+    border-color: #5c9fd8;
+    color: #5c9fd8;
 }
 /*Callouts- Custom Alerts*/
 [class*="callout-"] {
@@ -321,6 +326,9 @@ select:-webkit-autofill:focus {
     -webkit-text-fill-color: #202f3c;
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;
+}
+input[type="text"]:disabled {
+    cursor: pointer;
 }
 /*Add to Builder*/
 .alert-builder {

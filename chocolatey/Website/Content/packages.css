@@ -63,58 +63,31 @@ body, .gsc-control-cse, .gsc-control-cse .gsc-table-result {
     background-color: white !important;
     border-color: #5c9fd8 !important;
 }
-/*Package*/
-#package .box .col-9 a {
-    color: #1a375a;
-}
-#package img {
-    width: 60px;
-}
+/*Package Overview*/
 img.package-testing {
     width: 15px !important;
     height: 15px;
 }
-
-/*Package Moderation*/
-.package .moderator-side, .package .my-package {
-    font-weight: bold;
-    padding: 5px 15px;
+#package input {
+    border-color: #5c9fd8;
 }
-.package.ready, .package.responded, .package.pending,
-.package.waiting, .package.updated, .package.unknown-status {
-    padding-bottom: 38px;
-}
-.package.ready .moderator-side {
+.card.ready .card-header {
     background: #36bc98;
 }
-.package.updated .moderator-side {
+.card.updated .card-header {
     background: #fd7e14
 }
-.package.pending .moderator-side {
+.card.pending .card-header {
     background: #ffc107;
 }
-.package.waiting .moderator-side {
+.card.waiting .card-header {
     background: #f4516c;
 }
-.package.responded .moderator-side {
+.card.responded .card-header {
     background: #6f42c1;
 }
-.package.unknown-status .moderator-side {
+.card.unknown-status .card-header {
     background: #6c757d;
-}
-.package .moderator-side span {
-    padding-right: 5px;
-}
-.package .moderator-side img {
-    height: 25px !important;
-    width: 25px !important;
-}
-.package .my-package {
-    background: #5c9fd8;
-}
-/*Add to Builder*/
-.package .box .btn {
-    width: 210px;
 }
 /*Pagination*/
 ul.pager li.previous {
