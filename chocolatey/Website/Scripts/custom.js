@@ -46,3 +46,8 @@ clipboard.on('success', function (e) {
     setTooltip(btn, 'Copied');
     hideTooltip(btn);
 });
+
+// Make input text selectable with one click
+$(document).on('click', 'input[type=text]', function () {
+    this.select();
+});

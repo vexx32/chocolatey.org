@@ -81,22 +81,33 @@
                     <button type="button" class="btn btn-secondary font-weight-bold">Show API Key</button>
                     <div id="generateKey" class="d-none">
                         <h3 class="mt-4">Your API key is:</h3>
-                        <div class="d-flex flex-column flex-nowrap justify-content-start mt-auto">
-                            <span class="copyBox overflow-hidden w-100 rounded">
-                                @Model.ApiKey
-                                <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="@Model.ApiKey">
-                                    <i class="icon-clipboard" alt="Copy to Clipboard"></i>
+                        <div class="input-group copyBox">
+                            <input type="text" class="form-control"
+                                   value="@Model.ApiKey"
+                                   aria-label="Your custom API key"
+                                   readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary tt"
+                                        aria-label="Copy API Key to Clipboard"
+                                        data-toggle="tooltip"
+                                        title="Copy to Clipboard"
+                                        data-clipboard-text="@Model.ApiKey">
+                                        <i class="icon-clipboard" aria-hidden="true">
+                                            <span class="sr-only">
+                                                Copy API Key to Clipboard
+                                            </span>
+                                        </i>
                                 </button>
-                            </span>
-                            <fieldset class="form mt-2">
-                                <legend class="d-none">Generate New API Key</legend>
-                                @using (Html.BeginForm("GenerateApiKey", "Users", FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <input class="btn btn-primary font-weight-bold" type="submit" value="Generate New API Key" />
-                                }
-                            </fieldset>
+                            </div>
                         </div>
+                        <fieldset class="form mt-2">
+                            <legend class="d-none">Generate New API Key</legend>
+                            @using (Html.BeginForm("GenerateApiKey", "Users", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input class="btn btn-primary font-weight-bold" type="submit" value="Generate New API Key" />
+                            }
+                        </fieldset>
                         <h3 class="mt-4">Example Usage:</h3>
                         <pre class="py-2 mb-0 border line-numbers language-powershell"><code class="language-powershell">choco apikey --key @Model.ApiKey --source https://push.chocolatey.org/</code><code class="language-powershell">choco push MyPackage.1.0.nupkg --source https://push.chocolatey.org/</code></pre>
                     </div>

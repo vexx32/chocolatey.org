@@ -356,29 +356,7 @@ a + .collapse.show, a + .collapsing {
 }
 /*Copy Code Box*/
 .copyBox {
-    height: 40px;
-    padding: 5px 0 0 10px;
-    border: 1px solid #5c9fd8;
-    position: relative;
-    max-width: 912px;
-}
-.copyBox button {
-    height: 100%;
-    width: 38px;
-    background: #5c9fd8;
-    color: white;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-}
-.copyBox button:hover {
-    transition: 300ms;
-    cursor: pointer;
-    background: #5585a8;
-}
-.copyBox button:active:focus {
-    border: none;
+    max-width: 800px;
 }
 /*Footer*/
 footer {
@@ -499,7 +477,7 @@ footer {
         max-width: 1200px;
     }
     .copyBox {
-        max-width: 538px;
+        max-width: 550px;
     }
 }
 

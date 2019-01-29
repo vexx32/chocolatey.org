@@ -445,74 +445,83 @@
                             </ul>
                             <div class="tab-content bg-white p-3 shadow-sm mb-3">
                                 <div class="tab-pane fade show active" id="install" role="tabpanel" aria-labelledby="install-tab">
-                                    <div class="row">
-                                        <div class="col-12 pb-2">
-                                            <p>To install @Model.Title, run the following command from the command line or from PowerShell:</p>
+	                            <p class="mb-3">To install @Model.Title, run the following command from the command line or from PowerShell:</p>
+                                    <div class="input-group copyBox">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">></div>
                                         </div>
-                                        <div class="col-12 d-flex flex-column flex-nowrap justify-content-start mt-auto">
-                                            <span class="copyBox overflow-hidden w-100 rounded">
-                                                > choco install @Model.Id.ToLower()
-                                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                {<text> --version @Model.Version</text>}
-                                                @if (Model.Prerelease)
-                                                {<text> --pre </text>}
-                                                <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="choco install @Model.Id.ToLower()
-                                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                {<text> --version @Model.Version</text>}
-                                                @if (Model.Prerelease)
-                                                {<text> --pre </text>}">
-                                                    <i class="icon-clipboard" alt="Copy to Clipboard"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <div class="col-12 mt-3 package">
-                                            <a type="" class="btn btn-secondary font-weight-bold" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="icon-download" alt="Download"></i> Download</a>
+                                        <input type="text" class="form-control"
+                                               value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                               aria-label="Install @Model.Title command"
+                                               readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary tt"
+                                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                    data-toggle="tooltip"
+                                                    title="Copy to Clipboard"
+                                                    data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                    <i class="icon-clipboard" aria-hidden="true">
+                                                        <span class="sr-only">
+                                                        Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                                                        {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                                        {<text> --pre </text>} to Clipboard</span>
+                                                    </i>
+                                            </button>
                                         </div>
                                     </div>
+                                    <a class="btn btn-secondary font-weight-bold mt-3" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="icon-download" alt="Download"></i> Download</a>
                                 </div>
                                 <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="upgrade-tab">
-                                    <div class="row">
-                                        <div class="col-12 pb-2">
-                                            <p>To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
+                                    <p class="mb-3">To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
+                                    <div class="input-group copyBox">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">></div>
                                         </div>
-                                        <div class="col-12 d-flex flex-column flex-nowrap justify-content-start mt-auto">
-                                            <span class="copyBox overflow-hidden w-100 rounded">
-                                                > choco upgrade @Model.Id.ToLower()
-                                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                {<text> --version @Model.Version</text>}
-                                                @if (Model.Prerelease)
-                                                {<text> --pre </text>}
-                                                <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="choco upgrade @Model.Id.ToLower()
-                                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                {<text> --version @Model.Version</text>}
-                                                @if (Model.Prerelease)
-                                                {<text> --pre </text>}">
-                                                    <i class="icon-clipboard" alt="Copy to Clipboard"></i>
-                                                </button>
-                                            </span>
+                                        <input type="text" class="form-control"
+                                               value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                               aria-label="Upgrade @Model.Title command" 
+                                               readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary tt"
+                                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                    data-toggle="tooltip"
+                                                    title="Copy to Clipboard"
+                                                    data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                    <i class="icon-clipboard" aria-hidden="true">
+                                                        <span class="sr-only">
+                                                            Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                                                            {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                                            {<text> --pre </text>} to Clipboard
+                                                        </span>
+                                                    </i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="uninstall" role="tabpanel" aria-labelledby="uninstall-tab">
-                                    <div class="row">
-                                        <div class="col-12 pb-2">
-                                            <p>To uninstall @Model.Title, run the following command from the command line or from PowerShell:</p>
+                                    <p class="mb-3">To uninstall @Model.Title, run the following command from the command line or from PowerShell:</p>
+                                    <div class="input-group copyBox">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">></div>
                                         </div>
-                                        <div class="col-12 d-flex flex-column flex-nowrap justify-content-start mt-auto">
-                                            <span class="copyBox overflow-hidden w-100 rounded">
-                                                > choco uninstall @Model.Id.ToLower()
-                                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                {<text> --version @Model.Version</text>}
-                                                @if (Model.Prerelease)
-                                                {<text> --pre </text>}
-                                                <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="choco uninstall @Model.Id.ToLower()
-                                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                {<text> --version @Model.Version</text>}
-                                                @if (Model.Prerelease)
-                                                {<text> --pre </text>}">
-                                                    <i class="icon-clipboard" alt="Copy to Clipboard"></i>
-                                                </button>
-                                            </span>
+                                        <input type="text" class="form-control"
+                                               value="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                               aria-label="Uninstall @Model.Title command" 
+                                               readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary tt"
+                                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                    data-toggle="tooltip"
+                                                    title="Copy to Clipboard"
+                                                    data-clipboard-text="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                    <i class="icon-clipboard" aria-hidden="true">
+                                                        <span class="sr-only">
+                                                            Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                                                            {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                                            {<text> --pre </text>} to Clipboard
+                                                        </span>
+                                                    </i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -524,26 +533,30 @@
             else
             {
                 <div class="bg-white p-3 shadow-sm mb-3">
-                    <div class="row">
-                        <div class="col-12 pb-2">
-                            <p><strong>Note: </strong> Please <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">visit our documentation</a> to learn how to install/uninstall @Model.Title.</p>
-                            <p>To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
+                    <p><strong>Note: </strong> Please <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">visit our documentation</a> to learn how to install/uninstall @Model.Title.</p>
+                    <p class="mb-3">To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
+                    <div class="input-group copyBox">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">></div>
                         </div>
-                        <div class="col-12 d-flex flex-column flex-nowrap justify-content-start mt-auto">
-                            <span class="copyBox overflow-hidden w-100 rounded">
-                                > choco upgrade @Model.Id.ToLower()
-                                @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                {<text> --version @Model.Version</text>}
-                                @if (Model.Prerelease)
-                                {<text> --pre </text>}
-                                <button class="tt" data-toggle="tooltip" title="Copy to Clipboard" data-clipboard-text="choco install @Model.Id.ToLower()
-                                            @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                            {<text> --version @Model.Version</text>}
-                                            @if (Model.Prerelease)
-                                            {<text> --pre </text>}">
-                                    <i class="icon-clipboard" alt="Copy to Clipboard"></i>
-                                </button>
-                            </span>
+                        <input type="text" class="form-control"
+                               value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                               aria-label="Upgrade @Model.Title command" 
+                               readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary tt"
+                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                    data-toggle="tooltip"
+                                    title="Copy to Clipboard"
+                                    data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                    <i class="icon-clipboard" aria-hidden="true">
+                                        <span class="sr-only">
+                                            Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                                            {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                            {<text> --pre </text>} to Clipboard
+                                        </span>
+                                    </i>
+                            </button>
                         </div>
                     </div>
                 </div>

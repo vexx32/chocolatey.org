@@ -205,9 +205,3 @@ h1 img.package-testing {
         max-width: 200px;
     }
 }
-
-@media (min-width: 991px) {
-    .copyBox {
-        max-width: 538px;
-    }
-}
