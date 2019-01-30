@@ -535,7 +535,7 @@ namespace NuGetGallery
 
             if (package == null) return PackageNotFound(id, version);
 
-            var model = new ReportAbuseViewModel
+            var model = new ContactAdminsViewModel
             {
                 PackageId = id,
                 PackageVersion = package.Version,
@@ -551,7 +551,7 @@ namespace NuGetGallery
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
-        public virtual ActionResult ContactAdmins(string id, string version, ReportAbuseViewModel reportForm)
+        public virtual ActionResult ContactAdmins(string id, string version, ContactAdminsViewModel reportForm)
         {
             if (!ModelState.IsValid) return ContactAdmins(id, version);
 
