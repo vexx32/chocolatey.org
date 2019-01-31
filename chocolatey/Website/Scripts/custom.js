@@ -6,12 +6,6 @@ $(window).on('load', function () {
     $('body').delay(350).css({ 'overflow': 'visible' });
 });
 
-// Active state in nav
-$("nav .nav-link").on("click", function () {
-    $("nav").find(".active").removeClass("active");
-    $(this).addClass("active");
-});
-
 //Makes :contains case insensitive
 $.expr[":"].contains = $.expr.createPseudo(function (arg) {
     return function (elem) {
@@ -57,8 +51,11 @@ $('a[href*="#"]')
     .not('[data-toggle="tab"]')
     .click(function (event) {
         // Highlight active link if vertical nav
-        $(".vertical-nav").find(".active").removeClass("active");
-        $(this).parent().addClass('active');
+        var verticalNav = /pricing/.test(window.location.href);
+        if (verticalNav) {
+            $(".vertical-nav").find(".active").removeClass("active");
+            $(this).parent().addClass('active');
+        }
         // On-page links
         if (
             location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
@@ -90,7 +87,63 @@ $('a[href*="#"]')
         }
     }
 });
-// Make input text selectable with one click
+
+// Right vertical navigation active highlight on scroll
+$(function () {
+    $(document).on("scroll", onScroll);
+});
+function onScroll(event) {
+    var scrollPos = $(document).scrollTop();
+    $('.docs-right a[href*="#"]').each(function () {
+        var currLink = $(this);
+        var refElement = $(currLink.attr("href"));
+        if (refElement.position().top <= scrollPos) {
+            $('.docs-right ul li').removeClass("active");
+            currLink.parent().addClass("active");
+        }
+        else {
+            currLink.parent().removeClass("active");
+        }
+    });
+}
+
+// Copy Button for use throughout the website
+var clipboard = new ClipboardJS('.btn-copy');
+$('.btn-copy').click(function () {
+    var $this = $(this);
+    $this.html('<span class="icon-check text-white"></span> Command Text Coppied').removeClass('btn-secondary').addClass('btn-success');
+    setTimeout(function () {
+        $this.html('<span class="icon-clipboard"></span> Copy Command Text').removeClass('btn-success').addClass('btn-secondary');
+    }, 2000);
+});
+
+// Documentation left side navigation
+$(function () {
+    setNavigation();
+});
+function setNavigation() {
+    var path = window.location.pathname;
+    path = path.replace(/\/$/, "");
+    path = decodeURIComponent(path);
+
+    $(".docs-left a").each(function () {
+        var href = $(this).attr('href');
+        if (path.substring(0, href.indexOf('docs/').length) === href) {
+            $(this).closest('li').addClass('active').parent().parent().collapse('show').parent().parent().parent().collapse('show');
+        }
+    });
+}
+
+// Delete extra space from code blocks
+$(function () {
+    var pre = document.getElementsByTagName("code");
+    for (var i = 0, len = pre.length; i < len; i++) {
+        var text = pre[i].firstChild.nodeValue;
+        if (text != null) {
+            pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
+        }
+    }
+});// Make input text selectable with one click
 $(document).on('click', 'input[type=text]', function () {
     this.select();
 });

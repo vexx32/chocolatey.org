@@ -18,6 +18,17 @@ a {
 .sticky-top:not(th) {
     top: 1rem;
 }
+#docs .docs-left .sticky-top {
+    top: 0;
+}
+
+/*Code*/
+code:not([class*="language-"]) {
+    background: white;
+    padding: .2em;
+    border-radius: .3em;
+    border: 1px solid $gray-300;
+}
 
 /*Scrollbars*/
 ::-webkit-scrollbar {

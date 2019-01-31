@@ -228,19 +228,19 @@ Thanks for requesting a discount. Please see the link below:
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Install()
         {
-            return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/CodeLayout.cshtml");
+            return View("~/Views/Documentation/Installation.cshtml","~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult FAQ()
         {
-            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/CodeLayout.cshtml");
+            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Security()
         {
-            return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/CodeLayout.cshtml");
+            return View("~/Views/Documentation/Security.cshtml", "~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]

@@ -59,7 +59,7 @@
                         <a class="nav-link" href="@Url.Home()">Home <span class="sr-only">(current)</span></a>
                     </li>*@
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.RouteUrl(RouteName.Install)">Install</a>
+                        <a class="nav-link" href="@Url.RouteUrl(RouteName.Docs, new {docName = "installation"})">Install</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.RouteUrl(RouteName.About)">About</a>
@@ -74,7 +74,7 @@
                         <a class="nav-link" href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.RouteUrl(RouteName.FAQ)">FAQ</a>
+                        <a class="nav-link" href="@Url.RouteUrl(RouteName.FAQ, new {docName = "chocolatey-faqs"})">FAQ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Docs</a>
@@ -214,7 +214,7 @@
                     <ul class="list-unstyled mb-0">
                         @*<li><a href="@Url.RouteUrl(RouteName.Features)">Features</a></li>*@
                         <li><a href="@Url.RouteUrl(RouteName.About)">About</a></li>
-                        <li><a href="@Url.RouteUrl(RouteName.FAQ)">FAQ</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.FAQ, new {docName = "chocolatey-faqs"})">FAQ</a></li>
                         <li><a href="@Url.RouteUrl(RouteName.Pricing)">Need More Features?</a></li>
                         <li><a href="@Url.RouteUrl(RouteName.Pricing)">For Businesses</a></li>
                         <li><a href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a></li>
@@ -231,7 +231,7 @@
                         <li><a href="http://eepurl.com/4qUJH">Newsletter</a></li>
                         <li><a href="@Url.RouteUrl(RouteName.BlogHome)">Blog</a> <a href="http://feeds.feedburner.com/ChocolateyBlog" rel="alternate" type="application/rss+xml"><img src="//feedburner.google.com/fb/images/pub/feed-icon16x16.png" alt="Chocolatey Blog" style="vertical-align:middle;border:0" /></a></li>
                         <li><a href="https://groups.google.com/group/chocolatey">Mailing List</a></li>
-                        <li><a href="@Url.RouteUrl(RouteName.Security)">Security</a></li>
+                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "security"})">Security</a></li>
                         @*<li><a href="#">Site map</a></li>*@
                         <li><a href="@Url.Content("~/chocolatey-media-kit.zip")">Media Kit</a></li>
                         <li><a href="http://cafepress.com/chocolatey">Shop</a></li>

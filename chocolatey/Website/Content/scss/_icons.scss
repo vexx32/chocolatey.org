@@ -85,11 +85,11 @@
     content: "\f064";
 }
 
-.icon-angle-down:before, a[data-toggle="collapse"]:before {
+.icon-angle-down:before, a[data-toggle="collapse"]:before, .docs-left button.navbar-toggler[data-toggle="collapse"]:before {
     content: "\f107";
 }
 
-.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before {
+.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before, .docs-left button.navbar-toggler[data-toggle="collapse"].collapsed:before {
     content: "\f105";
 }
 
