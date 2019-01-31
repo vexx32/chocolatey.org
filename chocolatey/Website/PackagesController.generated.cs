@@ -293,7 +293,7 @@ namespace NuGetGallery {
         }
 
 
-        public override System.Web.Mvc.ActionResult ContactAdmins(string id, string version, NuGetGallery.ReportAbuseViewModel reportForm) {
+        public override System.Web.Mvc.ActionResult ContactAdmins(string id, string version, NuGetGallery.ContactAdminsViewModel reportForm) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ContactAdmins);
 
 
