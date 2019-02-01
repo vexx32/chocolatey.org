@@ -234,6 +234,11 @@ ul.check-list li::before {
     color: #36bc98;
 }
 
+/*Load More/Show Less*/
+#showLess {
+    display: none;
+}
+
 /*Collapse*/
 a + .collapse.show, a + .collapsing {
     margin-left: 30px;
