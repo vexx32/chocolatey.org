@@ -1,92 +1,197 @@
 ﻿@{
     ViewBag.Title = "Business";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 }
-<section>
-  <div class="container-wide p-b--l">
-  
-    <blockquote>"Chocolatey's Package Builder and a good configuration manager can achieve software upgrades across your entire organization in 10 minutes or less from determination to implementation."</blockquote>
-    
-    <blockquote>"Running organizations that depend on Windows software requires better tools that reduce time to implement and provide better security while doing so."</blockquote>
 
-    <h1 class="text-center m-b">Chocolatey</h1>
-    
-    Manage the software you install on Windows in a better way. Chocolatey is right for your organization if any or all of the following apply:
-    
-    - Do you install software on Windows? 
-    - Do you ever feel the current proceses you are using require a lot of hand-holding?
-    - Does your current approach to automation require a lot of manual interaction?
-    - Are you managing software for both internal applications and 3rd party software on Windows? If so, are your approaches consistent?
-    - Can you update a single piece of software across your organization in less than 2 hours? 30 minutes? 5 minutes? Does that time still apply from the moment you determine a need to upgrade to implementation?
+<div id="header" class="bg-medium-dark @if (!User.Identity.IsAuthenticated) {<text>neg-mt-xl-3</text>}">
+    <section class="py-3 py-lg-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-3">Chocolatey for Business</h1>
+                    <h1>Manage the Software You Install on Windows in a Better Way</h1>
+                    <a class="btn btn-lg btn-outline-light mt-3" href="@Url.RouteUrl(RouteName.ContactUs)">Schedule a Demo</a>
+                    <a class="btn btn-lg btn-primary mt-3" href="@Url.RouteUrl(RouteName.Pricing)">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="shape-border shape-border-bottom"></div>
+</div>
+<section class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center">
+                <div class="card w-75 mx-auto testimonial">
+                    <div class="card-body">
+                        <img class="rounded-circle border text-center" src="/content/images/team/mukesh-sq.png" alt="Mukesh Sharma, COO of Chocolatey" title="Mukesh Sharma, COO of Chocolatey" />
+                        <h3 class="mt-2 mb-0 text-primary"><small>Mukesh Sharma</small></h3>
+                        <p><small><i>COO of Chocolatey</i></small></p>
+                        <q class="mb-0">Running organizations that depend on Windows software requires better tools that reduce time to implement and provide better security while doing so.</q>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-3 text-center"><strong>Chocolatey is right for your organization if any or all of the following apply:</strong></h2>
+                <ul class="check-list">
+                    <li>Do you install software on Windows?</li>
+                    <li>Do you ever feel the current proceses you are using require a lot of hand-holding?</li>
+                    <li>Does your current approach to automation require a lot of manual interaction?</li>
+                    <li>Are you managing software for both internal applications and 3rd party software on Windows? If so, are your approaches consistent?</li>
+                    <li>Can you update a single piece of software across your organization in less than 2 hours? 30 minutes? 5 minutes? Does that time still apply from the moment you determine a need to upgrade to implementation?</li>
+                </ul>
+                <p>Hundreds of IT organizations have adopted Chocolatey to automate and simplify their Windows software management experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-3 text-center"><strong>Chocolatey Facts:</strong></h2>
+                <ul class="check-list">
+                    <li>Chocolatey is a 5 year proven solution that has been validated by Microsoft and countless other organizations.</li>
+                    <li>Chocolatey has a track record for success.</li>
+                    <li>Chocolatey makes your existing automation solutions better.</li>
+                    <li>Chocolatey builds on technologies you are already leveraging for Windows automation (like PowerShell).</li>
+                    <li>Chocolatey integrates right into your CI/CD platform.</li>
+                    <li>Packages are independent deployment artifacts that are portable across Windows automation technologies and can be tested independently.</li>
+                    <li>Chocolatey unifies your approaches to software installation and tracking on Windows.</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-center">
 
-    <p>Hundreds of IT organizations have adopted Chocolatey to automate and simplify their Windows software management experience.</p>
-    <h3>Begin managing your Windows environment in a better way...</h3>
-    
-    Facts:
-    - Chocolatey is a 5 year proven solution that has been validated by Microsoft and countless other organizations.
-    - Chocolatey has a track record for success.
-    - Chocolatey makes your existing automation solutions better.
-    - Chocolatey builds on technologies you are already leveraging for Windows automation (like PowerShell).
-    - Chocolatey integrates right into your CI/CD platform.
-    - Packages are independent deployment artifacts that are portable across Windows automation technologies and can be tested independently.
-    - Chocolatey unifies your approaches to software installation and tracking on Windows.
-    
-    Organizations like yours turn to Chocolatey for Business when:
-    
-    - You have a need for a supported approach.
-    - You need to move quickly to install/upgrade software. Chocolatey's Package Builder and a good configuration manager can achieve software upgrades across your entire organization in 10 minutes or less from determination to implementation.
-    
-    Why this is better:
-    
-    - The faster you can move to update 3rd party software (and internal software) reduces security risks for your organization.
-    
-    
-    Contact us today to get started with your free trial. Begin managing your software in a better way.
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center">
 
-    <p>
-      Chocolatey for Business is the enterprise offering that enables companies to adopt a DevOps approach to managing their Windows environment. Allowing you to deliver applications to your users more reliably and faster
-      Chocolatey Open Source is great for individuals to get started on automating their Windows management. But when you have complex, critical infrastructure managed by teams, Chocolatey for Business offers more. With our business editions you get all of the benefits of open source Chocolatey together with enhanced capabilities, integrations, and the peace of mind of having a supported platform.
-    </p>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-3 text-center"><strong>Organizations like yours turn to Chocolatey for Business when:</strong></h2>
+                <ul class="check-list">
+                    <li>You have a need for a supported approach.</li>
+                    <li>You need to move quickly to install/upgrade software. Chocolatey's Package Builder and a good configuration manager can achieve software upgrades across your entire organization in 10 minutes or less from determination to implementation.</li>
+                </ul>
+                <p>Why is this better? The faster you can move to update 3rd party software (and internal software) reduces security risks for your organization.</p>
+                <p>
+                    Chocolatey for Business is the enterprise offering that enables companies to adopt a DevOps approach to managing their Windows environment, allowing you to deliver applications to your users more reliably and faster.
+                    Chocolatey Open Source is great for individuals to get started on automating their Windows management, but when you have complex, critical infrastructure managed by teams, Chocolatey for Business offers more. 
+                    With our business editions you get all of the benefits of open source Chocolatey together with enhanced capabilities, integrations, and the peace of mind of having a supported platform.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-3 text-center"><strong>Deliver End to End automation through customised packages</strong></h2>
+                <p>
+                    Save time and reduce complexity by creating packages directly from software installers in seconds.
+                    We often hear from our customers that they are increasingly under pressure to deliver more software applications faster and reliably. With multiple versions to support it has only become time consuming and complex. Chocolatey for Business helps by automating the the task of application installation. Chocolatey can figure out how to install the various components and creates an entire package surrounding the process.  Effort can be reduced from hours to minutes. Whilst also reducing human error and ensuring consistency. By leveraging our powerful platform you can begin to build your customised packages for various use cases. Allowing you to automate the entire lifecycle in minutes.
+                </p>
+            </div>
+            <div class="col-lg-6 text-center">
 
-    <h3>Deliver End to End automation through customised packages</h3>
-
-    <p>Save time and reduce complexity by creating packages directly from software installers in seconds.
-      We often hear from our customers that they are increasingly under pressure to  deliver more software applications faster and reliably. With multiple versions to support it has only become time consuming and complex. Chocolatey for Business helps by automating the the task of application installation. Chocolatey can figure out how to install the various components and creates an entire package surrounding the process.  Effort can be reduced from hours to minutes. Whilst also reducing human error and ensuring consistency. By leveraging our powerful platform you can begin to build your customised packages for various use cases. Allowing you to automate the entire lifecycle in minutes.
-    </p>
-
-    <h3>Improve consistency - synchronization with programs & features</h3>
-
-    <p> Ensure that your updates are consistent across all updates.</p>
-
-    <p>We often hear from customers that have manually updated an application or have some auto update feature enabled that sits outside of Chocolatey.  This can create complications when you are trying to ensure there consistency between all updates of software and versions. Chocolatey for Business has solved this issue by enabling synchronization between programs and features. This provides better integration with Windows so that you can quickly inspect what has changed and report correctly.</p>
-
-    <h3>Streamline and accelerate deployments</h3>
-    <p>Install Directory Override helping you minimize your effort and reduce errors.</p>
-
-    <p>Using native installers can be challenging when having to determine the native installer type (MSI, NSIS, InnoSetup, etc). Errors can also occur when passing incorrect instructions and arguments.  Chocolatey can simply override the default default installation directory from a simple switch you pass to choco helping speed up your deployments and reducing errors.</p>
-
-    <h3>Accessibility of packages</h3>
-    <p>Ability to create custom private repository ensures that you will get access to packages all of the time.</p>
-
-    <p>Internet reliability or changes to software updates can mean you don't always get the packages you need when you need them. Chocolatey allows you to build  a dedicated repository within your IT environment. This ensures that can build and run your updates from your dedicated Chocolatey repositories and also enable access to to other teams based on your internal policies.</p>
-
-    <h3>Secure & Validated: Runtime Malware & Virus Protection minimizing risk.</h3>
-
-    <p>With the ongoing threat of viruses and malware it's important that you can trust the packages you access and run. Especially as you look to manage your Windows environment more securely.</p>
-
-    <p>We offer two options for our customers:</p>
-
-    <ul>
-      <li>Managed Service: When Chocolatey downloads resources as part of a package install, Chocolatey for Business will automatically check the executables prior to running any content. If a certain number of positives have been identified (configurable), Chocolatey will fail the install automatically (can be overridden). Chocolatey partners with VirusTotal to offer this service.</li>
-      <li>Integrated: If prefer to leverage your existing antivirus solution Chocolatey can be easily integrated with your current antivirus product.</li>
-    </ul>
-
-    <h3>Peace of Mind: Prioritization of Bugs and Features backed with customer support.</h3>
-
-    <p>For our Chocolatey Business customers we offer expert help from our team of support engineers. Your subscription includes access to new releases, bug fixes, and knowledge base. You can also get support and advice from our ever growing community.</p>
-
-
-    @*- Successful enterprise deployments
-- Use case studies*@
-
-  </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="bg-medium-dark border-0">
+    <div class="shape-border shape-border-top"></div>
+    <section class="py-3 py-lg-5">
+        <div class="container">
+            <div class="row mb-3 text-center text-white">
+                <div class="col-12">
+                    <h1><strong>Contact us today to get started with your free trial!</strong></h1>
+                    <h2>Begin managing your software in a better way.</h2>
+                    <a class="btn btn-lg btn-outline-light mt-3" href="@Url.RouteUrl(RouteName.ContactUs)">Schedule a Demo</a>
+                    <a class="btn btn-lg btn-primary mt-3" href="@Url.RouteUrl(RouteName.Pricing)">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="shape-border shape-border-bottom"></div>
+</div>
+<section class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h1 class="text-center display-2 text-primary"><i class="icon-refresh" alt="Synchronization with Programs & Features"></i></h1>
+                        <h3 class="text-center mb-0"><strong>Synchronization with Programs & Features</strong></h3>
+                        <h3 class="text-center mb-3"><small>Ensure that your updates are consistent across all updates.</small></h3>
+                        <p class="mb-0">
+                            We often hear from customers that have manually updated an application or have some auto update feature enabled that sits outside of Chocolatey.
+                            This can create complications when trying to ensure consistency between all updates of software and versions. Chocolatey for Business has solved this issue by enabling synchronization between programs and features.
+                            This provides better integration with Windows so that you can quickly inspect what has changed and report correctly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h1 class="text-center display-2 text-primary"><i class="icon-rocket" alt="Streamline and Accelerate Deployments"></i></h1>
+                        <h3 class="text-center mb-0"><strong>Streamline and Accelerate Deployments</strong></h3>
+                        <h3 class="text-center mb-3"><small>Install Directory Override helping you minimize your effort and reduce errors.</small></h3>
+                        <p class="mb-0">
+                            Using native installers can be challenging when having to determine the native installer type (MSI, NSIS, InnoSetup, etc). Errors can also occur when passing incorrect instructions and arguments.
+                            Chocolatey can simply override the default installation directory from a simple switch you pass to choco helping speed up your deployments and reducing errors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h1 class="text-center display-2 text-primary"><i class="icon-cogs" alt="Accessibility of Packages"></i></h1>
+                        <h3 class="text-center mb-0"><strong>Accessibility of Packages</strong></h3>
+                        <h3 class="text-center mb-3"><small>Create custom private repositories giving you access with no down time.</small></h3>
+                        <p class="mb-0">
+                            Internet reliability or changes to software updates can mean you don't always get the packages you need when you need them. Chocolatey allows you to build a dedicated repository within your IT environment.
+                            This ensures that can build and run your updates from your dedicated Chocolatey repositories and also enable access to to other teams based on your internal policies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h1 class="text-center display-2 text-primary"><i class="icon-users" alt="Peace of Mind"></i></h1>
+                        <h3 class="text-center mb-0"><strong>Peace of Mind</strong></h3>
+                        <h3 class="text-center mb-3"><small>Prioritization of Bugs and Features backed with customer support.</small></h3>
+                        <p class="mb-0">For our Chocolatey Business customers we offer expert help from our team of support engineers. Your subscription includes access to new releases, bug fixes, and knowledge base. You can also get support and advice from our ever growing community.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h1 class="text-center display-2 text-primary"><i class="icon-lock" alt="Secure & Validated"></i></h1>
+                        <h3 class="text-center mb-0"><strong>Secure & Validated</strong></h3>
+                        <h3 class="text-center mb-3"><small>Runtime Malware & Virus Protection minimizing risk.</small></h3>
+                        <p>With the ongoing threat of viruses and malware it's important that you can trust the packages you access and run. Especially as you look to manage your Windows environment more securely.</p>
+                        <p>We offer two options for our customers:</p>
+                        <ol class="mb-0">
+                            <li><strong>Managed Service:</strong> When Chocolatey downloads resources as part of a package install, Chocolatey for Business will automatically check the executables prior to running any content. If a certain number of positives have been identified (configurable), Chocolatey will fail the install automatically (can be overridden). Chocolatey partners with VirusTotal to offer this service.</li>
+                            <li><strong>Integrated:</strong> If prefer to leverage your existing antivirus solution Chocolatey can be easily integrated with your current antivirus product.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
