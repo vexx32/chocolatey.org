@@ -1,0 +1,281 @@
+﻿@{
+    ViewBag.Title = "Testimonials";
+}
+
+@section SideColumn {
+    <ul>
+        <li><a href="#testimonial-star-rating">Testimonials Star Ratings</a></li>
+        <li><a href="#testimonial-standalone">Standalone Testimonial</a></li>
+        <li><a href="#testimonial-multiple">Multiple Testimonials</a></li>
+        <li><a href="#testimonial-slider">Slider Testimonials <small><i>Coming Soon!</i></small></a></li>
+    </ul>
+}
+<h1>Testimonials</h1>
+<div class="callout callout-danger mt-3">
+    <strong class="text-danger">IMPORTANT!</strong><br />
+    The below testimonial looks are not native to the Bootstrap library. Ensure you have the <a href="@Url.RouteUrl(RouteName.Styleguide, new { styleguideName = "home" })">Chocolatey Theme</a> installed for proper usage.
+</div>
+
+<h2 id="testimonial-star-rating" class="mt-5">Testimonial Star Ratings</h2>
+<p>In situations where a user has provided a star rating with their testimonial, include the blocks of code below as shown on each <a href="testimonial-standalone">testimonial</a>. Otherwise, this can be ommited from the testimonial card.</p>
+<p>
+
+</p>
+<div class="card">
+    <div class="card-body">
+        <ul class="rating star5">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="rating star4">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="rating star3">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="rating star2">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="rating star1 mb-0">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="card-footer bg-white border-top">
+<script type="text/plain" class="language-markup">
+<!-- 5 Star Rating -->
+<ul class="rating star5">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<!-- 4 Star Rating -->
+<ul class="rating star4">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<!-- 3 Star Rating -->
+<ul class="rating star3">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<!-- 2 Star Rating -->
+<ul class="rating star2">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<!-- 1 Star Rating -->
+<ul class="rating star1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</script>
+    </div>
+</div>
+
+<h2 id="testimonial-standalone" class="mt-5">Standalone Testimonial</h2>
+<p>
+    This testimonial look should only be used when displaying with other content inside of <a href="https://getbootstrap.com/docs/4.3/layout/grid/" target="_blank" rel="noreferrer">Bootstrap's grid</a>. 
+    If multiple testimonials need to be displayed, use the <a href="#testimonial-multiple">options below</a>.
+</p>
+<div class="row align-items-center mb-3">
+    <div class="col-lg-6 text-center">
+        <div class="card w-75 mx-auto testimonial">
+            <div class="card-body">
+                <img class="rounded-circle border text-center" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>Jane Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6"></div>
+</div>
+<div class="border">
+<script type="text/plain" class="language-markup">
+<!-- Used within a .row to show how it can utilize the grid -->
+<div class="row align-items-center">
+    <div class="col-lg-6 text-center">
+        <div class="card w-75 mx-auto testimonial">
+            <div class="card-body">
+                <img class="rounded-circle border text-center" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>Jane Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6"></div>
+</div>
+</script>
+</div>
+
+<h2 id="testimonial-multiple" class="mt-5">Multiple Testimonials</h2>
+<p>
+    Use the testimonial option below when displaying more than one testimonial at a time. This adds a background header element, which works better when multiple testimonials are present.
+</p>
+<div class="row mb-3">
+    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+        <div class="card h-100 testimonial-2">
+            <div class="card-header p-0"></div>
+            <div class="card-body pt-0 text-center">
+                <img class="rounded-circle" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>Jane Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+        <div class="card h-100 testimonial-2">
+            <div class="card-header p-0"></div>
+            <div class="card-body pt-0 text-center">
+                <img class="rounded-circle" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>John Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 mb-lg-0">
+        <div class="card h-100 testimonial-2">
+            <div class="card-header p-0"></div>
+            <div class="card-body pt-0 text-center">
+                <img class="rounded-circle" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>Jane Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="border">
+<script type="text/plain" class="language-markup">
+<div class="row">
+    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+        <div class="card h-100 testimonial-2">
+            <div class="card-header p-0"></div>
+            <div class="card-body pt-0 text-center">
+                <img class="rounded-circle" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>Jane Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+        <div class="card h-100 testimonial-2">
+            <div class="card-header p-0"></div>
+            <div class="card-body pt-0 text-center">
+                <img class="rounded-circle" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>John Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus. Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 mb-lg-0">
+        <div class="card shadow h-100 testimonial-2">
+            <div class="card-header p-0"></div>
+            <div class="card-body pt-0 text-center">
+                <img class="rounded-circle" src="https://via.placeholder.com/100/e9ecef/000/" rel="noreferrer" alt="Placeholder" title="Placeholder" />
+                <h3 class="mt-2 mb-0 text-primary"><small>Jane Doe</small></h3>
+                <p><small><i>Position of Company Name</i></small></p>
+                <ul class="rating star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <q>Suspendisse non consequat nulla. Duis accumsan, nibh quis sagittis feugiat, metus purus commodo erat, ac condimentum tortor ex in purus.</q>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+</div>
+
+<h2 id="testimonial-slider" class="mt-5">Testimonial Slider</h2>
+<p><i>Coming Soon!</i></p>

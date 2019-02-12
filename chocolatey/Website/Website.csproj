@@ -672,6 +672,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\StyleguideController.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\Captcha.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
@@ -1243,6 +1244,7 @@
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
+    <Content Include="Content\Images\styleguide\logo-space.jpg" />
     <Content Include="Content\Images\team\gary.png" />
     <Content Include="Content\Images\team\mukesh-sq.png" />
     <Content Include="Content\Images\team\mukesh.png" />
@@ -1584,6 +1586,17 @@
     <Content Include="Views\Shared\_CopyrightNavigation.cshtml" />
     <Content Include="Views\Shared\_TopNavigation.cshtml" />
     <Content Include="Views\Shared\_BottomNavigation.cshtml" />
+    <Content Include="Views\Styleguide\Home.cshtml" />
+    <Content Include="Views\Styleguide\_Layout.cshtml" />
+    <Content Include="Views\Styleguide\_ViewStart.cshtml" />
+    <Content Include="Views\Styleguide\Colors.cshtml" />
+    <Content Include="Views\Styleguide\Alerts.cshtml" />
+    <Content Include="Views\Styleguide\Buttons.cshtml" />
+    <Content Include="Views\Styleguide\Cards.cshtml" />
+    <Content Include="Views\Styleguide\Sections.cshtml" />
+    <Content Include="Views\Styleguide\Testimonials.cshtml" />
+    <Content Include="Views\Styleguide\Font.cshtml" />
+    <Content Include="Views\Styleguide\Logo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

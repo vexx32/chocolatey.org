@@ -49,6 +49,7 @@ $('a[href*="#"]')
     .not('[href="#0"]')
     .not('[data-toggle="collapse"]')
     .not('[data-toggle="tab"]')
+    .not('[data-toggle="pill"]')
     .click(function (event) {
         // Highlight active link if vertical nav
         var verticalNav = /pricing/.test(window.location.href);
@@ -117,7 +118,12 @@ $('.btn-copy').click(function () {
     }, 2000);
 });
 
-// Documentation left side navigation
+// Allow Callouts to be dismissible
+$('[class*="callout-"] .close').click(function () {
+    $(this).closest('[class*="callout-"]').hide();
+});
+
+// Documentation & Styleguide left side navigation
 $(function () {
     setNavigation();
 });
@@ -128,7 +134,7 @@ function setNavigation() {
 
     $(".docs-left a").each(function () {
         var href = $(this).attr('href');
-        if (path.substring(0, href.indexOf('docs/').length) === href) {
+        if (path.substring(0, href.indexOf('docs/').length) === href || path.substring(0, href.indexOf('styleguide/').length) === href) {
             $(this).closest('li').addClass('active').parent().parent().collapse('show').parent().parent().parent().collapse('show');
         }
     });
