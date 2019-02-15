@@ -6,7 +6,9 @@
     "gulp-concat": "^2.6.1",
     "gulp-purgecss": "^1.1.1",
     "gulp-sass": "^4.0.2",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.11.0",
+    "gulp-uglify": "^3.0.1",
+    "gulp-zip": "^4.2.0"
   },
   "dependencies": {
     "bootstrap": "^4.3.1"

@@ -1306,6 +1306,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="chocolatey-media-kit.zip" />
+    <Content Include="chocolatey-styleguide.zip" />
     <Content Include="Content\scss\chocolatey.scss" />
     <Content Include="Content\scss\purge.scss" />
     <Content Include="Content\scss\_base.scss" />
