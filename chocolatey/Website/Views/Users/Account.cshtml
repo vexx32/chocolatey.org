@@ -18,8 +18,8 @@
                     <h2 class="mb-0">My Account (@Model.UserName)</h2>
                 </div>
                 <div class="col-xl-5 h-100 text-center text-xl-right">
-                    <a href="@Url.Action(MVC.Users.Edit())" class="btn btn-primary font-weight-bold">Edit Profile</a>
-                    <a href="@Url.Action(MVC.Users.ChangePassword())" class="btn btn-primary font-weight-bold">Change Password</a>
+                    <a href="@Url.Action(MVC.Users.Edit())" class="btn btn-primary">Edit Profile</a>
+                    <a href="@Url.Action(MVC.Users.ChangePassword())" class="btn btn-primary">Change Password</a>
                 </div>
             </div>
             <hr class="mb-3 mb-xl-5" />
@@ -35,7 +35,7 @@
                             </p>
                         </div>
                         <div class="card-footer bg-white pt-0 pb-4 border-0 text-center">
-                            <a href="@Url.UploadPackage()" class="btn btn-primary font-weight-bold">Upload Package</a>
+                            <a href="@Url.UploadPackage()" class="btn btn-primary">Upload Package</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                             <p class="mb-0">Edit package details or Remove packages that you have previously uploaded.</p>
                         </div>
                         <div class="card-footer bg-white pt-0 pb-4 border-0 text-center">
-                            <a href="@Url.Action(MVC.Users.Packages())" class="btn btn-primary font-weight-bold">Manage Packages</a>
+                            <a href="@Url.Action(MVC.Users.Packages())" class="btn btn-primary">Manage Packages</a>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                         previous keys) if your token is accidentally revealed.
                     </p>
                     <p class="text-danger font-weight-bold">Your key is hidden for privacy, click to show.</p>
-                    <button type="button" class="btn btn-secondary font-weight-bold">Show API Key</button>
+                    <button type="button" class="btn btn-secondary">Show API Key</button>
                     <div id="generateKey" class="d-none">
                         <h3 class="mt-4">Your API key is:</h3>
                         <div class="input-group copyBox">
@@ -104,7 +104,7 @@
                             @using (Html.BeginForm("GenerateApiKey", "Users", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
-                                <input class="btn btn-primary font-weight-bold" type="submit" value="Generate New API Key" />
+                                <input class="btn btn-primary" type="submit" value="Generate New API Key" />
                             }
                         </fieldset>
                         <h3 class="mt-4">Example Usage:</h3>

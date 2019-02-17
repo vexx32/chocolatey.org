@@ -369,8 +369,8 @@
                         <p class="mb-0">This does require that you increment the package version.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <a href="@Url.UploadPackage()" class="btn btn-success font-weight-bold"><i class="icon-upload" alt="Upload"></i> Upload Updated Package</a>
-                        <button type="button" class="btn btn-danger font-weight-bold" data-dismiss="modal">Cancel</button>
+                        <a href="@Url.UploadPackage()" class="btn btn-success"><i class="icon-upload" alt="Upload"></i> Upload Updated Package</a>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -468,7 +468,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <a class="btn btn-secondary font-weight-bold mt-3" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="icon-download" alt="Download"></i> Download</a>
+                                    <a class="btn btn-secondary mt-3" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="icon-download" alt="Download"></i> Download</a>
                                 </div>
                                 <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="upgrade-tab">
                                     <p class="mb-3">To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
@@ -704,11 +704,11 @@
 
                                         if (Model.Status == PackageStatusType.Approved)
                                         {
-                                            <button class="btn btn-secondary d-flex mx-auto mt-3 font-weight-bold" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Show Package Communication / Package Test Rerun</button>
+                                            <button class="btn btn-secondary d-flex mx-auto mt-3" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Show Package Communication / Package Test Rerun</button>
                                         }
                                         else
                                         {
-                                            <button class="btn btn-secondary d-flex mx-auto mt-3 font-weight-bold" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Show Package Review</button>
+                                            <button class="btn btn-secondary d-flex mx-auto mt-3" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Show Package Review</button>
                                         }
                                     }
                                     <div class="collapse @if (anyPackageRole && Model.Status != PackageStatusType.Approved) {<text>d-block</text>} " id="add-comment">
@@ -822,7 +822,7 @@
 
                                                 @if (moderationRole)
                                                 {
-                                                    <button class="btn btn-sm btn-secondary font-weight-bold mt-2" type="button" data-toggle="collapse" data-target="#test-trusted" aria-expanded="false" aria-controls="test-trusted">Show Trusted Section</button>
+                                                    <button class="btn btn-sm btn-secondary mt-2" type="button" data-toggle="collapse" data-target="#test-trusted" aria-expanded="false" aria-controls="test-trusted">Show Trusted Section</button>
                                                     <div class="collapse form-field" id="test-trusted">
                                                         <ul class="mb-0 mt-3">
                                                             <li>Trusted package ids are packages where we have built trust in the package maintainer(s).</li>
@@ -846,7 +846,7 @@
                                                             <p class="mt-2 mb-0 pb-2">This package @trustedText.</p>
                                                         }
                                                     </div>
-                                                    <button class="btn btn-sm btn-secondary font-weight-bold mt-2" type="button" data-toggle="collapse" data-target="#test-exemptions" aria-expanded="false" aria-controls="test-exemptions">Show Testing Exemption Section</button>
+                                                    <button class="btn btn-sm btn-secondary mt-2" type="button" data-toggle="collapse" data-target="#test-exemptions" aria-expanded="false" aria-controls="test-exemptions">Show Testing Exemption Section</button>
                                                     <div class="collapse form-field" id="test-exemptions">
                                                         <ul class="mb-0 mt-3">
                                                             <li>Exempting a package id from testing requires a reason.</li>
@@ -875,7 +875,7 @@
                                                         }
                                                     </div>
                                                 }
-                                                <button class="btn btn-success d-block mt-2 font-weight-bold" type="submit" value="Save" title="Save Changes"><i class="icon-save" alt="Save"></i> Save</button>
+                                                <button class="btn btn-success d-block mt-2" type="submit" value="Save" title="Save Changes"><i class="icon-save" alt="Save"></i> Save</button>
                                             </fieldset>
                                         }
                                     </div>
@@ -903,11 +903,11 @@
                         <hr />
                         @if (expandForModeration)
                         {
-                            <button type="button" class="btn btn-danger font-weight-bold mb-2"><i class="icon-minus-circle" alt="Collapse Files"></i> Collapse Files</button>
+                            <button type="button" class="btn btn-danger mb-2"><i class="icon-minus-circle" alt="Collapse Files"></i> Collapse Files</button>
 
                             var nuspecId = @Model.Id.Replace(".", "-") + "-nuspec";
                             <div class="collapse-2 mb-1">
-                                <button type="button" class="btn btn-sm btn-secondary font-weight-bold mr-2">Hide</button>
+                                <button type="button" class="btn btn-sm btn-secondary mr-2">Hide</button>
                                 @Model.Id<span>.nuspec</span>
                                 <div class="collapse-2-content d-block">
 <pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
@@ -1015,11 +1015,11 @@
                                         var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-").Replace(" ", string.Empty) + "-" + random.Next();
                                         if (expandForModeration)
                                         {
-                                            <button type="button" class="btn btn-sm btn-secondary font-weight-bold mr-2 ">Hide</button>
+                                            <button type="button" class="btn btn-sm btn-secondary mr-2 ">Hide</button>
                                         }
                                         else
                                         {
-                                            <button type="button" class="btn btn-sm btn-secondary font-weight-bold mr-2">Show</button>
+                                            <button type="button" class="btn btn-sm btn-secondary mr-2">Show</button>
                                         }
 
                                     }

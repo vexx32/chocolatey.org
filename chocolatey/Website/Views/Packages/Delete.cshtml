@@ -29,7 +29,7 @@
             {
                 <div class="row mt-5">
                     <div class="col-lg-8 mx-auto">
-                        <div class="card border-0 rounded-0 shadow">
+                        <div class="card">
                             <div class="card-body">
                             @using (Html.BeginForm())
                             {
@@ -47,7 +47,7 @@
                                         Unchecking this box means your package cannot be installed directly and it will
                                         not show up in search results.
                                     </p>
-                                    <button class="btn btn-primary font-weight-bold d-block mt-3 mx-auto" type="submit" value="Save" title="Save Changes">Save Changes</button>
+                                    <button class="btn btn-primary d-block mt-3 mx-auto" type="submit" value="Save" title="Save Changes">Save Changes</button>
                                     <p class="mb-0 mt-2 text-center"><small><a class="cancel" href="@Url.Action("DisplayPackage")" title="Cancel Changes and go back to package page.">Cancel</a></small></p>
                                 </fieldset>
                             }

@@ -23,16 +23,16 @@
 }
 
 <div class="col-lg-6 col-xl-4 mb-4">
-    <div class="card border-0 rounded-0 shadow h-100 @if (Model.Status == PackageStatusType.Unknown) {<text>unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
+    <div class="card h-100 @if (Model.Status == PackageStatusType.Unknown) {<text>unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
         @if (Model.Status == PackageStatusType.Unknown)
         {
-            <div class="card-header rounded-0 py-2 px-3 text-white font-weight-bold d-flex align-items-center">
+            <div class="card-header py-2 px-3 text-white font-weight-bold d-flex align-items-center">
                 <span>Unknown Status</span>
             </div>
         }
         @if (isSubmitted)
         {
-            <div class="card-header rounded-0 py-2 px-3 text-white font-weight-bold d-flex align-items-center">
+            <div class="card-header py-2 px-3 text-white font-weight-bold d-flex align-items-center">
                 @switch (submittedStatus)
                 {
                     case PackageSubmittedStatusType.Pending:

@@ -70,7 +70,7 @@
         <td>
             @if (!string.IsNullOrWhiteSpace(Model.Package.ReviewComments))
             {
-                <button type="button" data-toggle="collapse" data-target="#@divVersionId" aria-expanded="false" aria-controls="@divVersionId" class="btn btn-sm btn-secondary font-weight-bold mr-2 ">Show</button>
+                <button type="button" data-toggle="collapse" data-target="#@divVersionId" aria-expanded="false" aria-controls="@divVersionId" class="btn btn-sm btn-secondary mr-2 ">Show</button>
                 <div id="@divVersionId" class="collapse mt-3">
                     @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments.clean_html()))
                 </div>

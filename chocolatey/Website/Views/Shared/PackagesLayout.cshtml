@@ -19,7 +19,7 @@
     @RenderSection("TopScripts", required: false)
 }
 
-<body class="bg-light">
+<body>
     <header>
         <div class="alert alert-primary alert-dismissible fade show mb-0 @if (string.IsNullOrEmpty(noticeText)) { <text> d-none</text> }" role="alert" aria-atomic="true">
             <strong><i class="icon-exclamation-triangle m-r"></i>@Html.Raw(noticeText)</strong>
@@ -97,7 +97,7 @@
                     </form>
                     <form class="form-inline my-2 my-md-0 d-none d-xl-flex" role="search" action="@Url.SearchResults()" method="get">
                         <input class="form-control ml-2 search-input w-auto" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
-                        <button class="btn btn-search my-2 my-sm-0" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
+                        <button class="btn btn-primary btn-search my-2 my-sm-0" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
                     </form>
                 }
             </div>
@@ -114,7 +114,7 @@
                 </form>
                 <form class="form-inline d-none d-xl-flex" role="search" action="@Url.SearchResults()" method="get">
                     <input class="form-control ml-2 search-input w-auto" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
-                    <button class="btn btn-search my-2 my-sm-0" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
+                    <button class="btn btn-primary btn-search my-2 my-sm-0" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
                 </form>
             </nav>
         }
@@ -124,7 +124,7 @@
                     <div class="col-12">
                         <form class="form-inline justify-content-center" role="search" action="@Url.SearchResults()" method="get">
                             <input class="form-control search-input w-75" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
-                            <button class="btn btn-search" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
+                            <button class="btn btn-primary btn-search" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
                         </form>
                     </div>
                 </div>
