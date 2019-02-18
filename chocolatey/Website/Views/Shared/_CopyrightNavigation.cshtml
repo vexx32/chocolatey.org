@@ -1,0 +1,19 @@
+﻿@using System.Configuration
+
+<section class="container-fluid bg-medium-dark text-center py-3">
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <strong>&copy; 2017 - @DateTime.UtcNow.Year</strong> Chocolatey Software, Inc.<br />
+                <strong>&copy; 2011 - 2017</strong> RealDimensions Software, LLC.
+            </p>
+            @{
+                string commitId = ConfigurationManager.AppSettings["appharbor.commit_id"];
+                string worker = ConfigurationManager.AppSettings["appharbor.worker_name"];
+            }
+            <p id="releaseTag" class="mb-0">
+                Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. Page generated @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
+            </p>
+        </div>
+    </div>
+</section>

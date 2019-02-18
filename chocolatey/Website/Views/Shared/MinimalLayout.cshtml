@@ -1,13 +1,9 @@
-﻿@using System.Configuration
-@{
+﻿@{
     Layout = "_BaseLayout.cshtml";
 }
 @section css
 {
     @RenderSection("css", required: false)
-}
-@{
-    var noticeText = ("");
 }
 @section ExtraHeaders
 {
@@ -24,12 +20,7 @@
         <div id="shape"></div>
     </div>
     <header>
-        <div class="alert alert-primary alert-dismissible fade show mb-0 @if (string.IsNullOrEmpty(noticeText)) { <text> d-none</text> }" role="alert" aria-atomic="true">
-            <strong><i class="icon-exclamation-triangle m-r"></i>@Html.Raw(noticeText)</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        @Html.Partial("~/Views/Shared/_AlertTop.cshtml")
     </header>
     <main class="my-auto">
         @if (TempData.ContainsKey("Message"))
@@ -89,24 +80,8 @@
             </div>
         </section>
     </main>
-    <footer class="bg-medium text-white">
-        <section class="container-fluid bg-medium-dark text-center py-3">
-            <div class="row">
-                <div class="col-12">
-                    <p>
-                        <strong>&copy; 2017 - @DateTime.UtcNow.Year</strong> Chocolatey Software, Inc.<br />
-                        <strong>&copy; 2011 - 2017</strong> RealDimensions Software, LLC.
-                    </p>
-                    @{
-                        string commitId = ConfigurationManager.AppSettings["appharbor.commit_id"];
-                        string worker = ConfigurationManager.AppSettings["appharbor.worker_name"];
-                    }
-                    <p id="releaseTag" class="mb-0">
-                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker. Page generated @DateTime.UtcNow.ToString("dd MMM yyyy HH:mm:ss") +00:00.
-                    </p>
-                </div>
-            </div>
-        </section>
+    <footer class="bg-medium">
+        @Html.Partial("~/Views/Shared/_CopyrightNavigation.cshtml")
     </footer>
     @RenderPage("_CookiePolicy.cshtml")
 

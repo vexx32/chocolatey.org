@@ -1579,6 +1579,11 @@
     <Content Include="Views\Documentation\ReleaseNotesCentralManagement.cshtml" />
     <Content Include="Views\Packages\_UploadSteps.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesExtension.cshtml" />
+    <Content Include="Views\Shared\_AlertBottom.cshtml" />
+    <Content Include="Views\Shared\_AlertTop.cshtml" />
+    <Content Include="Views\Shared\_CopyrightNavigation.cshtml" />
+    <Content Include="Views\Shared\_TopNavigation.cshtml" />
+    <Content Include="Views\Shared\_BottomNavigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

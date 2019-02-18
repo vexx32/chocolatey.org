@@ -1,0 +1,106 @@
+﻿<header>
+    @Html.Partial("~/Views/Shared/_AlertTop.cshtml")
+    <nav class="navbar navbar-expand-xl navbar-dark bg-medium @if (!User.Identity.IsAuthenticated) { <text>mb-xl-3</text> }">
+        <a class="navbar-brand" href="@Url.Home()">
+            <img alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_square.svg")" />
+            @*<img class="d-xl-none" height="75" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />*@
+        </a>
+        <form class="form-inline my-2 my-md-0 d-xl-none ml-auto">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-outline-light mr-2" href="@Url.LogOn()"><i class="icon-sign-in" alt="Login"></i> Login</a>
+                <a class="btn btn-light" href="@Url.Action(MVC.Users.Register())"><i class="icon-user-plus" alt="Signup"></i> Signup</a>
+            }
+            else
+            {
+                <a class="btn btn-outline-light mr-2" href="@Url.LogOff()"><i class="icon-sign-out" alt="Log Off"></i> Log Off</a>
+                <a class="btn btn-light" href="@Url.Action(MVC.Users.Account())"><i class="icon-user" alt="Account"></i> Account</a>
+            }
+        </form>
+        <button class="navbar-toggler form-inline my-2 my-md-0 ml-2" type="button" data-toggle="collapse" data-target="#navbarlogoff" aria-controls="navbarlogoff" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarlogoff">
+            <ul class="navbar-nav ml-auto">
+            @*<li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.Features)">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.Business)">Business</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="@Url.Home()">Home <span class="sr-only">(current)</span></a>
+                </li>*@
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.Docs, new {docName = "installation"})">Install</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.About)">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <a class="nav-link pr-0" href="@Url.RouteUrl(RouteName.BlogHome)">Blog</a><a class="nav-link pl-1" href="http://feeds.feedburner.com/ChocolateyBlog" rel="alternate" type="application/rss+xml"><img src="//feedburner.google.com/fb/images/pub/feed-icon16x16.png" alt="Chocolatey Blog" style="vertical-align:middle;border:0" /></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.FAQ, new {docName = "chocolatey-faqs"})">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Docs</a>
+                </li>
+                <li class="nav-item d-xl-none">
+                    <a class="nav-link" href="@Url.RouteUrl(RouteName.ListPackages)">Packages</a>
+                </li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item d-none d-xl-block">
+                        <a class="nav-link" href="@Url.RouteUrl(RouteName.ListPackages)">Packages</a>
+                    </li>
+                }
+            </ul>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <form class="form-inline my-2 my-md-0 d-none d-xl-inline">
+                    <a class="btn btn-outline-light mr-2" href="@Url.LogOn()"><i class="icon-sign-in" alt="Login"></i> Login</a>
+                    <a class="btn btn-light" href="@Url.Action(MVC.Users.Register())"><i class="icon-user-plus" alt="Signup"></i> Signup</a>
+                </form>
+                <form class="form-inline my-2 my-md-0 d-none d-xl-flex" role="search" action="@Url.SearchResults()" method="get">
+                    <input class="form-control ml-2 search-input w-auto" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
+                    <button class="btn btn-primary btn-search my-2 my-sm-0" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
+                </form>
+            }
+        </div>
+    </nav>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <nav class="navbar navbar-dark bg-medium-dark d-none d-xl-flex">
+            @*<a class="navbar-brand" href="@Url.Action(MVC.Users.Account())"> Welcome, Username!</a>*@
+            <form class="form-inline ml-auto">
+                <a class="nav-link text-white" href="@Url.RouteUrl(RouteName.ListPackages)"><i class="icon-share" alt="View All Packages"></i> View All Packages</a>
+                <a class="btn btn-outline-light mr-2" href="@Url.LogOff()"><i class="icon-sign-out" alt="Log Off"></i> Log Off</a>
+                <a class="btn btn-light" href="@Url.Action(MVC.Users.Account())"><i class="icon-user" alt="Account"></i> Account</a>
+                <a class="btn btn-primary ml-2" href="@Url.UploadPackage()"><i class="icon-upload" alt="Upload"></i> Upload</a>
+            </form>
+            <form class="form-inline d-none d-xl-flex" role="search" action="@Url.SearchResults()" method="get">
+                <input class="form-control ml-2 search-input w-auto" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
+                <button class="btn btn-primary btn-search my-2 my-sm-0" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
+            </form>
+        </nav>
+    }
+    <div class="bg-medium-dark d-xl-none">
+        <section class="container py-2">
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-inline justify-content-center" role="search" action="@Url.SearchResults()" method="get">
+                        <input class="form-control search-input w-75" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
+                        <button class="btn btn-primary btn-search" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><i class="icon-search" alt="Search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</header>
