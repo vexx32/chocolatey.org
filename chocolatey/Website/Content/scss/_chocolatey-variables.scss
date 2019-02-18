@@ -12,9 +12,15 @@ $medium-light: #e9ecef;
 $medium: #2f6492;
 $medium-dark: #1a375a;
 
-// Body
+// Body & Font
 $enable-responsive-font-sizes: true;
 $body-bg: $gray-100;
+$font-family-sans-serif: 'PT Sans', sans-serif;
+$font-size-base: 1.25rem;
+$display1-size: 6.25rem;
+$display2-size: 5.75rem;
+$display3-size: 4.75rem;
+$display4-size: 3.75rem;
 
 // Links
 $link-hover-decoration: none;
