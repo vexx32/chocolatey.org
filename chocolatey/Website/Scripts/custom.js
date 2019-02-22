@@ -6,6 +6,82 @@ $(window).on('load', function () {
     $('body').delay(350).css({ 'overflow': 'visible' });
 });
 
+// Top Navigation
+$(document).ready(function () {
+    // Top Alert
+    var notice = window.sessionStorage.getItem('notice');
+    if (notice) {
+        $(".notice-text").addClass("d-none");
+    }
+    $('.notice-text').click(function () {
+        sessionStorage.setItem('notice', 'true');
+    });
+    // Dropdowns on desktop
+    $(".dropdown").on("click.bs.dropdown", function (e) {
+        $target = $(e.target);
+        // Stop dropdown from collapsing if clicked inside, otherwise collapse
+        if (!$target.hasClass("dropdown-toggle")) {
+            e.stopPropagation();
+        }
+    });
+    // Fade in animation
+    $('.dropdown').on('show.bs.dropdown', function () {
+        if ($(window).width() < 992) {
+            var height = $('header .alert').outerHeight();
+        }
+        else if ($(window).width() > 992 && $(window).width() < 1200) {
+            var height = $('nav.navbar').outerHeight() - $('nav .navbar-collapse').outerHeight() + $('header .alert').outerHeight();
+        }
+        else {
+            var height = $('nav.navbar').outerHeight() + $('header .alert').outerHeight();
+        }
+        var top = -$(window).scrollTop() + height;
+        var $dropdown = $(this).find('.dropdown-menu').first();
+        $dropdown.css("top", top);
+        $dropdown.stop(true, true).fadeIn();
+    });
+    // Fade out animation
+    $('.dropdown').on('hide.bs.dropdown', function () {
+        $(this).find('.dropdown-menu').first().stop(true, true).fadeOut();
+    });
+    // Close the dropdown when page is scrolled
+    $(window).on("scroll", function () {
+        if ($(this).width() > 1200) {
+            closeDropdowns();
+        }
+    });
+    // Close the dropdown when viewport is resized on desktop
+    $(window).on("resize", function () {
+        if ($(this).width() > 1200) {
+            closeDropdowns();
+            closeNav();
+        }
+    });
+    // Close the dropdown on mobile devices
+    $('.goback').click(function () {
+        closeDropdowns();
+    });
+    // Add/Remove fixed positioning for mobile
+    $('#topNav').on('show.bs.collapse', function () {
+        if ($(window).width() < 1200) {
+            $(this).parent().addClass("position-fixed").css("z-index", "999").css("top", "0");
+            $("body").addClass("position-fixed");
+        }
+    });
+    $('#topNav').on('hide.bs.collapse', function () {
+        $(this).parent().removeClass("position-fixed");
+        $("body").removeClass("position-fixed");
+    });
+    // Closes Sub Nav
+    function closeDropdowns() {
+        $(".dropdown.show").find(".dropdown-toggle").dropdown('toggle');
+    }
+    // Closes Main Nav
+    function closeNav() {
+        $(".navbar-collapse.show").collapse('toggle');
+    }
+});
+
 //Makes :contains case insensitive
 $.expr[":"].contains = $.expr.createPseudo(function (arg) {
     return function (elem) {

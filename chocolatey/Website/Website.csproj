@@ -1315,6 +1315,7 @@
     <Content Include="Content\scss\_icons.scss" />
     <Content Include="Content\scss\_preloader.scss" />
     <Content Include="Content\scss\_testimonials.scss" />
+    <Content Include="Content\scss\_navigation.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -2,9 +2,9 @@
     var noticeText = ("");
 }
 
-<div class="alert alert-primary alert-dismissible fade show mb-0 @if (string.IsNullOrEmpty(noticeText)) { <text> d-none</text> }" role="alert" aria-atomic="true">
-    <strong><i class="icon-exclamation-triangle m-r"></i>@Html.Raw(noticeText)</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+<div class="alert bg-success text-white alert-dismissible fade show mb-0 text-center p-2 notice-text @if (string.IsNullOrEmpty(noticeText)) { <text> d-none</text> }" role="alert" aria-atomic="true">
+    <strong>@Html.Raw(noticeText)</strong>
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">Got it!</span>
     </button>
 </div>

@@ -1,0 +1,246 @@
+#topNav {
+    padding-bottom: 0;
+    z-index: 9999;
+
+    img {
+        height: 50px;
+        margin-bottom: .5rem;
+    }
+
+    .navbar-collapse {
+        background: $white;
+        box-shadow: $box-shadow;
+        margin: 0 -1rem;
+        padding: .5rem 0;
+
+        &.show {
+            height: 100vh;
+        }
+
+        .nav-item:last-child {
+            margin: .5rem 1rem;
+        }
+
+        .nav-link {
+            padding: 0;
+            margin: .5rem 1rem;
+            color: $dark;
+            transition: 0.5s;
+        }
+
+        .nav-link:hover, .show > .dropdown-toggle {
+            color: $primary;
+        }
+
+        .dropdown-toggle:after {
+            border: none;
+            content: "\f107";
+            position: absolute;
+            top: 25%;
+            color: $primary;
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .dropdown-toggle:hover:after, .show > .dropdown-toggle:after {
+            opacity: 1;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            border: 0;
+            position: fixed !important;
+            margin-top: 0;
+            border-radius: 0;
+            box-shadow: $box-shadow;
+            padding: .5rem 0;
+            top: 99.5px;
+
+            &.show {
+                height: 100vh;
+            }
+
+            [class*=col-] {
+                padding: 0 1rem;
+
+                h4 {
+                    margin-bottom: 0;
+                }
+
+                ul {
+                    list-style: none;
+                    padding-left: 0;
+
+                    li {
+                        margin: .5rem 0;
+
+                        a {
+                            transition: 0.5s;
+                        }
+                    }
+                }
+            }
+
+            [class*=col-]:not(:last-child) {
+                border-bottom: 1px solid #ced4da;
+            }
+
+            .col-12 {
+                padding: .5rem 1rem;
+            }
+        }
+    }
+}
+
+#secondaryNav {
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        display: flex;
+
+        li {
+            padding: 0;
+            text-align: center;
+            display: flex;
+
+            .form-control {
+                border-color: $primary;
+            }
+
+            a {
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    line-height: 1.5rem;
+                }
+
+                span:nth-child(1) {
+                    font-size: 1.5rem;
+                }
+
+                span:nth-child(2), span:nth-child(3) {
+                    font-size: 80%;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    #secondaryNav {
+
+        ul {
+            
+            li {
+                padding: 0 .5rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+   #topNav img {
+        height: 75px;
+    }
+
+    #secondaryNav {
+
+        ul {
+
+            li {
+                padding: 0 1rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    #topNav {
+
+        .navbar-collapse {
+
+            &.show {
+                height: auto;
+            }
+
+            .dropdown-menu {
+                top: 94px;
+                padding: 1rem 0;
+
+                &.show {
+                    height: auto;
+                }
+
+                [class*=col-] {
+                    border-bottom: 0 !important;
+                }
+
+                [class*=col-]:not(:last-child):not(:first-child) {
+                    border-right: 1px solid #ced4da;
+                }
+            }
+        }
+    }
+
+    #secondaryNav {
+
+        ul {
+
+            li {
+                padding: 0 1.25rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    #topNav {
+        padding: 1.5rem;
+
+        img {
+            height: 125px;
+            position: absolute;
+            z-index: 9999;
+            top: 17px;
+            margin-bottom: 0;
+        }
+
+        .navbar-collapse {
+            background: $dark;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
+
+            .nav-item:last-child {
+                margin: 0;
+                position: absolute;
+                right: 1.5rem;
+                top: 25%;
+            }
+
+            .nav-link {
+                padding: .5rem 1.25rem;
+                color: $white;
+                margin: 0;
+            }
+
+            .dropdown-menu {
+                padding: 3rem 0;
+
+                [class*=col-] {
+                    padding: 0 2rem;
+
+                    ul {
+
+                        li {
+                            margin: 1rem 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

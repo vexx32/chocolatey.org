@@ -7,7 +7,7 @@
     font-style: normal;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before {
+[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before, .dropdown-toggle:after {
     font-family: 'FontAwesome';
     font-style: normal;
     font-weight: normal;
@@ -156,4 +156,12 @@
 
 .icon-users:before {
     content: "\f0c0";
+}
+
+.icon-chevron-left:before {
+    content: "\f053";
+}
+
+.icon-pencil:before {
+    content: "\f040";
 }
