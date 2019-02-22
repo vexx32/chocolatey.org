@@ -117,6 +117,11 @@ clipboard.on('success', function (e) {
     hideTooltip(btn);
 });
 
+// Make input text selectable with one click
+$(document).on('click', 'input[type=text]', function () {
+    this.select();
+});
+
 // Smooth Scroll
 // Select all links with hashes
 $('a[href*="#"]')
@@ -126,6 +131,8 @@ $('a[href*="#"]')
     .not('[data-toggle="collapse"]')
     .not('[data-toggle="tab"]')
     .not('[data-toggle="pill"]')
+    .not('[data-slide="prev"]')
+    .not('[data-slide="next"]')
     .click(function (event) {
         // Highlight active link if vertical nav
         var verticalNav = /pricing/.test(window.location.href);
@@ -225,7 +232,39 @@ $(function () {
             pre[i].firstChild.nodeValue = text.replace(/^\n+|\n+$/g, "");
         }
     }
-});// Make input text selectable with one click
-$(document).on('click', 'input[type=text]', function () {
-    this.select();
+});
+
+// Allow touch swiping of carousels on mobile devices
+$(".carousel").on("touchstart", function (event) {
+    var xClick = event.originalEvent.touches[0].pageX;
+    $(this).one("touchmove", function (event) {
+        var xMove = event.originalEvent.touches[0].pageX;
+        if (Math.floor(xClick - xMove) > 5) {
+            $(this).carousel('next');
+        }
+        else if (Math.floor(xClick - xMove) < -5) {
+            $(this).carousel('prev');
+        }
+    });
+    $(".carousel").on("touchend", function () {
+        $(this).off("touchmove");
+    });
+});
+
+// Stops video from playing when modal is closed or carousel is transitioned
+$('.information-carousel')
+    .on('shown.bs.modal', function () {
+        $(this).carousel('pause');
+    })
+    .on('hide.bs.modal', function () {
+        $(this).carousel('cycle');
+    })
+    .on('slide.bs.carousel', function () {
+        $(this).find(".video-story .modal").modal('hide');
+    });
+$(window).scroll(function () {
+    $(".video-story .modal").modal('hide');
+});
+$(".video-story .modal").on('hidden.bs.modal', function (e) {
+    $(this).find("iframe").attr("src", $(this).find("iframe").attr("src"));
 });

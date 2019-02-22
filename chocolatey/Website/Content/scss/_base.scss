@@ -18,6 +18,10 @@ a {
     transition: 0 .5s;
 }
 
+q {
+    display: inline-block;
+}
+
 .sticky-top:not(th) {
     top: 1rem;
 }
@@ -105,10 +109,6 @@ footer.bg-medium-dark a:hover {
     z-index: 9999;
 }
 
-.modal.fade .modal-dialog {
-    transform: translate(0,50%);
-}
-
 .modal .modal-footer button.close {
     color: $white;
     background-color: $secondary;
@@ -144,7 +144,7 @@ select:-webkit-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-input[type="text"]:disabled {
+input[type="text"]:disabled, .video-story div[data-toggle]:hover {
     cursor: pointer;
 }
 
@@ -213,12 +213,21 @@ input[type="text"]:disabled {
 }
 
 #terminal .terminal-body {
-    height: 300px;
+    height: 90px;
 }
 
-/*Home Page Images*/
-#trusted img, #tools img {
-    max-width: 600px;
+/*Home Page*/
+.carousel-section1 {
+    padding-bottom: 250px;
+}
+
+.carousel-section2 {
+    margin-top: -300px;
+}
+
+.carousel-section3 img {
+    max-height: 75px;
+    max-width: 125px;
 }
 
 /*Checklist*/
@@ -280,22 +289,23 @@ footer {
     border-top: 5px solid #81b5e2;
 }
 
+@media (min-width: 576px) {
+    #terminal .terminal-body {
+        height: 300px;
+    }
+}
+
 @media (min-width: 992px) {
     .copyBox {
         max-width: 550px;
     }
 
-    #artifacts {
-        background: url(/Content/images/gene.svg) 100% no-repeat;
-        background-position-x: 3%;
+    .modal.fade .modal-dialog:not(.modal-dialog-centered) {
+        transform: translate(0,50%);
     }
 }
 
 @media (min-width: 1200px) {
-    #artifacts {
-        background-position-x: 25%;
-    }
-
     .cookies-popup {
         z-index: 99;
     }

@@ -47,6 +47,12 @@ $custom-select-indicator: "";
 $input-border-color: $blue;
 $input-disabled-bg: $white;
 
+// Carousel
+$carousel-indicator-active-bg: $blue;
+$carousel-control-color: $blue;
+$carousel-control-opacity: 1;
+$carousel-control-hover-opacity: .7;
+
 // Container Widths
 $container-max-widths: (
   sm: 768px,

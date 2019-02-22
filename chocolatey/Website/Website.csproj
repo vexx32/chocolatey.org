@@ -1097,11 +1097,23 @@
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
     <Content Include="Content\Images\boxstarter.png" />
+    <Content Include="Content\Images\businesses\Chef-Dark.png" />
+    <Content Include="Content\Images\businesses\Cornell.png" />
+    <Content Include="Content\Images\businesses\Hulu.png" />
+    <Content Include="Content\Images\businesses\MyGet-Blue.png" />
+    <Content Include="Content\Images\businesses\OctopusDeploy-Dark.png" />
+    <Content Include="Content\Images\businesses\Puppet-Dark.png" />
+    <Content Include="Content\Images\businesses\SwissRe.png" />
+    <Content Include="Content\Images\businesses\Yelp.png" />
+    <Content Include="Content\Images\ccm-computer-white.jpg" />
+    <Content Include="Content\Images\ccm-mockup.jpg" />
     <Content Include="Content\Images\changePassword.png" />
+    <Content Include="Content\Images\chocolatey-staff.jpg" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
+    <Content Include="Content\Images\community-mockup.gif" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
     <Content Include="Content\Images\dep-graph.svg" />
@@ -1201,11 +1213,13 @@
     <Content Include="Content\Images\gui.png" />
     <Content Include="Content\Images\ChocolateyGUI_main_screen.png" />
     <Content Include="Content\Images\headerbackground.png" />
+    <Content Include="Content\Images\headers\home.jpg" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
     <Content Include="Content\Images\icon_slogan.png" />
     <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
+    <Content Include="Content\Images\integrations-mockup.jpg" />
     <Content Include="Content\Images\integration_points-dark.png" />
     <Content Include="Content\Images\invalidBG.png" />
     <Content Include="Content\Images\just-type-logo.svg" />
@@ -1316,6 +1330,8 @@
     <Content Include="Content\scss\_preloader.scss" />
     <Content Include="Content\scss\_testimonials.scss" />
     <Content Include="Content\scss\_navigation.scss" />
+    <Content Include="Content\scss\_carousels.scss" />
+    <Content Include="Content\scss\_backgrounds.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
