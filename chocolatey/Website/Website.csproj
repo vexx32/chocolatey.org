@@ -1614,6 +1614,7 @@
     <Content Include="Views\Styleguide\Testimonials.cshtml" />
     <Content Include="Views\Styleguide\Font.cshtml" />
     <Content Include="Views\Styleguide\Logo.cshtml" />
+    <Content Include="Views\Styleguide\Carousels.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
