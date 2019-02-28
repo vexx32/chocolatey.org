@@ -83,6 +83,7 @@
 <li>Now place that license file in that license folder. You can do this manually, or you can adapt this PowerShell command - <code>Copy-Item &lt;c:\path\&gt;chocolatey.license.xml $env:ChocolateyInstall\license\chocolatey.license.xml -Force</code>. (See image below)</li>
 <li>Verify the license file is set properly. In PowerShell, run <code>type $env:ChocolateyInstall\license\chocolatey.license.xml.</code> If that returns something, it means you are good to go. If not, something is misspelled or misplaced somewhere.</li>
 <li>Run this command: <code>choco upgrade chocolatey.extension</code> (or you can call <code>install</code> instead of <code>upgrade</code>). You will see an error you can safely ignore.</li>
+<li>Run this command: <code>choco</code>. You should not see any error message logged anymore (like you saw in the previous run asking you to install the licensed extension). If you do see an error message still, you may need to revisit these steps and determine what might have been missed or mistyped.</li>
 <li><p>That&#39;s it! You are good to go.</p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/12741281/84a3df8e-c940-11e5-8818-456801728cf5.png" alt="license" /></p>
 <p><img src="https://cloud.githubusercontent.com/assets/63502/13052159/e6d1be92-d3c2-11e5-8856-d7580e51e3b6.png" alt="install/upgrade" /></p></li>
@@ -103,6 +104,7 @@
 <li>Now place that license file in that license folder. You can do this manually, or you can adapt this PowerShell command - <code>Copy-Item &lt;c:\path\&gt;chocolatey.license.xml $env:ChocolateyInstall\license\chocolatey.license.xml -Force</code>. (See image below)</li>
 <li>Verify the license file is set properly. In PowerShell, run <code>type $env:ChocolateyInstall\license\chocolatey.license.xml.</code> If that returns something, it means you are good to go. If not, something is misspelled or misplaced somewhere.</li>
 <li>Run this command: <code>choco upgrade chocolatey.extension --pre --source c:\folder\where\downloaded\nupkg\resides</code> (or you can use <code>install</code> instead of <code>upgrade</code>). <strong>Note</strong>: Source location is not <code>--source c:\downloads\chocolatey.extension.1.8.1.nupkg</code>, it is <code>--source c:\downloads</code>. You will see an error you can safely ignore.</li>
+<li>Run this command: <code>choco</code>. You should not see any error message logged anymore (like you saw in the previous run asking you to install the licensed extension). If you do see an error message still, you may need to revisit these steps and determine what might have been missed or mistyped.</li>
 <li>That&#39;s it! You are good to go.</li>
 </ol>
 <p><strong>NOTE</strong>: Also note that order is <strong><em>very</em></strong> important here. You need license file placed, then chocolatey.extension, then any other licensed components. Expect issues if you don&#39;t follow this order exactly.</p>

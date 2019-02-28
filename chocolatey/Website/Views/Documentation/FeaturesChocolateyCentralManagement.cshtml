@@ -8,18 +8,29 @@
 <ul>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation-source">Installation Source</a>
+<ul>
+<li><a href="#use-specific-version">Use Specific Version</a></li>
+</ul></li>
 <li><a href="#setup">Setup</a>
 <ul>
 <li><a href="#pre-requisites">Pre-Requisites</a></li>
+<li><a href="#fqdn-usage">FQDN Usage</a></li>
+<li><a href="#install-ccm-components">Install CCM Components</a>
+<ul>
+<li><a href="#installing-chocolatey-management-database">Installing chocolatey-management-database</a></li>
+<li><a href="#installing-chocolatey-management-service">Installing chocolatey-management-service</a></li>
+<li><a href="#installing-chocolatey-management-web">Installing chocolatey-management-web</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#package-parameters">Package Parameters</a>
 <ul>
 <li><a href="#chocolatey-central-management-database">Chocolatey Central Management Database</a></li>
 <li><a href="#chocolatey-central-management-service">Chocolatey Central Management Service</a></li>
-<li><a href="#chocolatey-management-web">Chocolatey Management Web</a></li>
+<li><a href="#chocolatey-central-management-web">Chocolatey Central Management Web</a></li>
 <li><a href="#chocolatey-configuration-for-chocolatey-central-management">Chocolatey Configuration for Chocolatey Central Management</a></li>
+</ul></li>
 <li><a href="#chocolatey-clients">Chocolatey Clients</a></li>
-</ul></li>
-</ul></li>
 <li><a href="#faq">FAQ</a>
 <ul>
 <li><a href="#will-this-become-available-for-lower-editions-of-chocolatey">Will this become available for lower editions of Chocolatey?</a></li>
@@ -55,15 +66,27 @@ available sources.</p>
 <li>This is the CCM front end website that is the main user interface of the application</li>
 </ul></li>
 </ul>
+<h2 id="installation-source">Installation Source</h2>
+<p>All the packages required to install CCM onto a machine(s) on your environment are located on the <code>chocolatey.licensed</code> feed. This is the same place that you would install the <a href="https://chocolatey.org/docs/features-agent-service">Chocolatey Agent Service</a> and the <a href="https://chocolatey.org/docs/installation-licensed">Chocolatey Extension</a> from.</p>
+<p>The <code>chocolatey.licensed</code> source is automatically added to your Chocolatey instance when you install the Chocolatey Extension, however, as per the recommended installation best practices, this source is typically <a href="https://chocolatey.org/docs/installation-licensed#installing-upgrading-in-secure-environments-without-internet-access">disabled in an organisational context</a>. As such, it may be necessary to first download the required nupkg&#39;s from the licensed source, and place them into your own internal repository.</p>
+<h3 id="use-specific-version">Use Specific Version</h3>
+<p>During the CCM Beta phase, it is necessary to install/download the CCM packages using a specific version. i.e.&nbsp; simply attempting the following:</p>
+<pre><code class="nohighlight">choco install chocolatey-management-database --pre
+choco download chocolatey-management-database --pre</code></pre>
+<p>will not work, but rather, a more explicit command such as:</p>
+<pre><code class="nohighlight">choco install chocolatey-management-database --version 0.1.0-beta-20181009
+choco download chocolatey-management-database --version 0.1.0-beta-20181009</code></pre>
+<p>will be required.</p>
+<p><strong>NOTE:</strong> If the <code>chocolatey.licensed</code> source is indeed disabled in your environment, it will be necessary to also use <code>--source https://licensedpackages.chocolatey.org/api/v2/</code> in the above commands.</p>
 <h2 id="setup">Setup</h2>
 <p>While it is envisioned that CCM will be installed across multiple servers, it is<br />
 certainly possible to run CCM on a single server.</p>
 <p>Currently, the CCM packages do not provision the SQL Server Database Permissions that are required for the CCM components to function. It is assumed that the necessary permissions have already been provided. By default, two users will require read/write permissions to the CCM Database:</p>
 <ul>
-<li>ChocolateyLocalAdmin - which runs the CCM Windows Service</li>
-<li>IIS APPPOOL/ChocolateyCentralManagment - which runs the CCM IIS Application Pool</li>
+<li>ChocolateyLocalAdmin - which, by default, runs the CCM Windows Service</li>
+<li>IIS APPPOOL/ChocolateyCentralManagment - which, by default, runs the CCM IIS Application Pool</li>
 </ul>
-<p><strong>NOTE:</strong> If either of these users are changed during the installation of either of these components, the database permissions will need to be updated to reflect this.</p>
+<p><strong>NOTE:</strong> If either of these users are changed during the installation of these components, the database permissions will need to be updated to reflect this.</p>
 <p>Or, the required username/password for connecting to the CCM database are added as part of the connection string that is passed into the CCM packages during installation.</p>
 <h3 id="pre-requisites">Pre-Requisites</h3>
 <p>In order to install CCM, it is assumed that the following applications/software<br />
@@ -72,14 +95,60 @@ servers.</p>
 <ol>
 <li>SQL Server Instance, with administrator access for initial database provision</li>
 <li>Internet Information Services</li>
+<li>At least .Net Framework 4.6.1</li>
 </ol>
-<h3 id="package-parameters">Package Parameters</h3>
-<h4 id="chocolatey-central-management-database">Chocolatey Central Management Database</h4>
+<h3 id="fqdn-usage">FQDN Usage</h3>
+<p>When installing the CCM Windows Service, the default is to use the Fully Qualified Domain Name (FQDN) of the machine that it is being installed on. As a result, there is an expectation that the certificate (either the self signed certificate that is created during installation, or the existing certificate which is configured with the <a href="https://github.com/chocolatey/choco/wiki/FeaturesChocolateyCentralManagement#parameters-1">CertifcateThumbprint</a> parameter)) that is used to secure the transport layer of this service, also uses the same FQDN.</p>
+<p>If this is not the case, it will be necessary to use the information the installer about the actual name for the machine that is being used. When using a self signed certificate, this can be specified using the <code>CertifcateDnsName</code>, and when using an existing certificate, no additional parameters are required. In both cases, it will be necessary to also set the <code>centralManagementServiceUrl</code> <a href="https://github.com/chocolatey/choco/wiki/FeaturesChocolateyCentralManagement#centralmanagementserviceurl">configuration parameter</a>. This can be done using the following command:</p>
+<pre><code class="nohighlight">choco config set CentralManagementServiceUrl https://&lt;accessible_name_of_machine&gt;:24020/ChocolateyManagementService</code></pre>
+<h3 id="install-ccm-components">Install CCM Components</h3>
+<p><strong>NOTE:</strong> The following assumes that you already have IIS and SQL Server installed.</p>
+<ul>
+<li>IIS needs to be installed on the machine where the <code>chocolatey-management-web</code> package will be installed.<br />
+</li>
+<li>SQL Server needs to be installed on the machine where the <code>chocolatey-management-database</code> package will be installed.</li>
+</ul>
+<p>If this is not the case, then the below commands will result in errors.</p>
+<p>Installing IIS can be completed using the following command:</p>
+<pre><code class="nohighlight">choco install IIS-WebServer --source windowsfeatures</code></pre>
+<p><strong>NOTE:</strong> If installing all the CCM Components on a single machine, some package installs can be skipped as they will have already been done as part of installing other components.</p>
+<p>It is recommended that you install the CCM Components in the following order:</p>
+<ul>
+<li>chocolatey-management-database</li>
+<li>chocolatey-management-service</li>
+<li>chocolatey-management-web</li>
+</ul>
+<h4 id="installing-chocolatey-management-database">Installing chocolatey-management-database</h4>
+<p><strong>NOTE:</strong> It is likely that additional package parameters are required which are specific to your environment. Please carefully review the available <a href="https://github.com/chocolatey/choco/wiki/FeaturesChocolateyCentralManagement#chocolatey-central-management-database">package parameters</a> before proceeding.</p>
+<p>In order to successfully install the chocolatey-management-database package onto a machine, the following steps are required:</p>
+<pre><code class="nohighlight">choco upgrade chocolatey --version 0.10.12-beta-20181011
+choco upgrade chocolatey.extension --version 2.0.0-beta-20181009
+choco upgrade chocolatey-agent --version 0.9.0-beta-20181009
+choco upgrade chocolatey-management-database --version 0.1.0-beta-20181009</code></pre>
+<h4 id="installing-chocolatey-management-service">Installing chocolatey-management-service</h4>
+<p><strong>NOTE:</strong> It is likely that additional package parameters are required which are specific to your environment. Please carefully review the available <a href="https://github.com/chocolatey/choco/wiki/FeaturesChocolateyCentralManagement#chocolatey-central-management-service">package parameters</a> before proceeding.</p>
+<p>In order to successfully install the chocolatey-management-service package onto a machine, the following steps are required:</p>
+<p><strong>NOTE:</strong> Due to an issue that was identified in the initial release of CCM, the port number parameter is required.</p>
+<pre><code class="nohighlight">choco upgrade chocolatey --version 0.10.12-beta-20181011
+choco upgrade chocolatey.extension --version 2.0.0-beta-20181009
+choco upgrade chocolatey-agent --version 0.9.0-beta-20181009
+choco upgrade chocolatey-management-service --version 0.1.0-beta-20181009 --params=&quot;&#39;/PortNumber=24020&#39;&quot;</code></pre>
+<h4 id="installing-chocolatey-management-web">Installing chocolatey-management-web</h4>
+<p><strong>NOTE:</strong> It is likely that additional package parameters are required which are specific to your environment. Please carefully review the available <a href="https://github.com/chocolatey/choco/wiki/FeaturesChocolateyCentralManagement#chocolatey-central-management-web">package parameters</a> before proceeding.</p>
+<p>In order to successfully install the chocolatey-management-web package onto a machine, the following steps are required:</p>
+<pre><code class="nohighlight">choco upgrade aspnetcore-runtimepackagestore
+choco upgrade dotnetcore-windowshosting
+choco upgrade chocolatey --version 0.10.12-beta-20181011
+choco upgrade chocolatey.extension --version 2.0.0-beta-20181009
+choco upgrade chocolatey-agent --version 0.9.0-beta-20181009
+choco upgrade chocolatey-management-web --version 0.1.0-beta-20181009</code></pre>
+<h2 id="package-parameters">Package Parameters</h2>
+<h3 id="chocolatey-central-management-database">Chocolatey Central Management Database</h3>
 <p>This package creates the Chocolatey Central Management Database with the following defaults:</p>
 <ul>
 <li>Database Connection String: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
 </ul>
-<h5 id="parameters">Parameters</h5>
+<h4 id="parameters">Parameters</h4>
 <p>You can override the package defaults using the following parameters:</p>
 <ul>
 <li><code>/ConnectionString</code>
@@ -98,7 +167,7 @@ servers.</p>
 <li><strong>NOTE:</strong> Default Value: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
 </ul></li>
 </ul>
-<h5 id="example">Example</h5>
+<h4 id="example">Example</h4>
 <p>Let&#39;s assume that you want to install the Chocolatey Central Management Database<br />
 onto a machine that will access a SQL Server instance called <code>SQLSERVERCCM</code>, on<br />
 a domain machine called <code>MACHINE1</code> which is part of the domain <code>ccmtest</code>, using a specific user name (ccmservice) and password<br />
@@ -108,7 +177,7 @@ following:</p>
 <p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that<br />
 the sensitive information is not leaked out into log files.</p>
 <p><strong>NOTE:</strong> There is an assumption here that the username and password being used have the necessary permissions in order to create the CCM database in the destination SQL Server instance.</p>
-<h4 id="chocolatey-central-management-service">Chocolatey Central Management Service</h4>
+<h3 id="chocolatey-central-management-service">Chocolatey Central Management Service</h3>
 <p>This package creates the Chocolatey Central Management Service with the following defaults:</p>
 <ul>
 <li>Service Name: <strong>chocolatey-management-service</strong></li>
@@ -120,7 +189,7 @@ the sensitive information is not leaked out into log files.</p>
 <li>Service Listening Port: <strong>24020</strong></li>
 <li>Self-Signed Certificate Domain Name: <strong>DNS name of the local computer</strong></li>
 </ul>
-<h5 id="parameters-1">Parameters</h5>
+<h4 id="parameters-1">Parameters</h4>
 <p>You can override the package defaults using the following parameters:</p>
 <ul>
 <li><code>/Username</code>
@@ -179,7 +248,7 @@ the sensitive information is not leaked out into log files.</p>
 <li><strong>NOTE:</strong> Default Value: Not provided</li>
 </ul></li>
 </ul>
-<h5 id="example-1">Example</h5>
+<h4 id="example-1">Example</h4>
 <p>Let&#39;s assume that you want to install the CCM Windows Service with a specific<br />
 connection string in order to connect to the CCM Database, as well as configure<br />
 the CCM Service to use a specific user name and password, as well as alter the<br />
@@ -188,7 +257,7 @@ command would look like the following:</p>
 <pre><code class="nohighlight">choco install chocolatey-management-service --package-parameters-sensitive=&quot;&#39;/PortNumber=24021 /Username=ccmtest\ccmservice /Password=Password01 /ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;Integrated Security=SSPI;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
 <p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that<br />
 the sensitive information is not leaked out into log files.</p>
-<h4 id="chocolatey-management-web">Chocolatey Management Web</h4>
+<h3 id="chocolatey-central-management-web">Chocolatey Central Management Web</h3>
 <p>This package creates the Chocolatey Central Management Website and Application Pool with the following defaults:</p>
 <ul>
 <li>IIS Web Application Pool: <strong>ChocolateyCentralManagement</strong>
@@ -209,7 +278,7 @@ the sensitive information is not leaked out into log files.</p>
 <li>SQL Server Instance: <strong>&lt;LOCAL COMPUTER DNS NAME&gt;</strong></li>
 <li>Connection String: <strong>Server=&lt;LOCAL COMPUTER DNS NAME&gt;; Database=ChocolateyManagement; Trusted_Connection=True;</strong></li>
 </ul>
-<h5 id="parameters-2">Parameters</h5>
+<h4 id="parameters-2">Parameters</h4>
 <p>You can override the package defaults using the following parameters:</p>
 <ul>
 <li><code>/ConnectionString</code>
@@ -243,7 +312,7 @@ the sensitive information is not leaked out into log files.</p>
 <li><strong>NOTE:</strong> Default Value: Not provided</li>
 </ul></li>
 </ul>
-<h5 id="example-2">Example</h5>
+<h4 id="example-2">Example</h4>
 <p>Let&#39;s assume that you want to install the CCM Web Site with a specific<br />
 connection string in order to connect to the CCM Database, as well as configure<br />
 the IIS Application Pool to use a specific user name and password. The<br />
@@ -254,27 +323,27 @@ the sensitive information is not leaked out into log files.</p>
 <p><strong>NOTE:</strong> Once installed, when you access the CCM Web Site you will be prompted to provide a username<br />
 and password to access the site. By default, the username is <code>ccmadmin</code> and the password is <code>123qwe</code>.<br />
 After you input this, you will be prompted to change the password.</p>
-<h4 id="chocolatey-configuration-for-chocolatey-central-management">Chocolatey Configuration for Chocolatey Central Management</h4>
+<h3 id="chocolatey-configuration-for-chocolatey-central-management">Chocolatey Configuration for Chocolatey Central Management</h3>
 <p>The following configuration values, with their default values, are added into the chocolatey.config file after installing Chocolatey Central Management and it&#39;s dependent packages.</p>
-<h5 id="centralmanagementreportpackagestimerintervalinseconds">centralManagementReportPackagesTimerIntervalInSeconds</h5>
+<h4 id="centralmanagementreportpackagestimerintervalinseconds">centralManagementReportPackagesTimerIntervalInSeconds</h4>
 <p>This is the length of time, in seconds, that the Chocolatey Background Agent will wait between each attempt to report into Chocolatey Central Management.</p>
 <p><strong>Default Value:</strong> 1800</p>
-<h5 id="centralmanagementserviceurl">centralManagementServiceUrl</h5>
+<h4 id="centralmanagementserviceurl">centralManagementServiceUrl</h4>
 <p>This is the URL that is used by the Chocolatey Background Agent to report into Chocolatey Central Management, and also by the Chocolatey Central Management Service to register the URL that it is listening for incoming reports on.</p>
 <p><strong>Default Value:</strong> <em>blank</em></p>
-<p><strong>NOTE:</strong> If left blank, the Chocolatey Central Management Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on.</p>
-<p><strong>NOTE:</strong> Due to the fact that both the Chocolatey Background Agent and Chocolatey Central Management Service use this configuration value, if both of these services are located on the same machine, they Chocolatey Background Service on that machine has to report into the Chocolatey Central Management Service on that machine. It can&#39;t report into another instance.</p>
-<h5 id="centralmanagementreceivetimeoutinseconds">centralManagementReceiveTimeoutInSeconds</h5>
+<p><strong>NOTE:</strong> If left blank, the Chocolatey Central Management Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on. However, the Chocolatey Agent Service will not be able to report into CCM, if a value is not provided.</p>
+<p><strong>NOTE:</strong> Due to the fact that both the Chocolatey Background Agent and Chocolatey Central Management Service use this configuration value, if both of these services are located on the same machine, the Chocolatey Background Service on that machine has to report into the Chocolatey Central Management Service on that machine. It can&#39;t report into another instance.</p>
+<h4 id="centralmanagementreceivetimeoutinseconds">centralManagementReceiveTimeoutInSeconds</h4>
 <p>This is the length of time, in seconds, that a connection to Chocolatey Central Management can remain inactive, during which no application messages are received, before it is dropped.</p>
 <p><strong>Default Value:</strong> 30</p>
-<h5 id="centralmanagementsendtimeoutinseconds">centralManagementSendTimeoutInSeconds</h5>
+<h4 id="centralmanagementsendtimeoutinseconds">centralManagementSendTimeoutInSeconds</h4>
 <p>This is the length of time, in seconds, that a write operation against Chocolatey Central Management has to complete before the transport raises an exception.</p>
 <p><strong>Default Value:</strong> 30</p>
-<h5 id="centralmanagementcertificatevalidationmode">centralManagementCertificateValidationMode</h5>
+<h4 id="centralmanagementcertificatevalidationmode">centralManagementCertificateValidationMode</h4>
 <p>This captures the options for determining the validity of the Chocolatey Central Management Service certificate obtained using SSL/TLS negotiation.</p>
 <p><strong>Default Value:</strong> PeerOrChainTrust</p>
 <p><strong>Valid Values:</strong> None, PeerTrust, ChainTrust, PeerOrChainTrust, Custom</p>
-<h4 id="chocolatey-clients">Chocolatey Clients</h4>
+<h3 id="chocolatey-clients">Chocolatey Clients</h3>
 <p>Once CCM has been set up and configured, each machine that you want to report<br />
 into CCM will have to be enabled. This can be done by doing the following:</p>
 <pre><code class="powershell">choco config set CentralManagementServiceUrl https://ccmsrvserver:24021/ChocolateyManagementService
@@ -283,7 +352,7 @@ choco feature enable -n useChocolateyCentralManagement</code></pre>
 installed to is being set, and then the <code>useChocolateyCentralManagement</code> feature<br />
 is being enabled. In your environment you would replace <code>https://ccmsrvserver:24021</code> with the FQDN name of your server and the port you set.</p>
 <p><strong>NOTE:</strong> By default, this feature is disabled, and will need to be turned on.</p>
-<p><strong>NOTE:</strong> If not set, the Chocolatey Central Management Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on.</p>
+<p><strong>NOTE:</strong> If not set, the Chocolatey Central Management Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on. However, the Chocolatey Agent Service will not be able to report into CCM, if a value is not provided.</p>
 <p>Additional configuration exists for CCM Service, which allows fine grained<br />
 control of how Chocolatey Agent will report into CCM. For example:</p>
 <pre><code class="powershell">choco config set centralManagementReportPackagesTimerIntervalInSeconds 60
