@@ -53,6 +53,13 @@ $carousel-control-color: $blue;
 $carousel-control-opacity: 1;
 $carousel-control-hover-opacity: .7;
 
+// Breadcrumbs
+$breadcrumb-padding-y: 0;
+$breadcrumb-padding-x: 0;
+$breadcrumb-border-radius: 0;
+$breadcrumb-margin-bottom: 0;
+$breadcrumb-bg: transparent;
+
 // Container Widths
 $container-max-widths: (
   sm: 768px,

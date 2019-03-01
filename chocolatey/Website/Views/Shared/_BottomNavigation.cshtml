@@ -33,7 +33,7 @@
                     <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "security"})">Security</a></li>
                     <li><a href="@Url.RouteUrl(RouteName.Kickstarter)">Kickstarter</a></li>
                     <li><a href="@Url.RouteUrl(RouteName.Partner)">Partner</a></li>
-                    <li><a href="#">Customer Stories</a></li>
+                    <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">Customer Stories</a></li>
                 </ul>
             </div>
             <hr class="clearfix w-100 d-md-none">
@@ -53,10 +53,10 @@
             <div class="col-md-3 mx-auto">
                 <h3>Learn</h3>
                 <ul class="list-unstyled mb-0">
-                    <li><a href="#">Resource Library</a></li>
+                    <li><a href="@Url.RouteUrl(RouteName.Resources)">Resource Library</a></li>
                     <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Docs</a></li>
-                    <li><a href="#">Videos</a></li>
-                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})">Videos</a></li>
+                    <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">Case Studies</a></li>
                     <li><a href="#">Courses</a></li>
                     <li><a href="@Url.RouteUrl(RouteName.BlogHome)">Blog</a> <a href="http://feeds.feedburner.com/ChocolateyBlog" rel="alternate" type="application/rss+xml"><img src="//feedburner.google.com/fb/images/pub/feed-icon16x16.png" alt="Chocolatey Blog" style="vertical-align:middle;border:0" /></a></li>
                     <li><a href="@Url.RouteUrl(RouteName.MediaKit)">Media Kit</a></li>

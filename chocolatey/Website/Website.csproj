@@ -673,6 +673,7 @@
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StyleguideController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\Captcha.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
@@ -804,6 +805,7 @@
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModels\PasswordResetViewModel.cs" />
+    <Compile Include="ViewModels\ResourceViewModel.cs" />
     <Compile Include="XmlExtensions.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1275,6 +1277,26 @@
     <Content Include="Content\Images\userGraphic.png" />
     <Content Include="Content\Images\userIcon.png" />
     <Content Include="Content\Images\userIconWhite.png" />
+    <Content Include="Content\Images\videos\CaseStudy.jpg" />
+    <Content Include="Content\Images\videos\CMEGroup_Tony-Cheng.jpg" />
+    <Content Include="Content\Images\videos\Dan-Franciscus-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\evolution-of-ticketmaster.jpg" />
+    <Content Include="Content\Images\videos\future-of-windows-automation.jpg" />
+    <Content Include="Content\Images\videos\Gilbert-Sanchez-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\group-policy-at-puppet.jpg" />
+    <Content Include="Content\Images\videos\Karen-Kwentus-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\killing-golden-images.jpg" />
+    <Content Include="Content\Images\videos\managing-windows-at-facebook.jpg" />
+    <Content Include="Content\Images\videos\Mark-Johnson-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\ps-day-uk.jpg" />
+    <Content Include="Content\Images\videos\Puppet_Mike-Lombardi.jpg" />
+    <Content Include="Content\Images\videos\Qualcomm_Dwight-Bragdon.jpg" />
+    <Content Include="Content\Images\videos\Stefan-Scherer-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\Steven-Murawski-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\TDSecurity_Michel-Buczynsky.jpg" />
+    <Content Include="Content\Images\videos\what-is-chocolatey.jpg" />
+    <Content Include="Content\Images\videos\Yelp-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\Yelp_Ryan-de-Temple.jpg" />
     <Content Include="Content\Images\xmark.png" />
     <Content Include="Content\Images\yellow_ball_48.png" />
     <Content Include="Content\Images\YourPackage.png" />
@@ -1332,6 +1354,7 @@
     <Content Include="Content\scss\_navigation.scss" />
     <Content Include="Content\scss\_carousels.scss" />
     <Content Include="Content\scss\_backgrounds.scss" />
+    <Content Include="Content\scss\_resources.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1615,6 +1638,32 @@
     <Content Include="Views\Styleguide\Font.cshtml" />
     <Content Include="Views\Styleguide\Logo.cshtml" />
     <Content Include="Views\Styleguide\Carousels.cshtml" />
+    <Content Include="Views\Resources\Files\PuppetCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Home.cshtml" />
+    <Content Include="Views\Resources\CaseStudies.cshtml" />
+    <Content Include="Views\Resources\Files\YelpCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\WhatIsChocolatey.md" />
+    <Content Include="Views\Resources\_BreadCrumbs.cshtml" />
+    <Content Include="Views\Resources\SuccessStories.cshtml" />
+    <Content Include="Views\Resources\Files\ManagingWindowsAtFacebook.md" />
+    <Content Include="Views\Resources\Files\KillingGoldenImages.md" />
+    <Content Include="Views\Resources\_Layout.cshtml" />
+    <Content Include="Views\Resources\Post.cshtml" />
+    <Content Include="Views\Resources\Videos.cshtml" />
+    <Content Include="Views\Resources\Files\CMEGroupCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\EvolutionofTicketmaster.md" />
+    <Content Include="Views\Resources\Files\GroupPolicyAtPuppet.md" />
+    <Content Include="Views\Resources\Files\PSDayUK.md" />
+    <Content Include="Views\Resources\Files\QualcommCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\TDSecurityCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\FutureOfWindowsAutomation.md" />
+    <Content Include="Views\Resources\Files\DockerAContainerFullOfChocolatey.md" />
+    <Content Include="Views\Resources\Files\DanFranciscusChocoFest18.md" />
+    <Content Include="Views\Resources\Files\KarenKwentusChocoFest18.md" />
+    <Content Include="Views\Resources\Files\GilbertSanchezChocoFest18.md" />
+    <Content Include="Views\Resources\Files\MarkJohnsonChocoFest18.md" />
+    <Content Include="Views\Resources\Files\StevenMurawskiChocoFest18.md" />
+    <Content Include="Views\Resources\Files\YelpChocoFest18.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

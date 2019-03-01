@@ -155,6 +155,18 @@
             }
         }
     }
+
+    #secondaryNav.successStoryNav {
+
+        ul {
+            margin: 0;
+        }
+
+        .btn {
+            position: absolute;
+            right: 1.5rem;
+        }
+    }
 }
 
 @media (min-width: 992px) {
@@ -192,6 +204,12 @@
             li {
                 padding: 0 1.25rem;
             }
+        }
+    }
+    #secondaryNav.successStoryNav {
+
+        ul {
+            margin: 0 auto;
         }
     }
 }

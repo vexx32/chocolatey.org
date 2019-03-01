@@ -167,7 +167,6 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
 /*Header*/
 #header {
     border-top: 1px solid rgba(255,255,255,.2);
-    margin-top: -1rem;
 }
 
 /*Curve*/
@@ -308,5 +307,9 @@ footer {
 @media (min-width: 1200px) {
     .cookies-popup {
         z-index: 99;
+    }
+
+    #header {
+        margin-top: -1rem;
     }
 }

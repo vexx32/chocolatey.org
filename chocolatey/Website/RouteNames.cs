@@ -43,6 +43,8 @@ namespace NuGetGallery
         public const string FAQ = "FAQ";
         public const string BlogHome = "BlogHome";
         public const string BlogArticle = "BlogArticle";
+        public const string Resources = "Resources";
+        public const string ResourceName = "ResourceName";
         public const string Docs = "Docs";
         public const string Kickstarter = "Kickstarter";
         public const string Terms = "Terms";
