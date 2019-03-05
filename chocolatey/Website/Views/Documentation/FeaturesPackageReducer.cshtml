@@ -35,7 +35,6 @@
 <li><a href="#usage-1">Usage</a>
 <ul>
 <li><a href="#requirements-1">Requirements</a></li>
-<li><a href="#setup-1">Setup</a></li>
 </ul></li>
 <li><a href="#examples">Examples</a></li>
 <li><a href="#see-it-in-action-1">See It In Action</a></li>
@@ -155,7 +154,6 @@ The image shows an installation without and with package reducer. The difference
 <h4 id="can-i-apply-reducer-to-already-installed-packages">Can I apply reducer to already installed packages?</h4>
 <p>See the next section, the <code>choco optimize</code> command.</p>
 <h2 id="optimize-command">Optimize Command</h2>
-<p><strong>NOTE</strong>: CURRENTLY IN PREVIEW - see <a href="#setup-1">setup</a> below.</p>
 <p>Package Reducer&#39;s Package Optimizer is available in all licensed editions starting at Chocolatey Licensed Extension v1.12.0. It is similar to the automatic reduction, except it reduces the size of existing installations.</p>
 <p>With Package Optimizer:</p>
 <ul>
@@ -177,11 +175,6 @@ The image shows an installation without and with package reducer. The difference
 <li>Chocolatey (<code>chocolatey</code> package) v0.10.7+.</li>
 <li>Chocolatey Licensed Edition</li>
 <li>Chocolatey Licensed Extension (<code>chocolatey.extension</code> package) v1.12.0+.</li>
-</ul>
-<h4 id="setup-1">Setup</h4>
-<p>Optimize is currently in preview. You need to turn it on by enabling the feature <code>allowPreviewFeatures</code>:</p>
-<ul>
-<li><code>choco feature enable -n allowPreviewFeatures</code></li>
 </ul>
 <h3 id="examples">Examples</h3>
 <pre><code class="nohighlight">choco optimize
@@ -208,7 +201,7 @@ This image shows a display of `choco optimize` reducing space for 34 existing in
 <h4 id="how-do-i-take-advantage-of-this-feature-1">How do I take advantage of this feature?</h4>
 <p>You must have a <a href="https://chocolatey.org/pricing">licensed edition of Chocolatey</a> (Pro, MSP, or Business) and use the community package repository to install/upgrade packages. Pro is a personal, named license that costs about the price of a lunch outing per month and comes with several other features. Business editions are great for organizations that need to manage the total software management lifecycle. MSP editions are for managed service providers and contain the same features as Pro (minus VirusTotal integration).</p>
 <h4 id="im-a-licensed-customer-now-what-1">I&#39;m a licensed customer, now what?</h4>
-<p>Once you have set up the <code>allowPreviewFeatures</code> feature(s), you can just run <code>choco optimize</code>. Couple it with package reducer features to automatically ensure your Chocolatey installation stays very small.</p>
+<p>You can just run <code>choco optimize</code>. Couple it with package reducer features to automatically ensure your Chocolatey installation stays very small.</p>
 <h4 id="how-does-it-work-1">How does it work?</h4>
 <p>It goes through all existing packages and removes unnecessary installers and zips. It also deflates nupkg files down to 5KB or less.</p>
 </article>
