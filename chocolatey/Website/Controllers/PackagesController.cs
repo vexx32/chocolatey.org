@@ -308,6 +308,14 @@ namespace NuGetGallery
                 newComments += "Auto Verification Change - Verification tests have been set to rerun.";
             }
 
+            bool rerunValidation = form["RerunValidation"].clean_html() == "true";
+            if (rerunValidation)
+            {
+                packageSvc.ResetPackageValidationStatus(package);
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Auto Validation Change - Validation tests have been set to rerun.";
+            }
+
             bool rerunVirusScanner = form["RerunVirusScanner"].clean_html() == "true";
             if (rerunVirusScanner)
             {

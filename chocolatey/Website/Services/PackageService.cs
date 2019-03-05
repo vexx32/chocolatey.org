@@ -1086,6 +1086,15 @@ namespace NuGetGallery
             NotifyIndexingService(package);
         }
 
+        public void ResetPackageValidationStatus(Package package)
+        {
+            package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
+            if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Pending;
+            packageRepo.CommitChanges();
+            InvalidateCache(package.PackageRegistration);
+            NotifyIndexingService(package);
+        }
+
         public void SaveMinorPackageChanges(Package package)
         {
             packageRepo.CommitChanges();
