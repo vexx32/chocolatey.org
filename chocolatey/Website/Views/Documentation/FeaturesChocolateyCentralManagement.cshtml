@@ -337,5 +337,7 @@ choco config set centralManagementCertificateValidationMode &quot;PeerOrChainTru
 <h3 id="whats-the-minimum-version-of-the-chocolatey-packages-i-need-to-use-ccm">What&#39;s the minimum version of the Chocolatey packages I need to use CCM?</h3>
 <p>See <a href="#requirements">Requirements</a>.</p>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
-<p>As common issues are encountered and resolved, we will list them here.</p>
+<h3 id="the-specified-path-file-name-or-both-are-too-long">The specified path, file name, or both are too long</h3>
+<p>This error can occur when installing the <code>chocolatey-management-web</code> package. Due to the nested folder structure contained within this package, when extracting to the default cache location, the path can become too long. This problem is known is occur in the 0.1.0-beta–20181009 release of this package, and it should be corrected in subsequent releases. As a workaround, adding the following parameters to the install command should allow the installation to complete successfully:</p>
+<pre><code class="nohighlight">--cache-location=&quot;&#39;C:\Temp\choco&#39;&quot;</code></pre>
 </article>
