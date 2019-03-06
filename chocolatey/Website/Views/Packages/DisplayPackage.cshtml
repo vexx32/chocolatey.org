@@ -437,13 +437,17 @@
                     {
                        <div class="form-field">
                            <input id="RerunTests" name="RerunTests" type="checkbox" value="true" />
-                           <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun tests?</label>
+                           <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun verification tests?</label>
                        </div>
                     }
                     
                     @if (moderator && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
                     {
-                       <div class="form-field">
+                        <div class="form-field">
+                            <input id="RerunValidation" name="RerunValidation" type="checkbox" value="true" />
+                            <label for="RerunValidation" class="for-checkbox" title="Rerun package validation tests.">Rerun validation tests?</label>
+                        </div>
+                        <div class="form-field">
                            <input id="OverrideValidation" name="OverrideValidation" type="checkbox" value="true" />
                            <label for="OverrideValidation" class="for-checkbox" title="Override package validation failures and run tests.">Override validation errors?</label>
                        </div>

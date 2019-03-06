@@ -69,6 +69,8 @@ namespace NuGetGallery
 
         void ResetPackageTestStatus(Package package);
 
+        void ResetPackageValidationStatus(Package package);
+
         /// <summary>
         /// Saves minor package changes. Do not call this is you are listing or unlisting a package.
         /// </summary>
