@@ -36,15 +36,101 @@ namespace NuGetGallery
         private readonly IConfiguration settings;
         private readonly IPrincipal currentUser;
         private readonly IUserSiteProfilesService profilesService;
+        private readonly ICourseProfilesService courseProfilesService;
+        private readonly IFileSystemService _fileSystem;
 
-        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, IConfiguration settings, IPrincipal currentUser, IUserSiteProfilesService profilesService)
+        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, IConfiguration settings, IPrincipal currentUser, IUserSiteProfilesService profilesService, IFileSystemService fileSystem, ICourseProfilesService courseProfilesService)
         {
             userService = userSvc;
+            _fileSystem = fileSystem;
             this.packageService = packageService;
             this.messageService = messageService;
             this.settings = settings;
             this.currentUser = currentUser;
             this.profilesService = profilesService;
+            this.courseProfilesService = courseProfilesService;
+        }
+        
+        [HttpGet, OutputCache(VaryByParam = "username", Location = OutputCacheLocation.Any, Duration = 1800)]
+        public virtual ActionResult Courses()
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = userService.FindByUsername(currentUser.Identity.Name);
+                var userCourseProfiles = (from p in courseProfilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new CourseProfileViewModel(c)).ToList();
+
+                var model = new CourseViewModel
+                {
+                    EmailAddress = user.EmailAddress,
+                    EmailAllowed = user.EmailAllowed,
+                    EmailAllModerationNotifications = user.EmailAllModerationNotifications,
+                    PendingNewEmailAddress = user.UnconfirmedEmailAddress,
+                    Username = user.Username,
+                    UserCourseProfiles = userCourseProfiles
+                };
+
+                TempData.Clear();
+
+                return View("~/Views/Courses/Home.cshtml", model);
+            }
+
+            return View("~/Views/Courses/Home.cshtml");
+        }
+
+        [HttpGet, OutputCache(VaryByParam = "username", Location = OutputCacheLocation.Any, Duration = 1800)]
+        public virtual ActionResult CourseName(string courseName, string courseModuleName)
+        {
+            courseName = courseName.Replace("-", "");
+            courseModuleName = courseModuleName.Replace("-", "");
+
+            if (Request.IsAuthenticated)
+            {
+                var user = userService.FindByUsername(currentUser.Identity.Name);
+                var userCourseProfiles = (from p in courseProfilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new CourseProfileViewModel(c)).ToList();
+
+                var model = new CourseViewModel
+                {
+                    EmailAddress = user.EmailAddress,
+                    EmailAllowed = user.EmailAllowed,
+                    EmailAllModerationNotifications = user.EmailAllModerationNotifications,
+                    PendingNewEmailAddress = user.UnconfirmedEmailAddress,
+                    Username = user.Username,
+                    UserCourseProfiles = userCourseProfiles
+                };
+
+                //gets the current url
+                string currentUrl = Request.Url.AbsoluteUri;
+
+                //delete TempData if not directly after a completed quiz
+                if (!currentUrl.ToLower().Contains("?quiz"))
+                {
+                    TempData.Clear();
+                }
+
+                return View("~/Views/Courses/{0}/{1}.cshtml".format_with(courseName, courseModuleName), model);
+            }
+            return View("~/Views/Courses/{0}/{1}.cshtml".format_with(courseName, courseModuleName));
+        }
+
+        [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
+        public virtual ActionResult CourseName(CourseViewModel profile, string courseName, string courseModuleName)
+        {
+            courseName = courseName.Replace("-", "");
+            courseModuleName = courseModuleName.Replace("-", "");
+
+            if (ModelState.IsValid)
+            {
+                var user = userService.FindByUsername(currentUser.Identity.Name);
+                string existingConfirmationToken = user.EmailConfirmationToken;
+
+                if (existingConfirmationToken == user.EmailConfirmationToken) TempData["Message"] = "You passed this course!";
+
+                courseProfilesService.SaveProfiles(user, profile);
+
+                return Redirect(ControllerContext.HttpContext.Request.UrlReferrer.ToString() + "?quiz");
+            }
+
+            return View("~/Views/Courses/{0}/{1}.cshtml".format_with(courseName, courseModuleName), profile);
         }
 
         [Authorize, RequireHttpsAppHarbor]

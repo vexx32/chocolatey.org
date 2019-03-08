@@ -180,6 +180,8 @@ namespace NuGetGallery
         {
             modelBuilder.Entity<UserSiteProfile>().HasKey(e => e.Key);
 
+            modelBuilder.Entity<CourseProfile>().HasKey(e => e.Key);
+
             modelBuilder.Entity<PackageRegistration>()
                         .HasOptional<User>(e => e.TrustedBy)
                         .WithMany()

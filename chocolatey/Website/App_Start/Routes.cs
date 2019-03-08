@@ -220,7 +220,19 @@ namespace NuGetGallery
             
             // temporary redirect
             routes.Redirect(r => r.MapRoute("CentralManagementFeature", "features-chocolatey-central-management")).To(docsRoute, new { docName = "features-chocolatey-central-management" });
-            
+
+            routes.MapRouteSeo(
+                RouteName.Courses,
+                "courses",
+                new { controller = "Users", action = "Courses"}
+                );
+
+            routes.MapRouteSeo(
+                RouteName.CourseName,
+                "courses/{courseName}/{courseModuleName}",
+                new { controller = "Users", action = "CourseName", courseName = "home", courseModuleName = "home" }
+                );
+
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 
             routes.MapRoute(

@@ -1,0 +1,14 @@
+﻿@model CourseViewModel
+@{
+    ViewBag.Title = "Getting Started";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
+}
+
+<section class="py-3 py-lg-5 bg-white">
+    @Html.Partial("~/Views/Courses/GettingStarted/_CourseDescription.cshtml")
+</section>
+@Html.Partial("~/Views/Courses/_AllCourses.cshtml")

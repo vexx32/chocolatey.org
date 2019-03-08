@@ -181,12 +181,27 @@ function onScroll(event) {
     $('.docs-right a[href*="#"]').each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href"));
-        if (refElement.position().top <= scrollPos) {
-            $('.docs-right ul li').removeClass("active");
-            currLink.parent().addClass("active");
+        var courses = /courses/.test(window.location.href);
+        var top = $('.module-top').outerHeight();
+
+        if (courses) {
+            if (refElement.position().top <= scrollPos - top) {
+            //if (refElement.position().top <= scrollPos) {
+                $('.docs-right ul li').removeClass("active");
+                currLink.parent().addClass("active");
+            }
+            else {
+                currLink.parent().removeClass("active");
+            }
         }
         else {
-            currLink.parent().removeClass("active");
+            if (refElement.position().top <= scrollPos) {
+                $('.docs-right ul li').removeClass("active");
+                currLink.parent().addClass("active");
+            }
+            else {
+                currLink.parent().removeClass("active");
+            }
         }
     });
 }
@@ -221,7 +236,58 @@ function setNavigation() {
             $(this).closest('li').addClass('active').parent().parent().collapse('show').parent().parent().parent().collapse('show');
         }
     });
+    // Courses Section - Set Localstorage Items
+    // Active
+    $(".course-list li a").each(function () {
+        var href = $(this).attr('href');
+        if (path.substring(0, href.indexOf('courses/').length) === href) {
+            window.localStorage.setItem('active', href);
+        }
+    });
+    // Set Completed courses if user is NOT logged in
+    $(".course-list:not(.authenticated) li a").each(function () {
+        var href = $(this).attr('href');
+        if (path.substring(0, href.indexOf('courses/').length) === href) {
+            var completed = localStorage.completed === undefined ? new Array() : JSON.parse(localStorage.completed);
+            if ($.inArray(href, completed) == -1) //check that the element is not in the array
+                completed.push(href);
+            localStorage.completed = JSON.stringify(completed);
+        }
+    });
 }
+
+// Get Localstorage Items for Courses Section
+$(function () {
+    // Get Active Localstorage Item
+    var active = window.localStorage.getItem('active');
+    if (active) {
+        $('.course-list li a[href="' + active + '"]').parent().addClass('active');
+    }
+    // Get Completed Localstorage Items
+    var completed = localStorage.completed === undefined ? new Array() : JSON.parse(localStorage.completed); //get all completed items
+    for (var i in completed) { //<-- completed is the name of the cookie
+        if (!$('.course-list li a[href="' + completed[i] + '"]').parent().hasClass('active') && !$('.course-list').hasClass("authenticated")) // check if this is not active
+        {
+            $('.course-list li a[href="' + completed[i] + '"]').parent().addClass('completed');
+        }
+    }
+    // Remove completed local storage if use is logged in, tracking progress through profile
+    if ($(".course-list").hasClass("authenticated")) {
+        localStorage.removeItem('completed')
+    }
+    // Styleize
+    $(".course-list li").mouseover(function () {
+        $(this).children().addClass("hover");
+    });
+    $(".course-list li").mouseleave(function () {
+        $(this).children().removeClass("hover");
+    });
+});
+
+// Removes text from links in additional-course section
+$("#additional-courses .course-list a").each(function () {
+    $(this).empty().append("<span class='additional-module'>...</span>");
+});
 
 // Delete extra space from code blocks
 $(function () {

@@ -45,6 +45,8 @@ namespace NuGetGallery
         public const string BlogArticle = "BlogArticle";
         public const string Resources = "Resources";
         public const string ResourceName = "ResourceName";
+        public const string Courses = "Courses";
+        public const string CourseName = "CourseName";
         public const string Docs = "Docs";
         public const string Kickstarter = "Kickstarter";
         public const string Terms = "Terms";

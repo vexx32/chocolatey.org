@@ -1,0 +1,29 @@
+﻿@model CourseViewModel
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
+}
+
+<div id="header" class="course-header bg-primary">
+    <section class="py-3 py-lg-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-3">Chocolatey Courses</h1>
+                    <h1>Step-by-Step Guides for All Things Chocolatey!</h1>
+                    <a class="btn btn-outline-light" href="#additional-courses">View More Courses</a>
+                    <a class="btn btn-light" href="#getting-started">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="shape-border shape-border-bottom shape-border-white"></div>
+</div>
+<section id="getting-started" class="pb-3 pb-lg-5 bg-white">
+    @Html.Partial("~/Views/Courses/GettingStarted/_CourseDescription.cshtml")
+</section>
+@Html.Partial("~/Views/Courses/_AllCourses.cshtml")

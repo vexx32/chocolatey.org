@@ -7,7 +7,7 @@
     font-style: normal;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before, .dropdown-toggle:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before, .dropdown-toggle:after, .course-list li.completed::before, .course-list li.mod-completed::before, .correct::before, .wrong::before {
     font-family: 'FontAwesome';
     font-style: normal;
     font-weight: normal;
@@ -85,15 +85,15 @@
     content: "\f064";
 }
 
-.icon-angle-down:before, a[data-toggle="collapse"]:before, .docs-left button.navbar-toggler[data-toggle="collapse"]:before {
+.icon-angle-down:before, a[data-toggle="collapse"]:before, .docs-left button.navbar-toggler[data-toggle="collapse"]:before, .module-left button.navbar-toggler[data-toggle="collapse"]:before {
     content: "\f107";
 }
 
-.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before, .docs-left button.navbar-toggler[data-toggle="collapse"].collapsed:before {
+.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before, .docs-left button.navbar-toggler[data-toggle="collapse"].collapsed:before, .module-left button.navbar-toggler[data-toggle="collapse"].collapsed:before {
     content: "\f105";
 }
 
-.icon-check:before, ul.check-list li::before {
+.icon-check:before, ul.check-list li::before, .course-list li.completed::before, .course-list li.mod-completed::before, .correct::before {
     content: "\f00c";
 }
 
@@ -107,6 +107,10 @@
 
 .icon-times-circle-o:before {
     content: "\f05c";
+}
+
+.icon-times:before, .wrong::before {
+    content: "\f00d";
 }
 
 .icon-question-circle:before {
@@ -192,4 +196,8 @@
 
 .icon-bullhorn:before {
     content: "\f0a1";
+}
+
+.icon-graduation-cap:before {
+    content: "\f19d";
 }

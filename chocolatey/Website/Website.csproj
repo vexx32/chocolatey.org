@@ -674,6 +674,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StyleguideController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Entities\CourseProfile.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\Captcha.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
@@ -702,6 +703,10 @@
     <Compile Include="Migrations\201805072106573_Add_UserItems.Designer.cs">
       <DependentUpon>201805072106573_Add_UserItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903282038384_CourseProfile.cs" />
+    <Compile Include="Migrations\201903282038384_CourseProfile.Designer.cs">
+      <DependentUpon>201903282038384_CourseProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />
@@ -709,7 +714,9 @@
     <Compile Include="Services\AmazonSqsClientWrapper.cs" />
     <Compile Include="Services\AmazonSqsPackageStatisticsService.cs" />
     <Compile Include="Services\DatabasePackageStatisticsService.cs" />
+    <Compile Include="Services\CourseProfilesService.cs" />
     <Compile Include="Services\IAmazonSqsClient.cs" />
+    <Compile Include="Services\ICourseProfilesService.cs" />
     <Compile Include="Services\IScanService.cs" />
     <Compile Include="Services\IPackageStatisticsService.cs" />
     <Compile Include="Services\IUserService.cs" />
@@ -801,6 +808,8 @@
     <Compile Include="ViewModels\ContactAdminsViewModel.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
+    <Compile Include="ViewModels\CourseProfileViewModel.cs" />
+    <Compile Include="ViewModels\CourseViewModel.cs" />
     <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
@@ -1095,6 +1104,7 @@
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
+    <Content Include="Content\Images\Badges\GettingStartedCourse.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
@@ -1355,6 +1365,7 @@
     <Content Include="Content\scss\_carousels.scss" />
     <Content Include="Content\scss\_backgrounds.scss" />
     <Content Include="Content\scss\_resources.scss" />
+    <Content Include="Content\scss\_courses.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1365,6 +1376,7 @@
     <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\closeable\index.js" />
     <Content Include="Scripts\CookiesNotice\Index.js" />
+    <Content Include="Scripts\courses\courses.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
@@ -1664,6 +1676,23 @@
     <Content Include="Views\Resources\Files\MarkJohnsonChocoFest18.md" />
     <Content Include="Views\Resources\Files\StevenMurawskiChocoFest18.md" />
     <Content Include="Views\Resources\Files\YelpChocoFest18.md" />
+    <Content Include="Views\Courses\GettingStarted\WhatIsChocolatey.cshtml" />
+    <Content Include="Views\Courses\Home.cshtml" />
+    <Content Include="Views\Courses\_ModuleLayout.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_ViewStart.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\Home.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\Requirements.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_LeftSideColumn.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_CourseDescription.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\HowToUse.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\Terminology.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\ChocolateyPackages.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\InstallationInDetail.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\HowChocolateyWorks.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_NextUrl.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_Popup.cshtml" />
+    <Content Include="Views\Courses\_QuizCTA.cshtml" />
+    <Content Include="Views\Courses\_AllCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
