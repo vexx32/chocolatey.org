@@ -1,4 +1,6 @@
-﻿@{
+﻿@using NuGetGallery;
+
+@{
     ViewBag.Title = "Chocolatey - The package manager for Windows";
     ViewBag.Tab = "Home";
     Layout = "~/Views/Shared/PackagesLayout.cshtml";
@@ -350,9 +352,80 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 text-center mt-4">
+                    <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">View Customer Stories</a>
+                </div>
             </div>
         </div>
     </div>
+</section>
+<section id="home-resources">
+    <div class="bg-medium-dark">
+        <div class="shape-border shape-border-top shape-border-light"></div>
+        <div class="container py-3 py-lg-5">
+            <h1 class="text-center mb-5"><strong>Keep Up with the Latest Chocolatey Resources</strong></h1>
+            <div class="row resource-list">
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = "automated-managing-windows-desktop-software" })">
+                        <div class="card h-100">
+                            <div class="card-header font-weight-bold bg-medium-light text-center">
+                                <span class="icon-briefcase" alt="Case Studies"></span>
+                                <span>Case Study</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <img src="@Url.Content("~/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg")" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever">
+                            </div>
+                            <div class="card-footer">
+                                <h5>How I Completely Automated Managing Windows Desktop Software...Forever</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "videos", resourceName = "what-is-chocolatey" })">
+                        <div class="card h-100">
+                            <div class="card-header font-weight-bold bg-medium-light text-center">
+                                <span class="icon-play" alt="Video"></span>
+                                <span>Video</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <img src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey">
+                            </div>
+                            <div class="card-footer">
+                                <h5>What is Chocolatey?</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = "puppet-customer-success-story" })">
+                        <div class="card h-100">
+                            <div class="card-header font-weight-bold bg-medium-light text-center">
+                                <span class="icon-star" alt="Customer Success Stories"></span>
+                                <span>Customer Success Story</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <img src="@Url.Content("~/content/images/videos/Puppet_Mike-Lombardi.jpg")" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet">
+                            </div>
+                            <div class="card-footer">
+                                <h5>Puppet</h5>
+                                <p><small><i>Mike Lombardi, Sofware Engineer</i></small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "home"})">View All Resources</a>
+                </div>
+            </div>
+        </div>
+        <div class="shape-border shape-border-bottom"></div>
+    </div>
+</section>
+<section class="pb-3 pb-lg-5">
+    @Html.Partial("~/Views/Pages/_Courses.cshtml")
 </section>
 
 @section BottomScripts

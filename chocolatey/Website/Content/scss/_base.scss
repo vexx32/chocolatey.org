@@ -248,6 +248,14 @@ ul.check-list li::before {
     color: #36bc98;
 }
 
+/*Random Borders*/
+.border-hr {
+    border: 3px solid $blue;
+    width: 50px;
+    margin-left: 0;
+    border-radius: $border-radius;
+}
+
 /*Load More/Show Less*/
 #showLess {
     display: none;
