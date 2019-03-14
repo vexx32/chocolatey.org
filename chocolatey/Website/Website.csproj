@@ -1118,6 +1118,7 @@
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
     <Content Include="Content\Images\Badges\GettingStartedCourse.png" />
+    <Content Include="Content\Images\Badges\InstallingUpgradingUninstalling.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
@@ -1706,6 +1707,16 @@
     <Content Include="Views\Courses\GettingStarted\_Popup.cshtml" />
     <Content Include="Views\Courses\_QuizCTA.cshtml" />
     <Content Include="Views\Courses\_AllCourses.cshtml" />
+    <Content Include="Views\Courses\Installation\_CourseDescription.cshtml" />
+    <Content Include="Views\Courses\Installation\_LeftSideColumn.cshtml" />
+    <Content Include="Views\Courses\Installation\_ViewStart.cshtml" />
+    <Content Include="Views\Courses\Installation\Home.cshtml" />
+    <Content Include="Views\Courses\Installation\Installing.cshtml" />
+    <Content Include="Views\Courses\Installation\Upgrading.cshtml" />
+    <Content Include="Views\Courses\Installation\Uninstalling.cshtml" />
+    <Content Include="Views\Courses\Installation\_Method.cshtml" />
+    <Content Include="Views\Courses\Installation\_NextUrl.cshtml" />
+    <Content Include="Views\Courses\Installation\_Popup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

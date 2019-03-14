@@ -10,6 +10,8 @@
     Bundles.Reference("Scripts/courses");
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
+    var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
+    var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
 }
 @section css
 {
@@ -38,6 +40,10 @@
                             @if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) + "?quiz=true")
                             {
                                 <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started", courseModuleName = "home" })">Getting Started</a>
+                            }
+                            else if (FullHref == BaseHref + "/courses/installation/installing" || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "installation" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "installation" }) + "?quiz=true")
+                            {
+                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "installation", courseModuleName = "home" })">Installation</a>
                             }
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>

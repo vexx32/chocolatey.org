@@ -1,0 +1,22 @@
+﻿@using NuGetGallery;
+@model CourseViewModel
+
+<div class="container py-xl-5">
+    <div class="row">
+        <div class="col-xl-10 mx-auto">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="d-flex flex-row align-items-center">
+                        <img width="50" src="@CourseProfileConstants.Images.installingUpgradingUninstalling" alt="@CourseProfileConstants.InstallingUpgradingUninstalling" />
+                        <span class="ml-2">@CourseProfileConstants.InstallingUpgradingUninstalling</span>
+                    </h2>
+                    <p class="text-muted">3 Topics | < 30 Minutes | <span class="level beginner">Beginner</span></p>
+                    <p>Chocolatey installs in just seconds! Learn how to get up and running with Chocolatey with a basic or more advanced install method.</p>
+                </div>
+                <div class="col-lg-6 course-home">
+                    @Html.Partial("~/Views/Courses/Installation/_LeftSideColumn.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

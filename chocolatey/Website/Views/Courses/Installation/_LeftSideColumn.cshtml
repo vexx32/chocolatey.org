@@ -1,0 +1,23 @@
+﻿@using NuGetGallery;
+@model CourseViewModel
+
+<ol class="course-list @if (User.Identity.IsAuthenticated){<text>authenticated</text>}">
+    <li class="@if (User.Identity.IsAuthenticated && Model.UserCourseProfiles != null){foreach (var siteProfile in Model.UserCourseProfiles){if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.ModOne == true){<text>mod-completed</text>}}}">
+        <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "installing"})">
+            Installing<i class="icon-chevron-right"></i>
+            <span class="text-muted">10 Minutes | Learn how to install Chocolatey based on your preferred method.</span>
+        </a>
+    </li>
+    <li class="@if (User.Identity.IsAuthenticated && Model.UserCourseProfiles != null){foreach (var siteProfile in Model.UserCourseProfiles){if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.ModTwo == true){<text>mod-completed</text>}}}">
+        <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "upgrading"})">
+            Upgrading<i class="icon-chevron-right"></i>
+            <span class="text-muted">< 1 Minute | Find out how to upgrade Chocolatey with one simple command.</span>
+        </a>
+    </li>
+    <li class="@if (User.Identity.IsAuthenticated && Model.UserCourseProfiles != null){foreach (var siteProfile in Model.UserCourseProfiles){if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.ModThree == true){<text>mod-completed</text>}}}" ">
+        <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "uninstalling"})">
+            Uninstalling<i class="icon-chevron-right"></i>
+            <span class="text-muted">5 Minutes | How to uninstall Chocolatey the correct way.</span>
+        </a>
+    </li>
+</ol>

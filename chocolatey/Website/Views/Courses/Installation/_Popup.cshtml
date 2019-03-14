@@ -1,0 +1,37 @@
+﻿@using NuGetGallery;
+@model CourseViewModel
+
+@if (TempData.ContainsKey("Message"))
+{
+    <div class="modal fade" id="quiz-modal" tabindex="-1" role="dialog" aria-labelledby="quiz-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @foreach (var siteProfile in Model.UserCourseProfiles)
+                {
+                    if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.Completed == false)
+                    {
+                        <div class="modal-body text-center">
+                            <h3>You've completed the module"@ViewBag.Title"</h3>
+                            <i class="icon-check-circle-o display-1 text-success"></i>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <a href="#quiz" class="btn btn-secondary mt-3 btn-results" data-dismiss="modal">Review Answers</a>
+                            @Html.Partial("~/Views/Courses/Installation/_NextUrl.cshtml")
+                        </div>
+                    }
+                    else if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.Completed == true)
+                    {
+                        <div class="modal-body text-center">
+                            <h3>You've Completed the Course "@CourseProfileConstants.InstallingUpgradingUninstalling"</h3>
+                            <img width="200" src="@CourseProfileConstants.Images.installingUpgradingUninstalling" alt="@CourseProfileConstants.InstallingUpgradingUninstalling" />
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <a href="#quiz" class="btn btn-secondary mt-3 btn-results" data-dismiss="modal">Review Answers</a>
+                            <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
