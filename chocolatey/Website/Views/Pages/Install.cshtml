@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Installing Chocolatey";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
+}
+
+<section class="py-3 py-md-5 container">
+    <h1 class="text-center mb-4">Installing Chocolatey</h1>
+    <div class="row">
+        <div class="col-xl-8 mx-auto">
+            <div class="bg-primary shadow p-2">
+                <a class="h3 collapse show" data-toggle="collapse" href="#install-step1" role="button" aria-expanded="true" aria-controls="install-step1" title="Install Step 1"><strong>Step 1: Subscribe to the Chocolatey Newsletter</strong></a>
+            </div>
+            <div class="collapse show bg-white shadow" id="install-step1">
+                <div class="p-3">
+                    <p>Be the first to know about upcoming features, security releases, and news about Chocolatey.</p>
+                    <div id="mc_embed_signup">
+                        <form action="//chocolatey.us8.list-manage.com/subscribe/post?u=86a6d80146a0da7f2223712e4&amp;id=73b018498d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                            <div class="form-row align-items-center justify-content-center">
+                                <div class="col-12 col-md-10">
+                                    <input type="email" title="Email Address for Newsletter" class="form-control email mt-2 mt-md-0" id="mce-EMAIL" placeholder="Your e-mail address" value="" name="EMAIL" required>
+                                </div>
+                                <div style="position: absolute; left: -5000px;">
+                                    <input title="Invisible Field" type="text" name="b_86a6d80146a0da7f2223712e4_73b018498d" tabindex="-1" value="">
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <button type="submit" class="btn btn-primary w-100 mt-2 mt-md-0" id="mc-embedded-subscribe"><strong>Subscribe</strong></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-primary shadow p-2 mt-4">
+                <a class="h3 collapse show" data-toggle="collapse" href="#install-step2" role="button" aria-expanded="true" aria-controls="install-step2" title="Install Step 2"><strong>Step 2: Choose Your Installation Method</strong></a>
+            </div>
+            <div class="collapse show bg-white shadow" id="install-step2">
+                <div class="p-3">
+                    <h4 class="mb-3">Know the Requirements:</h4>
+                    <ul>
+                        <li>Windows 7+ / Windows Server 2003+</li>
+                        <li>PowerShell v2+</li>
+                        <li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)</li>
+                    </ul>
+                    <hr class="my-3" />
+                    <h4 class="mb-3">Basic Chocolatey Install:</h4>
+                    <ol class="mb-0">
+                        <li class="mb-3">First, ensure that you are using an <strong><em><a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">administrative shell</a></em></strong> - you can also install as a non-admin, check out <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "installation"})#non-administrative-install">Non-Administrative Installation</a>.</li>
+                        <li class="mb-3">
+                            <p>Copy the text specific to your command shell below.</p>
+                            <div class="callout-warning">
+                                <strong>NOTE:</strong> Please inspect <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> prior to running any of these scripts to ensure safety. We already know it's safe, but you should verify the security and contents of <strong><em>any</em></strong> script from the internet you are not familiar with. 
+                                All of these scripts download a remote PowerShell script and execute it on your machine. We take security very seriously. <a href="https://chocolatey.org/security">Learn more about our security protocols</a>.
+                            </div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item mr-2">
+                                    <a class="nav-link active" id="cmd-tab" data-toggle="tab" href="#cmd" role="tab" aria-controls="cmd" aria-selected="true">Install with cmd.exe</a>
+                                </li>
+                                <li class="nav-item mr-2">
+                                    <a class="nav-link" id="powershell-tab" data-toggle="tab" href="#powershell" role="tab" aria-controls="powershell" aria-selected="false">Install with powershell.exe</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content p-3">
+                                <div class="tab-pane fade show active" id="cmd" role="tabpanel" aria-labelledby="cmd-tab">
+                                    <h5>Install with cmd.exe</h5>
+                                    <p>Run the following command:</p>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               value="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"
+                                               aria-label="Install with cmd.exe command"
+                                               readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary tt"
+                                                    aria-label="Copy @@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot; to Clipboard"
+                                                    data-toggle="tooltip"
+                                                    title="Copy to Clipboard"
+                                                    data-clipboard-text="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;">
+                                                <i class="icon-clipboard" aria-hidden="true">
+                                                    <span class="sr-only">
+                                                        Copy @@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot; to Clipboard
+                                                    </span>
+                                                </i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="powershell" role="tabpanel" aria-labelledby="powershell-tab">
+                                    <h5>Install with powershell.exe</h5>
+                                    <p>With PowerShell, there is an additional step. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
+                                    <ul>
+                                        <li class="mb-3">Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass -Scope Process</code>.</li>
+                                    </ul>
+                                    <p>Now run the following command:</p>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               value="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))"
+                                               aria-label="Install with powershell.exe command"
+                                               readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary tt"
+                                                    aria-label="Copy Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)) to Clipboard"
+                                                    data-toggle="tooltip"
+                                                    title="Copy to Clipboard"
+                                                    data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))">
+                                                <i class="icon-clipboard" aria-hidden="true">
+                                                    <span class="sr-only">
+                                                        Copy Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)) to Clipboard
+                                                    </span>
+                                                </i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">Paste the copied text into your shell and press Enter.</li>
+                        <li class="mb-3">Wait a few seconds for the command to complete.</li>
+                        <li>If you don't see any errors, you are ready to use Chocolatey! Type <code>choco</code> or <code>choco -?</code> now, or see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "getting-started" })">Getting Started</a> for usage instructions.</li>
+                    </ol>
+                    <hr class="my-3" />
+                    <h4 class="mb-3">Advanced Chocolatey Install:</h4>
+                    <p>Are you installing behind a proxy, need a completely offline install, or wanting to install a licenced edition of Chocolatey? Need even more options? Visit our Documentation or take our new Installation Course to help you get up and running with Chocolatey!</p>
+                    <div class="row divider-row">
+                        <div class="col-lg-6">
+                            <hr class="d-lg-none" />
+                            <h5 class="mb-3"><small>Option 1:</small><br />Read the Documentation</h5>
+                            <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Docs, new {docName = "installation"})#more-install-options">Read the Installation Docs</a>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5 class="mb-3"><small>Option 2:</small><br />Take the step-by-step Installation Course<span class="badge badge-success ml-2">New!</span></h5>
+                            <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "installing"})">Take the Installation Course</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

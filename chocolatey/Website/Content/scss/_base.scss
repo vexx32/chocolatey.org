@@ -329,6 +329,14 @@ footer {
     .modal.fade .modal-dialog:not(.modal-dialog-centered) {
         transform: translate(0,50%);
     }
+
+    .divider-row [class*=col-]:not(:last-child) {
+        border-right: 1px solid #ced4da;
+    }
+
+    .divider-row [class*=col-] {
+        padding: 0 2rem;
+    }
 }
 
 @media (min-width: 1200px) {

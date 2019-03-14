@@ -228,7 +228,7 @@ Thanks for requesting a discount. Please see the link below:
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Install()
         {
-            return View("~/Views/Documentation/Installation.cshtml","~/Views/Documentation/_Layout.cshtml");
+            return View("~/Views/Pages/Install.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]

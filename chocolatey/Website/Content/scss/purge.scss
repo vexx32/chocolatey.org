@@ -29,3 +29,19 @@
 .invisible-input {
     display: none;
 }
+
+/*Transitions*/
+.fade {
+    transition: opacity .15s linear;
+
+    &:not(.show) {
+        opacity: 0;
+    }
+}
+
+.collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    transition: height .35s ease;
+}

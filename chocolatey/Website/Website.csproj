@@ -1716,6 +1716,7 @@
     <Content Include="Views\Courses\Installation\Home.cshtml" />
     <Content Include="Views\Courses\Installation\Installing.cshtml" />
     <Content Include="Views\Courses\Installation\Upgrading.cshtml" />
+    <Content Include="Views\Pages\Install.cshtml" />
     <Content Include="Views\Courses\Installation\Uninstalling.cshtml" />
     <Content Include="Views\Courses\Installation\_Method.cshtml" />
     <Content Include="Views\Courses\Installation\_NextUrl.cshtml" />

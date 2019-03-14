@@ -102,9 +102,10 @@ function setTooltip(btn, message) {
         .attr('data-original-title', message)
         .tooltip('show');
 }
-function hideTooltip(btn) {
+function hideTooltip(btn, message) {
     setTimeout(function () {
-        btn.tooltip('hide');
+        btn.tooltip('hide')
+        .attr('data-original-title', message)
     }, 1000);
 }
 
@@ -114,7 +115,7 @@ var clipboard = new ClipboardJS('.tt');
 clipboard.on('success', function (e) {
     var btn = $(e.trigger);
     setTooltip(btn, 'Copied');
-    hideTooltip(btn);
+    hideTooltip(btn, 'Copy');
 });
 
 // Make input text selectable with one click
