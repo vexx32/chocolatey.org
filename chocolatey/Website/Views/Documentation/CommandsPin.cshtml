@@ -12,11 +12,23 @@ alternative is <code>choco upgrade --except=&quot;pkg1,pk2&quot;</code>.</p>
 <h2 id="usage">Usage</h2>
 <pre><code class="nohighlight">  choco pin [list]|add|remove [&lt;options/switches&gt;]</code></pre>
 <h2 id="examples">Examples</h2>
-<pre><code class="nohighlight">  choco pin   
-  choco pin list  
+<pre><code class="nohighlight">  choco pin
+  choco pin list
   choco pin add -n=git
   choco pin add -n=git --version 1.2.3
   choco pin remove --name git</code></pre>
+<p><strong>NOTE:</strong> See scripting in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>) for how to<br />
+write proper scripts and integrations.</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<p>Exit codes that normally result from running this command.</p>
+<p>Normal:</p>
+<ul>
+<li>0: operation was successful, no issues detected</li>
+<li>–1 or 1: an error has occurred</li>
+</ul>
+<p>If you find other exit codes that we have not yet documented, please<br />
+file a ticket so we can document it at<br />
+<a href="https://github.com/chocolatey/choco/issues/new/choose" class="uri">https://github.com/chocolatey/choco/issues/new/choose</a>.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />

@@ -44,6 +44,18 @@ This is called automatic recompile.</p>
   choco new bob -a --version 1.2.0 maintainername=&quot;&#39;This guy&#39;&quot;
   choco new bob silentargs=&quot;&#39;/S&#39;&quot; url=&quot;&#39;https://somewhere/out/there.msi&#39;&quot;
   choco new bob --outputdirectory Packages</code></pre>
+<p><strong>NOTE:</strong> See scripting in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>) for how to<br />
+write proper scripts and integrations.</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<p>Exit codes that normally result from running this command.</p>
+<p>Normal:</p>
+<ul>
+<li>0: operation was successful, no issues detected</li>
+<li>–1 or 1: an error has occurred</li>
+</ul>
+<p>If you find other exit codes that we have not yet documented, please<br />
+file a ticket so we can document it at<br />
+<a href="https://github.com/chocolatey/choco/issues/new/choose" class="uri">https://github.com/chocolatey/choco/issues/new/choose</a>.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />

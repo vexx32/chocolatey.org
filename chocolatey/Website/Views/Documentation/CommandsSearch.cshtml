@@ -21,8 +21,29 @@ and switches with one dash (<code>-</code>). For more details, see<br />
   choco list -lai
   choco list --page=0 --page-size=25
   choco search git
-  choco search git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
+  choco search git --source=&quot;&#39;https://somewhere/out/there&#39;&quot;
   choco search bob -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
+<p><strong>NOTE:</strong> See scripting in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>) for how to<br />
+write proper scripts and integrations.</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<p>Exit codes that normally result from running this command.</p>
+<p>Normal:</p>
+<ul>
+<li>0: operation was successful, no issues detected</li>
+<li>–1 or 1: an error has occurred</li>
+</ul>
+<p>Enhanced:</p>
+<ul>
+<li>0: operation was successful, no issues detected</li>
+<li>–1 or 1: an error has occurred</li>
+<li>2: no results (enhanced)</li>
+</ul>
+<p><strong>NOTE:</strong> Starting in v0.10.12, if you have the feature &#39;useEnhancedExitCodes&#39;<br />
+turned on, then choco will provide enhanced exit codes that allow<br />
+better integration and scripting.</p>
+<p>If you find other exit codes that we have not yet documented, please<br />
+file a ticket so we can document it at<br />
+<a href="https://github.com/chocolatey/choco/issues/new/choose" class="uri">https://github.com/chocolatey/choco/issues/new/choose</a>.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_search.gif" alt="choco search" /></p>
 <h2 id="alternative-sources">Alternative Sources</h2>

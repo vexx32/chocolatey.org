@@ -25,6 +25,8 @@ will require specifying the path to the file.</p>
 <pre><code class="nohighlight">  choco push --source https://chocolatey.org/
   choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -t 500
   choco push --source &quot;&#39;https://chocolatey.org/&#39;&quot; -k=&quot;&#39;123-123123-123&#39;&quot;</code></pre>
+<p><strong>NOTE:</strong> See scripting in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>) for how to<br />
+write proper scripts and integrations.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>To use this command, you must have your API key saved for the community<br />
 feed (chocolatey.org) or the source you want to push to. Or you can<br />
@@ -36,6 +38,16 @@ exists with a different user (API key). The package could be unlisted.<br />
 You can verify by going to <a href="https://push.chocolatey.org/packages/packageName" class="uri">https://push.chocolatey.org/packages/packageName</a>.<br />
 Please contact the administrators of <a href="https://push.chocolatey.org/" class="uri">https://push.chocolatey.org/</a> if you see this<br />
 and you don&#39;t see a good reason for it.</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<p>Exit codes that normally result from running this command.</p>
+<p>Normal:</p>
+<ul>
+<li>0: operation was successful, no issues detected</li>
+<li>–1 or 1: an error has occurred</li>
+</ul>
+<p>If you find other exit codes that we have not yet documented, please<br />
+file a ticket so we can document it at<br />
+<a href="https://github.com/chocolatey/choco/issues/new/choose" class="uri">https://github.com/chocolatey/choco/issues/new/choose</a>.</p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p><strong>NOTE:</strong> Options and switches apply to all items passed, so if you are<br />
 running a command like install that allows installing multiple<br />

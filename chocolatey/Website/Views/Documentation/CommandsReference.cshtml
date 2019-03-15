@@ -58,9 +58,6 @@ apostrophes (<code>&quot;'value'&quot;</code>). In cmd.exe you can just use doub
 (<code>`&quot;value`&quot;</code>) or apostrophes (<code>'value'</code>). Using the combination<br />
 allows for both shells to work without issue, except for when the next<br />
 section applies.</li>
-<li><strong>Periods in PowerShell</strong>: If you need to pass a period as part of a<br />
-value or a path, PowerShell doesn&#39;t always handle it well. Please<br />
-quote those values using &quot;Quote Values&quot; section above.</li>
 <li><strong>Pass quotes in arguments</strong>: When you need to pass quoted values to<br />
 to something like a native installer, you are in for a world of fun. In<br />
 cmd.exe you must pass it like this: <code>-ia &quot;/yo=&quot;&quot;Spaces spaces&quot;&quot;&quot;</code>. In<br />
@@ -68,12 +65,113 @@ PowerShell.exe, you must pass it like this: <code>-ia '/yo=&quot;&quot;Spaces sp
 No other combination will work. In PowerShell.exe if you are on version<br />
 v3+, you can try <code>--%</code> before <code>-ia</code> to just pass the args through as is,<br />
 which means it should not require any special workarounds.</li>
+<li><strong>Periods in PowerShell</strong>: If you need to pass a period as part of a<br />
+value or a path, PowerShell doesn&#39;t always handle it well. Please<br />
+quote those values using &quot;Quote Values&quot; section above.</li>
 <li>Options and switches apply to all items passed, so if you are<br />
 installing multiple packages, and you use <code>--version=1.0.0</code>, choco<br />
 is going to look for and try to install version 1.0.0 of every<br />
 package passed. So please split out multiple package calls when<br />
 wanting to pass specific options.</li>
 </ul>
+<h2 id="scripting-integration---best-practices-style-guide">Scripting / Integration - Best Practices / Style Guide</h2>
+<p>When writing scripts, such as PowerShell scripts passing options and<br />
+switches, there are some best practices to follow to ensure that you<br />
+don&#39;t run into issues later. This also applies to integrations that<br />
+are calling Chocolatey and parsing output. Chocolatey <strong>uses</strong><br />
+PowerShell, but it is an exe, so it cannot return PowerShell objects.</p>
+<p>Following these practices ensures both readability of your scripts AND<br />
+compatibility across different versions and editions of Chocolatey.<br />
+Following this guide will ensure your experience is not frustrating<br />
+based on choco not receiving things you think you are passing to it.</p>
+<ul>
+<li>For consistency, always use <code>choco</code>, not <code>choco.exe</code>. Never use<br />
+shortcut commands like <code>cinst</code> or <code>cup</code>.</li>
+<li>Always have the command as the first argument to <code>choco. e.g.  <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })"></code>choco install<code></a>, where <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })"></code>install`</a> is the command.</li>
+<li>If there is a subcommand, ensure that is the second argument. e.g.<br />
+<code>choco source list</code>, where <code>source</code> is the command and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandslist" })"><code>list</code></a> is the<br />
+subcommand.</li>
+<li>Typically the subject comes next. If installing packages, the<br />
+subject would be the package names, e.g. <code>choco install pkg1 pkg2</code>.</li>
+<li>Never use &#39;nupkg&#39; or point directly to a nupkg file UNLESS using<br />
+&#39;choco push&#39;. Use the source folder instead, e.g. <code>choco install  &lt;package id&gt; --source=&quot;'c:\folder\with\package'&quot;</code> instead of<br />
+<code>choco install DoNotDoThis.1.0.nupkg</code> or <code>choco install DoNotDoThis    --source=&quot;'c:\folder\with\package\DoNotDoThis.1.0.nupkg'&quot;</code>.</li>
+<li>Switches and parameters are called simply options. Options come<br />
+after the subject. e.g. <code>choco install pkg1 --debug --verbose</code>.</li>
+<li>Never use the force option (<code>--force</code>/<code>-f</code>) in scripts (or really<br />
+otherwise as a default mode of use). Force is an override on<br />
+Chocolatey behavior. If you are wondering why Chocolatey isn&#39;t doing<br />
+something like the documentation says it should, it&#39;s likely because<br />
+you are using force. Stop.</li>
+<li>Always use full option name. If the short option is <code>-n</code>, and the<br />
+full option is <code>--name</code>, use <code>--name</code>. The only acceptable short<br />
+option for use in scripts is <code>-y</code>. Find option names in help docs<br />
+online or through <code>choco -?</code> /<code>choco [Command Name] -?</code>.</li>
+<li>For scripts that are running automated, always use <code>-y</code>. Do note<br />
+that even with <code>-y</code> passed, some things / state issues detected will<br />
+temporarily stop for input - the key here is temporarily. They will<br />
+continue without requiring any action after the temporary timeout<br />
+(typically 30 seconds).</li>
+<li>Full option names are prepended with two dashes, e.g. <code>--</code> or<br />
+<code>--debug --verbose --ignore-proxy</code>.</li>
+<li>When setting a value to an option, always put an equals (<code>=</code>)<br />
+between the name and the setting, e.g. <code>--source=&quot;'local'&quot;</code>.</li>
+<li>When setting a value to an option, always surround the value<br />
+properly with double quotes bookending apostrophes, e.g.<br />
+<code>--source=&quot;'internal_server'&quot;</code>.</li>
+<li>If you are building PowerShell scripts, you can most likely just<br />
+simply use apostrophes surrounding option values, e.g.<br />
+<code>--source='internal_server'</code>.</li>
+<li>Prefer upgrade to install in scripts. You can&#39;t <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsinstall" })"><code>install</code></a> to a newer<br />
+version of something, but you can <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commandsupgrade" })"><code>choco upgrade</code></a> which will do both<br />
+upgrade or install (unless switched off explicitly).</li>
+<li>If you are sharing the script with others, pass <code>--source</code> to be<br />
+explicit about where the package is coming from. Use full link and<br />
+not source name (&#39;<a href="https://chocolatey.org/api/v2" class="uri">https://chocolatey.org/api/v2</a>&#39; versus<br />
+&#39;chocolatey&#39;).</li>
+<li>If parsing output, you might want to use <code>--limit-output</code>/<code>-r</code> to<br />
+get output in a more machine parseable format. <strong>NOTE:</strong> Not all<br />
+commands handle return of information in an easily digestible<br />
+output.</li>
+<li>Use exit codes to determine status. Chocolatey exits with 0 when<br />
+everything worked appropriately and other exits codes like 1 when<br />
+things error. There are package specific exit codes that are<br />
+recommended to be used and reboot indicating exit codes as well. To<br />
+check exit code when using PowerShell, immediately call<br />
+<code>$exitCode = $LASTEXITCODE</code> to get the value choco exited with.</li>
+</ul>
+<p>Here&#39;s an example following bad practices (line breaks added for<br />
+readability):</p>
+<pre><code class="nohighlight">`choco install pkg1 -y -params &#39;/Option:Value /Option2:value with 
+ spaces&#39; --c4b-option &#39;Yaass&#39; --option-that-is-new &#39;dude upgrade&#39;`</code></pre>
+<p>Now here is that example written with best practices (again line<br />
+breaks added for readability - there are not line continuations<br />
+for choco):</p>
+<pre><code class="nohighlight">`choco upgrade pkg1 -y --source=&quot;&#39;https://chocolatey.org/api/v2&#39;&quot; 
+ --package-parameters=&quot;&#39;/Option:Value /Option2:value with spaces&#39;&quot;
+ --c4b-option=&quot;&#39;Yaass&#39;&quot; --option-that-is-new=&quot;&#39;dude upgrade&#39;&quot;`</code></pre>
+<p>Note the differences between the two:</p>
+<ul>
+<li>Which is more self-documenting?</li>
+<li>Which will allow for the newest version of something installed or<br />
+upgraded to (which allows for more environmental consistency on<br />
+packages and versions)?</li>
+<li>Which may throw an error on a badly passed option?</li>
+<li>Which will throw errors on unknown option values? See explanation<br />
+below.</li>
+</ul>
+<p>Chocolatey ignores options it doesn&#39;t understand, but it can only<br />
+ignore option values if they are tied to the option with an<br />
+equals sign (&#39;=&#39;). Note those last two options in the examples above?<br />
+If you roll off of a commercial edition or someone with older version<br />
+attempts to run the badly crafted script <code>--c4b-option 'Yaass'  --option-that-is-new 'dude upgrade'</code>, they are likely to see errors on<br />
+&#39;Yaass&#39; and &#39;dude upgrade&#39; because they are not explicitly tied to the<br />
+option they are written after. Now compare that to the other script.<br />
+Choco will ignore <code>--c4b-option=&quot;'Yaass'&quot;</code> and<br />
+<code>--option-that-is-new=&quot;'dude upgrade'&quot;</code> as a whole when it doesn&#39;t<br />
+register the options. This means that your script doesn&#39;t error.</p>
+<p>Following these scripting best practices will ensure your scripts work<br />
+everywhere they are used and with newer versions of Chocolatey.</p>
 <h2 id="see-help-menu-in-action">See Help Menu In Action</h2>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_help.gif" alt="choco help in action" /></p>
 <h2 id="default-options-and-switches">Default Options and Switches</h2>

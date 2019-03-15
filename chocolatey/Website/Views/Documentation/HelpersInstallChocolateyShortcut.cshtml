@@ -45,7 +45,7 @@ Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath
 Install-ChocolateyShortcut `
   -ShortcutFilePath &quot;C:\notepad.lnk&quot; `
   -TargetPath &quot;C:\Windows\System32\notepad.exe&quot; `
-  -WorkDirectory &quot;C:\&quot; `
+  -WorkingDirectory &quot;C:\&quot; `
   -Arguments &quot;C:\test.txt&quot; `
   -IconLocation &quot;C:\test.ico&quot; `
   -Description &quot;This is the description&quot;</code></pre>
@@ -133,6 +133,8 @@ Install-ChocolateyShortcut `
 <h3 id="workingdirectory-string">-WorkingDirectory [&lt;String&gt;]</h3>
 <p>OPTIONAL - The full absolute path of the Working Directory that will be<br />
 used by the new shortcut.</p>
+<p>As of v0.10.12, the directory will be created unless it contains environment<br />
+variable expansion like <code>%AppData%\FooBar</code>.</p>
 <table>
 <thead>
 <tr class="header">

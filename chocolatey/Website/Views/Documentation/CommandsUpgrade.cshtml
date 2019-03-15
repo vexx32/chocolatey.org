@@ -26,12 +26,44 @@ Programs and Features, ensuring automatically updating apps&#39; versions<br />
 <pre><code class="nohighlight">  choco upgrade chocolatey
   choco upgrade notepadplusplus googlechrome atom 7zip
   choco upgrade notepadplusplus googlechrome atom 7zip -dvfy
-  choco upgrade git --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; -y
+  choco upgrade git -y --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot;
+  choco upgrade git -y --params=&quot;&#39;/GitAndUnixToolsOnPath /NoAutoCrlf&#39;&quot; --install-args=&quot;&#39;/DIR=C:\git&#39;&quot;
+  # Params are package parameters, passed to the package
+  # Install args are installer arguments, appended to the silentArgs 
+  #  in the package for the installer itself
   choco upgrade nodejs.install --version 0.10.35
   choco upgrade git -s &quot;&#39;https://somewhere/out/there&#39;&quot;
   choco upgrade git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass
   choco upgrade all
   choco upgrade all --except=&quot;&#39;skype,conemu&#39;&quot;</code></pre>
+<p><strong>NOTE:</strong> See scripting in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a> (<code>choco -?</code>) for how to<br />
+write proper scripts and integrations.</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<p>Exit codes that normally result from running this command.</p>
+<p>Normal:</p>
+<ul>
+<li>0: operation was successful, no issues detected</li>
+<li>–1 or 1: an error has occurred</li>
+</ul>
+<p>Package Exit Codes:</p>
+<ul>
+<li>1641: success, reboot initiated</li>
+<li>3010: success, reboot required</li>
+<li>other (not listed): likely an error has occurred</li>
+</ul>
+<p>In addition to normal exit codes, packages are allowed to exit<br />
+with their own codes when the feature &#39;usePackageExitCodes&#39; is<br />
+turned on. Uninstall command has additional valid exit codes.<br />
+Available in v0.9.10+.</p>
+<p>Reboot Exit Codes:</p>
+<ul>
+<li>350: pending reboot detected, no action has occurred</li>
+<li>1604: install suspended, incomplete</li>
+</ul>
+<p>In addition to the above exit codes, you may also see reboot exit codes<br />
+when the feature &#39;exitOnRebootDetected&#39; is turned on. It typically requires<br />
+the feature &#39;usePackageExitCodes&#39; to also be turned on to work properly.<br />
+Available in v0.10.12+.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_upgrade.gif" alt="choco upgrade" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
@@ -291,6 +323,19 @@ out multiple package calls when wanting to pass specific options.</p>
        Overrides the default feature &#39;stopOnFirstPackageFailure&#39; set to &#39;False-
        &#39;. Available in 0.10.4+.
 
+     --skip-if-not-installed, --only-upgrade-installed, --skip-when-not-installed
+     Skip Packages Not Installed - if a package is not installed, do not 
+       install it during the upgrade process. Overrides the default feature 
+       &#39;skipPackageUpgradesWhenNotInstalled&#39; set to &#39;False&#39;. Available in 0.1-
+       0.12+.
+
+     --install-if-not-installed
+     Install Missing Packages When Not Installed - if a package is not 
+       installed, install it as part of running upgrade (typically default 
+       behavior). Overrides the default feature 
+       &#39;skipPackageUpgradesWhenNotInstalled&#39; set to &#39;False&#39;. Available in 0.1-
+       0.12+.
+
      --exclude-pre, --exclude-prerelease, --exclude-prereleases
      Exclude Prerelease - Should prerelease be ignored for upgrades? Will be 
        ignored if you pass `--pre`. Available in 0.10.4+.
@@ -305,6 +350,18 @@ out multiple package calls when wanting to pass specific options.</p>
      Ignore Remembered Options for Upgrade - ignore the arguments and options 
        used during install for upgrade. Overrides the default feature 
        &#39;useRememberedArgumentsForUpgrades&#39; set to &#39;False&#39;. Available in 0.10.4+.
+
+     --exitwhenrebootdetected, --exit-when-reboot-detected
+     Exit When Reboot Detected - Stop running install, upgrade, or uninstall 
+       when a reboot request is detected. Requires &#39;usePackageExitCodes&#39; 
+       feature to be turned on. Will exit with either 350 or 1604.  Overrides 
+       the default feature &#39;exitOnRebootDetected&#39; set to &#39;False&#39;.  Available in 
+       0.10.12+.
+
+     --ignoredetectedreboot, --ignore-detected-reboot
+     Ignore Detected Reboot - Ignore any detected reboots if found. Overrides 
+       the default feature &#39;exitOnRebootDetected&#39; set to &#39;False&#39;.  Available in 
+       0.10.12+.
 
      --sdc, --skipdownloadcache, --skip-download-cache
      Skip Download Cache - Use the original download even if a private CDN 
