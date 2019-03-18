@@ -22,22 +22,17 @@
                 </div>
             </section>
         </main>
-        <footer class="bg-medium text-white">
-            <section class="container-fluid bg-medium-dark text-center py-3">
+        <footer class="bg-dark text-white">
+            <section class="container-fluid text-center pt-3">
                 <div class="row">
                     <div class="col-12">
-                        <p>
-                            <strong>&copy; 2017 - @DateTime.UtcNow.Year</strong> Chocolatey Software, Inc.<br />
-                            <strong>&copy; 2011 - 2017</strong> RealDimensions Software, LLC.
-                        </p>
+                        <p class="mb-0"><strong>&copy; @DateTime.UtcNow.Year</strong> Chocolatey Software, Inc</p>
 
                         @{
                             string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
                             string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
                         }
-                        <p id="releaseTag" class="mb-0">
-                            Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker.
-                        </p>
+                        <p id="releaseTag" class="mb-0 text-dark"><small>Deployed from <a class="text-dark" href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker.</small></p>
                     </div>
                 </div>
             </section>

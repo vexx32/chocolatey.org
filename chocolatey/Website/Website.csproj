@@ -1583,7 +1583,6 @@
     <Content Include="Views\Documentation\ReleaseNotesCentralManagement.cshtml" />
     <Content Include="Views\Packages\_UploadSteps.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesExtension.cshtml" />
-    <Content Include="Views\Shared\_AlertBottom.cshtml" />
     <Content Include="Views\Shared\_AlertTop.cshtml" />
     <Content Include="Views\Shared\_CopyrightNavigation.cshtml" />
     <Content Include="Views\Shared\_TopNavigation.cshtml" />

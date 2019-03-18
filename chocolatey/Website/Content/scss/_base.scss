@@ -4,6 +4,10 @@ body {
     min-height: 100vh;
 }
 
+aside {
+    z-index: 9999 !important;
+}
+
 .profile-packages a {
     color: $gray-900;
     font-weight: $font-weight-normal;
@@ -88,6 +92,11 @@ footer.bg-medium-dark a:hover {
     position: fixed;
     width: 100%;
     bottom: 0;
+    z-index: 999;
+}
+
+.gitter-chat-embed {
+    z-index: 9999;
 }
 
 .modal {
@@ -285,5 +294,9 @@ footer {
 @media (min-width: 1200px) {
     #artifacts {
         background-position-x: 25%;
+    }
+
+    .cookies-popup {
+        z-index: 99;
     }
 }
