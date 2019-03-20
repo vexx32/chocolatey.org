@@ -6,220 +6,211 @@
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 }
-<section class="py-3 py-lg-5">
+
+<div id="header" class="bg-medium-dark team-header">
+    <section class="py-3 py-lg-5">
+        <div class="container py-3 py-lg-5 text-center">
+            <h1 class="display-3">Chocolatey Software</h1>
+            <h1><strong>The Sane Way to Manage Software on Windows</strong></h1>
+        </div>
+    </section>
+    <div class="shape-border shape-border-bottom"></div>
+</div>
+<section class="pb-3 pb-lg-5">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1 class="text-center pb-4">What is Chocolatey?</h1>
-                <p>
-                    <strong>Chocolatey is a package manager for Windows (like apt-get or yum but for Windows)</strong>. 
-                    It was designed to be a <strong>decentralized</strong> framework
-                    for quickly installing applications and tools that you need. It is built on the
-                    NuGet infrastructure currently using PowerShell as its focus for delivering packages
-                    from the distros to your door, err computer.
-                </p>
-                <p>Chocolatey is a single, unified interface designed to easily work with all aspects of managing Windows software (installers, zip archives, runtime binaries, internal and 3rd party software) using a packaging framework that understands both versioning and dependency requirements. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file. Chocolatey packages can be used independently, but also integrate with configuration managers like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, and Chef</a>. Chocolatey is trusted by businesses all over the world to manage their software deployments on Windows. You’ve never had so much fun managing software!</p>
-                <p>
-                    Chocolatey is brought to you by the work and inspiration of the community, the work
-                    and thankless nights of the <a href="https://github.com/orgs/chocolatey/people">
-                    Chocolatey Team </a>, and <a href="https://twitter.com/ferventcoder">Rob</a> heading up the direction.
-                </p>
-                <p>You can <strong>host your own sources</strong> and add them to Chocolatey, you can extend Chocolatey's capabilities, and folks, it's only going to get better.</p>
-                <p>Organizations that need better integration with Windows, more features and a smoother experience, not to mention a supported solution, turn to <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey for Business.</a></p>
-                <p>
-                    With all of this in mind, <strong>think of Chocolatey as a framework</strong> that
-                    you can build on top of. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">Chef, <strong>Puppet</strong>, Boxstarter, PowerShell DSC, Ansible, Saltstack, etc</a> all have ways for using Chocolatey
-                    to ensure the state of a computer and packages installed. <strong><em>Even Microsoft has decided to use Chocolatey's framework</em></strong> with the <a href="https://github.com/OneGet/oneget">PowerShell PackageManagement / OneGet</a> package manager aggregator! See Jeffrey Snover's <a href="http://blogs.technet.com/b/windowsserver/archive/2014/04/03/windows-management-framework-v5-preview.aspx">post</a> for more information.
-                </p>
+            <div class="col-lg-10 mx-auto">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2>Our Values and Approach</h2>
+                        <hr class="border-hr" />
+                        <p>
+                            Chocolatey is focused on helping our community, customers, and partners with solutions that help fill the gaps that are often ignored.
+                            We offer a simple, pragmatic, and open approach to software management.
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="video-story">
+                                    <div class="text-center" data-toggle="modal" data-target="#chocolatey-story"><img class="img-fluid shadow mb-3" src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey" /></div>
+                                    <div class="modal fade" id="chocolatey-story" tabindex="-1" role="dialog" aria-labelledby="What is Chocolatey Video" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body p-0">
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Z8olEnt65bk" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <q class="h5 text-muted text-italic">The biggest challenge is reducing duplication of effort, so users turn to Chocolatey for simplicity.</q>
+                                    <p class="text-center">Rob Reynolds, Founder of Chocolatey Software</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<div class="bg-white">
-    <section class="py-3 py-lg-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="text-center pb-4">About Chocolatey.org</h1>
-                    <p>
-                        Chocolatey.org is a feed of packages provided and maintained by the community. If
-                        you are a business looking at using Chocolatey, it is strongly recommended that
-                        you do not use the community feed. See the question below on trusting the community
-                        feed.
-                    </p>
-                    <p>
-                        Chocolatey.org is currently a fork of the NuGet gallery. Over time Chocolatey.org
-                        is planned to be rewritten as a totally custom website. The Chocolatey team has
-                        over 20 years of experience in writing fast, efficient and secure websites.
-                    </p>
-                    <p>
-                        Package moderation was implemented in October 2014. Every version of a package that
-                        comes through goes through at least two forms of automated review. If the package
-                        is not a trusted package, then a human must check over what is not easy for a
-                        computer to find to ensure that the packages are not doing anything malicious, but
-                        installing the software they state they are installing. Moderation does not check
-                        that the software that the package installs is free of malware. We do automatically
-                        scan every package and the resources it downloads with VirusTotal and display those
-                        results right on the package pages. However that verification is only at the time of
-                        check and internet resources can change. If you need better peace of mind, we offer
-                        <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">runtime malware protection</a>
-                        in <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey Pro</a> and
-                        <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey for Business</a>.
-                    </p>
-                    <p>
-                        Future security enhancements like package signing are planned to increase the security of the
-                        community feed. Bear with us, this is going to take time to get into place. The
-                        plan is that a moderator would review and sign off on a package with a cryptographic
-                        key. Users of Chocolatey would only need to trust moderators. As moderators are
-                        shifted, updates of Chocolatey will reflect this. There will also be an out of band
-                        way for users to trust a new maintainer. <br />
-                        For other security enhancements, please see <a href="@Url.RouteUrl(RouteName.Security)#chocolateyorg-the-community-feed">Security and the community feed</a>.
-                    </p>
-                    <p>The repository for issues/enhancements/requests for Chocolatey.org at <a href="https://github.com/chocolatey/chocolatey.org">GitHub Chocolatey.org</a>.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-<section class="py-3 py-lg-5">
+<section class="pt-3 pt-lg-5 bg-white">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1 class="text-center pb-4">About the Official Chocolatey Clients</h1>
-                <p>
-                    The official Chocolatey client is the one you get from chocolatey.org on the <a href="https://chocolatey.org/packages/chocolatey">package page</a>. 
-                    This and the Chocolatey GUI are the only recognized official clients. It is recommended you use the official clients as they the latest security fixes, the latest features, and are supported by the Chocolatey team.
-                </p>
-                <p>The repository for issues/enhancements/requests for Chocolatey at <a href="https://github.com/chocolatey/choco">GitHub Chocolatey</a>.</p>
-                <p>Note that broken packages should be reported back to package maintainers, not to the client repository or on the mailing list. For more information, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">the triage process</a>.</p>
+            <div class="col-lg-10 mx-auto">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 text-center">
+                        <img class="img-fluid mb-3 mb-lg-0" width="600" src="@Url.Content("~/content/images/ccm-computer-white.jpg")" alt="Chocolatey for Business" title="Chocolatey for Business">
+                    </div>
+                    <div class="col-lg-6 pb-3 pb-lg-5">
+                        <h2>Making It Easy</h2>
+                        <hr class="border-hr" />
+                        <p>
+                            Chocolatey was founded by Rob Reynolds in 2011 with the simple goal to offering a universal package manager for Windows. Chocolatey was started as an open source project to provide Windows system admin a simple and automated approach to deploying software.
+                        </p>
+                        <p>
+                            With ongoing adoption of Chocolatey we soon saw interest from various organizations that wanted to extend their usage of Chocolatey and demanded more advanced functionality and support. This was also fueled by teams that wanted to move to more agile and DevOps approach.
+                        </p>
+                        <p>
+                            With more versions of software to support and endless updates our goal was to help our customers become, efficient, and innovative software-driven organizations.
+                        </p>
+                        <p>
+                            We launched Chocolatey for Business that is built on our popular open source offering. Focused on three value-added areas;  improved security, enhanced productivity features, and enabling more visibility. All backed with dedicated support, services, & roadmap.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<div class="bg-white">
-    <section class="py-3 py-lg-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="text-center pb-4">Frequently Asked Questions</h1>
-                    <div class="d-flex flex-row">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>What is the difference between Chocolatey and NuGet?</strong></h3>
+@*<section id="team" class="py-3 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2>Meet the Chocolatey Team</h2>
+                <hr class="border-hr mb-4" />
+                <div class="row card-row card-bio">
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card h-100 mx-auto text-center">
+                            <div class="card-body position-relative p-0">
+                                <img class="img-fluid" src="@Url.Content("~/content/images/team/rob-sq.jpg")" alt="Rob Reynolds, Founder of Chocolatey" title="Rob Reynolds, Founder of Chocolatey" />
+                            </div>
+                            <div class="card-footer">
+                                <h5 class="mb-0">Rob Reynolds</h5>
+                                <p class="mb-md-0">Founder</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>NuGet is for development libraries, Chocolatey is a binary machine package manager. Typically you can think of it like this: <strong><em>"You use NuGet to get 3rd party libraries that you use to build the tools and applications that you host on Chocolatey."</em></strong>.</p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>How do I contact the Chocolatey group?</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.BlogArticle, new { articleName = "mukesh-sharma-joins-chocolatey" })">
+                            <div class="card h-100 mx-auto text-center">
+                                <div class="card-body position-relative p-0">
+                                    <img class="img-fluid" src="@Url.Content("~/content/images/team/mukesh-sq.jpg")" alt="Mukesh Sharma, COO of Chocolatey" title="Mukesh Sharma, COO of Chocolatey" />
+                                    <div class="card-overlay">
+                                        <p class="btn btn-light font-weight-bold">View Blog Post</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h5 class="mb-0">Mukesh Sharma</h5>
+                                    <p class="mb-md-0">Chief Operating Officer</p>
+                                    <p class="btn btn-primary btn-sm font-weight-bold d-md-none text-white">View Blog Post</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <p>The best way to do this is to use the <a href="https://groups.google.com/group/chocolatey">official mailinglist</a> (see the mailing list link below).</p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>Why can't I see my post on the mailing list?</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.BlogArticle, new { articleName = "gary-ewan-park-joins-chocolatey" })">
+                            <div class="card h-100 mx-auto text-center">
+                                <div class="card-body position-relative p-0">
+                                    <img class="img-fluid" src="@Url.Content("~/content/images/team/gary-sq.jpg")" alt="Gary Ewan Park, Senior Software Engineer" title="Gary Ewan Park, Senior Software Engineer" />
+                                    <div class="card-overlay">
+                                        <p class="btn btn-light font-weight-bold">View Blog Post</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h5 class="mb-0">Gary Ewan Park</h5>
+                                    <p class="mb-md-0">Senior Software Engineer</p>
+                                    <p class="btn btn-primary btn-sm font-weight-bold d-md-none text-white">View Blog Post</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <p>First time posters are moderated to cut down on spammers. Be patient and we will approve your message.</p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>Why is my software listed here? I haven't given anyone distribution permission!</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.BlogArticle, new { articleName = "paul-broadwith-joins-chocolatey" })">
+                            <div class="card h-100 mx-auto text-center">
+                                <div class="card-body position-relative p-0">
+                                    <img class="img-fluid" src="@Url.Content("~/content/images/team/paul-sq.jpg")" alt="Paul Broadwith, Senior Technical Engineer" title="Paul Broadwith, Senior Software Engineer" />
+                                    <div class="card-overlay">
+                                        <p class="btn btn-light font-weight-bold">View Blog Post</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h5 class="mb-0">Paul Broadwith</h5>
+                                    <p class="mb-md-0">Senior Technical Engineer</p>
+                                    <p class="btn btn-primary btn-sm font-weight-bold d-md-none text-white">View Blog Post</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <p>
-                        Many times the way Chocolatey works is to use PowerShell to download the package
-                        from the official distribution point, this way no distribution rights are violated.
-                        This is not always the case so feel free to reach out to the site administrators
-                        or <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> if you do have
-                        questions. Also see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Software vendor</a>
-                        for more details.
-                    </p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>I am the owner of software listed here and would like to maintain the package.</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.BlogArticle, new { articleName = "stephanie-burrows-joins-chocolatey" })">
+                            <div class="card h-100 mx-auto text-center">
+                                <div class="card-body position-relative p-0">
+                                    <img class="img-fluid" src="@Url.Content("~/content/images/team/stephanie-sq.jpg")" alt="Stephanie Burrows, Front-End Web Developer" title="Stephanie Burrows, Front-End Web Developer" />
+                                    <div class="card-overlay">
+                                        <p class="btn btn-light font-weight-bold">View Blog Post</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h5 class="mb-0">Stephanie Hays</h5>
+                                    <p class="mb-md-0">Front-End Web Developer</p>
+                                    <p class="btn btn-primary btn-sm font-weight-bold d-md-none text-white">View Blog Post</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <p>
-                        That's awesome to hear! The way this works out is to use the contact site admins
-                        link on the package page and we will handle reaching out to the current maintainers
-                        for you. Also see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Software vendor</a>
-                        for more details.
-                    </p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>How do I know if I can trust the community feed (the packages on this site?)</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card h-100 mx-auto text-center">
+                            <div class="card-body position-relative p-0">
+                                <img class="img-fluid" src="https://via.placeholder.com/350/e9ecef/000/" alt="Stephen V., Customer Support" title="Stephen V., Customer Support" />
+                            </div>
+                            <div class="card-footer">
+                                <h5 class="mb-0">Stephen V.</h5>
+                                <p class="mb-md-0">Customer Support</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>
-                        Even with moderation in place, the answer is that you can't fully trust the
-                        packages here. They are created by community members and although moderated to
-                        determine that they are installing the software the package is based on and that
-                        the package itself doesn't do anything malicious, it makes no guarantees about
-                        the underlying software that is installed. In some cases package maintainers do
-                        not implement checksums on the downloads, so there is also not a guarantee that what
-                        the original maintainers/moderators expected for you to get is what you get.
-                        We will make checksums a requirement in the future to combat this, but for now you should
-                        be somewhat careful about placing full trust in something you cannot control.
-                    </p>
-                    <p>
-                        If you require trust (e.g. most organizations require this), you
-                        should have an internal feed with vetted packages using internal resources. You
-                        should always decide whether you trust the maintainer(s) of the package, and even
-                        then you may want to inspect the package prior to installing. You can inspect packages
-                        easily by clicking download on the package page (and then treating
-                        the nupkg file as a zip archive).
-                    </p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>I'm an organization wanting to use Chocolatey.</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card h-100 mx-auto text-center">
+                            <div class="card-body position-relative p-0">
+                                <img class="img-fluid" src="https://via.placeholder.com/350/e9ecef/000/" alt="Brandi R., HR / Office Manager" title="Brandi R., HR / Office Manager" />
+                            </div>
+                            <div class="card-footer">
+                                <h5 class="mb-0">Brandi R.</h5>
+                                <p class="mb-md-0">HR / Office Manager</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>
-                        Awesome! Many organizations use Chocolatey, but the caveat is that they don't use the packages
-                        you will find on this site because they have a low tolerance for breakages, and require a higher
-                        trust and control over packages.<br /><br />
-                        Quite a few community folks use the packages on this site, which is a feed of packages provided and
-                        maintained by the community (it is also known as the community package repository). Packages on the community
-                        repository usually need download software from official distribution points due to distribution rights. When
-                        software owners move download locations or other breakages occur because of the internet, the package could be
-                        broken until the new location is specified in an updated version of the package.<br /><br />
-                        For folks in the community that are not using Chocolatey for production purposes, it is fine to
-                        use the community repo. For organizations that have a low tolerance for breakages and require a
-                        higher level of security, control, and trust, a self-hosted Chocolatey server is the recommended
-                        option. This guarantees that your installs, upgrades, and uninstalls will always work every
-                        time. This gives you complete control over what software gets installed. Also because you are
-                        vetting newer versions, you control when those newer versions are available for upgrade.
-                    </p>
-                    <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Hosting your own internal server</a> (it has non-Windows options as well).</p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>Is there a package that is broken, needs updating or something else?</strong></h3>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card h-100 mx-auto text-center">
+                            <div class="card-body position-relative p-0">
+                                <img class="img-fluid" src="https://via.placeholder.com/350/e9ecef/000/" alt="Jessica S., Sales Administration" title="Jessica S., Sales Administration" />
+                            </div>
+                            <div class="card-footer">
+                                <h5 class="mb-0">Jessica S.</h5>
+                                <p class="mb-md-0">Sales Administration</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>Please read over the <a title="Package Triage Process" href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package Triage Process</a> for details.</p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>Who <em>owns</em> Chocolatey?</strong></h3>
-                    </div>
-                    <p>
-                        The copyright for Chocolatey belongs to
-                        Chocolatey Software, Inc, a US-based Delaware Corporation founded in 2016 as an offshoot of
-                        RealDimensions Software, LLC. RealDimensions Software, LLC is a company that Rob formed to
-                        support the development of FOSS software and libraries that further the ecosystem.
-                    </p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>Do you have Business or Pro editions of Chocolatey?</strong></h3>
-                    </div>
-                    <p>Yes! See <a href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a> for details!</p>
-
-                    <div class="d-flex flex-row pt-3">
-                        <span class="icon-question-circle h3 mr-2"></span>
-                        <h3><strong>I need a support contract.</strong></h3>
-                    </div>
-                    <p class="mb-0">We can work with you on that. Please see <a href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a> and <a href="@Url.RouteUrl(RouteName.ContactUs)">contact us</a> for details!</p>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>*@

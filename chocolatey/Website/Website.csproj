@@ -1242,6 +1242,7 @@
     <Content Include="Content\Images\gui.png" />
     <Content Include="Content\Images\ChocolateyGUI_main_screen.png" />
     <Content Include="Content\Images\headerbackground.png" />
+    <Content Include="Content\Images\headers\chocolatey-staff.jpg" />
     <Content Include="Content\Images\headers\home.jpg" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
@@ -1290,13 +1291,16 @@
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\styleguide\logo-space.jpg" />
+    <Content Include="Content\Images\team\gary-sq.jpg" />
     <Content Include="Content\Images\team\gary.png" />
-    <Content Include="Content\Images\team\mukesh-sq.png" />
+    <Content Include="Content\Images\team\mukesh-sq.jpg" />
     <Content Include="Content\Images\team\mukesh.png" />
+    <Content Include="Content\Images\team\paul-sq.jpg" />
     <Content Include="Content\Images\team\paul.png" />
     <Content Include="Content\Images\team\rob-sq.jpg" />
     <Content Include="Content\Images\team\stephanie-1.jpg" />
     <Content Include="Content\Images\team\stephanie-2.jpg" />
+    <Content Include="Content\Images\team\stephanie-sq.jpg" />
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
     <Content Include="Content\Images\Turbo-on-Red.png" />
@@ -1385,6 +1389,7 @@
     <Content Include="Content\scss\_backgrounds.scss" />
     <Content Include="Content\scss\_resources.scss" />
     <Content Include="Content\scss\_courses.scss" />
+    <Content Include="Content\scss\_cards.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

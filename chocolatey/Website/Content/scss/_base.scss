@@ -277,34 +277,6 @@ a + .collapse.show, a + .collapsing {
     color: $white;
 }
 
-/*Cards*/
-.card {
-    box-shadow: $box-shadow;
-
-    .card-body p:last-child {
-        margin-bottom: 0;
-    }
-}
-.card-row {
-    a {
-
-        .card {
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            -webkit-transform: scale(0.98);
-            -ms-transform: scale(0.98);
-            transform: scale(0.98);
-        }
-
-        p {
-            color: $gray-900;
-            font-weight: $font-weight-normal;
-        }
-    }
-}
-
 /*Copy Code Box*/
 .copyBox {
     max-width: 800px;
