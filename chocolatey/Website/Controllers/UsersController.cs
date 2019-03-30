@@ -394,7 +394,6 @@ namespace NuGetGallery
             //var userProfiles = profilesService.GetUserProfiles(user).ToList();
             var userProfiles = (from p in profilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new UserSiteProfileViewModel(c)).ToList();
             var completedCourses = (from p in courseProfilesService.GetUserCourseProfiles(user) orderby p.CompletedDate select p).Select(c => new CourseProfileViewModel(c)).ToList();
-
             var model = new UserProfileModel
             {
                 Username = user.Username,
