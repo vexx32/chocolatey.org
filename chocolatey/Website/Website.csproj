@@ -1743,6 +1743,7 @@
     <Content Include="Views\Courses\CreatingChocolateyPackages\NugetPackagesAndNuspec.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\Shims.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\ChocoNewCommand.cshtml" />
+    <Content Include="Views\Pages\Sitemap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

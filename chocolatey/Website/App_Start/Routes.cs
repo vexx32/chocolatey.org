@@ -99,6 +99,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+               RouteName.Sitemap, "sitemap", new
+               {
+                   controller = "Pages",
+                   Action = "Sitemap"
+               });
+
+            routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
                     controller = "Pages",

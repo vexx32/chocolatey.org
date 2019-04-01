@@ -87,6 +87,12 @@ namespace NuGetGallery
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Sitemap()
+        {
+            return View("~/Views/Pages/Sitemap.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Kickstarter()
         {
             return View("~/Views/Pages/Kickstarter.cshtml");
