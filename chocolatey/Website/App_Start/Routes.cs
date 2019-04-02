@@ -106,6 +106,13 @@ namespace NuGetGallery
                });
 
             routes.MapRouteSeo(
+               RouteName.Community, "community", new
+               {
+                   controller = "Pages",
+                   Action = "Community"
+               });
+
+            routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
                     controller = "Pages",

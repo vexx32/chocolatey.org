@@ -41,6 +41,7 @@ namespace NuGetGallery
         public const string Install = "Install";
         public const string Business = "Business";
         public const string Sitemap = "Sitemap";
+        public const string Community = "Community";
         public const string FAQ = "FAQ";
         public const string BlogHome = "BlogHome";
         public const string BlogArticle = "BlogArticle";

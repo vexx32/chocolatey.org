@@ -7,7 +7,7 @@
     font-style: normal;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before, .dropdown-toggle:after, .course-list li.completed::before, .course-list li.mod-completed::before, .correct::before, .wrong::before {
+[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before, .dropdown-toggle:after, .course-list li.completed::before, .course-list li.mod-completed::before, .correct::before, .wrong::before, #get-involved li a:after {
     font-family: 'FontAwesome';
     font-style: normal;
     font-weight: normal;
@@ -23,6 +23,12 @@
     content: "\f069";
     color: $primary;
     font-size: .65em;
+}
+
+#get-involved li a:after {
+    /*chevron-right*/
+    font-size: .75rem;
+    margin-left: 5px;
 }
 
 .icon-clipboard:before {
@@ -166,7 +172,7 @@
     content: "\f053";
 }
 
-.icon-chevron-right:before {
+.icon-chevron-right:before, #get-involved li a:after {
     content: "\f054";
 }
 
@@ -200,4 +206,12 @@
 
 .icon-graduation-cap:before {
     content: "\f19d";
+}
+
+.icon-comments:before {
+    content: "\f086";
+}
+
+.icon-thumbs-o-up:before {
+    content: "\f087";
 }

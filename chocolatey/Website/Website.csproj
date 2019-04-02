@@ -1142,6 +1142,7 @@
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
+    <Content Include="Content\Images\community-mockup-grey.gif" />
     <Content Include="Content\Images\community-mockup.gif" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
@@ -1244,8 +1245,12 @@
     <Content Include="Content\Images\headerbackground.png" />
     <Content Include="Content\Images\headers\chocolatey-staff.jpg" />
     <Content Include="Content\Images\headers\home.jpg" />
+    <Content Include="Content\Images\headers\web.jpg" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
+    <Content Include="Content\Images\icons\books.png" />
+    <Content Include="Content\Images\icons\star.png" />
+    <Content Include="Content\Images\icons\thumb.png" />
     <Content Include="Content\Images\icon_slogan.png" />
     <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
@@ -1744,6 +1749,7 @@
     <Content Include="Views\Courses\CreatingChocolateyPackages\Shims.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\ChocoNewCommand.cshtml" />
     <Content Include="Views\Pages\Sitemap.cshtml" />
+    <Content Include="Views\Pages\Community.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
