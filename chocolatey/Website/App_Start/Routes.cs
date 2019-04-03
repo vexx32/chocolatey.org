@@ -113,6 +113,13 @@ namespace NuGetGallery
                });
 
             routes.MapRouteSeo(
+               RouteName.WhyChocolatey, "why-chocolatey", new
+               {
+                   controller = "Pages",
+                   Action = "WhyChocolatey"
+               });
+
+            routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
                     controller = "Pages",

@@ -115,7 +115,7 @@
     content: "\f05c";
 }
 
-.icon-times:before, .wrong::before {
+.icon-times:before, .wrong::before, ul.times-list li::before {
     content: "\f00d";
 }
 
@@ -214,4 +214,8 @@
 
 .icon-thumbs-o-up:before {
     content: "\f087";
+}
+
+.icon-dashboard:before {
+    content: "\f0e4";
 }

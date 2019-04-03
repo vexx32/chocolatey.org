@@ -1312,6 +1312,7 @@
     <Content Include="Content\Images\Turbo-on-Red.png" />
     <Content Include="Content\Images\turbo_logo.png" />
     <Content Include="Content\Images\twitter.png" />
+    <Content Include="Content\Images\upgrade-steps-vertical.jpg" />
     <Content Include="Content\Images\uploadPackage.png" />
     <Content Include="Content\Images\userGraphic.png" />
     <Content Include="Content\Images\userIcon.png" />
@@ -1751,6 +1752,7 @@
     <Content Include="Views\Pages\Sitemap.cshtml" />
     <Content Include="Views\Pages\Community.cshtml" />
     <Content Include="Views\Pages\Products.cshtml" />
+    <Content Include="Views\Pages\WhyChocolatey.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

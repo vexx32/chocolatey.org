@@ -230,22 +230,30 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
 }
 
 /*Checklist*/
-ul.check-list {
+ul.check-list, ul.times-list {
     list-style-type: none;
     margin-bottom: 0;
-}
 
-ul.check-list li {
-    margin-bottom: 1rem;
+    li {
+        margin-bottom: .5rem;
+
+        &:before {
+            font-family: 'FontAwesome';
+            position: absolute;
+            left: 8px;
+            font-size: 1.2em;
+            margin-left: 15px;
+        }
+    }
 }
 
 ul.check-list li::before {
-    font-family: 'FontAwesome';
-    position: absolute;
-    left: 8px;
-    font-size: 1.2em;
-    margin-left: 15px;
-    color: #36bc98;
+    color: $green;
+}
+
+ul.times-list li::before {
+    color: $red;
+    margin-top: -.25rem;
 }
 
 /*Random Borders*/
