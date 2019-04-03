@@ -92,13 +92,6 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
-                RouteName.Business, "business", new
-                {
-                    controller = "Pages",
-                    Action = "Business"
-                });
-
-            routes.MapRouteSeo(
                RouteName.Sitemap, "sitemap", new
                {
                    controller = "Pages",
@@ -110,6 +103,13 @@ namespace NuGetGallery
                {
                    controller = "Pages",
                    Action = "Community"
+               });
+
+            routes.MapRouteSeo(
+               RouteName.Products, "products", new
+               {
+                   controller = "Pages",
+                   Action = "Products"
                });
 
             routes.MapRouteSeo(
