@@ -1252,6 +1252,10 @@
     <Content Include="Content\Images\icons\books.png" />
     <Content Include="Content\Images\icons\star.png" />
     <Content Include="Content\Images\icons\thumb.png" />
+    <Content Include="Content\Images\icons\cloud.png" />
+    <Content Include="Content\Images\icons\cogs.png" />
+    <Content Include="Content\Images\icons\desktop.png" />
+    <Content Include="Content\Images\icons\server.png" />
     <Content Include="Content\Images\icon_slogan.png" />
     <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
@@ -1753,6 +1757,7 @@
     <Content Include="Views\Pages\Community.cshtml" />
     <Content Include="Views\Pages\Products.cshtml" />
     <Content Include="Views\Pages\WhyChocolatey.cshtml" />
+    <Content Include="Views\Pages\UseCases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

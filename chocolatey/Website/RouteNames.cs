@@ -43,6 +43,7 @@ namespace NuGetGallery
         public const string Community = "Community";
         public const string Products = "Products";
         public const string WhyChocolatey = "WhyChocolatey";
+        public const string UseCases = "UseCases";
         public const string FAQ = "FAQ";
         public const string BlogHome = "BlogHome";
         public const string BlogArticle = "BlogArticle";

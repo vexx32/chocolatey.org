@@ -120,6 +120,13 @@ namespace NuGetGallery
                });
 
             routes.MapRouteSeo(
+               RouteName.UseCases, "use-cases", new
+               {
+                   controller = "Pages",
+                   Action = "UseCases"
+               });
+
+            routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
                     controller = "Pages",

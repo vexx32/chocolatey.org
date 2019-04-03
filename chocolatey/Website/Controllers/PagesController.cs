@@ -111,6 +111,12 @@ namespace NuGetGallery
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult UseCases()
+        {
+            return View("~/Views/Pages/UseCases.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Kickstarter()
         {
             return View("~/Views/Pages/Kickstarter.cshtml");
