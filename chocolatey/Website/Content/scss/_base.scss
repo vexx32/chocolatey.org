@@ -290,6 +290,12 @@ a + .collapse.show, a + .collapsing {
     max-width: 800px;
 }
 
+/*Trusted By Logos*/
+.trusted-by img {
+    max-height: 50px;
+    max-width: 100px;
+}
+
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;

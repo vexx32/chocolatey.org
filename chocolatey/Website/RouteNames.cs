@@ -58,6 +58,7 @@ namespace NuGetGallery
         public const string Security = "Security";
         public const string MediaKit = "MediaKit";
         public const string Company = "Company";
+        public const string ContactTrial = "ContactTrial";
         public const string ContactUs = "ContactUs";
         public const string Discount = "Discount";
         public const string Evaluation = "Evaluation";

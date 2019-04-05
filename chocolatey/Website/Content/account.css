@@ -9,7 +9,7 @@
 #account label:not(.checkbox), .field-hint-message, #account .field-validation-error {
     font-size: 80%;
 }
-#account input:not(.btn):not(.check-box):not(.form-control), textarea, #MessageTo {
+#account input:not(.btn):not(.check-box):not(.form-control):not([type="radio"]), textarea, #MessageTo {
     width: 100%;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
@@ -25,7 +25,7 @@
     max-width: 530px;
     display: block;
 }
-#account label:not(.checkbox):not(.input-group-btn) {
+#account label:not(.checkbox):not(.input-group-btn):not([for="NonProfitYes"]):not([for="NonProfitNo"]) {
     margin-top: 1rem;
     margin-bottom: .3rem;
 }
@@ -78,19 +78,19 @@
 /* Create a custom checkbox */
 #account .checkmark {
     position: absolute;
-    top: 0;
+    top: 4px;
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #e9ecef;
 }
 /* On mouse-over, add a grey background color */
 #account .checkbox:hover input ~ .checkmark, #account .form-check:hover .checkmark:not(.checked) {
-    background-color: #ccc;
+    background-color: #cce5ff;
 }
 /* When the checkbox is checked, add a blue background */
 #account .checkbox input:checked ~ .checkmark, #account .form-check .checked {
-    background-color: #81b5e2;
+    background-color: #5c9fd8;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 #account .checkmark:after {

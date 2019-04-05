@@ -130,7 +130,7 @@ namespace NuGetGallery
                    controller = "Pages",
                    Action = "UseCases"
                });
-
+            
             routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {
@@ -171,8 +171,15 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "Company"
-                });  
-            
+                });
+
+            routes.MapRouteSeo(
+                RouteName.ContactTrial, "contact/trial", new
+                {
+                    controller = "Pages",
+                    Action = "ContactTrial"
+                });
+
             routes.MapRouteSeo(
                 RouteName.ContactUs, "contact", new
                 {

@@ -194,6 +194,23 @@ Package Url: {6}
             }
         }
 
+        public void ContactTrial(MailAddress fromAddress, string message, string optionalSubject)
+        {
+            string subject = "Customer Inquiry for Sales{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+            
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+
         public void ContactUs(MailAddress fromAddress, string contactType, string message, string optionalSubject)
         {
             string subject = "Customer Inquiry for {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));

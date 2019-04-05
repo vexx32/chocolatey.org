@@ -829,6 +829,7 @@
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModels\PasswordResetViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModel.cs" />
+    <Compile Include="ViewModels\ContactTrialViewModel.cs" />
     <Compile Include="XmlExtensions.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1133,11 +1134,13 @@
     <Content Include="Content\Images\businesses\OctopusDeploy-Dark.png" />
     <Content Include="Content\Images\businesses\Puppet-Dark.png" />
     <Content Include="Content\Images\businesses\SwissRe.png" />
+    <Content Include="Content\Images\businesses\Yelp-Stroke.png" />
     <Content Include="Content\Images\businesses\Yelp.png" />
     <Content Include="Content\Images\ccm-computer-white.jpg" />
     <Content Include="Content\Images\ccm-mockup.jpg" />
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\chocolatey-staff.jpg" />
+    <Content Include="Content\Images\chocolateyHeadquarters.jpg" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
@@ -1759,6 +1762,8 @@
     <Content Include="Views\Pages\WhyChocolatey.cshtml" />
     <Content Include="Views\Pages\UseCases.cshtml" />
     <Content Include="Views\Pages\Compare.cshtml" />
+    <Content Include="Views\Pages\ContactTrial.cshtml" />
+    <Content Include="Views\Pages\_ContactSideColumn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
