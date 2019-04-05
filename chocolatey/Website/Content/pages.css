@@ -1,4 +1,7 @@
 ﻿/*Pricing- Tables*/
+#compare table, #compare tbody {
+    display: inline-block;
+}
 .table td, .table th {
     vertical-align: middle;
 }
@@ -23,6 +26,32 @@
     color: white;
     font-weight: bold;
     text-align: center;
+}
+#compare thead > tr :not(:nth-child(1)) {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+#compare thead {
+    display: inline;
+}
+
+#compare tr {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#compare td, #compare th {
+    display: block;
+    flex: 1;
+    font-size: 80%;
+}
+
+#compare tbody th {
+    width: 100%;
+    flex: auto;
 }
 #faq-support-schedule tbody > tr > :nth-child(2) {
     border-right: 1px solid #9b9ea1;
@@ -160,5 +189,29 @@
     .docs-left .navbar-nav {
         max-height: 100vh;
         overflow: auto;
+    }
+
+    #compare table {
+        display: table;
+    }
+    #compare thead {
+        display: table-header-group;
+    }
+    #compare thead > tr > :not(:nth-child(1)) {
+        width: 15%;
+        vertical-align: middle;
+    }
+    #compare tbody {
+        display: table-row-group;
+    }
+    #compare tr {
+        display: table-row !important;
+    }
+    #compare td, #compare th, #compare thead > tr > :not(:nth-child(1)) {
+        display: table-cell;
+        font-size: 100%;
+    }
+    #compare tbody th {
+        width: auto;
     }
 }

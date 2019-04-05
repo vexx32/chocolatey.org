@@ -22,7 +22,7 @@ q {
     display: inline-block;
 }
 
-.sticky-top:not(th) {
+.sticky-top:not(th):not(tr) {
     top: 1rem;
 }
 #docs .docs-left .sticky-top {

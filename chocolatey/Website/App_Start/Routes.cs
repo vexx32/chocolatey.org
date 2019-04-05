@@ -82,7 +82,12 @@ namespace NuGetGallery
                     Action = "Evaluation"
                 });
 
-            routes.Redirect(r => r.MapRoute(RouteName.Compare, "compare")).To(pricingRoute);
+            routes.MapRouteSeo(
+               RouteName.Compare, "compare", new
+               {
+                   controller = "Pages",
+                   Action = "Compare"
+               });
 
             routes.MapRouteSeo(
                 RouteName.Install, "install", new
