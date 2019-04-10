@@ -574,13 +574,22 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <p>If you are using Chocolatey.Server, please login to that machine and check <a href="https://localhost" class="uri">https://localhost</a> for instructions specific to different infrastructure management tools in the admin section.</p>
 <h4 id="chocolatey-integration-implementation-with-configuration-managers">Chocolatey Integration Implementation with Configuration Managers</h4>
 <p>For common integrations, it&#39;s handy to refer to the table below to know what configuration manager to choose. Most of the implementations below are written and managed by the companies behind the product. These implementations are typically open source and each part could be added by community contributions for those familiar with the code implementations. If you are unable to provide code implementations for adding necessary functionality to the integrations, we find it best if you create issues/tickets with those organizations if you are a customer as you will have more leverage into getting them implemented. <strong>NOTE</strong>: If you are a configuration manager company identified in the table and you have implemented anything in the below or you find our information is incorrect, please let us know so we can get it fixed.</p>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 14%" />
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 12%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th></th>
+<th>Configuration Managers</th>
 <th><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">Ansible</a></th>
-<th><a href="https://docs.chef.io/resource_chocolatey_package.html">Chef</a> / <a href="https://supermarket.chef.io/cookbooks/chocolatey/">Cookbook</a></th>
-<th><a href="https://www.powershellgallery.com/packages/cChoco/2.3.1.0">PowerShell DSC</a></th>
+<th><a href="https://docs.chef.io/resource_chocolatey_package.html">Chef</a></th>
+<th><a href="https://www.powershellgallery.com/packages/cChoco">PowerShell DSC</a></th>
 <th><a href="https://forge.puppet.com/puppetlabs/chocolatey">Puppet</a></th>
 <th><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html">Salt</a></th>
 <th><a href="https://inedo.com/den/inedox/chocolatey">Otter</a></th>
@@ -589,69 +598,70 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 <tbody>
 <tr class="odd">
 <td>Manage Packages</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">x</a></td>
+<td><a href="https://docs.chef.io/resource_chocolatey_package.html">x</a></td>
+<td><a href="https://github.com/chocolatey/cChoco/blob/development/DSCResources/cChocoPackageInstall/cChocoPackageInstall.schema.mof">x</a></td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#package-provider-chocolatey">x</a></td>
+<td><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html#salt.modules.chocolatey.install">x</a></td>
+<td><a href="https://github.com/Inedo/inedox-chocolatey/blob/master/Chocolatey/InedoExtension/Configurations/ChocolateyPackageConfiguration.cs">x</a></td>
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">Install Chocolatey</a></td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">x</a></td>
+<td><a href="https://supermarket.chef.io/cookbooks/chocolatey/">x</a></td>
+<td><a href="https://github.com/chocolatey/cChoco/blob/development/DSCResources/cChocoInstaller/cChocoInstaller.schema.mof">x</a></td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#class-chocolatey">x</a></td>
+<td><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html#salt.modules.chocolatey.bootstrap">x</a></td>
+<td><a href="https://github.com/Inedo/inedox-chocolatey/blob/master/Chocolatey/InedoExtension/Configurations/ChocolateyInstalledConfiguration.cs">x</a></td>
 </tr>
 <tr class="odd">
 <td>Install Chocolatey from internal source</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html">x</a></td>
+<td><a href="https://supermarket.chef.io/cookbooks/chocolatey/">x</a></td>
+<td><a href="https://github.com/chocolatey/cChoco/blob/development/DSCResources/cChocoInstaller/cChocoInstaller.schema.mof">x</a></td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#class-chocolatey">x</a></td>
 <td></td>
-<td>x</td>
+<td><a href="https://github.com/Inedo/inedox-chocolatey/blob/master/Chocolatey/InedoExtension/Configurations/ChocolateyInstalledConfiguration.cs">x</a></td>
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-source" })">Manage Sources</a></td>
-<td>x</td>
-<td></td>
-<td>x</td>
-<td>x</td>
-<td></td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_source_module.html">x</a></td>
+<td><a href="https://docs.chef.io/resource_chocolatey_source.html">x</a></td>
+<td><a href="https://github.com/chocolatey/cChoco/blob/development/DSCResources/cChocoSource/cChocoSource.schema.mof">x</a></td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#chocolateysource">x</a></td>
+<td><a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html#salt.modules.chocolatey.add_source">x</a></td>
+<td><a href="https://github.com/Inedo/inedox-chocolatey/blob/master/Chocolatey/InedoExtension/Configurations/ChocolateySourceConfiguration.cs">x</a></td>
 </tr>
 <tr class="odd">
 <td>Manage Source Type (Admin/Self-Service)</td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_source_module.html">x</a></td>
 <td></td>
 <td></td>
-<td></td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#chocolateysource">x</a></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-feature" })">Manage Features</a></td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_feature_module.html">x</a></td>
 <td></td>
-<td>x</td>
-<td>x</td>
+<td><a href="https://github.com/chocolatey/cChoco/blob/master/DSCResources/cChocoFeature/cChocoFeature.schema.mof">x</a></td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#chocolateyfeature">x</a></td>
 <td></td>
-<td>x</td>
+<td><a href="https://github.com/Inedo/inedox-chocolatey/blob/master/Chocolatey/InedoExtension/Configurations/ChocolateyFeatureConfiguration.cs">x</a></td>
 </tr>
 <tr class="odd">
 <td><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-config" })">Manage Config Settings</a></td>
-<td>x</td>
+<td><a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_config_module.html">x</a></td>
+<td><a href="https://docs.chef.io/resource_chocolatey_config.html">x</a></td>
 <td></td>
-<td></td>
-<td>x</td>
+<td><a href="https://forge.puppet.com/puppetlabs/chocolatey#chocolateyconfig">x</a></td>
 <td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<p><strong>NOTE: Each <em>x</em> is linked to the specific feature documentation.</strong></p>
 <p>For most of these, those configuration managers have some sort of exec you could use to manage those additional aspects, but it would be best if they supported all aspects of configuration of Chocolatey as part of the provider implementations.</p>
 <h2 id="exercise-7-subscribe-to-release-announcements">Exercise 7: Subscribe To Release Announcements</h2>
 <p>In a fully internal environment, you need a way to know when new versions have been released and if they affect you so you can update those packages in your environment. Best to have a low traffic announce only type of email list you can join. Fortunately there is - <code>chocolatey-announce</code>.</p>

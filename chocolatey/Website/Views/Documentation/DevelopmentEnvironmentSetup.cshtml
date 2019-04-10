@@ -5,6 +5,18 @@
 <article>
 <h2 id="set-up-a-development-environment-using-chocolatey">Set Up A Development Environment Using Chocolatey</h2>
 <p>How many of you out there are rake fans? Getting developers to look at your source code can sometimes be an issue. Wouldn&#39;t it be nice if it was simple for them to get all set up? What about Ruby DevKit? It would be nice, right?</p>
+<!-- TOC -->
+<ul>
+<li><a href="#set-up-a-development-environment-using-chocolatey">Set Up A Development Environment Using Chocolatey</a></li>
+<li><a href="#set-up-from-the-source">Set up From the Source</a>
+<ul>
+<li><a href="#setupps1">setup.ps1:</a></li>
+<li><a href="#setupcmd">setup.cmd:</a></li>
+</ul></li>
+<li><a href="#getting-the-source">Getting the Source</a></li>
+<li><a href="#setup-a-full-environment-including-visual-studio-express-iis-express-and-sql-server-express-with-management-studio">Setup A Full Environment Including Visual Studio Express, IIS Express and SQL Server Express (with Management Studio)</a></li>
+</ul>
+<!-- /TOC -->
 <h2 id="set-up-from-the-source">Set up From the Source</h2>
 <p>This does the following:</p>
 <ul>
@@ -144,7 +156,7 @@ param(
 
 # Install Chocolatey
 if (Install-NeededFor &#39;chocolatey&#39;) {
-  iex ((new-object net.webclient).DownloadString(&quot;http://chocolatey.org/install.ps1&quot;)) 
+  iex ((new-object net.webclient).DownloadString(&quot;http://chocolatey.org/install.ps1&quot;))
 }
 
 if (Install-NeededFor &#39;autosave&#39;) {

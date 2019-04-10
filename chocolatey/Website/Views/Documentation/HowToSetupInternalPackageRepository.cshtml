@@ -4,6 +4,35 @@
 
 <article>
 <h1 id="how-to-use-package-internalizer-to-create-internal-package-source-business-editions-only">How To Use Package Internalizer To Create Internal Package Source (Business Editions Only)</h1>
+<!-- TOC -->
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#organizational-requirements">Organizational Requirements</a>
+<ul>
+<li><a href="#architecture">Architecture</a></li>
+</ul></li>
+<li><a href="#building-your-internal-infrastructure">Building Your Internal Infrastructure</a>
+<ul>
+<li><a href="#server-pre-requisites">Server Pre-Requisites</a></li>
+<li><a href="#internal-package-repositories">Internal Package Repositories</a>
+<ul>
+<li><a href="#install-and-configure-chocolatey-server">Install and Configure Chocolatey Server</a></li>
+</ul></li>
+<li><a href="#install-and-configure-jenkins-server">Install and Configure Jenkins Server</a>
+<ul>
+<li><a href="#script-get-updatedpackageps1">Script: <code>Get-UpdatedPackage.ps1</code></a></li>
+<li><a href="#script-update-prodrepofromtestps1">Script: <code>Update-ProdRepoFromTest.ps1</code></a></li>
+<li><a href="#script-convertto-chocoobjectps1">Script: <code>ConvertTo-ChocoObject.ps1</code></a></li>
+<li><a href="#create-jenkins-jobs">Create Jenkins Jobs</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#test-the-jenkins-automation-exercises">Test the Jenkins Automation (Exercises)</a>
+<ul>
+<li><a href="#submit-a-new-package">Submit a new package</a></li>
+<li><a href="#updating-a-package-from-the-chocolatey-community-repository">Updating a package from the Chocolatey Community Repository</a></li>
+</ul></li>
+</ul>
+<!-- /TOC -->
 <h2 id="summary">Summary</h2>
 <p>When running within an organization it is beneficial to use your own, internally controlled, package repository. But that doesn&#39;t mean you have to create all packages from scratch. Chocolatey allows you to create packages easily using the <a href="https://chocolatey.org/docs/features-create-packages-from-installers">package builder</a> but it also allows you to take packages from the Chocolatey Community Repository and recompile them for internal use - this is a process known as <a href="https://chocolatey.org/docs/features-automatically-recompile-packages">package internalization</a>. This guide shows you how to use that within your organization.</p>
 <h2 id="organizational-requirements">Organizational Requirements</h2>

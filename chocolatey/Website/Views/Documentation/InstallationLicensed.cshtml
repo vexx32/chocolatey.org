@@ -264,6 +264,7 @@ package {&#39;chocolatey.extension&#39;:
   source          =&gt; &#39;internal_chocolatey&#39;,
   install_options =&gt; [&#39;-pre&#39;],
   require         =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
+  provider        =&gt; chocolatey,
 }
 
 ### Licensed Config Settings
@@ -379,6 +380,7 @@ package {&#39;chocolatey-agent&#39;:
   ensure          =&gt; latest,
   install_options =&gt; [&#39;-pre&#39;],
   require         =&gt; Chocolateyfeature[&#39;useLocalSystemForServiceInstalls&#39;],
+  provider        =&gt; chocolatey,
 }</code></pre>
 <p>For setting up Self-Service / Background Mode, add the following elements:</p>
 <ul>
@@ -415,8 +417,9 @@ chocolateyfeature {&#39;useBackgroundService&#39;:
 }
 
 package {&#39;dotnet4.5.2&#39;:
-  ensure =&gt; latest,
-  notify =&gt; Reboot[&#39;pending_dot_net_install&#39;],
+  ensure   =&gt; latest,
+  notify   =&gt; Reboot[&#39;pending_dot_net_install&#39;],
+  provider =&gt; chocolatey,
 }
 
 reboot { &#39;pending_dot_net_install&#39;:
@@ -427,6 +430,7 @@ package {&#39;chocolateygui&#39;:
   ensure          =&gt; latest,
   install_options =&gt; [&#39;-pre&#39;],
   require         =&gt; Package[&#39;dotnet4.5.2&#39;],
+  provider        =&gt; chocolatey,
 }</code></pre>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
 <p>When you are attempting to install the licensed edition, you may run into some errors depending on your configuration. Here are some common ones we&#39;ve seen.</p>

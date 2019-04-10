@@ -110,7 +110,7 @@ choco feature enable --name=&quot;&#39;useBackgroundServiceWithNonAdministrators
 <p><strong>NOTE:</strong> If you are using file shares for sources, you may want to ensure the account or computer has network access permissions for the file share(s).</p>
 <p><strong>Package Parameters</strong>:</p>
 <ul>
-<li><code>/Username:</code> - provide username - intead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
+<li><code>/Username:</code> - provide username - instead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
 <li><code>/Password:</code> - optional password for the user.</li>
 <li><code>/EnterPassword</code> - receive the password at runtime as a secure string</li>
 <li><code>/UseDefaultChocolateyConfigUser</code> - use the default username from Chocolatey&#39;s configuration. This may be LocalSystem.</li>
@@ -278,7 +278,7 @@ This image shows running `choco install adobereader -y`.
 <h3 id="we-want-to-set-up-the-chocolatey-agent-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this">We want to set up the chocolatey agent service to use a domain account that will have local admin on each box. Can we do this?</h3>
 <p>Yes, absolutely. You will pass those credentials through at install/upgrade time, and you will also want to turn on the feature <code>useRememberedArgumentsForUpgrades</code> (see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })#features">configuration</a>) so that future upgrades will have that information available. The remembered arguments are stored encrypted on the box (that encryption is reversible so you may opt to pass that information each time).</p>
 <ul>
-<li><code>/Username:</code> - provide username - intead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
+<li><code>/Username:</code> - provide username - instead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
 <li><code>/Password:</code> - optional password for the user.</li>
 <li><code>/EnterPassword</code> - receive the password at runtime as a secure string</li>
 </ul>

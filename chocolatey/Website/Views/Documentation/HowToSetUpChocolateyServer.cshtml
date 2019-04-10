@@ -7,11 +7,16 @@
 <!-- TOC -->
 <ul>
 <li><a href="#what-is-chocolateyserver">What is Chocolatey.Server?</a></li>
+<li><a href="#links">Links</a></li>
 <li><a href="#requirements">Requirements</a></li>
+<li><a href="#setup">Setup</a>
+<ul>
 <li><a href="#setup-with-ansible">Setup with Ansible</a></li>
+<li><a href="#setup-with-chef">Setup with Chef</a></li>
 <li><a href="#setup-with-puppet">Setup with Puppet</a></li>
-<li><a href="#setup-normally">Setup Normally</a></li>
+<li><a href="#setup-manually">Setup Manually</a></li>
 <li><a href="#setup-with-powershell-script">Setup with PowerShell Script</a></li>
+</ul></li>
 <li><a href="#additional-configuration">Additional Configuration</a>
 <ul>
 <li><a href="#performance">Performance</a>
@@ -30,15 +35,18 @@
 <!-- /TOC -->
 <p><strong>NOTE:</strong> Refer to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">How To Set Up Chocolatey For Organizational/Internal Use</a> in tandem with this article.</p>
 <h2 id="what-is-chocolateyserver">What is Chocolatey.Server?</h2>
-<p>The <a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey.Server package</a> contains the binaries for a fully ready to go Chocolatey NuGet Server where you can serve packages over HTTP using a NuGet-compatible OData feed.</p>
-<p><a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey Server</a> is a simple Nuget.Server that is ready to rock and roll. It has already completed Steps 1–3 of NuGet&#39;s <a href="https://docs.nuget.org/Create/Hosting-Your-Own-NuGet-Feeds#creating-remote-feeds">host your own remote feed</a>. Version 0.1.2 has the following additional adds:</p>
+<p>The <a href="https://chocolatey.org/packages/chocolatey.server">Chocolatey.Server package</a> contains the binaries for a fully ready to go Chocolatey NuGet Server where you can serve packages over HTTP using a NuGet-compatible v2 OData Atom Feed. Chocolatey Simple Server (aka Chocolatey Server aka chocolatey.server) is an implementation of a NuGet.Server compiled and ready to go.</p>
+<p><strong>NOTE</strong>: This is meant to be a simple implementation and may not have the features to be used in a robust environment where you need multiple repositories with multiple users/API keys. If you are an organization, the recommendation is to evaluate your needs and determine if you instead need a Repository Server like Nexus, Artifactory Pro, or ProGet. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">hosting your own server</a> for those options.</p>
+<h2 id="links">Links</h2>
 <ul>
-<li>Uses same enhanced NuGet that Chocolatey uses so you can see more information in search if you choose to use those things.</li>
-<li>Allows packages up to 2GB. Package size can be controlled through <a href="https://msdn.microsoft.com/en-us/library/ms689462(v=vs.90).aspx">maxAllowedContentLength</a> and <a href="https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx">maxRequestLength</a>.</li>
+<li><a href="https://chocolatey.org/packages/chocolatey.server">Package</a></li>
+<li><a href="https://github.com/chocolatey/simple-server/blob/master/CHANGELOG.md">Changelog</a></li>
+<li><a href="https://github.com/chocolatey/simple-server">Source Code</a></li>
 </ul>
 <p>When you install it, it will install the website typically to <code>c:\tools\chocolatey.server</code>.</p>
 <h2 id="requirements">Requirements</h2>
 <ul>
+<li>.NET Framework 4.6+.</li>
 <li>You need a Windows box with at least 50GB of free space (or where ever you are going to put the packages).</li>
 <li>50GB of free space for where ever you will put packages.</li>
 <li>We recommend at least 8GB RAM, but more if you can.</li>
@@ -46,8 +54,9 @@
 <li>If you have an IIS site for WSUS administration, Chocolatey.Server website will not come up at all, even if everything looks right. We have not yet been able to determine the issue, but believe it is related to ASP.NET 4.6+. Installing all of the required components for Chocolatey.Server may also affect your WSUS admin site. Please seek a different box.</li>
 <li>If you can ensure your server is up to date with all of the Windows Updates, you will move through this process quite a bit quicker.</li>
 </ul>
-<p>Setup with Ansible<br />
-If you are using Ansible, you can use the <a href="https://galaxy.ansible.com/jborean93/win_chocolatey_server">win_chocolatey_server</a> role to set up an Chocolatey.Server instance on a host running Windows Server 2008 R2 or newer.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="setup-with-ansible">Setup with Ansible</h3>
+<p>If you are using Ansible, you can use the <a href="https://galaxy.ansible.com/jborean93/win_chocolatey_server">win_chocolatey_server</a> role to set up an Chocolatey.Server instance on a host running Windows Server 2008 R2 or newer.</p>
 <p>This Ansible role allows you to configure the following:</p>
 <ul>
 <li>The API token required to push packages</li>
@@ -57,8 +66,10 @@ If you are using Ansible, you can use the <a href="https://galaxy.ansible.com/jb
 <li>Generate a self-signed certificate alongside a https binding if a CA is not available</li>
 <li>Automatically install the Chocolatey nupkg from a path or a URL</li>
 </ul>
-<h2 id="setup-with-puppet">Setup with Puppet</h2>
-<p>If you are using the Puppet module <a href="https://forge.puppet.com/chocolatey/chocolatey_server">chocolatey/chocolatey_server</a>, it will do all of the additional setup for this package and allow some customization.</p>
+<h3 id="setup-with-chef">Setup with Chef</h3>
+<p>If you are using Chef, you can use <a href="https://github.com/galenemery/chocolatey_server">Galen Emery&#39;s POC</a> as a starting point to set up a Chocolatey Simple Server.</p>
+<h3 id="setup-with-puppet">Setup with Puppet</h3>
+<p>If you are using the Puppet module <a href="https://forge.puppet.com/chocolatey/chocolatey_server">chocolatey/chocolatey_server</a>, it will do all of the additional setup for this package and allow some customization. <strong>NOTE: For now it may be best to look at the one in GitHub.</strong></p>
 <p>The module works with Windows Server 2008/2012.<br />
 For a simple <code>include chocolatey_server</code> it does the following automatically:</p>
 <ul>
@@ -69,7 +80,7 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li>Ensures the IIS website is setup for chocolatey.server</li>
 <li>Ensures permissions for the site are set correctly.</li>
 </ul>
-<h2 id="setup-normally">Setup Normally</h2>
+<h3 id="setup-manually">Setup Manually</h3>
 <ul>
 <li>If your Windows updates are not up to date, there are two required Windows updates you are going to need (heads up they take awhile)<br />
 * Install KB2919355 - <code>choco install KB2919355 -y</code> - this one or the other Windows update takes a <strong><em>very</em></strong> long time to install, just be patient<br />
@@ -96,7 +107,7 @@ For a simple <code>include chocolatey_server</code> it does the following automa
 <li><code>IIS APPPOOL\&lt;app pool name&gt;</code> - Modify</li>
 </ul></li>
 </ul>
-<h2 id="setup-with-powershell-script">Setup with PowerShell Script</h2>
+<h3 id="setup-with-powershell-script">Setup with PowerShell Script</h3>
 <p>To install and configure Chocolatey.Server using PowerShell run the following script in an <strong>elevated administrator session</strong>:</p>
 <pre><code class="powershell">$siteName = &#39;ChocolateyServer&#39;
 $appPoolName = &#39;ChocolateyServerAppPool&#39;
