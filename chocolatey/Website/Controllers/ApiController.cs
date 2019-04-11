@@ -127,7 +127,11 @@ namespace NuGetGallery
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.RequestEntityTooLarge,String.Format(CultureInfo.CurrentCulture, Strings.PackageTooLarge, MAX_ALLOWED_CONTENT_LENGTH / ONE_MB));
             }
 
-            var packageToPush = ReadPackageFromRequest();
+            // Tempfile to store the package from stream. 
+            // Based on https://github.com/NuGet/NuGetGallery/issues/3042
+            var temporaryFile = Path.GetTempFileName();
+
+            var packageToPush = ReadPackageFromRequest(temporaryFile);
 
             // Ensure that the user can push packages for this partialId.
             var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id, useCache: false);
@@ -183,10 +187,25 @@ any moderation related failures.",
             try
             {
                 packageSvc.CreatePackage(packageToPush, user);
+
+                packageToPush = null;
+
+                try
+                {
+                    System.IO.File.Delete(temporaryFile);
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, "Could not remove temporary upload file: {0}", ex.Message);
+                }
             }
             catch (Exception ex)
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}", ex.Message));
+            }
+            finally
+            {
+                OptimizedZipPackage.PurgeCache();
             }
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
@@ -240,7 +259,7 @@ any moderation related failures.",
             filterContext.Result = new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, exception.Message, request.IsLocal ? exception.StackTrace : exception.Message);
         }
 
-        protected internal virtual IPackage ReadPackageFromRequest()
+        protected internal virtual IPackage ReadPackageFromRequest(string temporaryFile)
         {
             Stream stream;
             if (Request.Files.Count > 0)
@@ -250,7 +269,12 @@ any moderation related failures.",
             }
             else stream = Request.InputStream;
 
-            return new ZipPackage(stream);
+            using (var temporaryFileStream = System.IO.File.Open(temporaryFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                stream.CopyTo(temporaryFileStream);
+            }
+
+            return new OptimizedZipPackage(temporaryFile);
         }
 
         [ActionName("PackageIDs"), HttpGet]
