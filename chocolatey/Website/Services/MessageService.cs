@@ -211,21 +211,17 @@ Package Url: {6}
             }
         }
 
-        public void ContactUs(MailAddress fromAddress, string contactType, string message, string optionalSubject)
+        public void ContactGeneral(MailAddress fromAddress, string contactType, string message, string optionalSubject)
         {
             string subject = "Customer Inquiry for {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
             string body = message;
 
             var to = Configuration.ReadAppSettings("ContactUsEmail");
-            //refactor this a bit - magic strings! 
+
             if (contactType == "Website")
             {
                 subject = "Chocolatey - Contact Form - {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
                 to = Configuration.ReadAppSettings("ModeratorEmail");
-            }
-            if (contactType == "WebsiteBlock")
-            {
-                subject = "Blocked IP{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
             }
 
             using (var mailMessage = new MailMessage())

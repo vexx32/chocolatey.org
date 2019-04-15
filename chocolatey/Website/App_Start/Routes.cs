@@ -188,6 +188,13 @@ namespace NuGetGallery
                 });    
             
             routes.MapRouteSeo(
+                RouteName.ContactGeneral, "contact/general", new
+                {
+                    controller = "Pages",
+                    Action = "ContactGeneral"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
                     controller = "Pages",

@@ -817,7 +817,7 @@
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactAdminsViewModel.cs" />
-    <Compile Include="ViewModels\ContactUsViewModel.cs" />
+    <Compile Include="ViewModels\ContactGeneralViewModel.cs" />
     <Compile Include="ViewModels\CourseLeftViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleViewModel.cs" />
@@ -1253,6 +1253,7 @@
     <Content Include="Content\Images\herowithlogo.png" />
     <Content Include="Content\Images\icons\arrow-watch.png" />
     <Content Include="Content\Images\icons\books.png" />
+    <Content Include="Content\Images\icons\handshake.png" />
     <Content Include="Content\Images\icons\star.png" />
     <Content Include="Content\Images\icons\thumb.png" />
     <Content Include="Content\Images\icons\cloud.png" />
@@ -1485,7 +1486,7 @@
     <Content Include="Views\Pages\Pricing.cshtml" />
     <Content Include="Views\Shared\OldLayout.cshtml" />
     <Content Include="Views\Pages\Company.cshtml" />
-    <Content Include="Views\Pages\ContactUs.cshtml" />
+    <Content Include="Views\Pages\ContactGeneral.cshtml" />
     <Content Include="Views\Documentation\Installation.cshtml" />
     <Content Include="Views\Pages\Media.cshtml" />
     <Content Include="Views\Pages\Partner.cshtml" />
@@ -1764,6 +1765,7 @@
     <Content Include="Views\Pages\Compare.cshtml" />
     <Content Include="Views\Pages\ContactTrial.cshtml" />
     <Content Include="Views\Pages\_ContactSideColumn.cshtml" />
+    <Content Include="Views\Pages\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

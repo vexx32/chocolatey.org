@@ -1,135 +1,157 @@
-﻿@using NuGetGallery
-@model ContactUsViewModel
-@{
-    ViewBag.Title = "Contact Us";
+﻿@{
+    ViewBag.Title = "Contact";
     Layout = "~/Views/Shared/PackagesLayout.cshtml";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
-    Bundles.Reference("Content/account.css");
     Bundles.Reference("Scripts");
-    Bundles.Reference("Scripts/validation");
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 }
-@section TopScripts {
-    <script>
-        function onSubmit(token) {
-            document.getElementById("i-recaptcha").submit();
-        }
-    </script>
-    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
-}
 
-<section class="container py-3 py-xl-5 contact" id="account">
-    <div class="row">
-        <div class="col-xl-8 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="text-center">Contact Us</h1>
-                    <div class="callout-warning">
-                        <p><strong>If you are getting 403 errors</strong> with the community repository or have other website issues/access, use "Blocked IP Address" below when you contact.</p>
-                        <p>
-                            <strong>If you have found an issue or have questions</strong> (related to open source usage or package install issues), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.
-                        </p>
+<section>
+    <div class="container py-3 py-lg-5">
+        <h1 class="text-center">Let Us Help You!</h1>
+        <h3 class="text-center pb-4">Choose a category below and we'll get back to you as soon as possible.</h3>
+        <div class="row">
+            <div class="col-xl-10 mx-auto">
+                <div class="row card-row">
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <a href="#" data-toggle="modal" data-target="#sales-popup">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <span class="icon-dashboard display-3 text-primary"></span>
+                                        <h3 class="text-center mb-0">Sales</h3>
+                                    </div>
+                                    <p>I'd like information reguarding solutions for my organization.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="modal fade" id="sales-popup" tabindex="-1" role="dialog" aria-labelledby="salesLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h2 class="modal-title text-center mb-3" id="salesLabel">Please Choose a Category Below</h2>
+                                        <div class="row">
+                                            <div class="col-sm-6 mb-4 mb-sm-0">
+                                                <a href="#">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <div class="text-center">
+                                                                <h3 class="text-center mb-0">For My Organization</h3>
+                                                            </div>
+                                                            <p>Interested in learning more about Chocolatey commercial options for use in my organization.</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <a href="#">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <div class="text-center">
+                                                                <h3 class="text-center mb-0">For Another Organization</h3>
+                                                            </div>
+                                                            <p>Interested in reselling Chocolatey for Business to another organization.</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="callout-secondary mt-3">
-                        <p>Please fill out the form below to contact Chocolatey Software. <strong><i>Only use this form for the purposes below.</i></strong> See above for other means of contact for things not related to this form.</p>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.ContactTrial)">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <span class="icon-pencil display-3 text-primary"></span>
+                                        <h3 class="text-center mb-0">Trial</h3>
+                                    </div>
+                                    <p>I'd like to start a trial of Chocolatey for Business to see if it's right for my organization.</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <hr />
-                    <h3>Send Message to...</h3>
-                    <p><strong>"Sales" </strong>for special pricing, to learn more, and technical presentation &amp; trial for MSP or C4B.</p>
-                    <p><strong>"Partner" </strong>for reseller / channel partner.</p>
-                    <p><strong>"Other" </strong>to contact Chocolatey Software directly.</p>
-                    <p><strong>"Website" </strong>for site issues/access. </p>
-                    <p><strong>"Blocked IP Address" </strong>if you manage an IP address that has been blocked from using this site.</p>
-                    <hr class="mb-0"/>
-                    @using (Html.BeginForm())
-                    {
-                        <fieldset class="form">
-                            <legend class="d-none">Question or comments?</legend>
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true)
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-field d-flex flex-column">
-                                        <div>@Html.LabelFor(m => m.MessageTo) <span class="icon-asterisk"></span></div>
-                                        @Html.DropDownListFor(m => m.MessageTo, Model.MessageToItems, "Select...")
-				                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-field">
-                                        @Html.LabelFor(m => m.CompanyName)
-                                        @Html.EditorFor(m => m.CompanyName)
-                                        <span class="field-hint-message">Provide your company or leave empty if not an organizational request.</span>
-                                        @Html.ValidationMessageFor(m => m.CompanyName)
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <a href="#">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <img src="@Url.Content("~/content/images/icons/handshake.png")" class="mb-2 mt-4" width="100" />
+                                        <h3 class="text-center mb-0">Partner</h3>
                                     </div>
+                                    <p>I'd like to discuss becoming a partner with Chocolatey.</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-field">
-                                        @Html.LabelFor(m => m.FirstName) <span class="icon-asterisk"></span>
-                                        @Html.EditorFor(m => m.FirstName)
-                                        <span class="field-hint-message">Enter your first name.</span>
-                                        @Html.ValidationMessageFor(m => m.FirstName)
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.Discount)">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <span class="icon-graduation-cap display-3 text-primary"></span>
+                                        <h3 class="text-center mb-0">Student Discount</h3>
                                     </div>
+                                    <p>I'm a student and need a discount on Chocolatey to get started.</p>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-field">
-                                        @Html.LabelFor(m => m.LastName) <span class="icon-asterisk"></span>
-                                        @Html.EditorFor(m => m.LastName)
-                                        <span class="field-hint-message">Enter your last name.</span>
-                                        @Html.ValidationMessageFor(m => m.LastName)
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <a href="#">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <span class="icon-ban display-3 text-primary"></span>
+                                        <h3 class="text-center mb-0">Blocked IP</h3>
                                     </div>
+                                    <p>I'm a Chocolatey user, and my IP Address has been blocked.</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-field">
-                                        @Html.LabelFor(m => m.Email) <span class="icon-asterisk"></span>
-                                        @Html.EditorFor(m => m.Email, new { @class = "w-100" })
-                                        <span class="field-hint-message">Enter your email address.</span>
-                                        @Html.ValidationMessageFor(m => m.Email)
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <a href="@Url.RouteUrl(RouteName.ContactGeneral)">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <span class="icon-envelope display-3 text-primary"></span>
+                                        <h3 class="text-center mb-0">General</h3>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-field">
-                                        @Html.LabelFor(m => m.PhoneNumber)
-                                        @Html.EditorFor(m => m.PhoneNumber)
-                                        <span class="field-hint-message">Your phone number is optional but recommended.</span>
-                                        @Html.ValidationMessageFor(m => m.PhoneNumber)
-                                    </div>
+                                    <p>I have a general question for the Chocolatey team.</p>
                                 </div>
                             </div>
-                            <div class="form-field">
-                                @Html.LabelFor(m => m.Message) <span class="icon-asterisk"></span>
-                                @Html.TextAreaFor(m => m.Message, new { @rows = 5 })
-                                @Html.ValidationMessageFor(m => m.Message)
-                            </div>
-                            <div class="form-field mt-3">
-                            	<label class="for-checkbox checkbox mb-0">
-                                    @Html.CheckBoxFor(m => m.CheckBox, new { @class = "check-box" })
-                            	    I am not attempting to market software or services (such as SEO). I am also not requesting advertising space. <span class="icon-asterisk"></span>
-                            	    <span class="checkmark"></span>
-                                </label>
-                                @Html.ValidationMessageFor(m => m.CheckBox)
-                            </div>
-                            <div class="form-field">
-                                @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-                            </div>
-                            <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
-        	                <input class="btn btn-primary mt-3 mx-auto d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send Message" title="Send us a message. We'll be in touch soon!" />
-                        </fieldset>
-                    }
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-10 mx-auto">
+                <hr />
+                <div class="row pt-4">
+                    <div class="col-md-4">
+                        <p class="mb-0 mt-3 mt-lg-0"><strong>HQ Physical Address:</strong></p>
+                        <p>3620 SW Fairlawn Rd, Suite #220,<br />Topeka, KS 66614</p>
+                        <hr />
+                        <p class="mb-0"><strong>Mailing Address:</strong></p>
+                        <p>6021 SW 29th St Ste A 302,<br />Topeka, KS 66614</p>
+                        <img class="img-fluid mb-3 rounded shadow" src="@Url.Content("~/content/images/chocolateyHeadquarters.jpg")" alt="Chocolatey Software" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="embed-responsive embed-responsive-16by9 shadow">
+                            <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3100.576826185883!2d-95.74600428386569!3d39.00215334836595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87bee2ba65472b9d%3A0xf151f2c260ed0eb8!2s3620+SW+Fairlawn+Rd+%23220%2C+Topeka%2C+KS+66614!5e0!3m2!1sen!2sus!4v1560177899028!5m2!1sen!2sus" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
-}

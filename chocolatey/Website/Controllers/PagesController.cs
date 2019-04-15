@@ -192,21 +192,27 @@ Machines: {5}
             return View("~/Views/Pages/Thanks.cshtml");
         }
 
-        [HttpGet]
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult ContactUs()
         {
-            return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
+            return View("~/Views/Pages/ContactUs.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactGeneral()
+        {
+            return View("~/Views/Pages/ContactGeneral.cshtml", new ContactGeneralViewModel());
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
-        public virtual ActionResult ContactUs(ContactUsViewModel contactForm)
+        public virtual ActionResult ContactGeneral(ContactGeneralViewModel contactForm)
         {
-            if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactGeneral.cshtml", contactForm);
 
             if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
             {
                 ModelState.AddModelError(string.Empty,"Please use an alternative email address. This domain is known to send spam.");
-                return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+                return View("~/Views/Pages/ContactGeneral.cshtml", contactForm);
             }
 
             var from = new MailAddress(contactForm.Email);
@@ -233,7 +239,7 @@ Company: {4}
                 additionalSubject = "{0} {1}".format_with(contactForm.FirstName, contactForm.LastName);
             }
 
-            messageService.ContactUs(from, contactForm.MessageTo, message, additionalSubject);
+            messageService.ContactGeneral(from, contactForm.MessageTo, message, additionalSubject);
 
             TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
 

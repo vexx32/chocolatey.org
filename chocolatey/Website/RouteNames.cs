@@ -60,6 +60,7 @@ namespace NuGetGallery
         public const string Company = "Company";
         public const string ContactTrial = "ContactTrial";
         public const string ContactUs = "ContactUs";
+        public const string ContactGeneral = "ContactGeneral";
         public const string Discount = "Discount";
         public const string Evaluation = "Evaluation";
         public const string Support = "Support";
