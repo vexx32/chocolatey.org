@@ -289,6 +289,50 @@ Company: {4}
         }
 
         [HttpGet]
+        public ActionResult ContactPartner()
+        {
+            return View("~/Views/Pages/ContactPartner.cshtml", new ContactPartnerViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactPartner(ContactPartnerViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactPartner.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactPartner.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+
+### Message
+{5}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            messageService.ContactPartner(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet]
         public ActionResult Discount()
         {
             return View("~/Views/Pages/Discount.cshtml", new DiscountViewModel());
