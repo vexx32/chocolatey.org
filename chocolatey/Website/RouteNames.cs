@@ -65,6 +65,7 @@ namespace NuGetGallery
         public const string ContactPartner = "ContactPartner";
         public const string ContactSales = "ContactSales";
         public const string ContactSalesOther = "ContactSalesOther";
+        public const string ContactBlocked = "ContactBlocked";
         public const string Discount = "Discount";
         public const string Evaluation = "Evaluation";
         public const string Support = "Support";

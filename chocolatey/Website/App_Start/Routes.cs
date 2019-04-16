@@ -221,6 +221,13 @@ namespace NuGetGallery
                     controller = "Pages",
                     Action = "ContactSalesOther"
                 });
+                
+            routes.MapRouteSeo(
+                RouteName.ContactBlocked, "contact/blocked-ip-address", new
+                {
+                    controller = "Pages",
+                    Action = "ContactBlocked"
+                });
 
             routes.MapRouteSeo(
                 RouteName.Support, "support", new
