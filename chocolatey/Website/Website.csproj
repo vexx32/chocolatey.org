@@ -823,6 +823,7 @@
     <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleViewModel.cs" />
     <Compile Include="ViewModels\ContactPartnerViewModel.cs" />
+    <Compile Include="ViewModels\ContactSalesViewModel.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
     <Compile Include="ViewModels\CourseAchievementViewModel.cs" />
@@ -1770,6 +1771,7 @@
     <Content Include="Views\Pages\ContactUs.cshtml" />
     <Content Include="Views\Pages\ContactDiscount.cshtml" />
     <Content Include="Views\Pages\ContactPartner.cshtml" />
+    <Content Include="Views\Pages\ContactSales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

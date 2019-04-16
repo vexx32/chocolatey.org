@@ -333,6 +333,59 @@ Company: {4}
         }
 
         [HttpGet]
+        public ActionResult ContactSales()
+        {
+            return View("~/Views/Pages/ContactSales.cshtml", new ContactSalesViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactSales(ContactSalesViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactSales.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactSales.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+Machines: {5}
+
+### Message
+{6}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.Machines,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            //Find out if the user is part of a pipeline by examining the current URL query string
+            var pipeline = true;
+            if (Request.QueryString.ToString().Contains("pipline=false"))
+            {
+                pipeline = false;
+            }
+
+            messageService.ContactSales(from, message, additionalSubject, pipeline);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet]
         public ActionResult Discount()
         {
             return View("~/Views/Pages/Discount.cshtml", new DiscountViewModel());

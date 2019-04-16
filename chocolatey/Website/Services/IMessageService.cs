@@ -39,6 +39,7 @@ namespace NuGetGallery
         void ContactGeneral(MailAddress fromAddress, string contactType, string message, string optionalSubject);
         void ContactDiscount(MailAddress fromAddress, string message, string optionalSubject);
         void ContactPartner(MailAddress fromAddress, string message, string optionalSubject);
+        void ContactSales(MailAddress fromAddress, string message, string optionalSubject, bool pipeline);
         void Discount(string message, string emailTo, string fullName, string discountType);
         void SendNewAccountEmail(MailAddress toAddress, string confirmationUrl);
         void SendEmailChangeConfirmationNotice(MailAddress newEmailAddress, string confirmationUrl);

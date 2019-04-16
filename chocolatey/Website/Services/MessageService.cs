@@ -268,6 +268,29 @@ Package Url: {6}
             }
         }
 
+        public void ContactSales(MailAddress fromAddress, string message, string optionalSubject, bool pipeline)
+        {
+            string subject = "Customer Inquiry for Sales{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            //update subject line if user is not part of a pipeline.
+            if (pipeline == false)
+            {
+                subject = "Customer Inquiry for General Sales{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            }
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+
         public void Discount(string message, string emailTo, string fullName, string discountType)
         {
             string subject = "Chocolatey Discount for {0}".format_with(discountType);
