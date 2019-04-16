@@ -37,6 +37,7 @@ namespace NuGetGallery
         void ContactSiteAdmins(MailAddress fromAddress, Package package, string message, string packageUrl, bool copySender);
         void ContactTrial(MailAddress fromAddress, string message, string optionalSubject);
         void ContactGeneral(MailAddress fromAddress, string contactType, string message, string optionalSubject);
+        void ContactDiscount(MailAddress fromAddress, string message, string optionalSubject);
         void Discount(string message, string emailTo, string fullName, string discountType);
         void SendNewAccountEmail(MailAddress toAddress, string confirmationUrl);
         void SendEmailChangeConfirmationNotice(MailAddress newEmailAddress, string confirmationUrl);

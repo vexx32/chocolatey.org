@@ -23,7 +23,7 @@ using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
-    public class ContactGeneralViewModel : ISpamValidationModel
+    public class ContactDiscountViewModel : ISpamValidationModel
     {
         [AllowHtml]
         [Display(Name = "Enter your message")]
@@ -47,31 +47,14 @@ namespace NuGetGallery
         [Required(ErrorMessage = "Please enter your last name.")]
         public string LastName { get; set; }
 
-        [Display(Name = "Company")]
-        public string CompanyName { get; set; }
-
         [Display(Name = "Phone number")]
+        [Required(ErrorMessage = "Please enter your phone number. Incase your email does not go through, we want to still be able to follow up with you!")]
         public string PhoneNumber { get; set; }
-
-        [Display(Name = "Send message to")]
-        [Required(ErrorMessage = "Please make a selection.")]
-        public string MessageTo { get; set; }
 
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please check the box to agree to terms of this form.")]
         public bool CheckBox { get; set; }
 
         [ScaffoldColumn(false)]
         public string SpamValidationResponse { get; set; }
-
-        public IEnumerable<SelectListItem> MessageToItems
-        {
-            get
-            {
-                yield return new SelectListItem { Text = "Website", Value = "Website" };
-                yield return new SelectListItem { Text = "Press Request", Value = "PressRequest" };
-                yield return new SelectListItem { Text = "Software Vendor Opt Out", Value = "VendorOptOut" };
-                yield return new SelectListItem { Text = "Other", Value = "General" };
-            }
-        }
     }
 }

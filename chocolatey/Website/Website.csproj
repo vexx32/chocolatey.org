@@ -817,6 +817,7 @@
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactAdminsViewModel.cs" />
+    <Compile Include="ViewModels\ContactDiscountViewModel.cs" />
     <Compile Include="ViewModels\ContactGeneralViewModel.cs" />
     <Compile Include="ViewModels\CourseLeftViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
@@ -1766,6 +1767,7 @@
     <Content Include="Views\Pages\ContactTrial.cshtml" />
     <Content Include="Views\Pages\_ContactSideColumn.cshtml" />
     <Content Include="Views\Pages\ContactUs.cshtml" />
+    <Content Include="Views\Pages\ContactDiscount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,7 +1,7 @@
 ﻿@using NuGetGallery
 @model DiscountViewModel
 @{
-    ViewBag.Title = "Special Pricing";
+    ViewBag.Title = "Student Discount";
     Layout = "~/Views/Shared/PackagesLayout.cshtml";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/account.css");
@@ -19,55 +19,44 @@
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 }
 
-<style>select{width: 100%;padding: 3px 6px;border-radius: .25rem;border: 1px solid #81b5e2;}</style>
+<section id="account">
+    <div class="container py-3 py-lg-5">
+        <div class="row">
+            <div class="col-xl-6 mx-auto">
+                <h2 class="text-primary">Chocolatey Software Student Discount</h2>
+                <h4>Please provide the information below and we'll reach out as soon as possible.</h4>
+                @using (Html.BeginForm())
+                {
+                    <fieldset class="form">
+                        <legend class="d-none">Student Discount</legend>
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
 
-<section id="account" class="container py-3 py-md-5">
-    <div class="row">
-        <div class="col-sm-9 col-lg-6 col-xl-4 m-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="text-center">Special Pricing</h3>
-                    <p class="text-center"><small>Please fill out the form below to receive discount</small></p>
-                    <hr class="mb-0" />
-                    @using (Html.BeginForm())
-                    {
-                        <fieldset class="form">
-                            <legend class="d-none">Special pricing form</legend>
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true)
-
-                            <div class="form-field d-flex flex-column">
-                                <div>@Html.LabelFor(m => m.DiscountType) <span class="icon-asterisk"></span></div>
-                                @Html.DropDownListFor(m => m.DiscountType, Model.DiscountTypeItems, "Select...")
-                                <span class="field-hint-message">What kind of special pricing are you requesting?</span>
-                                @Html.ValidationMessageFor(m => m.DiscountType)
-                            </div>
-                            <div class="form-field">
-                                @Html.LabelFor(m => m.FirstName) <span class="icon-asterisk"></span>
-                                @Html.EditorFor(m => m.FirstName)
-                                <span class="field-hint-message">Enter your first name.</span>
-                                @Html.ValidationMessageFor(m => m.FirstName)
-                            </div>
-                            <div class="form-field">
-                                @Html.LabelFor(m => m.LastName) <span class="icon-asterisk"></span>
-                                @Html.EditorFor(m => m.LastName)
-                                <span class="field-hint-message">Enter your last name.</span>
-                                @Html.ValidationMessageFor(m => m.LastName)
-                            </div>
-                            <div class="form-field">
-                                @Html.LabelFor(m => m.Email) <span class="icon-asterisk"></span>
-                                @Html.EditorFor(m => m.Email)
-                                <span class="field-hint-message">Enter your email address.</span>
-                                @Html.ValidationMessageFor(m => m.Email)
-                            </div>
-                            <div class="form-field">
-                                @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-                            </div>
-                            <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
-                            <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
-                        </fieldset>
-                    }
-                </div>
+                        <div class="form-field d-none">
+                            @Html.DropDownListFor(m => m.DiscountType, Model.DiscountTypeItems, new { Value = "StudentDiscount" })
+                        </div>
+                        <div class="form-field">
+                            @Html.LabelFor(m => m.FirstName) <span class="icon-asterisk"></span>
+                            @Html.EditorFor(m => m.FirstName)
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </div>
+                        <div class="form-field">
+                            @Html.LabelFor(m => m.LastName) <span class="icon-asterisk"></span>
+                            @Html.EditorFor(m => m.LastName)
+                            @Html.ValidationMessageFor(m => m.LastName)
+                        </div>
+                        <div class="form-field">
+                            @Html.LabelFor(m => m.Email) <span class="icon-asterisk"></span>
+                            @Html.EditorFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </div>
+                        <div class="form-field">
+                            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
+                        </div>
+                        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+                        <input class="btn btn-primary mt-3 g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send" title="Send us a message. We'll be in touch soon!" />
+                    </fieldset>
+                }
             </div>
         </div>
     </div>

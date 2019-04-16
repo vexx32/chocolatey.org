@@ -195,6 +195,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.ContactDiscount, "contact/student-discount", new
+                {
+                    controller = "Pages",
+                    Action = "ContactDiscount"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
                     controller = "Pages",

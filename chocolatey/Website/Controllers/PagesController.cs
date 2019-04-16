@@ -192,6 +192,48 @@ Machines: {5}
             return View("~/Views/Pages/Thanks.cshtml");
         }
 
+        [HttpGet]
+        public ActionResult ContactDiscount()
+        {
+            return View("~/Views/Pages/ContactDiscount.cshtml", new ContactDiscountViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactDiscount(ContactDiscountViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactDiscount.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactDiscount.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+
+### Message
+{4}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.Message);
+
+            var additionalSubject = "{0} {1}".format_with(contactForm.FirstName, contactForm.LastName);
+
+            messageService.ContactDiscount(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult ContactUs()
         {
