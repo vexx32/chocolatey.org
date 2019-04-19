@@ -3,7 +3,6 @@
 @model UserProfileModel
 @{
     ViewBag.Title = @Model.Username;
-    Layout = "~/Views/Shared/PackagesLayout.cshtml";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/CookiesNotice");

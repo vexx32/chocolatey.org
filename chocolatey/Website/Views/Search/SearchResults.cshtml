@@ -1,6 +1,5 @@
 ﻿@model PackageListViewModel
 @{
-    Layout = "~/Views/Shared/PackagesLayout.cshtml";
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Search";
 
