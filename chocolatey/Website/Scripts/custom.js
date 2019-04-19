@@ -335,3 +335,23 @@ $(window).scroll(function () {
 $(".video-story .modal").on('hidden.bs.modal', function (e) {
     $(this).find("iframe").attr("src", $(this).find("iframe").attr("src"));
 });
+
+// Responsive Tabs
+$(function () {
+    tabs();
+
+    $(window).on("resize", function () {
+        tabs();
+    });
+
+    function tabs() {
+        if ($(window).width() < 576) {
+            $(".nav-tabs .nav-item").addClass("w-100");
+            $(".nav-tabs .nav-link").addClass("btn btn-outline-primary").removeClass("nav-link");
+        }
+        else {
+            $(".nav-tabs .nav-item").removeClass("w-100");
+            $(".nav-tabs .btn").addClass("nav-link").removeClass("btn btn-outline-primary");
+        }
+    }
+});

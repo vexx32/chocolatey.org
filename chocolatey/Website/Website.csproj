@@ -1410,6 +1410,7 @@
     <Content Include="Content\scss\_resources.scss" />
     <Content Include="Content\scss\_courses.scss" />
     <Content Include="Content\scss\_cards.scss" />
+    <Content Include="Content\scss\_tabs.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

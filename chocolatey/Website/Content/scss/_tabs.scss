@@ -1,0 +1,39 @@
+.nav-tabs {
+    border-bottom: 0;
+
+    .nav-item:not(:first-child) {
+        .nav-link {
+            margin-left: .5rem;
+        }
+
+        > .btn {
+            margin-top: 1rem;
+        }
+    }
+}
+
+.card-tabs {
+    .nav-tabs .nav-item {
+
+        &:last-child > .btn {
+            margin-bottom: .5rem;
+        }
+
+        .nav-link.active, .nav-link.active:hover, .nav-link.active:focus {
+            box-shadow: 0 -0.01rem 0.25rem rgba(0,0,0,.075);
+            border-color: transparent transparent white;
+            position: relative;
+        }
+    }
+}
+
+.body-tabs .nav-tabs .nav-item .nav-link.active {
+    background: $light;
+    border-color: $gray-300 $gray-300 transparent;
+}
+
+@media (min-width: 576px) {
+    .nav-tabs {
+        border-bottom: 1px solid #dee2e6;
+    }
+}

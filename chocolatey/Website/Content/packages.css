@@ -6,15 +6,6 @@
     color: #21446d !important;
     border-color: #5c9fd8;
 }
-/*Search Result Main Top Tabs*/
-.nav-tabs .nav-link {
-    background: #e2e3e5;
-    border: 1px solid #dee2e6;
-}
-.nav-tabs .nav-link.active {
-    background: #f8f9fa;
-    border-color: #dee2e6 #dee2e6 transparent;
-}
 /*Search Results: View Documentation*/
 .gsc-control-cse, .gsc-control-cse .gsc-table-result {
     font-family: "PT Sans",sans-serif !important;
@@ -176,16 +167,6 @@ h1 img.package-testing {
 }
 .comments-list .comment-body, .comments-list .user-role {
     margin-bottom: 1rem !important;
-}
-/*Install Tabs*/
-#tabs .nav-tabs, #tabs .nav-tabs .nav-link:hover, #tabs .nav-tabs .nav-link:focus {
-    border-bottom: none;
-}
-#tabs .nav-tabs .active, #tabs .nav-tabs .active:hover, #tabs .nav-tabs .active:focus {
-    background: white;
-    box-shadow: 0 -0.01rem 0.25rem rgba(0,0,0,.075);
-    border: none;
-    opacity: 1 !important;
 }
 /*Saved Popup*/
 #package-save .modal-header, #package-save .modal-footer {

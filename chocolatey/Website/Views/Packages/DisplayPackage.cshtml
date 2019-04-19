@@ -429,20 +429,20 @@
             {
                 if (Model.Listed || anyPackageRole && Model.Status != PackageStatusType.Rejected)
                 {
-                    <div id="tabs" class="row">
+                    <div class="row card-tabs">
                         <div class="col-12">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item mr-2">
+                            <ul class="nav nav-tabs border-bottom-0" role="tablist">
+                                <li class="nav-item">
                                     <a class="nav-link active" id="install-tab" data-toggle="tab" href="#install" role="tab" aria-controls="install" aria-selected="true">Install</a>
                                 </li>
-                                <li class="nav-item mr-2">
+                                <li class="nav-item">
                                     <a class="nav-link" id="upgrade-tab" data-toggle="tab" href="#upgrade" role="tab" aria-controls="upgrade" aria-selected="false">Upgrade</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="uninstall-tab" data-toggle="tab" href="#uninstall" role="tab" aria-controls="uninstall" aria-selected="false">Uninstall</a>
                                 </li>
                             </ul>
-                            <div class="tab-content bg-white p-3 shadow-sm mb-3">
+                            <div class="tab-content bg-white p-3 shadow-sm mb-3 position-relative">
                                 <div class="tab-pane fade show active" id="install" role="tabpanel" aria-labelledby="install-tab">
 	                            <p class="mb-3">To install @Model.Title, run the following command from the command line or from PowerShell:</p>
                                     <div class="input-group copyBox">

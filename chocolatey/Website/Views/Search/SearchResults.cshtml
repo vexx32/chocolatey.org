@@ -11,7 +11,7 @@
     Bundles.Reference("Scripts/CookiesNotice");
 }
 
-<section id="package" class="container py-5">
+<section id="package" class="container py-5 body-tabs">
     @if (!User.Identity.IsAuthenticated)
     {
         <div class="row">
@@ -24,7 +24,7 @@
         @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
     }
     <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item mr-2">
+        <li class="nav-item">
             <a class="nav-link active" id="packages-tab" data-toggle="tab" href="#packages-results" role="tab" aria-controls="packages-results" aria-selected="true">View Packages</a>
         </li>
         <li class="nav-item">
