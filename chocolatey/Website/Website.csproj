@@ -1428,7 +1428,6 @@
     <Content Include="Scripts\highlight\highlight.pack.js" />
     <Content Include="Scripts\home\bundle.txt" />
     <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
     <Content Include="Scripts\manageowners\knockout.3.5.0.js" />
     <Content Include="Scripts\packages\package-details.js" />

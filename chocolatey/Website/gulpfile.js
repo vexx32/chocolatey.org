@@ -76,7 +76,6 @@ function jsStyleguideConcat() {
     return gulp.src([
         "styleguide/tmp/jquery-3.3.1.js",
         "styleguide/tmp/bootstrap.bundle.js",
-        "styleguide/tmp/main.js",
         "styleguide/tmp/clipboard.js",
         "styleguide/tmp/custom.js"])
         .pipe(concat("chocolatey.js"))
