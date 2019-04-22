@@ -1477,7 +1477,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Search\SearchResults.cshtml" />
-    <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Packages\DisplayPackage.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1490,7 +1489,6 @@
     <Content Include="Views\Pages\Notice.cshtml" />
     <Content Include="Views\Packages\_ListVersion.cshtml" />
     <Content Include="Views\Pages\Pricing.cshtml" />
-    <Content Include="Views\Shared\OldLayout.cshtml" />
     <Content Include="Views\Pages\Company.cshtml" />
     <Content Include="Views\Pages\ContactGeneral.cshtml" />
     <Content Include="Views\Documentation\Installation.cshtml" />
@@ -1627,7 +1625,6 @@
     <Content Include="Views\Blog\Celebrating5Years.md" />
     <Content Include="Views\Blog\ChocolateyBusinessAndProfessionalComing.md" />
     <Content Include="Views\Blog\ChocolateyHasANewLogo.md" />
-    <Content Include="Views\Shared\CodeLayout.cshtml" />
     <Content Include="Views\Blog\CreateChocolateyPackages.md" />
     <Content Include="Views\Blog\HostYourOwnServer.md" />
     <Content Include="Views\Blog\InternalizePackages.md" />
@@ -1811,8 +1808,6 @@
     <Content Include="Views\Pages\Terms.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Object.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\TwoColumnLayout.cshtml" />
-    <Content Include="Views\Shared\UserDisplay.cshtml" />
     <Content Include="Views\Users\Account.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
     <Content Include="Views\Users\Confirm.cshtml" />
