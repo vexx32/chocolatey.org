@@ -1034,6 +1034,15 @@
       <Link>Infrastructure\Elmah.SqlServer.sql</Link>
     </EmbeddedResource>
     <Content Include="7za.exe" />
+    <Content Include="apple-touch-icon-114x114.png" />
+    <Content Include="apple-touch-icon-120x120.png" />
+    <Content Include="apple-touch-icon-144x144.png" />
+    <Content Include="apple-touch-icon-152x152.png" />
+    <Content Include="apple-touch-icon-180x180.png" />
+    <Content Include="apple-touch-icon-57x57.png" />
+    <Content Include="apple-touch-icon-72x72.png" />
+    <Content Include="apple-touch-icon-76x76.png" />
+    <Content Include="apple-touch-icon.png" />
     <Content Include="cloudflare-ratelimited.html" />
     <Content Include="Content\account.css" />
     <Content Include="Content\dist\chocolatey.slim.css" />
