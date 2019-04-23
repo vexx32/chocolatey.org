@@ -117,5 +117,14 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(gcse, s);
         })();
+        $(function () {
+            $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
+                $(this).closest("form").submit();
+            });
+            Closeable.modal("chocolatey_hide_packages_disclaimer");
+            if (!getCookie('chocolatey_hide_packages_disclaimer')) {
+                $(".modal-closeable").css('display', 'block');
+            }
+        });
     </script>
 }
