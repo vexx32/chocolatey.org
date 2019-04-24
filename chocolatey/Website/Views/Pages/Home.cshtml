@@ -140,7 +140,10 @@
                         <div class="carousel-item">
                             <div class="row align-items-center">
                                 <div class="col-12 text-center mb-3">
-                                    <img class="lazy img-fluid" src="@Url.Content("~/content/images/community-mockup.gif")" alt="Chocolatey Community" />
+                                    <img class="lazy img-fluid" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/community-mockup.gif")" alt="Chocolatey Community" />
+                                    <noscript>
+                                        <img class="img-fluid" src="@Url.Content("~/content/images/community-mockup.gif")" alt="Chocolatey Community" />
+                                    </noscript>
                                     <h1 class="py-3">Choose from Thousands of Community Packages</h1>
                                 </div>
                                 <div class="col-lg-6">
@@ -176,7 +179,10 @@
                         <div class="carousel-item">
                             <div class="row align-items-center">
                                 <div class="col-12 text-center mb-3">
-                                    <img class="lazy img-fluid" src="@Url.Content("~/content/images/integrations-mockup.jpg")" alt="Chocolatey Integrations" />
+                                    <img class="lazy img-fluid" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/integrations-mockup.jpg")" alt="Chocolatey Integrations" />
+                                    <noscript>
+                                        <img class="img-fluid" src="@Url.Content("~/content/images/integrations-mockup.jpg")" alt="Chocolatey Integrations" />
+                                    </noscript>
                                     <h1 class="py-3">The <i>Sane</i> Way to Manage Software on Windows</h1>
                                 </div>
                                 <div class="col-lg-6">
@@ -248,7 +254,10 @@
                                         <div class="row align-items-xl-center">
                                             <div class="col-xl-4 text-center">
                                                 <div class="w-75 p-5 mx-auto" style="background: #d32323;">
-                                                    <img src="@Url.Content("~/content/images/businesses/Yelp.png")" alt="Yelp" title="Yelp" />
+                                                    <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Yelp.png")" alt="Yelp" title="Yelp" />
+                                                    <noscript>
+                                                        <img src="@Url.Content("~/content/images/businesses/Yelp.png")" alt="Yelp" title="Yelp" />
+                                                    </noscript>
                                                 </div>
                                             </div>
                                             <div class="col-xl-8">
@@ -279,7 +288,10 @@
                                         <div class="row align-items-xl-center">
                                             <div class="col-xl-4 text-center">
                                                 <div class="w-75 p-5 mx-auto" style="background: #222;">
-                                                    <img src="@Url.Content("~/content/images/businesses/Puppet.png")" alt="Puppet, Inc." title="Puppet, Inc." />
+                                                    <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Puppet.png")" alt="Puppet, Inc." title="Puppet, Inc." />
+                                                    <noscript>
+                                                        <img src="@Url.Content("~/content/images/businesses/Puppet.png")" alt="Puppet, Inc." title="Puppet, Inc." />
+                                                    </noscript>
                                                 </div>
                                             </div>
                                             <div class="col-xl-8">
@@ -320,33 +332,78 @@
                 <div class="col-lg-10 mx-auto">
                     <div class="row align-items-center">
                         <div class="col my-4 text-center">
-                            <a href="https://puppet.com" rel="noreferrer" title="Puppet, Inc" target="_blank"><img src="@Url.Content("~/content/images/businesses/Puppet-Dark.png")" alt="Logo for Puppet, Inc" /></a>
+                            <a href="https://puppet.com" rel="noreferrer" title="Puppet, Inc" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Puppet-Dark.png")" alt="Logo for Puppet, Inc" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Puppet-Dark.png")" alt="Logo for Puppet, Inc" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col text-center">
-                            <a href="https://chef.io" rel="noreferrer" title="Chef Software, Inc" target="_blank"><img src="@Url.Content("~/content/images/businesses/Chef-Dark.png")" alt="Logo for Chef Software, Inc" /></a>
+                            <a href="https://chef.io" rel="noreferrer" title="Chef Software, Inc" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Chef-Dark.png")" alt="Logo for Chef Software, Inc" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Chef-Dark.png")" alt="Logo for Chef Software, Inc" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col my-4 text-center">
-                            <a href="https://www.seek.com.au" rel="noreferrer" title="SEEK - Australia's number one jobs site" target="_blank"><img src="@Url.Content("~/content/images/businesses/SEEK.png")" alt="Logo for SEEK" /></a>
+                            <a href="https://www.seek.com.au" rel="noreferrer" title="SEEK - Australia's number one jobs site" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/SEEK.png")" alt="Logo for SEEK" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/SEEK.png")" alt="Logo for SEEK" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col my-4 text-center">
-                            <a href="https://www.hulu.com" rel="noreferrer" title="Hulu" target="_blank"><img src="@Url.Content("~/content/images/businesses/Hulu.png")" alt="Logo for Hulu" /></a>
+                            <a href="https://www.hulu.com" rel="noreferrer" title="Hulu" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Hulu.png")" alt="Logo for Hulu" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Hulu.png")" alt="Logo for Hulu" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col my-4 text-center">
-                            <a href="https://octopus.com" rel="noreferrer" title="Octopus Deploy" target="_blank"><img src="@Url.Content("~/content/images/businesses/OctopusDeploy-Dark.png")" alt="Logo for Octopus Deploy" /></a>
+                            <a href="https://octopus.com" rel="noreferrer" title="Octopus Deploy" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/OctopusDeploy-Dark.png")" alt="Logo for Octopus Deploy" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/OctopusDeploy-Dark.png")" alt="Logo for Octopus Deploy" />
+                                </noscript>
+                            </a>
                         </div>
                     </div>
                     <div class="row align-items-center">
                         <div class="col my-4 text-center">
-                            <a href="http://inedo.com/proget" rel="noreferrer" title="ProGet is from Inedo Software, Inc" target="_blank"><img src="@Url.Content("~/content/images/businesses/ProGet.png")" alt="Logo for ProGet" /></a>
+                            <a href="http://inedo.com/proget" rel="noreferrer" title="ProGet is from Inedo Software, Inc" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/ProGet.png")" alt="Logo for ProGet" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/ProGet.png")" alt="Logo for ProGet" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col my-4 text-center">
-                            <a href="https://www.myget.org" rel="noreferrer" title="MyGet Ltd" target="_blank"><img src="@Url.Content("~/content/images/businesses/MyGet-Blue.png")" alt="Logo for MyGet" /></a>
+                            <a href="https://www.myget.org" rel="noreferrer" title="MyGet Ltd" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/MyGet-Blue.png")" alt="Logo for MyGet" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/MyGet-Blue.png")" alt="Logo for MyGet" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col my-4 text-center">
-                            <a href="https://www.cornell.edu" rel="noreferrer" title="Cornell University" target="_blank"><img src="@Url.Content("~/content/images/businesses/Cornell.png")" alt="Logo for Cornell University" /></a>
+                            <a href="https://www.cornell.edu" rel="noreferrer" title="Cornell University" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Cornell.png")" alt="Logo for Cornell University" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Cornell.png")" alt="Logo for Cornell University" />
+                                </noscript>
+                            </a>
                         </div>
                         <div class="col my-4 text-center">
-                            <a href="https://www.swissre.com" rel="noreferrer" title="Swiss Re Group" target="_blank"><img src="@Url.Content("~/content/images/businesses/SwissRe.png")" alt="Logo for Swiss Re Group" /></a>
+                            <a href="https://www.swissre.com" rel="noreferrer" title="Swiss Re Group" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/SwissRe.png")" alt="Logo for Swiss Re Group" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/SwissRe.png")" alt="Logo for Swiss Re Group" />
+                                </noscript>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -357,12 +414,12 @@
         </div>
     </div>
 </section>
-<section id="home-resources">
+<section">
     <div class="bg-medium-dark">
         <div class="shape-border shape-border-top shape-border-light"></div>
         <div class="container py-3 py-lg-5">
             <h1 class="text-center mb-5"><strong>Keep Up with the Latest Chocolatey Resources</strong></h1>
-            <div class="row resource-list">
+            <div class="row resource-list home-resources">
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = "automated-managing-windows-desktop-software" })">
                         <div class="card h-100">
@@ -371,7 +428,10 @@
                                 <span>Case Study</span>
                             </div>
                             <div class="card-body p-0">
-                                <img src="@Url.Content("~/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg")" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg")" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever">
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg")" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever">
+                                </noscript>
                             </div>
                             <div class="card-footer">
                                 <h5>How I Completely Automated Managing Windows Desktop Software...Forever</h5>
@@ -387,7 +447,10 @@
                                 <span>Video</span>
                             </div>
                             <div class="card-body p-0">
-                                <img src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey">
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey">
+                                </noscript>
                             </div>
                             <div class="card-footer">
                                 <h5>What is Chocolatey?</h5>
@@ -403,7 +466,10 @@
                                 <span>Customer Success Story</span>
                             </div>
                             <div class="card-body p-0">
-                                <img src="@Url.Content("~/content/images/videos/Puppet_Mike-Lombardi.jpg")" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/videos/Puppet_Mike-Lombardi.jpg")" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet">
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/videos/Puppet_Mike-Lombardi.jpg")" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet">
+                                </noscript>
                             </div>
                             <div class="card-footer">
                                 <h5>Puppet</h5>
@@ -421,7 +487,7 @@
         </div>
         <div class="shape-border shape-border-bottom"></div>
     </div>
-</section>
+</section">
 <section class="pb-3 pb-lg-5">
     @Html.Partial("~/Views/Pages/_Courses.cshtml")
 </section>

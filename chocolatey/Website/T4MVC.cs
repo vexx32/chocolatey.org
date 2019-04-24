@@ -760,6 +760,10 @@ namespace Links {
 
     public static readonly string YourPackage_png = Url("YourPackage.png");
 
+      
+
+    public static readonly string blankImage = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+
 
     }
 
