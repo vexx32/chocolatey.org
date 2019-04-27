@@ -1549,7 +1549,7 @@
     <Content Include="Views\Blog\ChocolateyFestComingSoon.md" />
     <Content Include="Views\Blog\StephanieBurrowsJoinsChocolatey.md" />
     <Content Include="Views\Documentation\FeaturesChocolateyCentralManagement.cshtml" />
-    <None Include="Views\Blog\ChocolateyFestReturns2020.md" />
+    <Content Include="Views\Blog\ChocolateyFestReturns2020.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
