@@ -1092,6 +1092,7 @@
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
+    <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
     <Content Include="Content\Images\boxstarter.png" />
     <Content Include="Content\Images\changePassword.png" />
@@ -1548,6 +1549,7 @@
     <Content Include="Views\Blog\ChocolateyFestComingSoon.md" />
     <Content Include="Views\Blog\StephanieBurrowsJoinsChocolatey.md" />
     <Content Include="Views\Documentation\FeaturesChocolateyCentralManagement.cshtml" />
+    <None Include="Views\Blog\ChocolateyFestReturns2020.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
