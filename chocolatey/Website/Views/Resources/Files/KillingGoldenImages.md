@@ -7,7 +7,7 @@ Company: KS Engineers
 Position: Software Development Engineer
 Video: FNQvvAvoGCI
 Tags: chocolatey-fest 2018
-Image: <img src="/content/images/videos/killing-golden-images.jpg" alt="Killing Golden Images in Your Infrastructure Setups" title="Killing Golden Images in Your Infrastructure Setups" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/killing-golden-images.jpg" alt="Killing Golden Images in Your Infrastructure Setups" title="Killing Golden Images in Your Infrastructure Setups" />
 Summary: This talk will be about common issues with 'drifting state' of development-box setups among larger teams and how Chocolatey can be used to solve those. 
 ---
 "Setting up Windows development boxes has been a quite cumbersome task for way to long. Forget about rotting golden images, finally a sane package manager exists that can give you that Unix-like feeling you've always been missing on Windows." 

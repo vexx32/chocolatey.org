@@ -7,7 +7,7 @@ Company: Qualcomm
 Position: Senior Staff IT Engineer
 Video: R9OClPwBpdk
 Tags: success-story chocolatey-fest 2018
-Image: <img src="/content/images/videos/Qualcomm_Dwight-Bragdon.jpg" alt="Dwight Bragdon at Qualcomm" title="Dwight Bragdon at Qualcomm" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Qualcomm_Dwight-Bragdon.jpg" alt="Dwight Bragdon at Qualcomm" title="Dwight Bragdon at Qualcomm" />
 Quote: The two things I love the most are Package Builder and Package Internalizer. Both have saved us time and effort to bring the tools in to a non-interconnected area.
 Summary: Dwight Bragdon at Qualcomm speaks on Chocolatey
 ---

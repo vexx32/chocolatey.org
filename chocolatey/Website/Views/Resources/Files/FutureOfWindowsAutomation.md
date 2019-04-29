@@ -7,7 +7,7 @@ Company: Chocolatey Software, Inc.
 Position: Founder
 Video: 6PnzlONRYmg
 Tags: chocolatey-fest 2018
-Image: <img src="/content/images/videos/future-of-windows-automation.jpg" alt="The Future of Windows Automation" title="The Future of Windows Automation" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/future-of-windows-automation.jpg" alt="The Future of Windows Automation" title="The Future of Windows Automation" />
 Summary: Chocolatey Founder, Rob Reynolds, talks about the future of Windows Automation.
 ---
 At the end of the day at Chocolatey Fest, Rob turns to a lighthearted closing keynote to close out the conference.

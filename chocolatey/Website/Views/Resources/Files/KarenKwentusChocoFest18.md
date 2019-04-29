@@ -7,7 +7,7 @@ Company: Chef Software
 Position: Sr. Solution Architect
 Video: qhTb13C7dPI
 Tags: chocolatey-fest 2018
-Image: <img src="/content/images/videos/Karen-Kwentus-ChocolateyFest-2018.jpg" alt="Ensuring Compliant, Consistent Systems w/Chef, InSpec, and Chocolatey" title="Ensuring Compliant, Consistent Systems w/Chef, InSpec, and Chocolatey" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Karen-Kwentus-ChocolateyFest-2018.jpg" alt="Ensuring Compliant, Consistent Systems w/Chef, InSpec, and Chocolatey" title="Ensuring Compliant, Consistent Systems w/Chef, InSpec, and Chocolatey" />
 Summary: Karen Kwentus speaks on Chef and Chocolatey.
 ---
 Make the audit status of all your machines an everyday data point available to your InfoSec team. Find out how to implement automated testing of CIS compliance standards as you administrate the desired state of your Windows environments with Chocolatey, InSpec and Chef.

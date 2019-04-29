@@ -6,7 +6,7 @@ Name: Mark Johnson
 Position: Solutions Architect
 Video: 9DyL6tWUiDg
 Tags: chocolatey-fest 2018
-Image: <img src="/content/images/videos/Mark-Johnson-ChocolateyFest-2018.jpg" alt="Provision & Manage Servers w/Otter, DSC, Git, & Chocolatey" title="Provision & Manage Servers w/Otter, DSC, Git, & Chocolatey" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Mark-Johnson-ChocolateyFest-2018.jpg" alt="Provision & Manage Servers w/Otter, DSC, Git, & Chocolatey" title="Provision & Manage Servers w/Otter, DSC, Git, & Chocolatey" />
 Summary: Mark Johnson, Solutions Architect, takes us on a journey through the lifetime of a Chocolatey package across Windows servers in the enterprise.
 ---
 In this session, we will take a journey through the lifetime of a Chocolatey package across Windows servers in the enterprise. Some of the questions we will answer: 

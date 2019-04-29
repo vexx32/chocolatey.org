@@ -7,7 +7,7 @@ Company: Microsoft
 Position: Lead Cloud Ops Advocate,
 Video: Fb_TptmadF8
 Tags: chocolatey-fest 2018
-Image: <img src="/content/images/videos/Steven-Murawski-ChocolateyFest-2018.jpg" alt="Improving Infrastructure Quality" title="Improving Infrastructure Quality" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Steven-Murawski-ChocolateyFest-2018.jpg" alt="Improving Infrastructure Quality" title="Improving Infrastructure Quality" />
 Summary: Steven Murawski speaks on how Test-Kitchen and Pester can help us build quality into our Chocolatey packages, our DSC resources, and our DSC configurations.
 ---
 "You can not inspect quality into a product" - Harold F. Dodge

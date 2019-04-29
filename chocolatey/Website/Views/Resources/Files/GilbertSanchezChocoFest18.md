@@ -7,7 +7,7 @@ Company: Facebook
 Position: "Se&ntilde;or" Systems Engineer
 Video: azP3I5tm3ho
 Tags: chocolatey-fest 2018
-Image: <img src="/content/images/videos/Gilbert-Sanchez-ChocolateyFest-2018.jpg" alt="Maintenance Mode: Leveraging Chef to Schedule Patching, Reboot, etc." title="Maintenance Mode: Leveraging Chef to Schedule Patching, Reboot, etc." />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Gilbert-Sanchez-ChocolateyFest-2018.jpg" alt="Maintenance Mode: Leveraging Chef to Schedule Patching, Reboot, etc." title="Maintenance Mode: Leveraging Chef to Schedule Patching, Reboot, etc." />
 Summary: Hear how Facebook EE (IT) created a source controlled way to schedule service interrupting changes while not impacting business as usual.
 ---
 New choco package requires a reboot? Windows patches overdue? Hear how Facebook EE (IT) created a source controlled way to schedule service interrupting changes while not impacting business as usual.

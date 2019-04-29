@@ -7,7 +7,7 @@ Company: Institute for Advanced Study
 Position: Systems Engineer
 Video: d-1jx5hXtyg
 Tags: featured case-study chocolatey-fest 2018
-Image: <img src="/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever" />
+Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever" />
 Summary: Dan Franciscus talks about how he found Chocolatey and built the processes using just PowerShell to automate 95% of software deployment and upgrades.
 ---
 It is story time! I will tell a story about how I found Chocolatey and built the processes using just PowerShell to automate 95% of our software deployment and upgrades. I will talk about how we internalize, schedule and upgrade all of our software with very little human interaction necessary.
