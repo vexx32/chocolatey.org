@@ -216,6 +216,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.ContactSalesOther, "contact/sales-for-another-organization", new
+                {
+                    controller = "Pages",
+                    Action = "ContactSalesOther"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
                     controller = "Pages",
