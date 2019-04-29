@@ -1194,7 +1194,6 @@
     <Content Include="Content\Images\icons\desktop.png" />
     <Content Include="Content\Images\icons\server.png" />
     <Content Include="Content\Images\icon_slogan.png" />
-    <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
     <Content Include="Content\Images\integrations-mockup.jpg" />
     <Content Include="Content\Images\integration_points-dark.png" />
