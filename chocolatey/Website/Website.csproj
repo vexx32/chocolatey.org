@@ -1274,10 +1274,12 @@
     <Content Include="Content\Images\nothing-50x50.png" />
     <Content Include="Content\Images\nugetlogo.png" />
     <Content Include="Content\Images\nugetLogoFooter.png" />
+    <Content Include="Content\Images\package-source.jpg" />
     <Content Include="Content\Images\packageDefaultIcon-50x50.png" />
     <Content Include="Content\Images\packageDefaultIcon.png" />
     <Content Include="Content\Images\packageOwnerActionIcons.png" />
     <Content Include="Content\Images\packagesDefaultIcon.png" />
+    <Content Include="Content\Images\profile-chocolatey-repository.jpg" />
     <Content Include="Content\Images\rd_logo.png" />
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
@@ -1721,6 +1723,22 @@
     <Content Include="Views\Courses\Installation\_NextUrl.cshtml" />
     <Content Include="Views\Courses\Installation\_Popup.cshtml" />
     <Content Include="Views\Pages\_Courses.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_CourseDescription.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_LeftSideColumn.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_NextUrl.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_Popup.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_ViewStart.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\Home.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\SummaryRulesAndGuidlines.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\AutomaticPackaging.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\BuildingTestingAndPushing.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\InstallingUpgradingAndUninstalling.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\PackageMaintainerHandover.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\NamingDescriptionAndVersioning.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\InternationalizationAndLocalization.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\NugetPackagesAndNuspec.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\Shims.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\ChocoNewCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -67,6 +67,37 @@
                     </div>
                 </div>
             </div>
+            @*Creating Chocolatey Packages*@
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-dark pb-2">
+                        @Html.Partial("~/Views/Courses/CreatingChocolateyPackages/_LeftSideColumn.cshtml")
+                    </div>
+                    <div class="card-body text-center">
+                        <a class="h4 btn-link" href="@Url.RouteUrl(RouteName.CourseName, new {courseName = "creating-chocolatey-packages", courseModuleName = "home"})">@CourseProfileConstants.CreatingChocolateyPackages</a>
+                        <p class="text-muted">10 Topics | 1.5 Hours | <span class="level intermediate">Intermediate</span></p>
+                        <hr />
+                        <p class="text-left">Learn everything you need to know about creating your first Chocolatey Package.</p>
+                    </div>
+                    <div class="card-footer text-center bg-white pt-0">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            foreach (var siteProfile in Model.UserCourseProfiles)
+                            {
+                                if (siteProfile.Name == CourseProfileConstants.CreatingChocolateyPackages && siteProfile.Completed == true)
+                                {
+                                    <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success completed">See Badge <span class="icon-chevron-right"></span></a>
+                                }
+                                else if (siteProfile.Name == CourseProfileConstants.CreatingChocolateyPackages && siteProfile.Completed == false)
+                                {
+                                    <a href="@Url.RouteUrl(RouteName.CourseName, new {courseName = "creating-chocolatey-packages", courseModuleName = "home"})" class="btn btn-success resume">Resume Course <span class="icon-chevron-right"></span></a>
+                                }
+                            }
+                        }
+                        <a href="@Url.RouteUrl(RouteName.CourseName, new {courseName = "creating-chocolatey-packages", courseModuleName = "home"})" class="btn btn-primary start">Start Learning</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

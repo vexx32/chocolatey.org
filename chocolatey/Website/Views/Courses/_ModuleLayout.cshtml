@@ -45,6 +45,10 @@
                             {
                                 <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "installation", courseModuleName = "home" })">Installation</a>
                             }
+                            else if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "creating-chocolatey-packages" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "creating-chocolatey-packages" }) + "?quiz=true")
+                            {
+                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "creating-chocolatey-packages", courseModuleName = "home" })">Creating Chocolatey Packages</a>
+                            }
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
                     </ol>
