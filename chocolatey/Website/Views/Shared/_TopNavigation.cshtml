@@ -244,14 +244,9 @@
     </nav>
     @if (PackageNav)
     {
-        <nav id="secondaryNav" class="navbar bg-white border-bottom">
+    <div id="secondaryNav">
+        <nav class="navbar bg-white border-bottom">
             <ul>
-                <li>
-                    <form class="form-inline" role="search" action="@Url.SearchResults()" method="get">
-                        <input class="form-control search-input w-auto" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
-                        <button class="btn btn-primary btn-search" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." type="submit" value=""><span class="icon-search" alt="Search Packages"></span></button>
-                    </form>
-                </li>
                 <li class="d-none d-sm-flex">
                     <a href="@Url.RouteUrl(RouteName.ListPackages)">
                         <span class="icon-download" alt="Packages"></span>
@@ -260,13 +255,13 @@
                 </li>
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <li class="d-none d-sm-flex">
+                    <li class="">
                         <a href="@Url.Action(MVC.Users.Register())">
                             <span class="icon-user-plus" alt="Signup"></span>
                             <span>Signup</span>
                         </a>
                     </li>
-                    <li class="d-none d-sm-flex">
+                    <li class="">
                         <a href="@Url.LogOn()">
                             <span class="icon-sign-in" alt="Login"></span>
                             <span>Login</span>
@@ -282,13 +277,13 @@
                             <span class="d-none d-lg-block">Moderator Queue</span>
                         </a>
                     </li>
-                    <li class="d-none d-sm-flex">
+                    <li class="">
                         <a href="@Url.Action(MVC.Users.Account())">
                             <span class="icon-user" alt="Account"></span>
                             <span>Account</span>
                         </a>
                     </li>
-                    <li class="d-none d-sm-flex">
+                    <li class="">
                         <a href="@Url.LogOff()">
                             <span class="icon-sign-out" alt="Log Off"></span>
                             <span>Log Off</span>
@@ -297,6 +292,27 @@
                 }
             </ul>
         </nav>
+        <nav class="navbar bg-white border-bottom d-none d-sm-flex">
+            <ul>
+                <li class="d-sm-flex align-items-center">
+                    <span class="status status-sm bg-success"></span>
+                    Passing
+                </li>
+                <li class="d-sm-flex align-items-center">
+                    <span class="status status-sm bg-danger"></span>
+                    Failing
+                </li>
+                <li class="d-sm-flex align-items-center">
+                    <span class="status status-sm bg-warning"></span>
+                    Pending
+                </li>
+                <li class="d-sm-flex align-items-center">
+                    <span class="status status-sm bg-secondary"></span>
+                    Unknown / Exempted
+                </li>
+            </ul>
+        </nav>
+    </div>
     }
     @if (ResourceNav)
     {

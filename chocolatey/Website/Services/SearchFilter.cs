@@ -16,6 +16,8 @@ namespace NuGetGallery
 
         public SortDirection SortDirection { get; set; }
 
+        public SortModeration SortModeration { get; set; }
+
         /// <summary>
         /// Determines if only this is a count only query and does not process the source queryable.
         /// </summary>
@@ -55,5 +57,17 @@ namespace NuGetGallery
     {
         Ascending,
         Descending,
+    }
+
+    public enum SortModeration
+    {
+        AllStatuses,
+        SubmittedStatus,
+        PendingStatus,
+        WaitingStatus,
+        RespondedStatus,
+        ReadyStatus,
+        UpdatedStatus,
+        UnknownStatus,
     }
 }

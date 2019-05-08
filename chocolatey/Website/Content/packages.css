@@ -1,10 +1,6 @@
 ﻿/*Form- Filters on Packages Page*/
-.form-field select {
-    width: 32%;
-}
-.form-field select, .form-field label {
+.form-field label {
     color: #21446d !important;
-    border-color: #5c9fd8;
 }
 /*Search Results: View Documentation*/
 .gsc-control-cse, .gsc-control-cse .gsc-table-result {
@@ -180,9 +176,6 @@ h1 img.package-testing {
 }
 
 @media (min-width: 768px) {
-    .form-field select {
-        width: 225px;
-    }
     #package-sidebar .package-logo {
         max-width: 200px;
     }

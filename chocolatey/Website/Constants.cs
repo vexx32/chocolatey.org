@@ -44,6 +44,15 @@ namespace NuGetGallery
         public const string RecentSortOrder = "package-created";
         public const string RelevanceSortOrder = "relevance";
 
+        public const string SubmittedModerationStatus = "submitted-status";
+        public const string PendingModerationStatus = "pending-status";
+        public const string WaitingModerationStatus = "waiting-status";
+        public const string RespondedModerationStatus = "responded-status";
+        public const string ReadyModerationStatus = "ready-status";
+        public const string UpdatedModerationStatus = "updated-status";
+        public const string UnknownModerationStatus = "unknown-status";
+        public const string AllModerationStatuses = "all-statuses";
+
         public const string Sha1HashAlgorithmId = "SHA1";
         public const string Sha512HashAlgorithmId = "SHA512";
         public const string PBKDF2HashAlgorithmId = "PBKDF2";

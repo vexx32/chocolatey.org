@@ -38,7 +38,8 @@ namespace NuGetGallery
             int updatedCount,
             int submittedCount,
             int waitingCount,
-            int respondedCount)
+            int respondedCount,
+            string moderationStatus)
         {
             // TODO: Implement actual sorting
             IEnumerable<ListPackageItemViewModel> items;
@@ -52,6 +53,7 @@ namespace NuGetGallery
             PageSize = pageSize;
             TotalCount = totalCount;
             SortOrder = sortOrder;
+            ModerationStatus = moderationStatus;
             SearchTerm = searchTerm;
             int pageCount = (TotalCount + PageSize - 1) / PageSize;
 
@@ -59,7 +61,7 @@ namespace NuGetGallery
                 items,
                 PageIndex,
                 pageCount,
-                page => url.PackageList(page, sortOrder, searchTerm, includePrerelease, moderatorQueue)
+                page => url.PackageList(page, sortOrder, searchTerm, includePrerelease, moderatorQueue, moderationStatus)
                 );
             Items = pager.Items;
             FirstResultIndex = 1 + (PageIndex * PageSize);
@@ -86,6 +88,8 @@ namespace NuGetGallery
         public string SearchTerm { get; private set; }
 
         public string SortOrder { get; private set; }
+
+        public string ModerationStatus { get; private set; }
 
         public int PageIndex { get; private set; }
 

@@ -1,4 +1,5 @@
 ﻿@model PackageListViewModel
+@using NuGetGallery
 @{
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Packages";
@@ -12,9 +13,11 @@
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
+
+    var currentUrl = Request.Url.AbsoluteUri;
 }
 
-<section class="container py-5">
+<section class="container py-3 py-md-5">
     @if (!User.Identity.IsAuthenticated)
     {
         <div class="row">
@@ -26,93 +29,197 @@
         </div>
         @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
     }
-    <div class="row">
-        <div class="col-12">
+    <div class="d-xl-flex align-items-xl-center justify-content-xl-between">
+        <div>
             @if (!String.IsNullOrEmpty(Model.SearchTerm))
             {
-                <h1>
-                    Search for "@Model.SearchTerm" returned @Model.TotalCount @if (Model.TotalCount == 1)
-                    {<text>package</text> }
-                else
-                { <text>packages</text>}
-                </h1>
+                <h2 class="mb-0">
+                    Search for "@Model.SearchTerm" Returned @Model.TotalCount
+                    @if (Model.TotalCount == 1)
+                    {<text>Package</text>}
+                    else
+                    {<text>Packages</text>}
+                </h2>
             }
             else
             {
                 if (moderationQueue)
                 {
-                    <h1>
-                        @if (Model.TotalCount == 1)
-                        {<text>There is @moderationCount package in moderation</text> }
+                    if (currentUrl.ToLower().Contains("pending-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Pending Packages in Moderation</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Pending Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Pending Packages in Moderation</text>}
+                        </h2>
+                    }
+                    else if (currentUrl.ToLower().Contains("updated-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Updated Packages in Moderation</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Updated Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Updated Packages in Moderation</text>}
+                        </h2>
+                    }
+                    else if (currentUrl.ToLower().Contains("waiting-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Waiting Packages in Moderation</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Waiting Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Waiting Packages in Moderation</text>}
+                        </h2>
+                    }
+                    else if (currentUrl.ToLower().Contains("responded-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Responded Packages in Moderation</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Responded Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Responded Packages in Moderation</text>}
+                        </h2>
+                    }
+                    else if (currentUrl.ToLower().Contains("ready-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Ready Packages in Moderation</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Ready Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Ready Packages in Moderation</text>}
+                        </h2>
+                    }
+                    else if (currentUrl.ToLower().Contains("unknown-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Unknown Packages</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Unknown Package</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Unknown Packages</text>}
+                        </h2>
+                    }
+                    else if (currentUrl.ToLower().Contains("submitted-status"))
+                    {
+                        <h2 class="mb-0">
+                            @if (@Model.LastResultIndex < 1)
+                            {<text>There are 0 Submitted Packages in Moderation</text>}
+                            else if (@Model.LastResultIndex == 1)
+                            {<text>There is @Model.LastResultIndex Submitted Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Submitted Packages in Moderation</text>}
+                        </h2>
+                    }
                     else
-                    { <text>There are @moderationCount packages in moderation</text>}
-                    </h1>
-                    <h2>@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h2>
+                    {
+                        <h2>
+                            @if (Model.TotalCount == 1)
+                            {<text>There is @moderationCount Package in Moderation</text>}
+                            else
+                            {<text>There are @moderationCount Packages in Moderation</text>}
+                        </h2>
+                        <h5 class="mb-xl-0">@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h5>
+                    }
+
                 }
                 else
                 {
-                    <h1>
+                    <h2 class="mb-0">
                         @if (Model.TotalCount == 1)
-                        {<text>There is @Model.TotalCount community maintained package</text> }
-                    else
-                    { <text>There are @Model.TotalCount community maintained packages</text>}
-                    </h1>
+                        {<text>There is @Model.TotalCount Community Maintained Package</text>}
+                        else
+                        {<text>There are @Model.TotalCount Community Maintained Packages</text>}
+                    </h2>
                 }
 
             }
         </div>
-        <div class="col-xl-4">
-            @if (@Model.LastResultIndex > 0)
-            {
-                <h3 class="mb-0">Displaying results @Model.FirstResultIndex - @Model.LastResultIndex.</h3>
-            }
-            <div class="d-flex small">
-                <div class="d-flex align-items-center mr-2">
-                    <div class="status status-sm bg-success"></div>
-                    Passing
-                </div>
-                <div class="d-flex align-items-center mr-2">
-                    <div class="status status-sm bg-danger"></div>
-                    Failing
-                </div>
-                <div class="d-flex align-items-center mr-2">
-                    <div class="status status-sm bg-warning"></div>
-                    Pending
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="status status-sm bg-secondary"></div>
-                    Unknown / Exempted
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-8">
-            <form method="get" action="">
-                <fieldset class="form search mt-3 text-center text-xl-right">
-                    <legend class="d-none">Sort Order</legend>
-                    <input type="hidden" name="q" value="@Model.SearchTerm" />
-                    <div class="form-field">
-                        <select class="rounded" name="moderatorQueue" id="moderatorQueue" aria-label="Sort by Normal View or Moderator Queue">
-                            @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
-                            @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
-                        </select>
-
-                        <select class="rounded" name="prerelease" id="prerelease" aria-label="Sort by the inclusion of Prerelease Packages">
-                            @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
-                            @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
-                        </select>
-
-                        <label class="d-none d-lg-inline-block mb-0" for="sortOrder">Sort By</label>
-                        <select class="rounded" name="sortOrder" id="sortOrder" aria-label="Sort Order">
-                            @if (!Model.SearchTerm.IsEmpty())
-                            {
-                                @ViewHelpers.Option(Constants.RelevanceSortOrder, "Relevance", Model.SortOrder)
-                            }
-                            @ViewHelpers.Option(Constants.PopularitySortOrder, "Popularity", Model.SortOrder)
-                            @ViewHelpers.Option(Constants.AlphabeticSortOrder, "A-Z", Model.SortOrder)
-                            @ViewHelpers.Option(Constants.RecentSortOrder, "Recent", Model.SortOrder)
-                        </select>
+        @if (@Model.LastResultIndex > 0)
+        {
+            <p class="mb-0">Displaying Results @Model.FirstResultIndex - @Model.LastResultIndex</p>
+        }
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-8 col-xl-9">
+            <nav class="navbar navbar-expand-sm p-0">
+                <button class="btn btn-primary w-100 d-sm-none" type="button" data-toggle="collapse" data-target="#search-filters" aria-controls="search filters" aria-expanded="false" aria-label="Toggle Search Filters">View Search Filters</button>
+                <div class="collapse navbar-collapse" id="search-filters">
+                    <div class="navbar-nav d-block w-100 mt-3 mt-sm-0">
+                        <form method="get" action="">
+                            <fieldset class="form search">
+                                <input type="hidden" name="q" value="@Model.SearchTerm" />
+                                <div class="form-row align-items-center">
+                                    <div class="col-sm mb-2 mb-sm-0">
+                                        <select class="form-control" name="moderatorQueue" id="moderatorQueue" aria-label="Sort by Normal View or Moderator Queue">
+                                            @ViewHelpers.Option("", "Normal View", Model.ModeratorQueue)
+                                            @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
+                                        </select>
+                                    </div>
+                                    @if (moderationQueue == true)
+                                    {
+                                        <div class="col-sm mb-2 mb-sm-0">
+                                            <select class="form-control" name="moderationStatus" id="moderationStatus" aria-label="Moderation Sort Order">
+                                                @ViewHelpers.Option(Constants.AllModerationStatuses, "All Moderation Statuses", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.SubmittedModerationStatus, "Submitted", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.UpdatedModerationStatus, "Updated", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.PendingModerationStatus, "Pending", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.WaitingModerationStatus, "Waiting", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.RespondedModerationStatus, "Responded", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.ReadyModerationStatus, "Ready", Model.ModerationStatus)
+                                                @ViewHelpers.Option(Constants.UnknownModerationStatus, "Unknown", Model.ModerationStatus)
+                                            </select>
+                                        </div>
+                                    }
+                                    <div class="col-sm mb-2 mb-sm-0">
+                                        <select class="form-control" name="prerelease" id="prerelease" aria-label="Sort by the inclusion of Prerelease Packages">
+                                            @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
+                                            @ViewHelpers.Option("true", "Include Prerelease", Model.IncludePrerelease)
+                                        </select>
+                                    </div>
+                                    <div class="col-sm mb-2 mb-sm-0">
+                                        <select class="form-control" name="sortOrder" id="sortOrder" aria-label="Sort Order">
+                                            @if (!Model.SearchTerm.IsEmpty())
+                                            {
+                                                @ViewHelpers.Option(Constants.RelevanceSortOrder, "Relevance", Model.SortOrder)
+                                            }
+                                            @ViewHelpers.Option(Constants.PopularitySortOrder, "Popularity", Model.SortOrder)
+                                            @ViewHelpers.Option(Constants.AlphabeticSortOrder, "A-Z", Model.SortOrder)
+                                            @ViewHelpers.Option(Constants.RecentSortOrder, "Recent", Model.SortOrder)
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm text-sm-right text-lg-left">
+                                        <a href="@Url.RouteUrl(RouteName.ListPackages)" class="btn btn-outline-primary"><span class="icon-refresh"></span><span class="d-sm-none d-md-inline-block ml-2 ml-sm-0 ml-md-2">Reset Filters</span></a>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
                     </div>
-                </fieldset>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-4 col-xl-3 mt-2 mt-lg-0">
+            <form class="form-inline justify-content-center justify-content-lg-end" role="search" action="@Url.SearchResults()" method="get">
+                <div class="input-group w-100">
+                    <input class="form-control" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
+                    <div class="input-group-append">
+                        <button class="input-group-text bg-primary" type="submit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." value="">
+                            <span class="icon-search" alt="Search Packages"></span>
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -124,11 +231,11 @@
         <form style="border:0px solid #ccc;padding:1px;text-align:center;" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=chocolatey', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input type="hidden" value="chocolatey" name="uri" /><input type="hidden" name="loc" value="en_US" />Or subcribe by <input type="submit" value="email" /></form>
     </div>
 </div>*@
-<section id="package" class="container pb-5">
+<section id="package" class="container pb-3 pg-lg-5">
     <div class="row">
         @foreach (var package in Model.Items)
         {
-             @Html.Partial(MVC.Packages.Views._ListPackage, package)
+            @Html.Partial(MVC.Packages.Views._ListPackage, package)
         }
     </div>
     <div class="row">
@@ -142,7 +249,7 @@
 {
     <script>
         $(function () {
-            $("#sortOrder,#prerelease,#moderatorQueue").change(function () {
+            $("#sortOrder,#prerelease,#moderatorQueue,#moderationStatus").change(function () {
                 $(this).closest("form").submit();
             });
             Closeable.modal("chocolatey_hide_packages_disclaimer");

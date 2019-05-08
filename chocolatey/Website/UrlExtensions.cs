@@ -42,9 +42,9 @@ namespace NuGetGallery
         }
 
         public static string PackageList(
-            this UrlHelper url, int page, string sortOrder, string searchTerm, bool prerelease, bool moderatorQueue)
+            this UrlHelper url, int page, string sortOrder, string searchTerm, bool prerelease, bool moderatorQueue, string moderationStatus)
         {
-            return url.Action(MVC.Packages.ListPackages(searchTerm, sortOrder, page, prerelease, moderatorQueue));
+            return url.Action(MVC.Packages.ListPackages(searchTerm, sortOrder, page, prerelease, moderatorQueue, moderationStatus));
         }
 
         public static string PackageList(this UrlHelper url)
