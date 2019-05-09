@@ -1174,8 +1174,6 @@
     <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
     <Content Include="Content\Images\greenArrow.png" />
-    <Content Include="Content\Images\green_ball_48.png" />
-    <Content Include="Content\Images\grey_ball_48.png" />
     <Content Include="Content\Images\gui.png" />
     <Content Include="Content\Images\ChocolateyGUI_main_screen.png" />
     <Content Include="Content\Images\headerbackground.png" />
@@ -1231,7 +1229,6 @@
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
-    <Content Include="Content\Images\red_ball_48.png" />
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
@@ -1278,7 +1275,6 @@
     <Content Include="Content\Images\videos\Yelp-ChocolateyFest-2018.jpg" />
     <Content Include="Content\Images\videos\Yelp_Ryan-de-Temple.jpg" />
     <Content Include="Content\Images\xmark.png" />
-    <Content Include="Content\Images\yellow_ball_48.png" />
     <Content Include="Content\Images\YourPackage.png" />
     <Content Include="Content\packages.css" />
     <Content Include="Content\pages.css" />
@@ -1317,6 +1313,7 @@
     <Content Include="Content\scss\_courses.scss" />
     <Content Include="Content\scss\_cards.scss" />
     <Content Include="Content\scss\_tabs.scss" />
+    <Content Include="Content\scss\_status-icons.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

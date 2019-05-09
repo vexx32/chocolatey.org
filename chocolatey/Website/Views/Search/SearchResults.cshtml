@@ -48,12 +48,24 @@
                     {
                         <h3 class="mb-0">Displaying results @Model.FirstResultIndex - @Model.LastResultIndex.</h3>
                     }
-                    <ul class="list-unstyled list-inline mb-0">
-                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/grey_ball_48.png")" title="This package is exempted from verification. Please see reason below." /> Unknown/Exempt</li>
-                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /> Invalid</li>
-                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" /> Pending</li>
-                        <li class="list-inline-item small"><img class="package-testing" src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /> Passing</li>
-                    </ul>
+                    <div class="d-flex small">
+                        <div class="d-flex align-items-center mr-2">
+                            <div class="status status-sm bg-success"></div>
+                            Passing
+                        </div>
+                        <div class="d-flex align-items-center mr-2">
+                            <div class="status status-sm bg-danger"></div>
+                            Failing
+                        </div>
+                        <div class="d-flex align-items-center mr-2">
+                            <div class="status status-sm bg-warning"></div>
+                            Pending
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="status status-sm bg-secondary"></div>
+                            Unknown / Exempted
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xl-8">
                     <form method="get" action="">

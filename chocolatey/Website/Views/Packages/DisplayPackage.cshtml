@@ -82,7 +82,15 @@
             }
         }
     }
+
+    var testingStatusPassing = Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing;
+    var testingStatusFailing = Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing;
+    var testingStatusPending = Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending;
+    var testingStatusUnknown = Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Unknown;
+    var testingStatusExempt = Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted;
+    var testingStatusWarning = Model.PackageTestResultsStatus != Model.PackageValidationResultStatus;
 }
+
 @section ExtraHeaders {
     @if (Model.Status == PackageStatusType.Rejected)
     {
@@ -97,7 +105,7 @@
     <div id="shadow"></div>
     <div id="shape"></div>
 </div>
-<section class="container py-3 py-md-5">
+<section class="container py-3 py-lg-5">
     <div id="package-sidebar" class="row">
         @*Desktop Sidebar*@
         <div class="col-md-3 col-xl-2 d-none d-md-block">
@@ -207,24 +215,12 @@
                 <p class="text-center mb-0"><strong>(@packageStatus)</strong></p>
             }
             <div class="justify-content-center align-items-center d-flex">
-                @switch (Model.PackageTestResultsStatus)
-                {
-                    case PackageAutomatedReviewResultStatusType.Unknown:
-                        <img class="package-testing mr-2" src="@Url.Content("~/content/images/grey_ball_48.png")" title="There are no package test results for this package" alt="There are no package test results for this package" />
-                        break;
-                    case PackageAutomatedReviewResultStatusType.Pending:
-                        <img class="package-testing mr-2" src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" />
-                        break;
-                    case PackageAutomatedReviewResultStatusType.Failing:
-                        <a href="@Model.PackageTestResultsUrl"><img class="package-testing mr-2" src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /></a>
-                        break;
-                    case PackageAutomatedReviewResultStatusType.Passing:
-                        <a href="@Model.PackageTestResultsUrl"><img class="package-testing mr-2" src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /></a>
-                        break;
-                    case PackageAutomatedReviewResultStatusType.Exempted:
-                        <img class="package-testing mr-2" src="@Url.Content("~/content/images/grey_ball_48.png")" title="This package is exempted from verification. Please see reason below." alt="This package is exempted from verification. Please see reason below." />
-                        break;
-                }
+                <div class="d-flex">
+                    <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="#status"  title="Click to view test results">
+                        <span class="@Model.PackageTestResultsStatus"></span>
+                        <span class="@Model.PackageValidationResultStatus"></span>
+                    </a>
+                </div>
                 @if (Model.Status != PackageStatusType.Rejected)
                 {
                     <p title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;" class="mb-0">@Model.Version | <strong>Updated: </strong>@Model.PublishedDate.ToShortDateString()</p>
@@ -379,24 +375,12 @@
             <div class="row">
                 <div class="col-12 mb-3 d-none d-md-block">
                     <h1 class="justify-content-center align-items-center d-flex mb-0" title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">
-                        @switch (Model.PackageTestResultsStatus)
-                        {
-                            case PackageAutomatedReviewResultStatusType.Unknown:
-                                <img class="package-testing mr-2" src="@Url.Content("~/content/images/grey_ball_48.png")" title="There are no package test results for this package" alt="There are no package test results for this package" />
-                                break;
-                            case PackageAutomatedReviewResultStatusType.Pending:
-                                <img class="package-testing mr-2" src="@Url.Content("~/content/images/yellow_ball_48.png")" title="Package test results are pending" alt="Package test results are pending" />
-                                break;
-                            case PackageAutomatedReviewResultStatusType.Failing:
-                                <a href="@Model.PackageTestResultsUrl"><img class="package-testing mr-2" src="@Url.Content("~/content/images/red_ball_48.png")" title="Package test results have failed. Follow the link for more information." alt="Package test results have failed." /></a>
-                                break;
-                            case PackageAutomatedReviewResultStatusType.Passing:
-                                <a href="@Model.PackageTestResultsUrl"><img class="package-testing mr-2" src="@Url.Content("~/content/images/green_ball_48.png")" title="Package test results are passing. Follow the link for more information." alt="Package test results are passing." /></a>
-                                break;
-                            case PackageAutomatedReviewResultStatusType.Exempted:
-                                <img class="package-testing mr-2" src="@Url.Content("~/content/images/grey_ball_48.png")" title="This package is exempted from verification. Please see reason below." alt="This package is exempted from verification. Please see reason below." />
-                                break;
-                        }
+                        <span class="d-flex">
+                            <a class="status" href="#status" title="Click to view test results">
+                                <span class="@Model.PackageTestResultsStatus"></span>
+                                <span class="@Model.PackageValidationResultStatus"></span>
+                            </a>
+                        </span>
                         @Model.Title
                         @if (Model.Status != PackageStatusType.Rejected)
                         {
@@ -424,6 +408,118 @@
                     }
                 </div>
             </div>
+            @* Pass/Fail Statuses *@
+            <div id="status" class="row">
+                <div class="col-12">
+                    <div class="callout p-0 @if(testingStatusWarning || testingStatusPending){<text>callout-warning</text>}else if(testingStatusPassing){<text>callout-success</text>}else if(testingStatusFailing){<text>callout-danger</text>}else if(testingStatusUnknown || testingStatusExempt){<text>callout-secondary</text>}">
+                        <div class="d-flex justify-content-between p-3">
+                            <div class="d-flex">
+                                <div class="d-flex">
+                                    <span class="status">
+                                        <span class="@Model.PackageTestResultsStatus"></span>
+                                        <span class="@Model.PackageValidationResultStatus"></span>
+                                    </span>
+                                </div>
+                                <div>
+                                    @if (testingStatusWarning)
+                                    {
+                                        <h3>Some Checks Have Failed or Are Not Yet Complete</h3>
+                                        <p>1 @Model.PackageTestResultsStatus Test and 1 @Model.PackageValidationResultStatus Test</p>
+                                    }
+                                    else if (testingStatusPassing)
+                                    {
+                                        <h3 class="text-success">All Checks are Passing</h3>
+                                        <p>2 Passing Test</p>
+                                    }
+                                    else if (testingStatusFailing)
+                                    {
+                                        <h3 class="text-danger">All Checks are Failing</h3>
+                                        <p>2 Failing Test</p>
+                                    }
+                                    else if (testingStatusPending)
+                                    {
+                                        <h3 class="text-warning">All Checks are Pending</h3>
+                                        <p>2 Pending Test</p>
+                                    }
+                                    else if (testingStatusUnknown)
+                                    {
+                                        <h3 class="text-secondary">All Checks are Unknown</h3>
+                                        <p>2 Test of Unknown Status</p>
+                                    }
+                                    else if (testingStatusExempt)
+                                    {
+                                        <h3 class="text-secondary">This Package is Exempt from Testing</h3>
+                                        <p>2 Exempt Test</p>
+                                    }
+                                </div>
+                            </div>
+                            <div class="d-none d-xl-block">
+                                <a class="@if(!testingStatusPassing){<text>collapse show</text>}else{<text>collapsed</text>} btn btn-sm btn-secondary" data-toggle="collapse" href="#testingResults" role="button" aria-expanded="true" aria-controls="testing results" title="Testing Results">@if(!testingStatusPassing){<text>Hide Checks</text>}else{<text>Show Checks</text>}</a>
+                            </div>
+                        </div>
+                        <div class="px-3 pb-3 d-xl-none">
+                            <a class="@if(!testingStatusPassing){<text>collapse show</text>}else{<text>collapsed</text>} btn btn-sm btn-secondary" data-toggle="collapse" href="#testingResults" role="button" aria-expanded="true" aria-controls="testing results" title="Testing Results">@if(!testingStatusPassing){<text>Hide Checks</text>}else{<text>Show Checks</text>}</a>
+                        </div>
+                        <div class="collapse @if(!testingStatusPassing){<text>show</text>}" id="testingResults">
+                            <hr class="mt-0" />
+                            @*Verification*@
+                            <div class="d-flex @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>justify-content-between</text>} px-3">
+                                @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
+                                {
+                                    <p class="mb-0"><span class="icon-times text-danger mr-3"></span> Verification Testing Failed</p>
+                                    <a href="@Model.PackageTestResultsUrl" target="_blank" rel="noreferrer">Details</a>
+                                }
+                                @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing)
+                                {
+                                    <p class="mb-0"><span class="icon-check text-success mr-3"></span> Verification Testing Passed</p>
+                                    <a href="@Model.PackageTestResultsUrl" target="_blank" rel="noreferrer">Details</a>
+                                }
+                                @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending)
+                                {
+                                    <p class="mb-0"><span class="icon-clock text-warning mr-3"></span> Verification Testing Pending</p>
+                                }
+                                @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown)
+                                {
+                                    <p class="mb-0"><span class="icon-question text-secondary mr-3"></span> Verification Testing Unknown</p>
+                                }
+                                @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted)
+                                {
+                                    <span class="icon-ban text-secondary mr-3"></span>
+                                    <div>
+                                        <p class="mb-0">Verification Testing Exempt:</p>
+                                        @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_html()))
+                                    </div>
+                                }
+                            </div>
+                            <hr />
+                            @*Validation*@
+                            <div class="px-3 pb-3">
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
+                                {
+                                    <p class="mb-0"><span class="icon-times text-danger mr-3"></span> Validation Testing Failed</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing)
+                                {
+                                    <p class="mb-0"><span class="icon-check text-success mr-3"></span> Validation Testing Passed</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending)
+                                {
+                                    <p class="mb-0"><span class="icon-clock text-warning mr-3"></span> Validation Testing Pending</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Unknown)
+                                {
+                                    <p class="mb-0"><span class="icon-question text-secondary mr-3"></span> Validation Testing Unknown</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted)
+                                {
+                                    <p class="mb-0"><span class="icon-ban text-secondary mr-3"></span> Validation Testing Exempt</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Install Tabs *@
             @if (Model.Title != "Chocolatey")
             {
                 if (Model.Listed || anyPackageRole && Model.Status != PackageStatusType.Rejected)
@@ -443,7 +539,7 @@
                             </ul>
                             <div class="tab-content bg-white p-3 shadow-sm mb-3 position-relative">
                                 <div class="tab-pane fade show active" id="install" role="tabpanel" aria-labelledby="install-tab">
-	                            <p class="mb-3">To install @Model.Title, run the following command from the command line or from PowerShell:</p>
+                                    <p class="mb-3">To install @Model.Title, run the following command from the command line or from PowerShell:</p>
                                     <div class="input-group copyBox">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">></div>
@@ -460,9 +556,10 @@
                                                     data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                     <i class="icon-clipboard" aria-hidden="true">
                                                         <span class="sr-only">
-                                                        Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                                        {<text> --version @Model.Version</text>} @if (Model.Prerelease)
-                                                        {<text> --pre </text>} to Clipboard</span>
+                                                            Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                                                            {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                                            {<text> --pre </text>} to Clipboard
+                                                        </span>
                                                     </i>
                                             </button>
                                         </div>
@@ -477,7 +574,7 @@
                                         </div>
                                         <input type="text" class="form-control"
                                                value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
-                                               aria-label="Upgrade @Model.Title command" 
+                                               aria-label="Upgrade @Model.Title command"
                                                readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary tt"
@@ -504,7 +601,7 @@
                                         </div>
                                         <input type="text" class="form-control"
                                                value="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
-                                               aria-label="Uninstall @Model.Title command" 
+                                               aria-label="Uninstall @Model.Title command"
                                                readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary tt"
@@ -539,7 +636,7 @@
                         </div>
                         <input type="text" class="form-control"
                                value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
-                               aria-label="Upgrade @Model.Title command" 
+                               aria-label="Upgrade @Model.Title command"
                                readonly>
                         <div class="input-group-append">
                             <button class="btn btn-primary tt"
@@ -599,13 +696,6 @@
                             <p>There are versions of this package awaiting moderation @(Model.Status == PackageStatusType.Submitted ? "(possibly just this one)" : string.Empty). See the <a href="#versionhistory">Version History section</a> below.</p>
                         </div>
                     }
-                    @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted)
-                    {
-                        <div class="callout callout-warning">
-                            <p>This package skips automatic verification:</p>
-                            @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_html()))
-                        </div>
-                    }
                     @if (Model.Status == PackageStatusType.Rejected)
                     {
                         <div class="callout callout-danger">
@@ -621,28 +711,24 @@
                                 You can see the package because you are one of its maintainers. You should have received an email about moderation. If you need to update/respond to the package review, please do so in the form below. If you need to contact the moderators for other reasons, feel free to respond to the email you received.
                                 If you have not received that email, please <a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Admins">contact Site Admins</a>.
                             </p>
-                        </div>
-                        if (moderationRoleAndMaintaner)
-                        {
-                            <div class="callout callout-danger">
+                            @if (moderationRoleAndMaintaner)
+                            {
                                 <p>Since you are a maintainer of this package, you are not able to review it.</p>
-                            </div>
-                        }
+                            }
+                        </div>
                     }
                     else if (maintainer && !Model.Listed)
                     {
                         <div class="callout callout-warning">
-                            <p>
-                                This package is unlisted and hidden from package listings.
-                                You can see the package because you are one of its maintainers. To list the package
-                                again, <a href="@Url.DeletePackage(Model)">change its listing setting</a> (does not apply to unapproved packages).
-                            </p>
+                            This package is unlisted and hidden from package listings.
+                            You can see the package because you are one of its maintainers. To list the package
+                            again, <a href="@Url.DeletePackage(Model)">change its listing setting</a> (does not apply to unapproved packages).
                         </div>
                     }
                     else if (!Model.Listed && Model.Status != PackageStatusType.Submitted)
                     {
                         <div class="callout callout-warning">
-                            <p>This package is unlisted and hidden from package listings.</p>
+                            This package is unlisted and hidden from package listings.
                         </div>
                     }
                     @* Maintainers always see the review comments *@
@@ -661,7 +747,7 @@
                     @if (Model.Listed && Model.Status == PackageStatusType.Exempted)
                     {
                         <div class="callout callout-danger">
-                            <p>This package is exempt from moderation. While it is likely safe for you, there is more risk involved.</p>
+                            This package is exempt from moderation. While it is likely safe for you, there is more risk involved.
                         </div>
                     }
                     @if (Model.Status == PackageStatusType.Submitted && !anyPackageRole)
@@ -671,7 +757,7 @@
 
                             @*Not logged in moderator que*@
                             <div class="alert alert-primary text-center mb-0 font-weight-bold btn-load-more border-0">
-                                Click to view older comments
+                                Click to View Older Comments
                             </div>
                             <div class="bg-white shadow-sm p-3 mb-3">
                                 <div style="max-height: 900px; overflow: auto;">
@@ -707,10 +793,10 @@
                                         }
                                         else
                                         {
-                                            <button class="btn btn-secondary d-flex mx-auto mt-3" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Show Package Review</button>
+                                            <button class="btn btn-secondary d-flex mx-auto mt-3" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Hide Package Review</button>
                                         }
                                     }
-                                    <div class="collapse @if (anyPackageRole && Model.Status != PackageStatusType.Approved) {<text>d-block</text>} " id="add-comment">
+                                    <div class="collapse @if (anyPackageRole && Model.Status != PackageStatusType.Approved) {<text>show</text>} " id="add-comment">
                                         @if (moderationRole)
                                         {
                                             <hr />
@@ -777,17 +863,17 @@
                                                 {
                                                     <div class="form-field">
                                                         <input id="RerunTests" name="RerunTests" type="checkbox" value="true" />
-                           				                <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun verification tests?</label>
+                                                        <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun verification tests?</label>
                                                     </div>
                                                 }
 
                                                 @if (moderator && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
                                                 {
-                        			                <div class="form-field">
-                            				            <input id="RerunValidation" name="RerunValidation" type="checkbox" value="true" />
-                            				            <label for="RerunValidation" class="for-checkbox" title="Rerun package validation tests.">Rerun validation tests?</label>
-                        			                </div>
-                        			                <div class="form-field">
+                                                    <div class="form-field">
+                                                        <input id="RerunValidation" name="RerunValidation" type="checkbox" value="true" />
+                                                        <label for="RerunValidation" class="for-checkbox" title="Rerun package validation tests.">Rerun validation tests?</label>
+                                                    </div>
+                                                    <div class="form-field">
                                                         <input id="OverrideValidation" name="OverrideValidation" type="checkbox" value="true" />
                                                         <label for="OverrideValidation" class="for-checkbox" title="Override package validation failures and run tests.">Override validation errors?</label>
                                                     </div>

@@ -5,21 +5,6 @@
 
     var submittedStatus = Model.SubmittedStatus;
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
-
-    var ballImageUrl = "~/content/images/grey_ball_48.png";
-    switch (Model.PackageTestResultsStatus)
-    {
-        case PackageAutomatedReviewResultStatusType.Pending:
-            ballImageUrl = "~/content/images/yellow_ball_48.png";
-            break;
-        case PackageAutomatedReviewResultStatusType.Failing:
-            ballImageUrl = "~/content/images/red_ball_48.png";
-            break;
-        case PackageAutomatedReviewResultStatusType.Passing:
-            ballImageUrl = "~/content/images/green_ball_48.png";
-            break;
-    }
-
 }
 
 <div class="col-lg-6 col-xl-4 mb-4">
@@ -42,7 +27,7 @@
                         <span>Ready</span>
                         break;
                     case PackageSubmittedStatusType.Updated:
-                        <span>Updated</span>
+                        <span class="mr-2">Updated</span>
                         @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                         break;
                     case PackageSubmittedStatusType.Responded:
@@ -51,7 +36,6 @@
                         {
                             @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
                         }
-
                         break;
                     default:
                         <span class="mr-2">Waiting for Maintainer</span>
@@ -65,7 +49,13 @@
                 <img class="mr-3" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" height="50" width="50" />
                 <div>
                     <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h3 text-dark mb-0 btn-link">@Model.Title</a>
-                    <p class="m-0"><img class="mr-1" src="@Url.Content(ballImageUrl)" title="Package testing. See package page for more details." alt="Package testing. See package page for more details." height="15" width="15" /><strong>@Model.Version</strong></p>
+                    <div class="d-flex align-items-center">
+                        <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)#status"  title="Click to view test results">
+                            <span class="@Model.PackageTestResultsStatus"></span>
+                            <span class="@Model.PackageValidationResultStatus"></span>
+                        </a>
+                        <p><strong>@Model.Version</strong></p>
+                    </div>
                 </div>
             </div>
             <div>
