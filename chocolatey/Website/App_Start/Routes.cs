@@ -501,8 +501,8 @@ namespace NuGetGallery
             routes.MapRouteSeo(
                 "Search", "search", new
                 {
-                    controller = "Search",
-                    Action = "DoSearch"
+                    controller = "Packages",
+                    Action = "ListPackages"
                 });
 
             routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());
