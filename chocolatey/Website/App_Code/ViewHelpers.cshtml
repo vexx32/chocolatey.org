@@ -11,21 +11,25 @@
 
 @helper PreviousNextPager(IPreviousNextPager pager) {
     if (pager.HasNextPage || pager.HasPreviousPage) {
-        <ul class="pager mt-3 mb-0 p-0 list-unstyled text-center h3 list-inline">
+        <ul class="pager mt-3 mb-0 p-0 list-unstyled text-center h5 list-inline">
             <li class="previous list-inline-item pr-3 mr-0">
-                @if (pager.HasPreviousPage) { 
+                @if (pager.HasPreviousPage)
+                {
                     <a href="@pager.PreviousPageUrl" title="Go to the previous page.">Previous</a>
                 }
-                else {
-                    <text>Previous</text>
+                else
+                {
+                    <span class="text-muted" title="No previous pages.">Previous</span>
                 }
             </li>
             <li class="next list-inline-item pl-2">
-                @if (pager.HasNextPage) { 
+                @if (pager.HasNextPage)
+                {
                     <a href="@pager.NextPageUrl" title="Go to the next page.">Next</a>
                 }
-                else {
-                    <text>Next</text>
+                else
+                {
+                    <span class="text-muted" title="No further pages">Next</span>
                 }
             </li>
         </ul>

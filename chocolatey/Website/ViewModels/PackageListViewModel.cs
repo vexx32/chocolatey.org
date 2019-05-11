@@ -63,10 +63,19 @@ namespace NuGetGallery
                 pageCount,
                 page => url.PackageList(page, sortOrder, searchTerm, includePrerelease, moderatorQueue, moderationStatus)
                 );
+
+            var pagerSearch = new PreviousNextPagerViewModel<ListPackageItemViewModel>(
+                items,
+                PageIndex,
+                pageCount,
+                page => url.SearchResults(page, sortOrder, searchTerm, includePrerelease, moderatorQueue, moderationStatus)
+                );
+
             Items = pager.Items;
             FirstResultIndex = 1 + (PageIndex * PageSize);
             LastResultIndex = FirstResultIndex + Items.Count() - 1;
             Pager = pager;
+            PagerSearch = pagerSearch;
             IncludePrerelease = includePrerelease ? "true" : null;
             ModeratorQueue = moderatorQueue ? "true" : null;
             ModerationUpdatedPackageCount = updatedCount;
@@ -82,6 +91,8 @@ namespace NuGetGallery
         public int LastResultIndex { get; set; }
 
         public IPreviousNextPager Pager { get; private set; }
+
+        public IPreviousNextPager PagerSearch { get; private set; }
 
         public int TotalCount { get; private set; }
 

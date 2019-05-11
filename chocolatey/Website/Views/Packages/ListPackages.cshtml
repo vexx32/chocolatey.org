@@ -260,11 +260,10 @@
                     @Html.Partial(MVC.Packages.Views._ListPackage, package)
                 }
             </div>
-            <div class="row">
-                <div class="col-12 text-center">
-                    @ViewHelpers.PreviousNextPager(Model.Pager)
-                </div>
-            </div>
+            @if (@FullHref == @BaseHref + "/packages")
+            {@ViewHelpers.PreviousNextPager(Model.Pager)}
+            else if (@FullHref == @BaseHref + "/search")
+            {@ViewHelpers.PreviousNextPager(Model.PagerSearch)}
         </div>
         @if (!String.IsNullOrEmpty(Model.SearchTerm))
         {
