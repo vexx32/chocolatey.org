@@ -1181,6 +1181,7 @@
     <Content Include="Content\Images\headers\web.jpg" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
+    <Content Include="Content\Images\How-Chocolatey-Works.mp4" />
     <Content Include="Content\Images\icons\arrow-watch.png" />
     <Content Include="Content\Images\icons\books.png" />
     <Content Include="Content\Images\icons\handshake.png" />
@@ -1628,6 +1629,7 @@
     <Content Include="Views\Pages\Sitemap.cshtml" />
     <Content Include="Views\Pages\Community.cshtml" />
     <Content Include="Views\Pages\Products.cshtml" />
+    <Content Include="Views\Pages\HowChocolateyWorks.cshtml" />
     <Content Include="Views\Pages\WhyChocolatey.cshtml" />
     <Content Include="Views\Pages\UseCases.cshtml" />
     <Content Include="Views\Pages\Compare.cshtml" />

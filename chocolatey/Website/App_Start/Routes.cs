@@ -130,7 +130,14 @@ namespace NuGetGallery
                    controller = "Pages",
                    Action = "UseCases"
                });
-            
+
+            routes.MapRouteSeo(
+               RouteName.HowChocolateyWorks, "how-chocolatey-works", new
+               {
+                   controller = "Pages",
+                   Action = "HowChocolateyWorks"
+               });
+
             routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
                 {

@@ -117,6 +117,12 @@ namespace NuGetGallery
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult HowChocolateyWorks()
+        {
+            return View("~/Views/Pages/HowChocolateyWorks.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Compare()
         {
             return View("~/Views/Pages/Compare.cshtml");
