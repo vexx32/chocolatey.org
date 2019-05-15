@@ -136,10 +136,10 @@ $('a[href*="#"]')
     .not('[data-slide="next"]')
     .click(function (event) {
         // Highlight active link if vertical nav
-        var verticalNav = /pricing/.test(window.location.href);
-        if (verticalNav) {
-            $(".vertical-nav").find(".active").removeClass("active");
-            $(this).parent().addClass('active');
+        var stickyNav = /pricing/.test(window.location.href);
+        if (stickyNav) {
+            $(".sticky-nav").find(".active").removeClass("active");
+            $(this).addClass('active');
         }
         // On-page links
         if (

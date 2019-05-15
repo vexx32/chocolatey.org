@@ -22,7 +22,7 @@ q {
     display: inline-block;
 }
 
-.sticky-top:not(th):not(tr) {
+.sticky-top:not(th):not(tr):not(.sticky-nav) {
     top: 1rem;
 }
 #docs .docs-left .sticky-top {
@@ -82,7 +82,11 @@ code:not([class*="language-"]) {
     background: $medium;
 }
 
-footer.bg-medium-dark a:hover {
+#editions ul li a, .sticky-nav a {
+    color: $dark;
+}
+
+footer.bg-medium-dark a:hover, #editions ul li a:hover, .sticky-nav a.active {
     color: $primary;
 }
 
