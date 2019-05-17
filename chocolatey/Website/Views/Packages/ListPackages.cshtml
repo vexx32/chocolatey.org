@@ -130,7 +130,23 @@
                             else
                             {<text>There are @moderationCount Packages in Moderation</text>}
                         </h2>
-                        <h5 class="mb-xl-0">@Model.ModerationUpdatedPackageCount Updated | @Model.ModerationRespondedPackageCount Responded | @Model.ModerationSubmittedPackageCount Submitted | @Model.ModerationWaitingPackageCount Waiting for Maintainer | @unreviewedCount Unreviewed</h5>
+                        <form method="get" action="">
+                            <fieldset class="form search h5 mb-0">
+                                <input type="hidden" name="q" value="@Model.SearchTerm" />
+                                <input type="hidden" name="moderatorQueue" value="true" />
+                                <button type="submit" name="moderationStatus" value="@Constants.UpdatedModerationStatus" class="bg-transparent border-0 btn-link text-dark">@Model.ModerationUpdatedPackageCount Updated</button>
+                                <span>|</span>
+                                <button type="submit" name="moderationStatus" value="@Constants.RespondedModerationStatus" class="bg-transparent border-0 btn-link text-dark">@Model.ModerationRespondedPackageCount Responded</button>
+                                <span>|</span>
+                                <button type="submit" name="moderationStatus" value="@Constants.SubmittedModerationStatus" class="bg-transparent border-0 btn-link text-dark">@Model.ModerationSubmittedPackageCount Submitted</button>
+                                <span>|</span>
+                                <button type="submit" name="moderationStatus" value="@Constants.WaitingModerationStatus" class="bg-transparent border-0 btn-link text-dark">@Model.ModerationWaitingPackageCount Waiting</button>
+                                <span>|</span>
+                                <button type="submit" name="moderationStatus" value="@Constants.UnknownModerationStatus" class="bg-transparent border-0 btn-link text-dark">@unreviewedCount Unreviewed</button>
+                                <input type="hidden" name="prerelease" value="false" />
+                                <input type="hidden" name="sortOrder" value="@Model.SortOrder" />
+                            </fieldset>
+                        </form>
                     }
 
                 }
