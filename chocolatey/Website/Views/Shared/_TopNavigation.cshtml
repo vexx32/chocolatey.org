@@ -1,4 +1,6 @@
-﻿@{
+﻿@using NuGetGallery
+@{
+    var moderationRole = User != null && User.IsInAnyModerationRole();
     var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
     var PackageNav =
@@ -247,21 +249,24 @@
     <div id="secondaryNav">
         <nav class="navbar bg-white border-bottom">
             <ul>
-                <li class="d-none d-sm-flex">
-                    <a href="@Url.RouteUrl(RouteName.ListPackages)">
-                        <span class="icon-download" alt="Packages"></span>
-                        <span>Packages</span>
-                    </a>
-                </li>
+                @if (@FullHref != @BaseHref + "/packages" && @FullHref != @BaseHref + "/search")
+                {
+                    <li class="d-none d-sm-flex">
+                        <a href="@Url.RouteUrl(RouteName.ListPackages)">
+                            <span class="icon-download" alt="Packages"></span>
+                            <span>Packages</span>
+                        </a>
+                    </li>
+                }
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <li class="">
+                    <li>
                         <a href="@Url.Action(MVC.Users.Register())">
                             <span class="icon-user-plus" alt="Signup"></span>
                             <span>Signup</span>
                         </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a href="@Url.LogOn()">
                             <span class="icon-sign-in" alt="Login"></span>
                             <span>Login</span>
@@ -270,20 +275,23 @@
                 }
                 else
                 {
-                    <li class="d-none d-md-flex">
-                        <a href="@Url.RouteUrl(RouteName.ListPackages)?q=&moderatorQueue=true">
-                            <span class="icon-pencil" alt="Moderator Queue"></span>
-                            <span class="d-lg-none">Moderation</span>
-                            <span class="d-none d-lg-block">Moderator Queue</span>
-                        </a>
-                    </li>
-                    <li class="">
+                    if (!Request.Url.AbsoluteUri.Contains("moderatorQueue=true") && moderationRole)
+                    {
+                        <li class="d-none d-md-flex">
+                            <a href="@Url.RouteUrl(RouteName.ListPackages)?q=&moderatorQueue=true">
+                                <span class="icon-pencil" alt="Moderator Queue"></span>
+                                <span class="d-lg-none">Moderation</span>
+                                <span class="d-none d-lg-block">Moderator Queue</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
                         <a href="@Url.Action(MVC.Users.Account())">
                             <span class="icon-user" alt="Account"></span>
                             <span>Account</span>
                         </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a href="@Url.LogOff()">
                             <span class="icon-sign-out" alt="Log Off"></span>
                             <span>Log Off</span>

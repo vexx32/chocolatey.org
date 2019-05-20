@@ -11,6 +11,7 @@
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/package-list");
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 
@@ -18,7 +19,16 @@
     var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
 }
-
+@if (!currentUrl.Contains("sortOrder"))
+{
+    if (currentUrl.Contains("moderatorQueue=true") || Request.RawUrl == Url.RouteUrl(RouteName.ListPackages) || Request.RawUrl == Url.RouteUrl(RouteName.SearchResults))
+    {
+        <div id="loader" class="preference">
+            <div id="shadow"></div>
+            <div id="shape"></div>
+        </div>
+    }
+}
 <section id="package" class="container py-3 py-lg-5 body-tabs">
     @if (!User.Identity.IsAuthenticated)
     {
@@ -179,7 +189,16 @@
                 </div>
                 @if (@Model.LastResultIndex > 0)
                 {
-                    <p class="mb-0">Displaying Results @Model.FirstResultIndex - @Model.LastResultIndex</p>
+                    <div>
+                        <p class="mb-0">Displaying Results @Model.FirstResultIndex - @Model.LastResultIndex</p>
+                        @if (currentUrl.Contains("moderatorQueue=true") && moderationRole)
+                        {
+                            <div class="custom-control custom-switch d-none d-xl-block mt-3">
+                                <input type="checkbox" class="custom-control-input" id="package-view">
+                                <label class="custom-control-label" for="package-view">Make the Moderator Queue your default view?</label>
+                            </div>
+                        }
+                    </div>
                 }
             </div>
             <hr />
@@ -289,27 +308,3 @@
         }
     </div>
 </section>
-
-@section BottomScripts
-{
-    <script>
-        $(function () {
-            $("#sortOrder,#prerelease,#moderatorQueue,#moderationStatus").change(function () {
-                $(this).closest("form").submit();
-            });
-            Closeable.modal("chocolatey_hide_packages_disclaimer");
-            if (!getCookie('chocolatey_hide_packages_disclaimer')) {
-                $(".modal-closeable").css('display', 'block');
-            }
-        });
-        (function () {
-            var cx = '013536524443644524775:xv95wv156yw';
-            var gcse = document.createElement('script');
-            gcse.type = 'text/javascript';
-            gcse.async = true;
-            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(gcse, s);
-        })();
-    </script>
-}
