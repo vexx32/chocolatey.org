@@ -32,6 +32,22 @@
     border-color: $gray-300 $gray-300 transparent;
 }
 
+.nav-pills-list .nav-item {
+    &:not(:last-child) {
+        border-right: 1px solid #ced4da;
+    }
+
+    .nav-link {
+        color: #202f3c;
+
+        &.active {
+            background: none;
+            color: #5c9fd8;
+            text-decoration: underline;
+        }
+    }
+}
+
 @media (min-width: 576px) {
     .nav-tabs {
         border-bottom: 1px solid #dee2e6;
