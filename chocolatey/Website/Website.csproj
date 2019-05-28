@@ -1058,6 +1058,12 @@
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
+    <Content Include="Content\Images\blog\redesign-badges.jpg" />
+    <Content Include="Content\Images\blog\redesign-default-view.gif" />
+    <Content Include="Content\Images\blog\redesign-filter-dropdown.jpg" />
+    <Content Include="Content\Images\blog\redesign-filter-header.jpg" />
+    <Content Include="Content\Images\blog\redesign-install-tabs.jpg" />
+    <Content Include="Content\Images\blog\redesign-show-hide.gif" />
     <Content Include="Content\Images\boxstarter.png" />
     <Content Include="Content\Images\businesses\Ansible-red-sm.png" />
     <Content Include="Content\Images\businesses\Artifactory-sm.png" />
@@ -1670,6 +1676,7 @@
     <Content Include="Views\Pages\ContactSales.cshtml" />
     <Content Include="Views\Pages\ContactSalesOther.cshtml" />
     <Content Include="Views\Pages\ContactBlocked.cshtml" />
+    <Content Include="Views\Blog\ChocolateyRedesign.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

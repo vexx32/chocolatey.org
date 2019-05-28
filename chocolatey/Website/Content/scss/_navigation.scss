@@ -1,3 +1,10 @@
+.notice-text a {
+    color: $white;
+
+    &:hover {
+        color: $medium-dark;
+    }
+}
 #topNav {
     padding-bottom: 0;
     z-index: 9999;
