@@ -1,0 +1,71 @@
+﻿@{
+  ViewBag.Title = "ReleaseNotesCentralManagement";
+}
+
+<article>
+<h1 id="chocolatey-release-notes---chocolatey-central-management">Chocolatey Release Notes - Chocolatey Central Management</h1>
+<h2 id="summary">Summary</h2>
+<p>This covers the release notes for the Chocolatey Central Management (<code>chocolatey-management-database</code>, <code>chocolatey-management-web</code>, and <code>chocolatey-management-web</code>) packages, which covers Central Management server-side functionality. For more information, installation options, etc, please refer to [[Chocolatey Central Management||FeaturesChocolateyCentralManagement]].</p>
+<p><strong>NOTE</strong>: This package is available to to Chocolatey for Business (C4B) customers only.</p>
+<h2 id="other-release-notes">Other Release Notes</h2>
+<ul>
+<li>Refer to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">Open Source Release Notes</a> as commercial editions build on top of open source.</li>
+<li>Chocolatey for Business (C4B) customers - also refer to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes-extension" })">Chocolatey Licensed Extension Release Notes</a> and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes-agent" })">Chocolatey Agent Release Notes</a>.</li>
+</ul>
+<h2 id="known-issues">Known Issues</h2>
+<ul>
+<li>Please see <a href="https://github.com/chocolatey/chocolatey-licensed-issues/labels/CentralManagement" class="uri">https://github.com/chocolatey/chocolatey-licensed-issues/labels/CentralManagement</a></li>
+<li>Some issues may be held internally, please follow your support routes to learn more.</li>
+</ul>
+<h2 id="may-22-2019">0.1.0 (May 22, 2019)</h2>
+<p>Initial preview release</p>
+<h3 id="features">FEATURES</h3>
+<ul>
+<li>Reports - Ability to view and generate report (Excel/PDF) for all currently outdated software</li>
+<li>Dashboard - Provide a dashboard screen with key KPI values</li>
+<li>Overview - Show number of machines checking into CCM and compare to number currently licensed</li>
+</ul>
+<h3 id="bug-fixes">BUG FIXES</h3>
+<ul>
+<li>Fix - Packaging - Before upgrading Web Package ensure that dotnet process isn&#39;t running</li>
+<li>Fix - Web Site - Ensure that minified versions of all assets are used</li>
+<li>Fix - Web Site - Ensure consistent Date/Time Formatting used everywhere</li>
+<li>Fix - Web Site - Corrected duplicate display of search input box on some screens</li>
+<li>Fix - Web Site - Error when attempting to sort by any column in table on Computer Details screen</li>
+<li>Fix - Web Site - Erorr when attempting to sort by Name or Package Title column in table on Software screen</li>
+<li>Fix - Web Site - Tab does not sort by oudated first on Software screen</li>
+<li>Fix - Web Site - Timezone modification doesn&#39;t provide useful information to user</li>
+<li>Fix - Web Site - Only show Software that is installed on at least one machine</li>
+<li>Fix - Web Site - Excel Export generates errors when DateTime values are included</li>
+<li>Fix - Versioning - Ensure correct version number is stamped on all generated assemblies</li>
+<li>Fix - Service - Correct usage of default port number, which should be 24020</li>
+<li>Fix - Service - New-SelfSignedCertificate usage doesn&#39;t work on earlier PowerShell versions</li>
+<li>Fix - Service - Ensure correct error handling for incorrect/missing SQL Server credentials</li>
+<li>Fix - Database - Ensure SQL Server 2008 support</li>
+<li>Fix - Database - Migrator doesn&#39;t exit with non-zero exit code when there is an error</li>
+<li>Fix - Installation - Ensure usage of FQDN for all components</li>
+</ul>
+<h3 id="improvements">IMPROVEMENTS</h3>
+<ul>
+<li>Logging - Provided better logging during Service Certificate installation</li>
+<li>Installation - Verify and usage persisted appsettings.json file during upgrade</li>
+<li>Installation - Reduce issues unpacking web package by shortening paths in packaging</li>
+<li>Uninstallation - Remove modifications that were done as part of installation</li>
+<li>Database - Don&#39;t attempt to seed database tables everytime application starts</li>
+<li>Packaging - Removed unneccessary files from package, making it much smaller</li>
+<li>Packaging - Added requied dependencies to packages</li>
+<li>Packaging - Add information about available installation parameters to package description</li>
+<li>Service - Allow modification of configuration settings without the need to restart Windows Service</li>
+</ul>
+<h2 id="beta20181009-october-9-2018"><a href="https://gitlab.com/chocolatey/choco-licensed-management-ui/milestones/1">0.1.0-beta–20181009</a> (October 9, 2018)</h2>
+<h3 id="features-1">FEATURES</h3>
+<ul>
+<li>[Security] Installation - Provide encryption for all persisted configuration data</li>
+<li>[Security] Installation - Sign all PowerShell Scripts and assemblies shipped as part of release</li>
+<li>[Security] Web Site - Provide full RBAC to site and API</li>
+<li>Audit - Provide ability to list all computers that are currently in use across environment</li>
+<li>Audit - Provide ability to list all software that is currently installed across environment</li>
+<li>Reports - Ability to view and generate report (Excel/PDF) for all currently installed software</li>
+<li>Reports - Ability to view and generate report (Excel/PDF) for all computers currently in use</li>
+</ul>
+</article>
