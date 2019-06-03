@@ -761,9 +761,9 @@
                             </div>
                             <div class="bg-white shadow-sm p-3 mb-3">
                                 <div style="max-height: 900px; overflow: auto;">
-                                    <ul class="comments-list list-unstyled d-flex flex-column-reverse mb-0 user-unknown">
+                                    <div class="comments-list list-unstyled d-flex flex-column-reverse mb-0 user-unknown">
                                         @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -778,9 +778,9 @@
                             </div>
                             <div class="bg-white shadow-sm p-3 mb-3">
                                 <div style="max-height: 900px; overflow: auto;">
-                                    <ul class="comments-list list-unstyled d-flex flex-column-reverse mb-0 @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>}">
+                                    <div class="comments-list list-unstyled d-flex flex-column-reverse mb-0 @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>}">
                                         @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
-                                    </ul>
+                                    </div>
                                 </div>
                                 @if (anyPackageRole)
                                 {

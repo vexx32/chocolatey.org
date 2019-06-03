@@ -52,13 +52,6 @@
     border-color: #5c9fd8 !important;
 }
 /*Package Overview*/
-img.package-testing {
-    width: 15px !important;
-    height: 15px;
-}
-#package input {
-    border-color: #5c9fd8;
-}
 .card.ready .card-header {
     background: #36bc98;
 }
@@ -85,6 +78,7 @@ ul.pager li.previous {
 textarea {
     padding: 1rem;
     width: 100%;
+    font-size: 100%;
 }
 .package-tags {
     background: #cce5ff;
@@ -92,10 +86,6 @@ textarea {
 }
 .d-label-none label {
     display: none;
-}
-h1 img.package-testing {
-    width: 25px !important;
-    height: 25px !important;
 }
 #files .syntaxhighlighter, #files .collapse-2-content {
     max-height: 500px;
@@ -108,8 +98,11 @@ h1 img.package-testing {
 #package-sidebar strong {
     font-weight: 600;
 }
+#package-sidebar img:not(.package-logo) {
+    max-width: 100%;
+}
 /*Chat*/
-.comments-list li {
+.comments-list > span {
     display: flex;
     flex-direction: column;
     background: #e2e3e5;
@@ -123,7 +116,7 @@ h1 img.package-testing {
     position: relative;
     display: none;
 }
-.comments-list li:first-child {
+.comments-list span:first-child {
     margin-bottom: 20px;
 }
 .chat-left {
