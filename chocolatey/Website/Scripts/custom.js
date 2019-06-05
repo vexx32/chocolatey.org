@@ -367,6 +367,23 @@ function getCookie(name) {
     return false;
 }
 
+// Set Login Cookie
+$(function () {
+    var acount = $(".ux_account");
+    var action = $(".ux_account_action");
+    if (getCookie('.ChocolateyGalleryAuthentication')) {
+        acount.html('<span class="icon-user" alt="Account"></span><span>Account</span>');
+        acount.prop('href', '/account');
+        action.html('<span class="icon-sign-out" alt="Log Off"></span><span>Log Off</span>');
+        action.prop('href', '/users/account/LogOff');
+    } else {
+        acount.html('<span class="icon-sign-in" alt="Login"></span><span>Login</span>');
+        acount.prop('href', '/users/account/LogOn');
+        action.html('<span class="icon-user-plus" alt="Signup"></span><span>Signup</span>');
+        action.prop('href', '/account/Register');
+    }
+});
+
 // Invisible input used for newsletter form
 var tmpElement = document.createElement('input');
 tmpElement.className = 'invisible-input';
