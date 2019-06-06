@@ -58,6 +58,7 @@
 <li><a href="#chocolatey-agent-service">Chocolatey Agent Service</a></li>
 </ul></li>
 <li><a href="#how-can-i-increase-the-level-of-logging-for-chocolatey-central-management">How can I increase the level of logging for Chocolatey Central Management</a></li>
+<li><a href="#can-i-install-the-chocolatey-central-management-web-site-under-a-virtual-directory-in-iis">Can I install the Chocolatey Central Management Web Site under a Virtual Directory in IIS?</a></li>
 </ul></li>
 <li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a>
 <ul>
@@ -437,6 +438,8 @@ $Connection.Close()</code></pre>
 <li>C:\ProgramData\chocolatey\lib\chocolatey.management.service\tools\service\chocolatey.console.service.host.exe.config</li>
 <li>C:\ProgramData\chocolatey\lib\chocolatey-agent\tools\service\chocolatey-agent.exe.config</li>
 </ul>
+<h3 id="can-i-install-the-chocolatey-central-management-web-site-under-a-virtual-directory-in-iis">Can I install the Chocolatey Central Management Web Site under a Virtual Directory in IIS?</h3>
+<p>Currently no. The Chocolatey Central Management Web Site expects to reside at the site level within IIS.</p>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
 <h3 id="the-specified-path-file-name-or-both-are-too-long">The specified path, file name, or both are too long</h3>
 <p>This error can occur when installing the <code>chocolatey-management-web</code> package. Due to the nested folder structure contained within this package, when extracting to the default cache location, the path can become too long. This problem is known is occur in the 0.1.0-beta–20181009 release of this package, and it should be corrected in subsequent releases. As a workaround, adding the following parameters to the install command should allow the installation to complete successfully:</p>
