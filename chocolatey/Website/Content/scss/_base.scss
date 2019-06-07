@@ -305,6 +305,29 @@ a + .collapse.show, a + .collapsing {
     max-width: 100px;
 }
 
+/*Careers Img Grid*/
+.img-grid {
+    border-radius: $border-radius;
+
+    [class*="col-"] {
+        &:first-child div img {
+            border-top-left-radius: $border-radius;
+        }
+
+        &:nth-child(3) div img {
+            border-top-right-radius: $border-radius;
+        }
+
+        &:nth-child(4) {
+            border-bottom-left-radius: $border-radius;
+        }
+
+        &:nth-child(6) {
+            border-bottom-right-radius: $border-radius;
+        }
+    }
+}
+
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;

@@ -1105,6 +1105,8 @@
     <Content Include="Content\Images\ccm-computer-white.jpg" />
     <Content Include="Content\Images\ccm-mockup.jpg" />
     <Content Include="Content\Images\changePassword.png" />
+    <Content Include="Content\Images\choco-chefconf.jpg" />
+    <Content Include="Content\Images\choco-ps-summit.jpg" />
     <Content Include="Content\Images\chocolatey-staff.jpg" />
     <Content Include="Content\Images\chocolateyHeadquarters.jpg" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
@@ -1677,6 +1679,7 @@
     <Content Include="Views\Pages\ContactSalesOther.cshtml" />
     <Content Include="Views\Pages\ContactBlocked.cshtml" />
     <Content Include="Views\Blog\ChocolateyRedesign.md" />
+    <Content Include="Views\Pages\Careers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -123,6 +123,12 @@ namespace NuGetGallery
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Careers()
+        {
+            return View("~/Views/Pages/Careers.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Compare()
         {
             return View("~/Views/Pages/Compare.cshtml");
