@@ -4,7 +4,7 @@
 
 <article>
 <h1 id="chocolatey-central-management-ccm-business-editions-only">Chocolatey Central Management (CCM) (Business Editions Only)</h1>
-<!-- TOC depthTo:5 -->
+<!-- TOC depthTo:6 -->
 <ul>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#requirements">Requirements</a></li>
@@ -32,6 +32,11 @@
 <li><a href="#package-parameters-2">Package Parameters</a></li>
 <li><a href="#example-2">Example</a></li>
 <li><a href="#verify-installation-2">Verify Installation</a></li>
+<li><a href="#additional-installation-steps">Additional Installation Steps</a>
+<ul>
+<li><a href="#smtp-configuration">SMTP Configuration</a></li>
+<li><a href="#appsettingsjson-configuration">appsettings.json configuration</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#complete-installation-script">Complete Installation Script</a></li>
 </ul></li>
@@ -45,7 +50,6 @@
 <li><a href="#centralmanagementcertificatevalidationmode">centralManagementCertificateValidationMode</a></li>
 </ul></li>
 <li><a href="#chocolatey-clients">Chocolatey Clients</a></li>
-<li><a href="#see-it-in-action">See It In Action</a></li>
 <li><a href="#faq">FAQ</a>
 <ul>
 <li><a href="#will-this-become-available-for-lower-editions-of-chocolatey">Will this become available for lower editions of Chocolatey?</a></li>
@@ -72,6 +76,7 @@
 <li><a href="#chocolatey-central-management-database-package-installs-without-error-but-chocolateymanagement-database-is-not-created">Chocolatey Central Management database package installs without error, but ChocolateyManagement database is not created</a></li>
 <li><a href="#the-term-install-chocolateyappsettingsjsonfile-is-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program">The term &#39;Install-ChocolateyAppSettingsJsonFile&#39; is not recognized as the name of a cmdlet, function, script file, or operable program.</a></li>
 <li><a href="#cannot-process-command-because-of-one-or-more-missing-mandatory-parameters-filepath">Cannot process command because of one or more missing mandatory parameters: FilePath</a></li>
+<li><a href="#all-attempts-to-send-email-from-ccm-result-in-an-error">All attempts to send email from CCM result in an error</a></li>
 <li><a href="#emails-sent-from-ccm-to-users-has-links-that-contains-localhost-rather-than-actual-ccm-server-name">Emails sent from CCM to users has links that contains localhost, rather than actual CCM Server name</a></li>
 </ul></li>
 </ul>
@@ -335,6 +340,34 @@ necessary installation command would look like the following:</p>
 <li>It should be possible to login to the site using the default credentials mentioned in the installation steps</li>
 <li>Open the Site log file located at <code>c:\tools\chocolatey-management-web\App_Data\Logs\Logs.txt</code> and verify that there are no recently reported errors</li>
 </ul>
+<h5 id="additional-installation-steps">Additional Installation Steps</h5>
+<p>Once installed, some one-time configuration steps are required.</p>
+<h6 id="smtp-configuration">SMTP Configuration</h6>
+<p>The CCM Site needs to be able to send email for certain actions. For example, when a new user is registering with the system, or when sending out forgotten password emails. Valid SMTP Configuration has to be provided in order for these emails to be sent out. Follow these steps to configure SMTP for CCM.</p>
+<ol>
+<li>Open the CCM Site in the browser</li>
+<li>Login with the <code>ccmadmin</code> user</li>
+<li>In the left hand menu click on <code>Administration</code> and then <code>Settings</code></li>
+<li>Click on the <code>Email (SMTP)</code> tab in the <code>Settings</code> screen</li>
+<li>Add the SMTP settings for your environment</li>
+<li>Click the <code>Send Test Email</code> button and ensure that an email is received correctly</li>
+</ol>
+<p>You should recieved a notification similar to this:</p>
+<p><img src="@Url.Content("~/content/images/docs/features/ccm/test_email_sent_correctly.png")" alt="Test email sent successfully" /></p>
+<h6 id="appsettingsjson-configuration">appsettings.json configuration</h6>
+<p>NOTE: In future versions of CCM, this configuration will likely be automatically applied during installation, and this step will not be required.</p>
+<p>There is a requirement within the CCM site to send emails to end users of the application. For example, when registering a new user, or resetting a password. To ensure that these emails contain a properly clickalbe link a modification needs to be made to the <code>appsettings.json</code> file which is located in the <code>c:\tools\chocolatey-management-web</code> folder.</p>
+<p>Open this file in a text editor, and add the following entry:</p>
+<pre><code class="json">    &quot;App&quot;: {
+        &quot;WebSiteRootAddress&quot;: &quot;&lt;URL_to_CCM&gt;&quot;
+    }</code></pre>
+<p>NOTE: When adding this entry, be sure to include a <code>,</code> either before or after the entry, depending on where you add it in the file. i.e.&nbsp; the end result needs to be a properly formatted JSON document.</p>
+<p>where <code>URL_to_CCM</code> should be the accessible URL to access the CCM Website. This will typically be the FQDN of the server that is hosting the CCM Web Site, but it will depend on your environments configuration.</p>
+<p>The end result should look something like this:</p>
+<p><img src="@Url.Content("~/content/images/docs/features/ccm/updated_appsettingsjson_file.png")" alt="Modified appsettings.json file" /></p>
+<p>Once this change has been added, save the file, and then run the following to ensure that the process running the CCM Website is stopped:</p>
+<pre><code class="powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
+<p>And then try accessing the website again. Any emails that are then sent from CCM should then contain valid links back to the site.</p>
 <h4 id="complete-installation-script">Complete Installation Script</h4>
 <p>The following is a complete installation script that can be used as an example of how to install all necessary CCM components and configuration on a single machine, using all the default values. To use values other than the default, see the relevant parameters section for the <a href="#package-parameters">chocolatey-management-database</a>, <a href="#package-parameters-1">chocolatey-management-service</a> and <a href="#package-parameters-2">chocolatey-management-web</a> packages. And refer to the <a href="#chocolatey-configuration-for-ccm">Chocolatey Configuration</a> for further information about global settings for CCM.</p>
 <pre><code class="powershell"># Find FDQN for current machine
@@ -410,7 +443,6 @@ choco feature enable --name=&quot;&#39;useChocolateyCentralManagement&#39;&quot;
 <p><strong>NOTE:</strong> By default, this feature is disabled, and will need to be turned on.</p>
 <p><strong>NOTE:</strong> If not set, the CCM Service will construct a URL based on the default Port number which is 24020, and the FQDN of the machine that the service is being executed on. However, Chocolatey Agent will not be able to report into CCM, if a value is not provided.</p>
 <p><a href="#chocolatey-configuration-for-chocolatey-central-management">Additional configuration</a> exists for CCM Service, which allows fine grained control of how Chocolatey Agent will report into CCM.</p>
-<h2 id="see-it-in-action">See It In Action</h2>
 <h2 id="faq">FAQ</h2>
 <h3 id="will-this-become-available-for-lower-editions-of-chocolatey">Will this become available for lower editions of Chocolatey?</h3>
 <p>CCM will only be available in Chocolatey for Business (C4B).</p>
@@ -522,6 +554,15 @@ $null = Move-Item -Path $certPath.PsPath -Destination &#39;Cert:\\LocalMachine\\
 <p>During the creation of Chocolatey Central Management, some additional PowerShell cmdlets were created, and these are installed as part of the Chocolatey Extension package. These cmdlets went through a number of iterations, and as a result, different combinations of Chocolatey Central Management packages were incompatible with the Chocolatey Extension package, resulting in the error:</p>
 <p><code>Cannot process command becuase of one or more missing mandattory parameters: FilePath</code></p>
 <p>The guidance in this case is either to pin to the specific version of the Chocolatey Extension package required by the version of Chocolatey Central Management beind used, or, update to the latest versions of all packages, where the situation should be addressed.</p>
+<h3 id="all-attempts-to-send-email-from-ccm-result-in-an-error">All attempts to send email from CCM result in an error</h3>
+<p>When any attempt is made by CCM to send an email, an error occurs. This either results in an HTTP 500 errors similar to the following:</p>
+<p><img src="@Url.Content("~/content/images/docs/features/ccm/error_when_sending_email_500.png")" alt="HTTP 500 error when sending email" /></p>
+<p>Or an inline error, similar to this:</p>
+<p><img src="@Url.Content("~/content/images/docs/features/ccm/error_when_sending_email_inline.png")" alt="Inline error when sending email" /></p>
+<p>Checking the log file, an error similar to this is found:</p>
+<pre><code class="powershell">ERROR 2019-06-14 00:54:03,491 [55   ] Microsoft.AspNetCore.Server.Kestrel      - Connection id &quot;0HLNGIPBBV01R&quot;, Request id &quot;0HLNGIPBBV01R:00000001&quot;: An unhandled exception was thrown by the application.
+System.Net.Sockets.SocketException (0x80004005): No connection could be made because the target machine actively refused it 127.0.0.1:25</code></pre>
+<p>This is caused due to the default SMTP configuration being used by CCM, which is incompatible with the environment. CCM, by default, assumes that there is an available SMTP Server available on the current machine, using port 25. To fix this, follow the installation steps <a href="#smtp-configuration">above</a>.</p>
 <h3 id="emails-sent-from-ccm-to-users-has-links-that-contains-localhost-rather-than-actual-ccm-server-name">Emails sent from CCM to users has links that contains localhost, rather than actual CCM Server name</h3>
 <p>There is a requirement within the CCM site to send emails to end users of the application. For example, when registering a new user, or resetting a password. When this happens, the email should contain a link back to the CCM Site, which the user can click on to bring up the site in their browser. However, emails sent from CCM contain links that contain localhost in the address, which means when clicked on, they fail to open correctly. This can be fixed by making a change to the <code>appsettings.json</code> file which is located in the <code>c:\tools\chocolatey-management-web</code> folder.</p>
 <p>Open this file in a text editor, and add the following entry:</p>
@@ -530,6 +571,8 @@ $null = Move-Item -Path $certPath.PsPath -Destination &#39;Cert:\\LocalMachine\\
     }</code></pre>
 <p>NOTE: When adding this entry, be sure to include a <code>,</code> either before or after the entry, depending on where you add it in the file. i.e.&nbsp; the end result needs to be a properly formatted JSON document.</p>
 <p>where <code>URL_to_CCM</code> should be the accessible URL to access the CCM Website. This will typically be the FQDN of the server that is hosting the CCM Web Site, but it will depend on your environments configuration.</p>
+<p>The end result should look something like this:</p>
+<p><img src="@Url.Content("~/content/images/docs/features/ccm/updated_appsettingsjson_file.png")" alt="Modified appsettings.json file" /></p>
 <p>Once this change has been added, save the file, and then run the following to ensure that the process running the CCM Website is stopped:</p>
 <pre><code class="powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
 <p>And then try accessing the website again. Any emails that are then sent from CCM should then contain valid links back to the site.</p>
