@@ -1126,6 +1126,10 @@
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
+    <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_500.png" />
+    <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_inline.png" />
+    <Content Include="Content\Images\docs\features\ccm\test_email_sent_correctly.png" />
+    <Content Include="Content\Images\docs\features\ccm\updated_appsettingsjson_file.png" />
     <Content Include="Content\Images\docs\features\features_auto_uninstall.png" />
     <Content Include="Content\Images\docs\features\features_choco_sync.png" />
     <Content Include="Content\Images\docs\features\features_direct_installer.png" />
