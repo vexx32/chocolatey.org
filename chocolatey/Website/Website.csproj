@@ -1126,6 +1126,7 @@
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
+    <Content Include="Content\Images\docs\features\ccm\ccm_overview.jpg" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_500.png" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_inline.png" />
     <Content Include="Content\Images\docs\features\ccm\test_email_sent_correctly.png" />
