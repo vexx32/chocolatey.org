@@ -754,7 +754,6 @@
                     {
                         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
                         {
-
                             @*Not logged in moderator que*@
                             <div class="alert alert-primary text-center mb-0 font-weight-bold btn-load-more border-0">
                                 Click to View Older Comments
@@ -786,7 +785,6 @@
                                 {
                                     if (Model.Listed || Model.Status == PackageStatusType.Rejected)
                                     {
-
                                         if (Model.Status == PackageStatusType.Approved)
                                         {
                                             <button class="btn btn-secondary d-flex mx-auto mt-3" type="button" data-toggle="collapse" data-target="#add-comment" aria-expanded="false" aria-controls="add-comment">Show Package Communication / Package Test Rerun</button>
@@ -829,12 +827,10 @@
                                             <ul>
                                                 <li>You can respond to review comments here.</li>
                                                 <li>Keep in mind this is publicly visible, so do not share any sensitive data or anything you wouldn't want to share with the world.</li>
-
                                                 @if (Model.Status == PackageStatusType.Submitted)
                                                 {
                                                     <li>You are also able to self-reject packages that may be out of date or incorrect (if the verifier fails the install). See <a href="@Url.RouteUrl(RouteName.FAQ)#how-do-i-self-reject-a-package">self-reject</a> for more information.</li>
                                                 }
-
                                             </ul>
                                         }
                                         @using (Html.BeginForm())
@@ -866,7 +862,6 @@
                                                         <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun verification tests?</label>
                                                     </div>
                                                 }
-
                                                 @if (moderator && Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
                                                 {
                                                     <div class="form-field">
@@ -904,7 +899,6 @@
                                                     </div>
                                                 }
                                                 @Html.ValidationSummary(true)
-
                                                 @if (moderationRole)
                                                 {
                                                     <button class="btn btn-sm btn-secondary mt-2" type="button" data-toggle="collapse" data-target="#test-trusted" aria-expanded="false" aria-controls="test-trusted">Show Trusted Section</button>
@@ -989,7 +983,6 @@
                         @if (expandForModeration)
                         {
                             <button type="button" class="btn btn-danger mb-2"><i class="icon-minus-circle" alt="Collapse Files"></i> Collapse Files</button>
-
                             var nuspecId = @Model.Id.Replace(".", "-") + "-nuspec";
                             <div class="collapse-2 mb-1">
                                 <button type="button" class="btn btn-sm btn-secondary mr-2">Hide</button>
@@ -1009,7 +1002,6 @@
 }
 &lt;owners&gt;NOTE: Original specified maintainers not included on site&lt;/owners&gt;
 &lt;!-- ============================== --&gt;
-
 &lt;!-- == SOFTWARE SPECIFIC SECTION == --&gt;
 @if (!string.IsNullOrWhiteSpace(@Model.Title))
 {
@@ -1023,7 +1015,6 @@
         authors.Append(", " + author.Name.to_string().Trim());
     }
     if (authors.Length > 0) { authors.Remove(0, 2); }
-
     <text>&lt;authors&gt;@authors.to_string()&lt;/authors&gt;</text>
 }
 @if (!string.IsNullOrWhiteSpace(@Model.ProjectUrl))
@@ -1068,7 +1059,6 @@
         tags.Append(" " + tag.to_string().Trim());
     }
     if (tags.Length > 0) { tags.Remove(0, 1); }
-
     <text>&lt;tags&gt;@tags.to_string()&lt;/tags&gt;</text>
 }
 @if (!string.IsNullOrWhiteSpace(@Model.Description))
@@ -1106,7 +1096,6 @@
                                         {
                                             <button type="button" class="btn btn-sm btn-secondary mr-2">Show</button>
                                         }
-
                                     }
                                     @file.FilePath
                                     <div class="collapse-2-content d-none">
@@ -1286,6 +1275,12 @@
             }
         });
     </script>
+    <script language="javascript" type="text/javascript">
+        ((window.gitter = {}).chat = {}).options = {
+            room: 'chocolatey/chocolatey.org'
+        };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
     <script type="text/javascript" language="javascript">
         var disqus_shortname = '@disqusShortname';
         var disqus_url = '@disqusUrl';

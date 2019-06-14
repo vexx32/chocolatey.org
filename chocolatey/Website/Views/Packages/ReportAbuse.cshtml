@@ -79,7 +79,7 @@
                         @Html.ValidationMessageFor(m => m.SpamValidationResponse)
                     </div>
                     <p class="mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
-        	        <input class="btn btn-primary g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Report Abuse" title="Report '@Model.PackageId' for abuse" />
+                    <input class="btn btn-primary g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Report Abuse" title="Report '@Model.PackageId' for abuse" />
                 </fieldset>
             }
         </div>
@@ -92,4 +92,10 @@
             $('fieldset').parent().attr('id', 'i-recaptcha');
         });
     </script>
+    <script language="javascript" type="text/javascript">
+        ((window.gitter = {}).chat = {}).options = {
+            room: 'chocolatey/chocolatey.org'
+        };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 }
