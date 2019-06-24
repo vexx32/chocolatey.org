@@ -194,11 +194,14 @@ namespace NuGetGallery
                 new { controller = "Blog", action = "Article" }
                 );  
             
-            routes.MapRouteSeo(
+            var docsRoute = routes.MapRouteSeo(
                 RouteName.Docs,
-                "docs/{docName}",
+                "docs/{docName}", 
                 new { controller = "Documentation", action = "Documentation", docName = "home" }
                 );
+            
+            // temporary redirect
+            routes.Redirect(r => r.MapRoute("CentralManagementFeature", "features-chocolatey-central-management")).To(docsRoute, new { docName = "features-chocolatey-central-management" });
             
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 
