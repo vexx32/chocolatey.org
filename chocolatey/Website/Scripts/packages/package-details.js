@@ -10,6 +10,9 @@ $(function () {
         commentList.find("h4:contains('(maintainer)')").addClass('comment-title comment-maintainer');
         commentList.find("h4:contains('(reviewer)')").addClass('comment-title comment-reviewer');
         commentList.children().not('.comment-title').addClass("comment-body");
+        
+        // Style Code
+    	$('.comments-list pre').contents().unwrap().wrap('<p></p>');
 
         commentList.find(".comment-title").each(function () {
             var h4 = $(this),
@@ -90,4 +93,23 @@ $(function () {
             $('.step-three-danger').remove();
         }
     }).keyup();
+    
+    // Initialize Text Editor
+    $('.text-editor').each(function () {
+        if ($(this).is('#NewReviewComments')) {
+            var placeholder = "Add to Review Comments";
+        }
+        else if ($(this).is('#ExemptedFromVerificationReason')) {
+            placeholder = "Exempted Reason";
+        }
+
+        var simplemde = new SimpleMDE({
+            element: this,
+            autoDownloadFontAwesome: false,
+            placeholder: placeholder,
+            toolbar: ["bold", "italic", "heading", "strikethrough", "|", "quote", "unordered-list", "ordered-list", "code", "|", "link", "image", "|", "side-by-side", "fullscreen", "|", "preview"]
+        });
+        simplemde.render();
+    });
+    $('.fa-eye').append(' Preview').addClass('font-weight-bold text-primary');
 });

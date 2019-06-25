@@ -7,9 +7,11 @@
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Content/prism/prism.css");
+    Bundles.Reference("Content/simplemde.min.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/packages");
     Bundles.Reference("Scripts/prism");
+    Bundles.Reference("Scripts/simplemde");
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 
@@ -1038,7 +1040,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                     <fieldset class="form">
                                         <div class="form-field d-label-none">
                                             @Html.LabelFor(m => m.NewReviewComments)
-                                            @Html.TextAreaFor(m => m.NewReviewComments, new { @cols = 80, @rows = 5, @placeholder = "Add to Review Comments" })
+                                            @Html.TextAreaFor(m => m.NewReviewComments, new {@class = "text-editor"})
                                             @Html.ValidationMessageFor(m => m.NewReviewComments)
                                             <span class="field-hint-message"></span>
                                         </div>
@@ -1150,7 +1152,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                                     <label for="IsExemptedFromVerification" class="mt-2 mb-3">Exempt the package from verification testing?</label>
                                                     <div class="form-field d-label-none pb-2">
                                                         @Html.LabelFor(m => m.ExemptedFromVerificationReason)
-                                                        @Html.TextAreaFor(m => m.ExemptedFromVerificationReason, new { @cols = 80, @rows = 5, @placeholder = "Exempted Reason" })
+                                                        @Html.TextAreaFor(m => m.ExemptedFromVerificationReason, new {@class = "text-editor"})
                                                         @Html.ValidationMessageFor(m => m.ExemptedFromVerificationReason)
                                                     </div>
                                                 }

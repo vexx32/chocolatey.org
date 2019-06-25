@@ -23,7 +23,7 @@ function compileSASS() {
 function purge() {
     return gulp.src("Content/dist/chocolatey.css")
         .pipe(purgecss({
-            content: ["Views/**/*.cshtml", "App_Code/ViewHelpers.cshtml", "Errors/*.*", "Scripts/custom.js", "Scripts/packages/package-details.js", "Content/scss/_search.scss"]
+            content: ["Views/**/*.cshtml", "App_Code/ViewHelpers.cshtml", "Errors/*.*", "Scripts/custom.js", "Scripts/packages/package-details.js", "Content/scss/_search.scss", "Scripts/simplemde/simplemde.min.js"]
         }))
         .pipe(gulp.dest("Content/dist/tmp"));
 }
