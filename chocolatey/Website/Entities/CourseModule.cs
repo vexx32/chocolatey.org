@@ -16,33 +16,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NuGetGallery
 {
-    public class CourseProfile : IEntity
+    public class CourseModule : IEntity
     {
         public int Key { get; set; }
 
+        public Course Course { get; set; }
+        public int CourseKey { get; set; }
+
         [StringLength(255)]
         public string Name { get; set; }
-        [StringLength(255)]
-        public string Url { get; set; }
-        [StringLength(400)]
-        public string Image { get; set; }
-        public string Username { get; set; }
-        public bool Completed { get; set; }
-        public bool ModOne { get; set; }
-        public bool ModTwo { get; set; }
-        public bool ModThree { get; set; }
-        public bool ModFour { get; set; }
-        public bool ModFive { get; set; }
-        public bool ModSix { get; set; }
-        public bool ModSeven { get; set; }
-        public bool ModEight { get; set; }
-        public bool ModNine { get; set; }
-        public bool ModTen { get; set; }
-        public bool ModEleven { get; set; }
-        public bool ModTwelve { get; set; }
+
+        public string Description { get; set; }
+        //[StringLength(255)]
+        //public string Url { get; set; }
+        [StringLength(10)]
+        public string ModuleLength { get; set; }
+        public int ModuleQuestionCount { get; set; }
+        public int Order { get; set; }
+
+        public CourseModuleNameType CourseModuleNameType { get; set; }
+        [MaxLength(100)]
+        [Column("CourseModuleNameType")]
+        public string CourseModuleNameTypeForDatabase
+        {
+            get { return CourseModuleNameType.ToString(); }
+            set
+            {
+                if (value == null) CourseModuleNameType = CourseModuleNameType.Unknown;
+                else CourseModuleNameType = (CourseModuleNameType)Enum.Parse(typeof(CourseModuleNameType), value);
+            }
+        }
+
     }
 }

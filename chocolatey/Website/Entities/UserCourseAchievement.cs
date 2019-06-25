@@ -1,4 +1,4 @@
-// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
 // and the authors/contributors of NuGetGallery 
@@ -16,13 +16,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 
 namespace NuGetGallery
 {
-    public interface ICourseProfilesService
+    public class UserCourseAchievement : IEntity
     {
-        IEnumerable<CourseProfile> GetUserCourseProfiles(User user);
-        void SaveCourseProfiles(User user, CourseDisplayViewModel profile);
+        public int Key { get; set; }
+
+        public User User { get; set; }
+        public int UserKey { get; set; }
+        
+        public int CourseKey { get; set; }
+
+        public bool Completed { get; set; }
+        public DateTime? CompletedDate { get; set; }
+
+        public virtual ICollection<UserCourseModuleAchievement> CourseModuleAchievements { get; set; }
     }
 }

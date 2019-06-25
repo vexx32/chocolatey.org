@@ -37,9 +37,10 @@ namespace NuGetGallery
         private readonly IPrincipal currentUser;
         private readonly IUserSiteProfilesService profilesService;
         private readonly ICourseProfilesService courseProfilesService;
+        private readonly ICourseService coursesService;
         private readonly IFileSystemService _fileSystem;
 
-        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, IConfiguration settings, IPrincipal currentUser, IUserSiteProfilesService profilesService, IFileSystemService fileSystem, ICourseProfilesService courseProfilesService)
+        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, IConfiguration settings, IPrincipal currentUser, IUserSiteProfilesService profilesService, IFileSystemService fileSystem, ICourseProfilesService courseProfilesService,ICourseService coursesService)
         {
             userService = userSvc;
             _fileSystem = fileSystem;
@@ -49,6 +50,7 @@ namespace NuGetGallery
             this.currentUser = currentUser;
             this.profilesService = profilesService;
             this.courseProfilesService = courseProfilesService;
+            this.coursesService = coursesService;
         }
         
         [HttpGet, OutputCache(VaryByParam = "username", Location = OutputCacheLocation.Any, Duration = 1800)]
@@ -57,16 +59,12 @@ namespace NuGetGallery
             if (Request.IsAuthenticated)
             {
                 var user = userService.FindByUsername(currentUser.Identity.Name);
-                var userCourseProfiles = (from p in courseProfilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new CourseProfileViewModel(c)).ToList();
+                var userCourseProfiles = (from p in courseProfilesService.GetUserCourseProfiles(user) orderby p.CompletedDate select p).Select(c => new CourseProfileViewModel(c)).ToList();
 
-                var model = new CourseViewModel
+                var model = new CourseDisplayViewModel
                 {
-                    EmailAddress = user.EmailAddress,
-                    EmailAllowed = user.EmailAllowed,
-                    EmailAllModerationNotifications = user.EmailAllModerationNotifications,
-                    PendingNewEmailAddress = user.UnconfirmedEmailAddress,
                     Username = user.Username,
-                    UserCourseProfiles = userCourseProfiles
+                    UserCourses = userCourseProfiles,
                 };
 
                 TempData.Clear();
@@ -86,23 +84,22 @@ namespace NuGetGallery
             if (Request.IsAuthenticated)
             {
                 var user = userService.FindByUsername(currentUser.Identity.Name);
-                var userCourseProfiles = (from p in courseProfilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new CourseProfileViewModel(c)).ToList();
+                var userCourseProfiles = (from p in courseProfilesService.GetUserCourseProfiles(user) orderby p.CompletedDate select p).Select(c => new CourseProfileViewModel(c)).ToList();
+                // TODO check instead if one can do a string.compare with insensitive case search
+                var course = coursesService.GetCourses().FirstOrDefault(x => x.Name == courseName);
+                // TODO what if the course is null?
 
-                var model = new CourseViewModel
+                var model = new CourseDisplayViewModel
                 {
-                    EmailAddress = user.EmailAddress,
-                    EmailAllowed = user.EmailAllowed,
-                    EmailAllModerationNotifications = user.EmailAllModerationNotifications,
-                    PendingNewEmailAddress = user.UnconfirmedEmailAddress,
                     Username = user.Username,
-                    UserCourseProfiles = userCourseProfiles
+                    UserCourses = userCourseProfiles,
+                    CourseName = courseName,
+                    CourseKey = course.Key,
+                    // will need read here for the course completion from user course data
                 };
-
-                //gets the current url
-                string currentUrl = Request.Url.AbsoluteUri;
-
+                
                 //delete TempData if not directly after a completed quiz
-                if (!currentUrl.ToLower().Contains("?quiz"))
+                if (!Request.QueryString.ToString().Contains("quiz=true"))
                 {
                     TempData.Clear();
                 }
@@ -113,7 +110,7 @@ namespace NuGetGallery
         }
 
         [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
-        public virtual ActionResult CourseName(CourseViewModel profile, string courseName, string courseModuleName)
+        public virtual ActionResult CourseName(CourseDisplayViewModel profile, string courseName, string courseModuleName)
         {
             courseName = courseName.Replace("-", "");
             courseModuleName = courseModuleName.Replace("-", "");
@@ -125,9 +122,9 @@ namespace NuGetGallery
 
                 if (existingConfirmationToken == user.EmailConfirmationToken) TempData["Message"] = "You passed this course!";
 
-                courseProfilesService.SaveProfiles(user, profile);
+                courseProfilesService.SaveCourseProfiles(user, profile);
 
-                return Redirect(ControllerContext.HttpContext.Request.UrlReferrer.ToString() + "?quiz");
+                return Redirect(ControllerContext.HttpContext.Request.UrlReferrer.ToString() + "?quiz=true");
             }
 
             return View("~/Views/Courses/{0}/{1}.cshtml".format_with(courseName, courseModuleName), profile);
@@ -396,6 +393,7 @@ namespace NuGetGallery
 
             //var userProfiles = profilesService.GetUserProfiles(user).ToList();
             var userProfiles = (from p in profilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new UserSiteProfileViewModel(c)).ToList();
+            var completedCourses = (from p in courseProfilesService.GetUserCourseProfiles(user) orderby p.CompletedDate select p).Select(c => new CourseProfileViewModel(c)).ToList();
 
             var model = new UserProfileModel
             {
@@ -404,7 +402,8 @@ namespace NuGetGallery
                 Packages = packages,
                 PackagesModerationQueue = packagesInModeration,
                 TotalPackageDownloadCount = packages.Sum(p => p.TotalDownloadCount),
-                UserProfiles = userProfiles
+                UserProfiles = userProfiles,
+                CompletedCourses = completedCourses,
             };
 
             return View("~/Views/Users/Profiles.cshtml", model);

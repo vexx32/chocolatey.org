@@ -73,7 +73,23 @@ namespace NuGetGallery.Migrations
                         ConfirmEmailAddresses = false
                     });
                 context.SaveChanges();
-            } 
+            }
+
+            AddCoursesAndModules(context);
+        }
+
+        private void AddCoursesAndModules(EntitiesContext context)
+        {
+            var courses = context.Set<Course>();
+            if (!courses.Any(x => x.Name == CourseConstants.GettingStartedWithChocolatey)){
+                courses.Add(new Course {
+                    Name = CourseConstants.GettingStartedWithChocolatey,
+                    Url = CourseConstants.GettingStartedWithChocolateyUrl,
+                    BadgeImage = CourseConstants.BadgeImages.GettingStartedWithChocolatey,
+                });
+
+                context.SaveChanges();
+            }
         }
     }
 }

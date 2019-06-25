@@ -14,7 +14,7 @@
     var SuccessStoryNav =
         (Request.RawUrl == Url.RouteUrl(RouteName.Resources, new { resourceType = "success-stories" }));
     var CourseNav =
-        (Request.Url.AbsoluteUri.ToLower().Contains("?quiz") || Request.RawUrl == Url.RouteUrl(RouteName.CourseName) && Request.RawUrl != Url.RouteUrl(RouteName.Courses));
+        (Request.Url.AbsoluteUri.ToLower().Contains("?quiz=true") || Request.RawUrl == Url.RouteUrl(RouteName.CourseName) && Request.RawUrl != Url.RouteUrl(RouteName.Courses));
 }
 
 <header class="w-100 @if (!PackageNav && !ResourceNav && !CourseNav) {<text>mb-xl-3</text>}">

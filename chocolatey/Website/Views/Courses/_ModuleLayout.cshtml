@@ -35,7 +35,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteName.Courses)">Courses</a></li>
                         <li class="breadcrumb-item">
-                            @if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) + "?quiz")
+                            @if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) + "?quiz=true")
                             {
                                 <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started", courseModuleName = "home" })">Getting Started</a>
                             }

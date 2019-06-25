@@ -62,55 +62,48 @@
         using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <fieldset class="form @if (!User.Identity.IsAuthenticated) {<text>disable</text>}else if(User.Identity.IsAuthenticated && Model.UserCourseProfiles != null) {foreach(var siteProfile in Model.UserCourseProfiles){if(siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModSix == true){<text>mod-completed</text>}}}">
-                <legend class="d-none">Quiz</legend>
+    <fieldset class="form @if(Model.UserCourseProfiles != null){foreach(var siteProfile in Model.UserCourseProfiles){if(siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModSix == true){<text>mod-completed</text>}}}">
+        <legend class="d-none">Quiz</legend>
+        @Html.HiddenFor(m => m.EmailAddress)
+        @Html.HiddenFor(m => m.CourseName, new { Value = CourseProfileConstants.GettingStartedWithChocolatey })
+        @Html.HiddenFor(m => m.CompletedModSix, new { Value = true })
+        <div class="form-field mt-3">
+            <h5>During which operations will the chocolateyBeforeModify.ps1 file be executed?</h5>
+            @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionOne" })
+            <label for="QuestOneOptionOne">Install</label><br />
+            @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionTwo" })
+            <label for="QuestOneOptionTwo">Install and Upgrade</label><br />
+            @Html.RadioButtonFor(m => m.QuestOne, "1", new { id = "QuestOneOptionThree" })
+            <label for="QuestOneOptionThree">Upgrade and Uninstall</label>
+        </div>
+        <div class="form-field mt-3">
+            <h5>What percentage of native uninstallers can Chocolatey’s Auto Uninstaller feature help with?</h5>
+            @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+            <label for="QuestTwoOptionOne">70</label><br />
+            @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
+            <label for="QuestTwoOptionTwo">80</label><br />
+            @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionThree" })
+            <label for="QuestTwoOptionThree">90</label>
+        </div>
+        <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
+    </fieldset>
+        }
 
-                <div class="form-field d-none">
-                    @Html.EditorFor(m => m.EmailAddress)
-                </div>
-                <div class="form-field d-none">
-                    @Html.TextBoxFor(m => m.CourseName, new { Value = CourseProfileConstants.GettingStartedWithChocolatey })
-                </div>
-                <div class="form-field d-none">
-                    @Html.CheckBox("CompletedModSix", true)
-                </div>
-                <div class="form-field mt-3">
-                    <h5>During which operations will the chocolateyBeforeModify.ps1 file be executed?</h5>
-                    @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionOne" })
-                    <label for="QuestOneOptionOne">Install</label><br />
-                    @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionTwo" })
-                    <label for="QuestOneOptionTwo">Install and Upgrade</label><br />
-                    @Html.RadioButtonFor(m => m.QuestOne, "1", new { id = "QuestOneOptionThree" })
-                    <label for="QuestOneOptionThree">Upgrade and Uninstall</label>
-                </div>
-                <div class="form-field mt-3">
-                    <h5>What percentage of native uninstallers can Chocolatey’s Auto Uninstaller feature help with?</h5>
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
-                    <label for="QuestTwoOptionOne">70</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
-                    <label for="QuestTwoOptionTwo">80</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionThree" })
-                    <label for="QuestTwoOptionThree">90</label>
-                </div>
-                <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
-            </fieldset>
+        if (Model.UserCourseProfiles != null)
+        {
+            foreach (var siteProfile in Model.UserCourseProfiles)
+            {
+                if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModSix == true && siteProfile.Completed == false)
+                {
+                    @Html.Partial("~/Views/Courses/GettingStarted/_NextUrl.cshtml")
+                }
+                else if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.Completed == true)
+                {
+                    <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
+                }
+            }
         }
     }
 </div>
-
-@if (User.Identity.IsAuthenticated && Model.UserCourseProfiles != null)
-{
-    foreach (var siteProfile in Model.UserCourseProfiles)
-    {
-        if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModSix == true && siteProfile.Completed == false)
-        {
-            @Html.Partial("~/Views/Courses/GettingStarted/_NextUrl.cshtml")
-        }
-        else if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.Completed == true)
-        {
-            <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
-        }
-    }
-}
 
 @Html.Partial("~/Views/Courses/GettingStarted/_Popup.cshtml")

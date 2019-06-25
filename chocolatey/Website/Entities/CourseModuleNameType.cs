@@ -16,13 +16,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
-
 namespace NuGetGallery
 {
-    public interface ICourseProfilesService
+    public enum CourseModuleNameType
     {
-        IEnumerable<CourseProfile> GetUserCourseProfiles(User user);
-        void SaveCourseProfiles(User user, CourseDisplayViewModel profile);
+        Unknown = 0,
+        GettingStarted_WhatIsChocolatey = 1,
+        GettingStarted_Requirements,
+        GettingStarted_HowToUse,
+        GettingStarted_Terminology,
+        GettingStarted_ChocolateyPackages,
+        GettingStarted_HowChocolateyWorks,
+        GettingStarted_InstallationInDetail,
+        Installation_Installing,
+        Installation_Upgrading,
+        Installation_Uninstalling,
+        CreatePackages_Summary,
+        CreatePackages_Nuspec,
+        CreatePackages_NewCommand,
+        CreatePackages_NamingVersioning,
+        CreatePackages_InstallUpgradeUninstall,
+        CreatePackages_Shims,
+        CreatePackages_Localization,
+        CreatePackages_BuildTestingPush,
+        CreatePackages_AutomaticPackaging,
+        CreatePackages_PackageHandover,
     }
 }

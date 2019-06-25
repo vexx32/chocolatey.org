@@ -36,18 +36,11 @@
         using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <fieldset class="form @if (!User.Identity.IsAuthenticated) {<text>disable</text>}else if(User.Identity.IsAuthenticated && Model.UserCourseProfiles != null) {foreach(var siteProfile in Model.UserCourseProfiles){if(siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModFour == true){<text>mod-completed</text>}}}">
+            <fieldset class="form @if(Model.UserCourseProfiles != null){foreach(var siteProfile in Model.UserCourseProfiles){if(siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModFour == true){<text>mod-completed</text>}}}">
                 <legend class="d-none">Quiz</legend>
-
-                <div class="form-field d-none">
-                    @Html.EditorFor(m => m.EmailAddress)
-                </div>
-                <div class="form-field d-none">
-                    @Html.TextBoxFor(m => m.CourseName, new { Value = CourseProfileConstants.GettingStartedWithChocolatey })
-                </div>
-                <div class="form-field d-none">
-                    @Html.CheckBox("CompletedModFour", true)
-                </div>
+                @Html.HiddenFor(m => m.EmailAddress)
+                @Html.HiddenFor(m => m.CourseName, new { Value = CourseProfileConstants.GettingStartedWithChocolatey })
+                @Html.HiddenFor(m => m.CompletedModFour, new { Value = true })
                 <div class="form-field mt-3">
                     <h5>What is a Chocolatey metapackage?</h5>
                     @Html.RadioButtonFor(m => m.QuestOne, "1", new { id = "QuestOneOptionOne" })
@@ -69,22 +62,23 @@
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
             </fieldset>
         }
+
+        if (Model.UserCourseProfiles != null)
+        {
+            foreach (var siteProfile in Model.UserCourseProfiles)
+            {
+                if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModFour == true && siteProfile.Completed == false)
+                {
+                    @Html.Partial("~/Views/Courses/GettingStarted/_NextUrl.cshtml")
+                }
+                else if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.Completed == true)
+                {
+                    <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
+                }
+            }
+        }
+
     }
 </div>
-
-@if (User.Identity.IsAuthenticated && Model.UserCourseProfiles != null)
-{
-    foreach (var siteProfile in Model.UserCourseProfiles)
-    {
-        if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModFour == true && siteProfile.Completed == false)
-        {
-            @Html.Partial("~/Views/Courses/GettingStarted/_NextUrl.cshtml")
-        }
-        else if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.Completed == true)
-        {
-            <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
-        }
-    }
-}
 
 @Html.Partial("~/Views/Courses/GettingStarted/_Popup.cshtml")

@@ -16,13 +16,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
+using System;
 
 namespace NuGetGallery
 {
-    public interface ICourseProfilesService
+    public class CourseProfileModuleViewModel
     {
-        IEnumerable<CourseProfile> GetUserCourseProfiles(User user);
-        void SaveCourseProfiles(User user, CourseDisplayViewModel profile);
+        public CourseProfileModuleViewModel(CourseProfileModule moduleAchievement)
+        {
+            Key = moduleAchievement.Key;
+            CourseProfileKey = moduleAchievement.CourseProfileKey;
+            CourseModuleKey = moduleAchievement.CourseModuleKey;
+            IsCompleted = moduleAchievement.IsCompleted;
+            CompletedDate = moduleAchievement.CompletedDate;
+        }
+
+        public int Key { get; set; }
+        public int CourseProfileKey { get; set; }
+        public int CourseModuleKey { get; set; }
+        public bool IsCompleted { get; set; }
+        public DateTime? CompletedDate { get; set; }
     }
 }

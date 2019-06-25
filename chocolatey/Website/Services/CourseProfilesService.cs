@@ -16,145 +16,84 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NuGetGallery
 {
+
     public class CourseProfilesService : ICourseProfilesService
     {
-        private readonly IEntityRepository<CourseProfile> profileRepo;
+        private readonly IEntityRepository<CourseProfile> courseProfileRepo;
 
         public CourseProfilesService(IEntityRepository<CourseProfile> profileRepo)
         {
-            this.profileRepo = profileRepo;
+            this.courseProfileRepo = profileRepo;
         }
 
-        public IEnumerable<CourseProfile> GetUserProfiles(User user)
+        public IEnumerable<CourseProfile> GetUserCourseProfiles(User user)
         {
-            return profileRepo.GetAll().Where(x => x.Username == user.Username).ToList();
+            return courseProfileRepo.GetAll().Where(x => x.UserKey == user.Key).ToList();
         }
 
-        public void SaveProfiles(User user, CourseViewModel profile)
+        public void SaveCourseProfiles(User user, CourseDisplayViewModel courseProfile)
         {
-            var siteProfiles = GetUserProfiles(user).AsQueryable();
+            var existingCourseProfiles = GetUserCourseProfiles(user).AsQueryable();
 
-            CompareAndPrepareProfile(
-                profile.CourseName,
-                user.Username,
-                string.Empty,
-                siteProfiles,
-                profile.CompletedCourse,
-                profile.CompletedModOne,
-                profile.CompletedModTwo,
-                profile.CompletedModThree,
-                profile.CompletedModFour,
-                profile.CompletedModFive,
-                profile.CompletedModSix,
-                profile.CompletedModSeven,
-                profile.CompletedModEight,
-                profile.CompletedModNine,
-                profile.CompletedModTen,
-                profile.CompletedModEleven,
-                profile.CompletedModTwelve,
-                prefix: string.Empty);
+            CompareAndPrepareCourseProfile(
+                courseProfile,
+                user,
+                existingCourseProfiles);
 
-            profileRepo.CommitChanges();
+            courseProfileRepo.CommitChanges();
         }
 
-        private void CompareAndPrepareProfile(
-            string profileName,
-            string userName,
-            string badgeUrl,
-            IQueryable<CourseProfile> siteProfiles,
-            bool completed,
-            bool modOne,
-            bool modTwo,
-            bool modThree,
-            bool modFour,
-            bool modFive,
-            bool modSix,
-            bool modSeven,
-            bool modEight,
-            bool modNine,
-            bool modTen,
-            bool modEleven,
-            bool modTwelve,
-            string prefix)
+        private void CompareAndPrepareCourseProfile(
+            CourseProfileViewModel courseProfileModel,
+            User user,
+            IQueryable<CourseProfile> existingCourseProfiles)
         {
-            var siteProfile = siteProfiles.FirstOrDefault(x => x.Name == profileName);
-
-            // This deletes the row from database
-            //if (siteProfile != null && string.IsNullOrWhiteSpace(profileValue)) profileRepo.DeleteOnCommit(siteProfile);
+            var courseProfile = existingCourseProfiles.FirstOrDefault(x => x.CourseKey == courseProfileModel.CourseKey);
             
-            if (siteProfile == null)
+            if (courseProfile == null)
             {
-                var newSiteProfile = new CourseProfile();
-                newSiteProfile.Username = userName;
-                newSiteProfile.Name = profileName;
-                newSiteProfile.Url = prefix;
-                newSiteProfile.Image = badgeUrl;
-                newSiteProfile.Completed = completed;
-                newSiteProfile.ModOne = modOne;
-                newSiteProfile.ModTwo = modTwo;
-                newSiteProfile.ModThree = modThree;
-                newSiteProfile.ModFour = modFour;
-                newSiteProfile.ModFive = modFive;
-                newSiteProfile.ModSix = modSix;
-                newSiteProfile.ModSeven = modSeven;
-                newSiteProfile.ModEight = modEight;
-                newSiteProfile.ModNine = modNine;
-                newSiteProfile.ModTen = modTen;
-                newSiteProfile.ModEleven = modEleven;
-                newSiteProfile.ModTwelve = modTwelve;
-                profileRepo.InsertOnCommit(newSiteProfile);
+                courseProfile = new CourseProfile();
+                courseProfile.CourseKey = courseProfileModel.CourseKey;
+                courseProfile.UserKey = user.Key;
+                courseProfileRepo.InsertOnCommit(courseProfile);
             }
 
-            // Getting Started with Chocolatey- Update Records
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModOne == false)
+            courseProfile.Completed = courseProfileModel.Completed;
+            courseProfile.CompletedDate = courseProfileModel.CompletedDate;
+
+            foreach (CourseProfileModuleViewModel moduleModel in courseProfileModel.CourseModuleAchievements.OrEmptyListIfNull())
             {
-                siteProfile.ModOne = modOne;
-            }
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModTwo == false)
-            {
-                siteProfile.ModTwo = modTwo;
-            }
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModThree == false)
-            {
-                siteProfile.ModThree = modThree;
-            }
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModFour == false)
-            {
-                siteProfile.ModFour = modFour;
-            }
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModFive == false)
-            {
-                siteProfile.ModFive = modFive;
-            }
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModSix == false)
-            {
-                siteProfile.ModSix = modSix;
-            }
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModSeven == false)
-            {
-                siteProfile.ModSeven = modSeven;
-            }
-            // Getting Started with Chocolatey- Course Completed
-            if (siteProfile != null && siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModOne == true && siteProfile.ModTwo == true && siteProfile.ModThree == true && siteProfile.ModFour == true && siteProfile.ModFive == true && siteProfile.ModSix == true && siteProfile.ModSeven == true)
-            {
-                siteProfile.Completed = true;
-                siteProfile.Url = CourseProfileConstants.GettingStartedWithChocolateyUrl;
-                siteProfile.Image = CourseProfileConstants.Images.gettingStartedWithChocolatey;
+                if (moduleModel.IsCompleted) {
+                    var module = courseProfile.CourseModuleAchievements.FirstOrDefault(x => x.CourseModuleKey == moduleModel.CourseModuleKey);
+
+                    if (module == null) {
+                        courseProfile.CourseModuleAchievements.Add(new CourseProfileModule {
+                            CourseProfileKey = courseProfile.Key,
+                            CourseModuleKey = moduleModel.Key,
+                            CompletedDate = moduleModel.CompletedDate
+                        });
+                    }
+                }
             }
         }
     }
 
-    public static class CourseProfileConstants
+    public static class CourseConstants
     {
         public const string GettingStartedWithChocolatey = "Getting Started with Chocolatey";
         public const string GettingStartedWithChocolateyUrl = "/courses/getting-started";
+        public const string InstallingUpgradingUninstalling = "Installing, Upgrading, and Uninstalling Chocolatey";
+        public const string InstallingUpgradingUninstallingUrl = "/courses/installation";
+        public const string CreatingChocolateyPackages = "Creating Chocolatey Packages";
+        public const string CreatingChocolateyPackagesUrl = "/courses/creating-chocolatey-packages";
 
-        public static class Images
+        public static class BadgeImages
         {
             private const string URLPATH = "~/Content/Images/Badges";
 
@@ -163,7 +102,9 @@ namespace NuGetGallery
                 return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName);
             }
 
-            public static readonly string gettingStartedWithChocolatey = Url("GettingStartedCourse.png");
+            public static readonly string GettingStartedWithChocolatey = Url("GettingStartedCourse.png");
+            public static readonly string InstallingUpgradingUninstalling = Url("InstallingUpgradingUninstalling.png");
+            public static readonly string CreatingChocolateyPackages = Url("CreatingChocolateyPackages.png");
         }
     }
 }

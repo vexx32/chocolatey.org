@@ -16,45 +16,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+
 namespace NuGetGallery
 {
     public class CourseProfileViewModel
     {
-        public CourseProfileViewModel(CourseProfile siteProfile)
+        public CourseProfileViewModel(CourseProfile courseProfile)
         {
-            Name = siteProfile.Name;
-            Url = siteProfile.Url;
-            Image = siteProfile.Image;
-            Completed = siteProfile.Completed;
-            ModOne = siteProfile.ModOne;
-            ModTwo = siteProfile.ModTwo;
-            ModThree = siteProfile.ModThree;
-            ModFour = siteProfile.ModFour;
-            ModFive = siteProfile.ModFive;
-            ModSix = siteProfile.ModSix;
-            ModSeven = siteProfile.ModSeven;
-            ModEight = siteProfile.ModEight;
-            ModNine = siteProfile.ModNine;
-            ModTen = siteProfile.ModTen;
-            ModEleven = siteProfile.ModEleven;
-            ModTwelve = siteProfile.ModTwelve;
+            Key = courseProfile.Key;
+            UserKey = courseProfile.UserKey;
+            User User = courseProfile.User;
+            Course Course = courseProfile.Course;
+            CourseKey = courseProfile.CourseKey;
+            Completed = courseProfile.Completed;
+            CompletedDate = courseProfile.CompletedDate;
+
+            CourseModuleAchievements = new List<CourseProfileModuleViewModel>();
+            foreach (var moduleAchievement in courseProfile.CourseModuleAchievements.OrEmptyListIfNull())
+            {
+                CourseModuleAchievements.Add(new CourseProfileModuleViewModel(moduleAchievement));
+            }
         }
 
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Image { get; set; }
+        public int Key { get; set; }
+        public int UserKey { get; set; }
+        public User User { get; set; }
+        public Course Course { get; set; }
+        public int CourseKey { get; set; } // foreign key to Course
+        public ICollection<CourseProfileModuleViewModel> CourseModuleAchievements { get; set; }
         public bool Completed { get; set; }
-        public bool ModOne { get; set; }
-        public bool ModTwo { get; set; }
-        public bool ModThree { get; set; }
-        public bool ModFour { get; set; }
-        public bool ModFive { get; set; }
-        public bool ModSix { get; set; }
-        public bool ModSeven { get; set; }
-        public bool ModEight { get; set; }
-        public bool ModNine { get; set; }
-        public bool ModTen { get; set; }
-        public bool ModEleven { get; set; }
-        public bool ModTwelve { get; set; }
+        public DateTime? CompletedDate { get; set; }
     }
 }

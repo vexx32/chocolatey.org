@@ -16,18 +16,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System;
 
 namespace NuGetGallery
 {
-    public class UserProfileModel
+    public class CourseDisplayViewModel
     {
+
         public string Username { get; set; }
-        public string EmailAddress { get; set; }
-        public ICollection<PackageViewModel> Packages { get; set; }
-        public ICollection<PackageViewModel> PackagesModerationQueue { get; set; }
-        public ICollection<UserSiteProfileViewModel> UserProfiles { get; set; }
-        public ICollection<CourseProfileViewModel> CompletedCourses { get; set; }
-        public int TotalPackageDownloadCount { get; set; }
+
+        [Display(Name = "Question One")]
+        public string QuestOne { get; set; }
+
+        [Display(Name = "Question Two")]
+        public string QuestTwo { get; set; }
+
+        [Display(Name = "Question Three")]
+        public string QuestThree { get; set; }
+
+        [Display(Name = "Question Four")]
+        public string QuestFour { get; set; }
+
+        public string CourseName { get; set; }
+
+        public int CourseKey { get; set; }
+
+        public bool CompletedCourse { get; set; }
+
+        public DateTime? CompletedDate { get; set; }
+        
+        public ICollection<CourseProfileViewModel> UserCourses { get; set; }
+
     }
 }
