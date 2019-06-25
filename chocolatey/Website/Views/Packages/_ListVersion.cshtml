@@ -1,5 +1,5 @@
 ﻿@model ListPackageVersionViewModel
-           
+@using Markdig
 @{
     var displayed = Model.DisplayVersion;
     var style = displayed ? "table-row" : "none";
@@ -7,6 +7,18 @@
     var divVersionId = "divVersion-" + Model.Package.Version.Replace(".", "-");
     var maintainer = User != null && Model.Package.Owners.Any(u => u.Username == User.Identity.Name);
     var moderator = User != null && User.IsModerator() && !maintainer;
+    
+    var MarkdownPipeline = new MarkdownPipelineBuilder()
+                 .UseSoftlineBreakAsHardlineBreak()
+                 .UseAutoLinks()
+                 .UseGridTables()
+                 .UsePipeTables()
+                 .UseAutoIdentifiers()
+                 .UseEmphasisExtras()
+                 .UseNoFollowLinks()
+                 .UseCustomContainers()
+                 .UseBootstrap()
+                 .Build();
 }
 
 @if (Model.Package.Listed || Model.Package.IsOwner(User) || Model.Package.Status == PackageStatusType.Submitted)
@@ -96,7 +108,7 @@
                 <div class="mt-3">
                     <div class="comments-list-container">
                         <div class="comments-list @if (maintainer) {<text> user-maintainer</text>} else if (moderator) {<text> user-moderator</text>} else {<text> user-unknown</text>}">
-                            @Html.Raw(Model.MarkdownGenerator.Transform(Model.Package.ReviewComments.clean_html()))
+                            @Html.Raw(Markdown.ToHtml(Model.Package.ReviewComments.clean_html() ?? string.Empty, MarkdownPipeline))
                         </div>
                     </div>
                 </div>
