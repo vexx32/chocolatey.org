@@ -1,6 +1,6 @@
-Url: managing-windows-at-facebook
+Url: winops-2017-dan-sedlacek-managing-windows-at-facebook
 Published: 20170926
-Title: Managing Windows @ Facebook with Dan Sedlacek at Winops 2017
+Title: WinOps 2017 Dan Sedlacek - Managing Windows @ Facebook
 Type: Case Study
 Name: Dan Sedlacek
 Company: Facebook
