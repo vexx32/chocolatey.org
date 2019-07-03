@@ -264,9 +264,19 @@
             </div>
         </div>
     </section>
-    <div class="shape-border shape-border-bottom"></div>
+    <div class="shape-border shape-border-bottom shape-border-white"></div>
 </div>
-<section class="pb-3 pb-lg-5">
+<section class="pb-3 pb-lg-5 bg-white">
+    <div class="container">
+        <div class="row resource-d-3 shuffle">
+            @Html.Partial("~/Views/Pages/_WrittenTestimonials.cshtml")
+        </div>
+        <div class="text-center">
+            <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "testimonials"})" class="btn btn-primary">See More Testimonials</a>
+        </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5">
     <div class="container">
         <div class="row">
             <div class="col-md-6 updated-list resource-d-6">

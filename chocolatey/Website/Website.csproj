@@ -1088,6 +1088,8 @@
     <Content Include="Content\Images\businesses\Chef-Dark.png" />
     <Content Include="Content\Images\businesses\Docker-sm.png" />
     <Content Include="Content\Images\businesses\ECEC-sm.png" />
+    <Content Include="Content\Images\businesses\EastCentralCollege-sm.png" />
+    <Content Include="Content\Images\businesses\ec-sm.jpg" />
     <Content Include="Content\Images\businesses\GitHub-sm.png" />
     <Content Include="Content\Images\businesses\GitLab-sm.png" />
     <Content Include="Content\Images\businesses\GoogleCloudPlatform-sm.png" />
@@ -1095,6 +1097,7 @@
     <Content Include="Content\Images\businesses\Inedo-sm.png" />
     <Content Include="Content\Images\businesses\Insight-sm.png" />
     <Content Include="Content\Images\businesses\ivanti-sm.png" />
+    <Content Include="Content\Images\businesses\JCVI-sm.png" />
     <Content Include="Content\Images\businesses\Jenkins-sm.png" />
     <Content Include="Content\Images\businesses\JetBrains-sm.png" />
     <Content Include="Content\Images\businesses\Microsoft-SCCM-sm.jpg" />
@@ -1108,6 +1111,7 @@
     <Content Include="Content\Images\businesses\Otter-sm.png" />
     <Content Include="Content\Images\businesses\PCM-sm.png" />
     <Content Include="Content\Images\businesses\Powershell-sm.png" />
+    <Content Include="Content\Images\businesses\PRIDE-sm.jpg" />
     <Content Include="Content\Images\businesses\Puppet-Dark.png" />
     <Content Include="Content\Images\businesses\Saltstack-sm.png" />
     <Content Include="Content\Images\businesses\Shadowsoft-sm.png" />
@@ -1115,6 +1119,7 @@
     <Content Include="Content\Images\businesses\SwissRe.png" />
     <Content Include="Content\Images\businesses\TheSageColleges-sm.png" />
     <Content Include="Content\Images\businesses\Tricore-sm.png" />
+    <Content Include="Content\Images\businesses\Uni-sm.png" />
     <Content Include="Content\Images\businesses\VMware-sm.png" />
     <Content Include="Content\Images\businesses\Yelp-Stroke.png" />
     <Content Include="Content\Images\businesses\Yelp.png" />
@@ -1572,6 +1577,8 @@
     <Content Include="Views\Shared\_Loader.cshtml" />
     <Content Include="Views\Documentation\Documentation.cshtml" />
     <Content Include="Views\Documentation\DocumentationLayout.cshtml" />
+    <Content Include="Views\Pages\_WrittenTestimonials.cshtml" />
+    <Content Include="Views\Resources\Testimonials.cshtml" />
     <Content Include="Views\Documentation\Files\AutomaticPackages.md" />
     <Content Include="Views\Documentation\Files\ChocolateyConfiguration.md" />
     <Content Include="Views\Documentation\Files\ChocolateyFAQs.md" />

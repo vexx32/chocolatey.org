@@ -389,6 +389,14 @@ $(".video-story .modal").on('hidden.bs.modal', function (e) {
     $(this).find("iframe").attr("src", $(this).find("iframe").attr("src"));
 });
 
+// Shuffles divs on load
+$('.shuffle').each(function () {
+    var divs = $(this).children().has('img');
+    while (divs.length) {
+        $(this).prepend(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+    }
+});
+
 // Responsive Tabs
 $(function () {
     tabs();
