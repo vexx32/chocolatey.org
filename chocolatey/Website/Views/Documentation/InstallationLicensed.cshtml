@@ -110,8 +110,7 @@
 <p><strong>NOTE</strong>: Also note that order is <strong><em>very</em></strong> important here. You need license file placed, then chocolatey.extension, then any other licensed components. Expect issues if you don&#39;t follow this order exactly.</p>
 <p>See the difference between the trial install here and <a href="#how-do-i-install-the-licensed-edition">a fully licensed edition</a> (also see the pictures above).</p>
 <h4 id="notes-on-the-trial-version">Notes on the Trial Version</h4>
-<p>In the trial, package authoring features have nag warnings that require someone to manually hit the Enter key a random number of times. Do not attempt to automate Package Internalizer / Package Builder or <code>choco sync</code> when using a trial of C4B. Execute those things directly and see how well they work for you.</p>
-<p>There are no trial type messages for runtime features unless they need to use Package Builder (like <code>choco sync</code> does), which should allow you to test those features with other integration tools.</p>
+<p>Very little functionality if any is held back. With the movement forward on things like Central Management and GUI branding, those are now available with a trial as well.</p>
 <h2 id="install-options">Install Options</h2>
 <h3 id="install-without-context-menus">Install Without Context Menus</h3>
 <p>As of Chocolatey Licensed Extension v1.12.2, you can install to client machines without the context menus (Right Click). Add the following to your installation : <code>--params=&quot;'/NoContextMenu'&quot;</code>. Currently there isn&#39;t a way to remove context menus if you have already deployed them, but it is on the backlog to add that. Example: <code>choco install chocolatey.extension -y --params=&quot;'/NoContextMenu'&quot;</code>.</p>

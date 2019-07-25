@@ -32,6 +32,8 @@
 <li><a href="#installing-chocolatey-management-service">Installing chocolatey-management-service</a>
 <ul>
 <li><a href="#package-parameters-1">Package Parameters</a></li>
+<li><a href="#chocolatey-managed-password">Chocolatey Managed Password</a></li>
+<li><a href="#chocolatey-central-management-service-windows-account-considerations">Chocolatey Central Management Service Windows Account Considerations</a></li>
 <li><a href="#example-1">Example</a></li>
 <li><a href="#verify-installation-1">Verify Installation</a></li>
 </ul></li>
@@ -74,6 +76,15 @@
 </ul></li>
 <li><a href="#how-can-i-increase-the-level-of-logging-for-chocolatey-central-management">How can I increase the level of logging for Chocolatey Central Management</a></li>
 <li><a href="#can-i-install-the-chocolatey-central-management-web-site-under-a-virtual-directory-in-iis">Can I install the Chocolatey Central Management Web Site under a Virtual Directory in IIS?</a></li>
+<li><a href="#we-want-to-set-up-the-chocolatey-central-management-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this">We want to set up the Chocolatey Central Management service to use a domain account that will have local admin on each box. Can we do this?</a></li>
+<li><a href="#is-the-password-stored-anywhere">Is the password stored anywhere?</a></li>
+<li><a href="#we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-management-service-what-do-we-need-to-do">We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Management Service, what do we need to do?</a></li>
+<li><a href="#tell-me-more-about-the-chocolatey-managed-password">Tell me more about the Chocolatey managed password.</a></li>
+<li><a href="#is-the-managed-password-stored-or-logged-anywhere">Is the managed password stored or logged anywhere?</a></li>
+<li><a href="#is-the-managed-password-the-same-on-every-machine">Is the managed password the same on every machine?</a></li>
+<li><a href="#how-would-someone-potentially-get-access-to-the-managed-password">How would someone potentially get access to the managed password?</a></li>
+<li><a href="#do-you-rotate-the-managed-password-on-a-schedule">Do you rotate the managed password on a schedule?</a></li>
+<li><a href="#can-i-take-advantage-of-chocolatey-managed-passwords-with-my-own-windows-services">Can I take advantage of Chocolatey managed passwords with my own Windows services?</a></li>
 </ul></li>
 <li><a href="#common-errors-and-resolutions">Common Errors and Resolutions</a>
 <ul>
@@ -86,6 +97,8 @@
 <li><a href="#cannot-process-command-because-of-one-or-more-missing-mandatory-parameters-filepath">Cannot process command because of one or more missing mandatory parameters: FilePath</a></li>
 <li><a href="#all-attempts-to-send-email-from-ccm-result-in-an-error">All attempts to send email from CCM result in an error</a></li>
 <li><a href="#emails-sent-from-ccm-to-users-has-links-that-contains-localhost-rather-than-actual-ccm-server-name">Emails sent from CCM to users has links that contains localhost, rather than actual CCM Server name</a></li>
+<li><a href="#the-remote-server-returned-an-unexpected-response-413-request-entity-too-large">The remote server returned an unexpected response: (413) Request Entity Too Large</a></li>
+<li><a href="#error-cannot-index-into-a-null-array">ERROR: Cannot index into a null array</a></li>
 </ul></li>
 </ul>
 <!-- /TOC -->
@@ -260,6 +273,35 @@ choco upgrade chocolatey-management-service --version 0.1.0</code></pre>
 <ul>
 <li>Explicit request not to reinstall the service</li>
 <li><strong>NOTE:</strong> Default Value: Not provided</li>
+</ul></li>
+</ul>
+<h5 id="chocolatey-managed-password">Chocolatey Managed Password</h5>
+<p>When Chocolatey manages the password for a local administrator, it creates a very complex password:</p>
+<ul>
+<li>It is 32 characters long.</li>
+<li>It uses uppercase, lowercase, numbers, and symbols to meet very stringent complexity requirements.</li>
+<li>The password is different for every machine.</li>
+<li>Due to the way that it is generated, it is completely unguessable.</li>
+<li>No one at Chocolatey Software could even tell you what the password is for a particular machine without local access.</li>
+</ul>
+<h5 id="chocolatey-central-management-service-windows-account-considerations">Chocolatey Central Management Service Windows Account Considerations</h5>
+<ul>
+<li>Windows Account (required, defaults to <code>ChocolateyLocalAdmin</code>)
+<ul>
+<li>The Chocolatey Central Managmeent Service requires <strong><em>an</em></strong> administrative account, whether that is a domain account or a local account - it just needs to be a local admin (a member of the Administrators group).</li>
+<li>The Chocolatey Central Management Service doesn&#39;t specifically require the <code>ChocolateyLocalAdmin</code> account, any Windows account can be used. The <code>ChocolateyLocalAdmin</code> is used as the default if one is not specified.</li>
+<li>Upon use of an account during installation, it will make that account a member of the Administrators account.</li>
+<li>The account used will also be granted LogonAsService and LogonAsBatch privileges.</li>
+</ul></li>
+<li>Managed Password (optional, default)
+<ul>
+<li>When the <code>ChocolateyLocalAdmin</code> account is used, it generates a managed password that is different on every machine, 32 characters long, meets complexity requirements, and basically very strong.</li>
+<li>To determine the managed password, it would take access to the box and someone from Chocolatey Software who has access to the algorithm used to generate the password (more information in the FAQs below).</li>
+</ul></li>
+<li>Rotating/Updating Passwords
+<ul>
+<li>If a different account with a rotating password is used, the service will need to be updated with the new credentials and restarted soon after changing that password.</li>
+<li>The managed password is not currently updated/rotated, but it is something we are looking at how best to implement.</li>
 </ul></li>
 </ul>
 <h5 id="example-1">Example</h5>
@@ -512,6 +554,41 @@ $Connection.Close()</code></pre>
 </ul>
 <h3 id="can-i-install-the-chocolatey-central-management-web-site-under-a-virtual-directory-in-iis">Can I install the Chocolatey Central Management Web Site under a Virtual Directory in IIS?</h3>
 <p>Currently no. The Chocolatey Central Management Web Site expects to reside at the site level within IIS.</p>
+<h3 id="we-want-to-set-up-the-chocolatey-central-management-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this">We want to set up the Chocolatey Central Management service to use a domain account that will have local admin on each box. Can we do this?</h3>
+<p>Yes, absolutely. You will pass those credentials through at install/upgrade time, and you will also want to turn on the feature useRememberedArgumentsForUpgrades (see <a href="https://chocolatey.org/docs/chocolatey-configuration#features">configuration</a>) so that future upgrades will have that information available. The remembered arguments are stored encrypted on the box (that encryption is reversible so you may opt to pass that information each time).</p>
+<ul>
+<li><code>/Username</code>: - provide username - instead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
+<li><code>/Password</code>: - optional password for the user.</li>
+<li><code>/EnterPassword</code> - receive the password at runtime as a secure string</li>
+</ul>
+<p>You would pass something like <code>choco install chocolatey-management-service -y --params=&quot;'/Username:domain\account /EnterPassword'&quot;</code> to securely pass the password at runtime. You could also run <code>choco install chocolatey-management-service -y --params=&quot;'/Username:&lt;domain\account&gt;'&quot; --package-parameters-sensitive=&quot;'/Password:&lt;password&gt;'&quot;</code> (or do it as part of <code>choco upgrade</code>).</p>
+<h3 id="is-the-password-stored-anywhere">Is the password stored anywhere?</h3>
+<p>No, that would reduce the security of the password. It exists in memory long enough to set the value on user and the service and then it is cleared.</p>
+<p>There is no storage of the password anywhere other than how Windows stores passwords.</p>
+<h3 id="we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-management-service-what-do-we-need-to-do">We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Management Service, what do we need to do?</h3>
+<p>Like with any service that uses rotating passwords, you will need to redeploy the service or go into the services management console and update the password. As it is much faster to deploy out that update, you can do something like <code>choco upgrade chocolatey-management-service -y --params=&quot;'/Username:domain\account'&quot; --package-parameters-sensitive=&quot;'/Password:newpassword'&quot; --force</code> (the <code>--force</code> ensures the code is redeployed).</p>
+<h3 id="tell-me-more-about-the-chocolatey-managed-password">Tell me more about the Chocolatey managed password.</h3>
+<p>So you&#39;ve seen from above that</p>
+<ul>
+<li>It is 32 characters long.</li>
+<li>It uses uppercase, lowercase, numbers, and symbols to meet very stringent complexity requirements.</li>
+<li>The password is different for every machine.</li>
+<li>Due to the way that it is generated, it is completely unguessable.</li>
+<li>No one at Chocolatey Software could even tell you what the password is for a particular machine without local access.</li>
+</ul>
+<p>Chocolatey uses something unique about each system, along with an encrypted value in the licensed code base to generate base password, then it makes some other changes to ensure that the password meets complexity requirements. We won&#39;t give you the full algorithm of how the password is generated as knowing the algorithm would be a security issue - like having a partial picture of a key, you could start working on how to break in. Unlike a picture of a key, even knowing the full algorithm doesn&#39;t get you everything you need as you would need local access to each box to determine the password for <strong>each</strong> machine.</p>
+<h3 id="is-the-managed-password-stored-or-logged-anywhere">Is the managed password stored or logged anywhere?</h3>
+<p>No, that would reduce the security of the password. It exists in memory long enough to set the value on user and the service and then it is cleared.</p>
+<p>There is no storage of the password anywhere other than how Windows stores passwords.</p>
+<h3 id="is-the-managed-password-the-same-on-every-machine">Is the managed password the same on every machine?</h3>
+<p>No, it is different for every machine it is deployed to.</p>
+<h3 id="how-would-someone-potentially-get-access-to-the-managed-password">How would someone potentially get access to the managed password?</h3>
+<p>The Chocolatey licensed code base is encrypted, so only people that work at Chocolatey Software would be able to determine the password for a particular box (just that one) <strong>IF</strong> they have local access to that box. Even with all of the information and the algorithm, it&#39;s still going to take our folks a while to determine the password. That gets them access to one machine. Of course, Chocolatey folks are not going to do this for obvious reasons.</p>
+<p>So let&#39;s realize this to its full potential - If someone were able to hack the Chocolatey licensed codebase, they would be able to determine the full password algorithm. Then they&#39;d also need to hack into your infrastructure and get local access to every box that they wanted to get the Chocolatey-managed password so they could get admin access to just that box. Taking this out a bit further, it&#39;s reasonable to assume that if someone has hacked into your infrastructure, it&#39;s highly unlikely they are going to be using a non-administrator account to get local access to a box so they can get the password for an administrator account for just that one box. It&#39;s more likely they would would already have a local admin account for the boxes they are attacking, and are likely to seek other attack vectors that are much less sophisticated.</p>
+<h3 id="do-you-rotate-the-managed-password-on-a-schedule">Do you rotate the managed password on a schedule?</h3>
+<p>We are looking to do this in a future release. We may make the schedule configurable.</p>
+<h3 id="can-i-take-advantage-of-chocolatey-managed-passwords-with-my-own-windows-services">Can I take advantage of Chocolatey managed passwords with my own Windows services?</h3>
+<p>Yes, absolutely. If you use C4B&#39;s PowerShell Windows Services code, you will be able to install services and have Chocolatey manage the password for those as well.</p>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
 <h3 id="the-specified-path-file-name-or-both-are-too-long">The specified path, file name, or both are too long</h3>
 <p>This error can occur when installing the <code>chocolatey-management-web</code> package. Due to the nested folder structure contained within this package, when extracting to the default cache location, the path can become too long. This problem is known is occur in the 0.1.0-beta–20181009 release of this package, and it should be corrected in subsequent releases. As a workaround, adding the following parameters to the install command should allow the installation to complete successfully:</p>
@@ -585,4 +662,8 @@ System.Net.Sockets.SocketException (0x80004005): No connection could be made bec
 <p>Once this change has been added, save the file, and then run the following to ensure that the process running the CCM Website is stopped:</p>
 <pre><code class="powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
 <p>And then try accessing the website again. Any emails that are then sent from CCM should then contain valid links back to the site.</p>
+<h3 id="the-remote-server-returned-an-unexpected-response-413-request-entity-too-large">The remote server returned an unexpected response: (413) Request Entity Too Large</h3>
+<p>When reporting a larger number of packages (approximately 200), this error may be reported. This is due to the size of the information, in bytes, being too large to send between the Chocolatey Agent Service and the Chocolatey Central Management Service. This has been identified as a <a href="https://github.com/chocolatey/chocolatey-licensed-issues/issues/95">bug</a>, which is due to be corrected in version 0.1.1 of Chocolatey Central Managment</p>
+<h3 id="error-cannot-index-into-a-null-array">ERROR: Cannot index into a null array</h3>
+<p>This error can be reported when installing the Chocolatey Central Management Service. This can happen depending on the netsh binding that are currently present on the machine that is being installed on. If for example, you have enabled SNI on a website on the machine that you are installing onto, then this error may occur. This has been identified as a <a href="https://github.com/chocolatey/chocolatey-licensed-issues/issues/96">bug</a>, which is due to be corrected in version 0.1.1 of Chocolatey Central Management.</p>
 </article>

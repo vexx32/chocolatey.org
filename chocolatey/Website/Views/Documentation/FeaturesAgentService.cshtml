@@ -8,7 +8,7 @@
 <p>Empower your users and give your IT folks the precious gift of time to invest into taking your organization to the next level!</p>
 </blockquote>
 <p>The Chocolatey Agent service allows you to go further with your software management, bringing Chocolatey to desktop users in organizations that have controlled environments. This provides users in controlled environments more empowerment and instant turn around on required software. This frees up IT folks and admins time to spend on making the organization even better.</p>
-<!-- TOC depthTo:5 -->
+<!-- TOC depthTo:6 -->
 <ul>
 <li><a href="#usage">Usage</a>
 <ul>
@@ -17,7 +17,12 @@
 <ul>
 <li><a href="#background-mode-setup">Background Mode Setup</a>
 <ul>
-<li><a href="#chocolatey-agent-install-options">Chocolatey Agent Install Options</a></li>
+<li><a href="#chocolatey-agent-install-options">Chocolatey Agent Install Options</a>
+<ul>
+<li><a href="#package-parameters">Package Parameters</a></li>
+<li><a href="#chocolatey-managed-password">Chocolatey Managed Password</a></li>
+</ul></li>
+<li><a href="#chocolatey-agent-service-windows-account-considerations">Chocolatey Agent Service Windows Account Considerations</a></li>
 <li><a href="#command-customization-consideration">Command Customization Consideration</a></li>
 <li><a href="#interactive-self-service-consideration">Interactive Self-Service Consideration</a></li>
 </ul></li>
@@ -108,7 +113,7 @@ choco feature enable --name=&quot;&#39;useBackgroundServiceWithNonAdministrators
 <h5 id="chocolatey-agent-install-options">Chocolatey Agent Install Options</h5>
 <p>Starting with Chocolatey Agent v0.8.0+, the service will install as a local administrative user <code>ChocolateyLocalAdmin</code> by default (and manage the password as well). However you can specify your own user with package parameters (or have it use <code>LocalSystem</code>). Using a local administrator account allows for more things to be installed without issues. It also will allow easier shortcuts and other items to be put back on the correct user (the original requestor). You can specify a domain account as well. Prior to <code>v0.8.0</code>, Chocolatey Agent would install as LocalSystem (<code>SYSTEM</code>) and would require additional customization.</p>
 <p><strong>NOTE:</strong> If you are using file shares for sources, you may want to ensure the account or computer has network access permissions for the file share(s).</p>
-<p><strong>Package Parameters</strong>:</p>
+<h6 id="package-parameters">Package Parameters</h6>
 <ul>
 <li><code>/Username:</code> - provide username - instead of using the default &#39;ChocolateyLocalAdmin&#39; user.</li>
 <li><code>/Password:</code> - optional password for the user.</li>
@@ -116,7 +121,7 @@ choco feature enable --name=&quot;&#39;useBackgroundServiceWithNonAdministrators
 <li><code>/UseDefaultChocolateyConfigUser</code> - use the default username from Chocolatey&#39;s configuration. This may be LocalSystem.</li>
 <li><code>/NoRestartService</code> - do not shut down and restart the service. You will need to restart later to take advantage of new service information.</li>
 </ul>
-<p><strong>Chocolatey Managed Password</strong></p>
+<h6 id="chocolatey-managed-password">Chocolatey Managed Password</h6>
 <p>When Chocolatey manages the password for a local administrator, it creates a very complex password:</p>
 <ul>
 <li>It is 32 characters long.</li>
@@ -126,6 +131,26 @@ choco feature enable --name=&quot;&#39;useBackgroundServiceWithNonAdministrators
 <li>No one at Chocolatey Software could even tell you what the password is for a particular machine without local access.</li>
 </ul>
 <p>See <a href="#faq">FAQ</a> below for more discussion on security aspects.</p>
+<h5 id="chocolatey-agent-service-windows-account-considerations">Chocolatey Agent Service Windows Account Considerations</h5>
+<ul>
+<li>Windows Account (required, defaults to <code>ChocolateyLocalAdmin</code>)
+<ul>
+<li>The Chocolatey Agent Service requires <strong><em>an</em></strong> administrative account, whether that is a domain account or a local account - it just needs to be a local admin (a member of the Administrators group).</li>
+<li>The agent service doesn&#39;t specifically require the <code>ChocolateyLocalAdmin</code> account, any Windows account can be used. The <code>ChocolateyLocalAdmin</code> is used as the default if one is not specified.</li>
+<li>Upon use of an account during installation, it will make that account a member of the Administrators account.</li>
+<li>The account used will also be granted LogonAsService and LogonAsBatch privileges.</li>
+</ul></li>
+<li>Managed Password (optional, default)
+<ul>
+<li>When the <code>ChocolateyLocalAdmin</code> account is used, it generates a managed password that is different on every machine, 32 characters long, meets complexity requirements, and basically very strong.</li>
+<li>To determine the managed password, it would take access to the box and someone from Chocolatey Software who has access to the algorithm used to generate the password (more information in the FAQs below).</li>
+</ul></li>
+<li>Rotating/Updating Passwords
+<ul>
+<li>If a different account with a rotating password is used, the service will need to be updated with the new credentials and restarted soon after changing that password.</li>
+<li>The managed password is not currently updated/rotated, but it is something we are looking at how best to implement.</li>
+</ul></li>
+</ul>
 <h5 id="command-customization-consideration">Command Customization Consideration</h5>
 <p>Starting with Chocolatey Licensed Extension v1.12.4, you are allowed to configure what commands can be routed through the background service. Please note that Chocolatey Licensed defaults to <code>install</code> and <code>upgrade</code> as that is the most secure experience. However you can add uninstall and some other commands as well. Uninstall does have some security considerations as it would allow a non-administrator to remove software that you may have installed, including the background service itself.</p>
 <p><strong>Available Commands</strong>:</p>
