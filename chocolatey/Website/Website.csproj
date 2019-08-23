@@ -828,6 +828,7 @@
     <Compile Include="ViewModels\DiscountViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
     <Compile Include="ViewModels\CourseAchievementViewModel.cs" />
+    <Compile Include="ViewModels\DocumentationSearchViewModel.cs" />
     <Compile Include="ViewModels\DocumentationViewModel.cs" />
     <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
@@ -1381,6 +1382,7 @@
     <Content Include="Scripts\CookiesNotice\Index.js" />
     <Content Include="Scripts\courses\courses.js" />
     <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\documentation\documentation.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
     <Content Include="Scripts\home\bundle.txt" />
@@ -1426,7 +1428,6 @@
     <Content Include="Views\Documentation\Index.cshtml" />
     <Content Include="Views\Shared\_BaseLayout.cshtml" />
     <Content Include="Views\Documentation\_Layout.cshtml" />
-    <Content Include="Views\Documentation\_ViewStart.cshtml" />
     <Content Include="Views\Pages\Features.cshtml" />
     <Content Include="Views\Documentation\About.cshtml" />
     <Content Include="Views\Documentation\AutomaticPackages.cshtml" />
@@ -1703,6 +1704,8 @@
     <Content Include="Views\Documentation\Search.cshtml" />
     <Content Include="Views\Blog\InfrastructureChangesOctober2019.md" />
     <Content Include="Views\Shared\_Loader.cshtml" />
+    <Content Include="Views\Documentation\Documentation.cshtml" />
+    <Content Include="Views\Documentation\DocumentationLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
