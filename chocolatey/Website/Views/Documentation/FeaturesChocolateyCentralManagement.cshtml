@@ -15,6 +15,7 @@
 <!-- TOC depthTo:6 -->
 <ul>
 <li><a href="#usage">Usage</a></li>
+<li><a href="#roadmap">Roadmap</a></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installation-source">Installation Source</a></li>
 <li><a href="#setup">Setup</a>
@@ -104,6 +105,23 @@
 <!-- /TOC -->
 <h2 id="usage">Usage</h2>
 <p>Chocolatey Central Management (CCM) works in conjunction with <a href="https://chocolatey.org/docs/features-agent-service">Chocolatey Agent</a> to bring full details of all Chocolatey controlled machines in your environment into one location, which is then accessible by the CCM Website. Chocolatey Agent will regularly report information about what is installed on each machine, and whether any of that software is outdated, based on packages in available sources.</p>
+<h2 id="roadmap">Roadmap</h2>
+<p>Chocolatey Central Management will allow:</p>
+<ul>
+<li>Centralized Software Management for your entire organization.</li>
+<li><del>Centralized reporting of software.</del> Completed May 2019</li>
+<li><del>Know immediately what software is out of date and on what machines.</del> Completed May 2019</li>
+<li><del>Know within seconds the entire estate of software and what versions are installed.</del> Completed May 2019
+<ul>
+<li><del>Including zips and archives* that do not show up in Programs and Features</del> Completed May 2019</li>
+<li><del>Including internal software* that does not show up in Programs and Features</del> Completed May 2019</li>
+</ul></li>
+<li>Adhoc reporting for a particular machine or set of machines</li>
+<li>Run arbitrary Chocolatey commands against one or more machines</li>
+<li><del>See how many machines you are actively managing in your organization</del> Completed May 2019</li>
+<li>More...</li>
+</ul>
+<p>* - When deployed through Chocolatey.</p>
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Chocolatey (<code>chocolatey</code> package) v0.10.14+</li>
