@@ -817,10 +817,10 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactAdminsViewModel.cs" />
     <Compile Include="ViewModels\ContactUsViewModel.cs" />
-    <Compile Include="ViewModels\CourseProfileModuleViewModel.cs" />
+    <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
-    <Compile Include="ViewModels\CourseProfileViewModel.cs" />
-    <Compile Include="ViewModels\CourseDisplayViewModel.cs" />
+    <Compile Include="ViewModels\CourseViewModel.cs" />
+    <Compile Include="ViewModels\CourseAchievementViewModel.cs" />
     <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />

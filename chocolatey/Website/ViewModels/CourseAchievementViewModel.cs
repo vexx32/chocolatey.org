@@ -21,31 +21,29 @@ using System.Collections.Generic;
 
 namespace NuGetGallery
 {
-    public class CourseProfileViewModel
+    public class CourseAchievementViewModel
     {
-        public CourseProfileViewModel(CourseProfile courseProfile)
+        public CourseAchievementViewModel(UserCourseAchievement courseAchievement)
         {
-            Key = courseProfile.Key;
-            UserKey = courseProfile.UserKey;
-            User User = courseProfile.User;
-            Course Course = courseProfile.Course;
-            CourseKey = courseProfile.CourseKey;
-            Completed = courseProfile.Completed;
-            CompletedDate = courseProfile.CompletedDate;
+            Key = courseAchievement.Key;
+            UserKey = courseAchievement.UserKey;
+            User = courseAchievement.User;
+            CourseKey = courseAchievement.CourseKey;
+            Completed = courseAchievement.Completed;
+            CompletedDate = courseAchievement.CompletedDate;
 
-            CourseModuleAchievements = new List<CourseProfileModuleViewModel>();
-            foreach (var moduleAchievement in courseProfile.CourseModuleAchievements.OrEmptyListIfNull())
+            CourseModuleAchievements = new List<CourseModuleAchievementViewModel>();
+            foreach (var moduleAchievement in courseAchievement.CourseModuleAchievements.OrEmptyListIfNull())
             {
-                CourseModuleAchievements.Add(new CourseProfileModuleViewModel(moduleAchievement));
+                CourseModuleAchievements.Add(new CourseModuleAchievementViewModel(moduleAchievement));
             }
         }
 
         public int Key { get; set; }
         public int UserKey { get; set; }
         public User User { get; set; }
-        public Course Course { get; set; }
-        public int CourseKey { get; set; } // foreign key to Course
-        public ICollection<CourseProfileModuleViewModel> CourseModuleAchievements { get; set; }
+        public int CourseKey { get; set; }
+        public ICollection<CourseModuleAchievementViewModel> CourseModuleAchievements { get; private set; }
         public bool Completed { get; set; }
         public DateTime? CompletedDate { get; set; }
     }

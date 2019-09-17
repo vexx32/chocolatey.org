@@ -20,21 +20,19 @@ using System;
 
 namespace NuGetGallery
 {
-    public class CourseProfileModuleViewModel
+    public class CourseModuleAchievementViewModel
     {
-        public CourseProfileModuleViewModel(CourseProfileModule moduleAchievement)
+        public CourseModuleAchievementViewModel(UserCourseModuleAchievement moduleAchievement)
         {
             Key = moduleAchievement.Key;
-            CourseProfileKey = moduleAchievement.CourseProfileKey;
+            CourseAchievementKey = moduleAchievement.UserCourseAchievementKey;
             CourseModuleKey = moduleAchievement.CourseModuleKey;
-            IsCompleted = moduleAchievement.IsCompleted;
             CompletedDate = moduleAchievement.CompletedDate;
         }
 
         public int Key { get; set; }
-        public int CourseProfileKey { get; set; }
+        public int CourseAchievementKey { get; set; }
         public int CourseModuleKey { get; set; }
-        public bool IsCompleted { get; set; }
         public DateTime? CompletedDate { get; set; }
     }
 }

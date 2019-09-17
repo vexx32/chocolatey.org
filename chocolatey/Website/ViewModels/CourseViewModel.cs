@@ -1,4 +1,5 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2017 - 2019 Chocolatey Software
+// Copyright 2011 - 2017RealDimensions Software, LLC, the original 
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
 // and the authors/contributors of NuGetGallery 
@@ -16,19 +17,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NuGetGallery
 {
-    public class CourseDisplayViewModel
+    public class CourseViewModel
     {
+        public CourseNameType CourseNameType { get; set; }
 
         public string Username { get; set; }
+        public int UserKey { get; set; }
 
         [Display(Name = "Question One")]
-        public string QuestOne { get; set; }
+        public string QuestionOne { get; set; }
 
         [Display(Name = "Question Two")]
         public string QuestTwo { get; set; }
@@ -46,8 +49,11 @@ namespace NuGetGallery
         public bool CompletedCourse { get; set; }
 
         public DateTime? CompletedDate { get; set; }
-        
-        public ICollection<CourseProfileViewModel> UserCourses { get; set; }
 
+        public ICollection<CourseAchievementViewModel> UserCourseAchievements { get; set; }
+
+        public IList<CourseModuleViewModel> CourseModules { get; set; }
+
+        public int CourseModuleKey { get; set; }
     }
 }
