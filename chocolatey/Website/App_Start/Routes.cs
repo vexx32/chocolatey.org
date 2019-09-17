@@ -224,13 +224,13 @@ namespace NuGetGallery
             routes.MapRouteSeo(
                 RouteName.Courses,
                 "courses",
-                new { controller = "Users", action = "Courses"}
+                new { controller = "Courses", action = "Courses" }
                 );
 
             routes.MapRouteSeo(
                 RouteName.CourseName,
                 "courses/{courseName}/{courseModuleName}",
-                new { controller = "Users", action = "CourseName", courseName = "home", courseModuleName = "home" }
+                new { controller = "Courses", action = "CourseName", courseName = "home", courseModuleName = "home" }
                 );
 
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
