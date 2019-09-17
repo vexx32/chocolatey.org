@@ -20,14 +20,12 @@ using System.Collections.Generic;
 
 namespace NuGetGallery
 {
-    public class UserProfileModel
+    public class CourseLeftViewModel
     {
-        public string Username { get; set; }
-        public string EmailAddress { get; set; }
-        public ICollection<PackageViewModel> Packages { get; set; }
-        public ICollection<PackageViewModel> PackagesModerationQueue { get; set; }
-        public ICollection<UserSiteProfileViewModel> UserProfiles { get; set; }
-        public ICollection<CourseAchievementViewModel> CompletedCourses { get; set; }
-        public int TotalPackageDownloadCount { get; set; }
+        public CourseNameType CourseNameType { get; set; }
+
+        public ICollection<CourseAchievementViewModel> UserCourseAchievements { get; set; }
+
+        public IList<CourseModuleViewModel> CourseModules { get; set; }
     }
 }

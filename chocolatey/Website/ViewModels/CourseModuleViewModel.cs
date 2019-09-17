@@ -1,4 +1,4 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+// Copyright 2011 - Present RealDimensions Software, LLC, the original 
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
 // and the authors/contributors of NuGetGallery 
@@ -16,18 +16,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
+using System;
 
 namespace NuGetGallery
 {
-    public class UserProfileModel
+    public class CourseModuleViewModel
     {
-        public string Username { get; set; }
-        public string EmailAddress { get; set; }
-        public ICollection<PackageViewModel> Packages { get; set; }
-        public ICollection<PackageViewModel> PackagesModerationQueue { get; set; }
-        public ICollection<UserSiteProfileViewModel> UserProfiles { get; set; }
-        public ICollection<CourseAchievementViewModel> CompletedCourses { get; set; }
-        public int TotalPackageDownloadCount { get; set; }
+        public string CourseModuleName { get; set; }
+        public string CourseModuleDescription { get; set; }
+        public int CourseModuleKey { get; set; }
+        public int CourseKey { get; set; }
+        public int ModuleOrder { get; set; }
+        public CourseModuleNameType ModuleNameType { get; set; }
+       // public bool IsCompleted { get; set; }
+       // public DateTime? CompletedDate { get; set; }
     }
 }
