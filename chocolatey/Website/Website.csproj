@@ -1701,7 +1701,7 @@
     <Content Include="Views\Courses\GettingStarted\_ViewStart.cshtml" />
     <Content Include="Views\Courses\GettingStarted\Home.cshtml" />
     <Content Include="Views\Courses\GettingStarted\Requirements.cshtml" />
-    <Content Include="Views\Courses\GettingStarted\_LeftSideColumn.cshtml" />
+    <Content Include="Views\Courses\_LeftSideColumn.cshtml" />
     <Content Include="Views\Courses\GettingStarted\_CourseDescription.cshtml" />
     <Content Include="Views\Courses\GettingStarted\HowToUse.cshtml" />
     <Content Include="Views\Courses\GettingStarted\Terminology.cshtml" />
@@ -1709,11 +1709,9 @@
     <Content Include="Views\Courses\GettingStarted\InstallationInDetail.cshtml" />
     <Content Include="Views\Courses\GettingStarted\HowChocolateyWorks.cshtml" />
     <Content Include="Views\Courses\GettingStarted\_NextUrl.cshtml" />
-    <Content Include="Views\Courses\GettingStarted\_Popup.cshtml" />
     <Content Include="Views\Courses\_QuizCTA.cshtml" />
     <Content Include="Views\Courses\_AllCourses.cshtml" />
     <Content Include="Views\Courses\Installation\_CourseDescription.cshtml" />
-    <Content Include="Views\Courses\Installation\_LeftSideColumn.cshtml" />
     <Content Include="Views\Courses\Installation\_ViewStart.cshtml" />
     <Content Include="Views\Courses\Installation\Home.cshtml" />
     <Content Include="Views\Courses\Installation\Installing.cshtml" />
@@ -1721,12 +1719,12 @@
     <Content Include="Views\Courses\Installation\Uninstalling.cshtml" />
     <Content Include="Views\Courses\Installation\_Method.cshtml" />
     <Content Include="Views\Courses\Installation\_NextUrl.cshtml" />
-    <Content Include="Views\Courses\Installation\_Popup.cshtml" />
     <Content Include="Views\Pages\_Courses.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\_CourseDescription.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\_LeftSideColumn.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\_NextUrl.cshtml" />
-    <Content Include="Views\Courses\CreatingChocolateyPackages\_Popup.cshtml" />
+    <Content Include="Views\Courses\_Popup.cshtml" />
+    <Content Include="Views\Courses\_CourseAchievementBadgeDisplay.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\_ViewStart.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\Home.cshtml" />
     <Content Include="Views\Courses\CreatingChocolateyPackages\SummaryRulesAndGuidlines.cshtml" />

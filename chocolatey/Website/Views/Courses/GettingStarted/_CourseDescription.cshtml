@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h2 class="d-flex flex-row align-items-center">
-                        <img width="50" src="@CourseProfileConstants.Images.gettingStartedWithChocolatey" alt="@CourseProfileConstants.GettingStartedWithChocolatey" />
-                        <span class="ml-2">@CourseProfileConstants.GettingStartedWithChocolatey</span>
+                        <img width="50" src="@CourseConstants.GetBadgeUrl(Model.CourseNameType)" alt="@Model.CourseName" />
+                        <span class="ml-2">@Model.CourseName</span>
                     </h2>
-                    <p class="mb-0"><strong>Prerequisite:</strong> <a href="@Url.RouteUrl(RouteName.CourseName, new {courseName = "installation"})">Installing, Upgrading, and Uninstalling Chocolatey</a></p>
+                    <p class="mb-0"><strong>Prerequisite:</strong> <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling) })">Installing, Upgrading, and Uninstalling Chocolatey</a></p>
                     <p class="text-muted">7 Topics | 1 Hour | <span class="level beginner">Beginner</span></p>
                     <p>
                         It's time. It's time to step out of the dark ages and stop either doing things manually or stop killing yourself trying to work directly with those complex systems.
@@ -19,7 +19,7 @@
                     </p>
                 </div>
                 <div class="col-lg-6 course-home">
-                    @Html.Partial("~/Views/Courses/GettingStarted/_LeftSideColumn.cshtml")
+                    @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType  = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
                 </div>
             </div>
         </div>

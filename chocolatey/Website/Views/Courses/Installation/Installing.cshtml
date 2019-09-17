@@ -2,10 +2,10 @@
 @model CourseViewModel
 @{
     ViewBag.Title = "Installing Chocolatey";
-    var url = Url.RouteUrl(RouteName.CourseName, new { courseName = "installation", courseModuleName = "installing" });
+    var url = Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(Model.CourseNameType), courseModuleName = CourseConstants.GetCourseModuleUrl(CourseModuleNameType.Installation_Installing) });
 }
 @section LeftSideColumn {
-    @Html.Partial("~/Views/Courses/Installation/_LeftSideColumn.cshtml")
+    @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
     <ul>
@@ -92,7 +92,7 @@
                     <option selected>Choose...</option>
                     @Html.Partial("~/Views/Courses/Installation/_Method.cshtml")
                 </select>
-                <a class="text-danger d-block mt-3" href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "home" })">Cancel</a>
+                <a class="text-danger d-block mt-3" href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "home" })">Cancel</a>
             </div>
         </div>
     </div>
@@ -887,18 +887,29 @@ choco install notepadplusplus.commandline -y
         using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <fieldset class="form @if(Model.UserCourseProfiles != null){foreach(var siteProfile in Model.UserCourseProfiles){if(siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.ModOne == true){<text>mod-completed</text>}}}">
-                <legend class="d-none">Quiz</legend>
-                @Html.HiddenFor(m => m.EmailAddress)
-                @Html.HiddenFor(m => m.CourseName, new { Value = CourseProfileConstants.InstallingUpgradingUninstalling })
-                @Html.HiddenFor(m => m.CompletedModOne, new { Value = true })
+            <fieldset class="form @if (Model.UserCourseAchievements != null)
+                                  {
+                                      var courseAchievement = Model.UserCourseAchievements.FirstOrDefault(c => c.CourseKey == Model.CourseKey);
+                                      if (courseAchievement != null)
+                                      {
+                                          CourseModuleAchievementViewModel moduleAchievement = courseAchievement.CourseModuleAchievements.FirstOrDefault(m => m.CourseModuleKey == Model.CourseModuleKey);
+                                          if (moduleAchievement != null)
+                                          {
+                                              <text>mod-completed</text>
+                                          }
+                                      }
+                                  }">
+              <legend class="d-none">Quiz</legend>
+              @Html.HiddenFor(m => m.CourseName)
+              @Html.HiddenFor(m => m.CourseKey)
+              @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>What is the minimum PowerShell version that Chocolatey supports?</h5>
-                    @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })
                     <label for="QuestOneOptionOne">PowerShell 5</label><br />
-                    @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionTwo" })
                     <label for="QuestOneOptionTwo">PowerShell Core</label><br />
-                    @Html.RadioButtonFor(m => m.QuestOne, "1", new { id = "QuestOneOptionThree" })
+                    @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionThree" })
                     <label for="QuestOneOptionThree">PowerShell 2</label>
                 </div>
                 <div class="form-field mt-3">
@@ -914,24 +925,11 @@ choco install notepadplusplus.commandline -y
             </fieldset>
         }
 
-        if (Model.UserCourseProfiles != null)
-        {
-            foreach (var siteProfile in Model.UserCourseProfiles)
-            {
-                if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.ModOne == true && siteProfile.Completed == false)
-                {
-                    @Html.Partial("~/Views/Courses/Installation/_NextUrl.cshtml")
-                }
-                else if (siteProfile.Name == CourseProfileConstants.InstallingUpgradingUninstalling && siteProfile.Completed == true)
-                {
-                    <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
-                }
-            }
-        }
+        @Html.Partial("~/Views/Courses/_CourseAchievementBadgeDisplay.cshtml", Model)
     }
 </div>
 
-@Html.Partial("~/Views/Courses/Installation/_Popup.cshtml")
+@Html.Partial("~/Views/Courses/_Popup.cshtml", Model)
 
 @section BottomScripts {
     <script>

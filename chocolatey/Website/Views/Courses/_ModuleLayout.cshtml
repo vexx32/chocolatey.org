@@ -37,13 +37,17 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteName.Courses)">Courses</a></li>
                         <li class="breadcrumb-item">
-                            @if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started" }) + "?quiz=true")
+                            @if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.GettingStartedWithChocolatey) }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.GettingStartedWithChocolatey) }) + "?quiz=true")
                             {
-                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "getting-started", courseModuleName = "home" })">Getting Started</a>
+                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.GettingStartedWithChocolatey), courseModuleName = "home" })">Getting Started</a>
                             }
-                            else if (FullHref == BaseHref + "/courses/installation/installing" || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "installation" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "installation" }) + "?quiz=true")
+                            else if (FullHref == BaseHref + "/courses/installation/installing" || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling) }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling) }) + "?quiz=true")
                             {
-                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = "installation", courseModuleName = "home" })">Installation</a>
+                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "home" })">Installation</a>
+                            }
+                            else if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.CreatingChocolateyPackages) }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.CreatingChocolateyPackages) }) + "?quiz=true")
+                            {
+                                <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.CreatingChocolateyPackages), courseModuleName = "home" })">Creating Chocolatey Packages</a>
                             }
                             else if (Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "creating-chocolatey-packages" }) || Request.RawUrl == Url.RouteUrl(RouteName.CourseName, new { courseName = "creating-chocolatey-packages" }) + "?quiz=true")
                             {

@@ -3,15 +3,15 @@ string currentUrl = Request.Url.AbsoluteUri;
 
 if (currentUrl.ToLower().Contains("uninstalling"))
 {
-    <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "home" })" class="btn btn-success mt-3">Review Unfinished Modules <span class="icon-chevron-right"></span></a>
+    <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "home" })" class="btn btn-success mt-3">Review Unfinished Modules <span class="icon-chevron-right"></span></a>
 }
 else
 {
     <a href="@if (currentUrl.ToLower().Contains("installing")) {
-    @Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "upgrading" })
+    @Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "upgrading" })
 }
 else if (currentUrl.ToLower().Contains("upgrading")) {
-    @Url.RouteUrl(RouteName.CourseName, new { courseName= "installation", courseModuleName = "uninstalling" })
+    @Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "uninstalling" })
 }" class="btn btn-success mt-3">Continue with Course<span class="icon-chevron-right"></span></a>
 }
 }

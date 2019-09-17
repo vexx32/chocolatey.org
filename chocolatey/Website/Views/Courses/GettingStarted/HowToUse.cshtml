@@ -4,7 +4,7 @@
     ViewBag.Title = "Using Chocolatey";
 }
 @section LeftSideColumn {
-    @Html.Partial("~/Views/Courses/GettingStarted/_LeftSideColumn.cshtml")
+    @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
     <ul>
@@ -47,18 +47,29 @@
         using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <fieldset class="form @if(Model.UserCourseProfiles != null){foreach(var siteProfile in Model.UserCourseProfiles){if(siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModThree == true){<text>mod-completed</text>}}}">
-                <legend class="d-none">Quiz</legend>
-                @Html.HiddenFor(m => m.EmailAddress)
-                @Html.HiddenFor(m => m.CourseName, new { Value = CourseProfileConstants.GettingStartedWithChocolatey })
-                @Html.HiddenFor(m => m.CompletedModThree, new { Value = true })
+            <fieldset class="form @if (Model.UserCourseAchievements != null)
+                                  {
+                                      var courseAchievement = Model.UserCourseAchievements.FirstOrDefault(c => c.CourseKey == Model.CourseKey);
+                                      if (courseAchievement != null)
+                                      {
+                                          CourseModuleAchievementViewModel moduleAchievement = courseAchievement.CourseModuleAchievements.FirstOrDefault(m => m.CourseModuleKey == Model.CourseModuleKey);
+                                          if (moduleAchievement != null)
+                                          {
+                                              <text>mod-completed</text>
+                                          }
+                                      }
+                                  }">
+              <legend class="d-none">Quiz</legend>
+              @Html.HiddenFor(m => m.CourseName)
+              @Html.HiddenFor(m => m.CourseKey)
+              @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>What command is used to install a Chocolatey Package?</h5>
-                    @Html.RadioButtonFor(m => m.QuestOne, "1", new { id = "QuestOneOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionOne" })
                     <label for="QuestOneOptionOne"><code>choco install &lt;packageName&gt;</code></label><br />
-                    @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionTwo" })
                     <label for="QuestOneOptionTwo"><code>choco info &lt;packageName&gt;</code></label><br />
-                    @Html.RadioButtonFor(m => m.QuestOne, "0", new { id = "QuestOneOptionThree" })
+                    @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionThree" })
                     <label for="QuestOneOptionThree"><code>choco update &lt;packageName&gt;</code></label>
                 </div>
                 <div class="form-field mt-3">
@@ -74,21 +85,8 @@
             </fieldset>
         }
 
-        if (Model.UserCourseProfiles != null)
-        {
-            foreach (var siteProfile in Model.UserCourseProfiles)
-            {
-                if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.ModThree == true && siteProfile.Completed == false)
-                {
-                    @Html.Partial("~/Views/Courses/GettingStarted/_NextUrl.cshtml")
-                }
-                else if (siteProfile.Name == CourseProfileConstants.GettingStartedWithChocolatey && siteProfile.Completed == true)
-                {
-                    <a href="@Url.Action(MVC.Users.Profiles(Model.Username))" class="btn btn-success mt-3">See Badges<span class="icon-chevron-right"></span></a>
-                }
-            }
-        }
+        @Html.Partial("~/Views/Courses/_CourseAchievementBadgeDisplay.cshtml", Model)
     }
 </div>
 
-@Html.Partial("~/Views/Courses/GettingStarted/_Popup.cshtml")
+@Html.Partial("~/Views/Courses/_Popup.cshtml", Model)
