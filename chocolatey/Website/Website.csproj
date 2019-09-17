@@ -1118,7 +1118,8 @@
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
     <Content Include="Content\Images\Badges\badges.png" />
-    <Content Include="Content\Images\Badges\GettingStartedCourse.png" />
+    <Content Include="Content\Images\Badges\CreatingChocolateyPackages.png" />
+    <Content Include="Content\Images\Badges\GettingStartedWithChocolatey.png" />
     <Content Include="Content\Images\Badges\InstallingUpgradingUninstalling.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
