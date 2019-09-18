@@ -1,4 +1,4 @@
-﻿@using MarkdownSharp
+﻿@using Markdig
 @using NuGetGallery;
 @model UserProfileModel
 @{
@@ -6,13 +6,10 @@
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/CookiesNotice");
-    var markdownGenerator = new Markdown
-    {
-        AutoHyperlink = true,
-        AutoNewLines = true,
-        //EncodeProblemUrlCharacters = true,
-        LinkEmails = true,
-    };
+    var MarkdownPipeline = new MarkdownPipelineBuilder()
+                 .UseSoftlineBreakAsHardlineBreak()
+                 .UseAdvancedExtensions()
+                 .Build();
 }
 
 <div id="header" class="bg-primary profile-header"></div>
@@ -115,7 +112,7 @@
                                         </ul>
                                         @if (String.IsNullOrEmpty(package.ReviewComments))
                                         {
-                                            <p class="mt-3 mb-0">@Html.Raw(markdownGenerator.Transform(package.ReviewComments.clean_html()))</p>
+                                            <p class="mt-3 mb-0">@Html.Raw(Markdown.ToHtml(package.ReviewComments, MarkdownPipeline))</p>
                                         }
                                     </div>
                                 </div>
@@ -143,7 +140,7 @@
                                     <div class="card-body pt-0 pb-3">
                                         @if (!string.IsNullOrEmpty(package.Summary))
                                         {
-                                            @Html.Raw(markdownGenerator.Transform(package.Summary.clean_html()))
+                                            @Html.Raw(Markdown.ToHtml(package.Summary, MarkdownPipeline))
                                         }
                                     </div>
                                     <div class="card-footer">
