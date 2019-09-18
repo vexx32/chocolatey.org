@@ -36,18 +36,18 @@
             </div>
         }
         <div class="form-field">
-            @Html.LabelFor(m => m.UserNameOrEmail) <span class="icon-asterisk"></span>
+            @Html.LabelFor(m => m.UserNameOrEmail) <span class="fas fa-asterisk"></span>
             @Html.EditorFor(m => m.UserNameOrEmail)
             <span class="field-hint-message">Enter your username or email address.</span>
             @Html.ValidationMessageFor(m => m.UserNameOrEmail)
         </div>
         <div class="form-field">
-            @Html.LabelFor(m => m.Password) <span class="icon-asterisk"></span>
+            @Html.LabelFor(m => m.Password) <span class="fas fa-asterisk"></span>
             @Html.EditorFor(m => m.Password)
             <span class="field-hint-message">Passwords must be at least 7 characters long.</span>
             @Html.ValidationMessageFor(m => m.Password)
         </div>
-        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="fas fa-asterisk"></span> <small>are required.</small></p>
         <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Log In" title="Log In" />
 	<p class="mb-0 mt-2 text-center"><small>@Html.ActionLink("Lost your Password?", "ForgotPassword", "Users")</small></p>
     </fieldset>

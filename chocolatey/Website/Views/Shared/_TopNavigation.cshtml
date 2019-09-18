@@ -37,7 +37,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 d-xl-none">
-                                    <a class="goback" href="#"><span class="icon-chevron-left"></span> Go Back</a>
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Overview</h4>
                                 </div>
                                 <div class="col-lg-4">
@@ -61,9 +61,9 @@
                                 <div class="col-lg-4">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">Customer Stories</a></li>
-                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "puppet-customer-success-story"})">Puppet<span class="icon-angle-right"></span></a></li>
-                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "yelp-customer-success-story"})">Yelp<span class="icon-angle-right"></span></a></li>
-                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "cme-group-customer-success-story"})">CME Group<span class="icon-angle-right"></span></a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "puppet-customer-success-story"})">Puppet<span class="fas fa-angle-right"></span></a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "yelp-customer-success-story"})">Yelp<span class="fas fa-angle-right"></span></a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "cme-group-customer-success-story"})">CME Group<span class="fas fa-angle-right"></span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 d-xl-none">
-                                    <a class="goback" href="#"><span class="icon-chevron-left"></span> Go Back</a>
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Product</h4>
                                 </div>
                                 <div class="col-lg-6">
@@ -120,7 +120,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 d-xl-none">
-                                    <a class="goback" href="#"><span class="icon-chevron-left"></span> Go Back</a>
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Community</h4>
                                 </div>
                                 <div class="col-lg-6">
@@ -148,7 +148,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 d-xl-none">
-                                    <a class="goback" href="#"><span class="icon-chevron-left"></span> Go Back</a>
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Learn</h4>
                                 </div>
                                 <div class="col-lg-4">
@@ -189,7 +189,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 d-xl-none">
-                                    <a class="goback" href="#"><span class="icon-chevron-left"></span> Go Back</a>
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Partners</h4>
                                 </div>
                                 <div class="col-lg-6">
@@ -216,7 +216,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 d-xl-none">
-                                    <a class="goback" href="#"><span class="icon-chevron-left"></span> Go Back</a>
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">About</h4>
                                 </div>
                                 <div class="col-lg-6">
@@ -253,7 +253,7 @@
                 {
                     <li class="d-none d-sm-flex">
                         <a href="@Url.RouteUrl(RouteName.ListPackages)">
-                            <span class="icon-download" alt="Packages"></span>
+                            <span class="fas fa-download" alt="Packages"></span>
                             <span>Packages</span>
                         </a>
                     </li>
@@ -262,13 +262,13 @@
                 {
                     <li>
                         <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
-                            <span class="icon-user-plus" alt="Signup"></span>
+                            <span class="fas fa-user-plus" alt="Signup"></span>
                             <span>Signup</span>
                         </a>
                     </li>
                     <li>
                         <a class="ux_account" href="@Url.LogOn()">
-                            <span class="icon-sign-in" alt="Login"></span>
+                            <span class="fas fa-sign-in-alt" alt="Login"></span>
                             <span>Login</span>
                         </a>
                     </li>
@@ -279,7 +279,7 @@
                     {
                         <li class="d-none d-md-flex">
                             <a href="@Url.RouteUrl(RouteName.ListPackages)?q=&moderatorQueue=true">
-                                <span class="icon-pencil" alt="Moderator Queue"></span>
+                                <span class="fas fa-pencil-alt" alt="Moderator Queue"></span>
                                 <span class="d-lg-none">Moderation</span>
                                 <span class="d-none d-lg-block">Moderator Queue</span>
                             </a>
@@ -287,13 +287,13 @@
                     }
                     <li>
                         <a class="ux_account" href="@Url.Action(MVC.Users.Account())">
-                            <span class="icon-user" alt="Account"></span>
+                            <span class="fas fa-users" alt="Account"></span>
                             <span>Account</span>
                         </a>
                     </li>
                     <li>
                         <a class="ux_account_action" href="@Url.LogOff()">
-                            <span class="icon-sign-out" alt="Log Off"></span>
+                            <span class="fas fa-sign-out-alt" alt="Log Off"></span>
                             <span>Log Off</span>
                         </a>
                     </li>
@@ -328,31 +328,31 @@
             <ul>
                 <li>
                     <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})">
-                        <span class="icon-play" alt="Videos"></span>
+                        <span class="fas fa-play" alt="Videos"></span>
                         <span>Videos</span>
                     </a>
                 </li>
                 <li>
                     <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">
-                        <span class="icon-star" alt="Customer Success Stories"></span>
+                        <span class="fas fa-star" alt="Customer Success Stories"></span>
                         <span>Success Stories</span>
                     </a>
                 </li>
                 <li>
                     <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">
-                        <span class="icon-briefcase" alt="Case Studies"></span>
+                        <span class="fas fa-briefcase" alt="Case Studies"></span>
                         <span>Case Studies</span>
                     </a>
                 </li>
                 <li>
                     <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">
-                        <span class="icon-file" alt="Documentation"></span>
+                        <span class="fas fa-file" alt="Documentation"></span>
                         <span>Docs</span>
                     </a>
                 </li>
                 <li>
                     <a href="@Url.RouteUrl(RouteName.BlogHome)">
-                        <span class="icon-rss" alt="Blog"></span>
+                        <span class="fas fa-rss" alt="Blog"></span>
                         <span>Blog</span>
                     </a>
                 </li>
@@ -372,13 +372,13 @@
                 <ul>
                     <li class="d-none d-sm-flex">
                         <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
-                            <span class="icon-user-plus" alt="Signup"></span>
+                            <span class="fas fa-user-plus" alt="Signup"></span>
                             <span>Signup</span>
                         </a>
                     </li>
                     <li class="d-none d-sm-flex">
                         <a class="ux_account" href="@Url.LogOn()">
-                            <span class="icon-sign-in" alt="Login"></span>
+                            <span class="fas fa-sign-in-alt" alt="Login"></span>
                             <span>Login</span>
                         </a>
                     </li>

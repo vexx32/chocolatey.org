@@ -26,25 +26,25 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <div class="form-field">
-            @Html.LabelFor(m => m.EmailAddress) <span class="icon-asterisk"></span>
+            @Html.LabelFor(m => m.EmailAddress) <span class="fas fa-asterisk"></span>
             @Html.EditorFor(m => m.EmailAddress)
             <span class="field-hint-message">Your email will not be public unless you choose to disclose it. It is required to verify your registration and for password retrieval, important notifications, etc.</span>
             @Html.ValidationMessageFor(m => m.EmailAddress)
         </div>
         <div class="form-field">
-            @Html.LabelFor(m => m.Username) <span class="icon-asterisk"></span>
+            @Html.LabelFor(m => m.Username) <span class="fas fa-asterisk"></span>
             @Html.EditorFor(m => m.Username)
             <span class="field-hint-message">Choose something unique so others will know which contributions are yours.</span>
             @Html.ValidationMessageFor(m => m.Username)
         </div>
         <div class="form-field">
-            @Html.LabelFor(m => m.Password) <span class="icon-asterisk"></span>
+            @Html.LabelFor(m => m.Password) <span class="fas fa-asterisk"></span>
             @Html.EditorFor(m => m.Password)
             <span class="field-hint-message">Passwords must be at least 7 characters long.</span>
             @Html.ValidationMessageFor(m => m.Password)
         </div>
         <div class="form-field">
-            @Html.LabelFor(m => m.ConfirmPassword) <span class="icon-asterisk"></span>
+            @Html.LabelFor(m => m.ConfirmPassword) <span class="fas fa-asterisk"></span>
             @Html.EditorFor(m => m.ConfirmPassword)
             <span class="field-hint-message">Please reenter your password and ensure that it matches the one above.</span>
             @Html.ValidationMessageFor(m => m.ConfirmPassword)
@@ -52,7 +52,7 @@
         <div class="form-field">
             @Html.ValidationMessageFor(m => m.SpamValidationResponse)
         </div>
-        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="icon-asterisk"></span> <small>are required.</small></p>
+        <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="fas fa-asterisk"></span> <small>are required.</small></p>
         <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Register" title="Register" />
         <p class="mb-0 mt-2 text-center"><small><a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a></small></p>
     </fieldset>

@@ -1220,14 +1220,6 @@
     <Content Include="Content\Images\herowithlogo.png" />
     <Content Include="Content\Images\How-Chocolatey-Works.mp4" />
     <Content Include="Content\Images\icons\arrow-watch.png" />
-    <Content Include="Content\Images\icons\books.png" />
-    <Content Include="Content\Images\icons\handshake.png" />
-    <Content Include="Content\Images\icons\star.png" />
-    <Content Include="Content\Images\icons\thumb.png" />
-    <Content Include="Content\Images\icons\cloud.png" />
-    <Content Include="Content\Images\icons\cogs.png" />
-    <Content Include="Content\Images\icons\desktop.png" />
-    <Content Include="Content\Images\icons\server.png" />
     <Content Include="Content\Images\icon_slogan.png" />
     <Content Include="Content\Images\inputBackground.png" />
     <Content Include="Content\Images\integrations-mockup.jpg" />

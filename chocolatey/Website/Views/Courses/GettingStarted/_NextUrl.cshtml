@@ -3,7 +3,7 @@ string currentUrl = Request.Url.AbsoluteUri;
 
 if (currentUrl.ToLower().Contains("installation-in-detail"))
 {
-    <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.GettingStartedWithChocolatey), courseModuleName = "home" })" class="btn btn-success mt-3">Review Unfinished Modules <span class="icon-chevron-right"></span></a>
+    <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.GettingStartedWithChocolatey), courseModuleName = "home" })" class="btn btn-success mt-3">Review Unfinished Modules<span class="fas fa-angle-right"></span></a>
 }
 else
 {
@@ -24,6 +24,6 @@ else if (currentUrl.ToLower().Contains("chocolatey-packages")) {
 }
 else if (currentUrl.ToLower().Contains("how-chocolatey-works")) {
     @Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.GettingStartedWithChocolatey), courseModuleName = "installation-in-detail" })
-}" class="btn btn-success mt-3">Continue with Course<span class="icon-chevron-right"></span></a>
+}" class="btn btn-success mt-3">Continue with Course<span class="fas fa-angle-right"></span></a>
 }
 }

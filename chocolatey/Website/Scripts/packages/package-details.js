@@ -80,13 +80,13 @@ $(function () {
         var $this = $(this);
         $this.toggleClass('btn-success');
         if ($this.hasClass('btn-success')) {
-            $this.html('<i class="icon-plus-circle" alt="Show Files"></i> Expand All');
+            $this.html('<i class="fas fa-plus-circle" alt="Show Files"></i> Expand All');
             $this.removeClass('btn-danger');
             $(".collapse-2-content").removeClass('d-block').addClass('d-none').find("pre").children().removeClass().children().removeClass().children().removeClass();
             var $this = $('#files .btn:contains("Hide")');
             $this.html('Show');
         } else {
-            $this.html('<i class="icon-minus-circle" alt="Collapse Files"></i> Collapse Files');
+            $this.html('<i class="fas fa-minus-circle" alt="Collapse Files"></i> Collapse Files');
             $this.removeClass('btn-success').addClass('btn-danger');
             $(".collapse-2-content").removeClass('d-none').addClass('d-block').find("pre").addClass('line-numbers language-powershell').find("code").addClass('language-powershell');
             var $this = $('#files .btn:contains("Show")');
@@ -125,7 +125,7 @@ $(function () {
             $('.moderation-view .btn-danger').addClass('d-none');
         } else {
             // Show "Expand All" button
-            $('.moderation-view .btn-danger').addClass('btn-success').removeClass('btn-danger').html('<i class="icon-plus-circle" alt="Show Files"></i> Expand All');
+            $('.moderation-view .btn-danger').addClass('btn-success').removeClass('btn-danger').html('<i class="fas fa-plus-circle" alt="Show Files"></i> Expand All');
             $('.moderation-view .btn-success').click(function () {
                 Prism.highlightAll();
             });

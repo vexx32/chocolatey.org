@@ -57,7 +57,7 @@
                 @Html.Raw(Model.Post)
             </div>
             <div class="col-12">
-                <a class="btn btn-primary my-3" href="@Url.RouteUrl(RouteName.BlogHome)"><span class="icon-arrow-left"></span> Return to Posts</a>
+                <a class="btn btn-primary my-3" href="@Url.RouteUrl(RouteName.BlogHome)"><span class="fas fa-angle-left"></span> Return to Posts</a>
                 @{
                     var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
                 }

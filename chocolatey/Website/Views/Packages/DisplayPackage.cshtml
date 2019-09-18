@@ -364,7 +364,7 @@
                         <p class="mb-0">This does require that you increment the package version.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <a href="@Url.UploadPackage()" class="btn btn-success"><i class="icon-upload" alt="Upload"></i> Upload Updated Package</a>
+                        <a href="@Url.UploadPackage()" class="btn btn-success"><i class="fas fa-upload" alt="Upload"></i> Upload Updated Package</a>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
@@ -466,25 +466,25 @@
                             <div class="d-flex @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>justify-content-between</text>} px-3">
                                 @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
                                 {
-                                    <p class="mb-0"><span class="icon-times text-danger mr-3"></span> Verification Testing Failed</p>
+                                    <p class="mb-0"><span class="fas fa-times text-danger mr-3"></span> Verification Testing Failed</p>
                                     <a href="@Model.PackageTestResultsUrl" target="_blank" rel="noreferrer">Details</a>
                                 }
                                 @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing)
                                 {
-                                    <p class="mb-0"><span class="icon-check text-success mr-3"></span> Verification Testing Passed</p>
+                                    <p class="mb-0"><span class="fas fa-check text-success mr-3"></span> Verification Testing Passed</p>
                                     <a href="@Model.PackageTestResultsUrl" target="_blank" rel="noreferrer">Details</a>
                                 }
                                 @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending)
                                 {
-                                    <p class="mb-0"><span class="icon-clock text-warning mr-3"></span> Verification Testing Pending</p>
+                                    <p class="mb-0"><span class="fas fa-clock text-warning mr-3"></span> Verification Testing Pending</p>
                                 }
                                 @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown)
                                 {
-                                    <p class="mb-0"><span class="icon-question text-secondary mr-3"></span> Verification Testing Unknown</p>
+                                    <p class="mb-0"><span class="fas fa-question text-secondary mr-3"></span> Verification Testing Unknown</p>
                                 }
                                 @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted)
                                 {
-                                    <span class="icon-ban text-secondary mr-3"></span>
+                                    <span class="fas fa-ban text-secondary mr-3"></span>
                                     <div>
                                         <p class="mb-0">Verification Testing Exempt:</p>
                                         @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_html()))
@@ -496,23 +496,23 @@
                             <div class="px-3 pb-3">
                                 @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
                                 {
-                                    <p class="mb-0"><span class="icon-times text-danger mr-3"></span> Validation Testing Failed</p>
+                                    <p class="mb-0"><span class="fas fa-times text-danger mr-3"></span> Validation Testing Failed</p>
                                 }
                                 @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing)
                                 {
-                                    <p class="mb-0"><span class="icon-check text-success mr-3"></span> Validation Testing Passed</p>
+                                    <p class="mb-0"><span class="fas fa-check text-success mr-3"></span> Validation Testing Passed</p>
                                 }
                                 @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending)
                                 {
-                                    <p class="mb-0"><span class="icon-clock text-warning mr-3"></span> Validation Testing Pending</p>
+                                    <p class="mb-0"><span class="fas fa-clock text-warning mr-3"></span> Validation Testing Pending</p>
                                 }
                                 @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Unknown)
                                 {
-                                    <p class="mb-0"><span class="icon-question text-secondary mr-3"></span> Validation Testing Unknown</p>
+                                    <p class="mb-0"><span class="fas fa-question text-secondary mr-3"></span> Validation Testing Unknown</p>
                                 }
                                 @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted)
                                 {
-                                    <p class="mb-0"><span class="icon-ban text-secondary mr-3"></span> Validation Testing Exempt</p>
+                                    <p class="mb-0"><span class="fas fa-ban text-secondary mr-3"></span> Validation Testing Exempt</p>
                                 }
                             </div>
                         </div>
@@ -554,7 +554,7 @@
                                                     data-toggle="tooltip"
                                                     title="Copy to Clipboard"
                                                     data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
-                                                    <i class="icon-clipboard" aria-hidden="true">
+                                                    <i class="fas fa-clipboard" aria-hidden="true">
                                                         <span class="sr-only">
                                                             Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                                                             {<text> --version @Model.Version</text>} @if (Model.Prerelease)
@@ -564,7 +564,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <a class="btn btn-secondary mt-3" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="icon-download" alt="Download"></i> Download</a>
+                                    <a class="btn btn-secondary mt-3" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="fas fa-download" alt="Download"></i> Download</a>
                                 </div>
                                 <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="upgrade-tab">
                                     <p class="mb-3">To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
@@ -582,7 +582,7 @@
                                                     data-toggle="tooltip"
                                                     title="Copy to Clipboard"
                                                     data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
-                                                    <i class="icon-clipboard" aria-hidden="true">
+                                                    <i class="fas fa-clipboard" aria-hidden="true">
                                                         <span class="sr-only">
                                                             Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                                                             {<text> --version @Model.Version</text>} @if (Model.Prerelease)
@@ -609,7 +609,7 @@
                                                     data-toggle="tooltip"
                                                     title="Copy to Clipboard"
                                                     data-clipboard-text="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
-                                                    <i class="icon-clipboard" aria-hidden="true">
+                                                    <i class="fas fa-clipboard" aria-hidden="true">
                                                         <span class="sr-only">
                                                             Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                                                             {<text> --version @Model.Version</text>} @if (Model.Prerelease)
@@ -644,7 +644,7 @@
                                     data-toggle="tooltip"
                                     title="Copy to Clipboard"
                                     data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
-                                    <i class="icon-clipboard" aria-hidden="true">
+                                    <i class="fas fa-clipboard" aria-hidden="true">
                                         <span class="sr-only">
                                             Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                                             {<text> --version @Model.Version</text>} @if (Model.Prerelease)
@@ -954,7 +954,7 @@
                                                         }
                                                     </div>
                                                 }
-                                                <button class="btn btn-success d-block mt-2" type="submit" value="Save" title="Save Changes"><i class="icon-save" alt="Save"></i> Save</button>
+                                                <button class="btn btn-success d-block mt-2" type="submit" value="Save" title="Save Changes"><i class="fas fa-save" alt="Save"></i> Save</button>
                                             </fieldset>
                                         }
                                     </div>
@@ -982,7 +982,7 @@
                         <hr />
                         @if (expandForModeration)
                         {
-                            <button type="button" class="btn btn-danger mb-2"><i class="icon-minus-circle" alt="Collapse Files"></i> Collapse Files</button>
+                            <button type="button" class="btn btn-danger mb-2"><i class="fas fa-minus-circle" alt="Collapse Files"></i> Collapse Files</button>
                             var nuspecId = @Model.Id.Replace(".", "-") + "-nuspec";
                             <div class="collapse-2 mb-1">
                                 <button type="button" class="btn btn-sm btn-secondary mr-2">Hide</button>

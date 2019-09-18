@@ -21,7 +21,7 @@
                 <a href="@Url.RouteUrl(RouteName.Courses)">
                     <div class="card h-100">
                         <div class="card-body p-0 d-flex justify-content-center flex-column text-center">
-                            <span class="icon-bullhorn display-1"></span>
+                            <span class="fas fa-bullhorn display-1"></span>
                             <h1 class="mb-0">Getting Started</h1>
                         </div>
                         <div class="card-footer">
@@ -34,7 +34,7 @@
                 <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">
                     <div class="card h-100">
                         <div class="card-body p-0 d-flex justify-content-center flex-column text-center">
-                            <span class="icon-file display-1"></span>
+                            <span class="fas fa-file display-1"></span>
                             <h1 class="mb-0">Docs</h1>
                         </div>
                         <div class="card-footer">
@@ -47,7 +47,7 @@
                 <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">
                     <div class="card h-100">
                         <div class="card-body p-0 d-flex justify-content-center flex-column text-center">
-                            <span class="icon-briefcase display-1"></span>
+                            <span class="fas fa-briefcase display-1"></span>
                             <h1 class="mb-0">Case Studies</h1>
                         </div>
                         <div class="card-footer">
@@ -60,7 +60,7 @@
                 <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})">
                     <div class="card h-100">
                         <div class="card-body p-0 d-flex justify-content-center flex-column text-center">
-                            <span class="icon-play display-1"></span>
+                            <span class="fas fa-play display-1"></span>
                             <h1 class="mb-0">Videos</h1>
                         </div>
                         <div class="card-footer">
@@ -73,7 +73,7 @@
                 <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">
                     <div class="card h-100">
                         <div class="card-body p-0 d-flex justify-content-center flex-column text-center">
-                            <span class="icon-star display-1"></span>
+                            <span class="fas fa-star display-1"></span>
                             <h1 class="mb-0">Success Stories</h1>
                         </div>
                         <div class="card-footer">
@@ -86,7 +86,7 @@
                 <a href="@Url.RouteUrl(RouteName.BlogHome)">
                     <div class="card h-100">
                         <div class="card-body p-0 d-flex justify-content-center flex-column text-center">
-                            <span class="icon-rss display-1"></span>
+                            <span class="fas fa-rss display-1"></span>
                             <h1 class="mb-0">Blog</h1>
                         </div>
                         <div class="card-footer">
@@ -129,15 +129,15 @@
                                     <div class="card-header font-weight-bold bg-medium-light text-dark text-center">
                                         @if (post.Type.Contains("Customer Success Story"))
                                         {
-                                            <span class="icon-star" alt="Customer Success Stories"></span>
+                                            <span class="fas fa-star" alt="Customer Success Stories"></span>
                                         }
                                         else if (post.Type.Contains("Video"))
                                         {
-                                            <span class="icon-play" alt="Videos"></span>
+                                            <span class="fas fa-play" alt="Videos"></span>
                                         }
                                         else if (post.Type.Contains("Case Study"))
                                         {
-                                            <span class="icon-briefcase" alt="Case Studies"></span>
+                                            <span class="fas fa-briefcase" alt="Case Studies"></span>
                                         }
                                         <span>@post.Type</span>
                                     </div>
@@ -193,7 +193,7 @@
                         <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = post.UrlPath })">
                             <div class="card h-100">
                                 <div class="card-header font-weight-bold bg-medium-light text-center">
-                                    <span class="icon-star" alt="Customer Success Stories"></span>
+                                    <span class="fas fa-star" alt="Customer Success Stories"></span>
                                     <span>@post.Type</span>
                                 </div>
                                 <div class="card-body p-0">
@@ -228,7 +228,7 @@
                         <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = post.UrlPath })">
                             <div class="card h-100">
                                 <div class="card-header font-weight-bold bg-medium-light text-center">
-                                    <span class="icon-briefcase" alt="Case Studies"></span>
+                                    <span class="fas fa-briefcase" alt="Case Studies"></span>
                                     <span>@post.Type</span>
                                 </div>
                                 <div class="card-body p-0">

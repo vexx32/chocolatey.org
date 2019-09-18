@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h3 class="mb-4">
-                            Published Packages <i class="icon-question-circle h4" alt="Save" data-toggle="tooltip" data-placement="top" title="These packages are currently published for the world to see."></i>
+                            Published Packages <i class="fas fa-question-circle h4" alt="Save" data-toggle="tooltip" data-placement="top" title="These packages are currently published for the world to see."></i>
                         </h3>
                         @PrintPublishedPackages(Model.Packages.Where(p => p.Listed), unlisted: false)
                     </div>
@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-12">
                             <h3 class="mb-4">
-                                Unlisted Packages <i class="icon-question-circle h4" alt="Save" data-toggle="tooltip" data-placement="top" title="These packages are currently unlisted."></i>
+                                Unlisted Packages <i class="fas fa-question-circle h4" alt="Save" data-toggle="tooltip" data-placement="top" title="These packages are currently unlisted."></i>
                             </h3>
                             @PrintPublishedPackages(unlistedPackages, unlisted: true)
                         </div>
@@ -119,7 +119,7 @@
                         <p class="mb-0">This does require that you increment the package version.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <a href="@Url.UploadPackage()" class="btn btn-success"><i class="icon-upload" alt="Upload"></i> Upload Updated Package</a>
+                        <a href="@Url.UploadPackage()" class="btn btn-success"><i class="fas fa-upload" alt="Upload"></i> Upload Updated Package</a>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>

@@ -251,7 +251,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-12 col-sm text-sm-right text-lg-left">
-                                                <a href="@if(@FullHref == @BaseHref + "/packages"){<text>@Url.RouteUrl(RouteName.ListPackages)</text>}else if(@FullHref == @BaseHref + "/search"){<text>@Url.RouteUrl(RouteName.SearchResults)</text>}" class="btn btn-outline-primary"><span class="icon-refresh"></span><span class="d-sm-none d-md-inline-block ml-2 ml-sm-0 ml-md-2">Reset Filters</span></a>
+                                                <a href="@if(@FullHref == @BaseHref + "/packages"){<text>@Url.RouteUrl(RouteName.ListPackages)</text>}else if(@FullHref == @BaseHref + "/search"){<text>@Url.RouteUrl(RouteName.SearchResults)</text>}" class="btn btn-outline-primary"><span class="fas fa-sync"></span><span class="d-sm-none d-md-inline-block ml-2 ml-sm-0 ml-md-2">Reset Filters</span></a>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -266,7 +266,7 @@
                             <input class="form-control" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
                             <div class="input-group-append">
                                 <button class="input-group-text bg-primary" type="submit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." value="">
-                                    <span class="icon-search" alt="Search Packages"></span>
+                                    <span class="fas fa-search" alt="Search Packages"></span>
                                 </button>
                             </div>
                         </div>
@@ -296,7 +296,7 @@
                             <input class="form-control" name="q" type="text" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." placeholder="Search Packages" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)">
                             <div class="input-group-append">
                                 <button class="input-group-text bg-primary" type="submit" title="Search by id only with 'id:searchValue'. Search by tags with 'tag:searchValue'." value="">
-                                    <span class="icon-search" alt="Search Packages"></span>
+                                    <span class="fas fa-search" alt="Search Packages"></span>
                                 </button>
                             </div>
                         </div>

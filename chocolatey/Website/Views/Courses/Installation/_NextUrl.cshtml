@@ -3,7 +3,7 @@ string currentUrl = Request.Url.AbsoluteUri;
 
 if (currentUrl.ToLower().Contains("uninstalling"))
 {
-    <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "home" })" class="btn btn-success mt-3">Review Unfinished Modules <span class="icon-chevron-right"></span></a>
+    <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "home" })" class="btn btn-success mt-3">Review Unfinished Modules<span class="fas fa-angle-right"></span></a>
 }
 else
 {
@@ -12,6 +12,6 @@ else
 }
 else if (currentUrl.ToLower().Contains("upgrading")) {
     @Url.RouteUrl(RouteName.CourseName, new { courseName = CourseConstants.GetCourseUrl(CourseNameType.InstallingUpgradingUninstalling), courseModuleName = "uninstalling" })
-}" class="btn btn-success mt-3">Continue with Course<span class="icon-chevron-right"></span></a>
+}" class="btn btn-success mt-3">Continue with Course<span class="fas fa-angle-right"></span></a>
 }
 }

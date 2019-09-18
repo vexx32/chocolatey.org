@@ -5,10 +5,10 @@
 .table td, .table th {
     vertical-align: middle;
 }
-.icon-check, .plus strong {
+.fa-check, .plus strong {
     color: #36bc98;
 }
-.table td .icon-ban {
+.table td .fa-ban {
     color: #f4516c;
 }
 #compare tbody td, #faq-pricing tbody td, #faq-support-schedule tbody > tr td {

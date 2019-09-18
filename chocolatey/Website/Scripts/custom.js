@@ -211,9 +211,9 @@ function onScroll(event) {
 var clipboard = new ClipboardJS('.btn-copy');
 $('.btn-copy').click(function () {
     var $this = $(this);
-    $this.html('<span class="icon-check text-white"></span> Command Text Coppied').removeClass('btn-secondary').addClass('btn-success');
+    $this.html('<span class="fas fa-check text-white"></span> Command Text Coppied').removeClass('btn-secondary').addClass('btn-success');
     setTimeout(function () {
-        $this.html('<span class="icon-clipboard"></span> Copy Command Text').removeClass('btn-success').addClass('btn-secondary');
+        $this.html('<span class="fas fa-clipboard"></span> Copy Command Text').removeClass('btn-success').addClass('btn-secondary');
     }, 2000);
 });
 
@@ -372,14 +372,14 @@ $(function () {
     var acount = $(".ux_account");
     var action = $(".ux_account_action");
     if (getCookie('.ChocolateyGalleryAuthentication')) {
-        acount.html('<span class="icon-user" alt="Account"></span><span>Account</span>');
+        acount.html('<span class="fas fa-user" alt="Account"></span><span>Account</span>');
         acount.prop('href', '/account');
-        action.html('<span class="icon-sign-out" alt="Log Off"></span><span>Log Off</span>');
+        action.html('<span class="fas fa-sign-out-alt" alt="Log Off"></span><span>Log Off</span>');
         action.prop('href', '/users/account/LogOff');
     } else {
-        acount.html('<span class="icon-sign-in" alt="Login"></span><span>Login</span>');
+        acount.html('<span class="fas fa-sign-in-alt" alt="Login"></span><span>Login</span>');
         acount.prop('href', '/users/account/LogOn');
-        action.html('<span class="icon-user-plus" alt="Signup"></span><span>Signup</span>');
+        action.html('<span class="fas fa-user-plus" alt="Signup"></span><span>Signup</span>');
         action.prop('href', '/account/Register');
     }
 });

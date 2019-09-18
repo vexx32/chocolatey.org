@@ -238,33 +238,6 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
     max-width: 125px;
 }
 
-/*Checklist*/
-ul.check-list, ul.times-list {
-    list-style-type: none;
-    margin-bottom: 0;
-
-    li {
-        margin-bottom: .5rem;
-
-        &:before {
-            font-family: 'FontAwesome';
-            position: absolute;
-            left: 8px;
-            font-size: 1.2em;
-            margin-left: 15px;
-        }
-    }
-}
-
-ul.check-list li::before {
-    color: $green;
-}
-
-ul.times-list li::before {
-    color: $red;
-    margin-top: -.25rem;
-}
-
 /*Random Borders*/
 .border-hr {
     border: 3px solid $blue;

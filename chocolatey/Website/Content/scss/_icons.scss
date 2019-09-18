@@ -1,233 +1,84 @@
-@font-face {
-    font-family: 'FontAwesome';
-    font-display: swap;
-    src: url('../fonts/fontawesome-webfont.eot?v=4.6.2');
-    src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.2') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.6.2') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.6.2') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.6.2') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.6.2#fontawesomeregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-[class^="icon-"]:before, [class*=" icon-"]:before, [data-toggle="collapse"]:before, .dropdown-toggle:after, .course-list li.completed::before, .course-list li.mod-completed::before, .correct::before, .wrong::before, #get-involved li a:after {
-    font-family: 'FontAwesome';
-    font-style: normal;
-    font-weight: normal;
-    speak: none;
-    display: inline-block;
-    text-decoration: inherit;
-    width: 1em;
-    text-align: center;
-    line-height: 1em;
-}
-
-.icon-asterisk:before {
-    content: "\f069";
-    color: $primary;
-    font-size: .65em;
-}
-
-#get-involved li a:after {
-    /*chevron-right*/
-    font-size: .75rem;
-    margin-left: 5px;
-}
-
-.icon-clipboard:before {
-    content: "\f0ea";
-}
-
-.icon-search:before {
-    content: "\f002";
-}
-
-.icon-facebook:before {
-    content: "\f09a";
-}
-
-.icon-github:before {
-    content: "\f09b";
-}
-
-.icon-twitter:before {
-    content: "\f099";
-}
-
-.icon-plus-circle:before {
-    content: "\f055";
-}
-
-.icon-minus-circle:before {
-    content: "\f056";
-}
-
-.icon-sign-in:before {
-    content: "\f090";
-}
-
-.icon-sign-out:before {
-    content: "\f08b";
-}
-
-.icon-upload:before {
-    content: "\f093";
-}
-
-.icon-download:before {
-    content: "\f019";
-}
-
-.icon-user:before {
-    content: "\f007";
-}
-
-.icon-user-plus:before {
-    content: "\f234";
-}
-
-.icon-eye:before {
-    content: "\f06e";
-}
-
-.icon-share:before {
-    content: "\f064";
-}
-
-.icon-angle-down:before, a[data-toggle="collapse"]:before, .docs-left button.navbar-toggler[data-toggle="collapse"]:before, .module-left button.navbar-toggler[data-toggle="collapse"]:before {
-    content: "\f107";
-}
-
-.icon-angle-right:before, a[data-toggle="collapse"].collapsed:before, .docs-left button.navbar-toggler[data-toggle="collapse"].collapsed:before, .module-left button.navbar-toggler[data-toggle="collapse"].collapsed:before {
-    content: "\f105";
-}
-
-.icon-check:before, ul.check-list li::before, .course-list li.completed::before, .course-list li.mod-completed::before, .correct::before {
-    content: "\f00c";
-}
-
-.icon-save:before {
-    content: "\f0c7";
-}
-
-.icon-check-circle-o:before {
-    content: "\f05d";
-}
-
-.icon-times-circle-o:before {
-    content: "\f05c";
-}
-
-.icon-times:before, .wrong::before, ul.times-list li::before {
-    content: "\f00d";
-}
-
-.icon-question-circle:before {
-    content: "\f059";
-    color: $primary;
-}
-
-.icon-question-circle:hover {
+.fa-question-circle:hover {
     cursor: pointer;
 }
 
-.icon-cogs:before {
-    content: "\f085";
+.fa-angle-right {
+    margin-left: .5rem;
 }
 
-.icon-arrow-left:before {
-    content: "\f060";
+.fa-asterisk, .form-field .fa-question-circle {
+    color: $primary;
+    font-size: .55em;
+    font-weight: 900;
 }
 
-.icon-youtube:before {
-    content: "\f167";
+a[data-toggle="collapse"], .docs-left button.navbar-toggler[data-toggle="collapse"], .module-left button.navbar-toggler[data-toggle="collapse"] {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-down);
+        margin-right: .5rem;
+    }
 }
 
-.icon-ban:before {
-    content: "\f05e";
+a[data-toggle="collapse"].collapsed, .docs-left button.navbar-toggler[data-toggle="collapse"].collapsed, .module-left button.navbar-toggler[data-toggle="collapse"].collapsed {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-right);
+        margin-right: .5rem;
+    }
 }
 
-.icon-lightbulb-o:before {
-    content: "\f0eb";
+.course-list li.completed, .course-list li.mod-completed, .correct {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-check);
+        text-align: center;
+    }
 }
 
-.icon-plus:before {
-    content: "\f067";
+.wrong {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-times);
+        text-align: center;
+    }
 }
 
-.icon-rocket:before {
-    content: "\f135";
+#get-involved li a {
+    &::after {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-right);
+        margin-left: .5rem;
+    }
 }
 
-.icon-refresh:before {
-    content: "\f021";
+.rating > label, .rating li {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-star);
+    }
 }
 
-.icon-lock:before {
-    content: "\f023";
-}
-
-.icon-users:before {
-    content: "\f0c0";
-}
-
-.icon-chevron-left:before {
-    content: "\f053";
-}
-
-.icon-chevron-right:before, #get-involved li a:after {
-    content: "\f054";
-}
-
-.icon-pencil:before {
-    content: "\f040";
-}
-
-.icon-play:before {
-    content: "\f04b";
-}
-
-.icon-star:before {
-    content: "\f005";
-}
-
-.icon-briefcase:before {
-    content: "\f0b1";
-}
-
-.icon-file:before {
-    content: "\f15b";
-}
-
-.icon-rss:before {
-    content: "\f09e";
-}
-
-.icon-bullhorn:before {
-    content: "\f0a1";
-}
-
-.icon-graduation-cap:before {
-    content: "\f19d";
-}
-
-.icon-comments:before {
-    content: "\f086";
-}
-
-.icon-thumbs-o-up:before {
-    content: "\f087";
-}
-
-.icon-dashboard:before {
-    content: "\f0e4";
-}
-
-.icon-envelope:before {
-    content: "\f0e0";
-}
-
-.icon-clock:before {
-    content: "\f017";
-}
-
-.icon-question:before {
-    content: "\f128";
+#topNav {
+    .navbar-collapse {
+        .dropdown-toggle {
+            &::after {
+                @extend %fa-icon;
+                @extend .fas;
+                content: fa-content($fa-var-angle-down);
+                position: absolute;
+                top: 25%;
+                color: $primary;
+                opacity: 0;
+                transition: 0.5s;
+                border: none;
+            }
+        }
+    }
 }

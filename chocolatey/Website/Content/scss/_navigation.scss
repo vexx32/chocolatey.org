@@ -39,16 +39,6 @@
             color: $primary;
         }
 
-        .dropdown-toggle:after {
-            border: none;
-            content: "\f107";
-            position: absolute;
-            top: 25%;
-            color: $primary;
-            opacity: 0;
-            transition: 0.5s;
-        }
-
         .dropdown-toggle:hover:after, .show > .dropdown-toggle:after {
             opacity: 1;
         }

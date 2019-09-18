@@ -123,7 +123,7 @@
                             data-toggle="tooltip"
                             title="Copy to Clipboard"
                             data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
-                        <i class="icon-clipboard" aria-hidden="true">
+                        <i class="fas fa-clipboard" aria-hidden="true">
                             <span class="sr-only">Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
                             {<text> --version @Model.Version</text>} @if (Model.Prerelease)
                             {<text> --pre </text>} to Clipboard</span>
