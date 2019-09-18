@@ -110,12 +110,14 @@ namespace NuGetGallery
                    Action = "Community"
                });
 
-            routes.MapRouteSeo(
-               RouteName.Products, "products", new
-               {
-                   controller = "Pages",
-                   Action = "Products"
-               });
+            var productsRoute = routes.MapRoute(
+                RouteName.Products, "products", new
+                {
+                    controller = "Pages",
+                    Action = "Products"
+                });
+
+            routes.Redirect(r => r.MapRoute(RouteName.Business, "business")).To(productsRoute);
 
             routes.MapRouteSeo(
                RouteName.WhyChocolatey, "why-chocolatey", new
