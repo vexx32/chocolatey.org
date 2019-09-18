@@ -4,6 +4,11 @@
 // Bootstrap and its default variables
 @import "node_modules/bootstrap/scss/bootstrap";
 
+// FontAwesome Pro
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
+
 // Aditional custom styles
 @import "Content/scss/preloader";
 @import "Content/scss/base";

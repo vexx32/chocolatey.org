@@ -1045,7 +1045,8 @@
     <Content Include="cloudflare-ratelimited.html" />
     <Content Include="Content\account.css" />
     <Content Include="Content\dist\chocolatey.slim.css" />
-    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fa-brands-400.svg" />
+    <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\404.svg" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
@@ -1327,11 +1328,6 @@
     <Content Include="gulpfile.js" />
     <Content Include="Install-LastPoshClient.ps1" />
     <None Include="Cassette.targets" />
-    <Content Include="Content\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="chocolatey-media-kit.zip" />
     <Content Include="chocolatey-styleguide.zip" />
     <Content Include="Content\scss\chocolatey.scss" />
@@ -1350,6 +1346,14 @@
     <Content Include="Content\scss\_cards.scss" />
     <Content Include="Content\scss\_tabs.scss" />
     <Content Include="Content\scss\_status-icons.scss" />
+    <Content Include="Content\fonts\fa-brands-400.eot" />
+    <Content Include="Content\fonts\fa-brands-400.ttf" />
+    <Content Include="Content\fonts\fa-brands-400.woff" />
+    <Content Include="Content\fonts\fa-brands-400.woff2" />
+    <Content Include="Content\fonts\fa-solid-900.eot" />
+    <Content Include="Content\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\fonts\fa-solid-900.woff" />
+    <Content Include="Content\fonts\fa-solid-900.woff2" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

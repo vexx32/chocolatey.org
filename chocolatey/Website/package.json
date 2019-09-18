@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.1",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
