@@ -56,12 +56,44 @@ code:not([class*="language-"]) {
     width: 100%;
 }
 
-.btn + .btn {
+.btn + .btn:not(.btn-sm) {
     margin-top: 1rem;
 }
 
 .btn-link:hover {
     text-decoration: underline;
+}
+
+.btn-secondary {
+    &.btn-twitter {
+        background: #00aced;
+        border-color: #00aced;
+
+        &:hover, &:focus, &:active, &:active:focus {
+            background: darken(#00aced, 15%);
+            border-color: darken(#00aced, 15%);
+        }
+    }
+
+    &.btn-github {
+        background: #24292e;
+        border-color: #24292e;
+
+        &:hover, &:focus, &:active, &:active:focus {
+            background: darken(#24292e, 15%);
+            border-color: darken(#24292e, 15%);
+        }
+    }
+
+    &.btn-stackexchange {
+        background: #242729;
+        border-color: #242729;
+
+        &:hover, &:focus, &:active, &:active:focus {
+            background: darken(#242729, 15%);
+            border-color: darken(#242729, 15%);
+        }
+    }
 }
 
 /*Backgrounds & Text*/
@@ -295,6 +327,12 @@ a + .collapse.show, a + .collapsing {
     }
 }
 
+/*List*/
+.divider-list li:not(:last-child) {
+    border-bottom: 1px solid #ced4da;
+    display: block;
+}
+
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;
@@ -309,8 +347,16 @@ footer {
         width: auto;
     }
 
-    .btn + .btn {
+    .btn + .btn:not(.btn-sm) {
         margin-top: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .divider-list li:not(:last-child) {
+        border-right: 1px solid #ced4da;
+        border-bottom: 0;
+        display: inline-block;
     }
 }
 

@@ -61,7 +61,7 @@
 
 @helper GravatarImage(string email, string username, int size) {
     if (string.IsNullOrWhiteSpace(email)) {email = "default";}
-    var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "mr-1" });
+    var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "rounded-circle" });
     if (gravatarHtml != null && AppHarbor.IsSecureConnection(new HttpContextWrapper(HttpContext.Current)))
     {
         gravatarHtml = new HtmlString(gravatarHtml.ToHtmlString().Replace("http://www.gravatar.com/", "https://secure.gravatar.com/"));

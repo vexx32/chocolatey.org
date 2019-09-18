@@ -15,98 +15,65 @@
     };
 }
 
-<section class="container py-3 py-md-5">
-    <div id="package-sidebar" class="row">
-        @*Desktop Sidebar*@
-        <div class="col-md-3 col-xl-2 d-none d-md-block">
-            @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 128)
-            <p class="mb-0 mt-3"><strong>Packages in Queue:</strong></p>
-            <h3 class="mb-3">@Model.PackagesModerationQueue.Count.ToString("n0")</h3>
-            <p class="mb-0"><strong>Packages:</strong></p>
-            <h3 class="mb-3">@Model.Packages.Count.ToString("n0")</h3>
-            <p class="mb-0"><strong>Downloads of @Model.Username's packages:</strong></p>
-            <h3 class="mb-3">@Model.TotalPackageDownloadCount.ToString("n0")</h3>
-            @if (Model.UserProfiles.Count >= 1)
-            {
-                <p class="mb-2"><strong>External Links:</strong></p>
-                <ul class="list-unstyled">
-                    @foreach (var siteProfile in Model.UserProfiles)
-                    {
-                        <li class="mb-2">
-                            <a class="d-flex align-items-center flex-row" href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
-                                <img style="max-width: 25px;" class="mr-1" src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
-                                <p class="mb-0">@siteProfile.Name</p>
+<div id="header" class="bg-primary profile-header"></div>
+<section class="container pb-3 pb-md-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card card-bio">
+                <div class="card-header text-center bg-white pt-0 pb-3">
+                    @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 128)
+                    <h1>@Model.Username</h1>
+                    <ul class="list-inline text-center mb-0 divider-list">
+                        <li class="list-inline-item py-3 py-md-0 pr-md-3 mr-0">
+                            <a href="#profile-moderation" class="text-dark">
+                                <h4 class="mb-0">@Model.PackagesModerationQueue.Count.ToString("n0")</h4>
+                                Packages in Queue
                             </a>
                         </li>
-                    }
-                </ul>
-            }
-            @*Badges*@
-            @if (Model.CompletedCourses.Count >= 1)
-            {
-                <p class="mb-2"><strong>Badge Achievments:</strong></p>
-                <ul class="list-unstyled">
-                @foreach (var courseAchievement in Model.CompletedCourses)
-                {
-                    if (courseAchievement.Completed == true)
-                    {
-                        <li class="mb-2">
-                            <a class="d-flex align-items-center flex-row" href="#badges" title="@CourseConstants.GetCourseName(courseAchievement.CourseKey)">
-                                <img style="max-width: 25px;" class="mr-1" src="@CourseConstants.GetBadgeUrl(courseAchievement.CourseKey)" alt="@CourseConstants.GetCourseName(courseAchievement.CourseKey)" />
-                                <p class="mb-0">@CourseConstants.GetCourseName(courseAchievement.CourseKey)</p>
+                        <li class="list-inline-item py-3 py-md-0 px-md-3 mr-0">
+                            <a href="#profile-packages" class="text-dark">
+                                <h4 class="mb-0">@Model.Packages.Count.ToString("n0")</h4>
+                                Published Packages
                             </a>
                         </li>
-                    }
-                }
-                </ul>
-            }
-        </div>
-        @*Mobile Sidebar*@
-        <div class="col-12 d-md-none">
-            <div class="justify-content-center align-items-center d-flex mb-3">
-                @ViewHelpers.GravatarImage(Model.EmailAddress, Model.Username, 40)
-                <h4 class="mb-0">@Model.Username's Profile</h4>
-            </div>
-            <div class="row border-bottom">
-                <div class="col">
-                    <p class="mb-0"><small>Queued Packages:</small></p>
-                    <p class="mb-1">@Model.PackagesModerationQueue.Count.ToString("n0")</p>
-                </div>
-                <div class="col">
-                    <p class="mb-0"><small>Packages:</small></p>
-                    <p class="mb-1">@Model.Packages.Count.ToString("n0")</p>
-                </div>
-            </div>
-            <div class="border-bottom pb-2">
-                <p class="mb-0"><small>Downloads of @Model.Username's packages:</small></p>
-                <p class="mb-1">@Model.TotalPackageDownloadCount.ToString("n0")</p>
-            </div>
-            @if (Model.UserProfiles.Count >= 1)
-            {
-                <div class="border-bottom">
-                    <p class="mb-0"><small>External Links:</small></p>
-                    <ul class="list-unstyled mb-0">
-                        @foreach (var siteProfile in Model.UserProfiles)
-                        {
-                            <li class="mb-2">
-                                <a class="d-flex align-items-center flex-row" href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
-                                    <img style="max-width: 25px;" class="mr-1" src="@(!string.IsNullOrWhiteSpace(siteProfile.Image) ? siteProfile.Image : SiteProfileConstants.Images.nothing_50x50_png)" alt="@siteProfile.Name Logo" />
-                                    <p class="mb-0">@siteProfile.Name</p>
-                                </a>
-                            </li>
-                        }
+                        <li class="list-inline-item py-3 py-md-0 px-md-3 mr-0">
+                            <h4 class="mb-0">@Model.TotalPackageDownloadCount.ToString("n0")</h4>
+                            <p class="font-weight-bold mb-0">Downloads of Packages</p>
+                        </li>
+                        <li class="list-inline-item py-3 py-md-0 pl-md-3 mr-0">
+                            <a href="#profile-badges" class="text-dark">
+                                <h4 class="mb-0">@Model.CompletedCourses.Count.ToString("n0")</h4>
+                                Course Badges
+                            </a>
+                        </li>
                     </ul>
                 </div>
-            }
-        </div>
-        @*Main*@
-        <div class="col-md-9 col-xl-10 profile-packages card-row">
-            <h2 class="d-none d-md-block">@Model.Username's Profile</h2>
-            <hr class="mb-3 mb-md-5 d-none d-md-block" />
+                <div class="card-body pt-0">
+                    @if (Model.UserProfiles.Count >= 1)
+                    {
+                        <div class="text-center">
+                            <i class="d-none btn-twitter btn-stackexchange btn-github"></i>
+                            @foreach (var siteProfile in Model.UserProfiles)
+                            {
+                                <a class="btn btn-sm btn-@if(siteProfile.Name.Contains("Repository")){<text>primary</text>}else{<text>secondary</text>} btn-@siteProfile.Name.ToLower().Replace(" ", "")" href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
+                                    <i class="@if(siteProfile.Name == SiteProfileConstants.Twitter){<text>fab fa-twitter</text>}
+                                        else if(siteProfile.Name == SiteProfileConstants.Github){<text>fab fa-github</text>}
+                                        else if(siteProfile.Name == SiteProfileConstants.StackExchange){<text>fab fa-stack-exchange</text>}
+                                        else if(siteProfile.Name.Contains("Repository")){<text>fas fa-code</text>}
+                                        else if(siteProfile.Name.Contains("Personal") || siteProfile.Name == SiteProfileConstants.Codeplex){<text>fas fa-link</text>}
+                                    "></i>
+                                    @siteProfile.Name
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            @*Packages in Moderation*@
             @if (Model.PackagesModerationQueue.Any())
             {
-                <h3 class="mb-4 mt-4 mt-md-0">Packages in Moderation:</h3>
-                <div class="row">
+                <h3 id="profile-moderation" class="my-4">Packages in Moderation:</h3>
+                <div class="row profile-packages card-row">
                     @foreach (var package in Model.PackagesModerationQueue)
                     {
                         var submittedStatus = "Reviewed, waiting for user action";
@@ -156,12 +123,13 @@
                         </div>
                     }
                 </div>
-                <hr class="mb-4" />
             }
+            @*Published Packages*@
             @if (Model.Packages.Count >= 1)
             {
-                <h3 class="mb-4">Packages:</h3>
-                <div class="row">
+                <hr class="mb-4" />
+                <h3 id="profile-packages" class="mb-4">Packages:</h3>
+                <div class="row profile-packages card-row">
                     @foreach (var package in Model.Packages)
                     {
                         var packageImage = Url.ImageUrl(package.Id, package.Version, package.IconUrl);
@@ -186,11 +154,12 @@
                         </div>
                     }
                 </div>
-                <hr class="mb-4" />
             }
+            @*Badges*@
             @if (Model.CompletedCourses.Count >= 1)
             {
-                <h3 id="badges" class="mb-4">Badges:</h3>
+                <hr class="mb-4" />
+                <h3 id="profile-badges" class="mb-4">Badges:</h3>
                 <div class="row">
                     @foreach (var courseAchievement in Model.CompletedCourses)
                     {
