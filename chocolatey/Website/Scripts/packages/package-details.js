@@ -1,6 +1,3 @@
-// Show package modal on form submit
-$('#package-save').modal('show');
-
 // Prism for Description section
 $(function () {
     // Description Area

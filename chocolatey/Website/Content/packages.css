@@ -157,16 +157,6 @@ textarea {
 .comments-list .comment-body, .comments-list .user-role {
     margin-bottom: 1rem !important;
 }
-/*Saved Popup*/
-#package-save .modal-header, #package-save .modal-footer {
-    border: none;
-}
-#package-save .modal-body .fa-check-circle-o {
-    color: #36bc98;
-}
-#package-save .modal-body .fa-times-circle-o {
-    color: #f4516c;
-}
 
 @media (min-width: 768px) {
     #package-sidebar .package-logo {

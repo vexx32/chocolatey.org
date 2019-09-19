@@ -6,6 +6,9 @@ $(window).on('load', function () {
     $('body').delay(350).css({ 'overflow': 'visible' });
 });
 
+// Show modal on tempdata "message"
+$('#tempdata-message').modal('show');
+
 // Top Navigation
 $(document).ready(function () {
     // Top Alert
