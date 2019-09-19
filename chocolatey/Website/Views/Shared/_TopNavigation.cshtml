@@ -287,8 +287,14 @@
                     }
                     <li>
                         <a class="ux_account" href="@Url.Action(MVC.Users.Account())">
-                            <span class="fas fa-users" alt="Account"></span>
+                            <span class="fas fa-cogs" alt="Account"></span>
                             <span>Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.Users.Profiles(User.Identity.Name))">
+                            <span class="fas fa-user-alt" alt="Profile"></span>
+                            <span>Profile</span>
                         </a>
                     </li>
                     <li>

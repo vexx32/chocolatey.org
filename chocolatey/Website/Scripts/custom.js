@@ -372,7 +372,7 @@ $(function () {
     var acount = $(".ux_account");
     var action = $(".ux_account_action");
     if (getCookie('.ChocolateyGalleryAuthentication')) {
-        acount.html('<span class="fas fa-user" alt="Account"></span><span>Account</span>');
+        acount.html('<span class="fas fa-cogs" alt="Account"></span><span>Account</span>');
         acount.prop('href', '/account');
         action.html('<span class="fas fa-sign-out-alt" alt="Log Off"></span><span>Log Off</span>');
         action.prop('href', '/users/account/LogOff');
