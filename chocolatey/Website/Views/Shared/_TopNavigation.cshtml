@@ -244,7 +244,7 @@
             </ul>
         </div>
     </nav>
-    @if (PackageNav)
+    @if (PackageNav || CourseNav)
     {
     <div id="secondaryNav">
         <nav class="navbar bg-white border-bottom">
@@ -300,26 +300,29 @@
                 }
             </ul>
         </nav>
-        <nav class="navbar bg-white border-bottom d-none d-sm-flex">
-            <ul>
-                <li class="d-sm-flex align-items-center">
-                    <span class="status status-sm bg-success"></span>
-                    Passing
-                </li>
-                <li class="d-sm-flex align-items-center">
-                    <span class="status status-sm bg-danger"></span>
-                    Failing
-                </li>
-                <li class="d-sm-flex align-items-center">
-                    <span class="status status-sm bg-warning"></span>
-                    Pending
-                </li>
-                <li class="d-sm-flex align-items-center">
-                    <span class="status status-sm bg-secondary"></span>
-                    Unknown / Exempted
-                </li>
-            </ul>
-        </nav>
+        @if (PackageNav)
+        {
+            <nav class="navbar bg-white border-bottom d-none d-sm-flex">
+                <ul>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-success"></span>
+                        Passing
+                    </li>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-danger"></span>
+                        Failing
+                    </li>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-warning"></span>
+                        Pending
+                    </li>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-secondary"></span>
+                        Unknown / Exempted
+                    </li>
+                </ul>
+            </nav>
+        }
     </div>
     }
     @if (ResourceNav)
@@ -363,27 +366,5 @@
                     <a href="#" class="btn btn-success d-none d-md-block">Submit Success Story</a>
                 }*@
         </nav>
-    }
-    @if (CourseNav)
-    {
-        if (!User.Identity.IsAuthenticated)
-        {
-            <nav id="secondaryNav" class="navbar bg-white border-bottom d-none d-sm-flex">
-                <ul>
-                    <li class="d-none d-sm-flex">
-                        <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
-                            <span class="fas fa-user-plus" alt="Signup"></span>
-                            <span>Signup</span>
-                        </a>
-                    </li>
-                    <li class="d-none d-sm-flex">
-                        <a class="ux_account" href="@Url.LogOn()">
-                            <span class="fas fa-sign-in-alt" alt="Login"></span>
-                            <span>Login</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        }
     }
 </header>
