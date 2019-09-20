@@ -4,7 +4,8 @@ Published: 20180919
 Author: Chocolatey Events Team
 Tags: News, Press-Release, Announcements, Conference
 Keywords: chocolatey, chocolatey fest, conference, winops, windows, automation
-Summary: Chocolatey Fest is less than a month away! Maybe you’re already convinced you should attend, but your manager may need some persuading. Use this letter as a starting point, and personalize as needed. 
+Summary: Chocolatey Fest is less than a month away! Maybe you’re already convinced you should attend, but your manager may need some persuading. Use this letter as a starting point, and personalize as needed.
+Image: <img src="/content/images/blog/chocolatey-fest.png" alt="Chocolatey Fest - A sweet conference focused on Windows automation (WinOps)! 08 October 2018, Park Central Hotel, San Francisco" title="Chocolatey Fest 2018 - join us for awesome talks, some actual chocolate, and maybe even an appearance by Willy Wonka!" /> 
 ---
 [Chocolatey Fest](https://chocolateyfest.com/) aka WinOps.org San Francisco is less than a month away! This year’s inaugural user conference, the first of its kind in North America focused on DevOps on Windows (WinOps), Chocolatey and related technologies, takes place October 8th, 2018, at the Park Central Hotel in San Francisco, California.  
 

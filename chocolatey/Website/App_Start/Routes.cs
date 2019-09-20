@@ -82,7 +82,12 @@ namespace NuGetGallery
                     Action = "Evaluation"
                 });
 
-            routes.Redirect(r => r.MapRoute(RouteName.Compare, "compare")).To(pricingRoute);
+            routes.MapRouteSeo(
+               RouteName.Compare, "compare", new
+               {
+                   controller = "Pages",
+                   Action = "Compare"
+               });
 
             routes.MapRouteSeo(
                 RouteName.Install, "install", new
@@ -92,11 +97,55 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
-                RouteName.Business, "business", new
+               RouteName.Sitemap, "sitemap", new
+               {
+                   controller = "Pages",
+                   Action = "Sitemap"
+               });
+
+            routes.MapRouteSeo(
+               RouteName.Community, "community", new
+               {
+                   controller = "Pages",
+                   Action = "Community"
+               });
+
+            var productsRoute = routes.MapRoute(
+                RouteName.Products, "products", new
                 {
                     controller = "Pages",
-                    Action = "Business"
+                    Action = "Products"
                 });
+
+            routes.Redirect(r => r.MapRoute(RouteName.Business, "business")).To(productsRoute);
+
+            routes.MapRouteSeo(
+               RouteName.WhyChocolatey, "why-chocolatey", new
+               {
+                   controller = "Pages",
+                   Action = "WhyChocolatey"
+               });
+
+            routes.MapRouteSeo(
+               RouteName.UseCases, "use-cases", new
+               {
+                   controller = "Pages",
+                   Action = "UseCases"
+               });
+
+            routes.MapRouteSeo(
+               RouteName.HowChocolateyWorks, "how-chocolatey-works", new
+               {
+                   controller = "Pages",
+                   Action = "HowChocolateyWorks"
+               });
+
+            routes.MapRouteSeo(
+               RouteName.Careers, "careers", new
+               {
+                   controller = "Pages",
+                   Action = "Careers"
+               });
 
             routes.MapRouteSeo(
                 RouteName.FAQ, "faq", new
@@ -127,7 +176,7 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
-                RouteName.MediaKit, "mediakit", new
+                RouteName.MediaKit, "media-kit", new
                 {
                     controller = "Pages",
                     Action = "MediaKit"
@@ -138,8 +187,15 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "Company"
-                });  
-            
+                });
+
+            routes.MapRouteSeo(
+                RouteName.ContactTrial, "contact/trial", new
+                {
+                    controller = "Pages",
+                    Action = "ContactTrial"
+                });
+
             routes.MapRouteSeo(
                 RouteName.ContactUs, "contact", new
                 {
@@ -147,6 +203,48 @@ namespace NuGetGallery
                     Action = "ContactUs"
                 });    
             
+            routes.MapRouteSeo(
+                RouteName.ContactGeneral, "contact/general", new
+                {
+                    controller = "Pages",
+                    Action = "ContactGeneral"
+                });
+
+            routes.MapRouteSeo(
+                RouteName.ContactDiscount, "contact/student-discount", new
+                {
+                    controller = "Pages",
+                    Action = "ContactDiscount"
+                });
+
+            routes.MapRouteSeo(
+                RouteName.ContactPartner, "contact/partner", new
+                {
+                    controller = "Pages",
+                    Action = "ContactPartner"
+                });
+
+            routes.MapRouteSeo(
+                RouteName.ContactSales, "contact/sales", new
+                {
+                    controller = "Pages",
+                    Action = "ContactSales"
+                });
+
+            routes.MapRouteSeo(
+                RouteName.ContactSalesOther, "contact/sales-for-another-organization", new
+                {
+                    controller = "Pages",
+                    Action = "ContactSalesOther"
+                });
+                
+            routes.MapRouteSeo(
+                RouteName.ContactBlocked, "contact/blocked-ip-address", new
+                {
+                    controller = "Pages",
+                    Action = "ContactBlocked"
+                });
+
             routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
@@ -183,6 +281,12 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.Styleguide,
+                "styleguide/{styleguideName}",
+                new { controller = "Styleguide", action = "Styleguide", styleguideName = "home" }
+                );
+
+            routes.MapRouteSeo(
                 RouteName.BlogHome,
                 "blog/",
                 new { controller = "Blog", action = "Index" }
@@ -192,9 +296,21 @@ namespace NuGetGallery
                 RouteName.BlogArticle,
                 "blog/{articleName}",
                 new { controller = "Blog", action = "Article" }
-                );  
-            
-            var docsRoute = routes.MapRouteSeo(
+                );
+
+            routes.MapRouteSeo(
+                RouteName.Resources,
+                "resources/{resourceType}",
+                new { controller = "Resource", action = "Resources", resourceType = "home" }
+                );
+
+            routes.MapRouteSeo(
+                RouteName.ResourceName,
+                "resources/{resourceType}/{resourceName}",
+                new { controller = "Resource", action = "ResourceName" }
+                );
+
+	    var docsRoute = routes.MapRouteSeo(
                 RouteName.Docs,
                 "docs/{docName}", 
                 new { controller = "Documentation", action = "Documentation", docName = "home" }
@@ -202,7 +318,19 @@ namespace NuGetGallery
             
             // temporary redirect
             routes.Redirect(r => r.MapRoute("CentralManagementFeature", "features-chocolatey-central-management")).To(docsRoute, new { docName = "features-chocolatey-central-management" });
-            
+
+            routes.MapRouteSeo(
+                RouteName.Courses,
+                "courses",
+                new { controller = "Courses", action = "Courses" }
+                );
+
+            routes.MapRouteSeo(
+                RouteName.CourseName,
+                "courses/{courseName}/{courseModuleName}",
+                new { controller = "Courses", action = "CourseName", courseName = "home", courseModuleName = "home" }
+                );
+
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 
             routes.MapRoute(
@@ -389,8 +517,8 @@ namespace NuGetGallery
             routes.MapRouteSeo(
                 "Search", "search", new
                 {
-                    controller = "Search",
-                    Action = "DoSearch"
+                    controller = "Packages",
+                    Action = "ListPackages"
                 });
 
             routes.MapRoute("v2PackageIds", "api/v2/package-ids", MVC.Api.GetPackageIds());

@@ -11,21 +11,25 @@
 
 @helper PreviousNextPager(IPreviousNextPager pager) {
     if (pager.HasNextPage || pager.HasPreviousPage) {
-        <ul class="pager">
-            <li class="previous">
-                @if (pager.HasPreviousPage) { 
+        <ul class="pager mt-3 mb-0 p-0 list-unstyled text-center h5 list-inline">
+            <li class="previous list-inline-item pr-3 mr-0">
+                @if (pager.HasPreviousPage)
+                {
                     <a href="@pager.PreviousPageUrl" title="Go to the previous page.">Previous</a>
                 }
-                else {
-                    <text>Previous</text>
+                else
+                {
+                    <span class="text-muted" title="No previous pages.">Previous</span>
                 }
             </li>
-            <li class="next">
-                @if (pager.HasNextPage) { 
+            <li class="next list-inline-item pl-2">
+                @if (pager.HasNextPage)
+                {
                     <a href="@pager.NextPageUrl" title="Go to the next page.">Next</a>
                 }
-                else {
-                    <text>Next</text>
+                else
+                {
+                    <span class="text-muted" title="No further pages">Next</span>
                 }
             </li>
         </ul>
@@ -36,29 +40,8 @@
     <option value="@value" @if (value == currentValue) {<text>selected="selected"</text>}>@label</option>    
 }
 
-@helper UploadSequence(int currentStep) {
-    <ol class="sequence">
-        @SequenceStep(1, "Upload", currentStep)
-        @SequenceStep(2, "Verify Details", currentStep)
-        @SequenceStep(3, "Enjoy", currentStep)
-    </ol>
-    <div class="clear-fix"><!--Sad Panda--></div>
-}
-
-@helper SequenceStep(int step, string caption, int currentStep) {
-    if (currentStep > step) {
-        <li class="past">@caption</li>
-    }
-    else if (currentStep == step) {
-        <li class="current">@caption</li>
-    }
-    else {
-        <li>@caption</li>
-    }    
-}
-
 @helper OwnersGravatar(IEnumerable<User> owners, int size, UrlHelper url, bool showName = true) {
-    <ul class="owners">
+    <ul class="list-unstyled mb-2 mb-md-0">
     @foreach (var owner in owners) {
         <li>
             @ViewHelpers.OwnerGravatar(owner, size, url, showName)
@@ -68,7 +51,7 @@
 }
 
 @helper OwnerGravatar(User owner, int size, UrlHelper url, bool showName = true) {
-    <a class="owner" href="@url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">
+    <a class="d-flex align-items-center" href="@url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">
         @if(!string.IsNullOrEmpty(owner.EmailAddress)) { @GravatarImage(owner.EmailAddress, owner.Username, size) }
         @if (showName) {
             <text>@owner.Username</text>
@@ -78,7 +61,7 @@
 
 @helper GravatarImage(string email, string username, int size) {
     if (string.IsNullOrWhiteSpace(email)) {email = "default";}
-    var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "owner-image" });
+    var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "rounded-circle" });
     if (gravatarHtml != null && AppHarbor.IsSecureConnection(new HttpContextWrapper(HttpContext.Current)))
     {
         gravatarHtml = new HtmlString(gravatarHtml.ToHtmlString().Replace("http://www.gravatar.com/", "https://secure.gravatar.com/"));

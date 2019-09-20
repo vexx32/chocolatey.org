@@ -87,6 +87,54 @@ namespace NuGetGallery
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Sitemap()
+        {
+            return View("~/Views/Pages/Sitemap.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Community()
+        {
+            return View("~/Views/Pages/Community.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Products()
+        {
+            return View("~/Views/Pages/Products.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult WhyChocolatey()
+        {
+            return View("~/Views/Pages/WhyChocolatey.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult UseCases()
+        {
+            return View("~/Views/Pages/UseCases.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult HowChocolateyWorks()
+        {
+            return View("~/Views/Pages/HowChocolateyWorks.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Careers()
+        {
+            return View("~/Views/Pages/Careers.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Compare()
+        {
+            return View("~/Views/Pages/Compare.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Kickstarter()
         {
             return View("~/Views/Pages/Kickstarter.cshtml");
@@ -111,20 +159,114 @@ namespace NuGetGallery
         }
 
         [HttpGet]
-        public ActionResult ContactUs()
+        public ActionResult ContactTrial()
         {
-            return View("~/Views/Pages/ContactUs.cshtml", new ContactUsViewModel());
+            return View("~/Views/Pages/ContactTrial.cshtml", new ContactTrialViewModel());
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
-        public virtual ActionResult ContactUs(ContactUsViewModel contactForm)
+        public virtual ActionResult ContactTrial(ContactTrialViewModel contactForm)
         {
-            if (!ModelState.IsValid) return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactTrial.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactTrial.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+Machines: {5}
+
+### Message
+{6}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.Machines,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            messageService.ContactTrial(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactDiscount()
+        {
+            return View("~/Views/Pages/ContactDiscount.cshtml", new ContactDiscountViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactDiscount(ContactDiscountViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactDiscount.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactDiscount.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+
+### Message
+{4}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.Message);
+
+            var additionalSubject = "{0} {1}".format_with(contactForm.FirstName, contactForm.LastName);
+
+            messageService.ContactDiscount(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult ContactUs()
+        {
+            return View("~/Views/Pages/ContactUs.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactGeneral()
+        {
+            return View("~/Views/Pages/ContactGeneral.cshtml", new ContactGeneralViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactGeneral(ContactGeneralViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactGeneral.cshtml", contactForm);
 
             if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
             {
                 ModelState.AddModelError(string.Empty,"Please use an alternative email address. This domain is known to send spam.");
-                return View("~/Views/Pages/ContactUs.cshtml", contactForm);
+                return View("~/Views/Pages/ContactGeneral.cshtml", contactForm);
             }
 
             var from = new MailAddress(contactForm.Email);
@@ -151,13 +293,208 @@ Company: {4}
                 additionalSubject = "{0} {1}".format_with(contactForm.FirstName, contactForm.LastName);
             }
 
-            messageService.ContactUs(from, contactForm.MessageTo, message, additionalSubject);
+            messageService.ContactGeneral(from, contactForm.MessageTo, message, additionalSubject);
 
             TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
 
             return View("~/Views/Pages/Thanks.cshtml");
         }
 
+        [HttpGet]
+        public ActionResult ContactPartner()
+        {
+            return View("~/Views/Pages/ContactPartner.cshtml", new ContactPartnerViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactPartner(ContactPartnerViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactPartner.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactPartner.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+
+### Message
+{5}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            messageService.ContactPartner(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactSales()
+        {
+            return View("~/Views/Pages/ContactSales.cshtml", new ContactSalesViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactSales(ContactSalesViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactSales.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactSales.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+Machines: {5}
+
+### Message
+{6}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.Machines,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            //Find out if the user is part of a pipeline by examining the current URL query string
+            var pipeline = true;
+            if (Request.QueryString.ToString().Contains("pipline=false"))
+            {
+                pipeline = false;
+            }
+
+            messageService.ContactSales(from, message, additionalSubject, pipeline);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactSalesOther()
+        {
+            return View("~/Views/Pages/ContactSalesOther.cshtml", new ContactSalesOtherViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactSalesOther(ContactSalesOtherViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactSalesOther.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactSalesOther.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+Machines: {5}
+
+### Message
+{6}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.Machines,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            var pipeline = false;
+
+            messageService.ContactSales(from, message, additionalSubject, pipeline);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult ContactBlocked()
+        {
+            return View("~/Views/Pages/ContactBlocked.cshtml", new ContactBlockedViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactBlocked(ContactBlockedViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactBlocked.cshtml", contactForm);
+
+            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                return View("~/Views/Pages/ContactBlocked.cshtml", contactForm);
+            }
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Company: {4}
+Blocked IP Address: {5}
+
+### Message
+{6}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.CompanyName,
+              contactForm.BlockedIP,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+            if (string.IsNullOrWhiteSpace(additionalSubject))
+            {
+                additionalSubject = "{0} {1}".format_with(contactForm.FirstName, contactForm.LastName);
+            }
+
+            messageService.ContactBlocked(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+        
         [HttpGet]
         public ActionResult Discount()
         {
@@ -228,19 +565,19 @@ Thanks for requesting a discount. Please see the link below:
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Install()
         {
-            return View("~/Views/Documentation/Installation.cshtml","~/Views/Shared/CodeLayout.cshtml");
+            return View("~/Views/Pages/Install.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult FAQ()
         {
-            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Shared/CodeLayout.cshtml");
+            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Security()
         {
-            return View("~/Views/Documentation/Security.cshtml", "~/Views/Shared/CodeLayout.cshtml");
+            return View("~/Views/Documentation/Security.cshtml", "~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]

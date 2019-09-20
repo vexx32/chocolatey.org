@@ -4,6 +4,7 @@ Author: Rob Reynolds
 Tags: News
 Keywords: chocolatey, logo
 Summary: Chocolatey recently underwent a bit of a fancy facelift. We are excited to unveil what that looks like!
+Image: <img src="https://cloud.githubusercontent.com/assets/63502/19225605/12326f66-8e65-11e6-9640-183716e99a39.png" alt="Chocolatey" />
 ---
 **Note:** Originally posted at [CodeBetter](http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/). *Reposted with permission.*
 

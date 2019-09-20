@@ -38,7 +38,8 @@ namespace NuGetGallery
             int updatedCount,
             int submittedCount,
             int waitingCount,
-            int respondedCount)
+            int respondedCount,
+            string moderationStatus)
         {
             // TODO: Implement actual sorting
             IEnumerable<ListPackageItemViewModel> items;
@@ -52,6 +53,7 @@ namespace NuGetGallery
             PageSize = pageSize;
             TotalCount = totalCount;
             SortOrder = sortOrder;
+            ModerationStatus = moderationStatus;
             SearchTerm = searchTerm;
             int pageCount = (TotalCount + PageSize - 1) / PageSize;
 
@@ -59,12 +61,21 @@ namespace NuGetGallery
                 items,
                 PageIndex,
                 pageCount,
-                page => url.PackageList(page, sortOrder, searchTerm, includePrerelease, moderatorQueue)
+                page => url.PackageList(page, sortOrder, searchTerm, includePrerelease, moderatorQueue, moderationStatus)
                 );
+
+            var pagerSearch = new PreviousNextPagerViewModel<ListPackageItemViewModel>(
+                items,
+                PageIndex,
+                pageCount,
+                page => url.SearchResults(page, sortOrder, searchTerm, includePrerelease, moderatorQueue, moderationStatus)
+                );
+
             Items = pager.Items;
             FirstResultIndex = 1 + (PageIndex * PageSize);
             LastResultIndex = FirstResultIndex + Items.Count() - 1;
             Pager = pager;
+            PagerSearch = pagerSearch;
             IncludePrerelease = includePrerelease ? "true" : null;
             ModeratorQueue = moderatorQueue ? "true" : null;
             ModerationUpdatedPackageCount = updatedCount;
@@ -81,11 +92,15 @@ namespace NuGetGallery
 
         public IPreviousNextPager Pager { get; private set; }
 
+        public IPreviousNextPager PagerSearch { get; private set; }
+
         public int TotalCount { get; private set; }
 
         public string SearchTerm { get; private set; }
 
         public string SortOrder { get; private set; }
+
+        public string ModerationStatus { get; private set; }
 
         public int PageIndex { get; private set; }
 

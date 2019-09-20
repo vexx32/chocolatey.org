@@ -4,6 +4,7 @@ Author: Rob Reynolds
 Tags: News
 Keywords: chocolatey, community repository, installs, statistics
 Summary: Recently Chocolatey's community repository (this site in the packages section) surpassed 50 million package installs! 50 million!
+Image: <img src="https://cloud.githubusercontent.com/assets/63502/18611655/0dd37f66-7d06-11e6-9246-c4d5c12aae90.png" />
 ---
 Recently Chocolatey's community repository (this site in the packages section) surpassed 50 million package installs! 50 million! That is a milestone worth a mention.
 

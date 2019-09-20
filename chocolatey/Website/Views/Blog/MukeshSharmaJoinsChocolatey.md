@@ -4,6 +4,7 @@ Published: 20161014
 Tags: News, Press-Release 
 Keywords: coo, chocolatey, mukesh sharma, chief operating officer, executive
 Summary: For immediate release: Chocolatey names Mukesh Sharma as second executive.
+Image: <img src="/content/images/team/mukesh.png" alt="Mukesh Sharma, COO of Chocolatey" title="Mukesh Sharma, COO of Chocolatey" />
 ---
 
 Chocolatey, the software management solution for Windows, recently named Mukesh Sharma as part of their executive team as Chief Operating Officer, to help drive go to market operations, business growth, and expansion into new markets.

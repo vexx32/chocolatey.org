@@ -163,6 +163,30 @@ If you think, the user should be able to customize this path and you, the packag
 <h3 id="make-it-clear-in-the-package-description">Make it clear in the package description</h3>
 <p>No matter how you decide, you are advised to state the default installation directory in your package description. This prevents confusion about where the application will end up being installed.</p>
 <p>If you allow customizing the installation path, then append instructions on how to do that, too.</p>
+<h3 id="windows-environment-variables">Windows environment variables</h3>
+<p>Chocolatey installations are advised to be performed while running &quot;as administrator&quot;. Because of this it is important that you understand that some windows environment variables will be pinned to the administrator user and not the installation user at least<br />
+one circumstance.</p>
+<p>On many systems there are multiple accounts. The issue can occur on a system where there is an admin user with an account type of &quot;Administrator&quot;, let&#39;s call this user <strong>admin</strong>. There is another user with an account type of &quot;Standard User&quot; lets call this second user <strong>user</strong>.</p>
+<p>Note: &quot;Administrator&quot; and &quot;Standard User&quot; are the 2 account types that Windows 10 supports.</p>
+<p>When <strong>admin</strong> chooses to run a <code>cmd</code> shell with elevated privileges by right clicking and selecting &quot;Run as administrator&quot;. <strong>admin</strong> will be warned by &quot;User Access Control&quot; that they are elevating privileges via a dialog that <strong>admin</strong> can dismiss. The command shell will run the shell with administrator rights from the <strong>admin</strong> account. All good!</p>
+<p>When <strong>user</strong> chooses to run a <code>cmd</code> shell by right clicking and selecting &quot;Run as administrator&quot;, <strong>user</strong> will be asked to enter the credentials for <strong>admin</strong> account to gain administrator rights. <strong>user</strong> will need to enter <strong>admin</strong>&#39;s credentials and then the command shell will run the shell with administrator rights from the <strong>admin</strong> account. Wait... what?</p>
+<p>Yes, really. An elevated command shell for <strong>user</strong> will run as if it is the <strong>admin</strong> user!</p>
+<p>That means that when your installer depends on any environment variables to find install locations there is a scenario where the environment variables are from a different user (e.g. <strong>admin</strong>) than the user installing the package.</p>
+<p>The known affected environment variables are: <code>APPDATA</code>, <code>LOCALAPPDATA</code>, <code>TEMP</code>, <code>TMP</code>, <code>USERNAME</code>, <code>USERPROFILE</code></p>
+<p>Example Settings for a user named &quot;administrator&quot;:</p>
+<pre><code class="nohighlight">APPDATA=C:\Users\administrator\AppData\Roaming
+LOCALAPPDATA=C:\Users\administrator\AppData\Local
+TEMP=C:\Users\administrator\AppData\Local\Temp
+TMP=C:\Users\administrator\AppData\Local\Temp
+USERNAME=administrator
+USERPROFILE=C:\Users\administrator</code></pre>
+<p>A simple way around this is to ask the user to set environment variables that can override environment variables. Or alternatively, instruct your users to set the necessary environment variables in the elevated privileges command shell.</p>
+<p>Example instructions:</p>
+<blockquote>
+<p>Within the administrator command shell you will need to set 2 environment variables:</p>
+<pre><code class="nohighlight">set LOCALAPPDATA=C:\Users\&lt;USERNAME&gt;\AppData\Local
+set USERPROFILE=C:\Users\&lt;USERNAME&gt;</code></pre>
+</blockquote>
 <h2 id="upgrading">Upgrading</h2>
 <p>Prior to choco version 0.9.10, there is no dedicated automation script for upgrade scenarios. Instead, your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a> script should support installing/upgrading on top of any previous versions of your package.</p>
 <p>More recent versions of choco (0.9.10+) give you the option of supplying a <code>chocolateyBeforeModify.ps1</code> script.<br />
@@ -221,7 +245,7 @@ chocolateyInstall or chocolateyUninstall scripts.</p>
 <p>If there is an icon which is suitable for your package, you can specify it in the <code>&lt;iconUrl&gt;</code> tag in the nuspec. But there are a few things you should consider:</p>
 <ul>
 <li><strong>Avoid hotlinking icons from sites where you don&#39;t have control over the file.</strong> If you have a packages repository (recommended), use your own copy of the icon and put it there.</li>
-<li><strong>Use a static CDN for icon URLs that permits you to serve files hosted in a repository on GitHub.</strong> Some CDN services cache files permanently and it&#39;s therefore best to use a specific tag or commit URL, not a branch URL. While we don&#39;t make any recommendations about specific services, the more popular ones used by maintainers are <a href="https://www.jsdelivr.com/">jsDelivr</a>, <a href="https://staticaly.com/">Staticaly</a> and <a href="https://raw.githack.com/">Githack</a>.</li>
+<li><strong>Use a static CDN for icon URLs that permits you to serve files hosted in a repository on GitHub.</strong> Some CDN services cache files permanently and it&#39;s therefore best to use a specific tag or commit URL, not a branch URL. While we don&#39;t make any recommendations about specific services, the more popular ones used by maintainers are <a href="https://www.jsdelivr.com/">jsDelivr</a>, <a href="https://statically.io/">Statically</a> and <a href="https://raw.githack.com/">Githack</a>.</li>
 <li><strong>Avoid using GitHub raw links</strong> (<a href="https://raw.githubusercontent.com/" class="uri">https://raw.githubusercontent.com/</a>...). They are not intended to be used as CDN.</li>
 <li><strong>Use the software&#39;s icon if one is available, not the logo.</strong> This blog post explains the difference between logos and icons: <a href="http://blog.designcrowd.com/article/353/differences-between-logos-and-icons" class="uri">http://blog.designcrowd.com/article/353/differences-between-logos-and-icons</a>. If the software of your package doesn&#39;t have an icon, but a logo with text and an image, you can extract the image with your favorite image editor and use that as package icon. An example is <a href="https://chocolatey.org/packages/mysql">MySQL&#39;s dolphin</a>.</li>
 <li><strong>Use package icons with at least 128 pixels in width or height</strong> if available. However, avoid very high resolutions, because this would only unnecessarily increase the page load time. If there are only icons with less than 128 pixels available, choose the icon with the highest resolution you can find without upscaling it. Don&#39;t use low resolution favicons as package icons.</li>

@@ -1,0 +1,11 @@
+﻿@{
+    var noticeText = ("Chocolatey has a new look! <a href='/blog/chocolatey-website-redesign'><u>Check out the blog post</u></a> to learn about some exciting key features!");
+    //var noticeText = ("");
+}
+
+<div class="alert bg-success text-white alert-dismissible fade show mb-0 text-center p-2 notice-text @if (string.IsNullOrEmpty(noticeText)) { <text> d-none</text> }" role="alert" aria-atomic="true">
+    <strong>@Html.Raw(noticeText)</strong>
+    <button type="button" class="close position-relative py-0" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

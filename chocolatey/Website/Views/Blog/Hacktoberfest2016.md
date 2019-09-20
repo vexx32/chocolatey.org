@@ -4,6 +4,7 @@ Author: Rob Reynolds
 Tags: News
 Keywords: chocolatey, hacktoberfest, digital ocean
 Summary: Are you a developer? Want to win two free t-shirts?
+Image: <img src="https://cloud.githubusercontent.com/assets/63502/19296212/9b9a3b44-8fff-11e6-92bf-0f9a3400e047.png" alt="Hacktoberfest 2016" />
 ---
 Recently we [tweeted](https://twitter.com/ferventcoder/status/782621022176419840) about participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/).
 

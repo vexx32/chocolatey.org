@@ -1,0 +1,87 @@
+.fa-question-circle:hover {
+    cursor: pointer;
+}
+
+.fa-angle-right {
+    margin-left: .5rem;
+}
+
+.fa-asterisk, .form-field .fa-question-circle {
+    color: $primary;
+}
+
+.fa-asterisk {
+    font-size: .55em;
+    font-weight: 900;
+}
+
+a[data-toggle="collapse"], .docs-left button.navbar-toggler[data-toggle="collapse"], .module-left button.navbar-toggler[data-toggle="collapse"] {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-down);
+        margin-right: .5rem;
+    }
+}
+
+a[data-toggle="collapse"].collapsed, .docs-left button.navbar-toggler[data-toggle="collapse"].collapsed, .module-left button.navbar-toggler[data-toggle="collapse"].collapsed {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-right);
+        margin-right: .5rem;
+    }
+}
+
+.course-list li.completed, .course-list li.mod-completed, .correct {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-check);
+        text-align: center;
+    }
+}
+
+.wrong {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-times);
+        text-align: center;
+    }
+}
+
+#get-involved li a {
+    &::after {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-right);
+        margin-left: .5rem;
+    }
+}
+
+.rating > label, .rating li {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-star);
+    }
+}
+
+#topNav {
+    .navbar-collapse {
+        .dropdown-toggle {
+            &::after {
+                @extend %fa-icon;
+                @extend .fas;
+                content: fa-content($fa-var-angle-down);
+                position: absolute;
+                top: 25%;
+                color: $primary;
+                opacity: 0;
+                transition: 0.5s;
+                border: none;
+            }
+        }
+    }
+}

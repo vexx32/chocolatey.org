@@ -5,7 +5,9 @@ http://chocolatey.org
 ## CONTRIBUTING
 
 ### Getting started
- 1. You will need a local running instance of SQL Server and Visual Studio 2013 or above
+ 1. Before starting, you will need:
+    1. Node.js and npm installed globally
+    1. A local running instand of SQL Server and Visual Studio 2013 or above
  1. In **Visual Studio**, open **ChocolateyGallery.sln**
  1. In the **Website** project, open **web.config**
  1. Locate the **connectionStrings** section, and modify the **NuGetGallery** connection string to point to your local instance of SQL Server. It's not a bad idea to change the database name (initial catalog) just to avoid confusion. For example if your SQL Server instance is named SQL2016, you could use:

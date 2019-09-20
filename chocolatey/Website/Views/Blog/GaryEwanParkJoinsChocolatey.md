@@ -5,6 +5,7 @@ Published: 20180211
 Tags: News, Press-Release
 Keywords: chocolatey, gary ewan park, engineer, senior software engineer
 Summary: For immediate release: Long time community member Gary Ewan Park joins Chocolatey full time as Senior Software Engineer.
+Image: <img src="/content/images/team/gary.png" alt="Gary Ewan Park, Senior Software Engineer" title="Gary Ewan Park, Senior Software Engineer" />
 ---
 We are excited to announce that Gary Ewan Park has joined the team as a Senior Software Engineer in a full time capacity. Gary had been working with the team in a part time capacity previously and has been a long time member of the Chocolatey community!
 

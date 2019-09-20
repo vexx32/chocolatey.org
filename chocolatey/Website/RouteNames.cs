@@ -39,10 +39,20 @@ namespace NuGetGallery
         public const string Compare = "Compare"; 
         public const string Stats = "Stats";
         public const string Install = "Install";
-        public const string Business = "Business";
+        public const string Sitemap = "Sitemap";
+        public const string Community = "Community";
+        public const string Products = "Products";
+        public const string WhyChocolatey = "WhyChocolatey";
+        public const string UseCases = "UseCases";
+        public const string HowChocolateyWorks = "HowChocolateyWorks";
+        public const string Careers = "Careers";
         public const string FAQ = "FAQ";
         public const string BlogHome = "BlogHome";
         public const string BlogArticle = "BlogArticle";
+        public const string Resources = "Resources";
+        public const string ResourceName = "ResourceName";
+        public const string Courses = "Courses";
+        public const string CourseName = "CourseName";
         public const string Docs = "Docs";
         public const string Kickstarter = "Kickstarter";
         public const string Terms = "Terms";
@@ -50,7 +60,14 @@ namespace NuGetGallery
         public const string Security = "Security";
         public const string MediaKit = "MediaKit";
         public const string Company = "Company";
+        public const string ContactTrial = "ContactTrial";
         public const string ContactUs = "ContactUs";
+        public const string ContactGeneral = "ContactGeneral";
+        public const string ContactDiscount = "ContactDiscount";
+        public const string ContactPartner = "ContactPartner";
+        public const string ContactSales = "ContactSales";
+        public const string ContactSalesOther = "ContactSalesOther";
+        public const string ContactBlocked = "ContactBlocked";
         public const string Discount = "Discount";
         public const string Evaluation = "Evaluation";
         public const string Support = "Support";
@@ -85,5 +102,7 @@ namespace NuGetGallery
         public const string CuratedPackages = "CuratedPackages";
         public const string CuratedPackage = "CuratedPackage";
         public const string SearchResults = "search";
+        public const string Styleguide = "Styleguide";
+        public const string Business = "Business";
     }
 }

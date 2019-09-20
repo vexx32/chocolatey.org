@@ -1,15 +1,16 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
+﻿// Copyright 2017 - 2019 Chocolatey Software
+// Copyright 2011 - 2017RealDimensions Software, LLC, the original 
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery
+// and the authors/contributors of NuGetGallery 
 // at https://github.com/NuGet/NuGetGallery
-//
+//  
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//
+// 
 //   http://www.apache.org/licenses/LICENSE-2.0
-//
+// 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,8 +37,17 @@ namespace NuGetGallery
         private readonly IConfiguration settings;
         private readonly IPrincipal currentUser;
         private readonly IUserSiteProfilesService profilesService;
+        private readonly ICourseAchievementsService courseAchievementsService;
 
-        public UsersController(IUserService userSvc, IPackageService packageService, IMessageService messageService, IConfiguration settings, IPrincipal currentUser, IUserSiteProfilesService profilesService)
+        public UsersController(
+            IUserService userSvc,
+            IPackageService packageService,
+            IMessageService messageService,
+            IConfiguration settings,
+            IPrincipal currentUser,
+            IUserSiteProfilesService profilesService,
+            ICourseAchievementsService courseAchievementsService
+        )
         {
             userService = userSvc;
             this.packageService = packageService;
@@ -45,8 +55,9 @@ namespace NuGetGallery
             this.settings = settings;
             this.currentUser = currentUser;
             this.profilesService = profilesService;
+            this.courseAchievementsService = courseAchievementsService;
         }
-
+        
         [Authorize, RequireHttpsAppHarbor]
         public virtual ActionResult Account()
         {
@@ -54,7 +65,8 @@ namespace NuGetGallery
             var curatedFeeds = GetService<ICuratedFeedsByManagerQuery>().Execute(user.Key);
 
             return View(
-                "~/Views/Users/Account.cshtml", new AccountViewModel
+                "~/Views/Users/Account.cshtml",
+                new AccountViewModel
                 {
                     UserName = user.Username,
                     ApiKey = user.ApiKey.ToString(),
@@ -106,7 +118,8 @@ namespace NuGetGallery
                 try
                 {
                     userService.UpdateProfile(user, profile.EmailAddress, profile.EmailAllowed, profile.EmailAllModerationNotifications);
-                } catch (EntityException ex)
+                }
+                catch (EntityException ex)
                 {
                     ModelState.AddModelError(String.Empty, ex.Message);
                     return View("~/Views/Users/Edit.cshtml", profile);
@@ -115,7 +128,8 @@ namespace NuGetGallery
                 if (existingConfirmationToken == user.EmailConfirmationToken) TempData["Message"] = "Account settings saved!";
                 else
                 {
-                    TempData["Message"] = "Account settings saved! We sent a confirmation email to verify your new email. When you confirm the email address, it will take effect and we will forget the old one.";
+                    TempData["Message"] =
+                        "Account settings saved! We sent a confirmation email to verify your new email. When you confirm the email address, it will take effect and we will forget the old one.";
 
                     var confirmationUrl = Url.ConfirmationUrl(MVC.Users.Confirm(), user.Username, user.EmailConfirmationToken, protocol: Request.Url.Scheme);
                     messageService.SendEmailChangeConfirmationNotice(new MailAddress(profile.EmailAddress, user.Username), confirmationUrl);
@@ -145,7 +159,8 @@ namespace NuGetGallery
             try
             {
                 user = userService.Create(request.Username, request.Password, request.EmailAddress);
-            } catch (EntityException ex)
+            }
+            catch (EntityException ex)
             {
                 ModelState.AddModelError(String.Empty, ex.Message);
                 return View("~/Views/Users/Register.cshtml");
@@ -181,17 +196,17 @@ namespace NuGetGallery
             var packages = packageService.FindPackagesByOwner(user);
 
             var published = from p in packages
-                            orderby new SemanticVersion(p.Version) descending
-                            group p by p.PackageRegistration.Id;
+                orderby new SemanticVersion(p.Version) descending
+                group p by p.PackageRegistration.Id;
 
             var model = new ManagePackagesViewModel
             {
                 Packages = from pr in published
-                           select new PackageViewModel(pr.First())
-                           {
-                               DownloadCount = pr.Sum(p => p.DownloadCount),
-                               Listed = pr.Any(p => p.Listed)
-                           },
+                    select new PackageViewModel(pr.First())
+                    {
+                        DownloadCount = pr.Sum(p => p.DownloadCount),
+                        Listed = pr.Any(p => p.Listed)
+                    },
             };
             return View("~/Views/Users/Packages.cshtml", model);
         }
@@ -302,7 +317,8 @@ namespace NuGetGallery
             var user = userService.FindByUsername(username);
             if (user == null) return HttpNotFound();
 
-            var packages = (from p in packageService.FindPackagesByOwner(user) where p.Listed orderby p.Version descending group p by p.PackageRegistration.Id).Select(c => new PackageViewModel(c.First())).ToList();
+            var packages = (from p in packageService.FindPackagesByOwner(user) where p.Listed orderby p.Version descending group p by p.PackageRegistration.Id).Select(c => new PackageViewModel(c.First()))
+                .ToList();
 
             var packagesInModeration =
                 (from p in packageService.FindPackagesByOwner(user) where p.Status == PackageStatusType.Submitted orderby p.Version descending group p by p.PackageRegistration.Id).Select(
@@ -310,7 +326,7 @@ namespace NuGetGallery
 
             //var userProfiles = profilesService.GetUserProfiles(user).ToList();
             var userProfiles = (from p in profilesService.GetUserProfiles(user) orderby p.Name select p).Select(c => new UserSiteProfileViewModel(c)).ToList();
-
+            var completedCourses = (from p in courseAchievementsService.GetUserCourseAchievements(user) orderby p.CompletedDate select p).Select(c => new CourseAchievementViewModel(c)).ToList();
             var model = new UserProfileModel
             {
                 Username = user.Username,
@@ -318,7 +334,8 @@ namespace NuGetGallery
                 Packages = packages,
                 PackagesModerationQueue = packagesInModeration,
                 TotalPackageDownloadCount = packages.Sum(p => p.TotalDownloadCount),
-                UserProfiles = userProfiles
+                UserProfiles = userProfiles,
+                CompletedCourses = completedCourses,
             };
 
             return View("~/Views/Users/Profiles.cshtml", model);

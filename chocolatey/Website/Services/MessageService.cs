@@ -194,21 +194,34 @@ Package Url: {6}
             }
         }
 
-        public void ContactUs(MailAddress fromAddress, string contactType, string message, string optionalSubject)
+        public void ContactTrial(MailAddress fromAddress, string message, string optionalSubject)
+        {
+            string subject = "Customer Inquiry for Sales{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+            
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+
+        public void ContactGeneral(MailAddress fromAddress, string contactType, string message, string optionalSubject)
         {
             string subject = "Customer Inquiry for {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
             string body = message;
 
             var to = Configuration.ReadAppSettings("ContactUsEmail");
-            //refactor this a bit - magic strings! 
+
             if (contactType == "Website")
             {
                 subject = "Chocolatey - Contact Form - {0}{1}".format_with(contactType, string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
                 to = Configuration.ReadAppSettings("ModeratorEmail");
-            }
-            if (contactType == "WebsiteBlock")
-            {
-                subject = "Blocked IP{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
             }
 
             using (var mailMessage = new MailMessage())
@@ -219,7 +232,81 @@ Package Url: {6}
                 mailMessage.To.Add(to);
                 SendMessage(mailMessage);
             }
-        } 
+        }
+
+        public void ContactDiscount(MailAddress fromAddress, string message, string optionalSubject)
+        {
+            string subject = "Customer Inquiry for StudentDiscount{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+        
+        public void ContactPartner(MailAddress fromAddress, string message, string optionalSubject)
+        {
+            string subject = "Customer Inquiry for Partner{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+
+        public void ContactSales(MailAddress fromAddress, string message, string optionalSubject, bool pipeline)
+        {
+            string subject = "Customer Inquiry for Sales{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            //update subject line if user is not part of a pipeline.
+            if (pipeline == false)
+            {
+                subject = "Customer Inquiry for General Sales{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            }
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
+
+        public void ContactBlocked(MailAddress fromAddress, string message, string optionalSubject)
+        {
+            string subject = "Blocked IP{0}".format_with(string.IsNullOrWhiteSpace(optionalSubject) ? string.Empty : " - {0}".format_with(optionalSubject));
+            string body = message;
+
+            var to = Configuration.ReadAppSettings("ContactUsEmail");
+            
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.From = fromAddress;
+                mailMessage.To.Add(to);
+                SendMessage(mailMessage);
+            }
+        }
         
         public void Discount(string message, string emailTo, string fullName, string discountType)
         {

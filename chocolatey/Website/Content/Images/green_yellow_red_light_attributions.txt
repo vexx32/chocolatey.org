@@ -1,7 +1,0 @@
-circle_green_small.png - http://www.icons-land.com/
-circle_red_small.png - http://www.icons-land.com/
-
-green_ball_48.png - http://ikonga.deviantart.com/
-grey_ball_48.png - http://ikonga.deviantart.com/
-red_ball_48.png - http://ikonga.deviantart.com/
-yellow_ball_48.png - http://ikonga.deviantart.com/

@@ -1,9 +1,0 @@
-shCore.js
-shBrushPlain.js
-shBrushPowerShell.js
-shBrushJScript.js
-shBrushXml.js
-shBrushRuby.js
-shBrushCSharp.js
-shBrushBash.js
-shBrushPython.js

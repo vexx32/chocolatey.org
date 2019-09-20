@@ -193,6 +193,10 @@ namespace NuGetGallery
         {
             container.RegisterPerWebRequest<IUserSiteProfilesService, UserSiteProfilesService>();
             container.RegisterPerWebRequest<IEntityRepository<UserSiteProfile>, EntityRepository<UserSiteProfile>>();
+            container.RegisterPerWebRequest<IEntityRepository<Course>, EntityRepository<Course>>();
+            container.RegisterPerWebRequest<IEntityRepository<CourseModule>, EntityRepository<CourseModule>>();
+            container.RegisterPerWebRequest<ICourseAchievementsService, CourseAchievementsService>();
+            container.RegisterPerWebRequest<IEntityRepository<UserCourseAchievement>, EntityRepository<UserCourseAchievement>>();
             container.Register<IImageFileService, ImageFileService>(Lifestyle.Singleton);
             container.RegisterPerWebRequest<IEntityRepository<ScanResult>, EntityRepository<ScanResult>>();
             container.RegisterPerWebRequest<IScanService, ScanService>();

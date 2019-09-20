@@ -6,85 +6,38 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Chocolatey Gallery</title> 
-        <link href="@Href("~/Content/site.css")" rel="stylesheet" />
-        <link href="@Href("~/Content/chocolatey.css")" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,700">
+        <link href="@Href("~/Content/dist/chocolatey.slim.css")" rel="stylesheet" />
         <link href="@Href("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
         <script src="@Href("~/Scripts/header/modernizr-2.6.2.js")"></script>
     </head>
     <body>
-        <div id="content-wrapper">
-            <header class="main">
-                <div id="logo"><a href="@Href("~/")">Chocolatey Gallery</a></div>
-            </header>
-            <nav class="main">
-                <ul id="menu">
-                    <li><a href="@Href("~/")">Home</a></li>
-                    <li><a href="@Href("~/Packages")">Packages</a></li>
-                    <li><a href="https://github.com/chocolatey/choco/wiki">Documentation</a></li>
-                    <li><a href="@Href("~/packages/upload")" class="upload">Upload Package</a></li>
-                </ul>
-            </nav>
-            <div id="body">
-            <div class="error-show-code"></div>
-            @RenderBody()
-            </div>
-        </div>
-        <div id="layout-footer" class="group">
-			<footer id="footer">
-				<ul class="recommended">
-					<li><a href="https://github.com/chocolatey/choco/wiki">Overview</a>
-						<p>
-							Where did Chocolatey get its name? What exactly is chocolatey anyway?</p>
-					</li>
-					<li><a href="http://groups.google.com/group/chocolatey">Discussion</a>
-						<p>
-							Find a possible bug? Got a feature request? Get involved in the discussion!</p>
-					</li>
-					<li><a href="http://bit.ly/chocolateyVideo">Video</a>
-						<p>
-							Want to see Chocolatey in action?</p>
-					</li>
-					<li><a href="https://github.com/chocolatey/choco/wiki/ChocolateyFAQs">FAQ</a>
-						<p>
-							Read the Frequently Asked Questions about Chocolatey.</p>
-					</li>
-				</ul>
-				<div class="license">
-					<p>
-						<a href="https://twitter.com/chocolateynuget" class="twitter-follow-button" data-show-count="true"
-							data-width="250px" data-lang="en">Follow @@chocolateynuget</a> <a href="https://twitter.com/share"
-								class="twitter-share-button" data-hashtags="chocolatey" data-lang="en">Tweet</a>
+        <header>
 
-						<script type="text/javascript">
-							!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");
-						</script>
+        </header>
+        <main class="my-auto">
+            <section class="container py-3 py-md-5">
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </section>
+        </main>
+        <footer class="bg-dark text-white">
+            <section class="container-fluid text-center pt-3">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mb-0"><strong>&copy; @DateTime.UtcNow.Year</strong> Chocolatey Software, Inc</p>
 
-						<br />
-						&copy; 2011 - @DateTime.UtcNow.Year RealDimensions Software, LLC.
-					</p>
-					@{
-                          string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
-                          string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
-                    }
-                    <p id="releaseTag">
-                        Deployed from <a href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker.
-                    </p>
-				</div>
-				<div class="supporters">
-					Site made possible by the following sponsors:
-					<ul class="supporters">
-						<li></li>
-						<li><a href="http://codingutopia.com">RealDimensions</a> <a id="realdimensions-logo" href="http://codingutopia.com"></a></li>
-						<li><a href="http://appharbor.com">AppHarbor</a> <a id="appharbor-logo" href="http://appharbor.com">
-						</a></li>
-                        <li><a href="https://turbo.net">Turbo.net</a> <a id="turbo-logo" href="https://turbo.net">
-                        </a></li>
-						<li></li>
-					</ul>
-				</div>
-			</footer>
-		</div>
-        <script src="@Href("~/Scripts/jquery-1.8.3.js")"></script>
+                        @{
+                            string commitId = System.Configuration.ConfigurationManager.AppSettings["appharbor.commit_id"];
+                            string worker = System.Configuration.ConfigurationManager.AppSettings["appharbor.worker_name"];
+                        }
+                        <p id="releaseTag" class="mb-0 text-dark"><small>Deployed from <a class="text-dark" href="https://github.com/chocolatey/chocolatey.org/commit/@commitId" title="View the commit.">@commitId.Substring(0, 10)</a>. You are on @worker.</small></p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+        <script src="@Href("~/Scripts/jquery-3.3.1.js")"></script>
         @RenderSection("BottomScripts", required: false)
     </body>
 </html>

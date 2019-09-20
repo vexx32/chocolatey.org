@@ -147,12 +147,11 @@
     <Reference Include="Lucene.Net.Contrib.SpellChecker">
       <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
-    <Reference Include="Markdig, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Markdig.0.9.0\lib\net40\Markdig.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Markdig, Version=0.15.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Markdig.0.15.6\lib\net40\Markdig.dll</HintPath>
     </Reference>
-    <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\MarkDownSharp\MarkdownSharp.dll</HintPath>
+    <Reference Include="MarkdownSharp, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MarkdownSharp.2.0.5\lib\net40\MarkdownSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -671,8 +670,16 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\StyleguideController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Entities\Course.cs" />
+    <Compile Include="Entities\CourseModule.cs" />
+    <Compile Include="Entities\CourseModuleNameType.cs" />
+    <Compile Include="Entities\CourseNameType.cs" />
+    <Compile Include="Entities\UserCourseAchievement.cs" />
+    <Compile Include="Entities\UserCourseModuleAchievement.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\Captcha.cs" />
     <Compile Include="Infrastructure\CassetteConfiguration.cs" />
@@ -701,14 +708,25 @@
     <Compile Include="Migrations\201805072106573_Add_UserItems.Designer.cs">
       <DependentUpon>201805072106573_Add_UserItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909091450200_Courses.cs" />
+    <Compile Include="Migrations\201909091450200_Courses.Designer.cs">
+      <DependentUpon>201909091450200_Courses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909091456152_CourseIndexes.cs" />
+    <Compile Include="Migrations\201909091456152_CourseIndexes.Designer.cs">
+      <DependentUpon>201909091456152_CourseIndexes.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />
     <Compile Include="RouteCollectionExtensions.cs" />
     <Compile Include="Services\AmazonSqsClientWrapper.cs" />
     <Compile Include="Services\AmazonSqsPackageStatisticsService.cs" />
+    <Compile Include="Entities\CourseConstants.cs" />
     <Compile Include="Services\DatabasePackageStatisticsService.cs" />
+    <Compile Include="Services\CourseAchievementsService.cs" />
     <Compile Include="Services\IAmazonSqsClient.cs" />
+    <Compile Include="Services\ICourseAchievementsService.cs" />
     <Compile Include="Services\IScanService.cs" />
     <Compile Include="Services\IPackageStatisticsService.cs" />
     <Compile Include="Services\IUserService.cs" />
@@ -798,12 +816,24 @@
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ContactAdminsViewModel.cs" />
-    <Compile Include="ViewModels\ContactUsViewModel.cs" />
+    <Compile Include="ViewModels\ContactDiscountViewModel.cs" />
+    <Compile Include="ViewModels\ContactBlockedViewModel.cs" />
+    <Compile Include="ViewModels\ContactGeneralViewModel.cs" />
+    <Compile Include="ViewModels\CourseLeftViewModel.cs" />
+    <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
+    <Compile Include="ViewModels\CourseModuleViewModel.cs" />
+    <Compile Include="ViewModels\ContactPartnerViewModel.cs" />
+    <Compile Include="ViewModels\ContactSalesOtherViewModel.cs" />
+    <Compile Include="ViewModels\ContactSalesViewModel.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
+    <Compile Include="ViewModels\CourseViewModel.cs" />
+    <Compile Include="ViewModels\CourseAchievementViewModel.cs" />
     <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModels\PasswordResetViewModel.cs" />
+    <Compile Include="ViewModels\ResourceViewModel.cs" />
+    <Compile Include="ViewModels\ContactTrialViewModel.cs" />
     <Compile Include="XmlExtensions.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1003,103 +1033,89 @@
       <Link>Infrastructure\Elmah.SqlServer.sql</Link>
     </EmbeddedResource>
     <Content Include="7za.exe" />
+    <Content Include="apple-touch-icon-114x114.png" />
+    <Content Include="apple-touch-icon-120x120.png" />
+    <Content Include="apple-touch-icon-144x144.png" />
+    <Content Include="apple-touch-icon-152x152.png" />
+    <Content Include="apple-touch-icon-180x180.png" />
+    <Content Include="apple-touch-icon-57x57.png" />
+    <Content Include="apple-touch-icon-72x72.png" />
+    <Content Include="apple-touch-icon-76x76.png" />
+    <Content Include="apple-touch-icon.png" />
     <Content Include="cloudflare-ratelimited.html" />
-    <Content Include="Content\chocolatey.css" />
-    <Content Include="Content\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\highlight\agate.css" />
-    <Content Include="Content\highlight\androidstudio.css" />
-    <Content Include="Content\highlight\arduino-light.css" />
-    <Content Include="Content\highlight\arta.css" />
-    <Content Include="Content\highlight\ascetic.css" />
-    <Content Include="Content\highlight\atelier-cave-dark.css" />
-    <Content Include="Content\highlight\atelier-cave-light.css" />
-    <Content Include="Content\highlight\atelier-dune-dark.css" />
-    <Content Include="Content\highlight\atelier-dune-light.css" />
-    <Content Include="Content\highlight\atelier-estuary-dark.css" />
-    <Content Include="Content\highlight\atelier-estuary-light.css" />
-    <Content Include="Content\highlight\atelier-forest-dark.css" />
-    <Content Include="Content\highlight\atelier-forest-light.css" />
-    <Content Include="Content\highlight\atelier-heath-dark.css" />
-    <Content Include="Content\highlight\atelier-heath-light.css" />
-    <Content Include="Content\highlight\atelier-lakeside-dark.css" />
-    <Content Include="Content\highlight\atelier-lakeside-light.css" />
-    <Content Include="Content\highlight\atelier-plateau-dark.css" />
-    <Content Include="Content\highlight\atelier-plateau-light.css" />
-    <Content Include="Content\highlight\atelier-savanna-dark.css" />
-    <Content Include="Content\highlight\atelier-savanna-light.css" />
-    <Content Include="Content\highlight\atelier-seaside-dark.css" />
-    <Content Include="Content\highlight\atelier-seaside-light.css" />
-    <Content Include="Content\highlight\atelier-sulphurpool-dark.css" />
-    <Content Include="Content\highlight\atelier-sulphurpool-light.css" />
-    <Content Include="Content\highlight\atom-one-dark.css" />
-    <Content Include="Content\highlight\atom-one-light.css" />
-    <Content Include="Content\highlight\brown-paper.css" />
-    <Content Include="Content\highlight\brown-papersq.png" />
-    <Content Include="Content\highlight\codepen-embed.css" />
-    <Content Include="Content\highlight\color-brewer.css" />
-    <Content Include="Content\highlight\darcula.css" />
-    <Content Include="Content\highlight\dark.css" />
-    <Content Include="Content\highlight\darkula.css" />
-    <Content Include="Content\highlight\default.css" />
-    <Content Include="Content\highlight\docco.css" />
-    <Content Include="Content\highlight\dracula.css" />
-    <Content Include="Content\highlight\far.css" />
-    <Content Include="Content\highlight\foundation.css" />
-    <Content Include="Content\highlight\github-gist.css" />
-    <Content Include="Content\highlight\github.css" />
-    <Content Include="Content\highlight\googlecode.css" />
-    <Content Include="Content\highlight\grayscale.css" />
-    <Content Include="Content\highlight\gruvbox-dark.css" />
-    <Content Include="Content\highlight\gruvbox-light.css" />
-    <Content Include="Content\highlight\hopscotch.css" />
-    <Content Include="Content\highlight\hybrid.css" />
-    <Content Include="Content\highlight\idea.css" />
-    <Content Include="Content\highlight\ir-black.css" />
-    <Content Include="Content\highlight\kimbie.dark.css" />
-    <Content Include="Content\highlight\kimbie.light.css" />
-    <Content Include="Content\highlight\magula.css" />
-    <Content Include="Content\highlight\mono-blue.css" />
-    <Content Include="Content\highlight\monokai-sublime.css" />
-    <Content Include="Content\highlight\monokai.css" />
-    <Content Include="Content\highlight\obsidian.css" />
-    <Content Include="Content\highlight\ocean.css" />
-    <Content Include="Content\highlight\paraiso-dark.css" />
-    <Content Include="Content\highlight\paraiso-light.css" />
-    <Content Include="Content\highlight\pojoaque.css" />
-    <Content Include="Content\highlight\pojoaque.jpg" />
-    <Content Include="Content\highlight\purebasic.css" />
-    <Content Include="Content\highlight\qtcreator_dark.css" />
-    <Content Include="Content\highlight\qtcreator_light.css" />
-    <Content Include="Content\highlight\railscasts.css" />
-    <Content Include="Content\highlight\rainbow.css" />
-    <Content Include="Content\highlight\school-book.css" />
-    <Content Include="Content\highlight\school-book.png" />
-    <Content Include="Content\highlight\solarized-dark.css" />
-    <Content Include="Content\highlight\solarized-light.css" />
-    <Content Include="Content\highlight\sunburst.css" />
-    <Content Include="Content\highlight\tomorrow-night-blue.css" />
-    <Content Include="Content\highlight\tomorrow-night-bright.css" />
-    <Content Include="Content\highlight\tomorrow-night-eighties.css" />
-    <Content Include="Content\highlight\tomorrow-night.css" />
-    <Content Include="Content\highlight\tomorrow.css" />
-    <Content Include="Content\highlight\vs.css" />
-    <Content Include="Content\highlight\xcode.css" />
-    <Content Include="Content\highlight\xt256.css" />
-    <Content Include="Content\highlight\zenburn.css" />
+    <Content Include="Content\account.css" />
+    <Content Include="Content\dist\chocolatey.slim.css" />
+    <Content Include="Content\fonts\fa-brands-400.svg" />
+    <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\404.svg" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
     <Content Include="Content\Images\appharbor-logo.png" />
     <Content Include="Content\Images\appharbor_logo.png" />
+    <Content Include="Content\Images\Badges\badges.png" />
+    <Content Include="Content\Images\Badges\CreatingChocolateyPackages.png" />
+    <Content Include="Content\Images\Badges\GettingStartedWithChocolatey.png" />
+    <Content Include="Content\Images\Badges\InstallingUpgradingUninstalling.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
+    <Content Include="Content\Images\blog\redesign-badges.jpg" />
+    <Content Include="Content\Images\blog\redesign-default-view.gif" />
+    <Content Include="Content\Images\blog\redesign-filter-dropdown.jpg" />
+    <Content Include="Content\Images\blog\redesign-filter-header.jpg" />
+    <Content Include="Content\Images\blog\redesign-install-tabs.jpg" />
+    <Content Include="Content\Images\blog\redesign-show-hide.gif" />
     <Content Include="Content\Images\boxstarter.png" />
+    <Content Include="Content\Images\businesses\Ansible-red-sm.png" />
+    <Content Include="Content\Images\businesses\Artifactory-sm.png" />
+    <Content Include="Content\Images\businesses\AWS-sm.png" />
+    <Content Include="Content\Images\businesses\Azure-sm.png" />
+    <Content Include="Content\Images\businesses\Betis-Group-sm.jpg" />
+    <Content Include="Content\Images\businesses\Boxstarter-sm.png" />
+    <Content Include="Content\Images\businesses\Buyitdirect-sm.jpg" />
+    <Content Include="Content\Images\businesses\Chef-Dark.png" />
+    <Content Include="Content\Images\businesses\Cornell.png" />
+    <Content Include="Content\Images\businesses\Docker-sm.png" />
+    <Content Include="Content\Images\businesses\GitHub-sm.png" />
+    <Content Include="Content\Images\businesses\GitLab-sm.png" />
+    <Content Include="Content\Images\businesses\GoogleCloudPlatform-sm.png" />
+    <Content Include="Content\Images\businesses\Hulu.png" />
+    <Content Include="Content\Images\businesses\Inedo-sm.png" />
+    <Content Include="Content\Images\businesses\Insight-sm.png" />
+    <Content Include="Content\Images\businesses\Invanti-sm.png" />
+    <Content Include="Content\Images\businesses\Jenkins-sm.png" />
+    <Content Include="Content\Images\businesses\JetBrains-sm.png" />
+    <Content Include="Content\Images\businesses\Microsoft-SCCM-sm.jpg" />
+    <Content Include="Content\Images\businesses\MyGet-Blue-sm.png" />
+    <Content Include="Content\Images\businesses\MyGet-Blue.png" />
+    <Content Include="Content\Images\businesses\Nexus-sm.png" />
+    <Content Include="Content\Images\businesses\NuGet-sm.png" />
+    <Content Include="Content\Images\businesses\OctopusDeploy-Dark-sm.png" />
+    <Content Include="Content\Images\businesses\OctopusDeploy-Dark.png" />
+    <Content Include="Content\Images\businesses\Otter-sm.png" />
+    <Content Include="Content\Images\businesses\PCM-sm.png" />
+    <Content Include="Content\Images\businesses\Powershell-sm.png" />
+    <Content Include="Content\Images\businesses\Puppet-Dark.png" />
+    <Content Include="Content\Images\businesses\Saltstack-sm.png" />
+    <Content Include="Content\Images\businesses\Shadowsoft-sm.png" />
+    <Content Include="Content\Images\businesses\SHI-sm.png" />
+    <Content Include="Content\Images\businesses\SwissRe.png" />
+    <Content Include="Content\Images\businesses\VMware-sm.png" />
+    <Content Include="Content\Images\businesses\Yelp-Stroke.png" />
+    <Content Include="Content\Images\businesses\Yelp.png" />
+    <Content Include="Content\Images\ccm-computer-white.jpg" />
+    <Content Include="Content\Images\ccm-mockup.jpg" />
     <Content Include="Content\Images\changePassword.png" />
+    <Content Include="Content\Images\choco-chefconf.jpg" />
+    <Content Include="Content\Images\choco-ps-summit.jpg" />
+    <Content Include="Content\Images\chocolatey-staff.jpg" />
+    <Content Include="Content\Images\chocolateyHeadquarters.jpg" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
     <Content Include="Content\Images\codeplex.jpg" />
+    <Content Include="Content\Images\community-mockup-grey.gif" />
+    <Content Include="Content\Images\community-mockup.gif" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
     <Content Include="Content\Images\dep-graph.svg" />
@@ -1194,29 +1210,32 @@
     <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
     <Content Include="Content\Images\greenArrow.png" />
-    <Content Include="Content\Images\green_ball_48.png" />
-    <Content Include="Content\Images\grey_ball_48.png" />
     <Content Include="Content\Images\gui.png" />
     <Content Include="Content\Images\ChocolateyGUI_main_screen.png" />
     <Content Include="Content\Images\headerbackground.png" />
+    <Content Include="Content\Images\headers\chocolatey-staff.jpg" />
+    <Content Include="Content\Images\headers\home.jpg" />
+    <Content Include="Content\Images\headers\web.jpg" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
+    <Content Include="Content\Images\How-Chocolatey-Works.mp4" />
+    <Content Include="Content\Images\icons\arrow-watch.png" />
     <Content Include="Content\Images\icon_slogan.png" />
-    <Content Include="Content\Images\icon_slogan_transparent.png" />
     <Content Include="Content\Images\inputBackground.png" />
-    <Content Include="Content\Images\integration_points.png" />
+    <Content Include="Content\Images\integrations-mockup.jpg" />
+    <Content Include="Content\Images\integration_points-dark.png" />
     <Content Include="Content\Images\invalidBG.png" />
     <Content Include="Content\Images\just-type-logo.svg" />
-    <Content Include="Content\Images\kickstarter\Chef.png" />
-    <Content Include="Content\Images\kickstarter\Elastic.png" />
-    <Content Include="Content\Images\kickstarter\ISE.png" />
-    <Content Include="Content\Images\kickstarter\MyGet.png" />
-    <Content Include="Content\Images\kickstarter\OctopusDeploy.png" />
-    <Content Include="Content\Images\kickstarter\ProGet.png" />
-    <Content Include="Content\Images\kickstarter\Puppet.png" />
-    <Content Include="Content\Images\kickstarter\SEEK.png" />
-    <Content Include="Content\Images\kickstarter\ShareByLink.png" />
-    <Content Include="Content\Images\kickstarter\Velocity.png" />
+    <Content Include="Content\Images\businesses\Chef.png" />
+    <Content Include="Content\Images\businesses\Elastic.png" />
+    <Content Include="Content\Images\businesses\ISE.png" />
+    <Content Include="Content\Images\businesses\MyGet.png" />
+    <Content Include="Content\Images\businesses\OctopusDeploy.png" />
+    <Content Include="Content\Images\businesses\ProGet.png" />
+    <Content Include="Content\Images\businesses\Puppet.png" />
+    <Content Include="Content\Images\businesses\SEEK.png" />
+    <Content Include="Content\Images\businesses\ShareByLink.png" />
+    <Content Include="Content\Images\businesses\Velocity.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\Images\logo2.svg" />
     <Content Include="Content\Images\logo_3.svg" />
@@ -1229,137 +1248,135 @@
     <Content Include="Content\Images\nothing-50x50.png" />
     <Content Include="Content\Images\nugetlogo.png" />
     <Content Include="Content\Images\nugetLogoFooter.png" />
+    <Content Include="Content\Images\package-source.jpg" />
     <Content Include="Content\Images\packageDefaultIcon-50x50.png" />
     <Content Include="Content\Images\packageDefaultIcon.png" />
     <Content Include="Content\Images\packageOwnerActionIcons.png" />
     <Content Include="Content\Images\packagesDefaultIcon.png" />
+    <Content Include="Content\Images\profile-chocolatey-repository.jpg" />
     <Content Include="Content\Images\rd_logo.png" />
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
-    <Content Include="Content\Images\red_ball_48.png" />
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
+    <Content Include="Content\Images\styleguide\logo-space.jpg" />
+    <Content Include="Content\Images\team\gary-sq.jpg" />
     <Content Include="Content\Images\team\gary.png" />
+    <Content Include="Content\Images\team\mukesh-sq.jpg" />
     <Content Include="Content\Images\team\mukesh.png" />
+    <Content Include="Content\Images\team\paul-sq.jpg" />
     <Content Include="Content\Images\team\paul.png" />
+    <Content Include="Content\Images\team\rob-sq.jpg" />
     <Content Include="Content\Images\team\stephanie-1.jpg" />
     <Content Include="Content\Images\team\stephanie-2.jpg" />
+    <Content Include="Content\Images\team\stephanie-sq.jpg" />
     <Content Include="Content\Images\trash.png" />
     <Content Include="Content\Images\turbo-logo.png" />
     <Content Include="Content\Images\Turbo-on-Red.png" />
     <Content Include="Content\Images\turbo_logo.png" />
     <Content Include="Content\Images\twitter.png" />
+    <Content Include="Content\Images\upgrade-steps-vertical.jpg" />
     <Content Include="Content\Images\uploadPackage.png" />
     <Content Include="Content\Images\userGraphic.png" />
     <Content Include="Content\Images\userIcon.png" />
     <Content Include="Content\Images\userIconWhite.png" />
+    <Content Include="Content\Images\videos\CaseStudy.jpg" />
+    <Content Include="Content\Images\videos\CMEGroup_Tony-Cheng.jpg" />
+    <Content Include="Content\Images\videos\Dan-Franciscus-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\evolution-of-ticketmaster.jpg" />
+    <Content Include="Content\Images\videos\future-of-windows-automation.jpg" />
+    <Content Include="Content\Images\videos\Gilbert-Sanchez-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\group-policy-at-puppet.jpg" />
+    <Content Include="Content\Images\videos\Karen-Kwentus-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\killing-golden-images.jpg" />
+    <Content Include="Content\Images\videos\managing-windows-at-facebook.jpg" />
+    <Content Include="Content\Images\videos\Mark-Johnson-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\ps-day-uk.jpg" />
+    <Content Include="Content\Images\videos\Puppet_Mike-Lombardi.jpg" />
+    <Content Include="Content\Images\videos\Qualcomm_Dwight-Bragdon.jpg" />
+    <Content Include="Content\Images\videos\Stefan-Scherer-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\Steven-Murawski-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\TDSecurity_Michel-Buczynsky.jpg" />
+    <Content Include="Content\Images\videos\what-is-chocolatey.jpg" />
+    <Content Include="Content\Images\videos\Yelp-ChocolateyFest-2018.jpg" />
+    <Content Include="Content\Images\videos\Yelp_Ryan-de-Temple.jpg" />
     <Content Include="Content\Images\xmark.png" />
-    <Content Include="Content\Images\yellow_ball_48.png" />
     <Content Include="Content\Images\YourPackage.png" />
-    <Content Include="Content\pricing-mega-v1.css" />
-    <Content Include="Content\pricing.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\packages.css" />
+    <Content Include="Content\pages.css" />
+    <Content Include="Content\prism\prism.css" />
     <Content Include="..\..\nugetgallery\Website\api\Web.config">
       <Link>api\Web.config</Link>
     </Content>
-    <Content Include="Content\style.css" />
-    <Content Include="Content\SyntaxHighlighter\shCore.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreDefault.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreDjango.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreEclipse.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreEmacs.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreFadeToGrey.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreMDUltra.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreMidnight.css" />
-    <Content Include="Content\SyntaxHighlighter\shCoreRDark.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeDefault.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeDjango.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeEclipse.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeEmacs.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeFadeToGrey.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeMDUltra.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeMidnight.css" />
-    <Content Include="Content\SyntaxHighlighter\shThemeRDark.css" />
     <Content Include="cloudflare-blocked.html" />
     <Content Include="DataServices\V2Feed.svc" />
     <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="googled7980ca724c3d811.html" />
+    <Content Include="gulpfile.js" />
     <Content Include="Install-LastPoshClient.ps1" />
     <None Include="Cassette.targets" />
-    <Content Include="Content\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="chocolatey-media-kit.zip" />
+    <Content Include="chocolatey-styleguide.zip" />
+    <Content Include="Content\scss\chocolatey.scss" />
+    <Content Include="Content\scss\purge.scss" />
+    <Content Include="Content\scss\_base.scss" />
+    <Content Include="Content\scss\_callouts.scss" />
+    <Content Include="Content\scss\_chocolatey-variables.scss" />
+    <Content Include="Content\scss\_icons.scss" />
+    <Content Include="Content\scss\_preloader.scss" />
+    <Content Include="Content\scss\_testimonials.scss" />
+    <Content Include="Content\scss\_navigation.scss" />
+    <Content Include="Content\scss\_carousels.scss" />
+    <Content Include="Content\scss\_backgrounds.scss" />
+    <Content Include="Content\scss\_resources.scss" />
+    <Content Include="Content\scss\_courses.scss" />
+    <Content Include="Content\scss\_cards.scss" />
+    <Content Include="Content\scss\_tabs.scss" />
+    <Content Include="Content\scss\_status-icons.scss" />
+    <Content Include="Content\fonts\fa-brands-400.eot" />
+    <Content Include="Content\fonts\fa-brands-400.ttf" />
+    <Content Include="Content\fonts\fa-brands-400.woff" />
+    <Content Include="Content\fonts\fa-brands-400.woff2" />
+    <Content Include="Content\fonts\fa-solid-900.eot" />
+    <Content Include="Content\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\fonts\fa-solid-900.woff" />
+    <Content Include="Content\fonts\fa-solid-900.woff2" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="opensearch.xml" />
     <Content Include="Scripts\anchorjs\anchor.min.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bundle.txt" />
+    <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\closeable\index.js" />
     <Content Include="Scripts\CookiesNotice\Index.js" />
+    <Content Include="Scripts\courses\courses.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
-    <Content Include="Scripts\highlight\highlight.pack.js" />
     <Content Include="Scripts\home\bundle.txt" />
-    <Content Include="Scripts\jquery-1.8.3.js" />
-    <Content Include="Scripts\jquery-ui-1.9.1.custom.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
-    <Content Include="Scripts\SearchResultsTabs\SearchResultsTabs.js" />
-    <Content Include="Scripts\SyntaxHighlighter\bundle.txt" />
+    <Content Include="Scripts\manageowners\knockout.3.5.0.js" />
+    <Content Include="Scripts\package-list\package-list.js" />
+    <Content Include="Scripts\packages\package-details.js" />
+    <Content Include="Scripts\prism\prism.js" />
     <Content Include="Scripts\validation\bundle.txt" />
     <Content Include="Scripts\validation\jquery.validate.js" />
-    <Content Include="Scripts\validation\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\manageowners\knockout-latest.js" />
     <Content Include="Scripts\home\stats.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shAutoloader.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushAppleScript.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushAS3.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushBash.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushColdFusion.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushCpp.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushCSharp.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushCss.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushDelphi.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushDiff.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushErlang.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushGroovy.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushJava.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushJavaFX.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushJScript.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushPerl.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushPhp.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushPlain.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushPowerShell.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushPython.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushRuby.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushSass.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushScala.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushSql.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushVb.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shBrushXml.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shCore.js" />
-    <Content Include="Scripts\SyntaxHighlighter\shLegacy.js" />
     <Content Include="Scripts\validation\MicrosoftAjax.js" />
     <Content Include="Scripts\validation\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\validation\MicrosoftMvcValidation.js" />
-    <Content Include="Scripts\ZeroClipboard\bundle.txt" />
-    <Content Include="Scripts\ZeroClipboard\ZeroClipboard.js" />
-    <Content Include="Scripts\ZeroClipboard\ZeroClipboard.swf" />
+    <Content Include="Views\Packages\UploadPackage.cshtml" />
     <Content Include="Views\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Search\SearchResults.cshtml" />
-    <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Packages\DisplayPackage.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1372,10 +1389,8 @@
     <Content Include="Views\Pages\Notice.cshtml" />
     <Content Include="Views\Packages\_ListVersion.cshtml" />
     <Content Include="Views\Pages\Pricing.cshtml" />
-    <Content Include="Views\Shared\OldLayout.cshtml" />
-    <Content Include="Views\Pages\Business.cshtml" />
     <Content Include="Views\Pages\Company.cshtml" />
-    <Content Include="Views\Pages\ContactUs.cshtml" />
+    <Content Include="Views\Pages\ContactGeneral.cshtml" />
     <Content Include="Views\Documentation\Installation.cshtml" />
     <Content Include="Views\Pages\Media.cshtml" />
     <Content Include="Views\Pages\Partner.cshtml" />
@@ -1474,7 +1489,6 @@
     <Content Include="Views\Documentation\HelpersGetWebFileName.cshtml" />
     <Content Include="Views\Documentation\FeaturesInfrastructureAutomation.cshtml" />
     <Content Include="Views\Documentation\FeaturesInstallDirectoryOverride.cshtml" />
-    <Content Include="Views\Packages\_ViewStart.cshtml" />
     <Content Include="Views\Pages\Thanks.cshtml" />
     <Content Include="Views\Documentation\CommandsInfo.cshtml" />
     <Content Include="Views\Documentation\FeaturesShim.cshtml" />
@@ -1511,7 +1525,6 @@
     <Content Include="Views\Blog\Celebrating5Years.md" />
     <Content Include="Views\Blog\ChocolateyBusinessAndProfessionalComing.md" />
     <Content Include="Views\Blog\ChocolateyHasANewLogo.md" />
-    <Content Include="Views\Shared\CodeLayout.cshtml" />
     <Content Include="Views\Blog\CreateChocolateyPackages.md" />
     <Content Include="Views\Blog\HostYourOwnServer.md" />
     <Content Include="Views\Blog\InternalizePackages.md" />
@@ -1556,8 +1569,112 @@
     <Content Include="Views\Documentation\FeaturesChocolateyCentralManagement.cshtml" />
     <Content Include="Views\Blog\ChocolateyFestReturns2020.md" />
     <Content Include="Views\Documentation\ReleaseNotesAgent.cshtml" />
+    <Content Include="Views\Shared\PackagesLayout.cshtml" />
+    <Content Include="Views\Shared\MinimalLayout.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesCentralManagement.cshtml" />
+    <Content Include="Views\Packages\_UploadSteps.cshtml" />
     <Content Include="Views\Documentation\ReleaseNotesExtension.cshtml" />
+    <Content Include="Views\Shared\_AlertTop.cshtml" />
+    <Content Include="Views\Shared\_CopyrightNavigation.cshtml" />
+    <Content Include="Views\Shared\_TopNavigation.cshtml" />
+    <Content Include="Views\Shared\_BottomNavigation.cshtml" />
+    <Content Include="Views\Styleguide\Home.cshtml" />
+    <Content Include="Views\Styleguide\_Layout.cshtml" />
+    <Content Include="Views\Styleguide\_ViewStart.cshtml" />
+    <Content Include="Views\Styleguide\Colors.cshtml" />
+    <Content Include="Views\Styleguide\Alerts.cshtml" />
+    <Content Include="Views\Styleguide\Buttons.cshtml" />
+    <Content Include="Views\Styleguide\Cards.cshtml" />
+    <Content Include="Views\Styleguide\Sections.cshtml" />
+    <Content Include="Views\Styleguide\Testimonials.cshtml" />
+    <Content Include="Views\Styleguide\Font.cshtml" />
+    <Content Include="Views\Styleguide\Logo.cshtml" />
+    <Content Include="Views\Styleguide\Carousels.cshtml" />
+    <Content Include="Views\Resources\Files\PuppetCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Home.cshtml" />
+    <Content Include="Views\Resources\CaseStudies.cshtml" />
+    <Content Include="Views\Resources\Files\YelpCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\WhatIsChocolatey.md" />
+    <Content Include="Views\Resources\_BreadCrumbs.cshtml" />
+    <Content Include="Views\Resources\SuccessStories.cshtml" />
+    <Content Include="Views\Resources\Files\ManagingWindowsAtFacebook.md" />
+    <Content Include="Views\Resources\Files\KillingGoldenImages.md" />
+    <Content Include="Views\Resources\_Layout.cshtml" />
+    <Content Include="Views\Resources\Post.cshtml" />
+    <Content Include="Views\Resources\Videos.cshtml" />
+    <Content Include="Views\Resources\Files\CMEGroupCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\EvolutionofTicketmaster.md" />
+    <Content Include="Views\Resources\Files\GroupPolicyAtPuppet.md" />
+    <Content Include="Views\Resources\Files\PSDayUK.md" />
+    <Content Include="Views\Resources\Files\QualcommCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\TDSecurityCustomerSuccessStory.md" />
+    <Content Include="Views\Resources\Files\FutureOfWindowsAutomation.md" />
+    <Content Include="Views\Resources\Files\DockerAContainerFullOfChocolatey.md" />
+    <Content Include="Views\Resources\Files\DanFranciscusChocoFest18.md" />
+    <Content Include="Views\Resources\Files\KarenKwentusChocoFest18.md" />
+    <Content Include="Views\Resources\Files\GilbertSanchezChocoFest18.md" />
+    <Content Include="Views\Resources\Files\MarkJohnsonChocoFest18.md" />
+    <Content Include="Views\Resources\Files\StevenMurawskiChocoFest18.md" />
+    <Content Include="Views\Resources\Files\YelpChocoFest18.md" />
+    <Content Include="Views\Courses\GettingStarted\WhatIsChocolatey.cshtml" />
+    <Content Include="Views\Courses\Home.cshtml" />
+    <Content Include="Views\Courses\_ModuleLayout.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_ViewStart.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\Home.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\Requirements.cshtml" />
+    <Content Include="Views\Courses\_LeftSideColumn.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_CourseDescription.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\HowToUse.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\Terminology.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\ChocolateyPackages.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\InstallationInDetail.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\HowChocolateyWorks.cshtml" />
+    <Content Include="Views\Courses\GettingStarted\_NextUrl.cshtml" />
+    <Content Include="Views\Courses\_QuizCTA.cshtml" />
+    <Content Include="Views\Courses\_AllCourses.cshtml" />
+    <Content Include="Views\Courses\Installation\_CourseDescription.cshtml" />
+    <Content Include="Views\Courses\Installation\_ViewStart.cshtml" />
+    <Content Include="Views\Courses\Installation\Home.cshtml" />
+    <Content Include="Views\Courses\Installation\Installing.cshtml" />
+    <Content Include="Views\Courses\Installation\Upgrading.cshtml" />
+    <Content Include="Views\Pages\Install.cshtml" />
+    <Content Include="Views\Courses\Installation\Uninstalling.cshtml" />
+    <Content Include="Views\Courses\Installation\_Method.cshtml" />
+    <Content Include="Views\Courses\Installation\_NextUrl.cshtml" />
+    <Content Include="Views\Pages\_Courses.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_CourseDescription.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_NextUrl.cshtml" />
+    <Content Include="Views\Courses\_Popup.cshtml" />
+    <Content Include="Views\Courses\_CourseAchievementBadgeDisplay.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\_ViewStart.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\Home.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\SummaryRulesAndGuidlines.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\AutomaticPackaging.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\BuildingTestingAndPushing.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\InstallingUpgradingAndUninstalling.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\PackageMaintainerHandover.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\NamingDescriptionAndVersioning.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\InternationalizationAndLocalization.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\NugetPackagesAndNuspec.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\Shims.cshtml" />
+    <Content Include="Views\Courses\CreatingChocolateyPackages\ChocoNewCommand.cshtml" />
+    <Content Include="Views\Pages\Sitemap.cshtml" />
+    <Content Include="Views\Pages\Community.cshtml" />
+    <Content Include="Views\Pages\Products.cshtml" />
+    <Content Include="Views\Pages\HowChocolateyWorks.cshtml" />
+    <Content Include="Views\Pages\WhyChocolatey.cshtml" />
+    <Content Include="Views\Pages\UseCases.cshtml" />
+    <Content Include="Views\Pages\Compare.cshtml" />
+    <Content Include="Views\Pages\ContactTrial.cshtml" />
+    <Content Include="Views\Pages\_ContactSideColumn.cshtml" />
+    <Content Include="Views\Pages\ContactUs.cshtml" />
+    <Content Include="Views\Pages\ContactDiscount.cshtml" />
+    <Content Include="Views\Pages\ContactPartner.cshtml" />
+    <Content Include="Views\Pages\ContactSales.cshtml" />
+    <Content Include="Views\Pages\ContactSalesOther.cshtml" />
+    <Content Include="Views\Pages\ContactBlocked.cshtml" />
+    <Content Include="Views\Blog\ChocolateyRedesign.md" />
+    <Content Include="Views\Pages\Careers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1570,6 +1687,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="package-lock.json" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
@@ -1583,18 +1702,14 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Packages\Download.cshtml" />
-    <Content Include="Views\Packages\Edit.cshtml" />
     <Content Include="Views\Packages\ListPackages.cshtml" />
     <Content Include="Views\Packages\ManagePackageOwners.cshtml" />
     <Content Include="Views\Packages\ReportAbuse.cshtml" />
-    <Content Include="Views\Packages\UploadPackage.cshtml" />
     <Content Include="Views\Packages\VerifyPackage.cshtml" />
     <Content Include="Views\Pages\Privacy.cshtml" />
     <Content Include="Views\Pages\Terms.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Object.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\TwoColumnLayout.cshtml" />
-    <Content Include="Views\Shared\UserDisplay.cshtml" />
     <Content Include="Views\Users\Account.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
     <Content Include="Views\Users\Confirm.cshtml" />
@@ -1671,4 +1786,13 @@
   <Target Name="Bundle" AfterTargets="Build">
     <Exec Command="&quot;$(msbuildtoolspath)\msbuild.exe&quot; &quot;$(ProjectDir)cassette.targets&quot; /p:OutputPath=$(OutputPath) /p:WebProjectOutputDir=&quot;$(WebProjectOutputDir)&quot; /t:Bundle /nr:false" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if "%25USERNAME:~0,5%25"=="apphb" (
+  call npm install gulp -g
+)
+
+cd $(SolutionDir)chocolatey\Website
+call npm install
+call "%25appdata%25\npm\gulp"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

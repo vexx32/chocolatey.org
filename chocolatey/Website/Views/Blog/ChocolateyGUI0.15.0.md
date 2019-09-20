@@ -5,6 +5,7 @@ Published: 20171018
 Tags: chocolatey oss, chocolatey gui, news, press-release
 Keywords: chocolatey oss, chocolatey gui, news, press-release, chocolatey, automate existing systems, dev ops, software deployment automation, software management automation
 Summary: Chocolatey GUI 0.15.0, the graphical user interface for Chocolatey, has just been released.  This is a major release of the application which brings with it a number of improvements and features, as well as fixing a number of bugs.
+Image: <img src="https://github.com/chocolatey/ChocolateyGUI/blob/c7a92e35a4b7e43cc611d7f8fd854ba8bb3171e2/docs/input/assets/img/Screenshots/Application_Loaded.png?raw=true" alt="Chocolatey Gui" />
 ---
 
 We are very happy to announce the release of version 0.15.0 of Chocolatey GUI!  This is a major overhaul of the application including a huge number of bug fixes, as well as a number of features and improvements.  This release has been a while in the making, but we hope that it will be worth the wait!

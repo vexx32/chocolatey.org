@@ -220,6 +220,36 @@ namespace NuGetGallery
                      .Map(
                          c =>
                          c.ToTable("PackageScanResults").MapLeftKey("ScanResultKey").MapRightKey("PackageKey"));
+
+            // take these out for now, will approach later
+            modelBuilder.Entity<Course>().HasKey(e => e.Key);
+            modelBuilder.Entity<Course>()
+                .HasMany<CourseModule>(c => c.CourseModules)
+                .WithRequired(cm => cm.Course)
+                .HasForeignKey(cm => cm.CourseKey);
+
+            modelBuilder.Entity<CourseModule>().HasKey(e => e.Key);
+
+            modelBuilder.Entity<UserCourseAchievement>().HasKey(e => e.Key);
+
+            modelBuilder.Entity<UserCourseAchievement>()
+                .HasRequired<User>(ca => ca.User)
+                .WithMany()
+                .HasForeignKey(ca => ca.UserKey)
+                .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<UserCourseAchievement>()
+            //    .HasRequired<Course>(ca => ca.Course)
+            //    .WithMany()
+            //    .HasForeignKey(ca => ca.CourseKey)
+            //    .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserCourseAchievement>()
+                .HasMany<UserCourseModuleAchievement>(ca => ca.CourseModuleAchievements)
+                .WithRequired(ma => ma.UserCourseAchievement)
+                .HasForeignKey(ma => ma.UserCourseAchievementKey);
+
+            modelBuilder.Entity<UserCourseModuleAchievement>().HasKey(e => e.Key);
         }
     }
 }

@@ -1,0 +1,376 @@
+﻿@using NuGetGallery
+@{
+    var moderationRole = User != null && User.IsInAnyModerationRole();
+    var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
+    var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
+    var PackageNav =
+        (
+            @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/search" || @FullHref == @BaseHref + "/account" || Request.RawUrl == Url.RouteUrl(RouteName.DisplayPackage) || Request.RawUrl == Url.RouteUrl(RouteName.UploadPackage) ||
+            Request.RawUrl == Url.Action(MVC.Users.Edit()) || Request.RawUrl == Url.Action(MVC.Users.ChangePassword()) || Request.RawUrl == Url.Action(MVC.Users.Packages()) || Request.RawUrl == Url.Action(MVC.Packages.ContactOwners()) ||
+            Request.RawUrl == Url.RouteUrl(RouteName.PackageVersionAction) || Request.RawUrl == Url.RouteUrl(RouteName.Profile)
+        );
+    var ResourceNav =
+        (
+            Request.RawUrl == Url.RouteUrl(RouteName.Docs) || Request.RawUrl == Url.RouteUrl(RouteName.BlogHome) || Request.RawUrl == Url.RouteUrl(RouteName.BlogArticle)
+        );
+    var SuccessStoryNav =
+        (Request.RawUrl == Url.RouteUrl(RouteName.Resources, new { resourceType = "success-stories" }));
+    var CourseNav =
+        (Request.Url.AbsoluteUri.ToLower().Contains("?quiz=true") || Request.RawUrl == Url.RouteUrl(RouteName.CourseName) && Request.RawUrl != Url.RouteUrl(RouteName.Courses));
+}
+
+<header class="w-100 @if (!PackageNav && !ResourceNav && !CourseNav) {<text>mb-xl-3</text>}">
+    <div class="d-none d-sm-block">@Html.Partial("~/Views/Shared/_AlertTop.cshtml")</div>
+    <nav id="topNav" class="navbar navbar-expand-xl navbar-dark bg-dark @if (!PackageNav && !ResourceNav && !CourseNav) {<text>shadow</text>}">
+        <a class="navbar-brand" href="@Url.Home()">
+            <img class="d-none d-xl-block" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_square.svg")" />
+            <img class="d-xl-none" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
+        </a>
+        <button class="navbar-toggler form-inline my-2 my-md-0 ml-2 border-0 collapsed" type="button" data-toggle="collapse" data-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="topNavbar">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="overview" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Overview</a>
+                    <div class="dropdown-menu" aria-labelledby="overview">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 d-xl-none">
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
+                                    <h4 class="text-center">Overview</h4>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.WhyChocolatey)">Why Chocolatey?</a>
+                                            <p class="d-none d-md-block">Chocolatey is a software management solution unlike anything else you've ever experienced on Windows. Chocolatey brings the concepts of true package management to allow you to version things, manage dependencies and installation order, better inventory management, and other features.</p>
+                                        </li>
+                                        <li><a href="@Url.RouteUrl(RouteName.HowChocolateyWorks)">How Chocolatey Works</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.UseCases)">Use Cases</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.UseCases)#server">Server</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.UseCases)#desktop">Desktop</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.UseCases)#cloud">Cloud / Containers</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.UseCases)#integrations">Integrations</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">Customer Stories</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "puppet-customer-success-story"})">Puppet<span class="fas fa-angle-right"></span></a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "yelp-customer-success-story"})">Yelp<span class="fas fa-angle-right"></span></a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "cme-group-customer-success-story"})">CME Group<span class="fas fa-angle-right"></span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="product" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product</a>
+                    <div class="dropdown-menu" aria-labelledby="product">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 d-xl-none">
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
+                                    <h4 class="text-center">Product</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Products)#chocolatey-for-business">Chocolatey for Business</a>
+                                            <p class="d-none d-md-block">Chocolatey for Business (C4B) is the enterprise offering that enables companies to adopt a DevOps approach to managing their Windows environment, allowing you to deliver applications to your users more reliably and faster.</p>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Products)#pro-edition">Pro Edition</a>
+                                            <p class="d-none d-md-block">Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 8 machines and provides the ultimate Chocolatey experience!</p>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Products)#foss">Open Source</a>
+                                            <p class="d-none d-md-block">Chocolatey has the largest online registry of Windows packages. Learn how Open Source Chocolatey can support your next project.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Compare)">Compare Editions</a>
+                                            <p class="d-none d-md-block">Learn the difference between the Chocolatey Editions and what will fit your needs the best.</p>
+                                        </li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Pricing)">Pricing</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ContactTrial)">Try Chocolatey for Business Free</a></li>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Pricing)">Purchase</a>
+                                            <p class="d-none d-md-block">I'm ready to get started now!</p>
+                                        </li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Support)">Support</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="community" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Community</a>
+                    <div class="dropdown-menu" aria-labelledby="community">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 d-xl-none">
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
+                                    <h4 class="text-center">Community</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.ListPackages)">Community Packages</a>
+                                            <p class="d-none d-md-block">Search the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Community)">Community Resources</a></li>
+                                        <li><a href="https://github.com/chocolatey" target="_blank" rel="noreferrer">Chocolatey on GitHub</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.BlogHome)">Blog</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="learn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</a>
+                    <div class="dropdown-menu" aria-labelledby="learn">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 d-xl-none">
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
+                                    <h4 class="text-center">Learn</h4>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Courses)">Get Started</a>
+                                            <p class="d-none d-md-block">New to Chocolatey? Learn the requirements and how to get Chocolatey up and running in no time!</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "home"})">Resource Library</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Docs</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})">Videos</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">Case Studies</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Courses)">Courses</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.MediaKit)">Media Kit</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Support)">Support</a>
+                                            <p class="d-none d-md-block">Need help? Read our Support FAQ to find out the next steps.</p>
+                                        </li>
+                                        <li><a href="@Url.RouteUrl(RouteName.BlogHome)">Blog</a></li>
+                                        <li><a href="http://eepurl.com/4qUJH" target="_blank" rel="noreferrer">Newsletter</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="partners" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Partners</a>
+                    <div class="dropdown-menu" aria-labelledby="partners">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 d-xl-none">
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
+                                    <h4 class="text-center">Partners</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Partner)">Overview</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ContactPartner)">Become a Partner</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Partner)#technology">Technology Partners</a></li>
+                                    </ul>
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Partner)#resellers">Resellers</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="about" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
+                    <div class="dropdown-menu" aria-labelledby="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 d-xl-none">
+                                    <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
+                                    <h4 class="text-center">About</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.About)">About Chocolatey</a>
+                                            <p class="d-none d-md-block">Chocolatey Software is focused on helping our community, customers, and partners with solutions that help fill the gaps that are often ignored. We offer a simple, pragmatic, and open approach to software management.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul>
+                                        <li><a href="@Url.RouteUrl(RouteName.Careers)">Careers</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light d-none d-xl-block" href="@Url.RouteUrl(RouteName.Install)">Install Now</a>
+                    <a class="btn btn-primary d-xl-none" href="@Url.RouteUrl(RouteName.Install)">Install Now</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    @if (PackageNav || CourseNav)
+    {
+    <div id="secondaryNav">
+        <nav class="navbar bg-white border-bottom">
+            <ul>
+                @if (@FullHref != @BaseHref + "/packages" && @FullHref != @BaseHref + "/search")
+                {
+                    <li class="d-none d-sm-flex">
+                        <a href="@Url.RouteUrl(RouteName.ListPackages)">
+                            <span class="fas fa-download" alt="Packages"></span>
+                            <span>Packages</span>
+                        </a>
+                    </li>
+                }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
+                            <span class="fas fa-user-plus" alt="Signup"></span>
+                            <span>Signup</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ux_account" href="@Url.LogOn()">
+                            <span class="fas fa-sign-in-alt" alt="Login"></span>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    if (!Request.Url.AbsoluteUri.Contains("moderatorQueue=true") && moderationRole)
+                    {
+                        <li class="d-none d-md-flex">
+                            <a href="@Url.RouteUrl(RouteName.ListPackages)?q=&moderatorQueue=true">
+                                <span class="fas fa-pencil-alt" alt="Moderator Queue"></span>
+                                <span class="d-lg-none">Moderation</span>
+                                <span class="d-none d-lg-block">Moderator Queue</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a class="ux_account" href="@Url.Action(MVC.Users.Account())">
+                            <span class="fas fa-cogs" alt="Account"></span>
+                            <span>Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.Users.Profiles(User.Identity.Name))">
+                            <span class="fas fa-user-alt" alt="Profile"></span>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ux_account_action" href="@Url.LogOff()">
+                            <span class="fas fa-sign-out-alt" alt="Log Off"></span>
+                            <span>Log Off</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+        @if (PackageNav)
+        {
+            <nav class="navbar bg-white border-bottom d-none d-sm-flex">
+                <ul>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-success"></span>
+                        Passing
+                    </li>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-danger"></span>
+                        Failing
+                    </li>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-warning"></span>
+                        Pending
+                    </li>
+                    <li class="d-sm-flex align-items-center">
+                        <span class="status status-sm bg-secondary"></span>
+                        Unknown / Exempted
+                    </li>
+                </ul>
+            </nav>
+        }
+    </div>
+    }
+    @if (ResourceNav)
+    {
+        <nav id="secondaryNav" class="@if (SuccessStoryNav) {<text>successStoryNav</text>} navbar bg-white border-bottom d-none d-sm-flex">
+            <ul>
+                <li>
+                    <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})">
+                        <span class="fas fa-play" alt="Videos"></span>
+                        <span>Videos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">
+                        <span class="fas fa-star" alt="Customer Success Stories"></span>
+                        <span>Success Stories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">
+                        <span class="fas fa-briefcase" alt="Case Studies"></span>
+                        <span>Case Studies</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">
+                        <span class="fas fa-file" alt="Documentation"></span>
+                        <span>Docs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.RouteUrl(RouteName.BlogHome)">
+                        <span class="fas fa-rss" alt="Blog"></span>
+                        <span>Blog</span>
+                    </a>
+                </li>
+            </ul>
+            @*To be added when Success Story submission is ready*@
+            @*@if (SuccessStoryNav)
+                {
+                    <a href="#" class="btn btn-success d-none d-md-block">Submit Success Story</a>
+                }*@
+        </nav>
+    }
+</header>

@@ -1,196 +1,482 @@
-﻿@{
+﻿@using NuGetGallery;
+
+@{
     ViewBag.Title = "Chocolatey - The package manager for Windows";
     ViewBag.Tab = "Home";
-    //js
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/home");
-    //Bundles.Reference("Scripts/ZeroClipboard");
+
+    // Set to True to show callout. False to hide callout if not relevent.
+    var callout = false;
 }
 
-@section ExtraHeaders {
-  <meta property="product:brand" content="Chocolatey" />    
-  <meta property="og:description" content="Chocolatey is software management automation for Windows that wraps installers, executables, zips, and scripts into compiled packages. Chocolatey integrates w/SCCM, Puppet, Chef, etc. Chocolatey is trusted by businesses to manage software deployments." />
-  <meta property="description" content="Chocolatey is software management automation for Windows that wraps installers, executables, zips, and scripts into compiled packages. Chocolatey integrates w/SCCM, Puppet, Chef, etc. Chocolatey is trusted by businesses to manage software deployments." />
-}
-
-<section>
-    <h1 class="huge slogan p-t">The <strong>package manager</strong> for Windows</h1>
-    <h2 class="slogan p-b--l"><strong>Chocolatey</strong> - Software Management Automation</h2>
-</section>
-@*<section class="release">
-        <h2>What's New?</h2>
-        There have been numerous changes recently, from PowerShell tab completion, to virus scanning packages, to a new logo! Here are a few high level items.
-        <ul>
-            <li>Chocolatey For Business / Chocolatey Pro <a href="@Url.RouteUrl(RouteName.Pricing)">available now with features you need!</a></li>
-            <li>Chocolatey has a <a href="http://codebetter.com/robreynolds/2016/04/19/chocolatey-has-a-new-logo/">new logo!</a></li>
-            <li>The 0.9.10 series is coming and it is going to be awesome! <a href="https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum/posts/1527031">Learn more...</a>. View the <a href="https://github.com/chocolatey/choco/blob/master/CHANGELOG.md">CHANGELOG</a>.</li>
-            <li>Chocolatey is 5 years old! <a href="http://codebetter.com/robreynolds/2016/03/28/5-years-with-chocolatey/">Read more...</a></li>
-            <li>Be sure to watch for improvements to Chocolatey.org coming soon!</li>
-        </ul>
-    </section>*@
-<div class="feature-sections">
-    <section class="clearfix p-l p-r container-wide p-b">
-        <div class="feature-sections__column">
-          <h2>The sane way to manage software on Windows</h2>
-          <ul class="check-list m-t">
-            <li>Chocolatey builds on technologies you know - unattended installation and PowerShell. Chocolatey works with all existing software installation technologies like MSI, NSIS, InnoSetup, etc, but also works with runtime binaries and zip archives. Go <a href="/compare">Pro/Business</a> to dial that experience up to 11!</li>
-            <li>Easily manage all aspects of Windows software (installation, configuration, upgrade, and uninstallation). Chocolatey is the most reliable when software is included in the package, but can also easily download resources.</li>
-            <li>Take advantage of PowerShell to provide automated software management instructions and Chocolatey’s <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">built-in module</a> to turn complex tasks into one line function calls!</li>
-          </ul>
-        </div>
-        <div class="feature-sections__column">
-            <div class="terminal-container">
-                <div class="terminal-chrome">
-                    <div class="terminal-chrome-top">
-                        <div class="terminal-chrome__minimise"></div>
-                        <div class="terminal-chrome__maximise"></div>
-                        <div class="terminal-chrome__close">&times;</div>
-                    </div>
-                    <div class="terminal-content terminal-content--min-height">
-                        choco <span data-animate="install docker-desktop,upgrade nodejs,uninstall flashplayer,search nodejs --id-starts-with,info docker-desktop">install docker-desktop</span><span class="terminal-cursor"></span>
-                    </div>
+<div id="header" class="bg-medium-dark ">
+    <section class="py-3 py-lg-5">
+        <div class="container py-lg-5">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-3">The <strong>Package Manager</strong> for Windows</h1>
+                    <h1>Modern Software Automation</h1>
+                    <a class="btn btn-lg btn-outline-light mt-3" href="@Url.RouteUrl(RouteName.WhyChocolatey)">Why Chocolatey</a>
+                    <a class="btn btn-lg btn-light mt-3" href="@Url.RouteUrl(RouteName.Courses)"><i class="fas fa-rocket"></i> Get Started</a>
                 </div>
             </div>
-            <a class="h3 m-t--l button install-button" href="@Url.RouteUrl(RouteName.Install)">
-                <span class="m-r--s icon-download"></span>
-                <strong>Install Chocolatey Now</strong>
-            </a>
         </div>
     </section>
-  <div class="bg-two p-t--l p-b--l">
-    <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-      <div class="feature-sections__column right">
-        <h2>Trusted by Business</h2>
-        <ul class="check-list m-t">
-          <li>Chocolatey can build full software deployments in 5-10 seconds! Packages from Programs and Features in under 60 seconds? You've never <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">built software deployments faster</a> than you will with Chocolatey!</li>
-          <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> makes existing packages work completely offline, allowing organizations to take advantage of great logic without a hit to the internet!</li>
-          <li>Chocolatey integrates with your favorite configuration manager like <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">SCCM, Puppet, Chef, or PowerShell DSC.</a></li>
-          <li>Organizations are creating/internalizing and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">hosting</a> their own packages that are reliable and repeatable so they can <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "community-packages-disclaimer" })">fully trust and control the process.</a> If you are an organization that wants the best ROI for any software management solution, look no further than <a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey for Business</a>.</li>
-          <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact us</a> to schedule a demo of Chocolatey for Business today!</li>
-        </ul>
-      </div>
-      <div class="feature-sections__column">
-        <img src="@Url.Content("~/content/images/integration_points.png")" />
-      </div>
-    </section>
-  </div>
-    <div class="bg-three p-t--l p-b--l">
-        <section class="clearfix p-l p-r p-t--l p-b--l container-wide">
-            <div class="feature-sections__column">
-                <h2>Official Chocolatey tools</h2>
-                <ul class="check-list m-t">
-                    <li>The CLI client, choco.exe, was designed with security in mind. Know you are using Chocolatey from a trusted source when you are using the official Chocolatey clients.</li>
-                    <li>Use choco.exe to install, upgrade, uninstall, publish and search for packages (and much more).</li>
-                    <li>Use <a href="@Url.Package("ChocolateyGUI")" title="A visual of Chocolatey GUI">Chocolatey GUI</a> when you need a visual representation of packages.</li>
-                    <li>There is an <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })#powershell-packagemanagement">official provider</a> for Windows 10/Windows Server 2016's built-in package manager manager (PackageManagement/OneGet) in the works - no ETA on release date yet.</li>
-                </ul>
-            </div>
-          <div class="feature-sections__column">
-             <img src="@Url.Content("~/content/images/ChocolateyGUI_main_screen.png")" />
-          </div>
-        </section>
-    </div>
- 
-    <div class="bg-two">
-        <section class="clearfix p-l p-r container-wide gene-bg">
-            <div class="feature-sections__column right p-t--l p-b--l">
-                <h2>Packages are independent deployment artifacts</h2>
-                <ul class="check-list m-t">
-                    <li>Chocolatey packages are not just fancy zip files with PowerShell, they understand versioning and dependencies, allowing you to encapsulate everything related to managing installation and configuration for a piece of software.</li>
-                    <li>As an independent deployment artifact, Chocolatey packages are not tied to another technology, allowing developers to install packages with Chocolatey and System Administrators to deploy Chocolatey packages using Chocolatey’s integration with their favorite configuration manager like SCCM, Puppet, or Chef.</li>
-                    <li>Chocolatey packages allow you to separate software installation concerns from automation tools / configuration managers and use the best tool for software management, which is the Chocolatey framework.</li>
-                </ul>
-            </div>
-            <div class="feature-sections__column no-padding">
-            </div>
-        </section>
-    </div>
-    
-    <div class="bg-three">
-        <section class="clearfix p-l p-r container-wide">
-            <div class="feature-sections__column m-t p-t--l p-b--l">
-                <h2>Choose from thousands of community packages</h2>
-                <ul class="check-list m-t">
-                  <li><a href="@Url.RouteUrl(RouteName.Pricing)">Chocolatey Pro</a> offers individuals greater protection, more reliability, and more features when using the community feed!</li>
-                  <li>Chocolatey.org has the largest online registry of Windows packages.</li>
-                  <li>Package submissions go through a rigorous moderation review process, including automatic virus scanning.</li>
-                  <li>The community repository has a strict policy on malicious and pirated software.</li>
-                </ul>
-            </div>
-            <div class="feature-sections__column text-center bg-statistics p-t--l p-b">
-              <div>
-                
-                <div class="inline-block m-b stat-number bg-two">
-                  <div class="huge-number stat"><span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>/<span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span></div>
-                  <small>unique packages / total packages</small>
-                </div>
-              </div>
-                <div>
-                    <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number stat"><span id="Downloads" class="num"></span></div>
-                        <small>total community package installs</small>
-                    </div>
-                </div>
-                <div>
-                    <div class="inline-block m-b stat-number bg-two">
-                        <div class="huge-number"><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></div>
-                        <small><a href="@Url.RouteUrl(RouteName.FAQ)#what-is-the-verifier">Known good packages</a></small>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
 </div>
-
-@*
-    <section class="featured">
-        <img src="@Url.Content("~/content/images/hero.png")" alt="Chocolatey install of Git (cinst git). Chocolatey benefits: 1. Sort of like yum or apt-get but for Windows; 2. Global silent installer; 3. Supports multiple package feeds, including private!; 4. Feeds can be local file/folder shares!; 5. NuGet Infrastructure + PowerShell Delivery" />
+@if (callout == true)
+{
+    <section id="callout" class="bg-medium-dark">
+        <div class="container py-3 py-lg-5">
+            <div class="row">
+                <div class="col-xl-10 mx-auto">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 mb-4 mb-lg-0 d-none d-lg-block text-right">
+                            <img height="100" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
+                        </div>
+                        <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+                            <p class="mb-0"><strong>We are pretty excited to finally share a new Chocolatey release! And this release won't disappoint. Loads of bug fixes, enhanced exit codes for search, list, info and outdated when results are returned versus nothing being returned, and some really nice improvements.</strong></p>
+                        </div>
+                        <div class="col-lg-3 text-center text-lg-left">
+                            <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "release-notes"})#march-15-2019" class="btn btn-primary">See Release Notes<span class="fas fa-angle-right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-
-
-     <section class="aggstats">
-        <span class="stat">
-            <span id="UpToDatePackages" class="num" title="This is a start towards understanding up to date packages"></span>packages updated in last 4 months
-        </span>
-        <span class="stat">
-            <span id="OlderThanOneYearPackages" class="num" title="Packages that have not had an update in over a year"></span>packages older than a year
-        </span>
-    </section>
-    <section class="aggstats">
-        <span class="stat" title="This is approval time from last submission time of a good version that has no findings to approval time over the last 30 days.">
-            <span id="AverageModerationWaitTimeHours" class="num"></span>average moderation approval wait time (hours)
-        </span>
-        <span class="stat" title="Packages ready for a moderator to review">
-            <span id="PackagesReadyForReviewModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">packages ready for moderation review</a>
-        </span>
-        <span class="stat" title="All packages under moderation, includes packages that are waiting for a mainter to fix something">
-            <span id="TotalPackagesInModeration" class="num"></span><a href="@Url.RouteUrl(RouteName.ListPackages, new { moderatorQueue = true })">total packages under moderation</a>
-        </span>
-    </section>
-
-    <section class="release">
-         <h2>Chocolatey v0.9.9 Released!</h2>
-         <p>
-             The latest version of Chocolatey uses the new choco.exe C# client. <strong>There are a few breaking changes you need to be aware of.</strong>
-            If you are upgrading from an older version, take a moment to familiarize yourself with the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">release notes</a>.
-            <em>chocolatey upgrade (cup)</em> to get the latest version of chocolatey&nbsp;– <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "release-notes" })">More information?</a>
-         </p>
-    </section>
-    <section class="info">
-        <h3>About</h3>
-        <p>When you use chocolatey to install applications/tools, nearly all you need to do is type one line and let it finish the rest! <a href="@Url.RouteUrl(RouteName.About)">Learn more</a>.
-        Where did Chocolatey get its name? What exactly is chocolatey anyway? Learn more in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Docs</a>!</p>
-
-        <h3>Videos</h3>
-        <p>Watch <a href="http://bit.ly/chocolateyVideo">Chocolatey in action.</a></p>
-
-        <h3>Packages Missing? Want to contribute?</h3>
-        <p>You can develop your own packages and share them via the Chocolatey Gallery. Read the documentation for more details on
-        <a title="Creating and submitting a package" href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">how to
-        create and publish a package</a>.</p>
-
-        <h3>Package Issues?</h3>
-        <p>If you find something wrong with a package or the package is out of date and you would like it updated, please use the contact maintainers link on the package page. For follow up procedures, please see the <a title="Package Triage Process" href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package Triage Process</a>.</p>
-    </section>*@
+}
+<section class="@if (callout == false){<text>bg-medium-dark</text>}">
+    <div class="container py-3 py-lg-5">
+        <div class="row">
+            <div class="col-xl-10 mx-auto">
+                <div class="row divider-row">
+                    <div class="col-lg-3 mb-4 mb-lg-0 text-center">
+                        <h2>Modernize</h2>
+                        <p>Simplify software management with cutting-edge technology</p>
+                    </div>
+                    <div class="col-lg-3 mb-4 mb-lg-0 text-center">
+                        <h2>Accelerate</h2>
+                        <p>Rapidly create, test, and deploy critical updates</p>
+                    </div>
+                    <div class="col-lg-3 mb-4 mb-lg-0 text-center">
+                        <h2>Integrate</h2>
+                        <p>Integrate with existing cloud and on-premise technologies</p>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <h2>Automate</h2>
+                        <p>Easily automate your entire Windows Software Lifecycle</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape-border shape-border-bottom shape-border-white"></div>
+</section>
+<section class="bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div id="informationCarousel" class="carousel slide carousel-fade information-carousel" data-ride="carousel" data-touch="true">
+                    <ol class="carousel-indicators">
+                        <li data-target="#informationCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#informationCarousel" data-slide-to="1"></li>
+                        <li data-target="#informationCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row align-items-center">
+                                <div class="col-12 text-center">
+                                    <img class="img-fluid" src="@Url.Content("~/content/images/ccm-mockup.jpg")" alt="Chocolatey Central Management" />
+                                    <h1 class="py-3">Chocolatey for Business (C4B)</h1>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p>Chocolatey for Business (C4B) is Complete Software Management. Built on our popular open source offering.</p>
+                                    <p>Focused on three value-added areas; improved security, enhanced productivity features, and enabling more visibility. All backed with dedicated support, services, & roadmap.</p>
+                                    <ul class="fa-ul">
+                                        <li><span class="fa-li"><span class="fas fa-check text-success"></span></span>Closely aligned to organizational use cases – rapid deployment & highly scalable</li>
+                                        <li><span class="fa-li"><span class="fas fa-check text-success"></span></span>More visual interfaces (GUIs) & smoother user experience</li>
+                                        <li><span class="fa-li"><span class="fas fa-check text-success"></span></span>Special advanced functionality i.e Package Creation, Package Internalizer, Package Audit, Package Synchronizer, Self-Service Installer</li>
+                                        <li><span class="fa-li"><span class="fas fa-check text-success"></span></span>Easy migration path from open source</li>
+                                        <li class="mb-3"><span class="fa-li"><span class="fas fa-check text-success"></span></span>Deep integration with leading technologies</li>
+                                    </ul>
+                                    <p>Chocolatey for Business (C4B) has helped hundreds of system admins save time, reduce downtime, and accelerate deployment.</p>
+                                    <div class="text-center mb-3 mb-lg-0">
+                                        <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.ContactTrial)">Start Free Trial</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-center">
+                                    <div class="row">
+                                        <div class="col-lg-8 mx-auto">
+                                            <div class="video-story">
+                                                <div class="text-center" data-toggle="modal" data-target="#qualcomm-story"><img class="img-fluid shadow mb-3" src="@Url.Content("~/content/images/videos/Qualcomm_Dwight-Bragdon.jpg")" alt="Dwight Bragdon at Qualcomm" title="Dwight Bragdon at Qualcomm" /></div>
+                                                <div class="modal fade" id="qualcomm-story" tabindex="-1" role="dialog" aria-labelledby="Dwight Bragdon at Qualcomm" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body p-0">
+                                                                <div class="embed-responsive embed-responsive-16by9">
+                                                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/R9OClPwBpdk" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <q class="h5 text-muted text-italic">The two things I love the most are Package Builder and Package Internalizer. Both have saved us time and effort to bring the tools in to a non-interconnected area.</q>
+                                                <h3 class="text-primary">Qualcomm</h3>
+                                                <p class="text-center">Dwight Bragdon, Senior Staff IT Engineer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row align-items-center">
+                                <div class="col-12 text-center mb-3">
+                                    <img class="lazy img-fluid" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/community-mockup.gif")" alt="Chocolatey Community" />
+                                    <noscript>
+                                        <img class="img-fluid" src="@Url.Content("~/content/images/community-mockup.gif")" alt="Chocolatey Community" />
+                                    </noscript>
+                                    <h1 class="py-3">Choose from Thousands of Community Packages</h1>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p>Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file.</p>
+                                    <p>Chocolatey.org has the largest online registry of Windows packages. Package submissions go through a rigorous moderation review process, including automatic virus scanning.</p>
+                                    <p>The community repository has a strict policy on malicious and pirated software.</p>
+                                    <div class="text-center mb-3 mb-lg-0">
+                                        <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.ListPackages)">Search Chocolatey Packages</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-dark text-center">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h1><span id="UniquePackages" class="num" title="This includes packages that may only have prereleases"></span>/<span id="TotalPackages" class="num" title="This is the total number of package versions - one for every version of a package"></span></h1>
+                                            <p class="mb-0">Unique Packages / Total Packages</p>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h1><span id="Downloads" class="num"></span></h1>
+                                            <p class="mb-0">Total Community Package Installs</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h1><span id="PackagesPassingVerification" class="num" title="These are the latest version of a package and whether it is passing the verifier - run once a month against the latest version of all packages"></span></h1>
+                                            <p class="mb-0"><a href="@Url.RouteUrl(RouteName.FAQ)#what-is-the-verifier">Known Good Packages</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row align-items-center">
+                                <div class="col-12 text-center mb-3">
+                                    <img class="lazy img-fluid" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/integrations-mockup.jpg")" alt="Chocolatey Integrations" />
+                                    <noscript>
+                                        <img class="img-fluid" src="@Url.Content("~/content/images/integrations-mockup.jpg")" alt="Chocolatey Integrations" />
+                                    </noscript>
+                                    <h1 class="py-3">The <i>Sane</i> Way to Manage Software on Windows</h1>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p>System engineers spend hours deploying & configuring Windows software manually. Traditional tools are not built for modern automation and a DevOps approach. Gaining insights and consistency across your environment is not always easy.</p>
+                                    <p>There are a lot of different installer formats and multiple approaches to deploying Windows software. Deploying software without package management on Windows can be complicated and time-consuming.</p>
+                                    <p>Chocolatey simplifies this through simple, repeatable, and automated approach, by using a universal packaging format for managing all Windows software. Regardless if installers are; native, zips, scripts, binaries or in-house developed – Chocolatey treats them as all 1st class citizens.</p>
+                                    <p><i>Write once, deploy anywhere, with anything, and then simply track & manage.</i></p>
+                                    <div class="text-center mb-3 mb-lg-0">
+                                        <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })">See Integrations</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-center">
+                                    <div id="terminal" class="shadow" style="max-height: 500px;">
+                                        <div class="d-flex flex-row-reverse align-items-center bg-white p-2">
+                                            <h3 class="mb-0">&times</h3>
+                                            <div class="maximize mx-3"></div>
+                                            <h3 class="mb-0">-</h3>
+                                        </div>
+                                        <div class="terminal-body bg-dark text-white p-3 h3 mb-0 text-left">
+                                            > choco <span data-animate="install docker,upgrade nodejs,uninstall flashplayer,search nodejs --id-starts-with,info docker">install docker</span><span class="terminal-cursor"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#informationCarousel" role="button" data-slide="prev">
+                        <span class="fas fa-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#informationCarousel" role="button" data-slide="next">
+                        <span class="fas fa-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="business-trusted">
+    <div class="bg-primary">
+        <div class="shape-border shape-border-top"></div>
+        <div class="container pt-3 pt-lg-5 carousel-section1">
+            <div class="row text-center">
+                <div class="col-lg-8 mx-auto">
+                    <h1><strong>Businesses Trust Chocolatey Software</strong></h1>
+                    <p>
+                        Many organizations face the ongoing challenge of deploying and supporting various versions of software. Chocolatey allows organizations to automate and simplify
+                        the management of their complex Windows environments. Our customers have experienced a massive reduction in effort, improved speed of deployment, high reliability, and comprehensive reporting.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="shape-border shape-border-bottom"></div>
+    </div>
+    <div class="carousel-section2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div id="testimonialCarousel" class="carousel slide carousel-fade text-dark testimonial-carousel carousel-dark" data-ride="carousel" data-touch="true">
+                        <ol class="carousel-indicators">
+                            <li data-target="#testimonialCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#testimonialCarousel" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="card">
+                                    <div class="card-body p-xl-5 d-xl-flex">
+                                        <div class="row align-items-xl-center">
+                                            <div class="col-xl-4 text-center">
+                                                <div class="w-75 p-5 mx-auto" style="background: #d32323;">
+                                                    <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Yelp.png")" alt="Yelp" title="Yelp" />
+                                                    <noscript>
+                                                        <img src="@Url.Content("~/content/images/businesses/Yelp.png")" alt="Yelp" title="Yelp" />
+                                                    </noscript>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-8">
+                                                <div class="row">
+                                                    <div class="col-12 order-xl-2 text-center text-xl-left">
+                                                        <h3 class="mt-2 mb-0 text-primary"><small>Ryan de Temple</small></h3>
+                                                        <p><small><i>Client Platform Manager at Yelp</i></small></p>
+                                                    </div>
+                                                    <div class="col-12 order-xl-1">
+                                                        <q class="mb-4 mb-xl-0">We wanted to make sure our user experience was seamless. We wanted to provide a service, software, configuration- without user intervention, without restarts... Chocolatey allowed our engineers to build the products, to build the pipeline and deliver just that.</q>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <div class="card-body p-xl-5 d-xl-flex">
+                                        <div class="row align-items-xl-center">
+                                            <div class="col-xl-4 text-center">
+                                                <div class="w-75 p-5 mx-auto" style="background: #222;">
+                                                    <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Puppet.png")" alt="Puppet, Inc." title="Puppet, Inc." />
+                                                    <noscript>
+                                                        <img src="@Url.Content("~/content/images/businesses/Puppet.png")" alt="Puppet, Inc." title="Puppet, Inc." />
+                                                    </noscript>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-8">
+                                                <div class="row">
+                                                    <div class="col-12 order-xl-2 text-center text-xl-left">
+                                                        <h3 class="mt-2 mb-0 text-primary"><small>Mike Lombardi</small></h3>
+                                                        <p><small><i>Software Engineer at Puppet</i></small></p>
+                                                    </div>
+                                                    <div class="col-12 order-xl-1">
+                                                        <q class="mb-4 mb-xl-0">The single biggest thing I love about Chocolatey has to be the ease of use and reusablility. That has made all the difference for me. I don't have to remember 37 different ways to interact with my software... just the one- and that's it!</q>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev d-none d-md-flex" href="#testimonialCarousel" role="button" data-slide="prev">
+                            <span class="fas fa-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next d-none d-md-flex" href="#testimonialCarousel" role="button" data-slide="next">
+                            <span class="fas fa-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 carousel-section3">
+                <div class="col-lg-10 mx-auto">
+                    <div class="row align-items-center">
+                        <div class="col my-4 text-center">
+                            <a href="https://puppet.com" rel="noreferrer" title="Puppet, Inc" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Puppet-Dark.png")" alt="Logo for Puppet, Inc" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Puppet-Dark.png")" alt="Logo for Puppet, Inc" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col text-center">
+                            <a href="https://chef.io" rel="noreferrer" title="Chef Software, Inc" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Chef-Dark.png")" alt="Logo for Chef Software, Inc" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Chef-Dark.png")" alt="Logo for Chef Software, Inc" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col my-4 text-center">
+                            <a href="https://www.seek.com.au" rel="noreferrer" title="SEEK - Australia's number one jobs site" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/SEEK.png")" alt="Logo for SEEK" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/SEEK.png")" alt="Logo for SEEK" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col my-4 text-center">
+                            <a href="https://www.hulu.com" rel="noreferrer" title="Hulu" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Hulu.png")" alt="Logo for Hulu" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Hulu.png")" alt="Logo for Hulu" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col my-4 text-center">
+                            <a href="https://octopus.com" rel="noreferrer" title="Octopus Deploy" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/OctopusDeploy-Dark.png")" alt="Logo for Octopus Deploy" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/OctopusDeploy-Dark.png")" alt="Logo for Octopus Deploy" />
+                                </noscript>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col my-4 text-center">
+                            <a href="http://inedo.com/proget" rel="noreferrer" title="ProGet is from Inedo Software, Inc" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/ProGet.png")" alt="Logo for ProGet" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/ProGet.png")" alt="Logo for ProGet" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col my-4 text-center">
+                            <a href="https://www.myget.org" rel="noreferrer" title="MyGet Ltd" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/MyGet-Blue.png")" alt="Logo for MyGet" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/MyGet-Blue.png")" alt="Logo for MyGet" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col my-4 text-center">
+                            <a href="https://www.cornell.edu" rel="noreferrer" title="Cornell University" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/Cornell.png")" alt="Logo for Cornell University" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/Cornell.png")" alt="Logo for Cornell University" />
+                                </noscript>
+                            </a>
+                        </div>
+                        <div class="col my-4 text-center">
+                            <a href="https://www.swissre.com" rel="noreferrer" title="Swiss Re Group" target="_blank">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/businesses/SwissRe.png")" alt="Logo for Swiss Re Group" />
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/businesses/SwissRe.png")" alt="Logo for Swiss Re Group" />
+                                </noscript>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-4">
+                    <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">View Customer Stories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section">
+    <div class="bg-medium-dark">
+        <div class="shape-border shape-border-top shape-border-light"></div>
+        <div class="container py-3 py-lg-5">
+            <h1 class="text-center mb-5"><strong>Keep Up with the Latest Chocolatey Resources</strong></h1>
+            <div class="row resource-list home-resources">
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = "automated-managing-windows-desktop-software" })">
+                        <div class="card h-100">
+                            <div class="card-header font-weight-bold bg-medium-light text-center">
+                                <span class="fas fa-briefcase" alt="Case Studies"></span>
+                                <span>Case Study</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg")" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever">
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/videos/Dan-Franciscus-ChocolateyFest-2018.jpg")" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever">
+                                </noscript>
+                            </div>
+                            <div class="card-footer">
+                                <h5>How I Completely Automated Managing Windows Desktop Software...Forever</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "videos", resourceName = "what-is-chocolatey" })">
+                        <div class="card h-100">
+                            <div class="card-header font-weight-bold bg-medium-light text-center">
+                                <span class="fas fa-play" alt="Video"></span>
+                                <span>Video</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey">
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/videos/what-is-chocolatey.jpg")" alt="What is Chocolatey" title="What is Chocolatey">
+                                </noscript>
+                            </div>
+                            <div class="card-footer">
+                                <h5>What is Chocolatey?</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <a href="@Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = "puppet-customer-success-story" })">
+                        <div class="card h-100">
+                            <div class="card-header font-weight-bold bg-medium-light text-center">
+                                <span class="fas fa-star" alt="Customer Success Stories"></span>
+                                <span>Customer Success Story</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <img class="lazy" src="@Links.Content.Images.blankImage" data-src="@Url.Content("~/content/images/videos/Puppet_Mike-Lombardi.jpg")" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet">
+                                <noscript>
+                                    <img src="@Url.Content("~/content/images/videos/Puppet_Mike-Lombardi.jpg")" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet">
+                                </noscript>
+                            </div>
+                            <div class="card-footer">
+                                <h5>Puppet</h5>
+                                <p><small><i>Mike Lombardi, Sofware Engineer</i></small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "home"})">View All Resources</a>
+                </div>
+            </div>
+        </div>
+        <div class="shape-border shape-border-bottom"></div>
+    </div>
+</section">
+<section class="pb-3 pb-lg-5">
+    @Html.Partial("~/Views/Pages/_Courses.cshtml")
+</section>
 
 @section BottomScripts
 {

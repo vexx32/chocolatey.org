@@ -1,0 +1,13 @@
+﻿@model CourseViewModel
+@{
+    ViewBag.Title = "Installing, Upgrading, and Uninstalling Chocolatey";
+    Layout = "~/Views/Shared/PackagesLayout.cshtml";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/CookiesNotice");
+}
+
+<section class="py-3 py-lg-5 bg-white">
+    @Html.Partial("~/Views/Courses/Installation/_CourseDescription.cshtml")
+</section>
+@Html.Partial("~/Views/Courses/_AllCourses.cshtml")
