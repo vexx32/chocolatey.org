@@ -43,21 +43,21 @@
     </div>
     <div class="shape-border shape-border-bottom shape-border-white"></div>
 </section>
-<section id="chocolatey-for-business" class="pb-3 pb-lg-5 bg-white">
+<section id="chocolatey-for-business" class="bg-white">
     <div class="container">
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
-                        <h2>Chocolatey for Business</h2>
+                        <h2>Chocolatey for Business (C4B)</h2>
                         <hr class="border-hr" />
                         <p>
                             Chocolatey for Business is the enterprise offering that enables companies to adopt a DevOps approach to managing their Windows environment, allowing you to deliver applications to your users more reliably and faster.
                             Chocolatey Open Source is great for individuals to get started on automating their Windows management, but when you have complex, critical infrastructure managed by teams, Chocolatey for Business offers more.
                         </p>
                         <p>
-                            With our business edition you get all of the benefits of open source Chocolatey together with enhanced capabilities, integrations, and the peace of mind of having a supported platform. Chocolatey for Business (C4B) is 
-                            Complete Software Management focused on three value-added areas - improved security, enhanced productivity features, and enabling more visibility. C4B is also backed with dedicated support, services, & roadmap.
+                            With our business edition you get all of the benefits of open source Chocolatey together with enhanced capabilities, integrations, and the peace of mind of having a supported platform. Chocolatey for Business is 
+                            Complete Software Management focused on three value-added areas - improved security, enhanced productivity features, and enabling more visibility. C4B is also backed with dedicated support, services, and roadmap.
                         </p>
                         <p>Getting started with C4B is easy and we are on hand to support you throughout your evaluation.</p>
                         <a href="@Url.RouteUrl(RouteName.Pricing)" class="btn btn-primary">Get Started</a>
@@ -70,30 +70,8 @@
         </div>
     </div>
 </section>
-<section id="pro-edition" class="pt-3 pt-lg-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 text-center d-none d-lg-block">
-                        <img class="img-fluid" width="300" src="@Url.Content("~/content/images/icons/arrow-watch.png")" />
-                    </div>
-                    <div class="col-lg-6">
-                        <h2>Pro Edition</h2>
-                        <hr class="border-hr" />
-                        <p>Whether you are looking to better manage your own PC or support your home network our Chocolatey Pro Edition is designed to help you save time and effort.</p>
-                        <p>
-                            Chocolatey Pro is a personal, named license that grants having licensed versions of Chocolatey on up to 8 machines. You can use Chocolatey Pro at work provided you do not go over the 8 machine limit and are not using it for organizational use.
-                            When you purchase a Pro license, you are supporting the community  your money goes towards infrastructure costs/improvements surrounding the community repository.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <div id="free-trial" class="bg-medium-dark border-0">
-    <div class="shape-border shape-border-top shape-border-light"></div>
+    <div class="shape-border shape-border-top"></div>
     <section class="py-3 py-lg-5">
         <div class="container">
             <div class="row mb-3 text-center text-white">
@@ -108,11 +86,39 @@
     </section>
     <div class="shape-border shape-border-bottom"></div>
 </div>
-<section id="foss" class="pb-3 pb-lg-5">
+<section id="pro-edition" class="pb-3 pb-lg-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <div class="row align-items-center">
+                    <div class="col-lg-6 text-center d-none d-lg-block">
+                        <img class="img-fluid" width="300" src="@Url.Content("~/content/images/icons/arrow-watch.png")" />
+                    </div>
+                    <div class="col-lg-6">
+                        <h2>Pro Edition (Individual)</h2>
+                        <hr class="border-hr" />
+                        <p>Individuals using the community repository can opt for Chocolatey Professional Edition to enhance their experience, giving them additional features such as <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "features-private-cdn"})">more reliability</a> and <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "features-virus-check"})">runtime malware protection.</a></p>
+                        <p>So whether you are looking to better manage your own PC or support your home network, Pro is designed to help you save time and effort. When you purchase a Pro license, your support goes towards infrastructure costs/improvements surrounding the community.</p>
+                        <p><strong>Note:</strong> Pro is not allowed for organizational use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="foss" class="py-3 py-lg-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2>Open Source Chocolatey</h2>
+                        <hr class="border-hr" />
+                        <p>Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and/or scripts into a compiled package file.</p>
+                        <p>Package submissions go through a <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "moderation"})">rigorous moderation review process</a>, including automatic virus scanning.</p>
+                        <p>The community repository has a strict policy on malicious and pirated software.</p>
+                        <a href="@Url.RouteUrl(RouteName.ListPackages)" class="btn btn-primary">Search Chocolatey Packages</a>
+                    </div>
                     <div class="col-lg-6 text-center d-none d-lg-block">
                         <div id="terminal" class="shadow img-fluid mx-auto" style="max-height: 500px; width: 600px;">
                             <div class="d-flex flex-row-reverse align-items-center bg-white p-2">
@@ -124,14 +130,6 @@
                                 > choco <span data-animate="install docker,upgrade nodejs,uninstall flashplayer,search nodejs --id-starts-with,info docker">install docker</span><span class="terminal-cursor"></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <h2>Open Source Chocolatey</h2>
-                        <hr class="border-hr" />
-                        <p>Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and scripts into a compiled package file.</p>
-                        <p>Package submissions go through a rigorous moderation review process, including automatic virus scanning.</p>
-                        <p>The community repository has a strict policy on malicious and pirated software.</p>
-                        <a href="@Url.RouteUrl(RouteName.ListPackages)" class="btn btn-primary">Search Chocolatey Packages</a>
                     </div>
                 </div>
             </div>

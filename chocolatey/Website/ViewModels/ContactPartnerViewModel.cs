@@ -52,7 +52,7 @@ namespace NuGetGallery
         public string CompanyName { get; set; }
 
         [Display(Name = "Phone number")]
-        [Required(ErrorMessage = "Please enter your phone number. Incase your email does not go through, we want to still be able to follow up with you!")]
+        [Required(ErrorMessage = "We need this as a way to contact you in case you don't receive our emails.")]
         public string PhoneNumber { get; set; }
 
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please check the box to agree to terms of this form.")]

@@ -32,7 +32,7 @@ Along with Chocolatey Courses, we've added a Resource Library to help you find a
 
 ### Community Package Repository
 #### A Fresh New Look 
-The <a href="/packages">Chocolatey Community Repository</a> got a makeover! The new look features a grid view of packages, in a clean Chocolatey theme. All the same functionality still exist, only now in a eaiser to view format. At the top of each package page you'll notice a simple tabbed interface that contains commands for you to easily copy/paste for installing, upgrading, and installing.
+The <a href="/packages">Chocolatey Community Repository</a> got a makeover! The new look features a grid view of packages, in a clean Chocolatey theme. All the same, functionality still exists, only now in an easier to view format. At the top of each package page you'll notice a simple tabbed interface that contains commands for you to easily copy/paste for installing, upgrading, and installing.
 <img class="border img-fluid mb-3" src="/content/images/blog/redesign-install-tabs.jpg" alt="Install Tabs" title="Install Tabs">
 
 #### Updates for Maintainers
