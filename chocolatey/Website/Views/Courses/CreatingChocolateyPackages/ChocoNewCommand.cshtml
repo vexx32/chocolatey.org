@@ -299,11 +299,11 @@ choco new bob --outputdirectory Packages</code></pre>
                 </div>
                 <div class="form-field mt-3">
                     <h5>What option can be passed to the choco new command to control where the generated files are placed?</h5>
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
                     <label for="QuestTwoOptionOne"><code>--template</code></label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionTwo" })
                     <label for="QuestTwoOptionTwo"><code>--output-directory</code></label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionThree" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionThree" })
                     <label for="QuestTwoOptionThree"><code>--name</code></label>
                 </div>
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

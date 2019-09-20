@@ -82,11 +82,11 @@
               </div>
               <div class="form-field mt-3">
                 <h5>Who has the necessary permissions on the chocolatey.org website to change the maintainer of a Chocolatey package?</h5>
-                @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionOne" })
+                @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionOne" })
                 <label for="QuestTwoOptionOne">Chocolatey.org administrators and current package maintainers</label><br />
-                @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionTwo" })
+                @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionTwo" })
                 <label for="QuestTwoOptionTwo">Only the original creator of the underlying software for the package</label><br />
-                @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionThree" })
+                @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionThree" })
                 <label for="QuestTwoOptionThree">Anyone</label>
               </div>
               <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

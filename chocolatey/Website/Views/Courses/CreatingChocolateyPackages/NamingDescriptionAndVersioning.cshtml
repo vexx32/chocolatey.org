@@ -111,9 +111,9 @@
                 </div>
                 <div class="form-field mt-3">
                     <h5>Once a package has been submitted to the Chocolatey Community Repository and approved, can it be modifed?</h5>
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
                     <label for="QuestTwoOptionOne">Yes, make as many changes as you want</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionTwo" })
                     <label for="QuestTwoOptionTwo">No, once approved a package is immutable, meaning it can’t be changed</label>
                 </div>
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

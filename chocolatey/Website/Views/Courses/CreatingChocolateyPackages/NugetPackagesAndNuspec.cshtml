@@ -122,11 +122,11 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
                 </div>
                 <div class="form-field mt-3">
                     <h5>During which operations will the chocolateyUninstall.ps1 file be executed?</h5>
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
                     <label for="QuestTwoOptionOne">Install</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionTwo" })
                     <label for="QuestTwoOptionTwo">Upgrade</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionThree" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionThree" })
                     <label for="QuestTwoOptionThree">Uninstall</label>
                 </div>
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

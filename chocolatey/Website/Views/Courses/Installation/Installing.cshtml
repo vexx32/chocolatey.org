@@ -914,11 +914,11 @@ choco install notepadplusplus.commandline -y
                 </div>
                 <div class="form-field mt-3">
                     <h5>What is the default installation location for Chocolatey (as of version 0.9.8.24)?  NOTE: You may need to have read and completed what is suggested in the note above, if unsure.</h5>
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
                     <label for="QuestTwoOptionOne">C:/Chocolatey</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionTwo" })
                     <label for="QuestTwoOptionTwo">C:/ProgramData/Chocolatey</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionThree" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionThree" })
                     <label for="QuestTwoOptionThree">C:/Program Files (x86)/Chocolatey</label>
                 </div>
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

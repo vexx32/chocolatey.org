@@ -68,11 +68,11 @@ foreach ($file in $files) {
               </div>
               <div class="form-field mt-3">
                 <h5>If you don’t want Chocolatey to create a shim file for an exe called Application.exe in you Chocolatey Package, what is the name of the file that should be created?</h5>
-                @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+                @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
                 <label for="QuestTwoOptionOne">application.exe.ignore</label><br />
-                @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionTwo" })
+                @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionTwo" })
                 <label for="QuestTwoOptionTwo">Application.exe.gui</label><br />
-                @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionThree" })
+                @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionThree" })
                 <label for="QuestTwoOptionThree">Application.exe.ignore</label>
               </div>
               <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

@@ -34,13 +34,13 @@ namespace NuGetGallery
         public string QuestionOne { get; set; }
 
         [Display(Name = "Question Two")]
-        public string QuestTwo { get; set; }
+        public string QuestionTwo { get; set; }
 
         [Display(Name = "Question Three")]
-        public string QuestThree { get; set; }
+        public string QuestionThree { get; set; }
 
         [Display(Name = "Question Four")]
-        public string QuestFour { get; set; }
+        public string QuestionFour { get; set; }
 
         public string CourseName { get; set; }
 

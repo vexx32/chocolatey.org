@@ -89,11 +89,11 @@
         </div>
         <div class="form-field mt-3">
             <h5>What percentage of native uninstallers can Chocolatey’s Auto Uninstaller feature help with?</h5>
-            @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+            @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
             <label for="QuestTwoOptionOne">70</label><br />
-            @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
+            @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionTwo" })
             <label for="QuestTwoOptionTwo">80</label><br />
-            @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionThree" })
+            @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionThree" })
             <label for="QuestTwoOptionThree">90</label>
         </div>
         <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />

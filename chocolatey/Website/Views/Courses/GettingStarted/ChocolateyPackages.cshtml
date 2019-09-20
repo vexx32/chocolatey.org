@@ -58,9 +58,9 @@
                 </div>
                 <div class="form-field mt-3">
                     <h5>When a Chocolatey Package is hosted on the Chocolatey Community Feed, can the native installers be included within the Chocolatey Package?</h5>
-                    @Html.RadioButtonFor(m => m.QuestTwo, "0", new { id = "QuestTwoOptionOne" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
                     <label for="QuestTwoOptionOne">No, this is never allowed</label><br />
-                    @Html.RadioButtonFor(m => m.QuestTwo, "1", new { id = "QuestTwoOptionTwo" })
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionTwo" })
                     <label for="QuestTwoOptionTwo">Yes, assuming that the license for this software allows for redistribution (and total Chocolatey Package size is less than 200 MB)</label>
                 </div>
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
