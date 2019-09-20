@@ -108,30 +108,37 @@
                 }
             </div>
         </div>
-        <div class="card-footer bg-white pt-0 pb-4 border-0 d-sm-flex">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">></div>
+        <div class="card-footer bg-white pt-0 pb-4 border-0 @if (Model.Title != "Chocolatey"){<text>d-sm-flex</text>}else{<text>text-right</text>}">
+            @if (Model.Title != "Chocolatey")
+            {
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">></div>
+                    </div>
+                    <input type="text" class="form-control"
+                            value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                            aria-label="Install @Model.Title command"
+                            readonly>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary tt"
+                                aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                data-toggle="tooltip"
+                                title="Copy to Clipboard"
+                                data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                            <i class="fas fa-clipboard" aria-hidden="true">
+                                <span class="sr-only">Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
+                                {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                {<text> --pre </text>} to Clipboard</span>
+                            </i>
+                        </button>
+                    </div>
                 </div>
-                <input type="text" class="form-control"
-                       value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
-                       aria-label="Install @Model.Title command"
-                       readonly>
-                <div class="input-group-append">
-                    <button class="btn btn-primary tt"
-                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
-                            data-toggle="tooltip"
-                            title="Copy to Clipboard"
-                            data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
-                        <i class="fas fa-clipboard" aria-hidden="true">
-                            <span class="sr-only">Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                            {<text> --version @Model.Version</text>} @if (Model.Prerelease)
-                            {<text> --pre </text>} to Clipboard</span>
-                        </i>
-                    </button>
-                </div>
-            </div>
-            <a class="btn btn-outline-primary font-weight-bold ml-sm-2 mt-3 mt-sm-0" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title">Learn More</a>
+            }
+            else
+            {
+                <a class="btn btn-primary mt-3 mt-sm-0" href="@Url.RouteUrl(RouteName.Install)" title="Learn how to install @Model.Title" aria-label="Learn how to install @Model.Title">Install Now</a>
+            }
+            <a class="btn btn-outline-primary ml-sm-2 mt-3 mt-sm-0" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title">Learn More</a>
         </div>
     </div>
 </div>
