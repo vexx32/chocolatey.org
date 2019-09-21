@@ -45,9 +45,13 @@
             </div>
         }
         <div class="card-body">
-            <div class="d-flex mb-3">
-                <img class="mr-3" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" height="50" width="50" />
-                <div>
+            <div class="row mb-3">
+                <div class="col-2 text-center pr-0">
+                    <div class="mx-auto package-image-header">
+                        <img class="img-fluid" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                    </div>
+                </div>
+                <div class="col-10">
                     <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h3 text-dark mb-0 btn-link">@Model.Title</a>
                     <div class="d-flex align-items-center">
                         <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)#status"  title="Click to view test results">

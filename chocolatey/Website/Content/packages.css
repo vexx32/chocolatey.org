@@ -91,6 +91,10 @@ textarea {
     max-height: 500px;
     overflow: auto;
 }
+
+.package-image-header {
+    max-width: 50px;
+}
 /*Package Sidebar*/
 #package-sidebar .package-logo {
     max-width: 40px;
