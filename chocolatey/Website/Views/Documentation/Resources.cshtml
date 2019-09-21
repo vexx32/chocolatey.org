@@ -3,7 +3,9 @@
 }
 
 <article>
-<p>Table of Contents</p>
+<p>Table of Contents<br />
+ @section SideColumn { <br />
+<!-- TOC --></p>
 <ul>
 <li><a href="#courses">Courses</a></li>
 <li><a href="#labs">Labs</a></li>
@@ -15,6 +17,8 @@
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "videos" })">Videos</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "presentations" })">Presentations</a></li>
 </ul>
+<!-- /TOC -->
+ } 
 <h2 id="courses">Courses</h2>
 <ul>
 <li><a href="https://www.pluralsight.com/courses/chocolatey-nuget-automation-pros" class="uri">https://www.pluralsight.com/courses/chocolatey-nuget-automation-pros</a></li>

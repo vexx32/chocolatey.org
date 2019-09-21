@@ -45,7 +45,7 @@ in the package directory).</p>
 chocolatey without attempting to uninstall the program.</p>
 <p><strong>NOTE:</strong> Starting in 0.9.10+, the Automatic Uninstaller (AutoUninstaller)<br />
 is turned on by default. To turn it off, run the following command:</p>
-<pre><code class="nohighlight">  choco feature disable -n autoUninstaller</code></pre>
+<pre><code class="language-none">  choco feature disable -n autoUninstaller</code></pre>
 <p><strong>NOTE:</strong> <a href="https://chocolatey.org/compare">Chocolatey Pro</a> / Business automatically synchronizes with<br />
 Programs and Features, ensuring manually removed apps are<br />
 automatically removed from Chocolatey&#39;s repository.</p>
@@ -56,14 +56,14 @@ because synchronizer ensures the registry snapshot stays up to date<br />
 and licensed enhancements have the ability to inspect more locations<br />
 to determine how to automatically uninstall software.</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="nohighlight">  choco uninstall &lt;pkg|all&gt; [pkg2 pkgN] [options/switches]
+<pre><code class="language-none">  choco uninstall &lt;pkg|all&gt; [pkg2 pkgN] [options/switches]
   cuninst &lt;pkg|all&gt; [pkg2 pkgN] [options/switches]</code></pre>
 <p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to<br />
 uninstall all packages.</p>
 <h2 id="see-it-in-action">See It In Action</h2>
 <p><img src="https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_uninstall.gif" alt="choco uninstall" /></p>
 <h2 id="examples">Examples</h2>
-<pre><code class="nohighlight">  choco uninstall git
+<pre><code class="language-none">  choco uninstall git
   choco uninstall notepadplusplus googlechrome atom 7zip
   choco uninstall notepadplusplus googlechrome atom 7zip -dv
   choco uninstall ruby --version 1.8.7.37402
@@ -104,7 +104,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre><code class="nohighlight">
+<pre><code class="language-none">
 
 
  -?, --help, -h

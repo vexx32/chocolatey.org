@@ -110,7 +110,7 @@
 <p><strong>NOTE</strong>: Once you are all setup, please review the <a href="#common-errors-and-resolutions">Common Errors and Resolutions</a> section so you will be familiar if you run into any issues with working with sources.</p>
 <p>An example script:</p>
 <p>This carries our typical recommendations, but you could adjust from above.</p>
-<pre><code class="powershell">choco upgrade chocolatey-agent -y
+<pre><code class="language-powershell">choco upgrade chocolatey-agent -y
 choco feature disable --name=&quot;&#39;showNonElevatedWarnings&#39;&quot;
 choco feature enable --name=&quot;&#39;useBackgroundService&#39;&quot;
 choco feature enable --name=&quot;&#39;useBackgroundServiceWithNonAdministratorsOnly&#39;&quot;
@@ -426,7 +426,7 @@ This image shows running `choco install adobereader -y`.
 </ul>
 <p>You would pass something like <code>choco install chocolatey-agent -y --params=&quot;'/Username:domain\account /EnterPassword'&quot;</code> to securely pass the password at runtime. You could also run <code>choco install chocolatey-agent -y --params=&quot;'/Username:&lt;domain\account&gt;'&quot; --package-parameters-sensitive=&quot;'/Password:&lt;password&gt;'&quot;</code> (or do it as part of <code>choco upgrade</code>).</p>
 <p>With Puppet, this could look something like:</p>
-<pre><code class="puppet">package {&#39;chocolatey-agent&#39;:
+<pre><code class="language-puppet">package {&#39;chocolatey-agent&#39;:
   ensure          =&gt; latest,
   install_options =&gt; [&#39;-pre&#39;,&#39;--params=&quot;&#39;,&quot;&#39;/Username:&lt;domain\account&gt;&#39;&quot;, &#39;&quot;&#39;,&#39;--package-parameters-sensitive=&quot;&#39;, &quot;&#39;/Password:&lt;password&gt;&#39;&quot;, &#39;&quot;&#39;],
   require         =&gt; Chocolateyfeature[&#39;useLocalSystemForServiceInstalls&#39;],

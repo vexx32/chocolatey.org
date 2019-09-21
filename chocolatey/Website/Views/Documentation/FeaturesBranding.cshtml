@@ -123,7 +123,7 @@ source as the package that is produced below.</p>
   &lt;/files&gt;
 &lt;/package&gt;</code></pre>
 <p><code>7.</code> Copy the following PowerShell into a file called <code>tools\chocolateyInstall.ps1</code></p>
-<pre><code class="powershell">  $toolsDir                      = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+<pre><code class="language-powershell">  $toolsDir                      = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
   $helpersFile                   = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;
 
   . $helpersFile
@@ -137,7 +137,7 @@ source as the package that is produced below.</p>
 
   Copy-Item -Path $chocolateyGuiBrandingAssembly -Destination $chocolateyGuiBrandingLocation</code></pre>
 <p><code>8.</code> Copy the following PowerShell into a file called <code>tools\chocolateyuninstall.ps1</code></p>
-<pre><code class="powershell">  $toolsDir                      = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+<pre><code class="language-powershell">  $toolsDir                      = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
   $helpersFile                   = Join-Path -Path $toolsDir -ChildPath &#39;helpers.ps1&#39;
 
   . $helpersFile
@@ -147,7 +147,7 @@ source as the package that is produced below.</p>
 
   Remove-Item -Path $chocolateyGuiBrandingAssembly -Force -ErrorAction Continue | Out-Null</code></pre>
 <p><code>9.</code> Copy the following PowerShell into a file called <code>tools\helpers.ps1</code></p>
-<pre><code class="powershell">  function Get-BrandingLocation {
+<pre><code class="language-powershell">  function Get-BrandingLocation {
     &lt;#
     .SYNOPSIS
     Gets the top level location for branding files used by Chocolatey

@@ -8,7 +8,7 @@
 <p>Retrieve registry key(s) for system-installed applications from an<br />
 exact or wildcard search.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Get-UninstallRegistryKey `
+<pre><code class="language-powershell">Get-UninstallRegistryKey `
   -SoftwareName &lt;String&gt; `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
@@ -28,22 +28,22 @@ version):</p>
 <p><code>Get-InstallRegistryKey</code></p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Version match: Software name is &quot;Gpg4Win (2.3.0)&quot;
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;Gpg4win (*)&quot;
 $key.UninstallString</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Fuzzy match: Software name is &quot;Launchy 2.5&quot;
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;Launchy*&quot;
 $key.UninstallString</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Exact match: Software name in Programs and Features is &quot;VLC media player&quot;
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;VLC media player&quot;
 $key.UninstallString</code></pre>
 <p><strong>EXAMPLE 4</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 #  Version match: Software name is &quot;SketchUp 2016&quot;
 # Note that the similar software name &quot;SketchUp Viewer&quot; would not be matched.
 [array]$key = Get-UninstallRegistryKey -SoftwareName &quot;SketchUp [0-9]*&quot;

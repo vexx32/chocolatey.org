@@ -161,14 +161,14 @@
 <li>SQL Server on the machine where the <code>chocolatey-management-database</code> package will be installed</li>
 </ul>
 <p>IIS can be installed using the following commands:</p>
-<pre><code class="powershell">choco install IIS-WebServer --source windowsfeatures
+<pre><code class="language-powershell">choco install IIS-WebServer --source windowsfeatures
 choco install IIS-ApplicationInit --source windowsfeatures</code></pre>
 <p>We will not provide specific instruction on installing SQL Server. Any database platform that supports Entity Framework (EF) Core is supported, and as such there are too many scenarios to cover in this document.</p>
 <p>For a list of Database products that support EF Core you can view the Microsoft Docs page <a href="https://docs.microsoft.com/en-us/ef/core/providers/#current-providers">here</a></p>
 <h3 id="fqdn-usage">FQDN Usage</h3>
 <p>When installing the CCM Service, the default is to use the Fully Qualified Domain Name (FQDN) of the machine that it is being installed on. As a result, there is an expectation that the certificate (either the self signed certificate that is created during installation, or the existing certificate which is configured with the <a href="#package-parameters-1">CertifcateThumbprint</a> parameter) that is used to secure the transport layer of this service, also uses the same FQDN.</p>
 <p>If this is not the case, it will be necessary to provide the information to the package about the actual name for the machine that is being used. When using a self signed certificate, this can be specified using the <code>CertifcateDnsName</code>, and when using an existing certificate, no additional parameters are required. In both cases, it will be necessary to also set the <code>centralManagementServiceUrl</code> <a href="#centralmanagementserviceurl">configuration parameter</a>. This can be done using the following command:</p>
-<pre><code class="powershell">choco config set CentralManagementServiceUrl https://&lt;accessible_name_of_machine&gt;:24020/ChocolateyManagementService</code></pre>
+<pre><code class="language-powershell">choco config set CentralManagementServiceUrl https://&lt;accessible_name_of_machine&gt;:24020/ChocolateyManagementService</code></pre>
 <h3 id="install-ccm-components">Install CCM Components</h3>
 <p>The CCM Components should be installed in the following order:</p>
 <ol>
@@ -179,7 +179,7 @@ choco install IIS-ApplicationInit --source windowsfeatures</code></pre>
 <h4 id="installing-chocolatey-management-database">Installing chocolatey-management-database</h4>
 <p><strong>NOTE:</strong> It is likely that additional package parameters are required which are specific to your environment. Please carefully review the available <a href="#package-parameters">package parameters</a> before proceeding.</p>
 <p>In order to successfully install the chocolatey-management-database package onto a machine (using all default values), the following steps are required:</p>
-<pre><code class="powershell">choco upgrade chocolatey --version 0.10.15
+<pre><code class="language-powershell">choco upgrade chocolatey --version 0.10.15
 choco upgrade chocolatey.extension --version 2.0.2
 choco upgrade chocolatey-agent --version 0.9.1
 choco upgrade chocolatey-management-database --version 0.1.0</code></pre>
@@ -208,7 +208,7 @@ choco upgrade chocolatey-management-database --version 0.1.0</code></pre>
 </ul>
 <h5 id="example">Example</h5>
 <p>Let&#39;s assume that you want to install the CCM Database onto a machine that will access a SQL Server instance called <code>SQLSERVERCCM</code>, on a domain machine called <code>MACHINE1</code> which is part of the domain <code>ccmtest</code>, using a specific user name (ccmservice) and password combination. In this scenario, the installation command would look like the following:</p>
-<pre><code class="powershell">choco upgrade chocolatey-management-database --package-parameters-sensitive=&quot;&#39;/ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
+<pre><code class="language-powershell">choco upgrade chocolatey-management-database --package-parameters-sensitive=&quot;&#39;/ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
 <p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that the sensitive information is not leaked out into log files.</p>
 <h5 id="verify-installation">Verify Installation</h5>
 <p>The purpose of the <code>chocolatey-management-database</code> package is to create and deploy the schema for the database that is used by the CCM Service and Website. This can be verified by using something like SQL Server Managmeent Studio to connect to the SQL Server Instance and:</p>
@@ -219,7 +219,7 @@ choco upgrade chocolatey-management-database --version 0.1.0</code></pre>
 <h4 id="installing-chocolatey-management-service">Installing chocolatey-management-service</h4>
 <p><strong>NOTE:</strong> It is likely that additional package parameters are required which are specific to your environment. Please carefully review the available <a href="#package-parameters-1">package parameters</a> before proceeding.</p>
 <p>In order to successfully install the chocolatey-management-service package onto a machine (using all default values), the following steps are required:</p>
-<pre><code class="powershell">choco upgrade chocolatey --version 0.10.15
+<pre><code class="language-powershell">choco upgrade chocolatey --version 0.10.15
 choco upgrade chocolatey.extension --version 2.0.2
 choco upgrade chocolatey-agent --version 0.9.1
 choco upgrade chocolatey-management-service --version 0.1.0</code></pre>
@@ -324,7 +324,7 @@ choco upgrade chocolatey-management-service --version 0.1.0</code></pre>
 </ul>
 <h5 id="example-1">Example</h5>
 <p>Let&#39;s assume that you want to install the CCM Service with a specific connection string in order to connect to the CCM Database, as well as configure the CCM Service to use a specific user name and password, as well as alter the Port number that the CCM Service will be hosted on. The necessary installation command would look like the following:</p>
-<pre><code class="powershell">choco upgrade chocolatey-management-service --package-parameters-sensitive=&quot;&#39;/PortNumber=24021 /Username=ccmtest\ccmservice /Password=Password01 /ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
+<pre><code class="language-powershell">choco upgrade chocolatey-management-service --package-parameters-sensitive=&quot;&#39;/PortNumber=24021 /Username=ccmtest\ccmservice /Password=Password01 /ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot;&#39;&quot;</code></pre>
 <p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that the sensitive information is not leaked out into log files.</p>
 <h5 id="verify-installation-1">Verify Installation</h5>
 <p>The <code>chocolatey-management-service</code> is responsible for making a number of changes to your system. A successful installation of this package can be verified by:</p>
@@ -335,7 +335,7 @@ choco upgrade chocolatey-management-service --version 0.1.0</code></pre>
 <h4 id="installing-chocolatey-management-web">Installing chocolatey-management-web</h4>
 <p><strong>NOTE:</strong> It is likely that additional package parameters are required which are specific to your environment. Please carefully review the available <a href="#package-parameters-2">package parameters</a> before proceeding.</p>
 <p>In order to successfully install the chocolatey-management-web package onto a machine (using all default values), the following steps are required:</p>
-<pre><code class="powershell">choco upgrade aspnetcore-runtimepackagestore
+<pre><code class="language-powershell">choco upgrade aspnetcore-runtimepackagestore
 choco upgrade dotnetcore-windowshosting
 choco upgrade chocolatey --version 0.10.15
 choco upgrade chocolatey.extension --version 2.0.2
@@ -399,7 +399,7 @@ choco upgrade chocolatey-management-web --version 0.1.0</code></pre>
 <h5 id="example-2">Example</h5>
 <p>Let&#39;s assume that you want to install the CCM Website with a specific connection string in order to connect to the CCM Database, as well as configure the IIS Application Pool to use a specific user name and password. The<br />
 necessary installation command would look like the following:</p>
-<pre><code class="powershell">choco upgrade chocolatey-management-web --package-parameters-sensitive=&quot;&#39;/ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot; /Username=ccmwebserver\ccmserviceuser /Password=Password01&#39;&quot;`</code></pre>
+<pre><code class="language-powershell">choco upgrade chocolatey-management-web --package-parameters-sensitive=&quot;&#39;/ConnectionString=&quot;&quot;Server=MACHINE1\SQLSERVERCCM;Database=ChocolateyManagement;User ID=ccmtest\ccmservice;Password=Password01;&quot;&quot; /Username=ccmwebserver\ccmserviceuser /Password=Password01&#39;&quot;`</code></pre>
 <p><strong>NOTE:</strong> This command makes use of <code>package-parameters-sensitive</code> to ensure that the sensitive information is not leaked out into log files.</p>
 <h5 id="verify-installation-2">Verify Installation</h5>
 <p>The <code>chocolatey-management-web</code> package is responsible for creating and deploying the CCM Website within IIS. A successful installation of this package can be verified by:</p>
@@ -434,7 +434,7 @@ necessary installation command would look like the following:</p>
 <p>The end result should look something like this:</p>
 <p><img src="@Url.Content("~/content/images/docs/features/ccm/updated_appsettingsjson_file.png")" alt="Modified appsettings.json file" /></p>
 <p>Once this change has been added, save the file, and then run the following to ensure that the process running the CCM Website is stopped:</p>
-<pre><code class="powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
+<pre><code class="language-powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
 <p>And then try accessing the website again. Any emails that are then sent from CCM should then contain valid links back to the site.</p>
 <h2 id="chocolatey-configuration-for-ccm">Chocolatey Configuration for CCM</h2>
 <p>The following configuration values, with their default values, are added into the chocolatey.config file after installing CCM and it&#39;s dependent packages.</p>
@@ -458,7 +458,7 @@ necessary installation command would look like the following:</p>
 <p><strong>Valid Values:</strong> None, PeerTrust, ChainTrust, PeerOrChainTrust, Custom</p>
 <h2 id="chocolatey-clients">Chocolatey Clients</h2>
 <p>Once CCM has been set up and configured, each machine that you want to report into CCM will have to be enabled. This can be done by doing the following:</p>
-<pre><code class="powershell">choco config set CentralManagementServiceUrl https://MACHINE1:24020/ChocolateyManagementService
+<pre><code class="language-powershell">choco config set CentralManagementServiceUrl https://MACHINE1:24020/ChocolateyManagementService
 choco feature enable --name=&quot;&#39;useChocolateyCentralManagement&#39;&quot;</code></pre>
 <p>Here, the full URL, including the port number, to where the CCM service was installed to is being set, and then the <code>useChocolateyCentralManagement</code> feature is being enabled. In your environment you would replace <code>MACHINE1:24020</code> with the FQDN name of your server and the port being used.</p>
 <p><strong>NOTE:</strong> By default, this feature is disabled, and will need to be turned on.</p>
@@ -467,7 +467,7 @@ choco feature enable --name=&quot;&#39;useChocolateyCentralManagement&#39;&quot;
 <h2 id="complete-installation-script">Complete Installation Script</h2>
 <p>The following is a complete installation script that can be used as an <strong>example</strong> (which should be modified to fit with your environment before executing) of how to install all necessary CCM components and configuration on a <strong>single machine</strong>, using all the <strong>default values</strong>.</p>
 <p>To use values other than the default, see the relevant parameters section for the <a href="#package-parameters">chocolatey-management-database</a>, <a href="#package-parameters-1">chocolatey-management-service</a> and <a href="#package-parameters-2">chocolatey-management-web</a> packages. And refer to the <a href="#chocolatey-configuration-for-ccm">Chocolatey Configuration</a> for further information about global settings for CCM.</p>
-<pre><code class="powershell"># Find FDQN for current machine
+<pre><code class="language-powershell"># Find FDQN for current machine
 $hostName = [System.Net.Dns]::GetHostName()
 $domainName = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties().DomainName
 
@@ -520,7 +520,7 @@ choco feature enable --name=&quot;&#39;useChocolateyCentralManagement&#39;&quot;
 <h3 id="how-can-i-add-sql-server-permissions-through-powershell">How can I add SQL Server Permissions through PowerShell</h3>
 <p>The following script is an example of how to add <code>db_owner</code> permissions to a SQL Server Database</p>
 <p><strong>NOTE:</strong> You will need to change <code>MACHINE1\SQLSERVERCCM</code> and <code>ChocolateyManagement</code> to the actual name of the SQL Server Instance and Database being used, and this script will have to be run by someone who has the correct permissions to the SQL Server Instance. In addition, change the <code>$username</code> variable for each user that requires permission to the database.</p>
-<pre><code class="powershell">$username = &#39;CCMSERVER\ChocolateyLocalAdmin&#39;
+<pre><code class="language-powershell">$username = &#39;CCMSERVER\ChocolateyLocalAdmin&#39;
 $database = &#39;ChocolateyManagement&#39;
 $chocolateyLocalAdminQuery = &quot;
 USE [master]
@@ -541,14 +541,14 @@ $Command.ExecuteNonQuery()
 $Connection.Close()</code></pre>
 <h3 id="how-can-i-view-what-ssl-registrations-have-been-made-by-the-installation-of-chocolatey-management-service">How can I view what SSL registrations have been made by the installation of chocolatey-management-service</h3>
 <p>By default, the installation of the <code>chocolatey-management-service</code> package will register a single netsh binding between a self-signed certifcate (created at the point of installation) and port 24020. This can be verified using the following command:</p>
-<pre><code class="powershell">netsh http show sslcert</code></pre>
+<pre><code class="language-powershell">netsh http show sslcert</code></pre>
 <h3 id="how-can-i-remove-a-netsh-binding-that-has-been-created">How can I remove a netsh binding that has been created</h3>
 <p>If you need to remove a netsh binding, you can do that using the following command:</p>
-<pre><code class="powershell">netsh http delete sslcert ipport=0.0.0.0:&lt;port_number&gt;</code></pre>
+<pre><code class="language-powershell">netsh http delete sslcert ipport=0.0.0.0:&lt;port_number&gt;</code></pre>
 <p><strong>NOTE:</strong> Here <code>&lt;port_number&gt;</code> should be replaced with the Port Number that has been registered</p>
 <h3 id="can-i-manually-create-an-ssl-binding">Can I manually create an SSL binding?</h3>
 <p>If required, it is possible to manually create a netsh binding. This is done using the following command:</p>
-<pre><code class="powershell">netsh http add sslcert ipport=0.0.0.0:&lt;port_number&gt; certhash=&lt;certificate_thumbprint&gt; appid={&lt;random_guid&gt;}</code></pre>
+<pre><code class="language-powershell">netsh http add sslcert ipport=0.0.0.0:&lt;port_number&gt; certhash=&lt;certificate_thumbprint&gt; appid={&lt;random_guid&gt;}</code></pre>
 <p><strong>NOTE:</strong> Here, <code>&lt;port_number&gt;</code> should be replaced with the Port Number to be used for the registration. <code>&lt;certifcate_thumbprint&gt;</code> should be replaced with the thumbprint for the certificate that is to be used for the registration. <code>&lt;random_guid&gt;</code> should be replaced with a random guid in the following format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code></p>
 <h3 id="where-can-i-find-all-the-log-files-for-chocolatey-central-management">Where can I find all the log files for Chocolatey Central Management</h3>
 <p>Due to the fact that Chocolatey Central Management is made up of a number of components, there are a few places that log files exist, and you may be asked for these when engaging with support.</p>
@@ -560,7 +560,7 @@ $Connection.Close()</code></pre>
 <p>Log file is located at <code>C:\ProgramData\chocolatey\lib\chocolatey-agent\tools\service\logs\chocolatey-agent.log</code></p>
 <h3 id="how-can-i-increase-the-level-of-logging-for-chocolatey-central-management">How can I increase the level of logging for Chocolatey Central Management</h3>
 <p>This can be done by changing the level value, which should be currently INFO, to use DEBUG, as per the following:</p>
-<pre><code class="nohighlight">&lt;root&gt;
+<pre><code class="language-none">&lt;root&gt;
   &lt;level value=&quot;DEBUG&quot; /&gt;
   &lt;appender-ref ref=&quot;ColoredConsoleAppender&quot; /&gt;
   &lt;appender-ref ref=&quot;RollingLogFileAppender&quot; /&gt;
@@ -610,10 +610,10 @@ $Connection.Close()</code></pre>
 <h2 id="common-errors-and-resolutions">Common Errors and Resolutions</h2>
 <h3 id="the-specified-path-file-name-or-both-are-too-long">The specified path, file name, or both are too long</h3>
 <p>This error can occur when installing the <code>chocolatey-management-web</code> package. Due to the nested folder structure contained within this package, when extracting to the default cache location, the path can become too long. This problem is known is occur in the 0.1.0-beta–20181009 release of this package, and it should be corrected in subsequent releases. As a workaround, adding the following parameters to the install command should allow the installation to complete successfully:</p>
-<pre><code class="powershell">--cache-location=&quot;&#39;C:\Temp\choco&#39;&quot;</code></pre>
+<pre><code class="language-powershell">--cache-location=&quot;&#39;C:\Temp\choco&#39;&quot;</code></pre>
 <h3 id="chocolatey-agent-service-is-unable-to-communicate-with-chocolatey-central-management-service">Chocolatey Agent Service is unable to communicate with Chocolatey Central Management Service</h3>
 <p>There is a known issue with the beta release of Chocolatey Central Management where an inconsistent Port Number is used between these two services. One used 24020 and the other used 24040. The correct default Port Number is 24020, and this is used in the 0.1.0 release of Chocolatey Central Management. If required, the Port Number can be explicitly set during the installation of the Chocolatey Central Management packages using the following option when installing <code>chocolatey-management-service</code>:</p>
-<pre><code class="powershell">--params=&quot;&#39;/PortNumber=24020&#39;&quot;</code></pre>
+<pre><code class="language-powershell">--params=&quot;&#39;/PortNumber=24020&#39;&quot;</code></pre>
 <h3 id="http-error-when-trying-to-access-chocolatey-central-management-website">HTTP Error when trying to access Chocolatey Central Management Website</h3>
 <p>When you try to access the Chocolatey Central Management Website (by default, this is hosted on <a href="http://localhost" class="uri">http://localhost</a>), errors messages similar to the following may be returned:</p>
 <p><code>HTTP Error 500.19 - Internal Server Error</code></p>
@@ -634,7 +634,7 @@ $Connection.Close()</code></pre>
 <p><code>A parameter cannot be found that matches parameter name KeyUsage</code></p>
 <p>This happens when installing Chocolatey Central Management on a machine that has PowerShell 4 or earlier. This is corrected in the 0.1.0 release of Chocolatey Central Management.</p>
 <p>To work around this issue, you can use the following script to manually create a Self Signed Certificate, which will then be used to continue the installation:</p>
-<pre><code class="powershell">$hostName = [System.Net.Dns]::GetHostName()
+<pre><code class="language-powershell">$hostName = [System.Net.Dns]::GetHostName()
 $domainName = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties().DomainName
 
 if(-Not $hostName.endswith($domainName)) {
@@ -664,7 +664,7 @@ $null = Move-Item -Path $certPath.PsPath -Destination &#39;Cert:\\LocalMachine\\
 <p>Or an inline error, similar to this:</p>
 <p><img src="@Url.Content("~/content/images/docs/features/ccm/error_when_sending_email_inline.png")" alt="Inline error when sending email" /></p>
 <p>Checking the log file, an error similar to this is found:</p>
-<pre><code class="powershell">ERROR 2019-06-14 00:54:03,491 [55   ] Microsoft.AspNetCore.Server.Kestrel      - Connection id &quot;0HLNGIPBBV01R&quot;, Request id &quot;0HLNGIPBBV01R:00000001&quot;: An unhandled exception was thrown by the application.
+<pre><code class="language-powershell">ERROR 2019-06-14 00:54:03,491 [55   ] Microsoft.AspNetCore.Server.Kestrel      - Connection id &quot;0HLNGIPBBV01R&quot;, Request id &quot;0HLNGIPBBV01R:00000001&quot;: An unhandled exception was thrown by the application.
 System.Net.Sockets.SocketException (0x80004005): No connection could be made because the target machine actively refused it 127.0.0.1:25</code></pre>
 <p>This is caused due to the default SMTP configuration being used by CCM, which is incompatible with the environment. CCM, by default, assumes that there is an available SMTP Server available on the current machine, using port 25. To fix this, follow the installation steps <a href="#smtp-configuration">above</a>.</p>
 <h3 id="emails-sent-from-ccm-to-users-has-links-that-contains-localhost-rather-than-actual-ccm-server-name">Emails sent from CCM to users has links that contains localhost, rather than actual CCM Server name</h3>
@@ -678,7 +678,7 @@ System.Net.Sockets.SocketException (0x80004005): No connection could be made bec
 <p>The end result should look something like this:</p>
 <p><img src="@Url.Content("~/content/images/docs/features/ccm/updated_appsettingsjson_file.png")" alt="Modified appsettings.json file" /></p>
 <p>Once this change has been added, save the file, and then run the following to ensure that the process running the CCM Website is stopped:</p>
-<pre><code class="powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
+<pre><code class="language-powershell">Get-Process -Name &quot;ChocolateySoftware.ChocolateyManagement.Web.Mvc&quot; -ErrorAction SilentlyContinue | Stop-Process -Force -PassThru</code></pre>
 <p>And then try accessing the website again. Any emails that are then sent from CCM should then contain valid links back to the site.</p>
 <h3 id="the-remote-server-returned-an-unexpected-response-413-request-entity-too-large">The remote server returned an unexpected response: (413) Request Entity Too Large</h3>
 <p>When reporting a larger number of packages (approximately 200), this error may be reported. This is due to the size of the information, in bytes, being too large to send between the Chocolatey Agent Service and the Chocolatey Central Management Service. This has been identified as a <a href="https://github.com/chocolatey/chocolatey-licensed-issues/issues/95">bug</a>, which is due to be corrected in version 0.1.1 of Chocolatey Central Managment</p>

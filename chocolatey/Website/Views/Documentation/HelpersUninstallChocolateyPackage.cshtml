@@ -7,7 +7,7 @@
 <!-- This documentation is automatically generated from https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Uninstall-ChocolateyPackage.ps1 using https://github.com/chocolatey/choco/tree/stable/GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
 <p>Uninstalls software from &quot;Programs and Features&quot;.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Uninstall-ChocolateyPackage `
+<pre><code class="language-powershell">Uninstall-ChocolateyPackage `
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
   [-SilentArgs &lt;String[]&gt;] `
@@ -36,10 +36,10 @@ auto uninstaller.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">Uninstall-ChocolateyPackage &#39;__NAME__&#39; &#39;EXE_OR_MSI&#39; &#39;SILENT_ARGS&#39; &#39;FilePath&#39;
+<pre><code class="language-powershell">Uninstall-ChocolateyPackage &#39;__NAME__&#39; &#39;EXE_OR_MSI&#39; &#39;SILENT_ARGS&#39; &#39;FilePath&#39;
 </code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Uninstall-ChocolateyPackage -PackageName $packageName `
                                 -FileType $installerType `
                                 -SilentArgs &quot;$silentArgs&quot; `

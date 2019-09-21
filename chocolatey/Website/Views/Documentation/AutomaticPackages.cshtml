@@ -5,7 +5,7 @@
 <article>
 <h1 id="automatic-packaging-for-maintenance">Automatic Packaging for Maintenance</h1>
 <p>Automatic packaging is a process that <strong>package maintainers can run on <em>their own</em> to keep the packages they maintain up to date</strong>. It is not a required step for maintaining packages on the community feed (<a href="https://chocolatey.org/packages" class="uri">https://chocolatey.org/packages</a>), but it is recommended you find a way to automate the delivery of packages to the community feed when there are updates if you are going to maintain more than 5 packages and you are not the software vendor for the packages you maintain.</p>
-<p><strong>NOTE:</strong> Not to be confused with the automatic package creation feature in <a href="https://chocolatey.org/pricing">Chocolatey for Business</a> - that feature creates packages directly from software installer files. This feature is for package maintenance of existing packages on the community feed.</p>
+<p><strong>NOTE:</strong> Not to be confused with the automatic package creation feature in <a href="https://chocolatey.org/compare">Chocolatey for Business</a> - that feature creates packages directly from software installer files. This feature is for package maintenance of existing packages on the community feed.</p>
 <!-- TOC -->
 <ul>
 <li><a href="#automatic-update-methods">Automatic update methods</a></li>
@@ -82,7 +82,7 @@
 <li>Check the config in <code>$env:ChocolateyInstall\lib\ChocolateyPackageUpdater\tools\chocopkgup\chocopkgup.exe.config</code>. The <code>PackagesFolder</code> key should point to where your repository is located.</li>
 <li>Create a scheduled task (in Windows). This is the command (edit the path to <code>cmd.exe</code> accordingly): <code>C:\Windows\System32\cmd.exe /c c:\tools\chocolateypackageupdater\ketarinupdate.cmd</code></li>
 <li><p>Alternatively to stop the command window from opening on Windows, you can create a VBS script as well and put the path to the <code>.vbs</code> file instead of <code>ketarinupdate.cmd</code> as the command to run. The file should have the following:</p>
-<pre><code class="nohighlight">~~~vb
+<pre><code class="language-none">~~~vb
 Set objShell = WScript.CreateObject(&quot;WScript.Shell&quot;)
 objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0, True
 ~~~</code></pre></li>
@@ -137,7 +137,7 @@ objShell.Run(&quot;C:\tools\ChocolateyPackageUpdater\ketarinupdate.cmd&quot;), 0
 <li>Click on the <strong>Commands Tab</strong> and set <strong>Edit command for event</strong> to &quot;Before updating an application&quot;.<br />
 <img src="@Url.Content("~/content/images/docs/chocopkgup/KetarinJobSettings.png")" title="Ketarin Settings" alt="Ketarin Settings" /></li>
 <li><p>Add the following text (replace <code>name</code> with the actual name of the meta package folder):</p>
-<pre><code class="nohighlight">~~~cmd
+<pre><code class="language-none">~~~cmd
 chocopkgup /p name /v {version} /u &quot;{preupdate-url}&quot; /u64 &quot;{url64}&quot; /pp &quot;{file}&quot; /c &quot;{Checksum}&quot; /c64 &quot;{Checksumx64}&quot;
 REM /disablepush
 ~~~</code></pre></li>

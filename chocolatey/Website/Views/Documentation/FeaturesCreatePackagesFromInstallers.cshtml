@@ -78,7 +78,7 @@ This image shows running `choco new --file .\installers\1Password-4.6.0.598.exe`
 <p>We&#39;ve prepared a short video going over the concepts:<br />
 <a href="https://www.youtube.com/watch?v=6TXY5Ie-3wg&amp;list=PLfn-TaDnc1us5X-PVlxW8M1h-6mXEXZSG&amp;index=1" title="Chocolatey&#39;s Package Builder - Package Builder CLI and Scripting"><img src="https://cloud.githubusercontent.com/assets/63502/20327872/b0caf0d8-ab54-11e6-8c40-8bdeeb8eb13c.png" alt="Chocolatey&#39;s Package Builder - Package Builder CLI and Scripting" /></a></p>
 <p>Quickly script out creating packages for your entire organization&#39;s cache of software, allowing you to completely automate your Windows installations in moments, not months. You can do that with a simple script:</p>
-<pre><code class="powershell"># Path to your installers, will navigate subdirectories
+<pre><code class="language-powershell"># Path to your installers, will navigate subdirectories
 $path = &#39;\\company.file.server\installers&#39;
 
 # Generate packages over supported types of files
@@ -110,7 +110,7 @@ Get-ChildItem -Path $path -Recurse | ?{
 <p><img src="@Url.Content("~/content/images/docs/gifs/choco_business_features.gif")" alt="auto package creation/synchronize" /></p>
 <h2 id="options-and-switches">Options and Switches</h2>
 <p>When running <code>choco new</code> in the Business editions, pass the following:</p>
-<pre><code class="nohighlight">     --file, --url=VALUE
+<pre><code class="language-none">     --file, --url=VALUE
      Inspect a file (native installer, zip, patch/upgrade file, or remote url
        to download first) to to completely create a package with proper silent
        arguments! Can be 32-bit or 64-bit architecture.  Available in Business

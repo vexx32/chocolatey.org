@@ -7,7 +7,7 @@
 <!-- This documentation is automatically generated from https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Install-ChocolateyPowershellCommand.ps1 using https://github.com/chocolatey/choco/tree/stable/GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
 <p>Installs a PowerShell Script as a command</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyPowershellCommand `
+<pre><code class="language-powershell">Install-ChocolateyPowershellCommand `
   [-PackageName &lt;String&gt;] `
   -PsFileFullPath &lt;String&gt; `
   [-Url &lt;String&gt;] `
@@ -35,11 +35,11 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $psFile = Join-Path $(Split-Path -Parent $MyInvocation.MyCommand.Definition) &quot;Install-WindowsImage.ps1&quot;
 Install-ChocolateyPowershellCommand -PackageName &#39;installwindowsimage.powershell&#39; -PSFileFullPath $psFile</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $psFile = Join-Path $(Split-Path -Parent $MyInvocation.MyCommand.Definition) `
  &quot;Install-WindowsImage.ps1&quot;
 Install-ChocolateyPowershellCommand `
@@ -48,7 +48,7 @@ Install-ChocolateyPowershellCommand `
  -PSFileFullPath $psFile `
  -Url &#39;http://somewhere.com/downloads/Install-WindowsImage.ps1&#39;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $psFile = Join-Path $(Split-Path -Parent $MyInvocation.MyCommand.Definition) `
  &quot;Install-WindowsImage.ps1&quot;
 Install-ChocolateyPowershellCommand `

@@ -37,7 +37,7 @@
 <li>With that same shell open where the environment variables are set, run the downloaded script to install Chocolatey.</li>
 </ol>
 <p>In PowerShell, it looks like this:</p>
-<pre><code class="powershell">$env:chocolateyProxyLocation = &#39;https://local/proxy/server&#39;
+<pre><code class="language-powershell">$env:chocolateyProxyLocation = &#39;https://local/proxy/server&#39;
 #$env:chocolateyProxyUser = &#39;username&#39;
 #$env:chocolateyProxyPassword = &#39;password&#39;
 # install script</code></pre>
@@ -70,14 +70,14 @@
 <h2 id="explicit-proxy-settings">Explicit Proxy Settings</h2>
 <p>Chocolatey has explicit proxy support starting with 0.9.9.9.</p>
 <p>You can simply configure 1 up to 5 settings and Chocolatey will use a proxy server. <code>proxy</code> is required and is the location and port of the proxy server. The values for user/password are only used for credentials when both are present.</p>
-<pre><code class="nohighlight">choco config set proxy &lt;locationandport&gt;
+<pre><code class="language-none">choco config set proxy &lt;locationandport&gt;
 choco config set proxyUser &lt;username&gt; #optional
 choco config set proxyPassword &lt;passwordThatGetsEncryptedInFile&gt; # optional
 choco config set proxyBypassList &quot;&#39;&lt;bypasslist, comma separated&gt;&#39;&quot; # optional, Chocolatey v0.10.4 required
 choco config set proxyBypassOnLocal true # optional, Chocolatey v0.10.4 required</code></pre>
 <h3 id="example">Example</h3>
 <p>Running the following commands in 0.9.9.9:</p>
-<pre><code class="nohighlight">choco config set proxy http://localhost:8888
+<pre><code class="language-none">choco config set proxy http://localhost:8888
 choco config set proxyUser bob
 choco config set proxyPassword 123Sup#rSecur3
 choco config set proxyBypassList &quot;&#39;http://localhost,http://this.location/&#39;&quot; #0.10.4 required

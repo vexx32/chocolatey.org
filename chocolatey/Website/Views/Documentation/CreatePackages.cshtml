@@ -86,7 +86,7 @@ can do just about anything you need. Choco has some very handy <a href="@Url.Rou
 <p><strong>Note:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It&#39;s best to work with the widest compatibility of systems out there.</p>
 <p>There is a video showing the creation of a package: <a href="http://www.youtube.com/watch?v=Wt_unjS_SUo" class="uri">http://www.youtube.com/watch?v=Wt_unjS_SUo</a><br />
 The video is a bit outdated in showing the contents of the chocolateyInstall.ps1. Have a look at what the <a href="https://github.com/ferventcoder/chocolatey-packages/blob/master/manual/windirstat/tools/chocolateyInstall.ps1">chocolateyInstall.ps1</a> looks like now:</p>
-<pre><code class="powershell">$packageName = &#39;windirstat&#39;
+<pre><code class="language-powershell">$packageName = &#39;windirstat&#39;
 $fileType = &#39;exe&#39;
 $url = &#39;http://prdownloads.sourceforge.net/windirstat/windirstat1_1_2_setup.exe&#39;
 $silentArgs = &#39;/S&#39;
@@ -174,7 +174,7 @@ one circumstance.</p>
 <p>That means that when your installer depends on any environment variables to find install locations there is a scenario where the environment variables are from a different user (e.g. <strong>admin</strong>) than the user installing the package.</p>
 <p>The known affected environment variables are: <code>APPDATA</code>, <code>LOCALAPPDATA</code>, <code>TEMP</code>, <code>TMP</code>, <code>USERNAME</code>, <code>USERPROFILE</code></p>
 <p>Example Settings for a user named &quot;administrator&quot;:</p>
-<pre><code class="nohighlight">APPDATA=C:\Users\administrator\AppData\Roaming
+<pre><code class="language-none">APPDATA=C:\Users\administrator\AppData\Roaming
 LOCALAPPDATA=C:\Users\administrator\AppData\Local
 TEMP=C:\Users\administrator\AppData\Local\Temp
 TMP=C:\Users\administrator\AppData\Local\Temp
@@ -184,7 +184,7 @@ USERPROFILE=C:\Users\administrator</code></pre>
 <p>Example instructions:</p>
 <blockquote>
 <p>Within the administrator command shell you will need to set 2 environment variables:</p>
-<pre><code class="nohighlight">set LOCALAPPDATA=C:\Users\&lt;USERNAME&gt;\AppData\Local
+<pre><code class="language-none">set LOCALAPPDATA=C:\Users\&lt;USERNAME&gt;\AppData\Local
 set USERPROFILE=C:\Users\&lt;USERNAME&gt;</code></pre>
 </blockquote>
 <h2 id="upgrading">Upgrading</h2>
@@ -261,7 +261,7 @@ chocolateyInstall or chocolateyUninstall scripts.</p>
 <p>If you have executables in the package or brought into the package folder during PowerShell run and you want to exclude them you need to create an empty file named exactly like (<strong>case sensitive</strong>) the executable with <code>.ignore</code> suffixed on the end in the same directory where the executable is or will be.</p>
 <p>Example: In the case of <code>Bob.exe</code> you would create a file named <code>Bob.exe.ignore</code> and that file would not get a redirect batch link. The Chocolatey package has an example of that. To further expand, <code>bob.exe.ignore</code> would not work because it doesn&#39;t have the correct casing.</p>
 <p>Here&#39;s a great <a href="https://github.com/ferventcoder/chocolatey-packages/blob/6ea7c087bd999d428a564b5d7e236ae998ef72e9/automatic/git.commandline/tools/chocolateyInstall.ps1#L13-L20">programmatic example</a>:</p>
-<pre><code class="powershell">$files = get-childitem $installDir -include *.exe -recurse
+<pre><code class="language-powershell">$files = get-childitem $installDir -include *.exe -recurse
 
 foreach ($file in $files) {
   #generate an ignore file
@@ -277,7 +277,7 @@ foreach ($file in $files) {
 <p><strong>NOTE</strong>: We strongly suggest the following should be performed in a VM and not on your machine.</p>
 <p><strong>NOTE</strong>: Testing your package can be done in the same way as the verifier - take a look at <a href="https://github.com/chocolatey/package-verifier-vagrant">Chocolatey Verifier Testing</a>.</p>
 <p>To test the package you just built, open a command line shell and navigate to the directory where the <code>*.nupkg</code> file is located. Then type:</p>
-<pre><code class="powershell">choco install packageName -dv -s .</code></pre>
+<pre><code class="language-powershell">choco install packageName -dv -s .</code></pre>
 <p>This will install the package right out of your source. As you find things you may need to fix, using <code>--force</code> (<code>-f</code>) will remove and reinstall the package from the updated <code>*.nupkg</code>. If you are specifically testing <code>chocolateyBeforeModify.ps1</code>, you need to be testing upgrade and uninstall scenarios. You need to install a version of the package with this file <strong>first</strong> as before modify is like uninstall, it runs from the installed package, not the package you are installing (like <code>chocolateyInstall.ps1</code> does).</p>
 <p><strong>NOTE:</strong> Using Force <code>--force</code> (<code>-f</code>) should only be done in subsequent testing where you are reinstalling the same package that you&#39;ve changed and should NOT be used in regular use scenarios. It should definitely not be in scripts.</p>
 <p><strong>NOTE:</strong> If you are using a Semver dash in your package version (such as 1.0.0-beta), you will need to use the <code>-pre</code> switch or else you will get <em>Unable to find package</em> errors from <code>choco install</code>. You can also specify <code>-version 1.0.0-beta</code> to try to install that exact version.</p>

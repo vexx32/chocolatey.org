@@ -3,15 +3,19 @@
 }
 
 <article>
+ @section SideColumn { 
+<!-- TOC -->
 <ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installing-chocolatey">Installing Chocolatey</a></li>
-<li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">More Install Options</a></li>
+<li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">More Install Options</a></li>
 <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">Installing Licensed Edition</a></li>
 <li><a href="#upgrading-chocolatey">Upgrading Chocolatey</a></li>
 <li><a href="#uninstalling-chocolatey">Uninstalling Chocolatey</a></li>
 <li><a href="#faqs">FAQs</a></li>
 </ul>
+<!-- /TOC -->
+ } 
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Windows 7+ / Windows Server 2003+</li>
@@ -22,7 +26,7 @@
 <h2 id="installing-chocolatey">Installing Chocolatey</h2>
 <p>Chocolatey installs in seconds. You are just a few steps from running choco right now!</p>
 <ol>
-<li>First, ensure that you are using an <strong><em><a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">administrative shell</a></em></strong> - you can also install as a non-admin, check out <a href="#non-administrative-install" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">Non-Administrative Installation</a>.</li>
+<li>First, ensure that you are using an <strong><em><a href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">administrative shell</a></em></strong> - you can also install as a non-admin, check out <a href="#non-administrative-install" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">Non-Administrative Installation</a>.</li>
 <li>Copy the text specific to your command shell - <a href="#install-with-cmdexe">cmd.exe</a> or <a href="#install-with-powershellexe">powershell.exe</a>.</li>
 <li>Paste the copied text into your shell and press Enter.</li>
 <li>Wait a few seconds for the command to complete.</li>
@@ -30,23 +34,23 @@
 </ol>
 <p><strong>NOTES</strong>:</p>
 <ul>
-<li>If you are behind a proxy, please see <a href="#installing-behind-a-proxy" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">Installing behind a proxy</a>.</li>
-<li>Need completely offline solution? See <a href="#completely-offline-install" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">Completely Offline Install</a>.</li>
+<li>If you are behind a proxy, please see <a href="#installing-behind-a-proxy" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">Installing behind a proxy</a>.</li>
+<li>Need completely offline solution? See <a href="#completely-offline-install" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">Completely Offline Install</a>.</li>
 <li>Installing the licensed edition? See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">install licensed edition</a>.</li>
-<li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">More Options</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a></li>
+<li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">More Options</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a></li>
 </ul>
 <h4 id="install-with-cmdexe">Install with cmd.exe</h4>
-<p>Run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"></button> (copy command text) </p>
-<pre><code class="nohighlight">
+<p>Run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"><span class="fad fa-clipboard"></span> Copy Command Text</button> </p>
+<pre><code class="language-none">
 @@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
 <h4 id="install-with-powershellexe">Install with PowerShell.exe</h4>
 <p>With PowerShell, there is an additional step. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
 <ul>
 <li>Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass -Scope Process</code>.</li>
-<li>Now run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button> (copy command text) </li>
+<li>Now run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"><span class="fad fa-clipboard"></span> Copy Command Text</button> </li>
 </ul>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
 </code></pre>
 <h4 id="additional-considerations">Additional considerations</h4>
@@ -57,7 +61,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 
 <p><strong>Troubleshooting? Proxy? Need more options?</strong><br />
 
-<a onclick="if ($(this).text() == 'Less Options') {$('#div-moreoptions').addClass('hide');$(this).text('More Options');} else {$('#div-moreoptions').removeClass('hide');$(this).text('Less Options');}">More Options</a>
+<a onclick="if ($(this).text() == 'Less Options') {$('#div-moreoptions').addClass('d-none');$(this).text('More Options');} else {$('#div-moreoptions').removeClass('d-none');$(this).text('Less Options');}">More Options</a>
 </p>
 
 <div id="div-moreoptions" class="hide">
@@ -84,9 +88,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 <p>With PowerShell, there is an additional step or two. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
 <ul>
 <li>Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass</code>.</li>
-<li>Now run the following command:  <button class="icon-clipboard copy-button" data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></button> (copy command text) </li>
+<li>Now run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex"></span> Copy Command Text</button> </li>
 </ul>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </code></pre>
 <h3 id="completely-offline-install">Completely offline install</h3>
@@ -99,7 +103,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/ins
 <li>You can put the chocolatey.nupkg on an internal package repository and then address that full path, similar to how you see in the Puppet provider - <a href="https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation" class="uri">https://forge.puppet.com/puppetlabs/chocolatey#manage-chocolatey-installation</a></li>
 <li><p>Then you would run a script similar to the below to address that local install. If it is on a repository somewhere, you will need to enhance the below script to get that file (the Chocolatey Puppet provider install script shows that).</p></li>
 </ol>
-<pre><code class="powershell"># Download and install Chocolatey nupkg from an OData (HTTP/HTTPS) url such as Artifactory, Nexus, ProGet (all of these are recommended for organizational use), or Chocolatey.Server (great for smaller organizations and POCs)
+<pre><code class="language-powershell"># Download and install Chocolatey nupkg from an OData (HTTP/HTTPS) url such as Artifactory, Nexus, ProGet (all of these are recommended for organizational use), or Chocolatey.Server (great for smaller organizations and POCs)
 # This is where you see the top level API - with xml to Packages - should look nearly the same as https://chocolatey.org/api/v2/
 # If you are using Nexus, always add the trailing slash or it won&#39;t work
 # === EDIT HERE ===
@@ -391,7 +395,7 @@ if (!(Test-Path $ChocoInstallPath)) {
 <li>Use <code>choco push</code> to push those items to your internal package repository (e.g. <code>choco push chocolatey.0.10.7.nupkg -s http://internal_repo/ -k abc123</code>)</li>
 <li>Determine how to get the bare url to download the Chocolatey.Nupkg directly. You will need that for the internal url for installing Chocolatey offline. For the community repository, it is <a href="https://chocolatey.org/api/v2/package/chocolatey" class="uri">https://chocolatey.org/api/v2/package/chocolatey</a></li>
 </ul>
-<pre><code class="puppet"># Requires puppetlabs/chocolatey module
+<pre><code class="language-puppet"># Requires puppetlabs/chocolatey module
 # See https://forge.puppet.com/puppetlabs/chocolatey
 
 ## Set resource defaults for `package` resources on Windows to use the Chocolatey provider
@@ -563,7 +567,7 @@ package {&#39;dotnet4.5.2&#39;:
 <h3 id="install-using-powershell-from-cmdexe">Install using PowerShell from cmd.exe</h3>
 <p>This is the best method if you want to repeat it or include it in source control. It requires no change to your existing PowerShell to allow for remote unsigned scripts.</p>
 <p>Create a file named <code>installChocolatey.cmd</code> with the following:</p>
-<pre><code class="nohighlight">@@echo off
+<pre><code class="language-none">@@echo off
 
 SET DIR=%~dp0%
 
@@ -601,15 +605,15 @@ SET DIR=%~dp0%
 <h3 id="installing-behind-a-proxy">Installing behind a proxy</h3>
 <p>Have a proxy? Try</p>
 <ul>
-<li>Cmd.exe:  <button class="icon-clipboard copy-button" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></button> (copy command text) </li>
+<li>Cmd.exe:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="@@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"></span> Copy Command Text</button> </li>
 </ul>
-<pre><code class="nohighlight">
+<pre><code class="language-none">
 @@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET PATH=&quot;%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
 <ul>
-<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):  <button class="icon-clipboard copy-button" data-clipboard-text="[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></button> (copy command text) </li>
+<li>PowerShell.exe (Ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is at least RemoteSigned):  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"></span> Copy Command Text</button> </li>
 </ul>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
 </code></pre>
 <h3 id="installing-behind-an-explicit-proxy">Installing behind an explicit proxy</h3>
@@ -637,7 +641,7 @@ See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "default-chocolatey-i
 <li><code>chocolateyVersion</code> - controls what version of Chocolatey is installed</li>
 </ul>
 <p>In PowerShell, it looks like this:</p>
-<pre><code class="powershell">$env:chocolateyVersion = &#39;0.9.9.12&#39;
+<pre><code class="language-powershell">$env:chocolateyVersion = &#39;0.9.9.12&#39;
 # install script</code></pre>
 <p><strong>NOTE:</strong> This will only work with the installation methods that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
 <h3 id="use-windows-built-in-compression-instead-of-downloading-7zip">Use Windows built-in compression instead of downloading 7zip</h3>
@@ -646,13 +650,13 @@ See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "default-chocolatey-i
 <li><code>chocolateyUseWindowsCompression</code> - this will bypass the download and use of 7zip.</li>
 </ul>
 <p>In PowerShell, it looks like this:</p>
-<pre><code class="powershell">$env:chocolateyUseWindowsCompression = &#39;true&#39;
+<pre><code class="language-powershell">$env:chocolateyUseWindowsCompression = &#39;true&#39;
 # install script</code></pre>
 <p><strong>NOTE:</strong> This will only work with the installation methods that call <a href="https://chocolatey.org/install.ps1" class="uri">https://chocolatey.org/install.ps1</a> as part of the install.</p>
 <h3 id="installing-with-restricted-tls">Installing with restricted TLS</h3>
 <p><strong>NOTE:</strong> If your server is restricted to TLS 1.1+, you need to add additional logic to be able to download and install Chocolatey (this is not necessary when running Chocolatey normally as it does this automatically). If this is for organizational use, you should consider hosting the Chocolatey package internally and installing from there. Otherwise, please see this section.</p>
 <p>If you see an error that looks similar to the following:</p>
-<pre><code class="nohighlight">Exception calling &quot;DownloadString&quot; with &quot;1&quot; argument(s): &quot;The underlying connection was closed: An unexpected error
+<pre><code class="language-none">Exception calling &quot;DownloadString&quot; with &quot;1&quot; argument(s): &quot;The underlying connection was closed: An unexpected error
 occurred on a receive.&quot;
 At line:1 char:1
 + iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/in ...
@@ -667,7 +671,7 @@ At line:1 char:1
 <li>.NET Framework 4.5</li>
 </ul>
 <p>You can just run the following instead of just the one-liner to get Chocolatey installed:</p>
-<pre><code class="powershell">$securityProtocolSettingsOriginal = [System.Net.ServicePointManager]::SecurityProtocol
+<pre><code class="language-powershell">$securityProtocolSettingsOriginal = [System.Net.ServicePointManager]::SecurityProtocol
 
 try {
   # Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
@@ -695,7 +699,7 @@ iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.or
 <li>Run <code>.\ChocolateyInstallNonAdmin.ps1</code>.</li>
 </ol>
 <p>ChocolateyInstallNonAdmin.ps1:</p>
-<pre><code class="powershell"># Set directory for installation - Chocolatey does not lock
+<pre><code class="language-powershell"># Set directory for installation - Chocolatey does not lock
 # down the directory if not the default
 $InstallDir=&#39;C:\ProgramData\chocoportable&#39;
 $env:ChocolateyInstall=&quot;$InstallDir&quot;
@@ -709,7 +713,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force;
 # https://chocolatey.org/install
 iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</code></pre>
 <p>Examples of packages you can install:</p>
-<pre><code class="powershell">choco install puppet-agent.portable -y
+<pre><code class="language-powershell">choco install puppet-agent.portable -y
 choco install ruby.portable -y
 choco install git.commandline -y
 
@@ -727,12 +731,12 @@ choco install notepadplusplus.commandline -y
 
 <h2 id="upgrading-chocolatey">Upgrading Chocolatey</h2>
 <p>Once installed, Chocolatey can be upgraded in exactly the same way as any other package that has been installed using Chocolatey. Simply use the command to upgrade to the latest stable release of Chocolatey:</p>
-<pre><code class="nohighlight">choco upgrade chocolatey</code></pre>
+<pre><code class="language-none">choco upgrade chocolatey</code></pre>
 <h2 id="uninstalling-chocolatey">Uninstalling Chocolatey</h2>
 <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "uninstallation" })">uninstall</a>.</p>
 <h2 id="faqs">FAQs</h2>
 <h3 id="im-having-trouble-installing-chocolatey">I&#39;m having trouble installing Chocolatey</h3>
-<p>Make sure you&#39;ve reviewed <a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('hide')">More Install Options</a> and looked over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a>. If you&#39;ve done those things, reach out over the mailing list or over the chat (Gitter). The links to those can be found in the open source section of <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a>.</p>
+<p>Make sure you&#39;ve reviewed <a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">More Install Options</a> and looked over <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a>. If you&#39;ve done those things, reach out over the mailing list or over the chat (Gitter). The links to those can be found in the open source section of <a href="https://chocolatey.org/support" class="uri">https://chocolatey.org/support</a>.</p>
 <h3 id="im-getting-a-403-attempting-to-install">I&#39;m getting a 403 attempting to install</h3>
 <p>This is addressed in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a>.</p>
 <h3 id="why-isnt-there-an-msi">Why isn&#39;t there an MSI?</h3>
@@ -742,7 +746,7 @@ choco install notepadplusplus.commandline -y
 <ul>
 <li><p>PowerShell is installed and is set up properly.</p>
 <p>PowerShell is a requirement for using Chocolatey, not just for install. It is what drives the package installation process in most cases. Every package can have binaries and/or installation/uninstallation scripts (written in PowerShell). Chocolatey is the framework and each package gets to define how it is installed, upgraded, and uninstalled. It&#39;s an extremely flexible framework that has been proven to meet the insanity that is the Windows software installation ecosystem. That flexibility would not be easily achieved without PowerShell.</p>
-<p>We do recognize there are a few organizations that disable PowerShell, so it&#39;s very likely in the future our <a href="https://chocolatey.org/pricing#compare">Business Edition</a> will meet that need. PowerShell is a staple of Windows automation, so it is not the norm for an organization in this day and age to disable PowerShell.</p>
+<p>We do recognize there are a few organizations that disable PowerShell, so it&#39;s very likely in the future our <a href="https://chocolatey.org/compare">Business Edition</a> will meet that need. PowerShell is a staple of Windows automation, so it is not the norm for an organization in this day and age to disable PowerShell.</p>
 <p>Having an install process that uses PowerShell helps you determine quickly if Chocolatey will be able to be used in your environment.</p></li>
 <li><p>You are open to doing things in a slightly different way, e.g.&nbsp; working with packages as opposed to installers.</p>
 <p>You are open to the concept of using packages. Some folks might say this means we are asking folks to learn to &#39;do things &quot;our way&quot; because we know better&#39;. It&#39;s less about &quot;knowing better&quot; and more about learning that Chocolatey does things in a slightly different way. It does that because the world of software is not just installers. Software goes beyond Programs and Features and a system that can track all of that also needs to as well. Package management is not a new concept in the world of software, perhaps just newer to Windows. If folks are not open to that, then they are probably not going to be open to Chocolatey. And that&#39;s completely fine. Chocolatey is not for everyone. We may eventually get to more of a masses approach. Right now we are targeting a specific type of audience - those that are looking for better ways to manage software on Windows and open to looking for the best process of doing that.</p></li>
@@ -750,15 +754,9 @@ choco install notepadplusplus.commandline -y
 
 <p>&nbsp;</p>
 
-
-<script language="javascript" type="text/javascript" src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js"></script>
-<script language="javascript" type="text/javascript">
-  new Clipboard('.copy-button');
-</script>
-
 <script language="javascript" type="text/javascript">
   if (window.location.hash) {
-    document.getElementById("div-moreoptions").classList.remove("hide");
+    document.getElementById("div-moreoptions").classList.remove("d-none");
   }
 </script>
 

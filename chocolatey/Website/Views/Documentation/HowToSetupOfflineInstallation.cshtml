@@ -174,7 +174,7 @@
 <li>Air Gapped Networks / Machines without Network Access: Get those files over to that air gapped network (USB key and sneakernet if you need to).</li>
 </ol>
 <p>Here is a handy script you can use for MSP / C4B / TRIAL (TRIAL you have some adjustments noted). If you are an open source user (FOSS), you might as well go back up to the instructions, there isn&#39;t much you are going to be able to take advantage of here. Let&#39;s be honest, you will have more work on your hands overall, but that&#39;s kind of the spirit of open source (or free versus a commercial solution).</p>
-<pre><code class="powershell"># Ensure we can run everything
+<pre><code class="language-powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # Setting up directories for values
@@ -258,7 +258,7 @@ Write-Warning &quot;Check and adjust script at &#39;$env:SystemDrive\choco-setup
 <li>Set proxy configuration, virus scan configuration, or other configuration as described at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })">Chocolatey configuration</a>.</li>
 <li>C4B / TRIAL: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre</code> and then follow the link for other settings you will need to configure.</li>
 </ol>
-<pre><code class="powershell"># Ensure we can run everything
+<pre><code class="language-powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # Install Chocolatey
@@ -345,7 +345,7 @@ choco feature enable --name=&quot;&#39;reduceInstalledPackageSpaceUsage&#39;&quo
 </ul>
 </blockquote>
 <p><strong>NOTE:</strong> Chocolatey.Server is a one package repository per setup and only has one apikey that can be used. So if you need multiple repositories, you would setup multiple Chocolatey.Server instances to cover your needs. Another option when you need multiple repositories and want ease of management is to look into Artifactory Pro, Nexus, and ProGet. They not only have multiple Chocolatey/NuGet repositories per instance, but also other repositories types as well. See the next section.</p>
-<pre><code class="powershell"># Ensure we can run everything
+<pre><code class="language-powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # Install Chocolatey.Server
@@ -398,7 +398,7 @@ Write-Warning &quot;Follow the steps at https://chocolatey.org/docs/how-to-set-u
 </ol>
 <p><strong>NOTE:</strong> We&#39;ll put Chocolatey here, and use this location of Chocolatey for all further client installations. If we are using Chocolatey.Server, we&#39;ll have an install.ps1 that it serves that is dynamic and will use a local chocolatey.nupkg if we have one in the repository (it will use the Chocolatey package at <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> otherwise, which we won&#39;t want).</p>
 <p>Here is a script for Chocolatey.Server:</p>
-<pre><code class="powershell"># Ensure we can run everything
+<pre><code class="language-powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # Copy the packages to the Chocolatey.Server repo folder
@@ -412,7 +412,7 @@ Copy-Item &quot;$env:SystemDrive\choco-setup\packages\*&quot; -Destination &quot
 <p><strong>NOTE</strong>: This is for C4B / MSP / TRIAL ONLY.<br />
 To make things easier for deployments, let&#39;s create a package for the license file. We are going to grab the currently installed license to do this, but you could use the one in <code>c:\choco-setup\files</code>.</p>
 <p>Save this script and run it on a machine where you&#39;ve installed the license.</p>
-<pre><code class="powershell"># Ensure we can run everything
+<pre><code class="language-powershell"># Ensure we can run everything
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 $licenseLocation = &quot;$env:ChocolateyInstall\license\chocolatey.license.xml&quot;
@@ -525,7 +525,7 @@ Write-Output &quot;Package has been created and is ready at $packagesFolder&quot
 <li>Set proxy configuration, virus scan configuration, or other configuration as described at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-configuration" })">Chocolatey configuration</a>.</li>
 <li>C4B / MSP / TRIAL: Are we installing the <a href="https://chocolatey.org/docs/features-agent-service#setup">optional Chocolatey Agent Service as well</a>? If so, run <code>choco upgrade chocolatey-agent -y --pre</code> and then follow the link for other settings you will need to configure.</li>
 </ol>
-<pre><code class="powershell"># This is a base url and should not include the &quot;/chocolatey&quot; (for Chocolatey.Server) or any url path to a NuGet/Chocolatey Packages API
+<pre><code class="language-powershell"># This is a base url and should not include the &quot;/chocolatey&quot; (for Chocolatey.Server) or any url path to a NuGet/Chocolatey Packages API
 $baseUrl = &quot;http://localhost&quot;
 # this is the sub path, it will combine the above with this in the script $baseUrl/$repositoryUrlPath
 $repositoryUrlPath = &quot;chocolatey&quot;

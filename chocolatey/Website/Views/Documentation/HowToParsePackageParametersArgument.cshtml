@@ -25,7 +25,7 @@
 <p>Let&#39;s customize a package with a call similar to `choco install <pkg_id> --params &quot;&#39;/LICENSE:value&#39;&quot;``.</p>
 <h3 id="example">Example</h3>
 <p>Here&#39;s an example of what we can achieve.</p>
-<pre><code class="powershell"># command line call: `choco install &lt;pkg_id&gt; --params &quot;&#39;/LICENSE:value&#39;&quot;`
+<pre><code class="language-powershell"># command line call: `choco install &lt;pkg_id&gt; --params &quot;&#39;/LICENSE:value&#39;&quot;`
 $pp = Get-PackageParameters
 
 # Read-Host, PromptForChoice, etc are not blocking calls with Chocolatey.
@@ -89,7 +89,7 @@ To pass parameters, use `--params &quot;&#39;&#39;&quot;` (e.g. `choco install p
 To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.
     &lt;/description&gt;</code></pre>
 <p><strong>NOTE</strong>: Package parameters can be passed as <code>--params</code>, but also as a few different ways including <code>--package-parameters</code>. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#options-and-switches">install options</a>:</p>
-<pre><code class="nohighlight"> --params, --parameters, --pkgparameters, --packageparameters, --package-parameters=VALUE
+<pre><code class="language-none"> --params, --parameters, --pkgparameters, --packageparameters, --package-parameters=VALUE
      PackageParameters - Parameters to pass to the package. Defaults to unspecified.</code></pre>
 <p><a name="step-3---use-core-community-extension"></a></p>
 <h3 id="step-3---use-get-packageparameters">Step 3 - Use Get-PackageParameters</h3>
@@ -106,7 +106,7 @@ To have choco remember parameters on upgrade, be sure to set `choco feature enab
 <h4 id="prepare-the-code">Prepare The Code</h4>
 <p>Now use <code>Get-PackageParameters</code> to parse the parameters as it will automatically be added to the functions when Chocolatey adds the <code>chocolatey-core.extension</code>.</p>
 <p>Let&#39;s open and add the following to <code>tools\chocolateyInstall.ps1</code>:</p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $pp = Get-PackageParameters
 
 if (!$pp[&#39;Port&#39;]) { $pp[&#39;Port&#39;] = &#39;81&#39; }
@@ -124,7 +124,7 @@ Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quo
 <h3 id="step-3-alternative---set-up-your-own-parsing-deprecated">Step 3 (alternative) - Set up Your Own Parsing [DEPRECATED]</h3>
 <p>This <em>How-To</em> focuses on how a package creator can make use of the PackageParameters argument within their package, and how they can parse the string which is passed through into their package from the installation command.</p>
 <h4 id="code-sample">Code Sample</h4>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
   $arguments = @@{}
 
   # Let&#39;s assume that the input string is something like this, and we will use a Regular Expression to parse the values
@@ -192,18 +192,18 @@ Write-Debug &quot;This would be the Chocolatey Silent Arguments: $silentArgs&quo
 <p>Having collected all the arguments into the dictionary, we can then inspect the values of each parameter that we are interested in. If it exists in the dictionary, replace the corresponding default value, otherwise, continue to use the default value.</p>
 <h2 id="installing-with-package-parameters">Installing With Package Parameters</h2>
 <p>Typically this is handled in the following way:</p>
-<pre><code class="nohighlight">choco install &lt;packageName&gt; --params &quot;&#39;/key:value key2:value&#39;&quot;</code></pre>
+<pre><code class="language-none">choco install &lt;packageName&gt; --params &quot;&#39;/key:value key2:value&#39;&quot;</code></pre>
 <p><strong>NOTE</strong>: <code>&lt;packageName&gt;</code> is synonymous with the value you put in the nuspec <code>&lt;id /&gt;</code> field. It is NEVER <code>name.version.nupkg</code> or <code>name.nuspec</code>. If you are testing a package locally, always use <code>choco install &lt;pkgid&gt; -d -s .</code>. That is a literal <code>-s .</code> (set source to local folder where the compiled nupkg is located), unless you have a dependency on another package, then use <code>-s &quot;'.;other feeds here'&quot;</code> - when you override the source (<code>--source</code> or <code>-s</code>), it means use ONLY this source for resolving packages.</p>
 <p>Now, in this example, if we were to call:</p>
 <p><code>choco install &lt;packageName&gt; -d</code></p>
 <p>The output would be:</p>
-<pre><code class="nohighlight">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</code></pre>
+<pre><code class="language-none">This would be the Chocolatey Silent Arguments: /S /Port:81 /Edition:LicenseKey /InstallationPath:c:\temp</code></pre>
 <p><strong>NOTE</strong>: If you have a prerelease (has a <code>-</code> in the version value e.g. <code>1.0.0-beta1</code>), make sure you add <code>--pre</code> to the install/upgrade arguments.</p>
 <p>i.e.&nbsp; it is using the default values which we made at the top of the file</p>
 <p>However, if we instead used:</p>
-<pre><code class="nohighlight"># See NOTE below, shell affects the way to pass args when you need to include quotes
+<pre><code class="language-none"># See NOTE below, shell affects the way to pass args when you need to include quotes
 choco install &lt;packageName&gt; -d --package-parameters &#39;/Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;&quot;C:\temp\folder with space&quot;&quot; /AdditionalTools&#39;</code></pre>
 <p><strong>NOTE:</strong> How you pass options with spaces varies with shell (cmd.exe vs powershell.exe) and other related information with choco options is important to keep in mind here. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass options/switches</a>.</p>
 <p>The output would be:</p>
-<pre><code class="nohighlight">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</code></pre>
+<pre><code class="language-none">This would be the Chocolatey Silent Arguments: /S /Port:82 /Edition:LicenseKey1 /InstallationPath:&quot;C:\temp\folder with space&quot; /Additionaltools</code></pre>
 </article>

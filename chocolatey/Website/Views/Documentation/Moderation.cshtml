@@ -160,28 +160,32 @@
 <h3 id="reviewer-moderator-process">Reviewer / Moderator Process</h3>
 <p>Typically a package goes into the moderation queue when submitted.You can get to that by signing in and going to the packages page like you normally would.</p>
 <ol>
-<li>You should see a new drop down near the top that allows you to change your view. This is the moderation queue. <img src="https://cloud.githubusercontent.com/assets/63502/7542991/b5032a38-f586-11e4-991a-7c7602d508aa.png" alt="Moderation Queue Dropdown" /></li>
-<li>You will see items arranged in order based on reviewed and resubmitted at the top, items ready for review in order based on when they were submitted, and at the end of the queue, you will see items that are waiting for maintainer response. <img src="https://cloud.githubusercontent.com/assets/63502/7543076/58d5530c-f587-11e4-8d73-1325074d6e58.png" alt="Moderation Queue" /></li>
+<li>You should see a new drop down near the top that allows you to change your view. This is the moderation queue.<br />
+<img src="@Url.Content("~/content/images/docs/moderation-1.jpg")" alt="Moderation Queue Dropdown" /></li>
+<li>You will see items arranged in order based on reviewed and resubmitted at the top, items ready for review in order based on when they were submitted, and at the end of the queue, you will see items that are waiting for maintainer response.<br />
+<img src="https://cloud.githubusercontent.com/assets/63502/7543076/58d5530c-f587-11e4-8d73-1325074d6e58.png" alt="Moderation Queue" /></li>
 <li>You grab a package and head in and review it based on the following items in the requirements and guidelines.</li>
-<li>Ensure the verifier has run. It will have both comments in the review and a colored ball up next to the title of the package (see image below). The ball should be:<br />
+<li>Ensure package tests have ran. It will have both comments in the review and a colored ball up next to the title of the package. A package status box is present at the top of each package page with test results. The left side of the ball next to the package title represents verification testing, while the right side represents validation testing (see image below). Color of ball sections indicate:<br />
 - <strong>Green</strong> if it is ready for review and approval.<br />
-- <strong>Orange</strong> if still pending verification (has not yet run).<br />
-- <strong>Red</strong> if it failed verification. The maintainer needs to fix or respond. If you find a package needs to skip verification, please contact an admin to do so. If you see a network issue from the log, you can rerun verification (see how in the next step).<br />
-- <strong>Grey</strong> if a package skips verification for some reason (which will be listed by the admin that flagged the package to skip verification). If possible, you will need to run the install/uninstall yourself.<br />
-<img src="https://cloud.githubusercontent.com/assets/63502/11872220/bf58f590-a499-11e5-84bb-6fcf6d320227.png" alt="Passed Verifier" /></li>
+- <strong>Yellow</strong> if still pending verification/validation (has not yet run).<br />
+- <strong>Red</strong> if it failed verification/validation. The maintainer needs to fix or respond. If you find a package needs to skip verification, please contact an admin to do so. If you see a network issue from the log, you can rerun verification (see how in the next step).<br />
+- <strong>Grey</strong> if a package skips verification/validation for some reason (which will be listed by the admin that flagged the package to skip testing). If possible, you will need to run the install/uninstall yourself.<br />
+<img src="@Url.Content("~/content/images/docs/moderation-4.jpg")" alt="Package Testing Results" /></li>
 <li>Check over the verifier logs to be sure everything looks good (follow the link from the button). If necessary, you can rerun the verifier.<br />
-<img src="https://cloud.githubusercontent.com/assets/63502/11872329/4b8427ec-a49a-11e5-87ea-46e5e43e8140.png" alt="Rerun" /></li>
+<img src="@Url.Content("~/content/images/docs/moderation-5.jpg")" alt="Rerun" /></li>
 <li>Go over the review log - shows history and review information so far. Note that when the validator runs it leaves comments. Look for it to have done the automated part of the requirements/guidelines checks. If it has not, you are responsible to check all <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#requirements-and-guidelines">requirements/guidelines</a> (see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#requirements-and-guidelines">Requirements and Guidelines</a> above).<br />
-<img src="https://cloud.githubusercontent.com/assets/63502/11872453/fd757a28-a49a-11e5-98c0-cfff70caebbd.png" alt="Review Notes" /></li>
+<img src="@Url.Content("~/content/images/docs/moderation-6.jpg")" alt="Review Notes" /></li>
 <li>Look at the notes section from the latest run of the validator to see if there are additional flagging follow ups from the validator.</li>
 <li>Check over the package based on <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#moderator-review">moderator review</a> (below).</li>
-<li>Review the previous comments if there are any. <img src="https://cloud.githubusercontent.com/assets/63502/7543258/c2c0abbc-f588-11e4-8cac-4c57b03671f8.png" alt="image" /></li>
-<li>Look through the package files <img src="https://cloud.githubusercontent.com/assets/63502/7543284/ddaa41e0-f588-11e4-817a-9d7bd1130a84.png" alt="image" /></li>
+<li>Review the previous comments if there are any.<br />
+<img src="https://cloud.githubusercontent.com/assets/63502/7543258/c2c0abbc-f588-11e4-8cac-4c57b03671f8.png" alt="image" /></li>
+<li>Look through the package files<br />
+<img src="@Url.Content("~/content/images/docs/moderation-10.jpg")" alt="Package Files" /></li>
 <li>Leave comments in the review box (&quot;Add to Review Comments&quot; section) if you have any. Note that you can use markdown here.<br />
-<img src="https://cloud.githubusercontent.com/assets/63502/11872386/8a58a1dc-a49a-11e5-9b38-04b42fcc6ebd.png" alt="Review box" /></li>
+<img src="@Url.Content("~/content/images/docs/moderation-11.jpg")" alt="Review box" /></li>
 <li>If you are approving the package, change Package Status to Approved. If you are Rejecting a package, change the status to Rejected. Otherwise leave the status as is (likely in Submitted).</li>
 <li>If you are making a comment or doing another action, but don&#39;t want to flag/hold the package for the maintainer to take action, uncheck the &quot;require maintainer to make changes?&quot; box. This is not required to be unchecked if you are approving the package.<br />
-<img src="https://cloud.githubusercontent.com/assets/63502/11872860/3f47f0f0-a49d-11e5-8725-e58d12a377c8.png" alt="Require maintainers to make changes?" /></li>
+<img src="@Url.Content("~/content/images/docs/moderation-13.jpg")" alt="Require maintainers to make changes?" /></li>
 <li>If you are doing an action that doesn&#39;t need to notify the maintainer, uncheck &quot;Send Maintainer email?&quot;.</li>
 <li>Click Save. You should get a message that the message was sent successfully.</li>
 <li>The maintainers receive an email noting the comments. They will follow up on the package page with their comments.</li>

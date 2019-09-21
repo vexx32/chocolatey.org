@@ -270,11 +270,11 @@ Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-
 <h3 id="features-4">FEATURES</h3>
 <ul>
 <li><p>Package Reducer / Optimize (All licensed editions) - Reduce Space Usage for Chocolatey Installations</p>
-<pre><code class="nohighlight">If you have a significant number of Chocolatey packages you manage, you may notice that you also may have a pretty significant space usage under the Chocolatey lib directory. Package reducer automatically decreases the size of nupkg files to around 5KB and removes installers and zips automatically from your package install directories. This may allow you to save GBs of usage for a large amount of packages being managed.
+<pre><code class="language-none">If you have a significant number of Chocolatey packages you manage, you may notice that you also may have a pretty significant space usage under the Chocolatey lib directory. Package reducer automatically decreases the size of nupkg files to around 5KB and removes installers and zips automatically from your package install directories. This may allow you to save GBs of usage for a large amount of packages being managed.
 
 To learn more about Package Reducer and `choco optimize`, please see https://chocolatey.org/docs/features-package-reducer.</code></pre></li>
 <li><p>Package Audit (C4B) - Learn Who and When</p>
-<pre><code class="nohighlight">Reporting is very important, and auditing not only when your installations occurred but who installed them can be critical. There is nothing that presents this kind of information as easily as you will be able to gather it with Chocolatey for Business (C4B) and Package Audit.
+<pre><code class="language-none">Reporting is very important, and auditing not only when your installations occurred but who installed them can be critical. There is nothing that presents this kind of information as easily as you will be able to gather it with Chocolatey for Business (C4B) and Package Audit.
 
 To learn more about Package Audit, please see https://chocolatey.org/docs/features-package-audit.</code></pre></li>
 </ul>
@@ -308,20 +308,20 @@ To learn more about Package Audit, please see https://chocolatey.org/docs/featur
 <h3 id="breaking-changes-1">BREAKING CHANGES</h3>
 <ul>
 <li><p>[Security] Self-Service / Background Mode - support background mode with self-service sources only by default</p>
-<pre><code class="nohighlight">If you are using self-service functionality, when you upgrade to v1.10, you will need to go to those sources that you allow to be self-service and ensure they are selected to allow self-service (`choco source list`). Otherwise by default users are going to be locked out of using those sources. The move to opt-in is best from a security standpoint and we want to give you the ability to have folks opt-in to the better behavior.
+<pre><code class="language-none">If you are using self-service functionality, when you upgrade to v1.10, you will need to go to those sources that you allow to be self-service and ensure they are selected to allow self-service (`choco source list`). Otherwise by default users are going to be locked out of using those sources. The move to opt-in is best from a security standpoint and we want to give you the ability to have folks opt-in to the better behavior.
 
 To change this behavior back to the way it was previously, simply run `choco disable -n useBackgroundServiceWithSelfServiceSourcesOnly`. For more details see `choco feature list` or https://chocolatey.org/docs/chocolatey-configuration#self-service-background-mode</code></pre></li>
 </ul>
 <h3 id="features-5">FEATURES</h3>
 <ul>
 <li><p>Package Throttle - Throttle Bandwidth / Rate Limit Download Speeds</p>
-<pre><code class="nohighlight">By default, Chocolatey downloads packages and resources as fast as it can. Package Throttle gives you a way to slow down Chocolatey so it doesn&#39;t overwhelm any bandwidth restrictions you may have. This is done as both a setting and per package install/upgrade. This is in bits per second (not bytes, bits is what most network traffic is measured in). When adding at runtime, simply add `--bps=VALUE`. To set the value in the configuration, call `choco config set maximumDownloadRateBitsPerSecond VALUE`. For more details see https://chocolatey.org/docs/features-package-reducer.</code></pre></li>
+<pre><code class="language-none">By default, Chocolatey downloads packages and resources as fast as it can. Package Throttle gives you a way to slow down Chocolatey so it doesn&#39;t overwhelm any bandwidth restrictions you may have. This is done as both a setting and per package install/upgrade. This is in bits per second (not bytes, bits is what most network traffic is measured in). When adding at runtime, simply add `--bps=VALUE`. To set the value in the configuration, call `choco config set maximumDownloadRateBitsPerSecond VALUE`. For more details see https://chocolatey.org/docs/features-package-reducer.</code></pre></li>
 <li><p>Package Synchronizer&#39;s Show All Packages In Programs and Features</p>
-<pre><code class="nohighlight">This means packages that do not have an underlying installation can still show up in Programs and Features and be managed there as well, which allows for legacy inventory reporting systems to see all the software that is installed in the same way that Chocolatey is able to. A picture can probably best explain this feature, check out [All Package In Programs and Features](https://raw.githubusercontent.com/chocolatey/choco-wiki/e619d5d25018f9362d50749ee86554ebc4f4f04d/images/features/features_packages_in_programs_and_features.png)
+<pre><code class="language-none">This means packages that do not have an underlying installation can still show up in Programs and Features and be managed there as well, which allows for legacy inventory reporting systems to see all the software that is installed in the same way that Chocolatey is able to. A picture can probably best explain this feature, check out [All Package In Programs and Features](https://raw.githubusercontent.com/chocolatey/choco-wiki/e619d5d25018f9362d50749ee86554ebc4f4f04d/images/features/features_packages_in_programs_and_features.png)
 
 To turn this feature on, simply run the following command `choco feature enable -n showAllPackagesInProgramsAndFeatures`. For more details on the feature, see https://chocolatey.org/docs/chocolatey-configuration#package-synchronizer and https://chocolatey.org/docs/features-synchronize. This does require one additional run of `choco` to take affect (same when disabling the feature), hopefully we can remove that in the future.</code></pre></li>
 <li><p>Package-less Install / Direct Installer - Install and upgrade directly from installers (MSIs, EXEs, etc)!</p>
-<pre><code class="nohighlight">If Package Builder can create a fully unattended package for an installer, you don&#39;t even need a package first. You can simply call `choco install nameoffile.msi` or `choco upgrade nameoffile.exe` and Chocolatey will generate packaging on the fly and install/upgrade the package!</code></pre></li>
+<pre><code class="language-none">If Package Builder can create a fully unattended package for an installer, you don&#39;t even need a package first. You can simply call `choco install nameoffile.msi` or `choco upgrade nameoffile.exe` and Chocolatey will generate packaging on the fly and install/upgrade the package!</code></pre></li>
 </ul>
 <h3 id="bug-fixes-16">BUG FIXES</h3>
 <ul>
@@ -463,7 +463,7 @@ To turn this feature on, simply run the following command `choco feature enable 
 <li>Manage Windows Services</li>
 </ul>
 <p>We&#39;ve introduced some service management functions to the business edition. <code>Install-ChocolateyWindowsService</code>, <code>Uninstall-ChocolateyWindowsService</code>, <code>Start-ChocolateyWindowsService</code>, and <code>Stop-ChocolateyWindowsService</code>. Those will be documented soon enough. For now some example code should suffice.</p>
-<pre><code class="powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+<pre><code class="language-powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
 $serviceExe = Join-Path $toolsDir &#39;service\chocolatey-agent.exe&#39;
 
 $packageArgs = @@{

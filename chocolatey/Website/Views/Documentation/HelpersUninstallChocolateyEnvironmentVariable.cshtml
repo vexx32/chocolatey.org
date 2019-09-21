@@ -8,7 +8,7 @@
 <p><strong>NOTE:</strong> Administrative Access Required when <code>-VariableType 'Machine'.</code></p>
 <p>Removes a persistent environment variable.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Uninstall-ChocolateyEnvironmentVariable `
+<pre><code class="language-powershell">Uninstall-ChocolateyEnvironmentVariable `
   -VariableName &lt;String&gt; `
   [-VariableType {Process | User | Machine}] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
@@ -27,11 +27,11 @@ use Install-ChocolateyEnvironmentVariable and set <code>-VariableValue $null</co
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Remove an environment variable
 Uninstall-ChocolateyEnvironmentVariable -VariableName &#39;bob&#39;</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Remove an environment variable from Machine
 Uninstall-ChocolateyEnvironmentVariable -VariableName &#39;bob&#39; -VariableType &#39;Machine&#39;</code></pre>
 <h2 id="inputs">Inputs</h2>

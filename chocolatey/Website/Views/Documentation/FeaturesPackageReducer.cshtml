@@ -110,7 +110,7 @@ The image shows an installation without and with package reducer. The difference
 <li><code>reduceInstalledPackageSpaceUsage</code> - Reduce Installed Package Size (Package Reducer) - Reduce size of the nupkg file to very small and remove extracted archives and installers.</li>
 </ul>
 <p><code>choco install</code> / <code>choco upgrade</code> provide the following option(s):</p>
-<pre><code class="nohighlight">     --reduce, --reduce-package-size, --deflate, --deflate-package-size
+<pre><code class="language-none">     --reduce, --reduce-package-size, --deflate, --deflate-package-size
      Reducer Installed Package Size (Package Reducer) - Reduce size of the
        nupkg file to very small and remove extracted archives and installers.
        Overrides the default feature &#39;reduceInstalledPackageSpaceUsage&#39; set to
@@ -169,7 +169,7 @@ The image shows an installation without and with package reducer. The difference
 <li>exe files if they are detected to be an installer</li>
 </ul>
 <h3 id="usage-1">Usage</h3>
-<pre><code class="nohighlight">choco optimize [&lt;options/switches&gt;]</code></pre>
+<pre><code class="language-none">choco optimize [&lt;options/switches&gt;]</code></pre>
 <h4 id="requirements-1">Requirements</h4>
 <ul>
 <li>Chocolatey (<code>chocolatey</code> package) v0.10.7+.</li>
@@ -177,7 +177,7 @@ The image shows an installation without and with package reducer. The difference
 <li>Chocolatey Licensed Extension (<code>chocolatey.extension</code> package) v1.12.0+.</li>
 </ul>
 <h3 id="examples">Examples</h3>
-<pre><code class="nohighlight">choco optimize
+<pre><code class="language-none">choco optimize
 choco optimize --reduce-nupkg-only</code></pre>
 <h3 id="see-it-in-action-1">See It In Action</h3>
 <p><img src="@Url.Content("~/content/images/docs/features/features_package_reducer_optimize.png")" alt="choco optimize - if you are on https://chocolatey.org/docs/features-package-reducer, see commented html below for detailed description of image" /></p>
@@ -194,7 +194,7 @@ Package Reducer's Package Optimizer (choco optimize) - Reduce Space for Existing
 This image shows a display of `choco optimize` reducing space for 34 existing installed packages. It shows what it is doing for each package, and shows how much space each package has now been saved. It shows a summary which shows the total space reduced for the machine overall.
 -->
 <h3 id="options-and-switches-1">Options and Switches</h3>
-<pre><code class="nohighlight">    --reduce-nupkg-only, --deflate-nupkg-only
+<pre><code class="language-none">    --reduce-nupkg-only, --deflate-nupkg-only
     Reduce Only Nupkg File Size - reduce only the size of nupkg file when
       using Package Optimizer. Licensed editions only (version 1.12.0+).</code></pre>
 <h3 id="faq-1">FAQ</h3>

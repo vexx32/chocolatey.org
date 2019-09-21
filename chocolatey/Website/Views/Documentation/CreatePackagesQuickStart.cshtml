@@ -94,7 +94,7 @@
 <h2 id="examples">Examples</h2>
 <p>Here are some simple examples. <strong>NOTE</strong>: This needs updated with checksums and newer package concepts. Please run <code>choco new</code> when creating packages as it contains all of the most up to date notes.</p>
 <h3 id="chocolateyinstallps1-for-exe-installer">chocolateyInstall.ps1 for .exe installer</h3>
-<pre><code class="powershell">$name = &#39;Package Name&#39;
+<pre><code class="language-powershell">$name = &#39;Package Name&#39;
 $installerType = &#39;exe&#39;
 $url  = &#39;http://path/to/download/installer.exe&#39;
 $silentArgs = &#39;/VERYSILENT&#39;
@@ -103,7 +103,7 @@ Install-ChocolateyPackage $name $installerType $silentArgs $url</code></pre>
 <p><strong>NOTE:</strong> You have to figure out the command line switch to make the installer silent, e.g. <strong>/VERYSILENT</strong>. This changes from installer to installer.</p>
 <h3 id="chocolateyinstallps1-for-msi-installer">chocolateyInstall.ps1 for .msi installer</h3>
 <p><strong>NOTE:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It&#39;s best to work with the widest compatibility of systems out there.</p>
-<pre><code class="powershell">$packageName = &#39;Package Name&#39;
+<pre><code class="language-powershell">$packageName = &#39;Package Name&#39;
 $installerType = &#39;msi&#39;
 $url = &#39;http://path/to/download/installer_x86.msi&#39;
 $url64 = &#39;http://path/to/download/installer_x64.msi&#39;

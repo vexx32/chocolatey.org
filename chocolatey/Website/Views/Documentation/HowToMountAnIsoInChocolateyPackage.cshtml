@@ -40,7 +40,7 @@
 <p><strong>NOTE:</strong> The above version is a minimum version dependency. Your version may be newer, you can substitute it there.</p>
 <h3 id="step-3-add-imdisk-code">Step 3: Add ImDisk Code</h3>
 <p>Now in your chocolateyInstall.ps1, you will want something similar to the following:</p>
-<pre><code class="powershell"># Internal use:
+<pre><code class="language-powershell"># Internal use:
 # - Option 1: If the ISO is smaller than 1GB, embed the binary directly into the package for the most reliable use skip this
 # - Option 2: Store ISO on a file share and skip this
 # - Option 3: Download from internal sources, like a binary (raw) repository in Artifactory, Nexus, or ProGet.
@@ -67,7 +67,7 @@ is an alternative that is built-in, so no package dependencies required. However
 <p>It is both an Operating System version dependency <strong><em>and</em></strong> a PowerShell version dependency (although by default those operating systems will have the right version of PowerShell already available). The great news is if you have that, it becomes as simple as the following code.</p>
 <h3 id="step-1-add-mount-diskimage-code">Step 1: Add Mount-DiskImage Code</h3>
 <p>In your chocolateyInstall.ps1, you will want something similar to the following:</p>
-<pre><code class="powershell"># Internal use:
+<pre><code class="language-powershell"># Internal use:
 # - Option 1: If the ISO is smaller than 1GB, embed the binary directly into the package for the most reliable use skip this
 # - Option 2: Store ISO on a file share and skip this
 # - Option 3: Download from internal sources, like a binary (raw) repository in Artifactory, Nexus, or ProGet.

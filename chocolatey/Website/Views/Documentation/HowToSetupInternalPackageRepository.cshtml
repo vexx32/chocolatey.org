@@ -76,7 +76,7 @@ To ensure the packages work in your environment you need to be in control of the
 <li><a href="#server-pre-requisites">Create a server and ensure you have the pre-requisites</a> before continuing.</li>
 <li>To install and configure Chocolatey Server, run the following PowerShell code (see the comments in the code for more information) in an <strong>elevated Administrator session</strong>:</li>
 </ol>
-<pre><code class="powershell">  $siteName = &#39;ChocolateyServer&#39;
+<pre><code class="language-powershell">  $siteName = &#39;ChocolateyServer&#39;
   $appPoolName = &#39;ChocolateyServerAppPool&#39;
   $sitePath = &#39;c:\tools\chocolatey.server&#39;
 
@@ -191,7 +191,7 @@ To ensure the packages work in your environment you need to be in control of the
 </ol>
 <p>Jenkins requires several PowerShell scripts to automate the processes. Create a directory on the root of your System Drive (normally <code>C:\</code>) called <code>scripts</code> and create each script file there.</p>
 <h4 id="script-get-updatedpackageps1">Script: <code>Get-UpdatedPackage.ps1</code></h4>
-<pre><code class="powershell">  [CmdletBinding()]
+<pre><code class="language-powershell">  [CmdletBinding()]
   Param (
       [Parameter(Mandatory)]
       [string]
@@ -242,7 +242,7 @@ To ensure the packages work in your environment you need to be in control of the
       }
   }</code></pre>
 <h4 id="script-update-prodrepofromtestps1">Script: <code>Update-ProdRepoFromTest.ps1</code></h4>
-<pre><code class="powershell">  [CmdletBinding()]
+<pre><code class="language-powershell">  [CmdletBinding()]
   Param (
       [Parameter(Mandatory)]
       [string]
@@ -308,7 +308,7 @@ To ensure the packages work in your environment you need to be in control of the
   }</code></pre>
 <p>Note the section above where you should insert the code to test your packages before being pushed to the production repository. This testing should be on an image that is typical for your environment, often called a &#39;Gold Image&#39;.</p>
 <h4 id="script-convertto-chocoobjectps1">Script: <code>ConvertTo-ChocoObject.ps1</code></h4>
-<pre><code class="powershell">  function ConvertTo-ChocoObject {
+<pre><code class="language-powershell">  function ConvertTo-ChocoObject {
       [CmdletBinding()]
       Param (
           [Parameter(ValueFromPipeline)]
@@ -371,7 +371,7 @@ To ensure the packages work in your environment you need to be in control of the
 <li><em>Script</em>:</li>
 </ul></li>
 </ul>
-<pre><code class="powershell">  node {
+<pre><code class="language-powershell">  node {
       powershell &#39;&#39;&#39;
           Set-Location (Join-Path -Path $env:SystemDrive -ChildPath &#39;scripts&#39;)
           .\\Get-UpdatedPackage.ps1 -LocalRepo $env:P_LOCAL_REPO_URL `
@@ -415,7 +415,7 @@ To ensure the packages work in your environment you need to be in control of the
 <li><em>Script</em>:</li>
 </ul></li>
 </ul>
-<pre><code class="powershell">  node {
+<pre><code class="language-powershell">  node {
       powershell &#39;&#39;&#39;
           $temp = Join-Path -Path $env:TEMP -ChildPath ([GUID]::NewGuid()).Guid
           $null = New-Item -Path $temp -ItemType Directory
@@ -473,7 +473,7 @@ To ensure the packages work in your environment you need to be in control of the
 <li><em>Script</em>:</li>
 </ul></li>
 </ul>
-<pre><code class="powershell">  node {
+<pre><code class="language-powershell">  node {
       powershell &#39;&#39;&#39;
           Set-Location (Join-Path -Path $env:SystemDrive -ChildPath &#39;scripts&#39;)
           .\\Update-ProdRepoFromTest.ps1 `
@@ -492,11 +492,11 @@ To ensure the packages work in your environment you need to be in control of the
 <ol>
 <li>To check the test repository, enter this at the command line <code>choco list --source http://testrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of Chocolatey you see may be different):</li>
 </ol>
-<pre><code class="powershell">  PS&gt; choco list --source http://testrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://testrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   0 packages found.</code></pre>
 <p><code>2.</code> To check the production repository, enter this at the command line <code>choco list --source http://prodrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of Chocolatey you see may be different):</p>
-<pre><code class="powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   0 packages found.</code></pre>
 <p>Follow these steps to add a new package:</p>
@@ -509,12 +509,12 @@ To ensure the packages work in your environment you need to be in control of the
 <ol>
 <li>To check the test repository, enter this at the command line <code>choco list --source http://testrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of <code>adobereader</code> and Chocolatey you see may be different):</li>
 </ol>
-<pre><code class="powershell">  PS&gt; choco list --source http://testrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://testrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   adobereader 2015.007.20033.02
   1 packages found.</code></pre>
 <p><code>2.</code> To check the production repository, enter this at the command line <code>choco list --source http://prodrepo-srv/chocolatey</code>. You should get this returned (note that the actual version of <code>adobereader</code> and Chocolatey you see may be different):</p>
-<pre><code class="powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   adobereader 2015.007.20033.02
   1 packages found.</code></pre>
@@ -526,21 +526,21 @@ To ensure the packages work in your environment you need to be in control of the
 <li>Go back to Jenkins and run the job <strong>Update production repository</strong> with default parameters. This will test the <code>putty.install</code> package and push it to the production repository.</li>
 <li>Go to the command line and run <code>choco list --source http://prodrepo-srv/chocolatey</code> and you should see these results (note that if you didn&#39;t follow the <a href="#submit-a-new-package">exercise above</a> then <code>adobereader</code> will not be in the list):</li>
 </ol>
-<pre><code class="powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   adobereader 2015.007.20033.02
   putty.install 0.70
   2 packages found.</code></pre>
 <p><code>5.</code> Go back to Jenkins and run the job <strong>Update test repository from Chocolatey Community Repository</strong> with default parameters. This will check the test repository against the Chocolatey Community Repository and update the <code>putty.install</code> package;<br />
 <code>6.</code> Go to the command line and run <code>choco list --source http://testrepo-srv/chocolatey --all-versions</code> and you should see these results (note that if you didn&#39;t follow the <a href="#submit-a-new-package">exercise above</a> then <code>adobereader</code> will not be in the list and the latest version of <code>putty.install</code> may be different):</p>
-<pre><code class="powershell">  PS&gt; choco list --source http://testrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://testrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   adobereader 2015.007.20033.02
   putty.install 0.70.0.20171219
   putty.install 0.70
   3 packages found.</code></pre>
 <p><code>7.</code> As the Jenkins job <strong>Update test repository from Chocolatey Community Repository</strong> we ran earlier triggers the job <strong>Update production repository</strong>, the <code>putty.install</code> package will be automatically tested and pushed to the production repository. To check this, run the following on the command line <code>choco list --source http://prodrepo-srv/chocolatey --all-versions</code> and you should see these results (note that if you didn&#39;t follow the <a href="#submit-a-new-package">exercise above</a> then <code>adobereader</code> will not be in the list and the latest version of <code>putty.install</code> may be different)</p>
-<pre><code class="powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
+<pre><code class="language-powershell">  PS&gt; choco list --source http://prodrepo-srv/chocolatey
   Chocolatey v0.10.11 Business
   adobereader 2015.007.20033.02
   putty.install 0.70.0.20171219

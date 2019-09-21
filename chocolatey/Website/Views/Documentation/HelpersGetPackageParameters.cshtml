@@ -8,7 +8,7 @@
 <p>Parses a string and returns a hash table array of those values for use<br />
 in package scripts.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Get-PackageParameters `
+<pre><code class="language-powershell">Get-PackageParameters `
   [-Parameters &lt;String&gt;] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
 <h2 id="description">Description</h2>
@@ -36,13 +36,13 @@ build all docs with <code>/Item:Value</code>.</p>
 <p><code>Get-PackageParametersBuiltIn</code></p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # The default way of calling, uses `$env:ChocolateyPackageParameters`
 # and `$env:ChocolateyPackageParametersSensitive` - this is typically
 # how things are passed in from choco.exe
 $pp = Get-PackageParameters</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # see https://chocolatey.org/docs/how-to-parse-package-parameters-argument
 # command line call: `choco install &lt;pkg_id&gt; --params &quot;&#39;/LICENSE:value&#39;&quot;`
 $pp = Get-PackageParameters
@@ -54,7 +54,7 @@ if (!$pp[&#39;LICENSE&#39;]) { $pp[&#39;LICENSE&#39;] = Read-Host &#39;License k
 # set a default if not passed
 if (!$pp[&#39;LICENSE&#39;]) { $pp[&#39;LICENSE&#39;] = &#39;1234&#39; }</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $pp = Get-PackageParameters
 if (!$pp[&#39;UserName&#39;]) { $pp[&#39;UserName&#39;] = &quot;$env:UserName&quot; }
 # Requires Choocolatey v0.10.8+ for Read-Host -AsSecureString
@@ -62,7 +62,7 @@ if (!$pp[&#39;Password&#39;]) { $pp[&#39;Password&#39;] = Read-Host &quot;Enter 
 # fail the install/upgrade if not value is not determined
 if (!$pp[&#39;Password&#39;]) { throw &quot;Package needs Password to install, that must be provided in params or in prompt.&quot; }</code></pre>
 <p><strong>EXAMPLE 4</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Pass in your own values
 Get-PackageParameters -Parameters &quot;/Shortcut /InstallDir:&#39;c:\program files\xyz&#39; /NoStartup&quot; | set r
 if ($r.Shortcut) {... }

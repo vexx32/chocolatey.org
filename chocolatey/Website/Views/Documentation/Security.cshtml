@@ -87,7 +87,7 @@
 </ul>
 <p>Using PowerShell, you can verify the binary (the path below is the default install location, adjust if necessary).</p>
 <p>0.10.10+:</p>
-<pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+<pre><code class="language-none">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 
 Subject      : CN=&quot;Chocolatey Software, Inc.&quot;, O=&quot;Chocolatey Software, Inc.&quot;, L=Topeka, S=Kansas, C=US
@@ -99,7 +99,7 @@ NotAfter     : 4/14/2021 7:00:00 AM
 Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid, System.Security.Cryptography.Oid,
                System.Security.Cryptography.Oid...}</code></pre>
 <p>0.10.4–0.10.9:</p>
-<pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+<pre><code class="language-none">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 Subject      : CN=&quot;Chocolatey Software, Inc.&quot;, O=&quot;Chocolatey Software, Inc.&quot;, L=Topeka, S=Kansas, C=US
 Issuer       : CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US
@@ -110,7 +110,7 @@ NotAfter     : 4/3/2018 7:00:00 AM
 Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid,
               System.Security.Cryptography.Oid, System.Security.Cryptography.Oid...}</code></pre>
 <p>0.9.10 - 0.10.3:</p>
-<pre><code class="nohighlight">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
+<pre><code class="language-none">C:\ PS&gt; (Get-AuthenticodeSignature -FilePath C:\ProgramData\chocolatey\choco.exe).SignerCertificate | Format-List
 
 Subject      : CN=&quot;RealDimensions Software, LLC&quot;, O=&quot;RealDimensions Software,
               LLC&quot;, L=Topeka, S=Kansas, C=US
@@ -128,7 +128,7 @@ Extensions   : {System.Security.Cryptography.Oid,
 <li>Although not the best security method, one can also verify choco based on the strong name. choco.exe is strong named with a key that is known only to the lead maintainer of Chocolatey (Rob). Verify the strong name of the official choco binary with the <code>sn.exe</code> utility - the public key should be <code>79d02ea9cad655eb</code>.</li>
 </ul>
 <p>Using a Visual Studio Command Prompt, you can verify the binary (the path below is the default install location, adjust if necessary). You can also download sn separately if necessary:</p>
-<pre><code class="nohighlight">~~~sh
+<pre><code class="language-none">~~~sh
 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC&gt;sn -T c:\ProgramData\chocolatey\choco.exe
 
 Microsoft (R) .NET Framework Strong Name Utility  Version 4.0.30319.1

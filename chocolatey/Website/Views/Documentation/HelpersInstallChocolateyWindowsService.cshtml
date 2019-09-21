@@ -7,7 +7,7 @@
 <p><strong>NOTE</strong>: This function requires a Chocolatey for Business License to use.</p>
 <p>Installs a Windows Service using Install Util, plus some extra awesome-sauce.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyWindowsService `
+<pre><code class="language-powershell">Install-ChocolateyWindowsService `
   -Name &lt;string&gt; `
   -ServiceExecutablePath &lt;string&gt; `
   [-Username &lt;string&gt;] `
@@ -38,9 +38,9 @@ the DoNotReinstallService switch. See the parameter below for more details.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">Install-ChocolateyWindowsService -Name &#39;bob&#39; -ServiceExecutablePath &#39;c:\somewhere\to\service.exe&#39;</code></pre>
+<pre><code class="language-powershell">Install-ChocolateyWindowsService -Name &#39;bob&#39; -ServiceExecutablePath &#39;c:\somewhere\to\service.exe&#39;</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+<pre><code class="language-powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
 $serviceExe = Join-Path $toolsDir &#39;service\dan-agent.exe&#39;
 
 $packageArgs = @@{
@@ -53,7 +53,7 @@ $packageArgs = @@{
 Install-ChocolateyWindowsService @@packageArgs</code></pre>
 <p><strong>EXAMPLE 3</strong><br />
 This is the installation code for the Chocolatey Agent service itself.</p>
-<pre><code class="powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+<pre><code class="language-powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
 $serviceExe = Join-Path $toolsDir &#39;service\chocolatey-agent.exe&#39;
 
 $packageArgs = @@{

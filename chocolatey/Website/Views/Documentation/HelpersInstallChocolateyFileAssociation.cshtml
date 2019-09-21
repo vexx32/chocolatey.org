@@ -8,7 +8,7 @@
 <p><strong>NOTE:</strong> Administrative Access Required.</p>
 <p>Creates an association between a file extension and a executable.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyFileAssociation `
+<pre><code class="language-powershell">Install-ChocolateyFileAssociation `
   -Extension &lt;String&gt; `
   -Executable &lt;String&gt; `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
@@ -23,7 +23,7 @@ will be opened via the executable specified.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # This will create an association between Sublime Text 2 and all .txt
 # files. Any .txt file opened will by default open with Sublime Text 2.
 $sublimeDir = (Get-ChildItem $env:ALLUSERSPROFILE\chocolatey\lib\sublimetext* | select $_.last)

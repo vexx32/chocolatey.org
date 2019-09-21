@@ -8,7 +8,7 @@
 <p><strong>NOTE:</strong> Administrative Access Required when <code>-PathType 'Machine'.</code></p>
 <p>This puts a directory to the PATH environment variable.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyPath `
+<pre><code class="language-powershell">Install-ChocolateyPath `
   -PathToInstall &lt;String&gt; `
   [-PathType {Process | User | Machine}] `
   [-IgnoredArguments &lt;Object[]&gt;] [&lt;CommonParameters&gt;]</code></pre>
@@ -24,10 +24,10 @@ correctly shows up on the right PATH.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">Install-ChocolateyPath -PathToInstall &quot;$($env:SystemDrive)\tools\gittfs&quot;
+<pre><code class="language-powershell">Install-ChocolateyPath -PathToInstall &quot;$($env:SystemDrive)\tools\gittfs&quot;
 </code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">Install-ChocolateyPath &quot;$($env:SystemDrive)\Program Files\MySQL\MySQL Server 5.5\bin&quot; -PathType &#39;Machine&#39;
+<pre><code class="language-powershell">Install-ChocolateyPath &quot;$($env:SystemDrive)\Program Files\MySQL\MySQL Server 5.5\bin&quot; -PathType &#39;Machine&#39;
 </code></pre>
 <h2 id="inputs">Inputs</h2>
 <p>None</p>

@@ -7,7 +7,7 @@
 <!-- This documentation is automatically generated from https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Install-ChocolateyVsixPackage.ps1 using https://github.com/chocolatey/choco/tree/stable/GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
 <p>Downloads and installs a VSIX package for Visual Studio</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyVsixPackage `
+<pre><code class="language-powershell">Install-ChocolateyVsixPackage `
   -PackageName &lt;String&gt; `
   [-VsixUrl &lt;String&gt;] `
   [-VsVersion &lt;Int32&gt;] `
@@ -34,14 +34,14 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # This downloads the AutoWrockTestable VSIX from the Visual Studio
 # Gallery and installs it to the latest version of VS.
 
 Install-ChocolateyVsixPackage -PackageName &quot;MyPackage&quot; `
   -VsixUrl http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # This downloads the AutoWrockTestable VSIX from the Visual Studio
 # Gallery and installs it to Visual Studio 2012 (v11.0).
 

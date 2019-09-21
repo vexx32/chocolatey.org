@@ -132,7 +132,7 @@
 </ul>
 <p>You can even script this or add it to a CI job that would automatically make the newer edition available.</p>
 <p><strong>NOTE</strong>: The licensed source that is automatically added can be disabled, but it cannot be removed. So just run <code>choco source disable -n chocolatey.licensed</code> to disable it or set that up in your configuration management solution scripts. Some of them, like Puppet, have a resource dedicated strictly to this:</p>
-<pre><code class="puppet">chocolateysource {&#39;chocolatey.licensed&#39;:
+<pre><code class="language-puppet">chocolateysource {&#39;chocolatey.licensed&#39;:
   ensure   =&gt; disabled,
   require  =&gt; File[&#39;C:/ProgramData/chocolatey/license/chocolatey.license.xml&#39;],
 }</code></pre>
@@ -148,7 +148,7 @@
 <li>Determine how to get the bare url to download the Chocolatey.Nupkg directly. You will need that for the internal url for installing Chocolatey offline. For the community repository, it is <a href="https://chocolatey.org/api/v2/package/chocolatey" class="uri">https://chocolatey.org/api/v2/package/chocolatey</a></li>
 </ul>
 <p>Here is what a completely offline use of Chocolatey looks like (complete with a Chocolatey.Server instance):</p>
-<pre><code class="puppet"># Requires puppetlabs/chocolatey module
+<pre><code class="language-puppet"># Requires puppetlabs/chocolatey module
 # See https://forge.puppet.com/puppetlabs/chocolatey
 
 ## - Ensure Chocolatey Install -
@@ -352,7 +352,7 @@ Here are some additional commands and scripts you will need for that setup:</p>
 <li><code>choco download chocolatey-agent --source https://licensedpackages.chocolatey.org/api/v2/ --ignore-dependencies</code></li>
 <li>Use <code>choco push</code> to push packages to your internal package repository (e.g. <code>choco push chocolatey-agent.0.8.0.nupkg -s http://internal_repo/ -k abc123</code>)</li>
 </ul>
-<pre><code class="puppet">## - Chocolatey Agent (Additional optional Chocolatey for Business install) -
+<pre><code class="language-puppet">## - Chocolatey Agent (Additional optional Chocolatey for Business install) -
 ## See https://chocolatey.org/docs/features-agent-service
 
 ## ensure we set the user up properly
@@ -387,7 +387,7 @@ package {&#39;chocolatey-agent&#39;:
 <li><code>choco download dotnet4.5.2 --internalize --source https://chocolatey.org/api/v2</code></li>
 <li>Use <code>choco push</code> to push those items to your internal package repository (e.g. <code>choco push chocolatey.0.10.7.nupkg -s http://internal_repo/ -k abc123</code>)</li>
 </ul>
-<pre><code class="puppet">## You don&#39;t want a non-admin to get a warning when using self-service
+<pre><code class="language-puppet">## You don&#39;t want a non-admin to get a warning when using self-service
 chocolateyfeature {&#39;showNonElevatedWarnings&#39;:
   ensure =&gt; disabled,
   require =&gt; Package[&#39;chocolatey-agent&#39;],

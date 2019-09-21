@@ -7,7 +7,7 @@
 <!-- This documentation is automatically generated from https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Install-ChocolateyShortcut.ps1 using https://github.com/chocolatey/choco/tree/stable/GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
 <p>Creates a shortcut</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyShortcut `
+<pre><code class="language-powershell">Install-ChocolateyShortcut `
   -ShortcutFilePath &lt;String&gt; `
   -TargetPath &lt;String&gt; `
   [-WorkingDirectory &lt;String&gt;] `
@@ -30,13 +30,13 @@ of failing a package installation.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # This will create a new shortcut at the location of &quot;C:\test.lnk&quot; and
 # link to the file located at &quot;C:\text.exe&quot;
 
 Install-ChocolateyShortcut -ShortcutFilePath &quot;C:\test.lnk&quot; -TargetPath &quot;C:\test.exe&quot;</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # This will create a new shortcut at the location of &quot;C:\notepad.lnk&quot;
 # and link to the Notepad application.  In addition, other properties
 # are being set to specify the working directory, an icon to be used for
@@ -50,7 +50,7 @@ Install-ChocolateyShortcut `
   -IconLocation &quot;C:\test.ico&quot; `
   -Description &quot;This is the description&quot;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Creates a new notepad shortcut on the root of c: that starts
 # notepad.exe as Administrator. Shortcut is also pinned to taskbar.
 # These parameters are available in 0.9.10+.

@@ -32,7 +32,7 @@ dash (<code>-</code>). For more details, see <a href="@Url.RouteUrl(RouteName.Do
 </ul>
 <!-- /TOC -->
 <h2 id="usage">Usage</h2>
-<pre><code class="nohighlight">  choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
+<pre><code class="language-none">  choco install &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]
   cinst &lt;pkg|packages.config&gt; [&lt;pkg2&gt; &lt;pkgN&gt;] [&lt;options/switches&gt;]</code></pre>
 <p><strong>NOTE:</strong> <code>all</code> is a special package keyword that will allow you to install<br />
 all packages from a custom feed. Will not work with Chocolatey default<br />
@@ -48,7 +48,7 @@ creation from installer files, automatic recompile support, runtime<br />
 malware protection, private CDN download cache, synchronize with<br />
 Programs and Features, etc - <a href="https://chocolatey.org/compare" class="uri">https://chocolatey.org/compare</a>.</p>
 <h2 id="examples">Examples</h2>
-<pre><code class="nohighlight">  choco install sysinternals
+<pre><code class="language-none">  choco install sysinternals
   choco install notepadplusplus googlechrome atom 7zip
   choco install notepadplusplus --force --force-dependencies
   choco install notepadplusplus googlechrome atom 7zip -dvfy
@@ -62,10 +62,10 @@ Programs and Features, etc - <a href="https://chocolatey.org/compare" class="uri
   choco install git -s &quot;&#39;https://somewhere/protected&#39;&quot; -u user -p pass</code></pre>
 <p>Choco can also install directly from a nuspec/nupkg file. This aids in<br />
 testing packages:</p>
-<pre><code class="nohighlight">  choco install &lt;path/to/nuspec&gt;
+<pre><code class="language-none">  choco install &lt;path/to/nuspec&gt;
   choco install &lt;path/to/nupkg&gt;</code></pre>
 <p>Install multiple versions of a package using -m (AllowMultiple versions)</p>
-<pre><code class="nohighlight">  choco install ruby --version 1.9.3.55100 -my
+<pre><code class="language-none">  choco install ruby --version 1.9.3.55100 -my
   choco install ruby --version 2.0.0.59800 -my
   choco install ruby --version 2.1.5 -my</code></pre>
 <p>What is <code>-my</code>? See option bundling in <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass arguments</a><br />
@@ -168,7 +168,7 @@ packages, and you use <code>--version=1.0.0</code>, it is going to look for and<
 try to install version 1.0.0 of every package passed. So please split<br />
 out multiple package calls when wanting to pass specific options.</p>
 <p>Includes <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#default-options-and-switches">default options/switches</a> (included below for completeness).</p>
-<pre><code class="nohighlight">
+<pre><code class="language-none">
 
 
  -?, --help, -h

@@ -4,6 +4,7 @@
 
 <article>
 <h1 id="how-to-internalizerecompile-packages">How To Internalize/Recompile Packages</h1>
+ @section SideColumn { 
 <!-- TOC -->
 <ul>
 <li><a href="#what-is-it-why">What is it? Why?</a></li>
@@ -12,6 +13,7 @@
 <li><a href="#how-to-internalizerecompile-an-existing-package-manually">How To Internalize/Recompile An Existing Package Manually</a></li>
 </ul>
 <!-- /TOC -->
+ } 
 <h2 id="what-is-it-why">What is it? Why?</h2>
 <p>Sometimes creating packages from scratch can be an involved process. Not all software installers are created equal (and not all are easily automated either)! Thankfully there is already a tremendous resource you can use to make the process of getting your software all packaged up even smoother.</p>
 <p>On <a href="https://chocolatey.org">chocolatey.org</a>, you will find packages with all of the install logic you need to automatically install your software. However, many of these publicly available packages also rely on software that is available from official distribution points because they are subject to <a href="https://en.wikipedia.org/wiki/Software_license">software licensing and copyright law</a>. Unless you&#39;re granted the right to distribute the software via the license, you can&#39;t redistribute it publicly. These laws do not apply when you use internal packages, and that is a good thing!</p>
@@ -50,12 +52,12 @@
 <p><code>3.</code> Delete the <code>_rels</code> and <code>package</code> folders and the <code>[Content_Types].xml</code> file. These are created during <code>choco pack</code> and should not be included, as they will be regenerated (and their existence leads to issues).</p>
 <p><img src="@Url.Content("~/content/images/docs/recompile/choco_delete_pkg_files.png")" alt="Remove _rels, package, and the xml file" /></p>
 <p><code>4.</code> Next, open <code>tools\chocolateyInstall.ps1</code>.</p>
-<pre><code class="powershell">Install-ChocolateyZipPackage &#39;notepadplusplus.commandline&#39; &#39;https://notepad-plus-plus.org/repository/6.x/6.8.7/npp.6.8.7.bin.zip&#39; &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;</code></pre>
+<pre><code class="language-powershell">Install-ChocolateyZipPackage &#39;notepadplusplus.commandline&#39; &#39;https://notepad-plus-plus.org/repository/6.x/6.8.7/npp.6.8.7.bin.zip&#39; &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;</code></pre>
 <p><code>5.</code> Download the zip file and place it in the tools folder of the package.</p>
 <p><img src="@Url.Content("~/content/images/docs/recompile/choco_download_zip.png")" alt="Zip file embedding in package" /></p>
 <p><code>6.</code> If the file ends in <code>.exe</code>, create an empty file called <code>*.exe.ignore</code>, where the name is an exact match with the exe with <code>.ignore</code> appended at the end (e.g. <code>bob.exe</code> would have a file next to it named <code>bob.exe.ignore</code>).</p>
 <p><code>7.</code> Next, edit <code>chocolateyInstall.ps1</code> to point to this embedded file instead of reaching out to the internet (if the size of the file is over 100MB, you might want to put it on a file share somewhere internally for better performance).</p>
-<pre><code class="powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
+<pre><code class="language-powershell">$toolsDir   = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
 Install-ChocolateyZipPackage &#39;notepadplusplus.commandline&#39; &quot;$toolsDir\npp.6.8.7.bin.zip&quot; &quot;$toolsDir&quot;</code></pre>
 <p>The double quotes allow for string interpolation (meaning variables get interpreted instead of taken literally).</p>
 <p><code>8.</code> Next, open the <code>*.nuspec</code> file to view its contents and make any necessary changes.</p>
@@ -77,7 +79,7 @@ Install-ChocolateyZipPackage &#39;notepadplusplus.commandline&#39; &quot;$toolsD
 &lt;/package&gt;</code></pre>
 <p>Some organizations will change the version field to denote this is an edited internal package, for example changing <code>6.8.7</code> to <code>6.8.7.20151202</code>. For now, this is not necessary.</p>
 <p><code>9.</code> Now you can navigate via the command line to the folder with the <code>.nuspec</code> file (from a Windows machine unless you&#39;ve installed Mono and built choco.exe from source) and use <code>choco pack</code>. You can also be more specific and type <code>choco pack path\to\notepadplusplus.commandline.nuspec</code>. The output should be similar to below.</p>
-<pre><code class="nohighlight">Attempting to build package from &#39;notepadplusplus.commandline.nuspec&#39;.
+<pre><code class="language-none">Attempting to build package from &#39;notepadplusplus.commandline.nuspec&#39;.
 Successfully created package &#39;notepadplusplus.commandline.6.8.7.nupkg&#39;</code></pre>
 <p><code>10.</code> Normally you test on a system to ensure that the package you just built is good prior to pushing the package (just the *.nupkg) to your internal repository. This can be done by using <code>choco.exe</code> on a test system to install (<code>choco install notepadplusplus.commandline -source .</code>) and uninstall (<code>choco uninstall notepadplusplus.commandline</code>).</p>
 <p><strong>NOTE:</strong> Originally posted at <a href="https://puppet.com/blog/chocolatey-creating-recompiled-packages" class="uri">https://puppet.com/blog/chocolatey-creating-recompiled-packages</a> and <a href="https://docs.puppet.com/pe/latest/windows_modules.html" class="uri">https://docs.puppet.com/pe/latest/windows_modules.html</a></p>

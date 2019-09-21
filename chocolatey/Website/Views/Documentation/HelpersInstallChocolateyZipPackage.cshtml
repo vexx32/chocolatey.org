@@ -8,7 +8,7 @@
 <p>Downloads file from a url and unzips it on your machine. Use<br />
 Get-ChocolateyUnzip when local or embedded file.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyZipPackage `
+<pre><code class="language-powershell">Install-ChocolateyZipPackage `
   -PackageName &lt;String&gt; `
   [-Url &lt;String&gt;] `
   -UnzipLocation &lt;String&gt; `
@@ -38,15 +38,15 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">Install-ChocolateyZipPackage -PackageName &#39;gittfs&#39; -Url &#39;https://github.com/downloads/spraints/git-tfs/GitTfs-0.11.0.zip&#39; -UnzipLocation $gittfsPath
+<pre><code class="language-powershell">Install-ChocolateyZipPackage -PackageName &#39;gittfs&#39; -Url &#39;https://github.com/downloads/spraints/git-tfs/GitTfs-0.11.0.zip&#39; -UnzipLocation $gittfsPath
 </code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Install-ChocolateyZipPackage -PackageName &#39;sysinternals&#39; `
  -Url &#39;http://download.sysinternals.com/Files/SysinternalsSuite.zip&#39; `
  -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Install-ChocolateyZipPackage -PackageName &#39;sysinternals&#39; `
  -Url &#39;http://download.sysinternals.com/Files/SysinternalsSuite.zip&#39; `
  -UnzipLocation &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot; `

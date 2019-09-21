@@ -13,7 +13,7 @@ file.</p>
 use Install-ChocolateyINSTALLPackage instead of this method (see links<br />
 below).</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Install-ChocolateyPackage `
+<pre><code class="language-powershell">Install-ChocolateyPackage `
   -PackageName &lt;String&gt; `
   [-FileType &lt;String&gt;] `
   [-SilentArgs &lt;String[]&gt;] `
@@ -57,7 +57,7 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $packageName= &#39;bob&#39;
 $toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
 $url        = &#39;https://somewhere.com/file.msi&#39;
@@ -79,7 +79,7 @@ $packageArgs = @@{
 
 Install-ChocolateyPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $packageName= &#39;bob&#39;
 $toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
 $url        = &#39;https://somewhere.com/file.msi&#39;
@@ -102,7 +102,7 @@ $packageArgs = @@{
 
 Install-ChocolateyPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $packageName= &#39;bob&#39;
 $toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
 $url        = &#39;https://somewhere.com/file.msi&#39;
@@ -125,26 +125,26 @@ $packageArgs = @@{
 
 Install-ChocolateyInstallPackage @@packageArgs</code></pre>
 <p><strong>EXAMPLE 4</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Install-ChocolateyPackage &#39;StExBar&#39; &#39;msi&#39; &#39;/quiet&#39; `
  &#39;http://stexbar.googlecode.com/files/StExBar-1.8.3.msi&#39; `
  &#39;http://stexbar.googlecode.com/files/StExBar64-1.8.3.msi&#39;</code></pre>
 <p><strong>EXAMPLE 5</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Install-ChocolateyPackage &#39;mono&#39; &#39;exe&#39; &#39;/SILENT&#39; `
  &#39;http://somehwere/something.exe&#39; -ValidExitCodes @@(0,21)</code></pre>
 <p><strong>EXAMPLE 6</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 Install-ChocolateyPackage &#39;ruby.devkit&#39; &#39;exe&#39; &#39;/SILENT&#39; `
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe&#39; `
  &#39;http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe&#39; `
  -checksum &#39;9383f12958aafc425923e322460a84de&#39; -checksumType &#39;md5&#39; `
  -checksum64 &#39;ce99d873c1acc8bffc639bd4e764b849&#39;</code></pre>
 <p><strong>EXAMPLE 7</strong></p>
-<pre><code class="powershell">Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
+<pre><code class="language-powershell">Install-ChocolateyPackage &#39;bob&#39; &#39;exe&#39; &#39;/S&#39; &#39;https://somewhere/bob.exe&#39; &#39;https://somewhere/bob-x64.exe&#39;
 </code></pre>
 <p><strong>EXAMPLE 8</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $options =
 @@{
   Headers = @@{

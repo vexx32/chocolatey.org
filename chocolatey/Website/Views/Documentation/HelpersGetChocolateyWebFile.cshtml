@@ -7,7 +7,7 @@
 <!-- This documentation is automatically generated from https://github.com/chocolatey/choco/tree/stable/src/chocolatey.resources/helpers/functions/Get-ChocolateyWebFile.ps1 using https://github.com/chocolatey/choco/tree/stable/GenerateDocs.ps1. Contributions are welcome at the original location(s). -->
 <p>Downloads a file from the internets.</p>
 <h2 id="syntax">Syntax</h2>
-<pre><code class="powershell">Get-ChocolateyWebFile `
+<pre><code class="language-powershell">Get-ChocolateyWebFile `
   -PackageName &lt;String&gt; `
   -FileFullPath &lt;String&gt; `
   [-Url &lt;String&gt;] `
@@ -35,25 +35,25 @@ internal packages.</p>
 <p>None</p>
 <h2 id="examples">Examples</h2>
 <p><strong>EXAMPLE 1</strong></p>
-<pre><code class="powershell">Get-ChocolateyWebFile &#39;__NAME__&#39; &#39;C:\somepath\somename.exe&#39; &#39;URL&#39; &#39;64BIT_URL_DELETE_IF_NO_64BIT&#39;
+<pre><code class="language-powershell">Get-ChocolateyWebFile &#39;__NAME__&#39; &#39;C:\somepath\somename.exe&#39; &#39;URL&#39; &#39;64BIT_URL_DELETE_IF_NO_64BIT&#39;
 </code></pre>
 <p><strong>EXAMPLE 2</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Download from an HTTPS location
 $toolsDir = &quot;$(Split-Path -parent $MyInvocation.MyCommand.Definition)&quot;
 Get-ChocolateyWebFile -PackageName &#39;bob&#39; -FileFullPath &quot;$toolsDir\bob.exe&quot; -Url &#39;https://somewhere/bob.exe&#39;</code></pre>
 <p><strong>EXAMPLE 3</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Download from FTP
 $toolsDir = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
 Get-ChocolateyWebFile -PackageName &#39;bob&#39; -FileFullPath &quot;$toolsDir\bob.exe&quot; -Url &#39;ftp://somewhere/bob.exe&#39;</code></pre>
 <p><strong>EXAMPLE 4</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 # Download from a file share
 $toolsDir = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
 Get-ChocolateyWebFile -PackageName &#39;bob&#39; -FileFullPath &quot;$toolsDir\bob.exe&quot; -Url &#39;file:///\\fileshare\location\bob.exe&#39;</code></pre>
 <p><strong>EXAMPLE 5</strong></p>
-<pre><code class="powershell">
+<pre><code class="language-powershell">
 $options =
 @@{
   Headers = @@{

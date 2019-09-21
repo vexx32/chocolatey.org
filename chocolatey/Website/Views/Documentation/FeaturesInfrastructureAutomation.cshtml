@@ -6,6 +6,7 @@
 <h1 id="configuration-management-integration-free-open-source">Configuration Management Integration (Free / Open Source)</h1>
 <p>Chocolatey integrates with several infrastructure automation tools!</p>
 <p>With most of these tools, the interface you would interact with Chocolatey would be through the tool or through the interfaces of the tool, like in scripts.</p>
+ @section SideColumn { 
 <!-- TOC depthTo:2 -->
 <ul>
 <li><a href="#summary">Summary</a></li>
@@ -22,6 +23,7 @@
 <li><a href="#system-center-configuration-manager">System Center Configuration Manager</a></li>
 </ul>
 <!-- /TOC -->
+ } 
 <h2 id="summary">Summary</h2>
 <h3 id="chocolatey-integration-implementation-with-common-configuration-managers">Chocolatey Integration Implementation with Common Configuration Managers</h3>
 <p>For common integrations, it&#39;s handy to refer to the table below to know what configuration manager to choose. Most of the implementations below are written and managed by the companies behind the product. These implementations are typically open source and each part could be added by community contributions for those familiar with the code implementations. If you are unable to provide code implementations for adding necessary functionality to the integrations, we find it best if you create issues/tickets with those organizations if you are a customer as you will have more leverage into getting them implemented. <strong>NOTE</strong>: If you are a configuration manager company identified in the table and you have implemented anything in the below or you find our information is incorrect, please let us know so we can get it fixed.</p>
@@ -116,7 +118,7 @@
 <p>For most of these, those configuration managers have some sort of exec you could use to manage those additional aspects, but it would be best if they supported all aspects of configuration of Chocolatey as part of the provider implementations.</p>
 <h2 id="ansible">Ansible</h2>
 <p>Ansible has the <code>win_chocolatey</code> module that manages both packages and the installation of Chocolatey itself.</p>
-<pre><code class="yaml">win_chocolatey:
+<pre><code class="language-yaml">win_chocolatey:
   name: git
   source: https://my.internal.repository/api/v2/</code></pre>
 <p><a href="https://bit.ly/choco_ansible">Read More...</a></p>
@@ -128,17 +130,17 @@
 <p><a href="http://boxstarter.org/">Read more...</a></p>
 <h2 id="chef">Chef</h2>
 <p>Chef 12.7+ has a <a href="https://www.chef.io/blog/2016/02/12/chef-client-12-7-released/">built-in</a> <code>chocolatey_package</code> resource to use with Chocolatey.</p>
-<pre><code class="ruby">chocolatey_package &#39;git&#39; do
+<pre><code class="language-ruby">chocolatey_package &#39;git&#39; do
   action :install
   source &#39;https://my.internal.repository/api/v2&#39;
 end</code></pre>
 <p><a href="https://docs.chef.io/resource_chocolatey_package.html">Resource - Read More...</a></p>
 <p>When you need to also install Chocolatey, you would use the community cookbook to do so. The cookbook is maintained by the Chocolatey team. It has a package resource that can be used with older Chef versions.</p>
-<pre><code class="ruby">include_recipe &#39;chocolatey&#39;</code></pre>
+<pre><code class="language-ruby">include_recipe &#39;chocolatey&#39;</code></pre>
 <p><a href="https://bit.ly/choco_chef">Cookbook - Read More...</a></p>
 <h3 id="example">Example</h3>
 <p>Here&#39;s a more in depth example from <a href="https://github.com/Nordstrom/chefdk_bootstrap/blob/master/recipes/windows.rb">Nordstrom</a>:</p>
-<pre><code class="ruby">include_recipe &#39;chocolatey&#39;
+<pre><code class="language-ruby">include_recipe &#39;chocolatey&#39;
 
 home = Dir.home
 %W(
@@ -155,7 +157,7 @@ packages.each do |pkg, install|
   include_recipe &quot;#{cookbook_name}::#{pkg}&quot; if install
 end</code></pre>
 <p>Another example from <a href="https://github.com/facebook/IT-CPE/tree/master/chef/cookbooks/cpe_choco">Facebook</a>:</p>
-<pre><code class="ruby">node.default[&#39;cpe_choco&#39;][&#39;sources&#39;][&#39;bacon&#39;] =
+<pre><code class="language-ruby">node.default[&#39;cpe_choco&#39;][&#39;sources&#39;][&#39;bacon&#39;] =
   &#39;source&#39; =&gt; &#39;http://bacon.es.yummy&#39;,
 }</code></pre>
 <h2 id="octopus-deploy">Octopus Deploy</h2>
@@ -164,7 +166,7 @@ end</code></pre>
 <h2 id="otter">Otter</h2>
 <p>Otter has an <a href="https://github.com/Inedo/inedox-chocolatey">open source Chocolatey extension</a> that allows installing and uninstalling packages, specifying package versions, chocolatey sources, chocolatey features, and installing chocolatey istelf.</p>
 <p>Otter also keeps an inventory of Chocolatey packages installed on any or all servers.</p>
-<pre><code class="otter">Chocolatey::Ensure-Package
+<pre><code class="language-none">Chocolatey::Ensure-Package
 (
     Name: 7zip.install,
     Version: 18.5,
@@ -192,7 +194,7 @@ Chocolatey::Ensure-Feature
 <p><a href="https://inedo.com/den/otter/chocolatey">Read More...</a></p>
 <h2 id="powershell-dsc">PowerShell DSC</h2>
 <p>PowerShell DSC (Desired State Configuration) has a cChoco module that can manage both packages and the installation of Chocolatey itself.</p>
-<pre><code class="powershell">  cChocoInstaller installChoco
+<pre><code class="language-powershell">  cChocoInstaller installChoco
   {
     InstallDir = &quot;c:\ProgramData\chocolatey&quot;
   }
@@ -208,7 +210,7 @@ Chocolatey::Ensure-Feature
 <p><a href="https://github.com/OneGet/oneget">PowerShell PackageManagement (aka OneGet)</a> is a package manager <strong><em>aggregator</em></strong> that depends on the existence of package managers as providers to work, one of which is Chocolatey. For a pretty comprehensive post about what PackageManagement is and what it is not, see the PackageManagement Blog post on <a href="https://blogs.technet.microsoft.com/packagemanagement/2015/05/05/10-things-about-oneget-that-are-completely-different-than-you-think/">10 things about OneGet that are completely different than you think</a>.</p>
 <h2 id="psdeploy">PSDeploy</h2>
 <p>PSDeploy is a quick and dirty module to simplify PowerShell based deployments.</p>
-<pre><code class="powershell">Deploy SingleChocolateyPackage {
+<pre><code class="language-powershell">Deploy SingleChocolateyPackage {
     By Chocolatey {
         FromSource &#39;c:\ChocolateyPackages\examplepackage.0.1.1.nupkg&#39;
         To &quot;http://your-choco-repo.internal.com/&quot;
@@ -221,7 +223,7 @@ Chocolatey::Ensure-Feature
 <p><a href="http://psdeploy.readthedocs.io/en/latest/Example-Chocolatey-Deployment/">Read More...</a></p>
 <h2 id="puppet">Puppet</h2>
 <p>Puppet has a <a href="https://forge.puppet.com/supported">Supported module</a> for Chocolatey <code>puppetlabs/chocolatey</code>. Note that there is also a <code>chocolatey/chocolatey</code> module, the supported module is a drop in replacement for the <code>chocolatey/chocolatey</code> module - please use <code>puppetlabs/chocolatey</code> as it has full configuration of Chocolatey.</p>
-<pre><code class="puppet">include chocolatey
+<pre><code class="language-puppet">include chocolatey
 
 package { &#39;git&#39;:
   ensure   =&gt; latest,
@@ -238,7 +240,7 @@ package { &#39;git&#39;:
 <p><a href="https://forge.puppet.com/puppetlabs/chocolatey">Read More...</a></p>
 <h2 id="saltstack">Saltstack</h2>
 <p>Salt has a Chocolatey module that manages both packages and the installation of Chocolatey itself.</p>
-<pre><code class="python">salt &#39;*&#39; chocolatey.bootstrap
+<pre><code class="language-python">salt &#39;*&#39; chocolatey.bootstrap
 salt &#39;*&#39; chocolatey.install git</code></pre>
 <p><a href="https://bit.ly/choco_salt">Read More...</a></p>
 <h2 id="system-center-configuration-manager">System Center Configuration Manager</h2>
