@@ -1074,8 +1074,8 @@
     <Content Include="Content\Images\businesses\Boxstarter-sm.png" />
     <Content Include="Content\Images\businesses\Buyitdirect-sm.jpg" />
     <Content Include="Content\Images\businesses\Chef-Dark.png" />
-    <Content Include="Content\Images\businesses\Cornell.png" />
     <Content Include="Content\Images\businesses\Docker-sm.png" />
+    <Content Include="Content\Images\businesses\ECEC-sm.png" />
     <Content Include="Content\Images\businesses\GitHub-sm.png" />
     <Content Include="Content\Images\businesses\GitLab-sm.png" />
     <Content Include="Content\Images\businesses\GoogleCloudPlatform-sm.png" />
@@ -1086,6 +1086,7 @@
     <Content Include="Content\Images\businesses\Jenkins-sm.png" />
     <Content Include="Content\Images\businesses\JetBrains-sm.png" />
     <Content Include="Content\Images\businesses\Microsoft-SCCM-sm.jpg" />
+    <Content Include="Content\Images\businesses\MPAC-sm.png" />
     <Content Include="Content\Images\businesses\MyGet-Blue-sm.png" />
     <Content Include="Content\Images\businesses\MyGet-Blue.png" />
     <Content Include="Content\Images\businesses\Nexus-sm.png" />
@@ -1100,6 +1101,8 @@
     <Content Include="Content\Images\businesses\Shadowsoft-sm.png" />
     <Content Include="Content\Images\businesses\SHI-sm.png" />
     <Content Include="Content\Images\businesses\SwissRe.png" />
+    <Content Include="Content\Images\businesses\TheSageColleges-sm.png" />
+    <Content Include="Content\Images\businesses\Tricore-sm.png" />
     <Content Include="Content\Images\businesses\VMware-sm.png" />
     <Content Include="Content\Images\businesses\Yelp-Stroke.png" />
     <Content Include="Content\Images\businesses\Yelp.png" />
