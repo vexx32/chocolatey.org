@@ -149,6 +149,7 @@ $(function () {
         if (value == 0) {
             $('.stepThreeUrl').text(defaultUrl);
             $('.stepThree .tab-pane').prepend('<p class="step-three-danger text-danger font-weight-bold small">You must enter your internal repository url in Step 3 before proceeding.</p>');
+            $('#install-step4 .code-toolbar').prepend('<p class="step-three-danger text-danger font-weight-bold small">You must enter your internal repository url in Step 3 before proceeding.</p>');
         }
         else {
             $('.step-three-danger').remove();
