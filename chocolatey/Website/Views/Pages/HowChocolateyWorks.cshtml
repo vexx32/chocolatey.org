@@ -23,14 +23,14 @@
                     Chocolatey is a software management solution that gives you the freedom to create a simple software package and then deploy it anywhere you have Windows using any of your familiar configuration or system management tools.
                 </p>
                 <p>
-                    If you ever used yum, apt, pacman or indeed any package managers on Linux, or Homebrew on a Mac, you already know what Chocolatey is. Chocolatey is the Windows package manager, in the same way that yum is a package manager for Linux.
+                    If you ever used yum, apt, pacman or indeed any package managers on Linux, or Homebrew on a Mac, you already know what Chocolatey is. Chocolatey is <i>the</i> Windows package manager, in the same way that RPM is a package manager for Linux.
                 </p>
                 <p>
-                    Designed to be simple to use, it provides a suite of powerful features that scale for your existing infrastructure, and your future infrastructure. Power and flexibility in one simple product.
+                    Designed to be simple to use, it provides a suite of powerful features that scale for your existing, and your future infrastructure. Power and flexibility in one simple product, that's Chocolatey.
                 </p>
                 <p>
-                    So whether you are a small or large organization, Chocolatey provides you with the features to be able to manage your Windows software simply, saving you time and resources.
-                    Getting started with Chocolatey is quick and easy. You can start using Open Source for free or contact us for a trial of our commercial version.
+                    So whether you are an individual, a small organization, or a large enterprise, Chocolatey provides you with the features to be able to manage your Windows software simply, saving you time and resources. 
+                    Getting started with Chocolatey is quick and easy - you can start using Open Source for free or contact us for a trial of our commercial edition.
                 </p>
             </div>
             <div class="col-lg-6 mx-auto">
@@ -78,24 +78,13 @@
                 <hr class="border-hr" />
                 <p>
                     We designed Chocolatey to work with the widest range of Windows operating systems all the way back to Windows 7 and Windows Server 2003.
-                    We also support cloud environments such as Microsoft Azure, Amazon AWS and any others where Windows platforms are available. Windows Server.Core and Windows Docker Containers as well.
+                    We also support cloud environments such as Microsoft Azure, Amazon AWS and any others where Windows platforms are available. Chocolatey runs on Windows Server.Core and Docker Windows container as well.
                 </p>
                 <p>
-                    One product to manage the software on your entire Windows estate cuts training costs for staff saving both money and time that could be better spent elsewhere within your organization.
+                    One product to manage all the software on your entire Windows estate cuts training costs for staff saving both money and time that could be better spent elsewhere within your organization.
                 </p>
             </div>
-            <div class="col-lg-6 px-lg-5 py-lg-5">
-                <h2>Use Familiar Tools</h2>
-                <hr class="border-hr" />
-                <p>
-                    Chocolatey packages use PowerShell to drive them so no need to learn another language to deploy software which cuts down the time from installation to package deployment.
-                </p>
-                <p>
-                    You can use Chocolatey to deploy software using the tools you already know. Many configuration management tools such as Ansible, Chef, Puppet, PowerShell DSC, Salt and others have specific support for Chocolatey.
-                    Any endpoint manager such as SCCM, Altiris, Connectwise Automate or others that allow you to manage remote deployment can use Chocolatey to manage software.
-                </p>
-            </div>
-            <div class="col-lg-6 px-lg-5">
+            <div class="col-lg-6 py-lg-5">
                 <h2>Complete Software Coverage</h2>
                 <hr class="border-hr" />
                 <p>
@@ -104,15 +93,24 @@
                 <p>Check out our<a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-setup-internal-package-repository"})#architecture"> Architecture Diagram</a> for a better understanding of organizational requirements.</p>
             </div>
             <div class="col-lg-6 px-lg-5">
-                <h2>Flexible Architecture</h2>
+                <h2>Reliable and Secure</h2>
+                <hr class="border-hr" />
+                <p>Chocolatey requires no internet access whatsoever. You can <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-setup-offline-installation"})">build and host packages internally</a> all for free, which gives you complete control over your environment.</p>
+                <p>
+                    Additionally, leverage over 7,000 community packages - <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-recompile-packages"})">internalizing them</a> for use in your environment.
+                    This allows you to reuse existing logic that has been tested across multiple environments. Add in <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-setup-internal-package-repository"})">automatic internalization using Package Internalizer</a>
+                    to take advantage of a hands off approach updating packages within moments of when they are updated in the community!
+                </p>
+            </div>
+            <div class="col-lg-6 px-lg-5">
+                <h2>Use Familiar Tools</h2>
                 <hr class="border-hr" />
                 <p>
-                    Chocolatey package internalization brings all of the resources that a package needs inside your organization.
-                    This process allows you to version control your packages and to use Continuous Deployment and automated testing to ensure quick deployment of tested, working packages to your Windows estate.
+                    Chocolatey packages use PowerShell to drive them so no need to learn another language to deploy software which cuts down the time from installation to package deployment.
                 </p>
                 <p>
-                    The automatic internalization process allows you to use the skills and resources that already exist in the Chocolatey community and bring those tried and tested packages into your organization.
-                    Why re-invent the wheel when you can leverage all that experience?
+                    You can use Chocolatey to deploy software using the tools you already know. Many configuration management tools such as Ansible, Chef, Puppet, PowerShell DSC, Salt and others have specific support for Chocolatey.
+                    Any end point management solution such as SCCM, Altiris, Connectwise Automate or others that allow you to manage remote deployment can use Chocolatey to manage software as well.
                 </p>
             </div>
         </div>

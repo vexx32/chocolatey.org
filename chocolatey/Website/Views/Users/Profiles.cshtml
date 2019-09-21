@@ -112,7 +112,7 @@
                                         </ul>
                                         @if (String.IsNullOrEmpty(package.ReviewComments))
                                         {
-                                            <p class="mt-3 mb-0">@Html.Raw(Markdown.ToHtml(package.ReviewComments, MarkdownPipeline))</p>
+                                            <p class="mt-3 mb-0">@Html.Raw(Markdown.ToHtml(package.ReviewComments ?? string.Empty, MarkdownPipeline))</p>
                                         }
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                     <div class="card-body pt-0 pb-3">
                                         @if (!string.IsNullOrEmpty(package.Summary))
                                         {
-                                            @Html.Raw(Markdown.ToHtml(package.Summary, MarkdownPipeline))
+                                            @Html.Raw(Markdown.ToHtml(package.Summary ?? string.Empty, MarkdownPipeline))
                                         }
                                     </div>
                                     <div class="card-footer">

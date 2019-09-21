@@ -604,11 +604,11 @@ chocolateysource {&#39;local_chocolatey_server&#39;:
 
 ## - Tab Completion -
 ## Ensure that when someone uses choco from powershell.exe, they have tab completion
-file {&#39;C:/Users/Administrator/Documents/WindowsPowerShell&#39;:
+file {&#39;C:\Users\Administrator\Documents\WindowsPowerShell&#39;:
   ensure =&gt; directory,
 }
 
-file {&#39;C:/Users/Administrator/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1&#39;:
+file {&#39;C:\Users\Administrator\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1&#39;:
   ensure =&gt; file,
   content =&gt; &#39;$ChocolateyProfile = &quot;$env:ChocolateyInstall\helpers\chocolateyProfile.psm1&quot;
 if (Test-Path($ChocolateyProfile)) {
@@ -915,11 +915,11 @@ choco install notepadplusplus.commandline -y
                 <div class="form-field mt-3">
                     <h5>What is the default installation location for Chocolatey (as of version 0.9.8.24)?  NOTE: You may need to have read and completed what is suggested in the note above, if unsure.</h5>
                     @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
-                    <label for="QuestTwoOptionOne">C:/Chocolatey</label><br />
+                    <label for="QuestTwoOptionOne">C:\Chocolatey</label><br />
                     @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionTwo" })
-                    <label for="QuestTwoOptionTwo">C:/ProgramData/Chocolatey</label><br />
+                    <label for="QuestTwoOptionTwo">C:\ProgramData/Chocolatey</label><br />
                     @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionThree" })
-                    <label for="QuestTwoOptionThree">C:/Program Files (x86)/Chocolatey</label>
+                    <label for="QuestTwoOptionThree">C:\Program Files (x86)/Chocolatey</label>
                 </div>
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
             </fieldset>
