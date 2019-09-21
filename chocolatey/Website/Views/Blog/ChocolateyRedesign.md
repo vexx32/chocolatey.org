@@ -1,12 +1,14 @@
 Url: chocolatey-website-redesign
-Title: Chocolatey.org Gets a Long Awaited Redesign!
+Title: Chocolatey's Website Gets a Long Awaited Redesign!
 Published: 20190920
 Author: Chocolatey News Team
 Tags: News, Press-Release
-Keywords: chocolatey, redesign, web design, features
-Summary: Chocolatey.org has all new features and improvements to help you get started or maintain your Chocolatey project!
+Keywords: chocolatey, website, redesign, web design, features
+Summary: Chocolatey's website has all new features and improvements to help you get started or maintain your Chocolatey project!
 ---
-Chocolatey.org has been in need of an update for a while, and we're happy to announce it is here! Along with a fresh look, the website also brings many performance improvements to help you find the information you need, faster. Keep reading to learn about just a few of the key features you don't want to miss!
+Howdy! You might have noticed a few changes on the website recently. Chocolatey has grown up quite a lot since the initial design of the site and we wanted to bring a much more consistent look and feel. We looked out across the industry of websites for modern automation tools and were inspired to take a step back and a hard look at what we had. What we've come up highlights both our product and our amazing community, all on the same site! 
+
+The design is fresh, crisp, and brings many performance improvements to help you find the information you need, faster. Keep reading to learn about just a few of the key features you don't want to miss!
 
 ### Where Did Everything Go?!
 Here is a handy list for you to get familiar with the website navigation:
@@ -14,7 +16,7 @@ Here is a handy list for you to get familiar with the website navigation:
 - **Community Packages** - From the top navigation click **Community > Community Packages**
 - **Documentation** - To get to the Chocolatey Documentation, from the top navigation click **Learn > Docs**
 - **Contact** - To get to the Contact area, from the top navigation click **About > Contact**
-- **Sitemap** - For a quick guide to all important links on Chocolatey.org, visit our sitemap. Navigate to the bottom navigation and click **Learn > Sitemap**
+- **Sitemap** - For a quick guide to all important links on the Chocolatey website, visit our sitemap. Navigate to the bottom navigation and click **Learn > Sitemap**
 
 ***
 
@@ -32,8 +34,12 @@ Along with Chocolatey Courses, we've added a Resource Library to help you find a
 
 ### Community Package Repository
 #### A Fresh New Look 
-The <a href="/packages">Chocolatey Community Repository</a> got a makeover! The new look features a grid view of packages, in a clean Chocolatey theme. All the same, functionality still exists, only now in an easier to view format. At the top of each package page you'll notice a simple tabbed interface that contains commands for you to easily copy/paste for installing, upgrading, and installing.
-<img class="border img-fluid mb-3" src="/content/images/blog/redesign-install-tabs.jpg" alt="Install Tabs" title="Install Tabs">
+The <a href="/packages">Chocolatey Community Repository</a> got a makeover! The new look features a grid view of packages, in a clean Chocolatey theme. All the same functionality still exist, only now in an eaiser to view format. At the top of each package page you'll notice a simple tabbed interface that contains commands for you to easily copy/paste for installing, upgrading, and installing.
+<img class="border img-fluid my-3" src="/content/images/blog/redesign-install-tabs.jpg" alt="Install Tabs" title="Install Tabs">
+
+We're excited to announce that packages have an included section for organizations as well, to really help organizations reuse packages from the community repository in recommended ways. Simply pick enter your internal repository url and copy from your chosen deployment method!
+<img class="border img-fluid my-3 p-0" src="/content/images/blog/redesign-install-tabs-puppet.jpg" alt="Organization Install Tabs" title="Organization Install Tabs">
+
 
 #### Updates for Maintainers
 ##### 1. Improvements to Moderation Filtering
@@ -52,3 +58,12 @@ If you are moderator/maintainer/admin you know how sometimes it has been difficu
 
 ##### 4. Show/Hide All Files
 <img class="border img-fluid mb-3" src="/content/images/blog/redesign-show-hide.gif" alt="Show/Hide Files in Moderation View" title="Show/Hide Files in Moderation View">
+
+
+### Other Changes are Coming
+
+* Documentation - We are working on making the documentation much more consumable to allow you to easily find what you need and get the proper information, with the proper context to you in a much more approachable format.
+* Better Moderation Flow - We'll be streamlining some of the moderation flow.
+* Updated Infrastructure - We've nearly outgrown our current infrastructure and we'll be making some long-planned for changes that ensure better availability and uptime.
+
+And these are just the more near-term changes! Stay tuned, as we have some more interesting things under wraps that we think you are going to love!

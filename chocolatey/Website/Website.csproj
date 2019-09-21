@@ -1063,6 +1063,7 @@
     <Content Include="Content\Images\blog\redesign-default-view.gif" />
     <Content Include="Content\Images\blog\redesign-filter-dropdown.jpg" />
     <Content Include="Content\Images\blog\redesign-filter-header.jpg" />
+    <Content Include="Content\Images\blog\redesign-install-tabs-puppet.jpg" />
     <Content Include="Content\Images\blog\redesign-install-tabs.jpg" />
     <Content Include="Content\Images\blog\redesign-show-hide.gif" />
     <Content Include="Content\Images\boxstarter.png" />
