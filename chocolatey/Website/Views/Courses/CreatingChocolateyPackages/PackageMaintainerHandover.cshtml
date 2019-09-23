@@ -83,7 +83,7 @@
               <div class="form-field mt-3">
                 <h5>Who has the necessary permissions on the chocolatey.org website to change the maintainer of a Chocolatey package?</h5>
                 @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionOne" })
-                <label for="QuestTwoOptionOne">Chocolatey.org administrators and current package maintainers</label><br />
+                <label for="QuestTwoOptionOne">Chocolatey.org moderators, administrators and current package maintainers.</label><br />
                 @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionTwo" })
                 <label for="QuestTwoOptionTwo">Only the original creator of the underlying software for the package</label><br />
                 @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionThree" })
