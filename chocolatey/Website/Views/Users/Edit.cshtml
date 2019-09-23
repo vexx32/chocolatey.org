@@ -71,19 +71,21 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="card mb-3">
-                                    <h4>Repository Links</h4>
-                                    <hr />
-                                    <div class="form-field mb-3">
-                                        <i class="fas fa-question-circle" alt="Save" data-toggle="tooltip" data-placement="top" title="The full Url to your packages repository (this is where you keep what builds the packages). Also put your automatic packages into this repository (the packages that use Chocolatey Package Updater to build and push automatically)."></i>
-                                        @Html.LabelFor(m => m.PackagesRepository)
-                                        @Html.EditorFor(m => m.PackagesRepository)
-                                        @Html.ValidationMessageFor(m => m.PackagesRepository)
-                                    </div>
-                                    <div class="form-field">
-                                        <i class="fas fa-question-circle" alt="Save" data-toggle="tooltip" data-placement="top" title="Deprecated field, leave this empty. It is recommended to include your automatic packages into the repository you specified above. No need for an additional separate repository."></i>
-                                        @Html.LabelFor(m => m.PackagesRepositoryAuto)
-                                        @Html.EditorFor(m => m.PackagesRepositoryAuto)
-                                        @Html.ValidationMessageFor(m => m.PackagesRepositoryAuto)
+                                    <div class="card-body">
+                                        <h4>Repository Links</h4>
+                                        <hr />
+                                        <div class="form-field mb-3">
+                                            <i class="fas fa-question-circle" alt="Save" data-toggle="tooltip" data-placement="top" title="The full Url to your packages repository (this is where you keep what builds the packages). Also put your automatic packages into this repository (the packages that use Chocolatey Package Updater to build and push automatically)."></i>
+                                            @Html.LabelFor(m => m.PackagesRepository)
+                                            @Html.EditorFor(m => m.PackagesRepository)
+                                            @Html.ValidationMessageFor(m => m.PackagesRepository)
+                                        </div>
+                                        <div class="form-field">
+                                            <i class="fas fa-question-circle" alt="Save" data-toggle="tooltip" data-placement="top" title="Deprecated field, leave this empty. It is recommended to include your automatic packages into the repository you specified above. No need for an additional separate repository."></i>
+                                            @Html.LabelFor(m => m.PackagesRepositoryAuto)
+                                            @Html.EditorFor(m => m.PackagesRepositoryAuto)
+                                            @Html.ValidationMessageFor(m => m.PackagesRepositoryAuto)
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card mb-3">
