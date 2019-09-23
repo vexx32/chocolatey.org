@@ -216,7 +216,7 @@ namespace NuGetGallery
 
             // All terms in the multi-term query appear in at least one of the fields.
             var conjuctionQuery = new BooleanQuery();
-            conjuctionQuery.Boost = 4.0f;
+            conjuctionQuery.Boost = 2.0f;
 
             // Some terms in the multi-term query appear in at least one of the fields.
             var disjunctionQuery = new BooleanQuery();
@@ -236,11 +236,19 @@ namespace NuGetGallery
 
             var exactIdQuery = new TermQuery(new Term("Id-Exact", escapedSearchTerm));
             exactIdQuery.Boost = 7.0f;
+            var relatedIdQuery = new WildcardQuery(new Term("Id-Exact", escapedSearchTerm + ".*"));
+            relatedIdQuery.Boost = 6.5f;
+            var startsIdQuery = new WildcardQuery(new Term("Id-Exact", escapedSearchTerm + "*"));
+            startsIdQuery.Boost = 6.0f;
             var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + escapedSearchTerm + "*"));
+            wildCardIdQuery.Boost = 3.0f;
             
             var exactTitleQuery = new TermQuery(new Term("Title-Exact", escapedSearchTerm));
-            exactTitleQuery.Boost = 5.0f;
+            exactTitleQuery.Boost = 6.5f;
+            var startsTitleQuery = new WildcardQuery(new Term("Title-Exact", escapedSearchTerm + "*"));
+            startsTitleQuery.Boost = 5.5f;
             var wildCardTitleQuery = new WildcardQuery(new Term("Title-Exact", "*" + escapedSearchTerm + "*"));
+            wildCardTitleQuery.Boost = 2.5f;
 
             foreach (var term in GetSearchTerms(searchFilter.SearchTerm))
             {
@@ -268,11 +276,11 @@ namespace NuGetGallery
             }
             
             // Create an OR of all the queries that we have
-            var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, exactTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, disjunctionQuery, wildCardQuery });
+            var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, exactTitleQuery, startsIdQuery, startsTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, disjunctionQuery, wildCardQuery });
 
             if (onlySearchById)
             {
-                combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, wildCardIdQuery, wildCardQuery });
+                combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, startsIdQuery, wildCardIdQuery, wildCardQuery });
             } else if (onlySearchByAuthor || onlySearchByTag)
             {
                 combinedQuery = conjuctionQuery.Combine(new Query[] { wildCardQuery });
