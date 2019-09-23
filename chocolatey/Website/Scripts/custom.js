@@ -332,8 +332,10 @@ $('.information-carousel')
     .on('slide.bs.carousel', function () {
         $(this).find(".video-story .modal").modal('hide');
     });
-$(window).scroll(function () {
-    $(".video-story .modal").modal('hide');
+$(window).on("scroll", function () {
+    if ($(this).width() > 1200) {
+        $(".video-story .modal").modal('hide');
+    }
 });
 $(".video-story .modal").on('hidden.bs.modal', function (e) {
     $(this).find("iframe").attr("src", $(this).find("iframe").attr("src"));
