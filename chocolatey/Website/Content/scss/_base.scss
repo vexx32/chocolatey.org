@@ -352,7 +352,7 @@ footer {
     }
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
     .divider-list li:not(:last-child) {
         border-right: 1px solid #ced4da;
         border-bottom: 0;
@@ -360,7 +360,7 @@ footer {
     }
 }
 
-@media (min-width: 992px) {
+@include media-breakpoint-up(lg) {
     .copyBox {
         max-width: 550px;
     }
@@ -378,7 +378,7 @@ footer {
     }
 }
 
-@media (min-width: 1200px) {
+@include media-breakpoint-up(xl) {
     .cookies-popup {
         z-index: 99;
     }

@@ -46,7 +46,7 @@
     margin-top: -64px;
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
     .card-row {
         &.card-bio {
             .card {

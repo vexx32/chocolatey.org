@@ -52,7 +52,7 @@
     }
 }
 
-@media (min-width: 576px) {
+@include media-breakpoint-up(sm) {
     .nav-tabs {
         border-bottom: 1px solid #dee2e6;
     }

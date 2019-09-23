@@ -127,8 +127,8 @@
     }
 }
 
-@media (min-width: 768px) {
-   #topNav img {
+@include media-breakpoint-up(md) {
+    #topNav img {
         height: 75px;
     }
 
@@ -155,7 +155,7 @@
     }
 }
 
-@media (min-width: 992px) {
+@include media-breakpoint-up(lg) {
     #topNav {
 
         .navbar-collapse {
@@ -192,6 +192,7 @@
             }
         }
     }
+
     #secondaryNav.successStoryNav {
 
         ul {
@@ -200,7 +201,7 @@
     }
 }
 
-@media (min-width: 1200px) {
+@include media-breakpoint-up(xl) {
     #topNav {
         padding: 1.5rem;
 
