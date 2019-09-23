@@ -218,7 +218,7 @@
                                                     @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
                                                 </select>
                                             </div>
-                                            @if (moderationQueue == true && string.IsNullOrWhiteSpace(Model.SearchTerm))
+                                            @if (moderationQueue == true)
                                             {
                                                 <div class="col-sm mb-2 mb-sm-0">
                                                     <select class="form-control" name="moderationStatus" id="moderationStatus" aria-label="Moderation Sort Order">
