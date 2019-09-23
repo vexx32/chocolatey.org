@@ -55,12 +55,12 @@ namespace NuGetGallery
             var searcher = new IndexSearcher(_directory, readOnly: true);
             var query = ParseQuery(searchFilter);
 
-            // If searching by relevance, boost scores by download count.
-            if (searchFilter.SortProperty == SortProperty.Relevance)
-            {
-                var downloadCountBooster = new FieldScoreQuery("DownloadCount", FieldScoreQuery.Type.INT);
-                query = new CustomScoreQuery(query, downloadCountBooster);
-            }
+            //// If searching by relevance, boost scores by download count.
+            //if (searchFilter.SortProperty == SortProperty.Relevance)
+            //{
+            //    var downloadCountBooster = new FieldScoreQuery("DownloadCount", FieldScoreQuery.Type.INT);
+            //    query = new CustomScoreQuery(query, downloadCountBooster);
+            //}
 
             var filterTerm = searchFilter.IncludePrerelease ? "IsLatest" : "IsLatestStable";
             Query filterQuery = new TermQuery(new Term(filterTerm, Boolean.TrueString));
