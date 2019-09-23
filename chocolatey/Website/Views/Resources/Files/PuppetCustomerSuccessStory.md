@@ -4,7 +4,7 @@ Title: Customer Success Story: Puppet
 Type: Customer Success Story
 Name: Mike Lombardi
 Company: Puppet
-Position: Sofware Engineer
+Position: Software Engineer
 Video: ESjwvIZGu30
 Tags: featured success-story chocolatey-fest 2018
 Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/Puppet_Mike-Lombardi.jpg" alt="Mike Lombardi at Puppet" title="Mike Lombardi at Puppet" />
