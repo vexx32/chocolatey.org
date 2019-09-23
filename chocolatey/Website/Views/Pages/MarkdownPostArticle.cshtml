@@ -54,13 +54,16 @@
             @Html.Raw(Model.Post)
         </div>
         <a class="btn btn-primary my-3" href="@Url.RouteUrl(RouteName.BlogHome)"><span class="fas fa-angle-left"></span> Return to Posts</a>
-        @{
-            var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
-        }
-        <a name="comments"></a>
-        <div id="disqus_thread"></div>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a class="h4 mt-4 collapsed d-block" data-toggle="collapse" href="#blog-comments" role="button" aria-expanded="false" aria-controls="blog-comments" title="Blog Comments">View Blog Comments</a>
+        <div class="collapse" id="blog-comments">
+            @{
+                var disqusShortname = System.Configuration.ConfigurationManager.AppSettings["DisqusShortname"];
+            }
+            <a name="comments"></a>
+            <div id="disqus_thread"></div>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
     </div>
 </section>
 
