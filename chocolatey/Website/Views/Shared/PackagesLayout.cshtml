@@ -16,7 +16,7 @@
 
 <body>
     @Html.Partial("~/Views/Shared/_TopNavigation.cshtml")
-    <main class="my-auto">
+    <main class="mb-auto">
         @if (TempData.ContainsKey("Message") || TempData.ContainsKey("ErrorMessage"))
         {
             <div class="modal fade" id="tempdata-message" tabindex="-1" role="dialog" aria-labelledby="tempdata-message" aria-hidden="true">
