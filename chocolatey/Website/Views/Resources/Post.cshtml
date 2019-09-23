@@ -98,14 +98,14 @@
             </ul>
         </div>
         <div class="row">
-            <div class="col-xl-8 mx-auto">
+            <div class="col-12 mx-auto">
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.Video" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
             @if (Model.Type.Contains("Customer Success Story"))
             {
-                <div class="col-xl-6 mx-auto pt-3 pt-lg-5 text-center">
+                <div class="col-lg-10 mx-auto pt-3 pt-lg-5 text-center">
                     @if (!String.IsNullOrEmpty(Model.Quote))
                     {
                         <q class="h3 pb-4">@Model.Quote</q>
@@ -116,13 +116,13 @@
             }
             @if (!Model.Type.Contains("Customer Success Story") && String.IsNullOrEmpty(Model.Post))
             {
-                <div class="col-xl-10 mx-auto pt-3 pt-lg-5 text-center">
+                <div class="col-12 mx-auto pt-3 pt-lg-5 text-center">
                     <h5>@Html.Raw(Model.Summary)</h5>
                 </div>
             }
             @if (!String.IsNullOrEmpty(Model.Post))
             {
-                <div class="col-xl-10 mx-auto pt-3 pt-lg-5">
+                <div class="col-12 mx-auto pt-3 pt-lg-5">
                     @Html.Raw(Model.Post)
                 </div>
             }
