@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-10">
-                    <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h3 text-dark mb-0 btn-link">@Model.Title</a>
+                    <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h4 text-dark mb-0 btn-link">@Model.Title</a>
                     <div class="d-flex align-items-center">
                         <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)#status"  title="Click to view test results">
                             <span class="@Model.PackageTestResultsStatus"></span>

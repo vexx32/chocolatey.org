@@ -1,5 +1,4 @@
 // Variables
-$font-weight-bold: 700 !default;
 $gray-100: #f8f9fa;
 $white: #ffffff;
 
@@ -19,11 +18,6 @@ $fa-font-path: "../../Content/fonts";
 $enable-responsive-font-sizes: true;
 $body-bg: $gray-100;
 $font-family-sans-serif: 'PT Sans', sans-serif;
-$font-size-base: 1.25rem;
-$display1-size: 6.25rem;
-$display2-size: 5.75rem;
-$display3-size: 4.75rem;
-$display4-size: 3.75rem;
 
 // Links
 $link-hover-decoration: none;
@@ -31,7 +25,7 @@ $link-hover-decoration: none;
 // Buttons
 $input-btn-padding-y-sm: 0;
 $input-btn-padding-x-sm: 6px;
-$btn-font-weight: $font-weight-bold;
+$btn-font-weight: 700;
 
 // Tooltips
 $tooltip-bg: darken($blue, 15%);
@@ -70,11 +64,3 @@ $custom-control-indicator-size: 1.5rem;
 
 // Tabs
 $nav-tabs-link-active-bg: $white;
-
-// Container Widths
-$container-max-widths: (
-  sm: 768px,
-  md: 992px,
-  lg: 1200px,
-  xl: 1800px
-);

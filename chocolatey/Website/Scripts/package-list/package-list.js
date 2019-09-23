@@ -1,6 +1,7 @@
 // Allow Moderator Queue to be set to default view
 $(function () {
     var moderatorQueue = window.location.href.indexOf('moderatorQueue') > 0;
+    var search = window.location.href.indexOf('q=') > 0;
     if (moderatorQueue) {
         window.sessionStorage.setItem('moderatorQueue', true);
     }
@@ -27,7 +28,7 @@ $(function () {
     if (view && !stop) {
         localStorage.setItem("stop", "true"); //Prevents continuous reloads
     }
-    else if (view && !moderatorQueue) {
+    else if (view && !moderatorQueue && !search) {
         localStorage.removeItem("stop");
         location.search = '' + "?q=&moderatorQueue=true"; // Change Parameter
     }

@@ -32,9 +32,6 @@ $(document).ready(function () {
         if ($(window).width() < 992) {
             var height = $('header .alert').outerHeight();
         }
-        else if ($(window).width() > 992 && $(window).width() < 1200) {
-            var height = $('nav.navbar').outerHeight() - $('nav .navbar-collapse').outerHeight() + $('header .alert').outerHeight();
-        }
         else {
             var height = $('nav.navbar').outerHeight() + $('header .alert').outerHeight();
         }
@@ -49,13 +46,13 @@ $(document).ready(function () {
     });
     // Close the dropdown when page is scrolled
     $(window).on("scroll", function () {
-        if ($(this).width() > 1200) {
+        if ($(this).width() > 992) {
             closeDropdowns();
         }
     });
     // Close the dropdown when viewport is resized on desktop
     $(window).on("resize", function () {
-        if ($(this).width() > 1200) {
+        if ($(this).width() > 992) {
             closeDropdowns();
             closeNav();
         }
@@ -66,7 +63,7 @@ $(document).ready(function () {
     });
     // Add/Remove fixed positioning for mobile
     $('#topNav').on('show.bs.collapse', function () {
-        if ($(window).width() < 1200) {
+        if ($(window).width() < 768) {
             $(this).parent().addClass("position-fixed").css("z-index", "999").css("top", "0");
             $("body").addClass("position-fixed");
         }
@@ -332,8 +329,10 @@ $('.information-carousel')
     .on('slide.bs.carousel', function () {
         $(this).find(".video-story .modal").modal('hide');
     });
-$(window).scroll(function () {
-    $(".video-story .modal").modal('hide');
+$(window).on("scroll", function () {
+    if ($(this).width() > 1200) {
+        $(".video-story .modal").modal('hide');
+    }
 });
 $(".video-story .modal").on('hidden.bs.modal', function (e) {
     $(this).find("iframe").attr("src", $(this).find("iframe").attr("src"));

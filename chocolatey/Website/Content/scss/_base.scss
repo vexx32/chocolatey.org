@@ -132,6 +132,11 @@ footer.bg-medium-dark a:hover, #editions ul li a:hover, .sticky-nav a.active {
     text-decoration: underline;
 }
 
+.alert-dismissible .close {
+    padding: 0;
+    right: 10px;
+}
+
 .cookies-popup {
     display: none;
     position: fixed;
@@ -333,6 +338,11 @@ a + .collapse.show, a + .collapsing {
     display: block;
 }
 
+/*Switches*/
+.custom-switch .custom-control-label::after {
+    top: 2px;
+}
+
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;
@@ -352,7 +362,7 @@ footer {
     }
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
     .divider-list li:not(:last-child) {
         border-right: 1px solid #ced4da;
         border-bottom: 0;
@@ -360,7 +370,7 @@ footer {
     }
 }
 
-@media (min-width: 992px) {
+@include media-breakpoint-up(lg) {
     .copyBox {
         max-width: 550px;
     }
@@ -378,7 +388,7 @@ footer {
     }
 }
 
-@media (min-width: 1200px) {
+@include media-breakpoint-up(xl) {
     .cookies-popup {
         z-index: 99;
     }

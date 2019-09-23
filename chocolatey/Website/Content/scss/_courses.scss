@@ -8,7 +8,7 @@
 
     li {
         border-left: 3px solid $medium-light;
-        padding: 0 0 20px 20px;
+        padding: 0 0 20px 23px;
 
         a {
             color: $dark;
@@ -34,33 +34,24 @@
         border: 3px solid $medium-light;
         content: "";
         float: left;
-        height: 25px;
-        line-height: 25px;
+        height: 20px;
+        line-height: 20px;
         margin: 0 1rem 0 -35px;
-        width: 25px;
+        width: 20px;
         transition: all 0.3s ease;
     }
-    /*li.completed:before, li.mod-completed:before {
-        border-color: $primary;
-        background-color: $primary;
-        color: $white;
-        line-height: 22px;
-        width: 25px;
-        height: 25px;
-        font-size: .75rem;
-    }*/
+
     li.completed, li.mod-completed {
         &::before, &::after {
             color: $white;
+            padding-left: 1px;
         }
 
         &::before {
             border-color: $primary;
             background-color: $primary;
-            line-height: 22px;
-            width: 25px;
-            height: 25px;
-            font-size: .75rem;
+            line-height: 16px;
+            font-size: 70%;
         }
     }
 

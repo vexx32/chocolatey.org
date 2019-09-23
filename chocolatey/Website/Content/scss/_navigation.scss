@@ -5,6 +5,7 @@
         color: $medium-dark;
     }
 }
+
 #topNav {
     padding-bottom: 0;
     z-index: 9999;
@@ -26,6 +27,10 @@
 
         .nav-item:last-child {
             margin: .5rem 1rem;
+
+            a {
+                font-size: 1.2rem;
+            }
         }
 
         .nav-link {
@@ -33,6 +38,7 @@
             margin: .5rem 1rem;
             color: $dark;
             transition: 0.5s;
+            font-size: 1.2rem;
         }
 
         .nav-link:hover, .show > .dropdown-toggle {
@@ -127,8 +133,8 @@
     }
 }
 
-@media (min-width: 768px) {
-   #topNav img {
+@include media-breakpoint-up(sm) {
+    #topNav img {
         height: 75px;
     }
 
@@ -155,9 +161,8 @@
     }
 }
 
-@media (min-width: 992px) {
+@include media-breakpoint-up(md) {
     #topNav {
-
         .navbar-collapse {
 
             &.show {
@@ -167,10 +172,6 @@
             .dropdown-menu {
                 top: 94px;
                 padding: 1rem 0;
-
-                &.show {
-                    height: auto;
-                }
 
                 [class*=col-] {
                     border-bottom: 0 !important;
@@ -192,6 +193,7 @@
             }
         }
     }
+
     #secondaryNav.successStoryNav {
 
         ul {
@@ -200,12 +202,12 @@
     }
 }
 
-@media (min-width: 1200px) {
+@include media-breakpoint-up(lg) {
     #topNav {
         padding: 1.5rem;
 
         img {
-            height: 125px;
+            height: 115px;
             position: absolute;
             z-index: 9999;
             top: 17px;
@@ -222,7 +224,7 @@
                 margin: 0;
                 position: absolute;
                 right: 1.5rem;
-                top: 25%;
+                top: 28%;
             }
 
             .nav-link {
@@ -233,6 +235,10 @@
 
             .dropdown-menu {
                 padding: 3rem 0;
+
+                &.show {
+                    height: auto;
+                }
 
                 [class*=col-] {
                     padding: 0 2rem;
@@ -245,6 +251,13 @@
                     }
                 }
             }
+        }
+    }
+}
+@include media-breakpoint-up(xl) {
+    #topNav {
+        img {
+            height: 125px;
         }
     }
 }

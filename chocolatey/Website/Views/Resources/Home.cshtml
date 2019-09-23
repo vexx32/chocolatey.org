@@ -269,76 +269,71 @@
 <section class="pb-3 pb-lg-5">
     <div class="container">
         <div class="row">
-            <div class="col-xl-10 mx-auto">
-                <div class="row">
-                    <div class="col-md-6 updated-list resource-d-6">
-                        <h3>Recently Updated Resources</h3>
+            <div class="col-md-6 updated-list resource-d-6">
+                <h3>Recently Updated Resources</h3>
+                <hr />
+                @foreach (var post in @Model)
+                {
+                    <a href="
+                    @if (post.Type.Contains("Customer Success Story"))
+                    {
+                        @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = post.UrlPath })
+                    }
+                    else if (post.Type.Contains("Video"))
+                    {
+                        @Url.RouteUrl(RouteName.ResourceName, new {resourceType= "videos", resourceName = post.UrlPath })
+                    }
+                    else if (post.Type.Contains("Case Study"))
+                    {
+                        @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = post.UrlPath })
+                    }
+                    ">
+                        <div>
+                            @post.Title
+                            <br />
+                            <span>@post.Published.GetValueOrDefault().ToLongDateString()</span>
+                        </div>
                         <hr />
-                        @foreach (var post in @Model)
-                        {
-                            <a href="
-                            @if (post.Type.Contains("Customer Success Story"))
-                            {
-                                @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = post.UrlPath })
-                            }
-                            else if (post.Type.Contains("Video"))
-                            {
-                                @Url.RouteUrl(RouteName.ResourceName, new {resourceType= "videos", resourceName = post.UrlPath })
-                            }
-                            else if (post.Type.Contains("Case Study"))
-                            {
-                                @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = post.UrlPath })
-                            }
-                            ">
-                                <div>
-                                    @post.Title
-                                    <br />
-                                    <span>@post.Published.GetValueOrDefault().ToLongDateString()</span>
-                                </div>
-                                <hr />
-                            </a>
-                        }
-                    </div>
-                    <div class="col-md-6 helpful-list resource-d-3">
-                        <h3>Helpful Resources</h3>
-                        <hr />
-                        @foreach (var post in @Model)
-                        {
-                            if (post.Tags.Contains("featured"))
-                            {
-                                <a href="
-                                @if (post.Type.Contains("Customer Success Story"))
-                                {
-                                    @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = post.UrlPath })
-                                }
-                                else if (post.Type.Contains("Video"))
-                                {
-                                    @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "videos", resourceName = post.UrlPath })
-                                }
-                                else if (post.Type.Contains("Case Study"))
-                                {
-                                    @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = post.UrlPath })
-                                }
-                                ">
-                                    <div class="bg-white p-2 mb-4 shadow-sm">
-                                        @post.Title
-                                        <br />
-                                        @if (post.Summary.Length < 100)
-                                        {
-                                            <span>@post.Summary</span>
-                                        }
-                                        else
-                                        {
-                                            <span>@post.Summary.Substring(0, 100)<text>...</text></span>
-                                        }
-                                    </div>
-                                </a>
-                            }
-                        }
-                    </div>
-                </div>
+                    </a>
+                }
             </div>
-            
+            <div class="col-md-6 helpful-list resource-d-3">
+                <h3>Helpful Resources</h3>
+                <hr />
+                @foreach (var post in @Model)
+                {
+                    if (post.Tags.Contains("featured"))
+                    {
+                        <a href="
+                        @if (post.Type.Contains("Customer Success Story"))
+                        {
+                            @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "success-stories", resourceName = post.UrlPath })
+                        }
+                        else if (post.Type.Contains("Video"))
+                        {
+                            @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "videos", resourceName = post.UrlPath })
+                        }
+                        else if (post.Type.Contains("Case Study"))
+                        {
+                            @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = post.UrlPath })
+                        }
+                        ">
+                            <div class="bg-white p-2 mb-4 shadow-sm">
+                                @post.Title
+                                <br />
+                                @if (post.Summary.Length < 100)
+                                {
+                                    <span>@post.Summary</span>
+                                }
+                                else
+                                {
+                                    <span>@post.Summary.Substring(0, 100)<text>...</text></span>
+                                }
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
         </div>
     </div>
 </section>

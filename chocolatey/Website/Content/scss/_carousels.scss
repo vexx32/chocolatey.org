@@ -69,14 +69,14 @@
     }
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
     .carousel.testimonial-carousel .carousel-inner .carousel-item > div {
         width: 75%;
         margin: 0 auto;
     }
 }
 
-@media (min-width: 1200px) {
+@include media-breakpoint-up(xl) {s
 
     .carousel.testimonial-carousel {
 
