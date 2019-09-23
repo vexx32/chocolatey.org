@@ -40,7 +40,7 @@
 <li><a href="#more-install-options" onclick="document.getElementById('div-moreoptions').classList.remove('d-none')">More Options</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "troubleshooting" })">Troubleshooting</a></li>
 </ul>
 <h4 id="install-with-cmdexe">Install with cmd.exe</h4>
-<p>Run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"><span class="fad fa-clipboard"></span> Copy Command Text</button> </p>
+<p>Run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="@@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))&quot; && SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;"><span class="fas fa-clipboard"></span> Copy Command Text</button> </p>
 <pre><code class="language-none">
 @@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command &quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot; &amp;&amp; SET &quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin&quot;
 </code></pre>
@@ -48,7 +48,7 @@
 <p>With PowerShell, there is an additional step. You must ensure <a href="https://go.microsoft.com/fwlink/?LinkID=135170">Get-ExecutionPolicy</a> is not Restricted. We suggest using <code>Bypass</code> to bypass the policy to get things installed or <code>AllSigned</code> for quite a bit more security.</p>
 <ul>
 <li>Run <code>Get-ExecutionPolicy</code>. If it returns <code>Restricted</code>, then run <code>Set-ExecutionPolicy AllSigned</code> or <code>Set-ExecutionPolicy Bypass -Scope Process</code>.</li>
-<li>Now run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"><span class="fad fa-clipboard"></span> Copy Command Text</button> </li>
+<li>Now run the following command:  <button class="btn btn-secondary btn-copy font-weight-bold" data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"><span class="fas fa-clipboard"></span> Copy Command Text</button> </li>
 </ul>
 <pre><code class="language-powershell">
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))
