@@ -300,6 +300,8 @@ namespace NuGetGallery
         {
             switch (searchFilter.SortProperty)
             {
+                case SortProperty.Relevance:
+                  return SortField.FIELD_SCORE;
                 case SortProperty.DisplayName:
                     return new SortField("DisplayName", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
                 case SortProperty.DownloadCount:
