@@ -51,7 +51,7 @@ namespace NuGetGallery
             document.Add(new Field("Id-Original", Package.PackageRegistration.Id, Field.Store.YES, Field.Index.NO));
 
             var field = new Field("Id-Exact", Package.PackageRegistration.Id.ToLowerInvariant(), Field.Store.NO, Field.Index.NOT_ANALYZED);
-            field.Boost = 2.5f;
+            field.Boost = 4.5f;
             document.Add(field);
             
             // We store the Id/Title field in multiple ways, so that it's possible to match using multiple
@@ -78,9 +78,13 @@ namespace NuGetGallery
 
             // title fields
             // If an element does not have a Title, fall back to Id, same as the website.
-            var workingTitle = String.IsNullOrEmpty(Package.Title)
+            var workingTitle = string.IsNullOrEmpty(Package.Title)
                                    ? Package.PackageRegistration.Id
                                    : Package.Title;
+
+            field = new Field("Title-Exact", workingTitle.ToLowerInvariant(), Field.Store.NO, Field.Index.NOT_ANALYZED);
+            field.Boost = 4.0f;
+            document.Add(field);
 
             // As-Is (stored for search results)
             field = new Field("Title", workingTitle, Field.Store.YES, Field.Index.ANALYZED);

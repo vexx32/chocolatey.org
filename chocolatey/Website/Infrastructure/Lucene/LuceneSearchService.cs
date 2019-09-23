@@ -216,7 +216,7 @@ namespace NuGetGallery
 
             // All terms in the multi-term query appear in at least one of the fields.
             var conjuctionQuery = new BooleanQuery();
-            conjuctionQuery.Boost = 2.0f;
+            conjuctionQuery.Boost = 4.0f;
 
             // Some terms in the multi-term query appear in at least one of the fields.
             var disjunctionQuery = new BooleanQuery();
@@ -235,8 +235,12 @@ namespace NuGetGallery
             bool onlySearchByTag = false;
 
             var exactIdQuery = new TermQuery(new Term("Id-Exact", escapedSearchTerm));
-            exactIdQuery.Boost = 2.5f;
+            exactIdQuery.Boost = 7.0f;
             var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + escapedSearchTerm + "*"));
+            
+            var exactTitleQuery = new TermQuery(new Term("Title-Exact", escapedSearchTerm));
+            exactTitleQuery.Boost = 5.0f;
+            var wildCardTitleQuery = new WildcardQuery(new Term("Title-Exact", "*" + escapedSearchTerm + "*"));
 
             foreach (var term in GetSearchTerms(searchFilter.SearchTerm))
             {
@@ -258,13 +262,13 @@ namespace NuGetGallery
                     if (onlySearchByTag && field != "Tags") continue;
 
                     var wildCardTermQuery = new WildcardQuery(new Term(field, localTerm + "*"));
-                    wildCardTermQuery.Boost = searchLimiter ? 2.5f : 0.7f;
+                    wildCardTermQuery.Boost = searchLimiter ? 7.0f : 0.7f;
                     wildCardQuery.Add(wildCardTermQuery, Occur.SHOULD);
                 }
             }
             
             // Create an OR of all the queries that we have
-            var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, wildCardIdQuery, conjuctionQuery, disjunctionQuery, wildCardQuery });
+            var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, exactTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, disjunctionQuery, wildCardQuery });
 
             if (onlySearchById)
             {
@@ -274,12 +278,12 @@ namespace NuGetGallery
                 combinedQuery = conjuctionQuery.Combine(new Query[] { wildCardQuery });
             }
             
-            if (searchFilter.SortProperty == SortProperty.Relevance)
-            {
-                // If searching by relevance, boost scores by download count.
-                var downloadCountBooster = new FieldScoreQuery("DownloadCount", FieldScoreQuery.Type.INT);
-                return new CustomScoreQuery(combinedQuery, downloadCountBooster);
-            }
+            //if (searchFilter.SortProperty == SortProperty.Relevance)
+            //{
+            //    // If searching by relevance, boost scores by download count.
+            //    var downloadCountBooster = new FieldScoreQuery("DownloadCount", FieldScoreQuery.Type.INT);
+            //    return new CustomScoreQuery(combinedQuery, downloadCountBooster);
+            //}
 
             return combinedQuery;
         }
