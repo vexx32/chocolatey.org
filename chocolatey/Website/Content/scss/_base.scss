@@ -338,6 +338,11 @@ a + .collapse.show, a + .collapsing {
     display: block;
 }
 
+/*Switches*/
+.custom-switch .custom-control-label::after {
+    top: 2px;
+}
+
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;
