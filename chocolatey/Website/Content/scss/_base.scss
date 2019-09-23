@@ -132,6 +132,11 @@ footer.bg-medium-dark a:hover, #editions ul li a:hover, .sticky-nav a.active {
     text-decoration: underline;
 }
 
+.alert-dismissible .close {
+    padding: 0;
+    right: 10px;
+}
+
 .cookies-popup {
     display: none;
     position: fixed;

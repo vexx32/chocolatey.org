@@ -21,10 +21,10 @@
 
 <header class="w-100 @if (!PackageNav && !ResourceNav && !CourseNav) {<text>mb-xl-3</text>}">
     <div class="d-none d-sm-block">@Html.Partial("~/Views/Shared/_AlertTop.cshtml")</div>
-    <nav id="topNav" class="navbar navbar-expand-xl navbar-dark bg-dark @if (!PackageNav && !ResourceNav && !CourseNav) {<text>shadow</text>}">
+    <nav id="topNav" class="navbar navbar-expand-lg navbar-dark bg-dark @if (!PackageNav && !ResourceNav && !CourseNav) {<text>shadow</text>}">
         <a class="navbar-brand" href="@Url.Home()">
-            <img class="d-none d-xl-block" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_square.svg")" />
-            <img class="d-xl-none" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
+            <img class="d-none d-lg-block" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_square.svg")" />
+            <img class="d-lg-none" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
         </a>
         <button class="navbar-toggler form-inline my-2 my-md-0 ml-2 border-0 collapsed" type="button" data-toggle="collapse" data-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,11 +36,11 @@
                     <div class="dropdown-menu" aria-labelledby="overview">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 d-xl-none">
+                                <div class="col-12 d-lg-none">
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Overview</h4>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.WhyChocolatey)">Why Chocolatey?</a>
@@ -49,7 +49,7 @@
                                         <li><a href="@Url.RouteUrl(RouteName.HowChocolateyWorks)">How Chocolatey Works</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.UseCases)">Use Cases</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.UseCases)#server">Server</a></li>
@@ -58,7 +58,7 @@
                                         <li><a href="@Url.RouteUrl(RouteName.UseCases)#integrations">Integrations</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">Customer Stories</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.ResourceName, new {resourceType= "success-stories", resourceName = "puppet-customer-success-story"})">Puppet<span class="fas fa-angle-right"></span></a></li>
@@ -75,11 +75,11 @@
                     <div class="dropdown-menu" aria-labelledby="product">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 d-xl-none">
+                                <div class="col-12 d-lg-none">
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Product</h4>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Products)#chocolatey-for-business">Chocolatey for Business</a>
@@ -95,7 +95,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Compare)">Compare Editions</a>
@@ -119,11 +119,11 @@
                     <div class="dropdown-menu" aria-labelledby="community">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 d-xl-none">
+                                <div class="col-12 d-lg-none">
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Community</h4>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.ListPackages)">Community Packages</a>
@@ -131,7 +131,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Community)">Community Resources</a></li>
                                         <li><a href="https://github.com/chocolatey" target="_blank" rel="noreferrer">Chocolatey on GitHub</a></li>
@@ -147,11 +147,11 @@
                     <div class="dropdown-menu" aria-labelledby="learn">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 d-xl-none">
+                                <div class="col-12 d-lg-none">
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Learn</h4>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Courses)">Get Started</a>
@@ -159,7 +159,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "home"})">Resource Library</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">Docs</a></li>
@@ -169,7 +169,7 @@
                                         <li><a href="@Url.RouteUrl(RouteName.MediaKit)">Media Kit</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Support)">Support</a>
@@ -188,17 +188,17 @@
                     <div class="dropdown-menu" aria-labelledby="partners">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 d-xl-none">
+                                <div class="col-12 d-lg-none">
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Partners</h4>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Partner)">Overview</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.ContactPartner)">Become a Partner</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Partner)#technology">Technology Partners</a></li>
                                     </ul>
@@ -215,11 +215,11 @@
                     <div class="dropdown-menu" aria-labelledby="about">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 d-xl-none">
+                                <div class="col-12 d-lg-none">
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">About</h4>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.About)">About Chocolatey</a>
@@ -227,7 +227,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Careers)">Careers</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.ContactUs)">Contact</a></li>
@@ -238,8 +238,8 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-light d-none d-xl-block" href="@Url.RouteUrl(RouteName.Install)">Install Now</a>
-                    <a class="btn btn-primary d-xl-none" href="@Url.RouteUrl(RouteName.Install)">Install Now</a>
+                    <a class="btn btn-outline-light d-none d-lg-block" href="@Url.RouteUrl(RouteName.Install)">Install Now</a>
+                    <a class="btn btn-primary d-lg-none" href="@Url.RouteUrl(RouteName.Install)">Install Now</a>
                 </li>
             </ul>
         </div>
