@@ -271,7 +271,7 @@ namespace NuGetGallery
 
                     var wildCardTermQuery = new WildcardQuery(new Term(field, localTerm + "*"));
                     wildCardTermQuery.Boost = searchLimiter ? 7.0f : 0.7f;
-                    wildCardQuery.Add(wildCardTermQuery, Occur.SHOULD);
+                    wildCardQuery.Add(wildCardTermQuery, Occur.MUST);
                 }
             }
             
