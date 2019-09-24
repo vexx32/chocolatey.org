@@ -276,7 +276,7 @@ namespace NuGetGallery
             }
             
             // Create an OR of all the queries that we have
-            var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, exactTitleQuery, startsIdQuery, startsTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, disjunctionQuery, wildCardQuery });
+            var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, exactTitleQuery, startsIdQuery, startsTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, wildCardQuery });
 
             if (onlySearchById)
             {
