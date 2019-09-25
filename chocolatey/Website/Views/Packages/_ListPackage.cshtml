@@ -5,116 +5,118 @@
 
     var submittedStatus = Model.SubmittedStatus;
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
+    var listView = Request.Cookies["preferenceListView"] != null;
 }
 
-<div class="col-lg-6 col-xl-4 mb-4">
-    <div class="card h-100 @if (Model.Status == PackageStatusType.Unknown) {<text>unknown-status</text>} @if (Model.Status == PackageStatusType.Submitted) {<text>@submittedStatus.ToString().ToLower()</text>}">
-        @if (Model.Status == PackageStatusType.Unknown)
-        {
-            <div class="card-header py-2 px-3 text-white font-weight-bold d-flex align-items-center">
-                <span>Unknown Status</span>
-            </div>
-        }
-        @if (isSubmitted)
-        {
-            <div class="card-header py-2 px-3 text-white font-weight-bold d-flex align-items-center">
-                @switch (submittedStatus)
-                {
-                    case PackageSubmittedStatusType.Pending:
-                        <span>Pending Automated Review</span>
-                        break;
-                    case PackageSubmittedStatusType.Ready:
-                        <span>Ready</span>
-                        break;
-                    case PackageSubmittedStatusType.Updated:
-                        <span class="mr-2">Updated</span>
-                        @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
-                        break;
-                    case PackageSubmittedStatusType.Responded:
-                        <span class="mr-2">Responded</span>
-                        if (!string.IsNullOrWhiteSpace(Model.ReviewerEmailAddress))
-                        {
-                            @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
-                        }
-                        break;
-                    default:
-                        <span class="mr-2">Waiting for Maintainer</span>
-                        @ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)
-                        break;
-                }
-            </div>
-        }
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-2 text-center pr-0">
-                    <div class="mx-auto package-image-header">
-                        <img class="img-fluid" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
-                    </div>
+<div class="@if (!listView){<text>card-body pb-2</text>}">
+    <div class="media">
+        <div class="mx-auto package-image-header">
+            <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title">
+                <img class="align-self-start img-fluid" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@Model.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';">
+            </a>
+        </div>
+        <div class="media-body ml-3">
+            @*Title and Type*@
+            <div class="d-flex @if(listView){<text>align-items-sm-center</text>}">
+                <div class="d-flex mt-1 @if(listView){<text>mt-sm-0</text>}">
+                    <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)#status" title="Click to view test results">
+                        <span class="@Model.PackageTestResultsStatus"></span>
+                        <span class="@Model.PackageValidationResultStatus"></span>
+                    </a>
                 </div>
-                <div class="col-10">
-                    <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h4 text-dark mb-0 btn-link">@Model.Title</a>
-                    <div class="d-flex align-items-center">
-                        <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)#status"  title="Click to view test results">
-                            <span class="@Model.PackageTestResultsStatus"></span>
-                            <span class="@Model.PackageValidationResultStatus"></span>
-                        </a>
-                        <p><strong>@Model.Version</strong></p>
-                    </div>
-                </div>
+                <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h5 font-weight-bold text-dark mb-0 btn-link">@Model.Title <span class="@if(!listView){<text>d-block small</text>}">@Model.Version</span></a>
             </div>
-            <div>
+            @*Badges*@
+            <div class="@if(!listView){<text>mt-1</text>}">
+                <span class="badge badge-pill badge-outline-primary">@Model.TotalDownloadCount.ToString("n0") @if(Model.TotalDownloadCount != 1){<text> Downloads</text>}else{<text> Download</text>}</span>
                 @if (Model.IsOwner(User))
                 {
-                    <span class="badge badge-dark p-2 mb-2">My Package</span>
+                    <span class="badge badge-pill badge-dark"><span class="fas fa-star text-warning small"></span> My Package</span>
                 }
-                <ul class="list-unstyled list-inline mb-0">
-                    <li class="list-inline-item mr-0">By: </li>
-                    @foreach (var owner in Model.Owners)
-                    {
-                        <li class="list-inline-item"><a href="@Url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">@owner.Username</a></li>
-                    }
-                </ul>
-                @if (@Model.Tags.AnySafe())
+                @if (Model.Status == PackageStatusType.Unknown)
                 {
-                    <ul class="list-unstyled list-inline mb-0">
-                        <li class="list-inline-item mr-0">Tags: </li>
-                        @foreach (var tag in Model.Tags)
-                        {
-                            <li class="list-inline-item"><a href="@Url.Search("tag:" + tag)" title="Search for @tag">@tag</a></li>
-                        }
-                    </ul>
+                    <span class="badge badge-pill badge-secondary">Unknown Status</span>
                 }
                 @if (isSubmitted)
                 {
-                    <span>Published: @Model.PublishedDate.ToShortDateString()</span>
-                    if (Model.ReviewedDate.HasValue)
+                    switch (submittedStatus)
                     {
-                        <span>| Reviewed: @Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</span>
-                    }
-                    if (!string.IsNullOrWhiteSpace(Model.ReviewerUserName))
-                    {
-                        <p class="mb-0">Reviewer: @Model.ReviewerUserName</p>
-                    }
-                    <p class="mb-0">Downloads: @Model.TotalDownloadCount.ToString("n0")</p>
-                }
-                else
-                {
-                    <p class="mb-0">Downloads: @Model.TotalDownloadCount.ToString("n0")</p>
-                    if (String.IsNullOrEmpty(Model.Description) || Model.Description.Length < 250)
-                    {
-                        <p class="mt-3">@Model.Description</p>
-                    }
-                    else
-                    {
-                        <p class="mt-3">@Model.Description.Substring(0, 250)<text>... </text><a class="font-weight-normal" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" aria-label="Continue reading about @Model.Title">Keep Reading</a></p>
-
+                        case PackageSubmittedStatusType.Pending:
+                            <span class="badge badge-pill badge-warning">Pending Automated Review</span>
+                            break;
+                        case PackageSubmittedStatusType.Ready:
+                            <span class="badge badge-pill badge-success">Ready</span>
+                            break;
+                        case PackageSubmittedStatusType.Updated:
+                            <span class="badge badge-pill badge-orange">Updated</span>
+                            <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 25)</a>
+                            break;
+                        case PackageSubmittedStatusType.Responded:
+                            <span class="badge badge-pill badge-purple">Responded</span>
+                            if (!string.IsNullOrWhiteSpace(Model.ReviewerEmailAddress))
+                            {
+                                <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 25)</a>
+                            }
+                            break;
+                        default:
+                            <span class="badge badge-pill badge-danger">Waiting for Maintainer</span>
+                            <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 25)</a>
+                            break;
                     }
                 }
             </div>
         </div>
-        <div class="card-footer bg-white pt-0 pb-4 border-0 @if (Model.Title != "Chocolatey"){<text>d-sm-flex</text>}else{<text>text-right</text>}">
-            @if (Model.Title != "Chocolatey")
+    </div>
+    @*Summary*@
+    @if (!isSubmitted)
+    {
+        <p class="mt-2 mb-0 package-list-align">
+            @if (String.IsNullOrEmpty(Model.Summary) || Model.Summary.Length < 138)
             {
+                @Model.Summary
+            }
+            else
+            {
+                @Model.Summary.Substring(0, 138)<text>... </text><a class="font-weight-normal" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" aria-label="Continue reading about @Model.Title">Keep Reading</a>
+            }
+        </p>
+    }
+</div>
+<div class="@if (listView){<text>row mt-2 package-list-align</text>}else{<text>card-footer bg-white pt-0</text>}">
+    <div class="@if(listView && !isSubmitted){<text>col-lg-6</text>}else if(listView && isSubmitted){<text>col-12</text>}">
+        @*Package By*@
+        <ul class="list-unstyled list-inline mb-0 small">
+            <li class="list-inline-item mr-0"><strong>By: </strong></li>
+            @foreach (var owner in Model.Owners)
+            {
+                <li class="list-inline-item mr-1"><a href="@Url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">@owner.Username</a></li>
+            }
+            @if (isSubmitted)
+            {
+                <li class="list-inline-item mr-1"><strong>Published: </strong>@Model.PublishedDate.ToShortDateString()</li>
+                if (Model.ReviewedDate.HasValue)
+                {
+                    <li class="list-inline-item mr-0"><strong>Reviewed: </strong>@Model.ReviewedDate.GetValueOrDefault().ToShortDateString() @if(!string.IsNullOrWhiteSpace(Model.ReviewerUserName)){<text> by <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@Model.ReviewerUserName</a></text>}</li>
+                }
+            }
+        </ul>
+        @*Tags*@
+        @if (@Model.Tags.AnySafe())
+        {
+            <ul class="list-unstyled list-inline mb-0 small">
+                <li class="list-inline-item mr-0"><strong>Tags: </strong></li>
+                @foreach (var tag in Model.Tags)
+                {
+                    <li class="list-inline-item mr-1"><a href="@Url.Search("tag:" + tag)" title="Search for @tag">@tag</a></li>
+                }
+            </ul>
+        }
+    </div>
+    <div class="mt-2 @if(listView && !isSubmitted){<text>col-lg-6 mt-lg-0</text>}else if(listView && isSubmitted){<text>d-none</text>}">
+        @*Command*@
+        @if (Model.Title != "Chocolatey" && !isSubmitted)
+        {
+            <div class="d-sm-flex">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">></div>
@@ -137,12 +139,17 @@
                         </button>
                     </div>
                 </div>
-            }
-            else
-            {
-                <a class="btn btn-primary mt-3 mt-sm-0" href="@Url.RouteUrl(RouteName.Install)" title="Learn how to install @Model.Title" aria-label="Learn how to install @Model.Title">Install Now</a>
-            }
-            <a class="btn btn-outline-primary ml-sm-2 mt-3 mt-sm-0" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title">Learn More</a>
-        </div>
+            </div>
+        }
+        else if (Model.Title == "Chocolatey")
+        {
+            <div class="text-right">
+                <a class="btn btn-primary" href="@Url.RouteUrl(RouteName.Install)" title="Learn how to install @Model.Title" aria-label="Learn how to install @Model.Title">Install Now</a>
+            </div>
+        }
     </div>
 </div>
+@if (listView)
+{
+    <hr />
+}

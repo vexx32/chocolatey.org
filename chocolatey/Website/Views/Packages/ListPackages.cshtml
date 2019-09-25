@@ -54,7 +54,7 @@
     }
     <div class="tab-content">
         <div class="tab-pane fade show active" id="packages-results" role="tabpanel" aria-labelledby="packages-tab">
-            <div class="d-xl-flex align-items-xl-center justify-content-xl-between">
+            <div class="d-lg-flex align-items-lg-center justify-content-lg-between">
                 <div>
                     @if (!String.IsNullOrEmpty(Model.SearchTerm))
                     {
@@ -183,31 +183,60 @@
                                 else
                                 {<text>There are @Model.TotalCount Community Maintained Packages</text>}
                             </h2>
+                            if (!moderationQueue)
+                            {
+                                <p class="mb-0">Displaying Results @Model.FirstResultIndex - @Model.LastResultIndex</p>
+                            }
                         }
-
                     }
                 </div>
                 @if (@Model.LastResultIndex > 0)
                 {
                     <div>
-                        <p class="mb-0">Displaying Results @Model.FirstResultIndex - @Model.LastResultIndex</p>
-                        @if (currentUrl.Contains("moderatorQueue=true") && moderationRole)
+                        @if (moderationQueue)
                         {
-                            <div class="custom-control custom-switch d-none d-xl-block mt-3">
-                                <input type="checkbox" class="custom-control-input" id="package-view">
-                                <label class="custom-control-label" for="package-view">Make the Moderator Queue your default view?</label>
-                            </div>
+                            <p class="mb-0 mb-lg-2">Displaying Results @Model.FirstResultIndex - @Model.LastResultIndex</p>
                         }
+                        <button class="btn btn-primary my-2 mb-sm-0 mt-lg-0" data-toggle="modal" data-target="#package-preferences">Manage Package Preferences</button>
+                        <div class="modal fade" id="package-preferences" tabindex="-1" role="dialog" aria-labelledby="Manage Package Preferences" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="mb-0">Manage Package Preferences</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true" class="fas fa-times"></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="preferenceListView">
+                                            <label class="custom-control-label" for="preferenceListView">Make list view your default view?</label>
+                                        </div>
+                                        @if (moderationRole)
+                                        {
+                                            <div class="custom-control custom-switch mt-3">
+                                                <input type="checkbox" class="custom-control-input" id="preferenceModView">
+                                                <label class="custom-control-label" for="preferenceModView">Make the Moderator Queue your default view?</label>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <button class="btn btn-success btn-preferences">Save Preferences</button>
+                                        <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
-            <hr />
+            <hr class="d-none d-sm-block" />
             <div class="row">
                 <div class="col-lg-8 col-xl-9">
                     <nav class="navbar navbar-expand-sm p-0">
                         <button class="btn btn-primary w-100 d-sm-none" type="button" data-toggle="collapse" data-target="#search-filters" aria-controls="search filters" aria-expanded="false" aria-label="Toggle Search Filters">View Search Filters</button>
                         <div class="collapse navbar-collapse" id="search-filters">
-                            <div class="navbar-nav d-block w-100 mt-3 mt-sm-0">
+                            <div class="navbar-nav d-block w-100 mt-2 mt-sm-0">
                                 <form method="get" action="">
                                     <fieldset class="form search">
                                         <input type="hidden" name="q" value="@Model.SearchTerm" />
@@ -273,12 +302,31 @@
                     </form>
                 </div>
             </div>
-            <div class="row pt-3 pt-lg-5">
-                @foreach (var package in Model.Items)
-                {
-                    @Html.Partial(MVC.Packages.Views._ListPackage, package)
-                }
-            </div>
+            @if (Request.Cookies["preferenceListView"] != null)
+            {
+                <ul class="list-unstyled pt-3 package-list-view">
+                    @foreach (var package in Model.Items)
+                    {
+                        <li>
+                            @Html.Partial(MVC.Packages.Views._ListPackage, package)
+                        </li>
+                    }
+                </ul>
+            }
+            else 
+            {
+                <div class="row pt-3 package-grid-view">
+                    @foreach (var package in Model.Items)
+                    {
+                        <div class="col-lg-6 col-xl-4 mb-4">
+                            <div class="card h-100">
+                                @Html.Partial(MVC.Packages.Views._ListPackage, package)
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
             @if (@FullHref == @BaseHref + "/packages")
             {@ViewHelpers.PreviousNextPager(Model.Pager)}
             else if (@FullHref == @BaseHref + "/search")

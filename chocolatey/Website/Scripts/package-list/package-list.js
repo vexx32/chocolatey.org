@@ -1,37 +1,39 @@
-// Allow Moderator Queue to be set to default view
+// Package Preferences
 $(function () {
-    var moderatorQueue = window.location.href.indexOf('moderatorQueue') > 0;
-    var search = window.location.href.indexOf('q=') > 0;
-    if (moderatorQueue) {
-        window.sessionStorage.setItem('moderatorQueue', true);
-    }
-    else {
-        window.sessionStorage.removeItem('moderatorQueue');
-    }
+    var preferenceListView = $('#preferenceListView');
+    var listView = getCookie("preferenceListView");
+    var preferenceModView = $('#preferenceModView');
+    var modView = getCookie("preferenceModView");
 
-    // Set or unset preferences
-    var select = $('#package-view');
-    select.change(function () {
-        if (select.prop("checked") == true) {
-            window.localStorage.setItem('view', true);
+    // Legacy script- Delete in 30 days for users to get cookied instead of using localstorage
+    if (window.localStorage.getItem('view')) {
+        document.cookie = "preferenceModView=true";
+        localStorage.removeItem("view");
+        location.reload();
+    }
+    // End legacy script
+    if (listView) {
+        preferenceListView.prop("checked", true);
+    }
+    if (modView) {
+        preferenceModView.prop("checked", true);
+    }
+    // Save Preferences
+    $('.btn-preferences').click(function () {
+        if (preferenceListView.prop("checked") == true) {
+            document.cookie = "preferenceListView=true";
         }
-        else {
-            localStorage.removeItem("view");
+        else if (preferenceListView.prop("checked") == false) {
+            document.cookie = "preferenceListView=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
+        if (preferenceModView.prop("checked") == true) {
+            document.cookie = "preferenceModView=true";
+        }
+        else if (preferenceModView.prop("checked") == false) {
+            document.cookie = "preferenceModView=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        location.reload();
     });
-
-    // Get Items
-    var view = window.localStorage.getItem('view');
-    if (view) {
-        select.prop("checked", true);
-    }
-    if (view && !stop) {
-        localStorage.setItem("stop", "true"); //Prevents continuous reloads
-    }
-    else if (view && !moderatorQueue && !search) {
-        localStorage.removeItem("stop");
-        location.search = '' + "?q=&moderatorQueue=true"; // Change Parameter
-    }
 });
 
 // Package Filtering
