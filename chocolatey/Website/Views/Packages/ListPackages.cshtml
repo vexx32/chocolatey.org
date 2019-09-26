@@ -62,8 +62,8 @@
                             Search for "@Model.SearchTerm" Returned @Model.TotalCount
                             @if (Model.TotalCount == 1)
                             {<text>Package</text>}
-                            else
-                            {<text>Packages</text>}
+                        else
+                        {<text>Packages</text>}
                         </h2>
                     }
                     else
@@ -75,10 +75,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Pending Packages in Moderation</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Pending Package in Moderation</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Pending Packages in Moderation</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Pending Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Pending Packages in Moderation</text>}
                                 </h2>
                             }
                             else if (currentUrl.ToLower().Contains("updated-status"))
@@ -86,10 +86,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Updated Packages in Moderation</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Updated Package in Moderation</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Updated Packages in Moderation</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Updated Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Updated Packages in Moderation</text>}
                                 </h2>
                             }
                             else if (currentUrl.ToLower().Contains("waiting-status"))
@@ -97,10 +97,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Waiting Packages in Moderation</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Waiting Package in Moderation</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Waiting Packages in Moderation</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Waiting Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Waiting Packages in Moderation</text>}
                                 </h2>
                             }
                             else if (currentUrl.ToLower().Contains("responded-status"))
@@ -108,10 +108,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Responded Packages in Moderation</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Responded Package in Moderation</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Responded Packages in Moderation</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Responded Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Responded Packages in Moderation</text>}
                                 </h2>
                             }
                             else if (currentUrl.ToLower().Contains("ready-status"))
@@ -119,10 +119,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Ready Packages in Moderation</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Ready Package in Moderation</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Ready Packages in Moderation</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Ready Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Ready Packages in Moderation</text>}
                                 </h2>
                             }
                             else if (currentUrl.ToLower().Contains("unknown-status"))
@@ -130,10 +130,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Unknown Packages</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Unknown Package</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Unknown Packages</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Unknown Package</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Unknown Packages</text>}
                                 </h2>
                             }
                             else if (currentUrl.ToLower().Contains("submitted-status"))
@@ -141,10 +141,10 @@
                                 <h2 class="mb-0">
                                     @if (@Model.LastResultIndex < 1)
                                     {<text>There are 0 Submitted Packages in Moderation</text>}
-                                    else if (@Model.LastResultIndex == 1)
-                                    {<text>There is @Model.LastResultIndex Submitted Package in Moderation</text>}
-                                    else if (@Model.LastResultIndex > 1)
-                                    {<text>There are @Model.LastResultIndex Submitted Packages in Moderation</text>}
+                                else if (@Model.LastResultIndex == 1)
+                                {<text>There is @Model.LastResultIndex Submitted Package in Moderation</text>}
+                            else if (@Model.LastResultIndex > 1)
+                            {<text>There are @Model.LastResultIndex Submitted Packages in Moderation</text>}
                                 </h2>
                             }
                             else
@@ -152,8 +152,8 @@
                                 <h2>
                                     @if (Model.TotalCount == 1)
                                     {<text>There is @moderationCount Package in Moderation</text>}
-                                    else
-                                    {<text>There are @moderationCount Packages in Moderation</text>}
+                                else
+                                {<text>There are @moderationCount Packages in Moderation</text>}
                                 </h2>
                                 <form method="get" action="">
                                     <fieldset class="form search h5 mb-0">
@@ -180,8 +180,8 @@
                             <h2 class="mb-0">
                                 @if (Model.TotalCount == 1)
                                 {<text>There is @Model.TotalCount Community Maintained Package</text>}
-                                else
-                                {<text>There are @Model.TotalCount Community Maintained Packages</text>}
+                            else
+                            {<text>There are @Model.TotalCount Community Maintained Packages</text>}
                             </h2>
                             if (!moderationQueue)
                             {
@@ -209,8 +209,8 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" id="preferenceListView">
-                                            <label class="custom-control-label" for="preferenceListView">Make list view your default view?</label>
+                                            <input type="checkbox" class="custom-control-input" id="preferenceGridView">
+                                            <label class="custom-control-label" for="preferenceGridView">Make grid view your default view?</label>
                                         </div>
                                         @if (moderationRole)
                                         {
@@ -302,18 +302,7 @@
                     </form>
                 </div>
             </div>
-            @if (Request.Cookies["preferenceListView"] != null)
-            {
-                <ul class="list-unstyled pt-3 package-list-view">
-                    @foreach (var package in Model.Items)
-                    {
-                        <li>
-                            @Html.Partial(MVC.Packages.Views._ListPackage, package)
-                        </li>
-                    }
-                </ul>
-            }
-            else 
+            @if (Request.Cookies["preferenceGridView"] != null)
             {
                 <div class="row pt-3 package-grid-view">
                     @foreach (var package in Model.Items)
@@ -326,11 +315,22 @@
                     }
                 </div>
             }
+            else
+            {
+                <ul class="list-unstyled pt-3 package-list-view">
+                    @foreach (var package in Model.Items)
+                    {
+                        <li>
+                            @Html.Partial(MVC.Packages.Views._ListPackage, package)
+                        </li>
+                    }
+                </ul>
+            }
 
             @if (@FullHref == @BaseHref + "/packages")
             {@ViewHelpers.PreviousNextPager(Model.Pager)}
-            else if (@FullHref == @BaseHref + "/search")
-            {@ViewHelpers.PreviousNextPager(Model.PagerSearch)}
+        else if (@FullHref == @BaseHref + "/search")
+        {@ViewHelpers.PreviousNextPager(Model.PagerSearch)}
         </div>
         @if (!String.IsNullOrEmpty(Model.SearchTerm))
         {

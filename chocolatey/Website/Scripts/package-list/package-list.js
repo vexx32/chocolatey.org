@@ -1,7 +1,7 @@
 // Package Preferences
 $(function () {
-    var preferenceListView = $('#preferenceListView');
-    var listView = getCookie("preferenceListView");
+    var preferenceGridView = $('#preferenceGridView');
+    var gridView = getCookie("preferenceGridView");
     var preferenceModView = $('#preferenceModView');
     var modView = getCookie("preferenceModView");
 
@@ -12,19 +12,19 @@ $(function () {
         location.reload();
     }
     // End legacy script
-    if (listView) {
-        preferenceListView.prop("checked", true);
+    if (gridView) {
+        preferenceGridView.prop("checked", true);
     }
     if (modView) {
         preferenceModView.prop("checked", true);
     }
     // Save Preferences
     $('.btn-preferences').click(function () {
-        if (preferenceListView.prop("checked") == true) {
-            document.cookie = "preferenceListView=true";
+        if (preferenceGridView.prop("checked") == true) {
+            document.cookie = "preferenceGridView=true";
         }
-        else if (preferenceListView.prop("checked") == false) {
-            document.cookie = "preferenceListView=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        else if (preferenceGridView.prop("checked") == false) {
+            document.cookie = "preferenceGridView=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
         if (preferenceModView.prop("checked") == true) {
             document.cookie = "preferenceModView=true";

@@ -217,8 +217,8 @@
             <div class="justify-content-center align-items-center d-flex">
                 <div class="d-flex">
                     <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="#status" title="Click to view test results">
-                        <span class="@Model.PackageTestResultsStatus"></span>
                         <span class="@Model.PackageValidationResultStatus"></span>
+                        <span class="@Model.PackageTestResultsStatus"></span>
                     </a>
                 </div>
                 @if (Model.Status != PackageStatusType.Rejected)
@@ -377,8 +377,8 @@
                     <h1 class="justify-content-center align-items-center d-flex mb-0" title="Nuspec reference: &lt;title&gt;@Model.Title&lt;/title&gt;">
                         <span class="d-flex">
                             <a class="status" href="#status" title="Click to view test results">
-                                <span class="@Model.PackageTestResultsStatus"></span>
                                 <span class="@Model.PackageValidationResultStatus"></span>
+                                <span class="@Model.PackageTestResultsStatus"></span>
                             </a>
                         </span>
                         @Model.Title
@@ -416,15 +416,33 @@
                             <div class="d-flex">
                                 <div class="d-flex">
                                     <span class="status">
-                                        <span class="@Model.PackageTestResultsStatus"></span>
                                         <span class="@Model.PackageValidationResultStatus"></span>
+                                        <span class="@Model.PackageTestResultsStatus"></span>
                                     </span>
                                 </div>
                                 <div>
                                     @if (testingStatusWarning)
                                     {
-                                        <h3>Some Checks Have Failed or Are Not Yet Complete</h3>
-                                        <p>1 @Model.PackageTestResultsStatus Test and 1 @Model.PackageValidationResultStatus Test</p>
+                                        if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted)
+                                        {
+                                            if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
+                                            {
+                                                <h3>Some Checks Are Exempted or Have Failed</h3>
+                                            }
+                                            else if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending)
+                                            {
+                                                <h3>Some Checks Are Exempted or Are Not Yet Complete</h3>
+                                            }
+                                            else
+                                            {
+                                                <h3>This Package Contains an Exempted Check</h3>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <h3>Some Checks Have Failed or Are Not Yet Complete</h3>
+                                        }
+                                        <p>1 Test @Model.PackageValidationResultStatus and 1 @Model.PackageTestResultsStatus Test</p>
                                     }
                                     else if (testingStatusPassing)
                                     {
@@ -468,8 +486,32 @@
                         </div>
                         <div class="collapse @if(!testingStatusPassing){<text>show</text>}" id="testingResults">
                             <hr class="mt-0" />
+                            @*Validation*@
+                            <div class="px-3">
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
+                                {
+                                    <p class="mb-0"><span class="fas fa-times text-danger mr-3"></span> Validation Testing Failed</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing)
+                                {
+                                    <p class="mb-0"><span class="fas fa-check text-success mr-3"></span> Validation Testing Passed</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending)
+                                {
+                                    <p class="mb-0"><span class="fas fa-clock text-warning mr-3"></span> Validation Testing Pending</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Unknown)
+                                {
+                                    <p class="mb-0"><span class="fas fa-question text-secondary mr-3"></span> Validation Testing Unknown</p>
+                                }
+                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted)
+                                {
+                                    <p class="mb-0"><span class="fas fa-ban text-secondary mr-3"></span> Validation Testing Exempt</p>
+                                }
+                            </div>
+                            <hr />
                             @*Verification*@
-                            <div class="d-flex @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>justify-content-between</text>} px-3">
+                            <div class="d-flex @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>justify-content-between</text>} px-3 pb-3">
                                 @if (Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing)
                                 {
                                     <p class="mb-0"><span class="fas fa-times text-danger mr-3"></span> Verification Testing Failed</p>
@@ -495,30 +537,6 @@
                                         <p class="mb-0">Verification Testing Exempt:</p>
                                         @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_html()))
                                     </div>
-                                }
-                            </div>
-                            <hr />
-                            @*Validation*@
-                            <div class="px-3 pb-3">
-                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Failing)
-                                {
-                                    <p class="mb-0"><span class="fas fa-times text-danger mr-3"></span> Validation Testing Failed</p>
-                                }
-                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing)
-                                {
-                                    <p class="mb-0"><span class="fas fa-check text-success mr-3"></span> Validation Testing Passed</p>
-                                }
-                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Pending)
-                                {
-                                    <p class="mb-0"><span class="fas fa-clock text-warning mr-3"></span> Validation Testing Pending</p>
-                                }
-                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Unknown)
-                                {
-                                    <p class="mb-0"><span class="fas fa-question text-secondary mr-3"></span> Validation Testing Unknown</p>
-                                }
-                                @if (Model.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted)
-                                {
-                                    <p class="mb-0"><span class="fas fa-ban text-secondary mr-3"></span> Validation Testing Exempt</p>
                                 }
                             </div>
                         </div>

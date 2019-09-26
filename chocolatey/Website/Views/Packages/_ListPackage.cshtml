@@ -5,10 +5,10 @@
 
     var submittedStatus = Model.SubmittedStatus;
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
-    var listView = Request.Cookies["preferenceListView"] != null;
+    var gridView = Request.Cookies["preferenceGridView"] != null;
 }
 
-<div class="@if (!listView){<text>card-body pb-2</text>}">
+<div class="@if (gridView){<text>card-body pb-2</text>}">
     <div class="media">
         <div class="mx-auto package-image-header">
             <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title">
@@ -17,17 +17,17 @@
         </div>
         <div class="media-body ml-3">
             @*Title and Type*@
-            <div class="d-flex @if(listView){<text>align-items-sm-center</text>}">
-                <div class="d-flex mt-1 @if(listView){<text>mt-sm-0</text>}">
+            <div class="d-flex @if(!gridView){<text>align-items-sm-center</text>}">
+                <div class="d-flex mt-1 @if(!gridView){<text>mt-sm-0</text>}">
                     <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)#status" title="Click to view test results">
-                        <span class="@Model.PackageTestResultsStatus"></span>
                         <span class="@Model.PackageValidationResultStatus"></span>
+                    	<span class="@Model.PackageTestResultsStatus"></span>
                     </a>
                 </div>
-                <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h5 font-weight-bold text-dark mb-0 btn-link">@Model.Title <span class="@if(!listView){<text>d-block small</text>}">@Model.Version</span></a>
+                <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h5 font-weight-bold text-dark mb-0 btn-link">@Model.Title <span class="@if(gridView){<text>d-block small</text>}">@Model.Version</span></a>
             </div>
             @*Badges*@
-            <div class="@if(!listView){<text>mt-1</text>}">
+            <div class="@if(gridView){<text>mt-1</text>}">
                 <span class="badge badge-pill badge-outline-primary">@Model.TotalDownloadCount.ToString("n0") @if(Model.TotalDownloadCount != 1){<text> Downloads</text>}else{<text> Download</text>}</span>
                 @if (Model.IsOwner(User))
                 {
@@ -82,8 +82,8 @@
         </p>
     }
 </div>
-<div class="@if (listView){<text>row mt-2 package-list-align</text>}else{<text>card-footer bg-white pt-0</text>}">
-    <div class="@if(listView && !isSubmitted){<text>col-lg-6</text>}else if(listView && isSubmitted){<text>col-12</text>}">
+<div class="@if (!gridView){<text>row mt-2 package-list-align</text>}else{<text>card-footer bg-white pt-0</text>}">
+    <div class="@if(!gridView && !isSubmitted){<text>col-lg-6</text>}else if(!gridView && isSubmitted){<text>col-12</text>}">
         @*Package By*@
         <ul class="list-unstyled list-inline mb-0 small">
             <li class="list-inline-item mr-0"><strong>By: </strong></li>
@@ -112,7 +112,7 @@
             </ul>
         }
     </div>
-    <div class="mt-2 @if(listView && !isSubmitted){<text>col-lg-6 mt-lg-0</text>}else if(listView && isSubmitted){<text>d-none</text>}">
+    <div class="mt-2 @if(!gridView && !isSubmitted){<text>col-lg-6 mt-lg-0</text>}else if(!gridView && isSubmitted){<text>d-none</text>}">
         @*Command*@
         @if (Model.Title != "Chocolatey" && !isSubmitted)
         {
@@ -149,7 +149,7 @@
         }
     </div>
 </div>
-@if (listView)
+@if (!gridView)
 {
     <hr />
 }
