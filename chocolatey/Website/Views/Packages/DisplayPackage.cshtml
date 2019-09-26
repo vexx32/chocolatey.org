@@ -1185,7 +1185,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @*  Files  *@
             <div class="row mb-4">
                 <div class="col-12">
-                    <a class="h2 @if (expandForModeration && moderator) {<text> collapse show</text>} else {<text>collapsed</text>} " data-toggle="collapse" href="#files" role="button" aria-expanded="false" aria-controls="files" title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</a>
+                    <a class="h2 @if (expandForModeration && moderator) {<text> collapse show</text>} else {<text>collapsed</text>}" data-toggle="collapse" href="#files" role="button" aria-expanded="false" aria-controls="files" title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</a>
                     <div class="collapse @if (expandForModeration && moderator) {<text> show moderation-view</text>}" id="files">
                         <hr />
                         @if (expandForModeration)
@@ -1356,8 +1356,8 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @*  Version History  *@
             <div class="row mb-4">
                 <div class="col-12">
-                    <a class="h2 collapsed" data-toggle="collapse" href="#versionhistory" role="button" aria-expanded="false" aria-controls="versionhistory" title="Version History">Version History</a>
-                    <div class="collapse" id="versionhistory">
+                    <a class="h2 @if(expandForModeration && moderator){<text> collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#versionhistory" role="button" aria-expanded="false" aria-controls="versionhistory" title="Version History">Version History</a>
+                    <div class="collapse @if(expandForModeration && moderator){<text> show</text>}" id="versionhistory">
                         <div class="table-responsive-sm">
                             <table class="table table-hover mt-3">
                                 <thead>
@@ -1431,8 +1431,8 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @*  Dependencies  *@
             <div class="row mb-4">
                 <div class="col-12">
-                    <a class="h2 collapsed" data-toggle="collapse" href="#dependencies" role="button" aria-expanded="false" aria-controls="dependencies" title="Nuspec reference: dependencies">Dependencies</a>
-                    <div class="collapse" id="dependencies">
+                    <a class="h2 @if(expandForModeration && moderator){<text> collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#dependencies" role="button" aria-expanded="false" aria-controls="dependencies" title="Nuspec reference: dependencies">Dependencies</a>
+                    <div class="collapse @if(expandForModeration && moderator){<text> show</text>}" id="dependencies">
                         <hr />
                         @Html.Partial("_PackageDependencies", Model.Dependencies)
                     </div>
