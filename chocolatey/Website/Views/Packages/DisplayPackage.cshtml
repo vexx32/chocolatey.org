@@ -976,7 +976,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         }
                     }
                     @*Logged in*@
-                    else if (anyPackageRole && Model.Status != PackageStatusType.Rejected)
+                    else if (anyPackageRole)
                     {
                         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
                         {
