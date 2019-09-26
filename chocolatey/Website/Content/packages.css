@@ -87,10 +87,6 @@ textarea {
     width: 100%;
     font-size: 100%;
 }
-.package-tags {
-    background: #cce5ff;
-    padding: 0 6px 3px;
-}
 .d-label-none label {
     display: none;
 }
@@ -167,7 +163,7 @@ textarea {
 
 @media (min-width: 768px) {
     #package-sidebar .package-logo {
-        max-width: 200px;
+        max-width: 150px;
     }
 }
 @media (min-width: 992px) {

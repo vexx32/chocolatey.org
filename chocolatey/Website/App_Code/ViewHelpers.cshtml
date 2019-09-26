@@ -51,10 +51,10 @@
 }
 
 @helper OwnerGravatar(User owner, int size, UrlHelper url, bool showName = true) {
-    <a class="d-flex align-items-center" href="@url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">
+    <a class="d-flex align-items-center mb-2" href="@url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">
         @if(!string.IsNullOrEmpty(owner.EmailAddress)) { @GravatarImage(owner.EmailAddress, owner.Username, size) }
         @if (showName) {
-            <text>@owner.Username</text>
+            <span class="ml-2">@owner.Username</span>
         }
     </a>
 }
