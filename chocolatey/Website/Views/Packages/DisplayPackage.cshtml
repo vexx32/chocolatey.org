@@ -1174,9 +1174,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             </div>
             @*  Description  *@
             <div class="row mb-4">
-                <div class="col-12">
-                    <a class="h2 collapse show" data-toggle="collapse" href="#description" role="button" aria-expanded="true" aria-controls="description" title="Nuspec reference: description">Description</a>
-                    <div class="collapse show" id="description">
+                <div id="description" class="col-12">
+                    <a class="h2 collapse show" data-toggle="collapse" href="#package-description" role="button" aria-expanded="true" aria-controls="description" title="Nuspec reference: description">Description</a>
+                    <div class="collapse show" id="package-description">
                         <hr />
                         @Html.Raw(markdownGenerator.Transform(Model.Description.clean_html()))
                     </div>
@@ -1184,9 +1184,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             </div>
             @*  Files  *@
             <div class="row mb-4">
-                <div class="col-12">
-                    <a class="h2 @if (expandForModeration && moderator) {<text> collapse show</text>} else {<text>collapsed</text>}" data-toggle="collapse" href="#files" role="button" aria-expanded="false" aria-controls="files" title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</a>
-                    <div class="collapse @if (expandForModeration && moderator) {<text> show moderation-view</text>}" id="files">
+                <div id="files" class="col-12">
+                    <a class="h2 @if (expandForModeration && moderator) {<text> collapse show</text>} else {<text>collapsed</text>}" data-toggle="collapse" href="#package-files" role="button" aria-expanded="false" aria-controls="files" title="Nuspec reference: files, optional - will default to all files next to nuspec">Files</a>
+                    <div class="collapse @if (expandForModeration && moderator) {<text> show moderation-view</text>}" id="package-files">
                         <hr />
                         @if (expandForModeration)
                         {
@@ -1317,9 +1317,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             </div>
             @*  Virus Scan  *@
             <div class="row mb-4">
-                <div class="col-12">
-                    <a class="h2 @if (expandForModeration && moderator) {<text> collapse show</text>} else {<text>collapsed</text>}" data-toggle="collapse" href="#virus" role="button" aria-expanded="false" aria-controls="virus" title="Virus Scan Results">Virus Scan Results</a>
-                    <div class="collapse @if (expandForModeration && moderator) {<text> show </text>}" id="virus">
+                <div id="virus" class="col-12">
+                    <a class="h2 @if (expandForModeration && moderator) {<text> collapse show</text>} else {<text>collapsed</text>}" data-toggle="collapse" href="#package-virus" role="button" aria-expanded="false" aria-controls="virus" title="Virus Scan Results">Virus Scan Results</a>
+                    <div class="collapse @if (expandForModeration && moderator) {<text> show </text>}" id="package-virus">
                         @if (Model.ScanResults.AnySafe())
                         {
                             <hr />
@@ -1355,9 +1355,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             </div>
             @*  Version History  *@
             <div class="row mb-4">
-                <div class="col-12">
-                    <a class="h2 @if(expandForModeration && moderator){<text> collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#versionhistory" role="button" aria-expanded="false" aria-controls="versionhistory" title="Version History">Version History</a>
-                    <div class="collapse @if(expandForModeration && moderator){<text> show</text>}" id="versionhistory">
+                <div id="versionhistory" class="col-12">
+                    <a class="h2 @if(expandForModeration && moderator){<text> collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#package-versionhistory" role="button" aria-expanded="false" aria-controls="versionhistory" title="Version History">Version History</a>
+                    <div class="collapse @if(expandForModeration && moderator){<text> show</text>}" id="package-versionhistory">
                         <div class="table-responsive-sm">
                             <table class="table table-hover mt-3">
                                 <thead>
@@ -1406,9 +1406,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @if (!String.IsNullOrEmpty(Model.Copyright))
             {
                 <div class="row mb-4">
-                    <div class="col-12">
-                        <a class="h2 collapsed" data-toggle="collapse" href="#copyright" role="button" aria-expanded="false" aria-controls="copyright" title="Nuspec reference: copyright">Copyright</a>
-                        <div class="collapse" id="copyright">
+                    <div id="copyright" class="col-12">
+                        <a class="h2 collapsed" data-toggle="collapse" href="#package-copyright" role="button" aria-expanded="false" aria-controls="copyright" title="Nuspec reference: copyright">Copyright</a>
+                        <div class="collapse" id="package-copyright">
                             <hr />
                             <p mb-0>@Model.Copyright</p>
                         </div>
@@ -1419,9 +1419,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @if (!String.IsNullOrWhiteSpace(Model.ReleaseNotes))
             {
                 <div class="row mb-4">
-                    <div class="col-12">
-                        <a class="h2 collapsed" data-toggle="collapse" href="#releasenotes" role="button" aria-expanded="false" aria-controls="releasenotes" title="Nuspec reference: releaseNotes">Release Notes</a>
-                        <div class="collapse" id="releasenotes">
+                    <div id="releasenotes" class="col-12">
+                        <a class="h2 collapsed" data-toggle="collapse" href="#package-releasenotes" role="button" aria-expanded="false" aria-controls="releasenotes" title="Nuspec reference: releaseNotes">Release Notes</a>
+                        <div class="collapse" id="package-releasenotes">
                             <hr />
                             @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes.clean_html()))
                         </div>
@@ -1430,9 +1430,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             }
             @*  Dependencies  *@
             <div class="row mb-4">
-                <div class="col-12">
-                    <a class="h2 @if(expandForModeration && moderator){<text> collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#dependencies" role="button" aria-expanded="false" aria-controls="dependencies" title="Nuspec reference: dependencies">Dependencies</a>
-                    <div class="collapse @if(expandForModeration && moderator){<text> show</text>}" id="dependencies">
+                <div id="dependencies" class="col-12">
+                    <a class="h2 @if(expandForModeration && moderator){<text> collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#package-dependencies" role="button" aria-expanded="false" aria-controls="dependencies" title="Nuspec reference: dependencies">Dependencies</a>
+                    <div class="collapse @if(expandForModeration && moderator){<text> show</text>}" id="package-dependencies">
                         <hr />
                         @Html.Partial("_PackageDependencies", Model.Dependencies)
                     </div>
@@ -1440,9 +1440,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             </div>
             @*  Discussion  *@
             <div class="row">
-                <div class="col-12">
-                    <a class="h2 collapse show" data-toggle="collapse" href="#discussion" role="button" aria-expanded="true" aria-controls="discussion" title=">Discussion for the @Model.Title Package">Discussion for the @Model.Title Package</a>
-                    <div class="collapse show" id="discussion">
+                <div id="discussion" class="col-12">
+                    <a class="h2 collapse show" data-toggle="collapse" href="#package-discussion" role="button" aria-expanded="true" aria-controls="discussion" title=">Discussion for the @Model.Title Package">Discussion for the @Model.Title Package</a>
+                    <div class="collapse show" id="package-discussion">
                         <hr />
                         <h3>Ground Rules:</h3>
                         <ul>

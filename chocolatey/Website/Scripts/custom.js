@@ -123,6 +123,11 @@ $(document).on('click', 'input[type=text]', function () {
     this.select();
 });
 
+// Toggle and scroll to collapse elements on click
+$('a[href*="#"]').not('[data-toggle="tab"]').click(function () {
+    $(this.hash).find('[data-toggle="collapse"]').next().collapse('show');
+});
+
 // Smooth Scroll
 // Select all links with hashes
 $('a[href*="#"]')
