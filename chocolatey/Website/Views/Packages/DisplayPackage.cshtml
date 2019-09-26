@@ -212,6 +212,18 @@
             {
                 <p class="text-center mb-0"><strong>(@packageStatus)</strong></p>
             }
+            @if (Model.Prerelease)
+            {
+                <p class="text-center text-warning"><strong>This is a prerelease version of @Model.Title.</strong></p>
+            }
+            else if (!Model.IsLatestVersionAvailable && Model.Status != PackageStatusType.Submitted && Model.Status != PackageStatusType.Rejected)
+            {
+                <p class="text-center text-warning"><strong>This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">latest version</a> of @Model.Title available.</strong></p>
+            }
+            @if (packageFileMayNotBeUpdatedYetOnCdn)
+            {
+                <p class="text-center text-danger"><strong>WARNING! The package (the *.nupkg file) is subject to a CDN with a 30 minute timeout. If you have pushed an updated version, please wait for more than 30 minutes before attempting to install from the site.</strong></p>
+            }
             <div class="justify-content-center align-items-center d-flex">
                 <div class="d-flex">
                     <a class="status status-sm @if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || Model.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}" href="#status" title="Click to view test results">
@@ -383,12 +395,10 @@
                             <span class="ml-2" title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;">@Model.Version</span>
                         }
                     </h1>
-                    <h3 class="text-center">
-                        @if (Model.Status == PackageStatusType.Submitted)
-                        {
-                            <span>(@packageStatus)</span>
-                        }
-                    </h3>
+                    @if (Model.Status == PackageStatusType.Submitted)
+                    {
+                        <h5 class="text-center">(@packageStatus)</h5>
+                    }
                     @if (Model.Prerelease)
                     {
                         <p class="text-center text-warning"><strong>This is a prerelease version of @Model.Title.</strong></p>
@@ -397,7 +407,6 @@
                     {
                         <p class="text-center text-warning"><strong>This is not the <a href="@Url.Package(Model.Id)" title="View the latest version">latest version</a> of @Model.Title available.</strong></p>
                     }
-
                     @if (packageFileMayNotBeUpdatedYetOnCdn)
                     {
                         <p class="text-center text-danger"><strong>WARNING! The package (the *.nupkg file) is subject to a CDN with a 30 minute timeout. If you have pushed an updated version, please wait for more than 30 minutes before attempting to install from the site.</strong></p>
