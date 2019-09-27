@@ -7,12 +7,9 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#building">Building</a></li>
-        <li><a href="#testing">Testing</a></li>
-        <li><a href="#pushing">Pushing</a></li>
-        <li><a href="#quiz">Quiz</a></li>
-    </ul>
+    <li><a href="#building">Building</a></li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#pushing">Pushing</a></li>
 }
 
 <h2 id="building" class="mb-3">Building Your Package</h2>
@@ -70,10 +67,10 @@
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>What is the recommended place to test your Chocolatey Package installation?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionOne" })
@@ -95,7 +92,7 @@
                 <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
             </fieldset>
         }
-        
+
         @Html.Partial("~/Views/Courses/_CourseAchievementBadgeDisplay.cshtml", Model)
     }
 </div>

@@ -7,13 +7,10 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#installation-paths">Installation Paths</a></li>
-        <li><a href="#limiting-installation">Limiting Installation</a></li>
-        <li><a href="#upgrading">Upgrading Your Package</a></li>
-        <li><a href="#uninstalling">Uninstalling Your Package</a></li>
-        <li><a href="#quiz">Quiz</a></li>
-    </ul>
+    <li><a href="#installation-paths">Installation Paths</a></li>
+    <li><a href="#limiting-installation">Limiting Installation</a></li>
+    <li><a href="#upgrading">Upgrading Your Package</a></li>
+    <li><a href="#uninstalling">Uninstalling Your Package</a></li>
 }
 
 <h2 id="installation-paths" class="mb-3">Installation Paths</h2>
@@ -77,10 +74,10 @@
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>Who is responsible for a Chocolatey Package only being installed on the correct Operating System for the underlying software of the package?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })

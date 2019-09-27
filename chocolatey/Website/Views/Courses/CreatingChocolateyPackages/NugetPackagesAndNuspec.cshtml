@@ -7,12 +7,9 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#general-information">General Information</a></li>
-        <li><a href="#custom-scripts">Custom Scripts</a></li>
-        <li><a href="#nuspec">Nuspec</a></li>
-        <li><a href="#quiz">Quiz</a></li>
-    </ul>
+    <li><a href="#general-information">General Information</a></li>
+    <li><a href="#custom-scripts">Custom Scripts</a></li>
+    <li><a href="#nuspec">Nuspec</a></li>
 }
 
 <h2 id="general-information" class="mb-3">General Information</h2>
@@ -109,10 +106,10 @@ Install-ChocolateyPackage $packageName $fileType $silentArgs $url</code></pre>
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>Should my Chocolatey Package ever need to have a dependency on the Chocolatey package?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })

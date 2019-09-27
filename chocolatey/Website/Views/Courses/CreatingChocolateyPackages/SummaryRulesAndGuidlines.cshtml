@@ -7,13 +7,10 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#summary">Summary</a></li>
-        <li><a href="#rules">Rules</a></li>
-        <li><a href="#character-encoding">Character Encoding</a></li>
-        <li><a href="#icon-guidlines">Package Icon Guidlines</a></li>
-        <li><a href="#quiz">Quiz</a></li>
-    </ul>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#rules">Rules</a></li>
+    <li><a href="#character-encoding">Character Encoding</a></li>
+    <li><a href="#icon-guidlines">Package Icon Guidlines</a></li>
 }
 
 <h2 id="summary" class="mb-3">Course Summary</h2>
@@ -118,10 +115,10 @@
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>What is the correct file character encoding to use when creating *.nuspec files for your Chocolatey Packages?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })

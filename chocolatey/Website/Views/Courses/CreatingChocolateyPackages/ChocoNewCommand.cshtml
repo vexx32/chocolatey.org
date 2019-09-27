@@ -7,13 +7,10 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-<ul>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#examples">Examples</a></li>
     <li><a href="#exit-codes">Exit Codes</a></li>
     <li><a href="#options-and-switches">Options and Switches</a></li>
-    <li><a href="#quiz">Quiz</a></li>
-</ul>
 }
 
 <h2 id="usage" class="mb-3">Usage</h2>
@@ -284,10 +281,10 @@ choco new bob --outputdirectory Packages</code></pre>
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>What exit code will be returned from the choco new command if everything worked correctly?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionOne" })
