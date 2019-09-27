@@ -363,6 +363,11 @@ namespace NuGetGallery
             IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
             IEnumerable<Package> packagesToShow = new List<Package>();
 
+            if (Request.Cookies["preferenceModView"] != null && string.IsNullOrWhiteSpace(q) && String.IsNullOrEmpty(sortOrder))
+            {
+                moderatorQueue = true;
+            }
+
             if (moderatorQueue)
             {
                 var unknownStatus = PackageStatusType.Unknown.GetDescriptionOrValue();

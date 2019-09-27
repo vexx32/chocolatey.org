@@ -33,7 +33,7 @@ a[data-toggle="collapse"].collapsed, .docs-left button.navbar-toggler[data-toggl
     }
 }
 
-.course-list li.completed, .course-list li.mod-completed, .correct {
+.course-list li.completed, .course-list li.mod-completed, .correct, .step_tabs li.step_inactive {
     &::before {
         @extend %fa-icon;
         @extend .fas;

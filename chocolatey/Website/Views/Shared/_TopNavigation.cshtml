@@ -154,7 +154,11 @@
                                 <div class="col-md-4">
                                     <ul>
                                         <li>
-                                            <a href="@Url.RouteUrl(RouteName.Courses)">Get Started</a>
+                                            <a href="@Url.RouteUrl(RouteName.Install)">Install Chocolatey</a>
+                                            <p class="d-none d-md-block">Get step-by-step instructions on how to install Chocolatey.</p>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Courses)">Getting Started Course</a>
                                             <p class="d-none d-md-block">New to Chocolatey? Learn the requirements and how to get Chocolatey up and running in no time!</p>
                                         </li>
                                     </ul>
@@ -312,19 +316,19 @@
                 <ul>
                     <li class="d-sm-flex align-items-center">
                         <span class="status status-sm bg-success"></span>
-                        Passing
+                        <small>Passing</small>
                     </li>
                     <li class="d-sm-flex align-items-center">
                         <span class="status status-sm bg-danger"></span>
-                        Failing
+                        <small>Failing</small>
                     </li>
                     <li class="d-sm-flex align-items-center">
                         <span class="status status-sm bg-warning"></span>
-                        Pending
+                        <small>Pending</small>
                     </li>
                     <li class="d-sm-flex align-items-center">
                         <span class="status status-sm bg-secondary"></span>
-                        Unknown / Exempted
+                        <small>Unknown / Exempted</small>
                     </li>
                 </ul>
             </nav>
