@@ -585,15 +585,15 @@
                                                     <div class="input-group-text">></div>
                                                 </div>
                                                 <input type="text" class="form-control"
-                                                       value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                                       value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                                        aria-label="Install @Model.Title command"
                                                        readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary tt"
-                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                                             data-toggle="tooltip"
                                                             title="Copy to Clipboard"
-                                                            data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                            data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                         <i class="fas fa-clipboard" aria-hidden="true">
                                                             <span class="sr-only">
                                                                 Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
@@ -612,15 +612,15 @@
                                                     <div class="input-group-text">></div>
                                                 </div>
                                                 <input type="text" class="form-control"
-                                                       value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                                       value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                                        aria-label="Upgrade @Model.Title command"
                                                        readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary tt"
-                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                                             data-toggle="tooltip"
                                                             title="Copy to Clipboard"
-                                                            data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                            data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                         <i class="fas fa-clipboard" aria-hidden="true">
                                                             <span class="sr-only">
                                                                 Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
@@ -639,15 +639,15 @@
                                                     <div class="input-group-text">></div>
                                                 </div>
                                                 <input type="text" class="form-control"
-                                                       value="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                                       value="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                                        aria-label="Uninstall @Model.Title command"
                                                        readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary tt"
-                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                                             data-toggle="tooltip"
                                                             title="Copy to Clipboard"
-                                                            data-clipboard-text="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                            data-clipboard-text="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                         <i class="fas fa-clipboard" aria-hidden="true">
                                                             <span class="sr-only">
                                                                 Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
@@ -844,19 +844,19 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                             <div class="input-group-text">></div>
                         </div>
                         <input type="text" class="form-control"
-                               value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                               value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                aria-label="Upgrade @Model.Title command"
                                readonly>
                         <div class="input-group-append">
                             <button class="btn btn-primary tt"
-                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                     data-toggle="tooltip"
                                     title="Copy to Clipboard"
-                                    data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                    data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                 <i class="fas fa-clipboard" aria-hidden="true">
                                     <span class="sr-only">
                                         Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                        {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                        {<text> --version=@Model.Version</text>} @if (Model.Prerelease)
                                         {<text> --pre </text>} to Clipboard
                                     </span>
                                 </i>
