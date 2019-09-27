@@ -170,9 +170,8 @@
     border-color: #36bc98;
     background-color: #36bc98;
     color: #fff;
-    content: "\f00c";
-    font-family: 'FontAwesome';
     font-size: 30px;
+    line-height: 60px;
 }
 .step_tabs li.step_inactive + li:after {
     background-color: #36bc98;
