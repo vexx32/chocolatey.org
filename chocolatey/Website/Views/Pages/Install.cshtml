@@ -44,6 +44,8 @@
                 <li>PowerShell v2+</li>
                 <li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)</li>
             </ul>
+            <hr class="my-3" />
+            <h4 class="mb-3">Chocolatey Install:</h4>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="individual-tab" data-toggle="tab" href="#individual" role="tab" aria-controls="individual" aria-selected="true">Individual</a>
@@ -511,6 +513,11 @@ class {'chocolatey':
                         </li>
                     </ul>
                 </div>
+                <hr class="my-3" />
+                <h4 class="mb-3">Chocolatey Licensed Install:</h4>
+                <p>Are you also installing a commercial edition of Chocolatey?</p>
+                <p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">Install the Licensed Edition</a>.</p>
+                
                 <hr class="my-3" />
                     <h4 class="mb-3">Advanced Chocolatey Install:</h4>
                     <p>Are you installing behind a proxy, need a completely offline install, or wanting to install a licenced edition of Chocolatey? Need even more options? Visit our Documentation or take our new Installation Course to help you get up and running with Chocolatey!</p>
