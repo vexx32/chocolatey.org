@@ -585,15 +585,15 @@
                                                     <div class="input-group-text">></div>
                                                 </div>
                                                 <input type="text" class="form-control"
-                                                       value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                                       value="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                                        aria-label="Install @Model.Title command"
                                                        readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary tt"
-                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                                             data-toggle="tooltip"
                                                             title="Copy to Clipboard"
-                                                            data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                            data-clipboard-text="choco install @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                         <i class="fas fa-clipboard" aria-hidden="true">
                                                             <span class="sr-only">
                                                                 Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
@@ -612,15 +612,15 @@
                                                     <div class="input-group-text">></div>
                                                 </div>
                                                 <input type="text" class="form-control"
-                                                       value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                                       value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                                        aria-label="Upgrade @Model.Title command"
                                                        readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary tt"
-                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                                             data-toggle="tooltip"
                                                             title="Copy to Clipboard"
-                                                            data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                            data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                         <i class="fas fa-clipboard" aria-hidden="true">
                                                             <span class="sr-only">
                                                                 Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
@@ -639,15 +639,15 @@
                                                     <div class="input-group-text">></div>
                                                 </div>
                                                 <input type="text" class="form-control"
-                                                       value="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                                                       value="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                                        aria-label="Uninstall @Model.Title command"
                                                        readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary tt"
-                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                                            aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                                             data-toggle="tooltip"
                                                             title="Copy to Clipboard"
-                                                            data-clipboard-text="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                                            data-clipboard-text="choco uninstall @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                                         <i class="fas fa-clipboard" aria-hidden="true">
                                                             <span class="sr-only">
                                                                 Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
@@ -663,6 +663,7 @@
                                 </div>
                                 @*Organizational*@
                                 <div class="tab-pane fade" id="organization" role="tabpanel" aria-labelledby="organization-tab">
+                                  <p class="small font-weight-bold">NOTE: This applies to both open source and commercial editions of Chocolatey.</p>
                                     @*Step 1*@
                                     <h4>1. Ensure you are set for organizational deployment</h4>
                                     <p>Please see the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">organizational deployment guide</a></p>
@@ -675,7 +676,7 @@
                                             <div class="collapse" id="install-step2-option1">
                                                 <ul>
                                                     <li>
-                                                        Open Source or commercial:
+                                                        Open Source or Commercial:
                                                         <ul>
                                                             <li>Proxy Repository - Create a proxy nuget repository on Nexus, Artifactory Pro, or a proxy Chocolatey repository on ProGet. Point your upstream to <strong>https://chocolatey.org/api/v2</strong>. Packages cache on first access automatically. Make sure your choco clients are using your proxy repository as a source and NOT the default community repository. See <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "commands-sources"})">source command</a> for more information.</li>
                                                             <li>You can also just download the package and push it to a repository <a class="btn btn-secondary btn-sm" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="fas fa-download" alt="Download"></i> Download</a></li>
@@ -691,15 +692,15 @@
                                                         Open Source
                                                         <ul>
                                                             <li>Download the Package <a class="btn btn-secondary btn-sm" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="fas fa-download" alt="Download"></i> Download</a></li>
-                                                            <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-recompile-packages"})">Follow these instructions</a></li>
+                                                            <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-recompile-packages"})">Follow manual internalization instructions</a></li>
                                                         </ul>
                                                     </li>
                                                     <li>
-                                                        Package Internalizer
+                                                        Package Internalizer (C4B)
                                                         <ul>
-                                                            <li>Run <code>choco download ID --internalize</code> <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "commands-download"})">(additional options)</a></li>
-                                                            <li>Run <code>choco push --source="'internal_source'"</code> for package and dependencies</li>
-                                                            <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-setup-internal-package-repository"})">Automate package internalization</a></li>
+                                                            <li>Run <code>choco download @Model.Id.ToLower() --internalize @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed){<text> --version=@Model.Version</text>} --source=https://chocolatey.org/api/v2</code> <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">(additional options)</a></li>
+                                                            <li>Run <code>choco push --source=&quot;'http://internal/odata/repo'&quot;</code> for package and dependencies</li>
+                                                            <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-internal-package-repository" })">Automate package internalization</a></li>
                                                         </ul>
                                                     </li>
                                                 </ul>
@@ -743,8 +744,8 @@
 <pre class="language-powershell border py-3"><code>
 choco upgrade @Model.Id.ToLower() -y --source=&quot;'STEP 3 URL'&quot; [other options]
 </code></pre>
-                                            <p class="mt-3">See <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "commands-upgrade"})#options-and-switches">options you can pass to upgrade.</a></p>
-                                            <p>See <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "commands-reference"})#scripting-integration-best-practices-style-guide">best practices for scripting.</a></p>
+                                            <p class="mt-3">See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })#options-and-switches">options you can pass to upgrade.</a></p>
+                                            <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#scripting-integration-best-practices-style-guide">best practices for scripting.</a></p>
                                             <p>Add this to a PowerShell script or use a Batch script with tools and in places where you are calling directly to Chocolatey. If you are integrating, keep in mind enhanced exit codes.</p>
                                             <p>If you do use a PowerShell script, use the following to ensure bad exit codes are shown as failures:</p>
 <pre class="language-powershell line-numbers border py-3"><code>
@@ -772,7 +773,7 @@ Exit $exitCode
                                             <p>See docs at <a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html" target="_blank" rel="noreferrer">https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html</a>.</p>
                                         </div>
                                         <div class="tab-pane fade" id="ccm" role="tabpanel" aria-labelledby="ccm-tab">
-                                            <p>Coming early 2020!</p>
+                                            <p>Coming early 2020! Central Managment Reporting available now! <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-chocolatey-central-management" })">More information...</a></p>
                                         </div>
                                         <div class="tab-pane fade" id="chef" role="tabpanel" aria-labelledby="chef-tab">
 <pre class="language-ruby line-numbers border py-3"><code>
@@ -843,19 +844,19 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                             <div class="input-group-text">></div>
                         </div>
                         <input type="text" class="form-control"
-                               value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
+                               value="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}"
                                aria-label="Upgrade @Model.Title command"
                                readonly>
                         <div class="input-group-append">
                             <button class="btn btn-primary tt"
-                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
+                                    aria-label="Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>} to Clipboard"
                                     data-toggle="tooltip"
                                     title="Copy to Clipboard"
-                                    data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version @Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
+                                    data-clipboard-text="choco upgrade @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed) {<text> --version=@Model.Version</text>} @if (Model.Prerelease) {<text> --pre </text>}">
                                 <i class="fas fa-clipboard" aria-hidden="true">
                                     <span class="sr-only">
                                         Copy @Model.Id.ToLower() @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed)
-                                        {<text> --version @Model.Version</text>} @if (Model.Prerelease)
+                                        {<text> --version=@Model.Version</text>} @if (Model.Prerelease)
                                         {<text> --pre </text>} to Clipboard
                                     </span>
                                 </i>
