@@ -6,7 +6,11 @@
 @section LeftSideColumn {
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
+@section RightSideColumn {
+    <li><a href="#internationalization-localization">Internationalization and Localization of Packages</a></li>
+}
 
+<h2 id="internationalization-localization" class="mb-3">Internationalization and Localization of Packages</h2>
 <p>For Chocolatey, internationalization and localization of packages is very important, because it has users from all over the world. Many applications support multiple languages, but they use several different methods to achieve that. Therefore, there is no standard how internationalization/localization has to be integrated into packages. However, here are a few examples of packages that use various techniques. You can use them as inspiration for new packages:</p>
 <ul>
     <li>The ideal situation is when an application determines the user's system language and automatically installs with that language. Then you don't have to take any action relating to localization, because the application already handles that. Examples of such applications are <a href="https://chocolatey.org/packages/vlc">VLC Media Player</a> and <a href="https://chocolatey.org/packages/libreoffice-fresh">LibreOffice</a>.</li>
@@ -40,10 +44,10 @@
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>Is there a standard mechanism for integrating internationalization/localization of software into Chocolatey Packages?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })
