@@ -325,6 +325,16 @@ namespace NuGetGallery
                 newComments += "Virus Scanner has ben set to rerun";
             }
 
+            bool rerunPackageCacher = form["RerunPackageCacher"].clean_html() == "true";
+            if (rerunPackageCacher)
+            {
+                package.DownloadCacheStatus = PackageDownloadCacheStatusType.Unknown;
+                packageSvc.SaveMinorPackageChanges(package);
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Customer CDN Download cacher has ben set to rerun";
+
+            }
+
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;
 
