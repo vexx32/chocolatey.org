@@ -83,7 +83,10 @@
                         <div class="d-none d-xl-block col-xl-2 docs-right">
                             <nav class="sticky-top">
                                 <p><strong>Module Topics:</strong></p>
-                                @RenderSection("RightSideColumn")
+                                <ul>
+                                    @RenderSection("RightSideColumn")
+                                    <li><a href="#quiz">Quiz</a></li>
+                                </ul>
                             </nav>
                         </div>
                     }

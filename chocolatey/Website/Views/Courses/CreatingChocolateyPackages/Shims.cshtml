@@ -7,10 +7,8 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#excluding-executables">Excluding Executables</a></li>
-        <li><a href="#shims-and-gui">Shims and GUI</a></li>
-    </ul>
+    <li><a href="#excluding-executables">Excluding Executables</a></li>
+    <li><a href="#shims-and-gui">Shims and GUI</a></li>
 }
 
 <h2 id="excluding-executables" class="mb-3">How to Exclude Executables from Getting Shims</h2>
@@ -53,29 +51,29 @@ foreach ($file in $files) {
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
-              <div class="form-field mt-3">
-                <h5>In order to create a shim for a GUI application, which will not leave a hanging command window when executed, what text should be suffixed to the file which is created?</h5>
-                @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })
-                <label for="QuestOneOptionOne">cli</label><br />
-                @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionTwo" })
-                <label for="QuestOneOptionTwo">gui</label><br />
-                @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionThree" })
-                <label for="QuestOneOptionThree">ignore</label>
-              </div>
-              <div class="form-field mt-3">
-                <h5>If you don’t want Chocolatey to create a shim file for an exe called Application.exe in you Chocolatey Package, what is the name of the file that should be created?</h5>
-                @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
-                <label for="QuestTwoOptionOne">application.exe.ignore</label><br />
-                @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionTwo" })
-                <label for="QuestTwoOptionTwo">Application.exe.gui</label><br />
-                @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionThree" })
-                <label for="QuestTwoOptionThree">Application.exe.ignore</label>
-              </div>
-              <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
+                <div class="form-field mt-3">
+                    <h5>In order to create a shim for a GUI application, which will not leave a hanging command window when executed, what text should be suffixed to the file which is created?</h5>
+                    @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionOne" })
+                    <label for="QuestOneOptionOne">cli</label><br />
+                    @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionTwo" })
+                    <label for="QuestOneOptionTwo">gui</label><br />
+                    @Html.RadioButtonFor(m => m.QuestionOne, "0", new { id = "QuestOneOptionThree" })
+                    <label for="QuestOneOptionThree">ignore</label>
+                </div>
+                <div class="form-field mt-3">
+                    <h5>If you don’t want Chocolatey to create a shim file for an exe called Application.exe in you Chocolatey Package, what is the name of the file that should be created?</h5>
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionOne" })
+                    <label for="QuestTwoOptionOne">application.exe.ignore</label><br />
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "0", new { id = "QuestTwoOptionTwo" })
+                    <label for="QuestTwoOptionTwo">Application.exe.gui</label><br />
+                    @Html.RadioButtonFor(m => m.QuestionTwo, "1", new { id = "QuestTwoOptionThree" })
+                    <label for="QuestTwoOptionThree">Application.exe.ignore</label>
+                </div>
+                <input class="btn btn-primary mt-3 disabled" data-toggle="modal" data-target="#quiz-modal" type="submit" value="Check Answers" title="Check Answers" />
             </fieldset>
         }
 

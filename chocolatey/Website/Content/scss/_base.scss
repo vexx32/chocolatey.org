@@ -142,7 +142,7 @@ footer.bg-medium-dark a:hover, #editions ul li a:hover, .sticky-nav a.active {
     position: fixed;
     width: 100%;
     bottom: 0;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .gitter-chat-embed {
@@ -389,10 +389,6 @@ footer {
 }
 
 @include media-breakpoint-up(xl) {
-    .cookies-popup {
-        z-index: 99;
-    }
-
     #header {
         margin-top: -1rem;
     }

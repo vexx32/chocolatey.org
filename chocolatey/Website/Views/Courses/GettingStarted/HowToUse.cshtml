@@ -7,11 +7,8 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#command-example">Command Example</a></li>
-        <li><a href="#advanced-install-concepts">Advanced Install Concepts</a></li>
-        <li><a href="#quiz">Quiz</a></li>
-    </ul>
+    <li><a href="#command-example">Command Example</a></li>
+    <li><a href="#advanced-install-concepts">Advanced Install Concepts</a></li>
 }
 
 <h2 id="command-example" class="mb-3">Command Example</h2>
@@ -59,10 +56,10 @@
                                           }
                                       }
                                   }">
-              <legend class="d-none">Quiz</legend>
-              @Html.HiddenFor(m => m.CourseName)
-              @Html.HiddenFor(m => m.CourseKey)
-              @Html.HiddenFor(m => m.CourseModuleKey)
+                <legend class="d-none">Quiz</legend>
+                @Html.HiddenFor(m => m.CourseName)
+                @Html.HiddenFor(m => m.CourseKey)
+                @Html.HiddenFor(m => m.CourseModuleKey)
                 <div class="form-field mt-3">
                     <h5>What command is used to install a Chocolatey Package?</h5>
                     @Html.RadioButtonFor(m => m.QuestionOne, "1", new { id = "QuestOneOptionOne" })

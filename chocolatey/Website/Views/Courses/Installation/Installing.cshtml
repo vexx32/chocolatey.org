@@ -8,74 +8,71 @@
     @Html.Partial("~/Views/Courses/_LeftSideColumn.cshtml", new CourseLeftViewModel() { CourseNameType = Model.CourseNameType, CourseModules = Model.CourseModules, UserCourseAchievements = Model.UserCourseAchievements })
 }
 @section RightSideColumn {
-    <ul>
-        <li><a href="#install-requirements">Requirements</a></li>
-        @if (Request.RawUrl == url + "?method=installing-chocolatey?quiz=true")
-        {
-            <li><a href="#installing-chocolatey">Basic Chocolatey Install</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-from-powershell-v3?quiz=true")
-        {
-            <li><a href="#install-from-powershell-v3">Install from Powershell v3+</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=completely-offline-install?quiz=true")
-        {
-            <li><a href="#completely-offline-install">Completely Offline Install</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-with-puppet?quiz=true")
-        {
-            <li><a href="#install-with-puppet">Install with Puppet</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-using-powershell-from-cmdexe?quiz=true")
-        {
-            <li><a href="#install-using-powershell-from-cmdexe">Install Using PowerShell from cmd.exe</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-using-nuget-package-manager?quiz=true")
-        {
-            <li><a href="#install-using-nuget-package-manager">Install Using NuGet Package Manager</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-using-nugetexe-from-powershell?quiz=true")
-        {
-            <li><a href="#install-using-nugetexe-from-powershell">Install Using NuGet.exe from PowerShell</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-downloaded-nuget-package-from-powershell?quiz=true")
-        {
-            <li><a href="#install-downloaded-nuget-package-from-powershell">Install Downloaded NuGet Package from PowerShell</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=install-licensed-edition?quiz=true")
-        {
-            <li><a href="#install-licensed-edition">Install Licensed Edition</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=installing-behind-a-proxy?quiz=true")
-        {
-            <li><a href="#installing-behind-a-proxy">Installing Behind a Proxy</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=installing-behind-an-explicit-proxy?quiz=true")
-        {
-            <li><a href="#installing-behind-an-explicit-proxy">Installing Behind an Explicit Proxy</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=installing-to-a-different-location?quiz=true")
-        {
-            <li><a href="#installing-to-a-different-location">Installing to a Different Location</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=installing-a-particular-version-of-chocolatey?quiz=true")
-        {
-            <li><a href="#installing-a-particular-version-of-chocolatey">Installing a Particular Version of Chocolatey</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=use-windows-built-in-compression-instead-of-downloading-7zip?quiz=true")
-        {
-            <li><a href="#use-windows-built-in-compression-instead-of-downloading-7zip">Use Windows Built-In Compression Instead of Downloading 7zip</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=installing-with-restricted-tls?quiz=true")
-        {
-            <li><a href="#installing-with-restricted-tls">Installing with Restricted TLS</a></li>
-        }
-        else if (Request.RawUrl == url + "?method=non-administrative-install?quiz=true")
-        {
-            <li><a href="#non-administrative-install">Non-Administrative Install</a></li>
-        }
-        <li><a href="#quiz">Quiz</a></li>
-    </ul>
+    <li><a href="#install-requirements">Requirements</a></li>
+    @if (Request.RawUrl == url + "?method=installing-chocolatey?quiz=true")
+    {
+        <li><a href="#installing-chocolatey">Basic Chocolatey Install</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-from-powershell-v3?quiz=true")
+    {
+        <li><a href="#install-from-powershell-v3">Install from Powershell v3+</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=completely-offline-install?quiz=true")
+    {
+        <li><a href="#completely-offline-install">Completely Offline Install</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-with-puppet?quiz=true")
+    {
+        <li><a href="#install-with-puppet">Install with Puppet</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-using-powershell-from-cmdexe?quiz=true")
+    {
+        <li><a href="#install-using-powershell-from-cmdexe">Install Using PowerShell from cmd.exe</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-using-nuget-package-manager?quiz=true")
+    {
+        <li><a href="#install-using-nuget-package-manager">Install Using NuGet Package Manager</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-using-nugetexe-from-powershell?quiz=true")
+    {
+        <li><a href="#install-using-nugetexe-from-powershell">Install Using NuGet.exe from PowerShell</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-downloaded-nuget-package-from-powershell?quiz=true")
+    {
+        <li><a href="#install-downloaded-nuget-package-from-powershell">Install Downloaded NuGet Package from PowerShell</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=install-licensed-edition?quiz=true")
+    {
+        <li><a href="#install-licensed-edition">Install Licensed Edition</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=installing-behind-a-proxy?quiz=true")
+    {
+        <li><a href="#installing-behind-a-proxy">Installing Behind a Proxy</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=installing-behind-an-explicit-proxy?quiz=true")
+    {
+        <li><a href="#installing-behind-an-explicit-proxy">Installing Behind an Explicit Proxy</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=installing-to-a-different-location?quiz=true")
+    {
+        <li><a href="#installing-to-a-different-location">Installing to a Different Location</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=installing-a-particular-version-of-chocolatey?quiz=true")
+    {
+        <li><a href="#installing-a-particular-version-of-chocolatey">Installing a Particular Version of Chocolatey</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=use-windows-built-in-compression-instead-of-downloading-7zip?quiz=true")
+    {
+        <li><a href="#use-windows-built-in-compression-instead-of-downloading-7zip">Use Windows Built-In Compression Instead of Downloading 7zip</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=installing-with-restricted-tls?quiz=true")
+    {
+        <li><a href="#installing-with-restricted-tls">Installing with Restricted TLS</a></li>
+    }
+    else if (Request.RawUrl == url + "?method=non-administrative-install?quiz=true")
+    {
+        <li><a href="#non-administrative-install">Non-Administrative Install</a></li>
+    }
 }
 
 <div id="loader">
