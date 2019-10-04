@@ -7,18 +7,60 @@
 }
 
 #topNav {
-    padding-bottom: 0;
     z-index: 9999;
+    height: 66px;
 
-    img {
+    .navbar-brand img {
         height: 50px;
-        margin-bottom: .5rem;
+    }
+
+    button {
+        font-size: 1.2rem;
+    }
+
+    .nav-search {
+        form {
+            input,
+            input:focus,
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+                background-color: $dark !important;
+                border-color: $light;
+                -webkit-text-fill-color: $light;
+                /*-webkit-box-shadow: 0 0 0 0.2rem rgba(248,249,250,.5) !important;*/
+                -webkit-box-shadow: 0 0 0px 1000px $dark inset;
+                caret-color: $light;
+            }
+
+            input {
+                border-bottom-right-radius: .25rem !important;
+                border-top-right-radius: .25rem !important;
+                box-shadow: none;
+            }
+
+            button {
+                position: absolute !important;
+                right: 1px;
+                border: 0;
+                z-index: 999 !important;
+                background: $dark !important;
+                top: 1px;
+                width: auto;
+                color: $light;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
     }
 
     .navbar-collapse {
         background: $white;
         box-shadow: $box-shadow;
-        margin: 0 -1rem;
+        margin: .5rem -1rem;
         padding: .5rem 0;
 
         &.show {
@@ -137,8 +179,16 @@
 }
 
 @include media-breakpoint-up(sm) {
-    #topNav img {
-        height: 75px;
+    #topNav {
+        height: 79px;
+
+        .navbar-brand img {
+            height: 63px;
+        }
+
+        .nav-search form input {
+            width: 375px;
+        }
     }
 
     #secondaryNav {
@@ -166,6 +216,10 @@
 
 @include media-breakpoint-up(md) {
     #topNav {
+        .nav-search form input {
+            width: 550px;
+        }
+
         .navbar-collapse {
 
             &.show {
@@ -205,13 +259,31 @@
 @include media-breakpoint-up(lg) {
     #topNav {
         padding: 1.5rem;
+        height: 92px;
 
-        img {
-            height: 115px;
+        .navbar-brand {
             position: absolute;
-            z-index: 9999;
             top: 17px;
-            margin-bottom: 0;
+            z-index: 9999;
+
+            img {
+                height: 119px;
+            }
+        }
+
+        .nav-search {
+            position: absolute;
+            right: 155px;
+            width: 62%;
+
+            form input {
+                width: 100%;
+            }
+
+            .btn-search {
+                position: absolute;
+                right: 0;
+            }
         }
 
         .navbar-collapse {
@@ -227,7 +299,7 @@
             }
 
             .nav-link {
-                padding: .5rem 1.25rem;
+                padding: .5rem .8rem;
                 color: $white;
                 margin: 0;
             }
@@ -250,6 +322,24 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    #topNav {
+        .navbar-collapse {
+            .nav-link {
+                padding: .5rem 1.25rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 1900px) {
+    #topNav {
+        .nav-search {
+            width: 22%;
         }
     }
 }
