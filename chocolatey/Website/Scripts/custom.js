@@ -82,6 +82,34 @@ $(document).ready(function () {
     }
 });
 
+// Opens tabbed information based on hash
+$(function () {
+    var urlTab = document.location.toString();
+    if (urlTab.match('#')) {
+        var tabNav = $('.nav-tabs a[href="#' + urlTab.split('#')[1] + '"]');
+        var parentTabNav = '#' + tabNav.parentsUntil('.tab-pane').parent().addClass('tab-nested');
+        parentTabNav = $('#' + $('.tab-pane.tab-nested').prop('id') + '-tab');
+        // Open Tabs
+        parentTabNav.tab('show');
+        tabNav.tab('show');
+        if (parentTabNav.length) {
+            $('html, body').scrollTop(parentTabNav.offset().top - 30);
+        }
+        else if (tabNav.length) {
+            $('html, body').scrollTop(tabNav.offset().top -30);
+        }
+        
+    }
+    // Change hash on tab click and prevent scrolling
+    $('.nav-tabs a').click(function (e) {
+        if (history.pushState) {
+            history.pushState(null, null, e.target.hash);
+        } else {
+            window.location.hash = e.target.hash; //Polyfill for old browsers
+        }
+    });
+});
+
 //Makes :contains case insensitive
 $.expr[":"].contains = $.expr.createPseudo(function (arg) {
     return function (elem) {
