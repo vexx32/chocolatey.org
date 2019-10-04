@@ -348,11 +348,13 @@
             </ul>
             @if (@Model.Tags.AnySafe())
             {
-                <p class="mb-0" title="Nuspec reference: tags | Specified as space-separated"><small>Tags:</small></p>
-                foreach (var tag in Model.Tags)
-                {
-                    <a class="badge badge-pill badge-primary" href="@Url.Search("tag:" + tag)" title="Search for @tag">@tag</a>
-                }
+                <div class="mb-3">
+                    <p class="mb-0" title="Nuspec reference: tags | Specified as space-separated"><small>Tags:</small></p>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a class="badge badge-pill badge-primary" href="@Url.Search("tag:" + tag)" title="Search for @tag">@tag</a>
+                    }
+                </div>
             }
         </div>
         @* Edit Package Modal*@
