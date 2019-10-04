@@ -34,6 +34,10 @@ $(function () {
         }
         location.reload();
     });
+    // Package warning callout
+    $('#callout-package-warning a[data-toggle="collapse"]').click(function () {
+        document.cookie = "chocolatey_hide_packages_warning=true";
+    });
 });
 
 // Package Filtering

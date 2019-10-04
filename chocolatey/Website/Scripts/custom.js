@@ -519,3 +519,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+// Replace Show/Hide on buttons when clicked
+$('.btn').click(function () {
+    var $this = $(this);
+    if ($this.is(':contains("Show")')) {
+        $this.each(function () {
+            var text = $this.text().replace('Show', 'Hide');
+            $this.text(text);
+        });
+    } else if ($this.is(':contains("Hide")')) {
+        $this.each(function () {
+            var text = $this.text().replace('Hide', 'Show');
+            $this.text(text);
+        });
+    }
+});

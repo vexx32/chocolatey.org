@@ -18,6 +18,7 @@
     var currentUrl = Request.Url.AbsoluteUri;
     var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
+    var packageWarning = Request.Cookies["chocolatey_hide_packages_warning"] == null;
 }
 @if (!currentUrl.Contains("sortOrder"))
 {
@@ -32,11 +33,17 @@
 <section id="package" class="container py-3 py-lg-5 body-tabs">
     @if (!User.Identity.IsAuthenticated)
     {
-        <div class="row">
-            <div class="col-12">
-                <div class="callout callout-warning">
-                    <p class="mb-0">Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Learn more</a>.</p>
+        <div id="callout-package-warning" class="callout callout-warning py-2">
+            <div class="d-md-flex justify-content-md-between align-items-md-center">
+                <h5 class="mb-0 font-weight-bold"><span class="fas fa-exclamation-triangle text-warning"></span> Community Package Repository Notification</h5>
+                <div class="mt-2 mt-md-0">
+                    <a class="@if(packageWarning){<text>collapse show</text>}else{<text>collapsed</text>} btn btn-sm btn-secondary" data-toggle="collapse" href="#package-warning" role="button" aria-expanded="true" aria-controls="package-warning" title="Package Warning">
+                        @if(packageWarning){<text>Hide</text>}else{<text>Show</text>} Notification
+                    </a>
                 </div>
+            </div>
+            <div class="collapse mt-2 @if(packageWarning){<text>show</text>}" id="package-warning">
+                <p>Your use of the packages on this site means you understand they are not supported or guaranteed in any way. Due to the nature of a public repository and unreliability due to distribution rights, these packages should not be used as is for organizational purposes either. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Learn more</a>.</p>
             </div>
         </div>
         @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
