@@ -911,7 +911,11 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     {
                         <div class="callout callout-danger">
                             <p>This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s):</p>
-                            @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
+                            <div class="comments-list-container">
+                                <div class="comments-list @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>} else {<text >user-unknown</text>}">
+                                    @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
+                                </div>
+                            </div>
                         </div>
                     }
                     else if (maintainer && !Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
@@ -966,12 +970,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
                         {
                             @*Not logged in moderator que*@
-                            <div class="alert alert-primary text-center mb-0 font-weight-bold btn-load-more border-0">
-                                Click to View Older Comments
-                            </div>
                             <div class="bg-white shadow-sm p-3 mb-3">
-                                <div style="max-height: 900px; overflow: auto;">
-                                    <div class="comments-list list-unstyled d-flex flex-column-reverse mb-0 user-unknown">
+                                <div class="comments-list-container">
+                                    <div class="comments-list user-unknown">
                                         @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
                                     </div>
                                 </div>
@@ -979,16 +980,14 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         }
                     }
                     @*Logged in*@
-                    else if (anyPackageRole)
+                    else if (anyPackageRole && Model.Status != PackageStatusType.Rejected)
                     {
                         if (!string.IsNullOrWhiteSpace(Model.ReviewComments))
                         {
-                            <div class="alert alert-primary text-center mb-0 font-weight-bold btn-load-more border-0">
-                                Click to View Older Comments
-                            </div>
+
                             <div class="bg-white shadow-sm p-3 mb-3">
-                                <div style="max-height: 900px; overflow: auto;">
-                                    <div class="comments-list list-unstyled d-flex flex-column-reverse mb-0 @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>}">
+                                <div class="comments-list-container">
+                                    <div class="comments-list @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>} else {<text> user-unknown</text>}">
                                         @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
                                     </div>
                                 </div>
@@ -1385,21 +1384,19 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                         var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: true);
                                         @Html.Partial("_ListVersion", packageVersionList)
                                     }
-                                </tbody>
-                                @if (packageVersions > packageVersionsDefaultDisplay)
-                                {
-                                    <tbody>
-                                        @foreach (var packageVersion in Model.PackageVersions.Skip(packageVersionsDefaultDisplay))
+                                    @if (packageVersions > packageVersionsDefaultDisplay)
+                                    {
+                                        foreach (var packageVersion in Model.PackageVersions.Skip(packageVersionsDefaultDisplay))
                                         {
                                             var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: false);
                                             @Html.Partial("_ListVersion", packageVersionList)
                                         }
-                                    </tbody>
-                                }
+                                    }
+                                </tbody>
                             </table>
                             @if (packageVersions > packageVersionsDefaultDisplay)
                             {
-                                <a onclick="if ($(this).text() == 'Hide') {$('.versionTableRowMore').hide();$(this).text('Show More');} else {$('.versionTableRowMore').show();$(this).text('Hide');}">Show More</a>
+                                <button type="button" class="btn btn-sm btn-secondary" onclick="if($(this).is(':contains(&quot;Hide&quot;)')){$('.versionTableRowMore').hide();}else{$('.versionTableRowMore').show();}">Show Additional Versions</button>
                             }
                         </div>
                     </div>

@@ -4,55 +4,45 @@ $(function () {
     $('#description').find("pre").addClass('line-numbers border').wrapInner('<code class="language-powershell"></code>');
     Prism.highlightAll();
 
-    //Chat Bubbles
-    // Define element containing user role
-    $(".comments-list h4:contains('maintainer')").addClass("user-role");
-    $(".comments-list h4:contains('reviewer')").addClass("user-role");
+    $(".comments-list").each(function () {
+        var commentList = $(this);
 
-    // Define comment message
-    $('.comments-list').children().not('.user-role').addClass("comment-body");
+        commentList.find("h4:contains('(maintainer)')").addClass('comment-title comment-maintainer');
+        commentList.find("h4:contains('(reviewer)')").addClass('comment-title comment-reviewer');
+        commentList.children().not('.comment-title').addClass("comment-body");
 
-    // Split user-role into two elements, so date can go on the bottom of chat bubble
-    $('.user-role').each(function () {
-        // Wrap comment in span to form bubble
-        $(this).nextUntil('.user-role').addBack().wrapAll('<span></span>');
-        // Disect comment
-        var $h4 = $(this),
-            text = $h4.text(),
-            textParts = text.split(' on');
+        commentList.find(".comment-title").each(function () {
+            var h4 = $(this),
+                text = h4.text(),
+                textParts = text.split(' on');
 
-        if (textParts.length == 2) {
-            $h4.text(textParts[0]).after('<h6 class="comment-date">on ' + textParts[1] + '</h6>');
+            // Wrap comment in span to form bubble
+            h4.nextUntil('.comment-title').addBack().wrapAll('<span class="comment-group"></span>');
+            // Disect date and wrap
+            if (textParts.length == 2) {
+                h4.text(textParts[0]).after('<h6 class="comment-date">on ' + textParts[1] + '</h6>');
+            }
+        });
+
+        // Define left or right chat position
+        var commentMaintainer = commentList.find(".comment-maintainer").parent();
+        var commentReviewer = commentList.find(".comment-reviewer").parent();
+
+        if (commentList.hasClass("user-unknown")) {
+            commentMaintainer.addClass("chat-left");
+            commentReviewer.addClass("chat-right");
         }
-    });
-
-    // Unknown User
-    $(".comments-list.user-unknown .user-role:contains('maintainer')").parent().addClass("chat-left");
-    $(".comments-list.user-unknown .user-role:contains('reviewer')").parent().addClass("chat-right");
-    //Maintainer
-    $(".comments-list.user-maintainer .user-role:contains('maintainer')").parent().addClass("chat-right");
-    $(".comments-list.user-maintainer .user-role:contains('reviewer')").parent().addClass("chat-left");
-    //Moderator
-    $(".comments-list.user-moderator .user-role:contains('maintainer')").parent().addClass("chat-left");
-    $(".comments-list.user-moderator .user-role:contains('reviewer')").parent().addClass("chat-right");
-
-    // Reverse order of comments
-    div = $('.comments-list');
-    div.children().each(function (i, span) { div.prepend(span) })
-
-    // Load more comments
-    var button = $(".btn-load-more");
-
-    if ($(".comments-list span:hidden").length < 4) {
-        button.hide();
-    }
-    $(".comments-list span").slice(0, 4).show().addClass('d-flex');
-    button.click(function (e) {
-        e.preventDefault();
-        $(".comments-list span:hidden").slice(0, 100).show().addClass('d-flex');
-        if ($(".comments-list span:hidden").length == 0) {
-            button.hide();
+        if (commentList.hasClass("user-maintainer")) {
+            commentMaintainer.addClass("chat-right");
+            commentReviewer.addClass("chat-left");
         }
+        if (commentList.hasClass("user-moderator")) {
+            commentMaintainer.addClass("chat-left");
+            commentReviewer.addClass("chat-right");
+        }
+
+        // Scroll to bottom of container to show newest comments first
+        commentList.parent().scrollTop(commentList.parent()[0].scrollHeight - commentList.parent()[0].clientHeight);
     });
 
     // Files Section
