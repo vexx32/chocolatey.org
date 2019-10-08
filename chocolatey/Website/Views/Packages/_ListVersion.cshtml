@@ -34,27 +34,48 @@
         @switch (Model.Package.Status)
         {
             case PackageStatusType.Submitted:
-                    switch (Model.Package.SubmittedStatus)
-                    {
-                        case PackageSubmittedStatusType.Waiting:
-                        <td>waiting for maintainer</td>
-                        break;
-                        case PackageSubmittedStatusType.Responded:
-                        <td>responded</td>
-                        break;
-                        default:
-                        <td>submitted</td>
-                        break;
-                    }
-
+            switch (Model.Package.SubmittedStatus)
+            {
+                case PackageSubmittedStatusType.Pending:
+                    <td><span class="badge badge-pill badge-warning">Pending Automated Review</span></td>
                     break;
+                case PackageSubmittedStatusType.Ready:
+                    <td><span class="badge badge-pill badge-success">Ready</span></td>
+                    break;
+                case PackageSubmittedStatusType.Updated:
+                    <td>
+                        <span class="badge badge-pill badge-orange">Updated</span>
+                        <a href="@Url.Action(MVC.Users.Profiles(Model.Package.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.Package.ReviewerEmailAddress, Model.Package.ReviewerUserName, 20)</a>   
+                    </td>
+                    break;
+                case PackageSubmittedStatusType.Responded:
+                    <td>
+                    <span class="badge badge-pill badge-purple">Responded</span>
+                        @if (!string.IsNullOrWhiteSpace(Model.Package.ReviewerEmailAddress))
+                        {
+                            <a href="@Url.Action(MVC.Users.Profiles(Model.Package.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.Package.ReviewerEmailAddress, Model.Package.ReviewerUserName, 20)</a>
+                        }
+                    </td>
+                    break;
+                default:
+                    <td>
+                        <span class="badge badge-pill badge-danger">Waiting for Maintainer</span>
+                        <a href="@Url.Action(MVC.Users.Profiles(Model.Package.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.Package.ReviewerEmailAddress, Model.Package.ReviewerUserName, 20)</a>
+                    </td>
+                    break;
+            }
+            break;
             case PackageStatusType.Approved:
+                <td><span class="fas fa-check text-success"></span> Approved</td>
+                break;
             case PackageStatusType.Rejected:
+                <td><span class="fas fa-times text-danger"></span> Rejected</td>
+                break;
             case PackageStatusType.Exempted:
-                <td>@Model.Package.Status.GetDescriptionOrValue().ToLower()</td>
+                <td><span class="fas fa-ban text-secondary"></span> Exempted</td>
                 break;
             default:
-                <td>&nbsp;</td>
+                <td><span class="fas fa-question text-secondary"></span> Unknown</td>
                 break;
         }
     
