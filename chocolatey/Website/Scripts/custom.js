@@ -535,3 +535,10 @@ $('.btn').click(function () {
         });
     }
 });
+
+// Search box
+$('.search-box').each(function () {
+    if (!$(this).parent().hasClass('nav-search')) {
+        $(this).removeClass('d-none');
+    }
+});

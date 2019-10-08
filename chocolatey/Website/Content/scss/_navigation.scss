@@ -118,10 +118,6 @@
                 display: flex;
                 flex-direction: column;
 
-                span {
-                    line-height: 1.5rem;
-                }
-
                 span:nth-child(1) {
                     font-size: 1.5rem;
                 }
@@ -131,6 +127,12 @@
                 }
             }
         }
+    }
+}
+#secondaryNav.packagesNav {
+
+    ul {
+        margin: 0 auto;
     }
 }
 
@@ -144,7 +146,7 @@
         ul {
 
             li {
-                padding: 0 1rem;
+                padding: 0 .75rem;
             }
         }
     }
@@ -185,20 +187,17 @@
         }
     }
 
-    #secondaryNav {
-
-        ul {
-
-            li {
-                padding: 0 1.25rem;
-            }
-        }
-    }
-
     #secondaryNav.successStoryNav {
 
         ul {
             margin: 0 auto;
+        }
+    }
+
+    #secondaryNav.packagesNav {
+
+        ul {
+            margin: 0;
         }
     }
 }
@@ -225,7 +224,6 @@
                 margin: 0;
                 position: absolute;
                 right: 1.5rem;
-                top: 28%;
             }
 
             .nav-link {
@@ -252,13 +250,6 @@
                     }
                 }
             }
-        }
-    }
-}
-@include media-breakpoint-up(xl) {
-    #topNav {
-        img {
-            height: 125px;
         }
     }
 }

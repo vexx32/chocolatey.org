@@ -1366,6 +1366,7 @@
     <Content Include="Content\fonts\fa-solid-900.ttf" />
     <Content Include="Content\fonts\fa-solid-900.woff" />
     <Content Include="Content\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\scss\_search.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
