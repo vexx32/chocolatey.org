@@ -3,10 +3,10 @@
     var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
 
-    var pagePackages = @FullHref == @BaseHref + "/packages";
-    var pageSearch = @FullHref == @BaseHref + "/search";
+    var pagePackages = @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/packages/";
+    var pageSearch = @FullHref == @BaseHref + ("/search") || @FullHref == @BaseHref + ("/search/");
     var pageHome = Request.RawUrl == Url.RouteUrl(RouteName.Home);
-    var pageDocs = Request.RawUrl == Url.RouteUrl(RouteName.Docs) || Request.RawUrl == Url.RouteUrl(RouteName.Docs) + "?q=" + ViewBag.SearchTerm;
+    var pageDocs = @FullHref.Contains("/docs");
 }
 
 <form class="form-inline search-box d-none" role="search" action="@if(pagePackages){@Url.PackageList()}else if(pageSearch || pageHome){@Url.SearchResults()}else if(pageDocs){@Url.RouteUrl(RouteName.Docs, new { docName = "search" })}" method="get">

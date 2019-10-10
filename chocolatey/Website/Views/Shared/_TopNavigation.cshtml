@@ -5,7 +5,7 @@
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
     var PackageListNav =
         (
-            @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/search"
+            @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/packages/" || @FullHref == @BaseHref + ("/search") || @FullHref == @BaseHref + ("/search/")
         );
     var PackageAreaNav =
        (
@@ -18,7 +18,7 @@
         );
     var ResourceNav =
         (
-            Request.RawUrl == Url.RouteUrl(RouteName.Docs) || Request.RawUrl == Url.RouteUrl(RouteName.BlogHome) || Request.RawUrl == Url.RouteUrl(RouteName.BlogArticle)
+            @FullHref.Contains("/docs") || Request.RawUrl == Url.RouteUrl(RouteName.BlogHome) || Request.RawUrl == Url.RouteUrl(RouteName.BlogArticle)
         );
     var SuccessStoryNav =
         (Request.RawUrl == Url.RouteUrl(RouteName.Resources, new { resourceType = "success-stories" }));

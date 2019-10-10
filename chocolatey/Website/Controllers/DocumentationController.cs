@@ -32,14 +32,18 @@ namespace NuGetGallery.Controllers
         }
 
         [HttpGet, OutputCache(VaryByParam = "*", Location = OutputCacheLocation.Any, Duration = 7200)]
-        public ActionResult Documentation(string docName)
+        public ActionResult Documentation(string docName, string q)
         {
             docName = docName.Replace("-", "");
             var fileExists = _fileSystem.FileExists(Server.MapPath("~/Views/Documentation/{0}.cshtml".format_with(docName)));
+            q = (q ?? string.Empty).Trim();
+            ViewBag.SearchTerm = q;
+
+            var viewModel = new DocumentationViewModel(q);
 
             if (fileExists)
             {
-                return View(docName);
+                return View(docName, viewModel);
             }
 
             return RedirectToAction("PageNotFound", "Error");
