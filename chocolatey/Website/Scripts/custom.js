@@ -153,7 +153,7 @@ $(document).on('click', 'input[type=text]', function () {
 
 // Toggle and scroll to collapse elements on click
 $('a[href*="#"]').not('[data-toggle="tab"]').click(function () {
-    $(this.hash).find('[data-toggle="collapse"]').next().collapse('show');
+    $(this.hash).find('a[data-toggle="collapse"]').next().collapse('show');
 });
 
 // Smooth Scroll
