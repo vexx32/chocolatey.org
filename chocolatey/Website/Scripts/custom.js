@@ -519,3 +519,84 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+// Replace Show/Hide on buttons when clicked
+$('.btn').click(function () {
+    var $this = $(this);
+    if ($this.is(':contains("Show")')) {
+        $this.each(function () {
+            var text = $this.text().replace('Show', 'Hide');
+            $this.text(text);
+        });
+    } else if ($this.is(':contains("Hide")')) {
+        $this.each(function () {
+            var text = $this.text().replace('Hide', 'Show');
+            $this.text(text);
+        });
+    }
+});
+
+// Search box
+$('.search-box').each(function () {
+    if (!$(this).parent().hasClass('nav-search')) {
+        $(this).removeClass('d-none');
+    }
+});
+$('.nav-search .btn-search').click(function () {
+    var btnSearch = $('.nav-search .btn-search');
+    var btnSearchOption = btnSearch.prev().find('button');
+
+    btnSearch.addClass('d-none').parent().find('form').removeClass('d-none').find('input').focus();
+    if (!btnSearchOption.hasClass('btn-docs') && document.location.pathname.indexOf("/docs") != 0) {
+        btnSearchOption.html('<span class="small"><i class="fas fa-search" alt="Search Packages"></i> Packages</span>');
+        btnSearchOption.after('<button class="btn btn-light btn-docs" type="submit" formaction="/docs/search"><span class="small"><i class="fas fa-file" alt="Search Docs"></i> Docs</span></button>');
+    }
+    navSearch();
+    searchHelpShow();
+
+    $(window).on("resize", function () {
+        navSearch();
+    });
+
+    function navSearch() {
+        if (btnSearch.hasClass('d-none')) {
+            if ($(window).width() < 576) {
+                $('#topNav').find('.navbar-brand').addClass('d-none').next().addClass('w-100').find('.nav-search').addClass('w-100');
+                $('#topNav').find('.btn-nav-toggle').addClass('d-none');
+            }
+            else {
+                $('#topNav').find('.navbar-brand').removeClass('d-none').next().removeClass('w-100').find('.nav-search').removeClass('w-100');
+                $('#topNav').find('.btn-nav-toggle').removeClass('d-none');
+            }
+        }
+    }
+});
+$(window).on("resize, click", function () {
+    if ($('.nav-search .btn-search').hasClass('d-none')) {
+        $('.nav-search form').addClass('d-none').next().removeClass('d-none');
+
+        if ($(window).width() < 576) {
+            $('#topNav').find('.navbar-brand').removeClass('d-none').next().removeClass('w-100').find('.nav-search').removeClass('w-100');
+            $('#topNav').find('.btn-nav-toggle').removeClass('d-none');
+        }
+    }
+    searchHelpHide();
+});
+$('.search-box.search-packages input').bind("click keyup", function () {
+    if (!$(this).hasClass('active-input')) {
+        $(this).addClass('active-input');
+        searchHelpShow();
+    }
+});
+function searchHelpShow() {
+    if ($('.nav-search .btn-search').hasClass('d-none') && $('.nav-search .search-box').hasClass('search-packages')) {
+        $('.nav-search').find('.search-box input').addClass('active-input');
+    }
+    $('.active-input').parentsUntil('form').parent().find('.search-help').removeClass('d-none');
+}
+function searchHelpHide() {
+    $('.active-input').removeClass('active-input').parentsUntil('form').parent().find('.search-help').addClass('d-none');
+}
+$('.nav-search button, .search-box input, .search-box button, .search-box .search-help').click(function (event) {
+    event.stopPropagation();
+});

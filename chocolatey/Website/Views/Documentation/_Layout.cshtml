@@ -1,4 +1,6 @@
-﻿@{
+﻿@model DocumentationViewModel
+@using NuGetGallery
+@{
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/pages.css");
@@ -23,7 +25,7 @@
 
 <body>
     @Html.Partial("~/Views/Shared/_TopNavigation.cshtml")
-    <main id="docs">
+    <main id="docs" class="mb-auto">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-md-3 col-xl-2 p-0 docs-left">
@@ -34,6 +36,9 @@
                         <div class="collapse navbar-collapse bg-light" id="docs-nav">
                             <div class="navbar-nav d-block w-100 bg-light">
                                 <ul>
+                                    <li class="p-2 bg-primary">
+                                        @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                                    </li>
                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "home" })">Docs Home</a></li>
                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "why" })">Why Chocolatey?</a></li>
                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "security" })">Security</a></li>
@@ -66,7 +71,7 @@
                                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-throttle" })">Package Throttle (Pro+)</a></li>
                                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-synchronize" })">Package Synchronizer (Pro+ Auto / C4B Sync Command)</a></li>
                                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Self-Service / Background Mode (C4B)</a></li>
-        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-chocolatey-central-management" })">Chocolatey Central Management (C4B)</a></li>
+                                                    <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-chocolatey-central-management" })">Chocolatey Central Management (C4B)</a></li>
                                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-create-packages-from-installers" })">Package Builder (C4B)</a></li>
                                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer (C4B)</a></li>
                                                     <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-package-audit" })">Package Audit (C4B)</a></li>
@@ -178,7 +183,7 @@
                                         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Host Your Own Package Repository Server</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-set-up-chocolatey-server" })">Set up the Chocolatey.Server</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">Set up Chocolatey for internal/organizational use</a></li>
-        				<li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-internal-package-repository" })">Automate Package Internalizer (MSP/C4B)</a></li>
+                                        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-internal-package-repository" })">Automate Package Internalizer (MSP/C4B)</a></li>
                                     </ul>
                                 </div>
                                 @*Use Cases*@
@@ -260,5 +265,17 @@
         });
         anchors.options = { placement: 'left' };
         anchors.add();
+    </script>
+    <script>
+        // Documentation Search Results
+        (function () {
+            var cx = '013536524443644524775:xv95wv156yw';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
     </script>
 </body>
