@@ -92,6 +92,23 @@
             -webkit-box-shadow: none;
         }
     }
+
+    &.search-packages .search-help {
+        top: 100%;
+        width: 100%;
+        max-width: 539px;
+        z-index: 1;
+
+        .arrow-up {
+            top: .25rem;
+            left: .75rem;
+            width: 0;
+            height: 0;
+            border-left: .75rem solid transparent;
+            border-right: .75rem solid transparent;
+            border-bottom: .75rem solid $white;
+        }
+    }
 }
 
 @include media-breakpoint-up(sm) {

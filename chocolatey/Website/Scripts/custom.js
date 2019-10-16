@@ -552,6 +552,7 @@ $('.nav-search .btn-search').click(function () {
         btnSearchOption.after('<button class="btn btn-light btn-docs" type="submit" formaction="/docs/search"><span class="small"><i class="fas fa-file" alt="Search Docs"></i> Docs</span></button>');
     }
     navSearch();
+    searchHelpShow();
 
     $(window).on("resize", function () {
         navSearch();
@@ -579,7 +580,23 @@ $(window).on("resize, click", function () {
             $('#topNav').find('.btn-nav-toggle').removeClass('d-none');
         }
     }
+    searchHelpHide();
 });
-$('.nav-search input, .nav-search button').click(function (event) {
+$('.search-box.search-packages input').bind("click keyup", function () {
+    if (!$(this).hasClass('active-input')) {
+        $(this).addClass('active-input');
+        searchHelpShow();
+    }
+});
+function searchHelpShow() {
+    if ($('.nav-search .btn-search').hasClass('d-none') && $('.nav-search .search-box').hasClass('search-packages')) {
+        $('.nav-search').find('.search-box input').addClass('active-input');
+    }
+    $('.active-input').parentsUntil('form').parent().find('.search-help').removeClass('d-none');
+}
+function searchHelpHide() {
+    $('.active-input').removeClass('active-input').parentsUntil('form').parent().find('.search-help').addClass('d-none');
+}
+$('.nav-search button, .search-box input, .search-box button, .search-box .search-help').click(function (event) {
     event.stopPropagation();
 });
