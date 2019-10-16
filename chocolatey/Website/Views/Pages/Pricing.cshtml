@@ -5,7 +5,6 @@
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/CookiesNotice");
 }
-
 <section id="editions" class="py-3 py-lg-5">
     <div class="container">
         <div class="row text-center pb-4">
@@ -104,169 +103,167 @@
 </section>
 <section class="pb-3 pb-lg-5 bg-white" id="pricing-faq">
     <ul class="bg-white list-unstyled list-inline sticky-nav sticky-top py-3 text-center border-bottom d-none d-md-block">
-        <li class="list-inline-item px-3"><a class="active" href="#Pricing">Pricing</a></li>
-        <li class="list-inline-item px-3"><a href="#Licensing">Licensing</a></li>
-        <li class="list-inline-item px-3"><a href="#Purchasing">Purchasing</a></li>
-        <li class="list-inline-item px-3"><a href="#Renewing">Renewing</a></li>
-        <li class="list-inline-item px-3"><a href="#Support">Support</a></li>
+        <li class="list-inline-item px-3"><a class="collapse-nav collapse show active" data-toggle="collapse" href="#faq-pricing" role="button" aria-expanded="true" aria-controls="faq-pricing">Pricing</a></li>
+        <li class="list-inline-item px-3"><a class="collapse-nav collapsed" data-toggle="collapse" href="#faq-licensing" role="button" aria-expanded="false" aria-controls="faq-licensing">Licensing</a></li>
+        <li class="list-inline-item px-3"><a class="collapse-nav collapsed" data-toggle="collapse" href="#faq-purchasing" role="button" aria-expanded="false" aria-controls="faq-purchasing">Purchasing</a></li>
+        <li class="list-inline-item px-3"><a class="collapse-nav collapsed" data-toggle="collapse" href="#faq-renewing" role="button" aria-expanded="false" aria-controls="faq-renewing">Renewing</a></li>
+        <li class="list-inline-item px-3"><a class="collapse-nav collapsed" data-toggle="collapse" href="#faq-support" role="button" aria-expanded="false" aria-controls="faq-support">Support</a></li>
     </ul>
     <div class="container pt-3 pt-lg-5">
-        <div class="row">
-            @*Pricing*@
-            <div id="Pricing" class="col-12 mb-4">
-                <a class="h2 collapse show" data-toggle="collapse" href="#faq-pricing" role="button" aria-expanded="true" aria-controls="faq-pricing" title="Pricing">Pricing Overview</a>
-                <div class="collapse show" id="faq-pricing">
-                    <hr />
-                    <h3>How is Chocolatey priced?</h3>
-                    <p>Chocolatey is priced on a per node basis. Please see <a href="#Licensing">"What counts as a license?" (below)</a> for more information.</p>
+        @*Pricing*@
+        <div class="mb-4">
+            <a class="h2 collapse show" data-toggle="collapse" href="#faq-pricing" role="button" aria-expanded="true" aria-controls="faq-pricing" title="Pricing">Pricing Overview</a>
+            <div class="collapse show" id="faq-pricing">
+                <hr />
+                <h3>How is Chocolatey priced?</h3>
+                <p>Chocolatey is priced on a per node basis. Please see <a href="#Licensing">"What counts as a license?" (below)</a> for more information.</p>
 
-                    <h3 class="mt-4">What are pricing options?</h3>
-                    <p>For organizations that want to quickly get started, we offer the Chocolatey for Business (C4B) Starter Pack. The Starter Pack allows for up to 35 nodes is priced at $600 per year. This is the minimum pack and ideal for smaller environments, testing, or setting up a proof of concept.</p>
-                    <ul>
-                        <li>Over 35 node pricing starts at $16 per node.</li>
-                        <li>Price breaks begin at 500 nodes with special pricing for larger volumes and multi-year contracts.</li>
-                        <li>We offer special pricing for non-profit organizations and have other opportunities for discounts for all types of organizations. Please see the FAQs just below this.</li>
-                    </ul>
+                <h3 class="mt-4">What are pricing options?</h3>
+                <p>For organizations that want to quickly get started, we offer the Chocolatey for Business (C4B) Starter Pack. The Starter Pack allows for up to 35 nodes is priced at $600 per year. This is the minimum pack and ideal for smaller environments, testing, or setting up a proof of concept.</p>
+                <ul>
+                    <li>Over 35 node pricing starts at $16 per node.</li>
+                    <li>Price breaks begin at 500 nodes with special pricing for larger volumes and multi-year contracts.</li>
+                    <li>We offer special pricing for non-profit organizations and have other opportunities for discounts for all types of organizations. Please see the FAQs just below this.</li>
+                </ul>
 
-                    <h3 class="mt-4">What is included in an annual subscription?</h3>
-                    <p>The annual subscription is an all-inclusive price.</p>
-                    <p>An annual subscription includes:</p>
-                    <ul>
-                        <li>Licensing for all the advanced features in our commercial editions</li>
-                        <li>Upgrades for access to all the features and fixes that come available during your subscription term</li>
-                        <li>Access to our support team, with varying levels based on what you purchase (including an option for 24/7). See <a href="#Support">support below</a> for more information</li>
-                    </ul>
-                    <h3 class="mt-4">Do you also offer perpetual pricing?</h3>
-                    <p>We also offer perpetual pricing on Chocolatey for Business. <a href="@Url.RouteUrl(RouteName.ContactSales)">Contact us</a> for details.</p>
+                <h3 class="mt-4">What is included in an annual subscription?</h3>
+                <p>The annual subscription is an all-inclusive price.</p>
+                <p>An annual subscription includes:</p>
+                <ul>
+                    <li>Licensing for all the advanced features in our commercial editions</li>
+                    <li>Upgrades for access to all the features and fixes that come available during your subscription term</li>
+                    <li>Access to our support team, with varying levels based on what you purchase (including an option for 24/7). See <a href="#Support">support below</a> for more information</li>
+                </ul>
+                <h3 class="mt-4">Do you also offer perpetual pricing?</h3>
+                <p>We also offer perpetual pricing on Chocolatey for Business. <a href="@Url.RouteUrl(RouteName.ContactSales)">Contact us</a> for details.</p>
 
-                    <h3 class="mt-4">Do you offer special pricing?</h3>
-                    <p>For Case study / testimonials we can offer discounts on Chocolatey for Business. Multi-year term and volume purchase contracts also provide options for discounts. <a href="@Url.RouteUrl(RouteName.ContactSales)">Contact us</a> for details.</p>
+                <h3 class="mt-4">Do you offer special pricing?</h3>
+                <p>For Case study / testimonials we can offer discounts on Chocolatey for Business. Multi-year term and volume purchase contracts also provide options for discounts. <a href="@Url.RouteUrl(RouteName.ContactSales)">Contact us</a> for details.</p>
 
-                    <h3 class="mt-4">We are a non-profit/education/government institution. What special pricing do you have available?</h3>
-                    <p>We offer very attractive pricing for education and non-profit organizations. Depending on volume, we have varying levels of special discounts available. <a href="@Url.RouteUrl(RouteName.ContactSales)">Contact us</a> for details.</p>
+                <h3 class="mt-4">We are a non-profit/education/government institution. What special pricing do you have available?</h3>
+                <p>We offer very attractive pricing for education and non-profit organizations. Depending on volume, we have varying levels of special discounts available. <a href="@Url.RouteUrl(RouteName.ContactSales)">Contact us</a> for details.</p>
 
-                    <h3 class="mt-4">Can I add more nodes during my subscription?</h3>
-                    <p>Yes, adding more nodes is easy. Simply let us know the number of nodes you would like to add and we provide a quote. We are also happy to co-term your nodes to current subscription. We would send you an updated licence file.</p>
-                </div>
+                <h3 class="mt-4">Can I add more nodes during my subscription?</h3>
+                <p>Yes, adding more nodes is easy. Simply let us know the number of nodes you would like to add and we provide a quote. We are also happy to co-term your nodes to current subscription. We would send you an updated licence file.</p>
             </div>
-            @*Licensing*@
-            <div id="Licensing" class="col-12 mb-4">
-                <a class="h2 collapsed" data-toggle="collapse" href="#faq-licensing" role="button" aria-expanded="false" aria-controls="faq-licensing" title="Licensing">Licensing</a>
-                <div class="collapse" id="faq-licensing">
-                    <hr />
-                    <h3>What counts as a license?</h3>
-                    <p>Our licensing is per node (machine).</p>
-                    <p>Simply put, every node you deploy Chocolatey packages to, whether physical, virtual, container, on-prem, in the cloud, or in test environments. Every environment, everywhere, all are part of the licensing count.</p>
-                    <p>We aim to keep our licensing simple and transparent.</p>
+        </div>
+        @*Licensing*@
+        <div class="mb-4">
+            <a class="h2 collapsed" data-toggle="collapse" href="#faq-licensing" role="button" aria-expanded="false" aria-controls="faq-licensing" title="Licensing">Licensing</a>
+            <div class="collapse" id="faq-licensing">
+                <hr />
+                <h3>What counts as a license?</h3>
+                <p>Our licensing is per node (machine).</p>
+                <p>Simply put, every node you deploy Chocolatey packages to, whether physical, virtual, container, on-prem, in the cloud, or in test environments. Every environment, everywhere, all are part of the licensing count.</p>
+                <p>We aim to keep our licensing simple and transparent.</p>
 
-                    <h3 class="mt-4">Can I mix open source and commercial Chocolatey?</h3>
-                    <p>
-                        While you technically can, you need to be very careful, physically separating even the repositories you are using. 
-                        If you end up deploying any packages you've built or acquired with licensed features, those open source nodes will also count as licensed nodes for licensing purposes.
-                    </p>
+                <h3 class="mt-4">Can I mix open source and commercial Chocolatey?</h3>
+                <p>
+                    While you technically can, you need to be very careful, physically separating even the repositories you are using. 
+                    If you end up deploying any packages you've built or acquired with licensed features, those open source nodes will also count as licensed nodes for licensing purposes.
+                </p>
 
-                    <h3 class="mt-4">What happens if we go over the licence count?</h3>
-                    <p>An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshold.</p>
+                <h3 class="mt-4">What happens if we go over the licence count?</h3>
+                <p>An organization that needs to temporarily go over a license count while you bring up a server before destroying another does not incur a penalty as long as they are back in limits within 24 hours and the average count of licenses is below the threshold.</p>
 
-                    <h3 class="mt-4">Do I install Chocolatey on every machine where I manage software?</h3>
-                    <p>Yes, Chocolatey has a local client install on every machine where you will manage software with Chocolatey.</p>
+                <h3 class="mt-4">Do I install Chocolatey on every machine where I manage software?</h3>
+                <p>Yes, Chocolatey has a local client install on every machine where you will manage software with Chocolatey.</p>
 
-                    <h3 class="mt-4">How can I track the number of nodes we have deployed?</h3>
-                    <p>
-                        We recommend you track the nodes you deploy using your currently reporting tools or deployment schedules so that you are aligned to our licencing agreement.
-                        Our Chocolatey Central Management dashboard does offer the ability for customers to track their node count and deployments.
-                    </p>
+                <h3 class="mt-4">How can I track the number of nodes we have deployed?</h3>
+                <p>
+                    We recommend you track the nodes you deploy using your currently reporting tools or deployment schedules so that you are aligned to our licencing agreement.
+                    Our Chocolatey Central Management dashboard does offer the ability for customers to track their node count and deployments.
+                </p>
 
-                    <h3 class="mt-4">Can I purchase just some of the features?</h3>
-                    <p>Unfortunately not. Chocolatey for Business is more than package management, as it if offers a suite of advanced functionality, support, and deeper technical integrational. With our goals in simplicity, reducing complexity of offerings helps keep costs low. If we separated out the features and sold them individually, the added complexity for us would make the price of individual features the same as our current fully-featured offering.</p>
+                <h3 class="mt-4">Can I purchase just some of the features?</h3>
+                <p>Unfortunately not. Chocolatey for Business is more than package management, as it if offers a suite of advanced functionality, support, and deeper technical integrational. With our goals in simplicity, reducing complexity of offerings helps keep costs low. If we separated out the features and sold them individually, the added complexity for us would make the price of individual features the same as our current fully-featured offering.</p>
 
-                    <h3 class="mt-4">We're an organization, can we deploy Chocolatey Pro?</h3>
-                    <p>
-                        Our Chocolatey Professional edition was developed for home users or community members looking support our open source project. It is a violation of the Pro licensing to use it in an organizational context.
-                        We try to keep our offerings simple, Chocolatey for Business is ideal for organizational use and the cost and time savings far outweigh the investment.
-                    </p>
+                <h3 class="mt-4">We're an organization, can we deploy Chocolatey Pro?</h3>
+                <p>
+                    Our Chocolatey Professional edition was developed for home users or community members looking support our open source project. It is a violation of the Pro licensing to use it in an organizational context.
+                    We try to keep our offerings simple, Chocolatey for Business is ideal for organizational use and the cost and time savings far outweigh the investment.
+                </p>
 
-                    <h3 class="mt-4">What licensing options do you offer?</h3>
-                    <p>We offer both subscription and perpetual licensing. Perpetual offerings are only available for Chocolatey for Business (C4B).</p>
-                </div>
+                <h3 class="mt-4">What licensing options do you offer?</h3>
+                <p>We offer both subscription and perpetual licensing. Perpetual offerings are only available for Chocolatey for Business (C4B).</p>
             </div>
-            @*Purchasing*@
-            <div id="Purchasing" class="col-12 mb-4">
-                <a class="h2 collapsed" data-toggle="collapse" href="#faq-purchasing" role="button" aria-expanded="false" aria-controls="faq-purchasing" title="Purchasing">Purchasing</a>
-                <div class="collapse" id="faq-purchasing">
-                    <hr />
-                    <h3>Can I get an official quote?</h3>
-                    <p>If you are ready to move forward with an official quote or need budgetary pricing simply <a href="@Url.RouteUrl(RouteName.ContactSales)">reach out to our team</a> and we will be back in touch.</p>
+        </div>
+        @*Purchasing*@
+        <div class="mb-4">
+            <a class="h2 collapsed" data-toggle="collapse" href="#faq-purchasing" role="button" aria-expanded="false" aria-controls="faq-purchasing" title="Purchasing">Purchasing</a>
+            <div class="collapse" id="faq-purchasing">
+                <hr />
+                <h3>Can I get an official quote?</h3>
+                <p>If you are ready to move forward with an official quote or need budgetary pricing simply <a href="@Url.RouteUrl(RouteName.ContactSales)">reach out to our team</a> and we will be back in touch.</p>
 
-                    <h3 class="mt-4">Can I purchase through a reseller?</h3>
-                    <p>We do have a <a href="@Url.RouteUrl(RouteName.Partner)#resellers">network of resellers</a> - check with your partner to see if they already have an agreement with Chocolatey. If they do not and you have a preferred partner them simply introduce them to us, and we'll work with them through the process.</p>
+                <h3 class="mt-4">Can I purchase through a reseller?</h3>
+                <p>We do have a <a href="@Url.RouteUrl(RouteName.Partner)#resellers">network of resellers</a> - check with your partner to see if they already have an agreement with Chocolatey. If they do not and you have a preferred partner them simply introduce them to us, and we'll work with them through the process.</p>
 
-                    <h3 class="mt-4">Can I pay by Credit Card, ACH, Wire transfer, check, etc?</h3>
-                    <p>Yes. For organizations, we support many payment methods. If you have general questions and are not already in contact with sales, please <a href="@Url.RouteUrl(RouteName.ContactSales)?pipeline=false">contact sales.</a> Otherwise, please reach out over email/phone.</p>
+                <h3 class="mt-4">Can I pay by Credit Card, ACH, Wire transfer, check, etc?</h3>
+                <p>Yes. For organizations, we support many payment methods. If you have general questions and are not already in contact with sales, please <a href="@Url.RouteUrl(RouteName.ContactSales)?pipeline=false">contact sales.</a> Otherwise, please reach out over email/phone.</p>
 
-                    <h3 class="mt-4">Can you work with my purchasing team to get set-up as a supplier?</h3>
-                    <p>We are happy to engage directly with your purchasing or procurement teams once you are ready to move forward with purchase. This may include the supply of W9, support with on-boarding, and any security or operational questions. Simply <a href="@Url.RouteUrl(RouteName.ContactSales)">contact us</a> with your requirements.</p>
+                <h3 class="mt-4">Can you work with my purchasing team to get set-up as a supplier?</h3>
+                <p>We are happy to engage directly with your purchasing or procurement teams once you are ready to move forward with purchase. This may include the supply of W9, support with on-boarding, and any security or operational questions. Simply <a href="@Url.RouteUrl(RouteName.ContactSales)">contact us</a> with your requirements.</p>
 
-                    <h3 class="mt-4">Where can I obtain a copy of your license agreement?</h3>
-                    <p>For Chocolatey for Business, you can find a copy <a href="@Url.RouteUrl(RouteName.Support)#business-legal">here.</a> Other editions are subject to <a href="https://github.com/chocolatey/choco/blob/master/LICENSE" target="_blank" rel="noreferrer">Apache v2.0 licensing.</a></p>
+                <h3 class="mt-4">Where can I obtain a copy of your license agreement?</h3>
+                <p>For Chocolatey for Business, you can find a copy <a href="@Url.RouteUrl(RouteName.Support)#business-legal">here.</a> Other editions are subject to <a href="https://github.com/chocolatey/choco/blob/master/LICENSE" target="_blank" rel="noreferrer">Apache v2.0 licensing.</a></p>
 
-                    <h3 class="mt-4">How long does it take to get my license?</h3>
-                    <p>Once we have received your order successfully, you will receive your licenses within 1-3 business days.</p>
+                <h3 class="mt-4">How long does it take to get my license?</h3>
+                <p>Once we have received your order successfully, you will receive your licenses within 1-3 business days.</p>
 
-                    <h3 class="mt-4">What is the refund policy?</h3>
-                    <p>For Pro, we provide a full refund the first 30 days. If you are an organization that purchases a starter pack without a trial, you are also granted a 30 day period. Please note we provide business trials so you can know it is right for your organization prior to an annual commitment.</p>
-                </div>
+                <h3 class="mt-4">What is the refund policy?</h3>
+                <p>For Pro, we provide a full refund the first 30 days. If you are an organization that purchases a starter pack without a trial, you are also granted a 30 day period. Please note we provide business trials so you can know it is right for your organization prior to an annual commitment.</p>
             </div>
-            @*Renewals*@
-            <div id="Renewing" class="col-12 mb-4">
-                <a class="h2 collapsed" data-toggle="collapse" href="#faq-renewing" role="button" aria-expanded="false" aria-controls="faq-renewing" title="Renewing">Renewing</a>
-                <div class="collapse" id="faq-renewing">
-                    <hr />
-                    <h3>How do renewals work?</h3>
-                    <p>Typically you would purchase again using the same method as you used previously. The expiry date for the new license will take the old expiration date into account.</p>
-                    <p>
-                        Once you receive the license, you will need to place it on every machine over the old license file. If you have a lot of machines,
-                        we recommend <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-setup-offline-installation"})#exercise-4-create-a-package-for-the-license">creating a package for the license</a> to allow a simple package upgrade.
-                    </p>
+        </div>
+        @*Renewals*@
+        <div class="mb-4">
+            <a class="h2 collapsed" data-toggle="collapse" href="#faq-renewing" role="button" aria-expanded="false" aria-controls="faq-renewing" title="Renewing">Renewing</a>
+            <div class="collapse" id="faq-renewing">
+                <hr />
+                <h3>How do renewals work?</h3>
+                <p>Typically you would purchase again using the same method as you used previously. The expiry date for the new license will take the old expiration date into account.</p>
+                <p>
+                    Once you receive the license, you will need to place it on every machine over the old license file. If you have a lot of machines,
+                    we recommend <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-setup-offline-installation"})#exercise-4-create-a-package-for-the-license">creating a package for the license</a> to allow a simple package upgrade.
+                </p>
 
-                    <h3 class="mt-4">What happens if I don't renew?</h3>
-                    <ul>
-                        <li>Annual: If you have an annual subscription and do not renew it, the commercial features will stop working when the license expires (by default it goes back to open source, but you can <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "chocolatey-configuration"})#flow-control">turn on a feature to make it error</a> if you depend on the security aspects of the commercial edition). Access to support also ceases at the end of your subscription term.</li>
-                        <li>Perpetual: If you have a perpetual license and do not renew the annual maintenance and support, the commercial features will still work, but you will no longer be able to get newer editions of the commercial products, nor will you have access to support.</li>
-                    </ul>
+                <h3 class="mt-4">What happens if I don't renew?</h3>
+                <ul>
+                    <li>Annual: If you have an annual subscription and do not renew it, the commercial features will stop working when the license expires (by default it goes back to open source, but you can <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "chocolatey-configuration"})#flow-control">turn on a feature to make it error</a> if you depend on the security aspects of the commercial edition). Access to support also ceases at the end of your subscription term.</li>
+                    <li>Perpetual: If you have a perpetual license and do not renew the annual maintenance and support, the commercial features will still work, but you will no longer be able to get newer editions of the commercial products, nor will you have access to support.</li>
+                </ul>
 
-                    <h3 class="mt-4">Can you send me a renewal quote?</h3>
-                    <p>Yes, we can for our organizational customers. For organizational customers, we typically email renewal notifications with next steps 30-45 days prior to the license expiration, but sometimes we may not have the right contact or spam filters get in the way. If you are in need of a renewal quote, just <a href="@Url.RouteUrl(RouteName.ContactSales)?pipeline=false">contact our sales team.</a></p>
+                <h3 class="mt-4">Can you send me a renewal quote?</h3>
+                <p>Yes, we can for our organizational customers. For organizational customers, we typically email renewal notifications with next steps 30-45 days prior to the license expiration, but sometimes we may not have the right contact or spam filters get in the way. If you are in need of a renewal quote, just <a href="@Url.RouteUrl(RouteName.ContactSales)?pipeline=false">contact our sales team.</a></p>
 
-                    <h3 class="mt-4">Can I add more nodes?</h3>
-                    <p>Adding more nodes is easy. Simply let us know the number of nodes you would like to add and we provide a quote. We can also add more nodes at any time during your contract and don't have to wait until the renewal date. We can co-term the licensing and pro-rate pricing so you have one simple renewal date.</p>
-                </div>
+                <h3 class="mt-4">Can I add more nodes?</h3>
+                <p>Adding more nodes is easy. Simply let us know the number of nodes you would like to add and we provide a quote. We can also add more nodes at any time during your contract and don't have to wait until the renewal date. We can co-term the licensing and pro-rate pricing so you have one simple renewal date.</p>
             </div>
-            @*Support*@
-            <div id="Support" class="col-12 mb-4">
-                <a class="h2 collapsed" data-toggle="collapse" href="#faq-support" role="button" aria-expanded="false" aria-controls="faq-support" title="Support">Support</a>
-                <div class="collapse" id="faq-support">
-                    <hr />
-                    <h3>How does support work?</h3>
-                    <p>See our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
+        </div>
+        @*Support*@
+        <div class="mb-4">
+            <a class="h2 collapsed" data-toggle="collapse" href="#faq-support" role="button" aria-expanded="false" aria-controls="faq-support" title="Support">Support</a>
+            <div class="collapse" id="faq-support">
+                <hr />
+                <h3>How does support work?</h3>
+                <p>See our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
 
-                    <h3 class="mt-4">What levels of support do you offer?</h3>
-                    <p>Please see our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
-                    <ul>
-                        <li>Pro - included automatically for Professional customers</li>
-                        <li>Business Standard - included automatically for all organizational customers</li>
-                        <li>Business Standard+ - included automatically for all organizational customers with 100 licenses or more</li>
-                        <li>Business Premium - available for larger organizational customers at an additional cost</li>
-                    </ul>
+                <h3 class="mt-4">What levels of support do you offer?</h3>
+                <p>Please see our <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
+                <ul>
+                    <li>Pro - included automatically for Professional customers</li>
+                    <li>Business Standard - included automatically for all organizational customers</li>
+                    <li>Business Standard+ - included automatically for all organizational customers with 100 licenses or more</li>
+                    <li>Business Premium - available for larger organizational customers at an additional cost</li>
+                </ul>
 
-                    <h3 class="mt-4">Do you have 24/7 support available?</h3>
-                    <p>We do for premium customers. Please see the <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
+                <h3 class="mt-4">Do you have 24/7 support available?</h3>
+                <p>We do for premium customers. Please see the <a href="@Url.RouteUrl(RouteName.Support)">support page</a> for details.</p>
 
-                    <h3 class="mt-4">How do I get support for a package?</h3>
-                    <p>We do not have support for packages found on Chocolatey.org - those are considered community packages and should not be used for commercial purposes. Package issues should follow the package triage process. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Read more...</a></p>
-                    <p>While we are able to give tips and pointers on packaging that you create, every piece of software out there is a special snowflake so we are unable to support the packaging of it directly. The only exception to this is if you are a business customer and you opt for professional packaging services.</p>
-                    <p class="mb-0">Professional packaging services can be purchased with a license or at any time simply by reaching out to the sales team. It does carry an additional cost per package - if you already have this, reach out to support. If you haven't already purchased this, you can <a href="@Url.RouteUrl(RouteName.ContactSales)?pipeline=false)">reach out to sales</a> to make payment ahead of time.</p>
-                </div>
+                <h3 class="mt-4">How do I get support for a package?</h3>
+                <p>We do not have support for packages found on Chocolatey.org - those are considered community packages and should not be used for commercial purposes. Package issues should follow the package triage process. <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "community-packages-disclaimer" })">Read more...</a></p>
+                <p>While we are able to give tips and pointers on packaging that you create, every piece of software out there is a special snowflake so we are unable to support the packaging of it directly. The only exception to this is if you are a business customer and you opt for professional packaging services.</p>
+                <p class="mb-0">Professional packaging services can be purchased with a license or at any time simply by reaching out to the sales team. It does carry an additional cost per package - if you already have this, reach out to support. If you haven't already purchased this, you can <a href="@Url.RouteUrl(RouteName.ContactSales)?pipeline=false)">reach out to sales</a> to make payment ahead of time.</p>
             </div>
         </div>
     </div>
@@ -319,5 +316,4 @@
             <td>$68.5125 / $17.7625*</td>
         </tr>
     </tbody>
-</table>
-*@
+</table>*@
