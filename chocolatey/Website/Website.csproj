@@ -1700,6 +1700,7 @@
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Documentation\Search.cshtml" />
     <Content Include="Views\Blog\InfrastructureChangesOctober2019.md" />
+    <Content Include="Views\Shared\_Loader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
