@@ -1699,6 +1699,7 @@
     <Content Include="Views\Pages\Careers.cshtml" />
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Documentation\Search.cshtml" />
+    <Content Include="Views\Blog\InfrastructueChangesOctober2019.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
