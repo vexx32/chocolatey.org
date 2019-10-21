@@ -19,6 +19,6 @@ On Saturday 26 October 2019 the following services will be unavailable between 3
 * Package Cacher;
 * Manage Chocolatey Packages through Boxstarter;
 
-For all updates, and to check on progress, please use the [Chcolatey.org status page](https://status.chocolatey.org).
+For all updates, and to check on progress, please use the [Chocolatey.org status page](https://status.chocolatey.org).
 
 In an attempt to mitigate the effect these changes will have, a time was chosen when use of the website and services is minimal. However, we appreciate that some will still be affected and we apologise for the inconvenience caused.
