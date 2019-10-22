@@ -41,7 +41,7 @@ textarea {
 .d-label-none label {
     display: none;
 }
-#files .syntaxhighlighter, #files .collapse-2-content {
+#files pre {
     max-height: 500px;
     overflow: auto;
 }
