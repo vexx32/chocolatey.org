@@ -7,6 +7,16 @@
 <!-- TOC -->
 <ul>
 <li><a href="#mounting-isos---the-problem">Mounting ISOs - The Problem</a></li>
+<li><a href="#chocolatey-isomount.extension">chocolatey-isomount.extension</a>
+<ul>
+<li><a href="#step-1--get-chocolatey-isomountextension-package">Step 1: Get chocolatey-isomount.extension Package</a></li>
+<li><a href="#step-2--add-chocolatey-isomountextension-dependency">Step 2: Add chocolatey-isomount.extension Dependency</a></li>
+<li><a href="#step-3--add-chocolatey-isomountextension-code">Step 3: Add chocolatey-isomount.extension Code</a>
+<ul>
+<li><a href="#embedded-iso-or-on-a-fileshare">Embedded ISO or on a fileshare</a></li>
+<li><a href="#download-iso-from-an-url">Download ISO from an URL</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#imdisk">ImDisk</a>
 <ul>
 <li><a href="#step-1-get-imdisk-package">Step 1: Get ImDisk Package</a></li>
@@ -22,6 +32,60 @@
 <!-- /TOC -->
 <h2 id="mounting-isos---the-problem">Mounting ISOs - The Problem</h2>
 <p>There are times when using an installer file directly is not an option as what you need is contained in an ISO. In later versions of the Windows Operating System (defined in <a href="#mount-diskimage">Mount-DiskImage</a> below), PowerShell provides the ability to mount this ISO file directly using the <code>Mount-DiskImage</code> cmdlet. However, in earlier versions of Windows, this is not possible. In order to maintain backwards compatibility with older Operating Systems, when using an ISO file, you can use ImDisk Virtual Disk Driver.</p>
+<h2 id="chocolatey-isomountextension">chocolatey-isomount.extension</h2>
+<p>One of the community maintainers has created an extension package to automate the installation of software from inside an ISO file. This extension is based on the <a href="#mount-diskimage">Mount-DiskImage</a> method below and therefore has the same <a href="#requirements">Requirements</a>.</p>
+<h3 id="step-1-get-chocolatey-isomountextension-package">Step 1: Get chocolatey-isomount.extension Package</h3>
+<p>You will need to take a dependency on the <a href="https://chocolatey.org/packages/chocolatey-isomount.extension">chocolatey-isomount.extension package</a> If you are using Chocolatey in an organizational context, be sure to cache the chocolatey-isomount.extension package and place it on your internal sources.</p>
+<ol>
+<li>MSP/C4B: Run <code>choco download chocolatey-isomount.extension</code></li>
+<li>FOSS: Download <a href="https://chocolatey.org/api/v2/package/chocolatey-isomount.extension">chocolatey-isomount.extension</a></li>
+<li>Deploy the package to your internal repository.</li>
+</ol>
+<p><strong>NOTE</strong>: MSP stands for Managed Service Provider. It along with Chocolatey for Business (C4B) are commercial editions of Chocolatey that come with <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> to convert existing packages to be 100% offline and reliable. FOSS (free open source software) is short for the open source edition.</p>
+<h3 id="step-2-add-chocolatey-isomountextension-dependency">Step 2: Add chocolatey-isomount.extension Dependency</h3>
+<p>Open your package&#39;s nuspec up and add a dependency on <code>chocolatey-isomount.extension</code>. This will be inserted just above the closing &quot;metadata&quot; tag (<code>&lt;/metadata&gt;</code>).</p>
+<pre><code class="xml">  &lt;dependencies&gt;
+      &lt;dependency id=&quot;chocolatey-isomount.extension&quot; version=&quot;1.0.0&quot; /&gt;
+  &lt;/dependencies&gt;</code></pre>
+<p><strong>NOTE:</strong> The above version is a minimum version dependency. Your version may be newer, you can substitute it there.</p>
+<h3 id="step-3-add-chocolatey-isomountextension-code">Step 3: Add chocolatey-isomount.extension Code</h3>
+<p>Now in your chocolateyInstall.ps1, you will want something similar to the following:</p>
+<h4 id="embedded-iso-or-on-a-fileshare">Embedded ISO or on a fileshare</h4>
+<pre><code class="language-powershell">$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$fileLocation = Join-Path $toolsDir &#39;ISO_EMBEDDED_IN_PACKAGE&#39;
+
+$packageArgs = @@{
+    packageName   = $packageName
+    fileType      = &#39;msi&#39;
+    file          = &#39;setup.msi&#39;
+    file64        = &#39;x64\setup64.msi&#39;
+    silentArgs    = &quot;/qn /norestart&quot;
+    validExitCodes= @@(0, 3010, 1641)
+    softwareName  = &#39;Bob*&#39;
+    isoFile       = $fileLocation
+}
+
+Install-ChocolateyIsoInstallPackage @@packageArgs</code></pre>
+<h4 id="download-iso-from-an-url">Download ISO from an URL</h4>
+<pre><code class="language-powershell">$packageName= &#39;bob&#39;
+$toolsDir   = &quot;$(Split-Path -Parent $MyInvocation.MyCommand.Definition)&quot;
+$url        = &#39;https://somewhere.com/file.iso&#39;
+
+$packageArgs = @@{
+    packageName   = $packageName
+    fileType      = &#39;msi&#39;
+    url           = $url
+    file          = &#39;setup.msi&#39;
+    file64        = &#39;x64\setup64.msi&#39;
+    silentArgs    = &quot;/qn /norestart&quot;
+    validExitCodes= @@(0, 3010, 1641)
+    softwareName  = &#39;Bob*&#39;
+    checksum      = &#39;12345&#39;
+    checksumType  = &#39;sha256&#39;
+}
+
+Install-ChocolateyIsoPackage @@packageArgs</code></pre>
 <h2 id="imdisk">ImDisk</h2>
 <p>The most compatible with all versions of Windows option is to use ImDisk. ImDisk Virtual Disk Driver (imdisk) is a software package that allows an ISO file to be mounted, but more importantly, it works for Windows NT/2000/XP/Vista/7/8/8.1 or Windows Server 2003/2008/2012/2016 (so basically, everything!). That means that you can use one, common, method, for mounting ISO files when required within your Chocolatey Packages.</p>
 <h3 id="step-1-get-imdisk-package">Step 1: Get ImDisk Package</h3>
