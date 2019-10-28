@@ -7,6 +7,10 @@ try {
   exit 1
 }
 
+if ($null -eq (Get-ChildItem -Path 'choco.wiki' -File)) {
+    git submodule init
+}
+
 git submodule update --remote --rebase
 
 function CleanUpHeaderIds($text) {
