@@ -24,10 +24,7 @@
 {
     if (currentUrl.Contains("moderatorQueue=true") || Request.RawUrl == Url.RouteUrl(RouteName.ListPackages) || Request.RawUrl == Url.RouteUrl(RouteName.SearchResults))
     {
-        <div id="loader" class="preference">
-            <div id="shadow"></div>
-            <div id="shape"></div>
-        </div>
+        @Html.Partial("~/Views/Shared/_Loader.cshtml")
     }
 }
 <section id="package" class="container py-3 py-lg-5 body-tabs">

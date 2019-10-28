@@ -1,9 +1,8 @@
-// Preloader 
+// Preloader
 $(window).on('load', function () {
-    $('#shape').fadeOut();
-    $('#shadow').fadeOut();
-    $('#loader').delay(350).fadeOut('slow');
-    $('body').delay(350).css({ 'overflow': 'visible' });
+    $('#loader').fadeOut(500, function () {
+        $(this).remove();
+    });
 });
 
 // Show modal on tempdata "message"

@@ -8,10 +8,10 @@
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Content/prism/prism.css");
     Bundles.Reference("Scripts");
-    Bundles.Reference("Scripts/CookiesNotice");
-    Bundles.Reference("Scripts/closeable");
     Bundles.Reference("Scripts/packages");
     Bundles.Reference("Scripts/prism");
+    Bundles.Reference("Scripts/CookiesNotice");
+    Bundles.Reference("Scripts/closeable");
 
     var markdownGenerator = new Markdown
     {
@@ -101,10 +101,7 @@
 {
     @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
 }
-<div id="loader">
-    <div id="shadow"></div>
-    <div id="shape"></div>
-</div>
+@Html.Partial("~/Views/Shared/_Loader.cshtml")
 <section class="container py-3 py-lg-5">
     <div id="package-sidebar" class="row">
         @*Desktop Sidebar*@
@@ -1175,13 +1172,19 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     <hr />
                     @if (expandForModeration)
                     {
-                        <button type="button" class="btn btn-danger mb-2"><i class="fas fa-minus-circle" alt="Collapse Files"></i> Collapse Files</button>
-                        var nuspecId = @Model.Id.Replace(".", "-") + "-nuspec";
-                        <div class="collapse-2 mb-1">
-                            <button type="button" class="btn btn-sm btn-secondary mr-2">Hide</button>
+                        if (Model.Files.Any())
+                        {
+                            var fileCount = Model.Files.Count();
+                            <button type="button" class="btn btn-collapse-files mb-2 @if(fileCount <= 9){<text>btn-danger</text>}else if(fileCount > 9 && fileCount < 30){<text>btn-success</text>}else{<text>d-none</text>}">
+                                @if(fileCount <= 9){<text>Collapse</text>}else{<text>Expand</text>} All Files
+                            </button>
+                        }
+                        var packageFile = "file-path-" + @Model.Id.Replace(".", "-");
+                        <div class="mb-1">
+                            <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="true">Hide</button>
                             @Model.Id<span>.nuspec</span>
-                            <div class="collapse-2-content d-block">
-<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+                            <div class="@packageFile collapse show">
+<pre class="line-numbers"><code class="language-powershell">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!-- This is not exact, it's only based on what is stored about the package --&gt;
 &lt;!-- description and releaseNotes left out for brevity --&gt;
 &lt;package&gt;
@@ -1269,32 +1272,35 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
 }
 &lt;/metadata&gt;
 &lt;/package&gt;</code></pre>
-                            </div>
                         </div>
+                    </div>
                     }
                     @if (Model.Files.Any())
                     {
                         var random = new Random();
+                        var fileCount = Model.Files.Count();
                         foreach (var file in Model.Files)
                         {
-                            <div class="collapse-2 mb-1">
-                                @if (!string.IsNullOrWhiteSpace(file.FileContent))
-                                {
-                                    var fileDivId = "div-" + Path.GetFileName(file.FilePath).Replace(".", "-").Replace(" ", string.Empty) + "-" + random.Next();
-                                    if (expandForModeration)
+                            if (!string.IsNullOrWhiteSpace(file.FileContent))
+                            {
+                                var packageFile = "file-path-" + Path.GetFileName(file.FilePath.ToLower()).Replace(".", "-").Replace(" ", string.Empty) + "-" + random.Next();
+                                var alwaysExpand = file.FilePath.ToLower().Contains("chocolateyinstall.ps1") || file.FilePath.ToLower().Contains("chocolateyuninstall.ps1") || file.FilePath.ToLower().Contains("chocolateybeforemodify.ps1") || file.FilePath.ToLower().Contains("verification.txt") || file.FilePath.ToLower().Contains("license.txt");
+                                var expandFile = expandForModeration && fileCount <= 9 || expandForModeration && alwaysExpand;
+                                <div class="mb-1">
+                                    @if (expandFile)
                                     {
-                                        <button type="button" class="btn btn-sm btn-secondary mr-2 ">Hide</button>
+                                        <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="true">Hide</button>
                                     }
                                     else
                                     {
-                                        <button type="button" class="btn btn-sm btn-secondary mr-2">Show</button>
+                                        <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="false">Show</button>
                                     }
-                                }
-                                @file.FilePath
-                                <div class="collapse-2-content d-none">
-                                    <pre class=""><code class="">@file.FileContent</code></pre>
+                                    @file.FilePath
+                                    <div class="@packageFile collapse @if(expandFile){<text>show</text>}">
+                                        <pre class="@if(expandFile){<text>line-numbers</text>}"><code class="@if(expandFile){<text>language-powershell</text>}">@file.FileContent</code></pre>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                     }
                 </div>
