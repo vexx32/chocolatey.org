@@ -82,26 +82,41 @@ $(document).ready(function () {
     }
 });
 
-// Opens tabbed information based on hash
+// Opens tabbed/collapse information based on hash
 $(function () {
-    var urlTab = document.location.toString();
-    if (urlTab.match('#')) {
-        var tabNav = $('.nav-tabs a[href="#' + urlTab.split('#')[1] + '"]');
+    var urlHash = document.location.toString();
+    if (urlHash.match('#')) {
+        var tabNav = $('[data-toggle="tab"][href="#' + urlHash.split('#')[1] + '"]');
         var parentTabNav = '#' + tabNav.parentsUntil('.tab-pane').parent().addClass('tab-nested');
         parentTabNav = $('#' + $('.tab-pane.tab-nested').prop('id') + '-tab');
         // Open Tabs
         parentTabNav.tab('show');
         tabNav.tab('show');
+
+        // Toggle Collpase
+        var collapseNav = $($('[data-toggle="collapse"][href="#' + urlHash.split('#')[1] + '"]').attr('href'));
+        collapseNav.collapse('show');
+
+        // Scroll Tabs
         if (parentTabNav.length) {
             $('html, body').scrollTop(parentTabNav.offset().top - 30);
         }
         else if (tabNav.length) {
-            $('html, body').scrollTop(tabNav.offset().top -30);
+            $('html, body').scrollTop(tabNav.offset().top - 30);
         }
-        
+        // Scroll Collapse
+        if (collapseNav.length) {
+            collapseNav.on('shown.bs.collapse', function () {
+                if (/pricing/.test(window.location.href)) {
+                    $('html, body').scrollTop($(this).offset().top - 120);
+                } else {
+                    $('html, body').scrollTop($(this).offset().top - 60);
+                }
+            });
+        }
     }
-    // Change hash on tab click and prevent scrolling
-    $('.nav-tabs a').click(function (e) {
+    // Change hash on tab/collapse click and prevent scrolling
+    $('[data-toggle="tab"], [data-toggle="collapse"]').click(function (e) {
         if (history.pushState) {
             history.pushState(null, null, e.target.hash);
         } else {
@@ -152,8 +167,12 @@ $(document).on('click', 'input[type=text]', function () {
 });
 
 // Toggle and scroll to collapse elements on click
-$('a[href*="#"]').not('[data-toggle="tab"]').click(function () {
-    $(this.hash).find('a[data-toggle="collapse"]').next().collapse('show');
+$('.collapse-nav').click(function () {
+    $(this).parent().parent().find(".active").removeClass("active");
+    $(this).addClass('active');
+    $(this.hash).on('shown.bs.collapse', function () {
+        $('html, body').animate({ scrollTop: $(this).offset().top - 120 }, 1100);
+    });
 });
 
 // Smooth Scroll
