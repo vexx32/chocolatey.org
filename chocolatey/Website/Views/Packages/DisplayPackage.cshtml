@@ -26,6 +26,7 @@
     var packageVersions = Model.PackageVersions.Count();
     var packageVersionsDefaultDisplay = 10;
 
+    var admin = User != null && User.IsAdmin();
     var maintainer = User != null && Model.Owners.Any(u => u.Username == User.Identity.Name);
     var moderator = User != null && User.IsModerator() && !maintainer;
     var moderationRole = User != null && User.IsInAnyModerationRole() && !maintainer;
@@ -1073,6 +1074,13 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                             <div class="form-field">
                                                 <input id="RerunVirusScanner" name="RerunVirusScanner" type="checkbox" value="true" />
                                                 <label for="RerunVirusScanner" class="for-checkbox" title="Rerun virus scanner to get latest reports.">Rerun virus scanner?</label>
+                                                    </div>
+                                                }
+                                                @if (admin)
+                                                {
+                                                    <div class="form-field">
+                                                        <input id="RerunPackageCacher" name="RerunPackageCacher" type="checkbox" value="true" />
+                                                        <label for="RerunPackageCacher" class="for-checkbox" title="Rerun Customer CDN cacher to update cache.">Rerun package CDN cacher?</label>
                                             </div>
                                         }
                                         @if (moderationRole)
