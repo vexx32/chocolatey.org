@@ -1,4 +1,4 @@
-﻿@using MarkdownSharp
+﻿@using Markdig
 @using NuGetGallery
 @model DisplayPackageViewModel
 @{
@@ -7,19 +7,25 @@
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Content/prism/prism.css");
+    Bundles.Reference("Content/simplemde.min.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/packages");
     Bundles.Reference("Scripts/prism");
+    Bundles.Reference("Scripts/simplemde");
     Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 
-    var markdownGenerator = new Markdown
-    {
-        AutoHyperlink = true,
-        AutoNewLines = true,
-        //EncodeProblemUrlCharacters = true,
-        LinkEmails = true,
-    };
+    var MarkdownPipeline = new MarkdownPipelineBuilder()
+                 .UseSoftlineBreakAsHardlineBreak()
+                 .UseAutoLinks()
+                 .UseGridTables()
+                 .UsePipeTables()
+                 .UseAutoIdentifiers()
+                 .UseEmphasisExtras()
+                 .UseNoFollowLinks()
+                 .UseCustomContainers()
+                 .UseBootstrap()
+                 .Build();
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
@@ -536,7 +542,7 @@
                             <span class="fas fa-ban text-secondary mr-3"></span>
                             <div>
                                 <p class="mb-0">Verification Testing Exempt:</p>
-                                @Html.Raw(markdownGenerator.Transform(Model.ExemptedFromVerificationReason.clean_html()))
+                                @Html.Raw(Markdown.ToHtml(Model.ExemptedFromVerificationReason.clean_html() ?? string.Empty, MarkdownPipeline))
                             </div>
                         }
                     </div>
@@ -899,7 +905,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     <p>This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s):</p>
                     <div class="comments-list-container">
                         <div class="comments-list @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>} else {<text >user-unknown</text>}">
-                            @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
+                            @Html.Raw(Markdown.ToHtml(Model.ReviewComments.clean_html() ?? string.Empty, MarkdownPipeline))
                         </div>
                     </div>
                 </div>
@@ -959,7 +965,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     <div class="bg-white shadow-sm p-3 mb-3">
                         <div class="comments-list-container">
                             <div class="comments-list user-unknown">
-                                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
+                                @Html.Raw(Markdown.ToHtml(Model.ReviewComments.clean_html() ?? string.Empty, MarkdownPipeline))
                             </div>
                         </div>
                     </div>
@@ -974,7 +980,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     <div class="bg-white shadow-sm p-3 mb-3">
                         <div class="comments-list-container">
                             <div class="comments-list @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>} else {<text> user-unknown</text>}">
-                                @Html.Raw(markdownGenerator.Transform(Model.ReviewComments.clean_html()))
+                                @Html.Raw(Markdown.ToHtml(Model.ReviewComments.clean_html() ?? string.Empty, MarkdownPipeline))
                             </div>
                         </div>
                         @if (anyPackageRole)
@@ -1034,7 +1040,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                     <fieldset class="form">
                                         <div class="form-field d-label-none">
                                             @Html.LabelFor(m => m.NewReviewComments)
-                                            @Html.TextAreaFor(m => m.NewReviewComments, new { @cols = 80, @rows = 5, @placeholder = "Add to Review Comments" })
+                                            @Html.TextAreaFor(m => m.NewReviewComments, new {@class = "text-editor"})
                                             @Html.ValidationMessageFor(m => m.NewReviewComments)
                                             <span class="field-hint-message"></span>
                                         </div>
@@ -1146,7 +1152,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                                     <label for="IsExemptedFromVerification" class="mt-2 mb-3">Exempt the package from verification testing?</label>
                                                     <div class="form-field d-label-none pb-2">
                                                         @Html.LabelFor(m => m.ExemptedFromVerificationReason)
-                                                        @Html.TextAreaFor(m => m.ExemptedFromVerificationReason, new { @cols = 80, @rows = 5, @placeholder = "Exempted Reason" })
+                                                        @Html.TextAreaFor(m => m.ExemptedFromVerificationReason, new {@class = "text-editor"})
                                                         @Html.ValidationMessageFor(m => m.ExemptedFromVerificationReason)
                                                     </div>
                                                 }
@@ -1170,7 +1176,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                 <a class="h2 collapse show" data-toggle="collapse" href="#description" role="button" aria-expanded="true" aria-controls="description" title="Nuspec reference: description">Description</a>
                 <div class="collapse show" id="description">
                     <hr />
-                    @Html.Raw(markdownGenerator.Transform(Model.Description.clean_html()))
+                    @Html.Raw(Markdown.ToHtml(Model.Description.clean_html() ?? string.Empty, MarkdownPipeline))
                 </div>
             </div>
             @*  Files  *@
@@ -1374,14 +1380,14 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                             <tbody>
                                 @foreach (var packageVersion in Model.PackageVersions.Take(packageVersions < packageVersionsDefaultDisplay ? packageVersions : packageVersionsDefaultDisplay))
                                 {
-                                    var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: true);
+                                    var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, displayVersion: true);
                                     @Html.Partial("_ListVersion", packageVersionList)
                                 }
                                 @if (packageVersions > packageVersionsDefaultDisplay)
                                 {
                                     foreach (var packageVersion in Model.PackageVersions.Skip(packageVersionsDefaultDisplay))
                                     {
-                                        var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, markdownGenerator, displayVersion: false);
+                                        var packageVersionList = new ListPackageVersionViewModel(packageVersion, Model, moderationRole, displayVersion: false);
                                         @Html.Partial("_ListVersion", packageVersionList)
                                     }
                                 }
@@ -1412,7 +1418,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     <a class="h2 collapsed" data-toggle="collapse" href="#releasenotes" role="button" aria-expanded="false" aria-controls="releasenotes" title="Nuspec reference: releaseNotes">Release Notes</a>
                     <div class="collapse" id="releasenotes">
                         <hr />
-                        @Html.Raw(markdownGenerator.Transform(Model.ReleaseNotes.clean_html()))
+                        @Html.Raw(Markdown.ToHtml(Model.ReleaseNotes.clean_html() ?? string.Empty, MarkdownPipeline))
                     </div>
                 </div>
             }

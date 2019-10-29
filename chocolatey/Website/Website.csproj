@@ -1333,6 +1333,7 @@
       <Link>api\Web.config</Link>
     </Content>
     <Content Include="cloudflare-blocked.html" />
+    <Content Include="Content\simplemde.min.css" />
     <Content Include="DataServices\V2Feed.svc" />
     <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
@@ -1389,6 +1390,7 @@
     <Content Include="Scripts\package-list\package-list.js" />
     <Content Include="Scripts\packages\package-details.js" />
     <Content Include="Scripts\prism\prism.js" />
+    <Content Include="Scripts\simplemde\simplemde.min.js" />
     <Content Include="Scripts\validation\bundle.txt" />
     <Content Include="Scripts\validation\jquery.validate.js" />
     <Content Include="Scripts\home\stats.js" />

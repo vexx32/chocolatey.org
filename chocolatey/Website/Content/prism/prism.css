@@ -91,6 +91,9 @@ pre[class*="language-"]:after {
 	-o-transform: rotate(2deg);
 	transform: rotate(2deg);
 }
+pre.line-numbers {
+    padding: 1rem 0;
+}
 .token.comment,
 .token.block-comment,
 .token.prolog,

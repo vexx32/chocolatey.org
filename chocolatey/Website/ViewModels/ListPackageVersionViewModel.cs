@@ -16,25 +16,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using MarkdownSharp;
-
 namespace NuGetGallery
 {
     public class ListPackageVersionViewModel
     {
-        public ListPackageVersionViewModel(DisplayPackageViewModel package, DisplayPackageViewModel currentPackageVersion, bool moderationRole, Markdown markdownGenerator, bool displayVersion)
+        public ListPackageVersionViewModel(DisplayPackageViewModel package, DisplayPackageViewModel currentPackageVersion, bool moderationRole, bool displayVersion)
         {
             Package = package;
             CurrentPackageVersion = currentPackageVersion;
             ModerationRole = moderationRole;
-            MarkdownGenerator = markdownGenerator;
             DisplayVersion = displayVersion;
         }
 
         public DisplayPackageViewModel Package { get; set; }
         public DisplayPackageViewModel CurrentPackageVersion { get; set; }
         public bool ModerationRole { get; set; }
-        public Markdown MarkdownGenerator { get; set; }
         public bool DisplayVersion { get; set; }
     }
 }
