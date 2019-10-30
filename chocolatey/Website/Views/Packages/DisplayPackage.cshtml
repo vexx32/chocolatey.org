@@ -1084,9 +1084,9 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                                 }
                                                 @if (admin)
                                                 {
-                                                    <div class="form-field">
-                                                        <input id="RerunPackageCacher" name="RerunPackageCacher" type="checkbox" value="true" />
-                                                        <label for="RerunPackageCacher" class="for-checkbox" title="Rerun Customer CDN cacher to update cache.">Rerun package CDN cacher?</label>
+                                            <div class="form-field">
+                                                <input id="RerunPackageCacher" name="RerunPackageCacher" type="checkbox" value="true" />
+                                                <label for="RerunPackageCacher" class="for-checkbox" title="Rerun CDN Package Cacher to update cache.">Rerun CDN Package Cacher?</label>
                                             </div>
                                         }
                                         @if (moderationRole)

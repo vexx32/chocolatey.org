@@ -331,8 +331,7 @@ namespace NuGetGallery
                 package.DownloadCacheStatus = PackageDownloadCacheStatusType.Unknown;
                 packageSvc.SaveMinorPackageChanges(package);
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
-                newComments += "Customer CDN Download cacher has ben set to rerun";
-
+                newComments += "Package Cacher (CDN Download Cache) has ben set to rerun";
             }
 
             // could be null if no moderation has happened yet
