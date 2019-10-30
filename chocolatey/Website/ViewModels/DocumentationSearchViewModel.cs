@@ -20,9 +20,12 @@ using System;
 
 namespace NuGetGallery
 {
-    public class DocumentationViewModel
+    public class DocumentationSearchViewModel
     {
-        public string Post { get; set; }
-        public string UrlPath { get; set; }
+        public DocumentationSearchViewModel(string searchTerm)
+        {
+            SearchTerm = searchTerm;
+        }
+        public string SearchTerm { get; private set; }
     }
 }

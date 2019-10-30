@@ -104,6 +104,9 @@
     display: block;
     padding: .75rem;
 }
+.docs-right a {
+    border-left: 1px solid #dee2e6;
+}
 .docs-left a:hover, .docs-right a:hover {
     opacity: 1 !important;
     background: #e6f3ff;
@@ -131,22 +134,13 @@
 #docs .docs-left li a, .docs-right li a {
     padding-left: 1.5rem;
 }
-.docs-right li ul li a {
-    padding-left: 2.5rem;
+.docs-right li ul li {
+    margin-left: 1rem;
 }
 .docs-left li .collapse li a {
     padding-left: 2.5rem;
 }
-.docs-body img {
-    max-width: 100%;
-}
-.docs-right ul li {
-    border-left: 1px solid #dee2e6;
-}
-.docs-right ul li ul {
-    border-left: 0;
-}
-.docs-right .active {
+.docs-right .active a {
     border-left: 1px solid #5c9fd8;
 }
 .docs-left .navbar-collapse {
