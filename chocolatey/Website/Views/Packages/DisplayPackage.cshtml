@@ -1080,10 +1080,10 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                             <div class="form-field">
                                                 <input id="RerunVirusScanner" name="RerunVirusScanner" type="checkbox" value="true" />
                                                 <label for="RerunVirusScanner" class="for-checkbox" title="Rerun virus scanner to get latest reports.">Rerun virus scanner?</label>
-                                                    </div>
-                                                }
-                                                @if (admin)
-                                                {
+                                            </div>
+                                        }
+                                        @if (admin & !maintainer)
+                                        {
                                             <div class="form-field">
                                                 <input id="RerunPackageCacher" name="RerunPackageCacher" type="checkbox" value="true" />
                                                 <label for="RerunPackageCacher" class="for-checkbox" title="Rerun CDN Package Cacher to update cache.">Rerun CDN Package Cacher?</label>
