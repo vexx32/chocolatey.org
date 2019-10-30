@@ -571,13 +571,15 @@ Thanks for requesting a discount. Please see the link below:
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult FAQ()
         {
-            return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Documentation/_Layout.cshtml");
+            return RedirectToAction("Documentation", "Documentation", new { docName = "chocolatey-faqs" });
+            //return View("~/Views/Documentation/ChocolateyFAQs.cshtml", "~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public ActionResult Security()
         {
-            return View("~/Views/Documentation/Security.cshtml", "~/Views/Documentation/_Layout.cshtml");
+            return RedirectToAction("Documentation", "Documentation", new {docName = "security"});
+            //return View("~/Views/Documentation/Security.cshtml", "~/Views/Documentation/_Layout.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
