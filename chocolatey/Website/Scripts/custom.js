@@ -169,9 +169,10 @@ $(document).on('click', 'input[type=text]', function () {
 $('.collapse-nav').click(function () {
     $(this).parent().parent().find(".active").removeClass("active");
     $(this).addClass('active');
-    $(this.hash).on('shown.bs.collapse', function () {
-        $('html, body').animate({ scrollTop: $(this).offset().top - 120 }, 1100);
-    });
+    if (!$(this.hash).hasClass('show')) {
+        $(this.hash).collapse('show');
+    }
+    $('html, body').animate({ scrollTop: $(this.hash).offset().top - 120 }, 1100);
 });
 
 // Smooth Scroll
@@ -185,6 +186,7 @@ $('a[href*="#"]')
     .not('[data-toggle="pill"]')
     .not('[data-slide="prev"]')
     .not('[data-slide="next"]')
+    .not('.collapse-nav')
     .click(function (event) {
         // Highlight active link if vertical nav
         var stickyNav = /pricing/.test(window.location.href);
