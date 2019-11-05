@@ -2,7 +2,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
     "del": "^3.0.0",
-    "gulp": "^4.0.0",
+    "gulp": "^4.0.2",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-purgecss": "^1.1.1",
