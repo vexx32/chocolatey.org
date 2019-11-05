@@ -37,7 +37,7 @@
             <button class="btn btn-outline-light btn-nav-toggle mr-3 collapsed" type="button" data-toggle="collapse" data-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fas fa-bars"></span>
             </button>
-            @if (Request.RawUrl == Url.RouteUrl(RouteName.Home) || @FullHref.Contains("/docs"))
+            @if (!PackageListNav)
             {
                 <div class="nav-search d-lg-none">
                     @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
@@ -259,7 +259,7 @@
                         </div>
                     </div>
                 </li>
-                @if (Request.RawUrl == Url.RouteUrl(RouteName.Home))
+                @if (!@FullHref.Contains("/docs") && !PackageListNav)
                 {
                     <li class="nav-item d-none d-lg-block">
                         <div class="nav-search">
