@@ -118,6 +118,26 @@ textarea {
 .comments-list p.comment-body {
     margin-bottom: 1rem;
 }
+/*Virus Scan Results*/
+.list-virus-scan li {
+    margin: 4px 0;
+}
+[class*="virus-scan-"] > span {
+    padding: .05rem .6rem;
+    margin-left: 2px;
+    border-radius: 10rem;
+    font-weight: bold;
+}
+.virus-scan-light > span {
+    background: #ffc107;
+}
+.virus-scan-medium > span {
+    background: #fd7e14;
+}
+.virus-scan-dark > span {
+    background: #f4516c;
+    color: #fff;
+}
 
 @media (min-width: 768px) {
     #package-sidebar .package-logo {

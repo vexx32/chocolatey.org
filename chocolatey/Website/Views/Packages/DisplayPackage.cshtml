@@ -1328,18 +1328,54 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     @if (Model.ScanResults.AnySafe())
                     {
                         <hr />
-                        <ul class="list-unstyled">
+                        if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            <ul class="list-unstyled list-inline">
+                                <li class="list-inline-item">Legend:</li>
+                                <li class="list-inline-item virus-scan virus-scan-light">
+                                    <span>1-5</span>
+                                </li>
+                                <li class="list-inline-item virus-scan virus-scan-medium">
+                                    <span>6-10</span>
+                                </li>
+                                <li class="list-inline-item virus-scan virus-scan-dark">
+                                    <span>10+</span>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="font-weight-bold"><a href="@Url.LogOn()">Log in</a> or click on link to see number of positives.</p>
+                        }
+                        <ul class="list-unstyled list-virus-scan">
                             @foreach (var fileScan in Model.ScanResults.OrEmptyListIfNull())
                             {
-                                <li>
+                                var fileScanHighlight = string.Empty;
+                                if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                                {
+                                    if (fileScan.Positives > 0 && fileScan.Positives < 6)
+                                    {
+                                        fileScanHighlight = "virus-scan-light";
+                                    }
+                                    else if (fileScan.Positives > 5 && fileScan.Positives < 11)
+                                    {
+                                        fileScanHighlight = "virus-scan-medium";
+                                    }
+                                    else if (fileScan.Positives > 5 && fileScan.Positives < 11)
+                                    {
+                                        fileScanHighlight = "virus-scan-dark";
+                                    }
+                                }
+
+                                <li class="@fileScanHighlight">
                                     <a title="full sha256: @fileScan.Sha256Checksum" href="@fileScan.ScanDetailsUrl">@fileScan.FileName (@fileScan.Sha256Checksum.Substring(0, 12))</a>
                                     @if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
                                     {
-                                        <text>-</text> @fileScan.Positives<text>/</text>@fileScan.TotalScans
+                                        <text>-</text><span><span>@fileScan.Positives</span>/@fileScan.TotalScans</span>
                                     }
                                     else
                                     {
-                                        <text>- ## / </text> @fileScan.TotalScans <text> - Log in or click on link to see number of positives</text>
+                                        <text>- ## / </text> @fileScan.TotalScans
                                     }
                                 </li>
                             }
