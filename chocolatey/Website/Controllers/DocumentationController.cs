@@ -175,6 +175,11 @@ namespace NuGetGallery.Controllers
             if (string.IsNullOrWhiteSpace(filePath)) return filePath;
 
             var fileName = Path.GetFileNameWithoutExtension(filePath);
+            if (fileName.Equals("CommandsApiKey"))
+            {
+                fileName = fileName.Replace("CommandsApiKey", "CommandsApikey");
+            }
+
             var hyphenatedValue = new StringBuilder();
 
             Char previousChar = '^';
