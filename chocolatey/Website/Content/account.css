@@ -31,10 +31,16 @@
 }
 #account .validation-summary-errors ul {
     list-style-type: none;
-    padding-left: 1rem;
-    border-left: 6px solid #f4516c;
+    padding-left: 0;
     margin-top: 1rem;
     margin-bottom: 0;
+}
+#account .validation-summary-errors ul li {
+    padding-left: 1rem;
+    border-left: 6px solid #f4516c;
+}
+#account .validation-summary-errors ul li:not(:first-child) {
+    margin-top: .5rem;
 }
 #account .validation-summary-errors ul li, #account .field-hint-message, #account .field-validation-error, #account .was-validated .form-check-input:invalid ~ .form-check-label {
     color: #f4516c;
