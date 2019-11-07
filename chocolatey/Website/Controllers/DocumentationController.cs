@@ -180,7 +180,13 @@ namespace NuGetGallery.Controllers
             Char previousChar = '^';
             foreach (var valueChar in fileName)
             {
-                if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0 && !Char.IsUpper(previousChar))
+                // Filenames that contain both a "-" and camel casing
+                if (fileName.Contains("-") && Char.IsLower(previousChar) && Char.IsUpper(valueChar))
+                {
+                    hyphenatedValue.Append("-");
+                }
+
+                if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0 && !Char.IsUpper(previousChar) && !fileName.Contains("-"))
                 {
                     hyphenatedValue.Append("-");
                 }
