@@ -405,8 +405,12 @@ $(window).on("scroll", function () {
         $(".video-story .modal").modal('hide');
     }
 });
-$(".video-story .modal").on('hidden.bs.modal', function (e) {
-    $(this).find("iframe").attr("src", $(this).find("iframe").attr("src"));
+$(".video-story .modal").on('show.bs.modal', function (e) {
+    var iFrame = $(this).find("iframe");
+    iFrame.attr("src", iFrame.attr("data-src"));
+});
+$(".video-story .modal").on('hide.bs.modal', function (e) {
+    $(this).find("iframe").attr("src", "");
 });
 
 // Shuffles divs on load
