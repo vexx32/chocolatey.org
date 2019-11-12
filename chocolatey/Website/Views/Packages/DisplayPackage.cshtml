@@ -1007,7 +1007,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         @if (moderationRole)
                         {
                             <ul>
-                                <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer--moderator-process">moderation</a>.
+                                <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">moderation</a>.
                                 <li>**Please do not reject a package until the end of the conversation.**</li>
                                 <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
                                 @if (Model.Status == PackageStatusType.Approved || Model.Status == PackageStatusType.Exempted)
