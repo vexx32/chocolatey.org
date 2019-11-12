@@ -1001,10 +1001,11 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         }
                     }
                     <div class="collapse @if (Model.Status != PackageStatusType.Approved) {<text>show</text>} " id="add-comment">
+                        <hr />
+                        <a class="h3 d-hash-none @if(Request.Cookies["chocolatey_hide_comment_instructions"] == null){<text>collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#instructions" role="button" aria-expanded="true" aria-controls="instructions" title="Instructions for @if(moderationRole){<text>Review</text>}else{<text>Comments</text>}">Instructions for @if(moderationRole){<text>Review</text>}else{<text>Comments</text>}</a>
+                        <div class="ml-0 collapse @if(Request.Cookies["chocolatey_hide_comment_instructions"] == null){<text>show</text>}" id="instructions">
                         @if (moderationRole)
                         {
-                            <hr />
-                            <h3 class="mt-3">Instructions for Review:</h3>
                             <ul>
                                 <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer--moderator-process">moderation</a>.
                                 <li>**Please do not reject a package until the end of the conversation.**</li>
@@ -1028,8 +1029,6 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         }
                         else
                         {
-                            <hr />
-                            <h3 class="mt-3">Instructions for Comments:</h3>
                             <ul>
                                 <li>You can respond to review comments here.</li>
                                 <li>Keep in mind this is publicly visible, so do not share any sensitive data or anything you wouldn't want to share with the world.</li>
@@ -1039,9 +1038,10 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                 }
                             </ul>
                         }
+                        </div>
                         @using (Html.BeginForm())
                         {
-                            <fieldset class="form">
+                            <fieldset class="form mt-3">
                                 <div class="form-field d-label-none">
                                     @Html.LabelFor(m => m.NewReviewComments)
                                     @Html.TextAreaFor(m => m.NewReviewComments, new {@class = "text-editor"})

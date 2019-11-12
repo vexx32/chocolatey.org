@@ -112,4 +112,15 @@ $(function () {
         easymde.render();
         $('<span> Preview</span>').insertAfter($(this).next().find('.fa-eye')).parent().addClass('font-weight-bold text-primary');
     });
+    // Hide comment instructions
+    $('#instructions').on('hidden.bs.collapse', function () {
+        if (!getCookie('chocolatey_hide_comment_instructions')) {
+            document.cookie = "chocolatey_hide_comment_instructions=true;path=/";
+        }
+    });
+    $('#instructions').on('shown.bs.collapse', function () {
+        if (getCookie('chocolatey_hide_comment_instructions')) {
+            document.cookie = "chocolatey_hide_comment_instructions=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+    });
 });
