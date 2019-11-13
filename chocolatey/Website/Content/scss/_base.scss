@@ -344,6 +344,13 @@ a + .collapse.show, a + .collapsing {
     top: 2px;
 }
 
+/*z-index*/
+.z-index-1 {
+    z-index: 1;
+}
+.z-index-2 {
+    z-index: 2;
+}
 /*Footer*/
 footer {
     border-top: 5px solid #81b5e2;
