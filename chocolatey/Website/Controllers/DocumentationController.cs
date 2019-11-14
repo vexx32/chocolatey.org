@@ -175,12 +175,23 @@ namespace NuGetGallery.Controllers
             if (string.IsNullOrWhiteSpace(filePath)) return filePath;
 
             var fileName = Path.GetFileNameWithoutExtension(filePath);
+            if (fileName.Equals("CommandsApiKey"))
+            {
+                fileName = fileName.Replace("CommandsApiKey", "CommandsApikey");
+            }
+
             var hyphenatedValue = new StringBuilder();
 
             Char previousChar = '^';
             foreach (var valueChar in fileName)
             {
-                if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0 && !Char.IsUpper(previousChar))
+                // Filenames that contain both a "-" and camel casing
+                if (fileName.Contains("-") && Char.IsLower(previousChar) && Char.IsUpper(valueChar))
+                {
+                    hyphenatedValue.Append("-");
+                }
+
+                if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0 && !Char.IsUpper(previousChar) && !fileName.Contains("-"))
                 {
                     hyphenatedValue.Append("-");
                 }
