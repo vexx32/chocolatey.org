@@ -1742,6 +1742,8 @@
     <Content Include="Views\Documentation\Files\Uninstallation.md" />
     <Content Include="Views\Documentation\Files\Videos.md" />
     <Content Include="Views\Documentation\Files\Why.md" />
+    <Content Include="Views\Shared\NewsletterLayout.cshtml" />
+    <Content Include="Views\Shared\_NewsletterNavigation.cshtml" />
     <Content Include="Views\Shared\_Modals.cshtml" />
   </ItemGroup>
   <ItemGroup>

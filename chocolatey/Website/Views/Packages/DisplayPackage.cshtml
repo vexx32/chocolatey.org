@@ -2,6 +2,7 @@
 @using NuGetGallery
 @model DisplayPackageViewModel
 @{
+    Layout = "~/Views/Shared/NewsletterLayout.cshtml";
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Bundles.Reference("Content/dist/chocolatey.slim.css");

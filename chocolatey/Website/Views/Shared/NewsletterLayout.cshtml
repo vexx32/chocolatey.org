@@ -21,6 +21,7 @@
         @RenderBody()
     </main>
     <footer>
+        @Html.Partial("~/Views/Shared/_NewsletterNavigation.cshtml")
         @Html.Partial("~/Views/Shared/_BottomNavigation.cshtml")
     </footer>
     @RenderPage("_CookiePolicy.cshtml")

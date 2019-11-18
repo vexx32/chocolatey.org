@@ -62,7 +62,9 @@
             </div>
         </div>
     </main>
-    @Html.Partial("~/Views/Shared/_BottomNavigation.cshtml")
+    <footer>
+        @Html.Partial("~/Views/Shared/_BottomNavigation.cshtml")
+    </footer>
     @RenderPage("~/Views/Shared/_CookiePolicy.cshtml")
 
     @Bundles.RenderStylesheets("bottom")
