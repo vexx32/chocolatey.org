@@ -1297,13 +1297,13 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         var fileCount = Model.Files.Count();
                         foreach (var file in Model.Files)
                         {
-                            if (!string.IsNullOrWhiteSpace(file.FileContent))
-                            {
-                                var packageFile = "file-path-" + Path.GetFileName(file.FilePath.ToLower()).Replace(".", "-").Replace(" ", string.Empty) + "-" + random.Next();
-                                var alwaysExpand = file.FilePath.ToLower().Contains("chocolateyinstall.ps1") || file.FilePath.ToLower().Contains("chocolateyuninstall.ps1") || file.FilePath.ToLower().Contains("chocolateybeforemodify.ps1") || file.FilePath.ToLower().Contains("verification.txt") || file.FilePath.ToLower().Contains("license.txt");
-                                var expandFile = expandForModeration && fileCount <= 9 || expandForModeration && alwaysExpand;
-                                <div class="mb-1">
-                                    @if (expandFile)
+                            var packageFile = "file-path-" + Path.GetFileName(file.FilePath.ToLower()).Replace(".", "-").Replace(" ", string.Empty) + "-" + random.Next();
+                            var alwaysExpand = file.FilePath.ToLower().Contains("chocolateyinstall.ps1") || file.FilePath.ToLower().Contains("chocolateyuninstall.ps1") || file.FilePath.ToLower().Contains("chocolateybeforemodify.ps1") || file.FilePath.ToLower().Contains("verification.txt") || file.FilePath.ToLower().Contains("license.txt");
+                            var expandFile = expandForModeration && fileCount <= 9 || expandForModeration && alwaysExpand;
+                            <div class="mb-1">
+                                @if (!string.IsNullOrWhiteSpace(file.FileContent))
+                                {
+                                    if (expandFile)
                                     {
                                         <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="true">Hide</button>
                                     }
@@ -1311,12 +1311,12 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                     {
                                         <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="false">Show</button>
                                     }
-                                    @file.FilePath
-                                    <div class="@packageFile collapse @if(expandFile){<text>show</text>}">
-                                        <pre class="@if(expandFile){<text>line-numbers</text>}"><code class="@if(expandFile){<text>language-powershell</text>}">@file.FileContent</code></pre>
-                                    </div>
+                                }
+                                @file.FilePath
+                                <div class="@packageFile collapse @if(expandFile){<text>show</text>}">
+                                    <pre class="@if(expandFile){<text>line-numbers</text>}"><code class="@if(expandFile){<text>language-powershell</text>}">@file.FileContent</code></pre>
                                 </div>
-                            }
+                            </div>
                         }
                     }
                 </div>
