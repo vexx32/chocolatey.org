@@ -101,7 +101,7 @@ code:not([class*="language-"]) {
     background: $medium-light;
 }
 
-.bg-dark:not(.navbar) a:not(.btn), .bg-medium-dark, .bg-primary, .bg-medium, .bg-primary a:not(.btn), .bg-medium:not(.navbar) a:not(.btn), footer.bg-medium-dark a {
+.bg-dark:not(.navbar) a:not(.btn), .bg-medium-dark, .bg-primary, .bg-medium, .bg-primary a:not(.btn), .bg-medium:not(.navbar) a:not(.btn), footer li a, footer h3 {
     color: $white;
 }
 
@@ -353,7 +353,8 @@ a + .collapse.show, a + .collapsing {
 }
 /*Footer*/
 footer {
-    border-top: 5px solid #81b5e2;
+    border-top: 5px solid $primary;
+    background: $medium-dark;
 }
 
 @media (min-width: 576px) {
