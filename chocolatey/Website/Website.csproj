@@ -1742,6 +1742,7 @@
     <Content Include="Views\Documentation\Files\Uninstallation.md" />
     <Content Include="Views\Documentation\Files\Videos.md" />
     <Content Include="Views\Documentation\Files\Why.md" />
+    <Content Include="Views\Shared\_Modals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
