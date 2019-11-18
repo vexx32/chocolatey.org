@@ -7,7 +7,6 @@
     Bundles.Reference("Scripts/anchorjs");
     Bundles.Reference("Scripts/prism");
     Bundles.Reference("Scripts/documentation");
-    Bundles.Reference("Scripts/CookiesNotice");
 }
 @section css
 {
@@ -239,11 +238,4 @@
     </script>
 
     <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
-
-    <script language="javascript" type="text/javascript">
-        CookiesNotice.modal("chocolatey_hide_cookies_notice");
-        if (!getCookie('chocolatey_hide_cookies_notice')) {
-            $(".cookies-popup").css('display', 'block');
-        }
-    </script>
 </body>

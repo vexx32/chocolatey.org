@@ -1405,7 +1405,6 @@
     <Content Include="Scripts\bundle.txt" />
     <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\closeable\index.js" />
-    <Content Include="Scripts\CookiesNotice\Index.js" />
     <Content Include="Scripts\courses\courses.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\documentation\documentation.js" />

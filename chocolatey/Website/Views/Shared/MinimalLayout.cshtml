@@ -73,11 +73,4 @@
     @Bundles.RenderScripts()
 
     @RenderSection("BottomScripts", required: false)
-
-    <script language="javascript" type="text/javascript">
-        CookiesNotice.modal("chocolatey_hide_cookies_notice");
-        if (!getCookie('chocolatey_hide_cookies_notice')) {
-            $(".cookies-popup").css('display', 'block');
-        }
-    </script>
 </body>

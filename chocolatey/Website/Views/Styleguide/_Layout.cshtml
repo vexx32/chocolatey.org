@@ -4,7 +4,6 @@
     Bundles.Reference("Content/pages.css");
     Bundles.Reference("Content/prism/prism.css");
     Bundles.Reference("Scripts");
-    Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/prism");
 }
 @section css
@@ -72,12 +71,6 @@
     @RenderSection("BottomScripts", required: false)
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
-    <script language="javascript" type="text/javascript">
-        CookiesNotice.modal("chocolatey_hide_cookies_notice");
-        if (!getCookie('chocolatey_hide_cookies_notice')) {
-            $(".cookies-popup").css('display', 'block');
-        }
-    </script>
     <script>
         $(function () {
             $('pre').addClass('line-numbers py-2 m-0');
