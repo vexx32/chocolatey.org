@@ -119,16 +119,16 @@
             <p class="mb-0"><strong>Downloads of v @Model.Version:</strong></p>
             <h3 class="mb-3">@Model.DownloadCount.ToString("n0")</h3>
             <p class="mb-0"><strong>Last Update:</strong></p>
-            <h3 class="mb-3">@Model.PublishedDate.ToShortDateString()</h3>
+            <h3 class="mb-3">@Model.PublishedDate.ToString("dd MMM yyyy")</h3>
             @if (Model.Status == PackageStatusType.Submitted)
             {
                 <p class="mb-0"><strong>Published Date:</strong></p>
-                <h3 class="mb-3">@Model.PublishedDate.ToShortDateString()</h3>
+                <h3 class="mb-3">@Model.PublishedDate.ToString("dd MMM yyyy")</h3>
 
                 if (Model.ReviewedDate.HasValue)
                 {
                     <p class="mb-0"><strong>Reviewed Date:</strong></p>
-                    <h3 class="mb-3">@Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</h3>
+                    <h3 class="mb-3">@Model.ReviewedDate.GetValueOrDefault().ToString("dd MMM yyyy")</h3>
                     <p class="mb-0"><strong>Reviewer:</strong></p>
                     <h3 class="mb-3">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 32)</h3>
                 }
@@ -237,7 +237,7 @@
                 </div>
                 @if (Model.Status != PackageStatusType.Rejected)
                 {
-                    <p title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;" class="mb-0">@Model.Version | <strong>Updated: </strong>@Model.PublishedDate.ToShortDateString()</p>
+                    <p title="Nuspec reference: &lt;version&gt;@Model.Version&lt;/version&gt;" class="mb-0">@Model.Version | <strong>Updated: </strong>@Model.PublishedDate.ToString("dd MMM yyyy")</p>
                 }
             </div>
             <div class="text-center">
@@ -318,13 +318,13 @@
                 <div class="row border-bottom">
                     <div class="col">
                         <p class="mb-0"><small>Published:</small></p>
-                        <p class="mb-1">@Model.PublishedDate.ToShortDateString()</p>
+                        <p class="mb-1">@Model.PublishedDate.ToString("dd MMM yyyy")</p>
                     </div>
                     @if (Model.ReviewedDate.HasValue)
                     {
                         <div class="col">
                             <p class="mb-0"><small>Reviewed:</small></p>
-                            <p class="mb-1">@Model.ReviewedDate.GetValueOrDefault().ToShortDateString()</p>
+                            <p class="mb-1">@Model.ReviewedDate.GetValueOrDefault().ToString("dd MMM yyyy")</p>
                         </div>
                     }
                 </div>
@@ -903,7 +903,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @if (Model.Status == PackageStatusType.Approved)
             {
                 <div class="callout callout-success">
-                    <p>This package was approved @Html.Raw(@reviewerComments) on @Model.ApprovedDate.GetValueOrDefault().ToShortDateString().</p>
+                    <p>This package was approved @Html.Raw(@reviewerComments) on @Model.ApprovedDate.GetValueOrDefault().ToString("dd MMM yyyy").</p>
                 </div>
             }
             @if (Model.Listed && Model.Status != PackageStatusType.Approved && Model.Status != PackageStatusType.Exempted)
@@ -921,7 +921,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @if (Model.Status == PackageStatusType.Rejected)
             {
                 <div class="callout callout-danger position-relative z-index-1">
-                    <p>This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToShortDateString(). The reviewer @Model.ReviewerUserName has listed the following reason(s):</p>
+                    <p>This package was rejected on @Model.ReviewedDate.GetValueOrDefault().ToString("dd MMM yyyy"). The reviewer @Model.ReviewerUserName has listed the following reason(s):</p>
                     <div class="comments-list-container">
                         <div class="comments-list @if (maintainer) {<text> user-maintainer </text>} else if (moderator) {<text> user-moderator</text>} else {<text >user-unknown</text>}">
                             @Html.Raw(Markdown.ToHtml(Model.ReviewComments.clean_html() ?? string.Empty, MarkdownPipeline))

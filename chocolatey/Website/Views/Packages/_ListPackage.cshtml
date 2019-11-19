@@ -93,10 +93,10 @@
             }
             @if (isSubmitted)
             {
-                <li class="list-inline-item mr-1"><strong>Published: </strong>@Model.PublishedDate.ToShortDateString()</li>
+                <li class="list-inline-item mr-1"><strong>Published: </strong>@Model.PublishedDate.ToString("dd MMM yyyy")</li>
                 if (Model.ReviewedDate.HasValue)
                 {
-                    <li class="list-inline-item mr-0"><strong>Reviewed: </strong>@Model.ReviewedDate.GetValueOrDefault().ToShortDateString() @if(!string.IsNullOrWhiteSpace(Model.ReviewerUserName)){<text> by <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@Model.ReviewerUserName</a></text>}</li>
+                    <li class="list-inline-item mr-0"><strong>Reviewed: </strong>@Model.ReviewedDate.GetValueOrDefault().ToString("dd MMM yyyy") @if(!string.IsNullOrWhiteSpace(Model.ReviewerUserName)){<text> by <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@Model.ReviewerUserName</a></text>}</li>
                 }
             }
         </ul>

@@ -104,10 +104,10 @@
                             <div class="card-body pt-0 pb-3">
                                 <ul class="list-unstyled mb-0">
                                     <li><strong>Package Status:</strong> @submittedStatus</li>
-                                    <li><strong>Submitted Date:</strong> @package.PublishedDate.ToShortDateString()</li>
+                                    <li><strong>Submitted Date:</strong> @package.PublishedDate.ToString("dd MMM yyyy")</li>
                                     @if (package.ReviewedDate != null)
                                     {
-                                        <li><strong>Reviewed:</strong> @package.ReviewedDate.GetValueOrDefault().ToShortDateString()</li>
+                                        <li><strong>Reviewed:</strong> @package.ReviewedDate.GetValueOrDefault().ToString("dd MMM yyyy")</li>
                                     }
                                     else
                                     {
