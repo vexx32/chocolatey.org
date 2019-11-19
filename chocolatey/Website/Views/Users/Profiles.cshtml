@@ -92,7 +92,13 @@
                     <a href="@Url.Package(package.Id, package.Version)" title="View more about @package.Title" target="_blank">
                         <div class="card border-0 rounded-0 shadow h-100">
                             <div class="card-header bg-white border-0 d-flex align-items-center pt-3">
-                                <img width="35" class="mr-1" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                                <img width="35" class="mr-3" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                                <div class="d-flex">
+                                    <span class="status status-sm @if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}">
+                                        <span class="@package.PackageValidationResultStatus"></span>
+                                        <span class="@package.PackageTestResultsStatus"></span>
+                                    </span>
+                                </div>
                                 <h4 class="mb-0">@package.Title</h4>
                             </div>
                             <div class="card-body pt-0 pb-3">
@@ -132,7 +138,13 @@
                     <a href="@Url.Package(package.Id)" title="View more about @package.Title" target="_blank">
                         <div class="card border-0 rounded-0 shadow h-100">
                             <div class="card-header bg-white border-0 d-flex align-items-center pt-3">
-                                <img width="35" class="mr-1" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                                <img width="35" class="mr-3" src="@(Url.Content(packageImage ?? @Links.Content.Images.packageDefaultIcon_50x50_png))" alt="@package.Id icon" onerror="this.src='@Links.Content.Images.packageDefaultIcon_50x50_png';" />
+                                <div class="d-flex">
+                                    <span class="status status-sm @if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Passing){<text>bg-success</text>}else if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Failing){<text>bg-danger</text>}else if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Pending){<text>bg-warning</text>}else if(package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Exempted || package.PackageTestResultsStatus == PackageAutomatedReviewResultStatusType.Unknown){<text>bg-secondary</text>}">
+                                        <span class="@package.PackageValidationResultStatus"></span>
+                                        <span class="@package.PackageTestResultsStatus"></span>
+                                    </span>
+                                </div>
                                 <h4 class="mb-0">@package.Title</h4>
                             </div>
                             <div class="card-body pt-0 pb-3">
