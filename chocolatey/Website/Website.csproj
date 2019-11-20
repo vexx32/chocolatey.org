@@ -1047,6 +1047,7 @@
     <Content Include="cloudflare-ratelimited.html" />
     <Content Include="Content\account.css" />
     <Content Include="Content\dist\chocolatey.slim.css" />
+    <Content Include="Content\easymde.min.css" />
     <Content Include="Content\fonts\fa-brands-400.svg" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\Images\404.png" />
@@ -1334,7 +1335,6 @@
       <Link>api\Web.config</Link>
     </Content>
     <Content Include="cloudflare-blocked.html" />
-    <Content Include="Content\simplemde.min.css" />
     <Content Include="DataServices\V2Feed.svc" />
     <Content Include="DataServices\V2SubmittedFeed.svc" />
     <Content Include="Errors\Error.html" />
@@ -1383,6 +1383,7 @@
     <Content Include="Scripts\courses\courses.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\documentation\documentation.js" />
+    <Content Include="Scripts\easymde\easymde.min.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
     <Content Include="Scripts\home\bundle.txt" />
@@ -1392,7 +1393,6 @@
     <Content Include="Scripts\package-list\package-list.js" />
     <Content Include="Scripts\packages\package-details.js" />
     <Content Include="Scripts\prism\prism.js" />
-    <Content Include="Scripts\simplemde\simplemde.min.js" />
     <Content Include="Scripts\validation\bundle.txt" />
     <Content Include="Scripts\validation\jquery.validate.js" />
     <Content Include="Scripts\home\stats.js" />
