@@ -103,13 +103,13 @@ $(function () {
             placeholder = "Exempted Reason";
         }
 
-        var simplemde = new SimpleMDE({
+        var easymde = new EasyMDE({
             element: this,
             autoDownloadFontAwesome: false,
             placeholder: placeholder,
             toolbar: ["bold", "italic", "heading", "strikethrough", "|", "quote", "unordered-list", "ordered-list", "code", "|", "link", "image", "|", "side-by-side", "fullscreen", "|", "preview"]
         });
-        simplemde.render();
+        easymde.render();
+        $('<span> Preview</span>').insertAfter('.editor-toolbar .fa-eye').parent().addClass('font-weight-bold text-primary');
     });
-    $('.fa-eye').append(' Preview').addClass('font-weight-bold text-primary');
 });
