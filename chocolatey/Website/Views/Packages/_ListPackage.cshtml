@@ -27,15 +27,15 @@
                 <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h5 font-weight-bold text-dark mb-0 btn-link">@Model.Title <span class="@if(gridView){<text>d-block small</text>}">@Model.Version</span></a>
             </div>
             @*Badges*@
-            <div class="@if(gridView){<text>mt-1</text>}">
-                <span class="badge badge-pill badge-outline-primary">@Model.TotalDownloadCount.ToString("n0") @if(Model.TotalDownloadCount != 1){<text> Downloads</text>}else{<text> Download</text>}</span>
+            <div class="@if(gridView){<text>mt-1</text>} d-flex align-items-center">
+                <span class="badge badge-pill badge-outline-primary mr-1">@Model.TotalDownloadCount.ToString("n0") @if(Model.TotalDownloadCount != 1){<text> Downloads</text>}else{<text> Download</text>}</span>
                 @if (Model.IsOwner(User))
                 {
-                    <span class="badge badge-pill badge-dark"><span class="fas fa-star text-warning small"></span> My Package</span>
+                    <span class="badge badge-pill badge-dark mr-1"><span class="fas fa-star text-warning small"></span> My Package</span>
                 }
                 @if (Model.Status == PackageStatusType.Unknown)
                 {
-                    <span class="badge badge-pill badge-secondary">Unknown Status</span>
+                    <span class="badge badge-pill badge-secondary mr-1">Unknown Status</span>
                 }
                 @if (isSubmitted)
                 {
@@ -48,19 +48,19 @@
                             <span class="badge badge-pill badge-success">Ready</span>
                             break;
                         case PackageSubmittedStatusType.Updated:
-                            <span class="badge badge-pill badge-orange">Updated</span>
-                            <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 25)</a>
+                            <span class="badge badge-pill badge-orange mr-1">Updated</span>
+                            @ViewHelpers.OwnersGravatarListPackages(Model.Owners, 25, Url)
                             break;
                         case PackageSubmittedStatusType.Responded:
-                            <span class="badge badge-pill badge-purple">Responded</span>
+                            <span class="badge badge-pill badge-purple mr-1">Responded</span>
+                            @ViewHelpers.OwnersGravatarListPackages(Model.Owners, 25, Url)
+                            break;
+                        default:
+                            <span class="badge badge-pill badge-danger mr-1">Waiting for Maintainer</span>
                             if (!string.IsNullOrWhiteSpace(Model.ReviewerEmailAddress))
                             {
                                 <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 25)</a>
                             }
-                            break;
-                        default:
-                            <span class="badge badge-pill badge-danger">Waiting for Maintainer</span>
-                            <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.ReviewerEmailAddress, Model.ReviewerUserName, 25)</a>
                             break;
                     }
                 }
@@ -93,10 +93,10 @@
             }
             @if (isSubmitted)
             {
-                <li class="list-inline-item mr-1"><strong>Published: </strong>@Model.PublishedDate.ToShortDateString()</li>
+                <li class="list-inline-item mr-1"><strong>Published: </strong>@Model.PublishedDate.ToString("dd MMM yyyy")</li>
                 if (Model.ReviewedDate.HasValue)
                 {
-                    <li class="list-inline-item mr-0"><strong>Reviewed: </strong>@Model.ReviewedDate.GetValueOrDefault().ToShortDateString() @if(!string.IsNullOrWhiteSpace(Model.ReviewerUserName)){<text> by <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@Model.ReviewerUserName</a></text>}</li>
+                    <li class="list-inline-item mr-0"><strong>Reviewed: </strong>@Model.ReviewedDate.GetValueOrDefault().ToString("dd MMM yyyy") @if(!string.IsNullOrWhiteSpace(Model.ReviewerUserName)){<text> by <a href="@Url.Action(MVC.Users.Profiles(Model.ReviewerUserName))">@Model.ReviewerUserName</a></text>}</li>
                 }
             }
         </ul>

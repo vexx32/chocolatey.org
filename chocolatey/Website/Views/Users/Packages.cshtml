@@ -79,7 +79,7 @@
                         </td>
                         <td>@package.Id</td>
                         <td>@package.Version</td>
-                        <td>@package.PublishedDate.ToShortDateString()</td>
+                        <td>@package.PublishedDate.ToString("dd MMM yyyy")</td>
                         <td>@package.DownloadCount</td>
                     </tr>
                     totlalDownloads += package.DownloadCount;

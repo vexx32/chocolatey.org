@@ -59,6 +59,19 @@
     </a>
 }
 
+@helper OwnersGravatarListPackages(IEnumerable<User> owners, int size, UrlHelper url) {
+    <ul class="list-unstyled list-inline mb-0">
+    @foreach (var owner in owners) {
+        <li class="list-inline-item">
+            <a class="mr-1" href="@url.Action(MVC.Users.Profiles(owner.Username))" title="@owner.Username">
+                @if (!string.IsNullOrEmpty(owner.EmailAddress))
+                {@GravatarImage(owner.EmailAddress, owner.Username, size)}
+            </a>
+        </li>
+    }  
+    </ul>  
+}
+
 @helper GravatarImage(string email, string username, int size) {
     if (string.IsNullOrWhiteSpace(email)) {email = "default";}
     var gravatarHtml = Gravatar.GetHtml(email, size, "retro", GravatarRating.G, attributes: new { width = size, height = size, title = username, @class = "rounded-circle" });
