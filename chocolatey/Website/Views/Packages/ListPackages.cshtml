@@ -249,21 +249,18 @@
                                             @ViewHelpers.Option("true", "Moderator Queue", Model.ModeratorQueue)
                                         </select>
                                     </div>
-                                    @if (moderationQueue == true)
-                                    {
-                                        <div class="col-sm mb-2 mb-sm-0">
-                                            <select class="form-control" name="moderationStatus" id="moderationStatus" aria-label="Moderation Sort Order">
-                                                @ViewHelpers.Option(Constants.AllModerationStatuses, "All Moderation Statuses", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.SubmittedModerationStatus, "Submitted", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.UpdatedModerationStatus, "Updated", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.PendingModerationStatus, "Pending", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.WaitingModerationStatus, "Waiting", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.RespondedModerationStatus, "Responded", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.ReadyModerationStatus, "Ready", Model.ModerationStatus)
-                                                @ViewHelpers.Option(Constants.UnknownModerationStatus, "Unknown", Model.ModerationStatus)
-                                            </select>
-                                        </div>
-                                    }
+                                    <div class="col-sm mb-2 mb-sm-0 @if (!moderationQueue){<text>d-none</text>}">
+                                        <select class="form-control" name="moderationStatus" id="moderationStatus" aria-label="Moderation Sort Order">
+                                            @ViewHelpers.Option(Constants.AllModerationStatuses, "All Moderation Statuses", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.SubmittedModerationStatus, "Submitted", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.UpdatedModerationStatus, "Updated", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.PendingModerationStatus, "Pending", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.WaitingModerationStatus, "Waiting", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.RespondedModerationStatus, "Responded", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.ReadyModerationStatus, "Ready", Model.ModerationStatus)
+                                            @ViewHelpers.Option(Constants.UnknownModerationStatus, "Unknown", Model.ModerationStatus)
+                                        </select>
+                                    </div>
                                     <div class="col-sm mb-2 mb-sm-0">
                                         <select class="form-control" name="prerelease" id="prerelease" aria-label="Sort by the inclusion of Prerelease Packages">
                                             @ViewHelpers.Option("false", "Stable Only", Model.IncludePrerelease)
