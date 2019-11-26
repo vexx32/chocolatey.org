@@ -438,11 +438,6 @@ namespace NuGetGallery
 
                 packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(pendingAutoReviewPackages).Union(waitingForMaintainerPackages);
 
-                if (!string.IsNullOrWhiteSpace(q))
-                {
-                    packagesToShow = packagesToShow.AsQueryable().Search(q).ToList();
-                }
-
                 switch (searchFilter.SortProperty)
                 {
                     case SortProperty.DisplayName:
@@ -455,162 +450,164 @@ namespace NuGetGallery
                         //do not change the search order
                         break;
                 }
-                if (string.IsNullOrWhiteSpace(q))
+                switch (searchFilter.SortModeration)
                 {
-                    switch (searchFilter.SortModeration)
-                    {
-                        case SortModeration.AllStatuses:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
-                            packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(pendingAutoReviewPackages).Union(waitingForMaintainerPackages);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.SubmittedStatus:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == pendingStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.UnknownStatus:
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase != readyStatus && p.SubmittedStatusForDatabase != pendingStatus && p.SubmittedStatusForDatabase != waitingStatus && p.SubmittedStatusForDatabase != respondedStatus && p.SubmittedStatusForDatabase != updatedStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packageVersions.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packageVersions.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packageVersions.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.PendingStatus:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == pendingStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.WaitingStatus:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.RespondedStatus:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == respondedStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.ReadyStatus:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        case SortModeration.UpdatedStatus:
-                            packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
-                            packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == updatedStatus);
-                            switch (searchFilter.SortProperty)
-                            {
-                                case SortProperty.DisplayName:
-                                    packagesToShow = packagesToShow.OrderBy(p => p.Title);
-                                    break;
-                                case SortProperty.Recent:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
-                                    break;
-                                case SortProperty.DownloadCount:
-                                    packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
-                                    break;
-                                default:
-                                    //do not change the search order
-                                    break;
-                            }
-                            break;
-                        default:
-                            //do not change the search order
-                            break;
-                    }
+                    case SortModeration.AllStatuses:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
+                        packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(pendingAutoReviewPackages).Union(waitingForMaintainerPackages);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.SubmittedStatus:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus || p.SubmittedStatusForDatabase == pendingStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.UnknownStatus:
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase != readyStatus && p.SubmittedStatusForDatabase != pendingStatus && p.SubmittedStatusForDatabase != waitingStatus && p.SubmittedStatusForDatabase != respondedStatus && p.SubmittedStatusForDatabase != updatedStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packageVersions.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packageVersions.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packageVersions.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.PendingStatus:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == pendingStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.WaitingStatus:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.RespondedStatus:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == respondedStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.ReadyStatus:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == readyStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    case SortModeration.UpdatedStatus:
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
+                        packagesToShow = submittedPackages.Where(p => p.SubmittedStatusForDatabase == updatedStatus);
+                        switch (searchFilter.SortProperty)
+                        {
+                            case SortProperty.DisplayName:
+                                packagesToShow = packagesToShow.OrderBy(p => p.Title);
+                                break;
+                            case SortProperty.Recent:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.Published);
+                                break;
+                            case SortProperty.DownloadCount:
+                                packagesToShow = packagesToShow.OrderByDescending(p => p.DownloadCount);
+                                break;
+                            default:
+                                //do not change the search order
+                                break;
+                        }
+                        break;
+                    default:
+                        //do not change the search order
+                        break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(q))
+                {
+                    packagesToShow = packagesToShow.AsQueryable().Search(q).ToList();
                 }
 
                 totalHits = packagesToShow.Count() + packageVersions.Count();
