@@ -400,6 +400,8 @@ namespace NuGetGallery
             int respondedPackagesCount = 0;
             int unreviewedPackagesCount = 0;
             int waitingPackagesCount = 0;
+            int pendingAutoReviewPackagesCount = 0;
+            int unknownPackagesCount = 0;
             var searchFilter = GetSearchFilter(q, sortOrder, page, prerelease, moderationStatus);
 
             if (moderatorQueue)
@@ -425,10 +427,14 @@ namespace NuGetGallery
 
                 var pendingAutoReviewPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == pendingStatus || p.SubmittedStatusForDatabase == null).OrderBy(p => p.Published).ToList();
                 unreviewedPackagesCount += pendingAutoReviewPackages.Count;
+                pendingAutoReviewPackagesCount = pendingAutoReviewPackages.Count;
 
                 //var waitingForMaintainerPackages = submittedPackages.Where(p => p.ReviewedDate >= p.Published).OrderByDescending(p => p.ReviewedDate).ToList();
                 var waitingForMaintainerPackages = submittedPackages.Where(p => p.SubmittedStatusForDatabase == waitingStatus).OrderByDescending(p => p.ReviewedDate).ToList();
                 waitingPackagesCount = waitingForMaintainerPackages.Count;
+
+                var unknownPackages = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null).ToList();
+                unknownPackagesCount = unknownPackages.Count;
 
                 packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(pendingAutoReviewPackages).Union(waitingForMaintainerPackages);
 
@@ -612,6 +618,11 @@ namespace NuGetGallery
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount).ToList());
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
+
+                if (searchFilter.SortModeration.Equals(SortModeration.UnknownStatus))
+                {
+                    totalHits = totalHits - unknownPackagesCount;
+                }
             }
             else
             {
@@ -657,7 +668,7 @@ namespace NuGetGallery
             }
 
             var viewModel = new PackageListViewModel(
-                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount, respondedPackagesCount, moderationStatus);
+                packagesToShow, q, sortOrder, totalHits, page - 1, Constants.DefaultPackageListPageSize, Url, prerelease, moderatorQueue, updatedPackagesCount, unreviewedPackagesCount, waitingPackagesCount, respondedPackagesCount, pendingAutoReviewPackagesCount, unknownPackagesCount, moderationStatus);
 
             ViewBag.SearchTerm = q;
 
