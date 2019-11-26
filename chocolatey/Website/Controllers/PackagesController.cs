@@ -619,7 +619,7 @@ namespace NuGetGallery
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
 
-                if (searchFilter.SortModeration.Equals(SortModeration.UnknownStatus))
+                if (!string.IsNullOrWhiteSpace(q) && (searchFilter.SortModeration.Equals(SortModeration.UnknownStatus) || searchFilter.SortModeration.Equals(SortModeration.AllStatuses)) || searchFilter.SortModeration.Equals(SortModeration.UnknownStatus))
                 {
                     totalHits = totalHits - unknownPackagesCount;
                 }
