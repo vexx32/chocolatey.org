@@ -1,12 +1,4 @@
 ﻿@using NuGetGallery
-@{
-    var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
-    var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
-    var PackageListNav =
-        (
-            @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/packages/" || @FullHref == @BaseHref + ("/search") || @FullHref == @BaseHref + ("/search/")
-        );
-}
 
 <header class="w-100">
     <div class="d-none d-sm-block">@Html.Partial("~/Views/Shared/_AlertTop.cshtml")</div>
@@ -19,7 +11,7 @@
             <button class="btn btn-outline-light btn-nav-toggle mr-3 collapsed" type="button" data-toggle="collapse" data-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fas fa-bars"></span>
             </button>
-            @if (!PackageListNav)
+            @if (!ViewContext.RouteData.Values["Action"].Equals("ListPackages"))
             {
                 <div class="nav-search d-lg-none">
                     @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
@@ -241,7 +233,7 @@
                         </div>
                     </div>
                 </li>
-                @if (!@FullHref.Contains("/docs") && !PackageListNav)
+                @if (!ViewContext.RouteData.Values["Action"].Equals("Documentation") && !ViewContext.RouteData.Values["Action"].Equals("ListPackages"))
                 {
                     <li class="nav-item d-none d-lg-block">
                         <div class="nav-search">
