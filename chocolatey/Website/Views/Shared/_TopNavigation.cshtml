@@ -6,12 +6,6 @@
         (
             @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/packages/" || @FullHref == @BaseHref + ("/search") || @FullHref == @BaseHref + ("/search/")
         );
-    var ResourceNav =
-        (
-            @FullHref.Contains("/docs") || Request.RawUrl == Url.RouteUrl(RouteName.BlogHome) || Request.RawUrl == Url.RouteUrl(RouteName.BlogArticle)
-        );
-    var SuccessStoryNav =
-        (Request.RawUrl == Url.RouteUrl(RouteName.Resources, new { resourceType = "success-stories" }));
 }
 
 <header class="w-100">
@@ -265,46 +259,4 @@
             </ul>
         </div>
     </nav>
-    @if (ResourceNav)
-    {
-        <nav id="secondaryNav" class="@if (SuccessStoryNav) {<text>successStoryNav</text>} navbar bg-white border-bottom d-none d-sm-flex">
-            <ul>
-                <li>
-                    <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})">
-                        <span class="fas fa-play" alt="Videos"></span>
-                        <span>Videos</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "success-stories"})">
-                        <span class="fas fa-star" alt="Customer Success Stories"></span>
-                        <span>Success Stories</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">
-                        <span class="fas fa-briefcase" alt="Case Studies"></span>
-                        <span>Case Studies</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "home"})">
-                        <span class="fas fa-file" alt="Documentation"></span>
-                        <span>Docs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.RouteUrl(RouteName.BlogHome)">
-                        <span class="fas fa-rss" alt="Blog"></span>
-                        <span>Blog</span>
-                    </a>
-                </li>
-            </ul>
-            @*To be added when Success Story submission is ready*@
-            @*@if (SuccessStoryNav)
-                {
-                    <a href="#" class="btn btn-success d-none d-md-block">Submit Success Story</a>
-                }*@
-        </nav>
-    }
 </header>
