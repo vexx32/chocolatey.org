@@ -113,6 +113,10 @@
     @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
 }
 @Html.Partial("~/Views/Shared/_Loader.cshtml")
+<section id="secondaryNav">
+    @Html.Partial("~/Views/Shared/_AuthenticationSubNavigation.cshtml")
+    @Html.Partial("~/Views/Shared/_PackageStatusSubNavigation.cshtml")
+</section>
 <section class="container py-3 py-lg-5">
     <div id="package-sidebar" class="row">
         @*Desktop Sidebar*@

@@ -1,20 +1,10 @@
 ﻿@using NuGetGallery
 @{
-    var moderationRole = User != null && User.IsInAnyModerationRole();
     var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
     var PackageListNav =
         (
             @FullHref == @BaseHref + "/packages" || @FullHref == @BaseHref + "/packages/" || @FullHref == @BaseHref + ("/search") || @FullHref == @BaseHref + ("/search/")
-        );
-    var PackageAreaNav =
-       (
-           Request.RawUrl == Url.RouteUrl(RouteName.DisplayPackage) || Request.RawUrl == Url.RouteUrl(RouteName.UploadPackage) ||
-           Request.RawUrl == Url.Action(MVC.Users.Packages()) || Request.RawUrl == Url.RouteUrl(RouteName.PackageVersionAction)
-       );
-    var AccountNav =
-        (
-            @FullHref == @BaseHref + "/account" || Request.RawUrl == Url.Action(MVC.Users.Edit()) || Request.RawUrl == Url.Action(MVC.Users.ChangePassword()) || Request.RawUrl == Url.Action(MVC.Packages.ContactOwners()) || Request.RawUrl == Url.RouteUrl(RouteName.Profile)
         );
     var ResourceNav =
         (
@@ -22,13 +12,11 @@
         );
     var SuccessStoryNav =
         (Request.RawUrl == Url.RouteUrl(RouteName.Resources, new { resourceType = "success-stories" }));
-    var CourseNav =
-        (Request.Url.AbsoluteUri.ToLower().Contains("?quiz=true") || Request.RawUrl == Url.RouteUrl(RouteName.CourseName) && Request.RawUrl != Url.RouteUrl(RouteName.Courses));
 }
 
-<header class="w-100 @if (!PackageListNav && !PackageAreaNav && !AccountNav && !ResourceNav && !CourseNav) {<text>mb-xl-3</text>}">
+<header class="w-100">
     <div class="d-none d-sm-block">@Html.Partial("~/Views/Shared/_AlertTop.cshtml")</div>
-    <nav id="topNav" class="navbar navbar-expand-lg navbar-dark bg-dark @if (!PackageListNav && !PackageAreaNav && !AccountNav && !ResourceNav && !CourseNav) {<text>shadow</text>}">
+    <nav id="topNav" class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand p-0" href="@Url.Home()">
             <img class="d-none d-lg-block" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_square.svg")" />
             <img class="d-lg-none" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
@@ -277,109 +265,6 @@
             </ul>
         </div>
     </nav>
-    @if (PackageListNav || PackageAreaNav || AccountNav || CourseNav)
-    {
-        <section id="secondaryNav">
-            @if (PackageListNav)
-            {
-                <div class="bg-primary">
-                    <div class="container py-2">
-                        <div class="row">
-                            <div class="col-lg-6 mx-auto">
-                                @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-            <nav class="navbar bg-white border-bottom d-flex">
-                <div class="container">
-                    <ul>
-                        @if (PackageListNav || PackageAreaNav)
-                        {
-                            <li class="d-none d-sm-flex">
-                                <a href="@Url.RouteUrl(RouteName.ListPackages)">
-                                    <span class="fas fa-download" alt="Packages"></span>
-                                    <span>Packages</span>
-                                </a>
-                            </li>
-                        }
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
-                                    <span class="fas fa-user-plus" alt="Signup"></span>
-                                    <span>Signup</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="ux_account" href="@Url.LogOn()">
-                                    <span class="fas fa-sign-in-alt" alt="Login"></span>
-                                    <span>Login</span>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            if (!Request.Url.AbsoluteUri.Contains("moderatorQueue=true") && moderationRole && PackageListNav || PackageAreaNav)
-                            {
-                                <li class="d-none d-lg-flex">
-                                    <a href="@Url.RouteUrl(RouteName.ListPackages)?q=&moderatorQueue=true">
-                                        <span class="fas fa-pencil-alt" alt="Moderator Queue"></span>
-                                        <span class="d-lg-none">Moderation</span>
-                                        <span class="d-none d-lg-block">Moderator Queue</span>
-                                    </a>
-                                </li>
-                            }
-                            <li>
-                                <a class="ux_account" href="@Url.Action(MVC.Users.Account())">
-                                    <span class="fas fa-cogs" alt="Account"></span>
-                                    <span>Account</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action(MVC.Users.Profiles(User.Identity.Name))">
-                                    <span class="fas fa-user-alt" alt="Profile"></span>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="ux_account_action" href="@Url.LogOff()">
-                                    <span class="fas fa-sign-out-alt" alt="Log Off"></span>
-                                    <span>Log Off</span>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </nav>
-            @if (PackageListNav || PackageAreaNav)
-            {
-                <nav class="navbar bg-white border-bottom d-none d-sm-flex">
-                    <div class="container">
-                        <ul class="d-flex">
-                            <li class="d-sm-flex align-items-center">
-                                <span class="status status-sm bg-success"></span>
-                                <small>Passing</small>
-                            </li>
-                            <li class="d-sm-flex align-items-center">
-                                <span class="status status-sm bg-danger"></span>
-                                <small>Failing</small>
-                            </li>
-                            <li class="d-sm-flex align-items-center">
-                                <span class="status status-sm bg-warning"></span>
-                                <small>Pending</small>
-                            </li>
-                            <li class="d-sm-flex align-items-center">
-                                <span class="status status-sm bg-secondary"></span>
-                                <small>Unknown / Exempted</small>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            }
-        </section>
-    }
     @if (ResourceNav)
     {
         <nav id="secondaryNav" class="@if (SuccessStoryNav) {<text>successStoryNav</text>} navbar bg-white border-bottom d-none d-sm-flex">

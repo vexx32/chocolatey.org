@@ -26,6 +26,19 @@
         @Html.Partial("~/Views/Shared/_Loader.cshtml")
     }
 }
+<section id="secondaryNav">
+    <div class="bg-primary">
+        <div class="container py-2">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Shared/_AuthenticationSubNavigation.cshtml")
+    @Html.Partial("~/Views/Shared/_PackageStatusSubNavigation.cshtml")
+</section>
 <section id="package" class="container py-3 py-lg-5 body-tabs">
     @if (!User.Identity.IsAuthenticated)
     {
