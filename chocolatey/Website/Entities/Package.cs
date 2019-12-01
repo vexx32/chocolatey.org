@@ -45,9 +45,7 @@ namespace NuGetGallery
         public virtual ICollection<PackageAuthor> Authors { get; set; }
         public virtual ICollection<PackageFile> Files { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [MaxLength(1500)]
         public string Copyright { get; set; }
         public DateTime Created { get; set; }
         public virtual ICollection<PackageDependency> Dependencies { get; set; }
@@ -74,17 +72,13 @@ namespace NuGetGallery
         [StringLength(256), Required]
         public string Hash { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [MaxLength(1500)]
         public string IconUrl { get; set; }
         public bool IsLatest { get; set; }
         public bool IsLatestStable { get; set; }
         public DateTime LastUpdated { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [MaxLength(500)]
         public string LicenseUrl { get; set; }
 
         [StringLength(20)]
@@ -93,36 +87,30 @@ namespace NuGetGallery
         public DateTime Published { get; set; }
         public long PackageFileSize { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [MaxLength(500)]
         public string ProjectUrl { get; set; }
 
-        [MaxLength(400)]
+        [MaxLength(500)]
         public string ProjectSourceUrl { get; set; }
 
-        [MaxLength(400)]
+        [MaxLength(500)]
         public string PackageSourceUrl { get; set; }
 
-        [MaxLength(400)]
+        [MaxLength(500)]
         public string DocsUrl { get; set; }
 
-        [MaxLength(400)]
+        [MaxLength(500)]
         public string MailingListUrl { get; set; }
 
-        [MaxLength(400)]
+        [MaxLength(500)]
         public string BugTrackerUrl { get; set; }
 
         public bool RequiresLicenseAcceptance { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [MaxLength(1500)]
         public string Summary { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed and *IS* used for searches, but is maintained via Lucene. Db column is nvarchar(max).
-        /// </remarks>
+        [MaxLength(1000)]
         public string Tags { get; set; }
 
         [StringLength(256)]
@@ -242,7 +230,9 @@ namespace NuGetGallery
         public virtual ICollection<PackageFramework> SupportedFrameworks { get; set; }
 
         // TODO: it would be nice if we could change the feed so that we don't need to flatten authors and dependencies
+        [MaxLength(1500)]
         public string FlattenedAuthors { get; set; }
+        [MaxLength(1500)]
         public string FlattenedDependencies { get; set; }
     }
 }

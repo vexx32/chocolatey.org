@@ -716,6 +716,10 @@
     <Compile Include="Migrations\201909091456152_CourseIndexes.Designer.cs">
       <DependentUpon>201909091456152_CourseIndexes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912010426221_AdjustPackageVarcharMaxColumns.cs" />
+    <Compile Include="Migrations\201912010426221_AdjustPackageVarcharMaxColumns.Designer.cs">
+      <DependentUpon>201912010426221_AdjustPackageVarcharMaxColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
     <Compile Include="RouteAreaCollectionExtensions.cs" />
