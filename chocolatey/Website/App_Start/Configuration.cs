@@ -115,6 +115,8 @@ namespace NuGetGallery
 
         public string ScanResultsKey { get { return ReadAppSettings("ScanResultsKey", (value) => value ?? string.Empty); } }
 
+        public bool IndexContainsAllVersions { get { return ReadAppSettings("IndexContainsAllVersions", (value) => bool.Parse(value ?? bool.TrueString)); } }
+
         protected virtual string GetConfiguredSiteRoot()
         {
             return ReadAppSettings("SiteRoot");

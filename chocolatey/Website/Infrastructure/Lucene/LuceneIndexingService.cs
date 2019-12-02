@@ -44,15 +44,17 @@ namespace NuGetGallery
         private readonly Directory _directory;
         private IndexWriter _indexWriter;
         private readonly IEntityRepository<Package> _packageRepository;
+        private readonly bool _indexContainsAllVersions;
         private readonly Func<bool> _getShouldAutoUpdate;
 
         public string IndexPath { get { return LuceneCommon.IndexDirectory; } }
 
         public bool IsLocal { get { return true; } }
 
-        public LuceneIndexingService(IEntityRepository<Package> packageSource)
+        public LuceneIndexingService(IEntityRepository<Package> packageSource, bool indexContainsAllVersions)
         {
             _packageRepository = packageSource;
+            _indexContainsAllVersions = indexContainsAllVersions;
             _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
             _getShouldAutoUpdate = () => true;
         }
@@ -140,13 +142,15 @@ namespace NuGetGallery
                 // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
                 // update independent of the package.
                 set = set.Where(
-                    p => (p.IsLatest || p.IsLatestStable) &&
+                    p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
                          p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
             }
-            else
+            else if (!_indexContainsAllVersions)
             {
                 set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
             }
+
+            set = set.Where(p => p.Listed);
 
             var list = set
                 .Include(p => p.PackageRegistration)
@@ -241,7 +245,7 @@ namespace NuGetGallery
                 _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
 
                 // Log but swallow the exception
-                ErrorSignal.FromCurrentContext().Raise(ex); 
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
             // Should always be add, due to locking

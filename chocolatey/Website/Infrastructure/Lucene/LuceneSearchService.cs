@@ -14,16 +14,22 @@ namespace NuGetGallery
 {
     public class LuceneSearchService : ISearchService
     {
+        private readonly bool _containsAllVersions;
         private static readonly string[] FieldAliases = new[] { "Id", "Title", "Tag", "Tags", "Description", "Author", "Authors", "Owner", "Owners" };
         private static readonly string[] Fields = new[] { "Id", "Title", "Tags", "Description", "Authors", "Owners" };
         private Lucene.Net.Store.Directory _directory;
 
-        public LuceneSearchService()
+        public LuceneSearchService() : this(containsAllVersions: false)
         {
+        }
+
+        public LuceneSearchService(bool containsAllVersions)
+        {
+            _containsAllVersions = containsAllVersions;
             _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
         }
 
-        public bool ContainsAllVersions { get { return false; } }
+        public bool ContainsAllVersions { get { return _containsAllVersions; } }
 
         public SearchResults Search(SearchFilter searchFilter)
         {
@@ -66,6 +72,12 @@ namespace NuGetGallery
             Query filterQuery = new TermQuery(new Term(filterTerm, Boolean.TrueString));
 
             Filter filter = new QueryWrapperFilter(filterQuery);
+
+            if (searchFilter.IncludeAllVersions)
+            {
+                filter = new QueryWrapperFilter(new TermQuery(new Term("Listed", Boolean.TrueString)));
+            }
+            
             var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));
 
             if (results.TotalHits == 0 || searchFilter.CountOnly)
@@ -94,6 +106,7 @@ namespace NuGetGallery
             bool isLatest = Boolean.Parse(doc.Get("IsLatest"));
             bool isLatestStable = Boolean.Parse(doc.Get("IsLatestStable"));
             bool isPrerelease = Boolean.Parse(doc.Get("IsPrerelease"));
+            bool isListed = Boolean.Parse(doc.Get("Listed"));
             bool requiresLicenseAcceptance = Boolean.Parse(doc.Get("RequiresLicenseAcceptance"));
             DateTime created = DateTime.Parse(doc.Get("Created"), CultureInfo.InvariantCulture);
             DateTime published = DateTime.Parse(doc.Get("Published"), CultureInfo.InvariantCulture);
@@ -155,6 +168,7 @@ namespace NuGetGallery
                 IsLatest = isLatest,
                 IsLatestStable = isLatestStable,
                 IsPrerelease = isPrerelease,
+                Listed = isListed,
                 Language = doc.Get("Language"),
                 LastUpdated = lastUpdated,
                 Published = published,
