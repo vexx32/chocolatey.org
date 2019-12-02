@@ -52,6 +52,7 @@ namespace NuGetGallery
         bool HostImages { get; }
         int PackageOperationsUserKey { get; }
         string ScanResultsKey { get; }
+        bool IndexContainsAllVersions { get; }
 
     }
 }
