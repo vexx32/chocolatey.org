@@ -289,25 +289,28 @@ namespace NuGetGallery
              }
              searchFilter.QueryTerms = queryTerms;
 
-             // We'll only use the index if we the query searches for latest \ latest-stable packages
              string filter;
              if (queryTerms.TryGetValue("$filter", out filter))
              {
                  if (!(filter.Equals("IsLatestVersion", StringComparison.Ordinal) || filter.Equals("IsAbsoluteLatestVersion", StringComparison.Ordinal) 
                    || filter.Contains("IsLatestVersion") || filter.Contains("IsAbsoluteLatestVersion")))
                  {
-                     searchFilter.IsValid = false;
-                     searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
                      searchFilter.IncludeAllVersions = true;
                  }
              }
-             else if (!allVersionsInIndex)
+             else
              {
-                 searchFilter.IsValid = false;
-                 searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
                  searchFilter.IncludeAllVersions = true;
              }
 
+             // We'll only use the index if we the query searches for latest \ latest-stable packages
+             // if all versions are not available in the index
+             if (searchFilter.IncludeAllVersions && !allVersionsInIndex)
+             {
+                 searchFilter.IsValid = false;
+                 searchFilter.FilterInvalidReason = SearchFilterInvalidReason.DueToAllVersionsRequested;
+             }
+             
              string skipStr;
              if (queryTerms.TryGetValue("$skip", out skipStr))
              {
