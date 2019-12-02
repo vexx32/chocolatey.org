@@ -245,7 +245,7 @@ namespace NuGetGallery
                 _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
 
                 // Log but swallow the exception
-                ErrorSignal.FromCurrentContext().Raise(ex); 
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
             // Should always be add, due to locking
