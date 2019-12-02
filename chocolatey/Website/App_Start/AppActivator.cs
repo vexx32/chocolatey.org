@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -74,7 +74,7 @@ namespace NuGetGallery
             ViewEngines.Engines.Add(new CSharpRazorViewEngine());
 
             RegisterGlobalFilters(GlobalFilters.Filters);
-            
+
             Routes.RegisterRoutes(RouteTable.Routes);
 
 #if !DEBUG
@@ -98,14 +98,21 @@ namespace NuGetGallery
         {
             var jobs = new List<IJob>();
             var indexer = DependencyResolver.Current.GetService<IIndexingService>();
-          
+
             if (indexer != null)
             {
                 indexer.RegisterBackgroundJobs(jobs);
             }
 
-            jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
-            jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
+            if (ConfigurationManager.AppSettings.Get("EnablePackageStatisticsBackgroundJob").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
+            {
+                jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
+            }
+
+            if (ConfigurationManager.AppSettings.Get("EnableWorkItemsBackgroundJob").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
+            {
+                jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
+            }
 
             var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
             _jobManager = new JobManager(jobs, jobCoordinator)
@@ -124,8 +131,8 @@ namespace NuGetGallery
         private static void DbMigratorPostStart()
         {
             var dbMigrator = new DbMigrator(new MigrationsConfiguration());
-            // After upgrading to EF 4.3 and MiniProfile 1.9, there is a bug that causes several 
-            // 'Invalid object name 'dbo.__MigrationHistory' to be thrown when the database is first created; 
+            // After upgrading to EF 4.3 and MiniProfile 1.9, there is a bug that causes several
+            // 'Invalid object name 'dbo.__MigrationHistory' to be thrown when the database is first created;
             // it seems these can safely be ignored, and the database will still be created.
             dbMigrator.Update();
         }
