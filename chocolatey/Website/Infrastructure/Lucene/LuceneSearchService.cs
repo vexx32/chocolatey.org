@@ -14,16 +14,22 @@ namespace NuGetGallery
 {
     public class LuceneSearchService : ISearchService
     {
+        private readonly bool _containsAllVersions;
         private static readonly string[] FieldAliases = new[] { "Id", "Title", "Tag", "Tags", "Description", "Author", "Authors", "Owner", "Owners" };
         private static readonly string[] Fields = new[] { "Id", "Title", "Tags", "Description", "Authors", "Owners" };
         private Lucene.Net.Store.Directory _directory;
 
-        public LuceneSearchService()
+        public LuceneSearchService() : this(containsAllVersions: false)
         {
+        }
+
+        public LuceneSearchService(bool containsAllVersions)
+        {
+            _containsAllVersions = containsAllVersions;
             _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
         }
 
-        public bool ContainsAllVersions { get { return false; } }
+        public bool ContainsAllVersions { get { return _containsAllVersions; } }
 
         public SearchResults Search(SearchFilter searchFilter)
         {

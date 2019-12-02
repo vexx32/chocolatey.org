@@ -44,15 +44,17 @@ namespace NuGetGallery
         private readonly Directory _directory;
         private IndexWriter _indexWriter;
         private readonly IEntityRepository<Package> _packageRepository;
+        private readonly bool _indexContainsAllVersions;
         private readonly Func<bool> _getShouldAutoUpdate;
 
         public string IndexPath { get { return LuceneCommon.IndexDirectory; } }
 
         public bool IsLocal { get { return true; } }
 
-        public LuceneIndexingService(IEntityRepository<Package> packageSource)
+        public LuceneIndexingService(IEntityRepository<Package> packageSource, bool indexContainsAllVersions)
         {
             _packageRepository = packageSource;
+            _indexContainsAllVersions = indexContainsAllVersions;
             _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
             _getShouldAutoUpdate = () => true;
         }
