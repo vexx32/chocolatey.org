@@ -94,6 +94,7 @@ namespace NuGetGallery
             bool isLatest = Boolean.Parse(doc.Get("IsLatest"));
             bool isLatestStable = Boolean.Parse(doc.Get("IsLatestStable"));
             bool isPrerelease = Boolean.Parse(doc.Get("IsPrerelease"));
+            bool isListed = Boolean.Parse(doc.Get("Listed"));
             bool requiresLicenseAcceptance = Boolean.Parse(doc.Get("RequiresLicenseAcceptance"));
             DateTime created = DateTime.Parse(doc.Get("Created"), CultureInfo.InvariantCulture);
             DateTime published = DateTime.Parse(doc.Get("Published"), CultureInfo.InvariantCulture);
@@ -155,6 +156,7 @@ namespace NuGetGallery
                 IsLatest = isLatest,
                 IsLatestStable = isLatestStable,
                 IsPrerelease = isPrerelease,
+                Listed = isListed,
                 Language = doc.Get("Language"),
                 LastUpdated = lastUpdated,
                 Published = published,
