@@ -155,7 +155,7 @@ namespace NuGetGallery
                 searchFilter.IsValid = true;
             }
 
-            // use Lucene
+            // When the SearchFilter is valid, we can use Lucene
             // We can only use Lucene if the client queries for the latest versions (IsLatest \ IsLatestStable) versions of a package
             // and specific sort orders that we have in the index.
             if (searchFilter.IsValid)
