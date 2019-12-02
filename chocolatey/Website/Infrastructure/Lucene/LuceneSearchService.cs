@@ -72,6 +72,12 @@ namespace NuGetGallery
             Query filterQuery = new TermQuery(new Term(filterTerm, Boolean.TrueString));
 
             Filter filter = new QueryWrapperFilter(filterQuery);
+
+            if (searchFilter.IncludeAllVersions)
+            {
+                filter = new QueryWrapperFilter(new TermQuery(new Term("Listed", Boolean.TrueString)));
+            }
+            
             var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));
 
             if (results.TotalHits == 0 || searchFilter.CountOnly)
