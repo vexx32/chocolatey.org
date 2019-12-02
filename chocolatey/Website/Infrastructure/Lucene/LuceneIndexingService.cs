@@ -142,13 +142,15 @@ namespace NuGetGallery
                 // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
                 // update independent of the package.
                 set = set.Where(
-                    p => (p.IsLatest || p.IsLatestStable) &&
+                    p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
                          p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
             }
-            else
+            else if (!_indexContainsAllVersions)
             {
                 set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
             }
+
+            set = set.Where(p => p.Listed);
 
             var list = set
                 .Include(p => p.PackageRegistration)
