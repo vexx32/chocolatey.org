@@ -104,8 +104,15 @@ namespace NuGetGallery
                 indexer.RegisterBackgroundJobs(jobs);
             }
 
-            jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
-            jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
+            if (ConfigurationManager.AppSettings.Get("EnablePackageStatisticsBackgroundJob").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
+            {
+                jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
+            }
+
+            if (ConfigurationManager.AppSettings.Get("EnableWorkItemsBackgroundJob").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
+            {
+                jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
+            }
 
             var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
             _jobManager = new JobManager(jobs, jobCoordinator)
