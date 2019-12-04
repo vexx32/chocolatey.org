@@ -117,7 +117,32 @@ namespace NuGetGallery.Controllers
                 MatchCollection urlOnePatternMatches = Regex.Matches(contents, urlOnePattern);
                 foreach (Match match in urlOnePatternMatches)
                 {
-                    contents = contents.Replace(match.Value, "[" + match.Groups[1].Value + "](/docs/" + match.Groups[2].Value.ToLower() + ")");
+                    var hyphenatedValue = new StringBuilder();
+
+                    Char previousChar = '^';
+                    foreach (var valueChar in match.Groups[2].Value.ToString())
+                    {
+                        // Filenames that contain both a "-" and camel casing
+                        if (match.Groups[2].Value.Contains("-") && Char.IsLower(previousChar) && Char.IsUpper(valueChar))
+                        {
+                            hyphenatedValue.Append("-");
+                        }
+
+                        if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0 && !Char.IsUpper(previousChar) && !match.Groups[2].Value.Contains("-"))
+                        {
+                            hyphenatedValue.Append("-");
+                        }
+
+                        if (Char.IsDigit(valueChar) && !Char.IsDigit(previousChar) && hyphenatedValue.Length != 0)
+                        {
+                            hyphenatedValue.Append("-");
+                        }
+
+                        previousChar = valueChar;
+                        hyphenatedValue.Append(valueChar.to_string());
+                    }
+
+                    contents = contents.Replace(match.Value, "[" + match.Groups[1].Value + "](/docs/" + hyphenatedValue.ToString().ToLower() + ")");
                 }
 
                 var urlTwoPattern = @"\[(.*?)\]\((.*?)\)";
