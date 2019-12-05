@@ -42,8 +42,11 @@ textarea {
     display: none;
 }
 #files pre {
-    max-height: 500px;
     overflow: auto;
+}
+#files pre[class*="language-"].line-numbers.line-numbers code {
+    overflow: visible;
+    max-height: 500px;
 }
 /*Package Sidebar*/
 #package-sidebar .package-logo {
