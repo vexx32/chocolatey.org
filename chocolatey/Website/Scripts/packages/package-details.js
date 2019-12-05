@@ -110,6 +110,6 @@ $(function () {
             toolbar: ["bold", "italic", "heading", "strikethrough", "|", "quote", "unordered-list", "ordered-list", "code", "|", "link", "image", "|", "side-by-side", "fullscreen", "|", "preview"]
         });
         easymde.render();
-        $('<span> Preview</span>').insertAfter('.editor-toolbar .fa-eye').parent().addClass('font-weight-bold text-primary');
+        $('<span> Preview</span>').insertAfter($(this).next().find('.fa-eye')).parent().addClass('font-weight-bold text-primary');
     });
 });
