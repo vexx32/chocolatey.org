@@ -35,12 +35,14 @@ namespace NuGetGallery
 {
     public class LuceneIndexingService : IIndexingService
     {
+        private const int LUCENE_CACHE_REBUILD_HOURS = 24;
+        private const int LUCENE_UPDATE_JOB_FREQUENCY_MINUTES = 10;
+        private const int LUCENE_UPDATE_JOB_TIMEOUT_MINUTES = 8;
         private readonly string _rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
         private readonly Func<EntitiesContext> _contextThunk;
         private static readonly object IndexWriterLock = new object();
 
-        private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(3);
-
+        private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(LUCENE_CACHE_REBUILD_HOURS);
         private static readonly ConcurrentDictionary<Directory, IndexWriter> WriterCache = new ConcurrentDictionary<Directory, IndexWriter>();
 
         private readonly Directory _directory;
@@ -339,8 +341,8 @@ namespace NuGetGallery
             {
                 jobs.Add(
                     new LuceneIndexingJob(
-                        frequence: TimeSpan.FromMinutes(6),
-                        timeout: TimeSpan.FromMinutes(5),
+                        frequence: TimeSpan.FromMinutes(LUCENE_UPDATE_JOB_FREQUENCY_MINUTES),
+                        timeout: TimeSpan.FromMinutes(LUCENE_UPDATE_JOB_TIMEOUT_MINUTES),
                         indexingService: this));
             }
         }
