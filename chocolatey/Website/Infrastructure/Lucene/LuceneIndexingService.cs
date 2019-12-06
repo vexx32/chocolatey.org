@@ -35,6 +35,7 @@ namespace NuGetGallery
 {
     public class LuceneIndexingService : IIndexingService
     {
+        private readonly Func<EntitiesContext> _contextThunk;
         private static readonly object IndexWriterLock = new object();
 
         private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(3);
@@ -51,9 +52,14 @@ namespace NuGetGallery
 
         public bool IsLocal { get { return true; } }
 
-        public LuceneIndexingService(IEntityRepository<Package> packageSource, bool indexContainsAllVersions)
+        public LuceneIndexingService(Func<EntitiesContext> contextThunk, bool indexContainsAllVersions)
         {
-            _packageRepository = packageSource;
+            if (contextThunk == null)
+            {
+                throw new ArgumentNullException("contextThunk");
+            }
+            _contextThunk = contextThunk;
+
             _indexContainsAllVersions = indexContainsAllVersions;
             _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
             _getShouldAutoUpdate = () => true;

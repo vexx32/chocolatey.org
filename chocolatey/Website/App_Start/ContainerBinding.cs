@@ -37,6 +37,8 @@ namespace NuGetGallery
     /// </summary>
     public class ContainerBinding
     {
+        private const int LUCENE_TIMEOUT_SECONDS = 720;
+
         /// <summary>
         ///   Loads the module into the kernel.
         /// </summary>
@@ -81,7 +83,7 @@ namespace NuGetGallery
             container.RegisterPerWebRequest<IPackageService, PackageService>();
             container.RegisterPerWebRequest<ICryptographyService, CryptographyService>();
 
-            container.Register<IIndexingService>(() => new LuceneIndexingService(container.GetInstance<IEntityRepository<Package>>(), configuration.IndexContainsAllVersions), Lifestyle.Singleton);
+            container.Register<IIndexingService>(() => new LuceneIndexingService(() => new EntitiesContext(LUCENE_TIMEOUT_SECONDS), configuration.IndexContainsAllVersions), Lifestyle.Singleton);
             container.Register<IFormsAuthenticationService, FormsAuthenticationService>(Lifestyle.Singleton);
 
             container.RegisterPerWebRequest<IControllerFactory, NuGetControllerFactory>();
