@@ -39,15 +39,43 @@ namespace NuGetGallery
 
     public class EntitiesContext : DbContext, IWorkItemsContext, IEntitiesContext
     {
-        public EntitiesContext(): base(SetConnectionString("NuGetGallery"))
+        private const int DEFAULT_TIMEOUT_SECONDS = 110;
+
+        public EntitiesContext() : this("NuGetGallery", DEFAULT_TIMEOUT_SECONDS)
         {
-            InitializeCustomOptions();
         }
 
-        private static string SetConnectionString(string connectionName)
+        public EntitiesContext(int timeoutSeconds) : this("NuGetGallery", timeoutSeconds)
+        {
+        } 
+        
+        public EntitiesContext(string nameOrConnectionString) : this(nameOrConnectionString,DEFAULT_TIMEOUT_SECONDS)
+        {
+        } 
+        
+        public EntitiesContext(string nameOrConnectionString, int timeoutSeconds)
+            : base(SetConnectionString(nameOrConnectionString))
+        {
+            InitializeCustomOptions(timeoutSeconds);
+        }
+
+        private static bool TreatAsConnectionString(string nameOrConnectionString)
+        {
+            return nameOrConnectionString.IndexOf('=') >= 0;
+        }
+
+        private static string SetConnectionString(string nameOrConnectionString)
         {
             var connectionString = new StringBuilder();
-            connectionString.Append(System.Configuration.ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
+
+            if (!TreatAsConnectionString(nameOrConnectionString))
+            {
+                connectionString.Append(System.Configuration.ConfigurationManager.ConnectionStrings[nameOrConnectionString].ConnectionString);
+            }
+            else
+            {
+                connectionString.Append(nameOrConnectionString);
+            }
 
             if (!connectionString.to_string().EndsWith(";"))
             {
@@ -65,7 +93,7 @@ namespace NuGetGallery
         /// <summary>
         ///   Initializes the custom options.
         /// </summary>
-        protected void InitializeCustomOptions()
+        protected void InitializeCustomOptions(int timeoutSeconds)
         {
             // defaults for quick reference
             //Configuration.LazyLoadingEnabled = true;
@@ -79,7 +107,7 @@ namespace NuGetGallery
             if (adapter != null)
             {
                 var objectContext = adapter.ObjectContext;
-                objectContext.CommandTimeout = 110; // value in seconds
+                objectContext.CommandTimeout = timeoutSeconds; // value in seconds
             }
        }
 
