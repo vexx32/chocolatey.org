@@ -19,7 +19,8 @@ namespace NuGetGallery
         private static readonly string[] Fields = new[] { "Id", "Title", "Tags", "Description", "Authors", "Owners" };
         private Lucene.Net.Store.Directory _directory;
 
-        public LuceneSearchService() : this(containsAllVersions: false)
+        public LuceneSearchService()
+            : this(containsAllVersions: false)
         {
         }
 
@@ -77,7 +78,7 @@ namespace NuGetGallery
             {
                 filter = new QueryWrapperFilter(new TermQuery(new Term("InIndex", Boolean.TrueString)));
             }
-            
+
             var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));
 
             if (results.TotalHits == 0 || searchFilter.CountOnly)
@@ -126,7 +127,7 @@ namespace NuGetGallery
             if (!string.IsNullOrEmpty(doc.Get("DownloadCacheDate"))) downloadCacheDate = DateTime.Parse(doc.Get("DownloadCacheDate"), CultureInfo.InvariantCulture);
             DateTime? packageScanResultDate = null;
             if (!string.IsNullOrEmpty(doc.Get("PackageScanResultDate"))) packageScanResultDate = DateTime.Parse(doc.Get("PackageScanResultDate"), CultureInfo.InvariantCulture);
-    
+
             var owners = doc.Get("FlattenedOwners")
                             .split_safe(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                             .Select(o => new User { Username = o })
@@ -195,7 +196,7 @@ namespace NuGetGallery
                 PackageCleanupResultDate = packageCleanupResultDate,
                 ReviewedDate = reviewedDate,
                 ApprovedDate = approvedDate,
-                ReviewedBy = new User { Username = doc.Get("PackageReviewer") }, 
+                ReviewedBy = new User { Username = doc.Get("PackageReviewer") },
                 DownloadCacheStatusForDatabase = doc.Get("DownloadCacheStatus"),
                 DownloadCacheDate = downloadCacheDate,
                 DownloadCache = doc.Get("DownloadCache"),
@@ -256,7 +257,7 @@ namespace NuGetGallery
             startsIdQuery.Boost = 6.0f;
             var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + escapedSearchTerm + "*"));
             wildCardIdQuery.Boost = 3.0f;
-            
+
             var exactTitleQuery = new TermQuery(new Term("Title-Exact", escapedSearchTerm));
             exactTitleQuery.Boost = 6.5f;
             var startsTitleQuery = new WildcardQuery(new Term("Title-Exact", escapedSearchTerm + "*"));
@@ -288,18 +289,19 @@ namespace NuGetGallery
                     wildCardQuery.Add(wildCardTermQuery, Occur.MUST);
                 }
             }
-            
+
             // Create an OR of all the queries that we have
             var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, exactTitleQuery, startsIdQuery, startsTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, wildCardQuery });
 
             if (onlySearchById)
             {
                 combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, startsIdQuery, wildCardIdQuery, wildCardQuery });
-            } else if (onlySearchByAuthor || onlySearchByTag)
+            }
+            else if (onlySearchByAuthor || onlySearchByTag)
             {
                 combinedQuery = conjuctionQuery.Combine(new Query[] { wildCardQuery });
             }
-            
+
             //if (searchFilter.SortProperty == SortProperty.Relevance)
             //{
             //    // If searching by relevance, boost scores by download count.
@@ -323,7 +325,7 @@ namespace NuGetGallery
             switch (searchFilter.SortProperty)
             {
                 case SortProperty.Relevance:
-                  return SortField.FIELD_SCORE;
+                    return SortField.FIELD_SCORE;
                 case SortProperty.DisplayName:
                     return new SortField("DisplayName", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
                 case SortProperty.DownloadCount:

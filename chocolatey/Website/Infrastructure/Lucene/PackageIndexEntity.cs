@@ -184,8 +184,7 @@ namespace NuGetGallery
             if (Package.SupportedFrameworks.AnySafe())
             {
                 string joinedFrameworks = string.Join(";", Package.SupportedFrameworks.Select(f => f.FrameworkName));
-                document.Add(new Field("JoinedSupportedFrameworks", joinedFrameworks, Field.Store.YES,
-                                       Field.Index.NO));
+                document.Add(new Field("JoinedSupportedFrameworks", joinedFrameworks, Field.Store.YES, Field.Index.NO));
             }
 
             string displayName = String.IsNullOrEmpty(Package.Title) ? Package.PackageRegistration.Id : Package.Title;

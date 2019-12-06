@@ -35,7 +35,6 @@ namespace NuGetGallery
     public class V2Feed : FeedServiceBase<V2FeedPackage>
     {
         private const int FeedVersion = 2;
-
         private const int DEFAULT_CACHE_TIME_SECONDS_V2FEED = 60;
 
         public V2Feed()
