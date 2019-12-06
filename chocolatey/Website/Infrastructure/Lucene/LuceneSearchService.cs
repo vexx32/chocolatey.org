@@ -75,7 +75,7 @@ namespace NuGetGallery
 
             if (searchFilter.IncludeAllVersions)
             {
-                filter = new QueryWrapperFilter(new TermQuery(new Term("Listed", Boolean.TrueString)));
+                filter = new QueryWrapperFilter(new TermQuery(new Term("InIndex", Boolean.TrueString)));
             }
             
             var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));

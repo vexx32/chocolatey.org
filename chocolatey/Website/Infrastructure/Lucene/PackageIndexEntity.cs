@@ -129,6 +129,7 @@ namespace NuGetGallery
             document.Add(new Field("IsLatestStable", Package.IsLatestStable.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             document.Add(new Field("IsPrerelease", Package.IsPrerelease.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             document.Add(new Field("Listed", Package.Listed.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            document.Add(new Field("InIndex", "True", Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             document.Add(new Field("Language", Package.Language.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("LastUpdated", Package.LastUpdated.ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
