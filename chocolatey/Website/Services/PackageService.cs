@@ -1204,7 +1204,7 @@ namespace NuGetGallery
 
         private void NotifyIndexingService()
         {
-            indexingSvc.UpdateIndex(forceRefresh:true);
+            indexingSvc.UpdateIndex(forceRefresh:false);
         }
 
         private void NotifyIndexingService(Package package)
