@@ -269,9 +269,7 @@ namespace NuGetGallery
 
             foreach (var term in terms)
             {
-                var localTerm = term.to_lower_invariant();
-                
-                localTerm = term.Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
+                var localTerm = Escape(term).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
                 var termQuery = queryParser.Parse(localTerm);
                 conjuctionQuery.Add(termQuery, Occur.MUST);
                 disjunctionQuery.Add(termQuery, Occur.SHOULD);
