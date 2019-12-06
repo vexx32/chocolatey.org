@@ -289,7 +289,11 @@ namespace NuGetGallery
             // Create an OR of all the queries that we have
             var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, exactTitleQuery, startsIdQuery, startsTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, wildCardQuery });
 
-            if (onlySearchById)
+            if (onlySearchByExactId)
+            {
+                combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery });
+            }
+            else if (onlySearchById)
             {
                 combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, startsIdQuery, wildCardIdQuery, wildCardQuery });
             }

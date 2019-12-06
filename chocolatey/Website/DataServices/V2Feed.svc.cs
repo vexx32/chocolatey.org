@@ -149,6 +149,28 @@ namespace NuGetGallery
         [WebGet]
         public IQueryable<V2FeedPackage> FindPackagesById(string id)
         {
+            if (searchService.ContainsAllVersions)
+            {
+                // this is likely to come back with SearchFilter.Empty();
+                var searchFilter = GetSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, id, includePrerelease: true);
+                searchFilter.IsValid = true;
+                searchFilter.SearchTerm = id;
+                searchFilter.IncludePrerelease = true;
+                searchFilter.IncludeAllVersions = true;
+                // Find packages by Id specific items
+                searchFilter.ExactIdOnly = true;
+                searchFilter.SortProperty = SortProperty.Version;
+                searchFilter.SortDirection = SortDirection.Descending;
+               
+                // rejected packages are already filtered out of this
+                return NugetGallery.Cache.Get(
+                    string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
+                    DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
+                    () => GetResultsFromSearchService(searchFilter)
+                            .ToV2FeedPackageQuery(GetSiteRoot())
+                            .ToList()
+                ).AsQueryable();
+            }
 
             return NugetGallery.Cache.Get(
                 string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
