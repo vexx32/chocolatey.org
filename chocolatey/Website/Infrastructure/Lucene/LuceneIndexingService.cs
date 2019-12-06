@@ -35,6 +35,7 @@ namespace NuGetGallery
 {
     public class LuceneIndexingService : IIndexingService
     {
+        private readonly string _rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
         private readonly Func<EntitiesContext> _contextThunk;
         private static readonly object IndexWriterLock = new object();
 
@@ -44,7 +45,6 @@ namespace NuGetGallery
 
         private readonly Directory _directory;
         private IndexWriter _indexWriter;
-        private readonly IEntityRepository<Package> _packageRepository;
         private readonly bool _indexContainsAllVersions;
         private readonly Func<bool> _getShouldAutoUpdate;
 
@@ -115,12 +115,16 @@ namespace NuGetGallery
                 if (!package.IsLatest || !package.IsLatestStable)
                 {
                     // Someone passed us in a version which was e.g. just unlisted? Or just not the latest version which is what we want to index. Doesn't really matter. We'll find one to index.
-                    package = _packageRepository.GetAll()
-                                                .Where(p => (p.IsLatest || p.IsLatestStable) && p.PackageRegistrationKey == packageRegistrationKey)
-                                                .Include(p => p.PackageRegistration)
-                                                .Include(p => p.PackageRegistration.Owners)
-                                                .Include(p => p.SupportedFrameworks)
-                                                .FirstOrDefault();
+                    using (var context = _contextThunk())
+                    {
+                        var packageRepo = new EntityRepository<Package>(context);
+                        package = packageRepo.GetAll()
+                                    .Where(p => (p.IsLatest || p.IsLatestStable) && p.PackageRegistrationKey == packageRegistrationKey)
+                                    .Include(p => p.PackageRegistration)
+                                    .Include(p => p.PackageRegistration.Owners)
+                                    .Include(p => p.SupportedFrameworks)
+                                    .FirstOrDefault();
+                    }
                 }
 
                 // Just update the provided package
@@ -140,37 +144,45 @@ namespace NuGetGallery
 
         private List<PackageIndexEntity> GetPackages(DateTime? lastIndexTime)
         {
-            IQueryable<Package> set = _packageRepository.GetAll();
-
-            if (lastIndexTime.HasValue)
+            using (var context = _contextThunk())
             {
-                // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
-                // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
-                // update independent of the package.
-                set = set.Where(
-                    p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
-                         p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
-            }
-            else if (!_indexContainsAllVersions)
-            {
-                set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
-            }
+                var packageRepo = new EntityRepository<Package>(context);
 
-            set = set.Where(p => p.Listed);
+                IQueryable<Package> set = packageRepo.GetAll();
 
-            var list = set
-                .Include(p => p.PackageRegistration)
-                .Include(p => p.PackageRegistration.Owners)
-                .Include(p => p.SupportedFrameworks)
-                .ToList();
-
-            var packagesForIndexing = list.Select(
-                p => new PackageIndexEntity
+                if (lastIndexTime.HasValue)
                 {
-                    Package = p
-                });
+                    // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
+                    // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
+                    // update independent of the package.
+                    set = set.Where(
+                        p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
+                             p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
+                }
+                else if (!_indexContainsAllVersions)
+                {
+                    set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
+                }
+                else
+                {
+                    // get everything including unlisted
+                    set = set.Where(p => p.StatusForDatabase != _rejectedStatus  || p.StatusForDatabase == null);
+                }
 
-            return packagesForIndexing.ToList();
+                var list = set
+                    .Include(p => p.PackageRegistration)
+                    .Include(p => p.PackageRegistration.Owners)
+                    .Include(p => p.SupportedFrameworks)
+                    .ToList();
+
+                var packagesForIndexing = list.Select(
+                    p => new PackageIndexEntity
+                    {
+                        Package = p
+                    });
+
+                return packagesForIndexing.ToList();
+            }
         }
 
         public void AddPackages(IList<PackageIndexEntity> packages, bool creatingIndex)
