@@ -333,24 +333,6 @@ namespace NuGetGallery
                 case SortProperty.Recent:
                     return new SortField("PublishedDate", SortField.LONG, reverse: true);
             }
-            switch (searchFilter.SortModeration)
-            {
-                case SortModeration.SubmittedStatus:
-                    return new SortField("SubmittedStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.PendingStatus:
-                    return new SortField("PendingStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.WaitingStatus:
-                    return new SortField("WaitingStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.RespondedStatus:
-                    return new SortField("RespondedStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.ReadyStatus:
-                    return new SortField("ReadyStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.UpdatedStatus:
-                    return new SortField("UpdatedStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.UnknownStatus:
-                    return new SortField("UnknownStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.AllStatuses:
-                    return new SortField("AllStatuses", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
             }
 
             return SortField.FIELD_SCORE;
