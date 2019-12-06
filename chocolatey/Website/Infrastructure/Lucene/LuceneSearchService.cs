@@ -240,11 +240,6 @@ namespace NuGetGallery
             // Escape the entire term we use for exact searches.
             var escapedSearchTerm = Escape(searchFilter.SearchTerm).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
 
-            bool searchLimiter = false;
-            bool onlySearchById = false;
-            bool onlySearchByAuthor = false;
-            bool onlySearchByTag = false;
-
             var exactIdQuery = new TermQuery(new Term("Id-Exact", escapedSearchTerm));
             exactIdQuery.Boost = 7.0f;
             var relatedIdQuery = new WildcardQuery(new Term("Id-Exact", escapedSearchTerm + ".*"));
@@ -266,13 +261,15 @@ namespace NuGetGallery
             wildCardQuery.Boost = 0.5f;
 
             var terms = GetSearchTerms(searchFilter.SearchTerm).ToList();
+            bool onlySearchById = searchFilter.ByIdOnly || searchFilter.ExactIdOnly || terms.AnySafe(t => t.StartsWith("id\\:"));
+            bool onlySearchByExactId = searchFilter.ExactIdOnly;
+            bool onlySearchByAuthor = terms.AnySafe(t => t.StartsWith("author\\:"));
+            bool onlySearchByTag = terms.AnySafe(t => t.StartsWith("tag\\:"));
+            bool searchLimiter = onlySearchById || onlySearchByAuthor || onlySearchByTag;
+
             foreach (var term in terms)
             {
                 var localTerm = term.to_lower_invariant();
-                onlySearchById = localTerm.StartsWith("id\\:");
-                onlySearchByAuthor = localTerm.StartsWith("author\\:");
-                onlySearchByTag = localTerm.StartsWith("tag\\:");
-                if (onlySearchById || onlySearchByAuthor || onlySearchByTag) searchLimiter = true; 
                 
                 localTerm = term.Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
                 var termQuery = queryParser.Parse(localTerm);
