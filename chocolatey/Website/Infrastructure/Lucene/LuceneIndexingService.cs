@@ -108,6 +108,14 @@ namespace NuGetGallery
 
         public void UpdatePackage(Package package)
         {
+            if (_indexContainsAllVersions)
+            {
+                //just update everything since the last write time
+                UpdateIndex(forceRefresh: false);
+                return;
+            }
+
+            // when we only store the latest, we can run the rest of this
             if (_getShouldAutoUpdate())
             {
                 var packageRegistrationKey = package.PackageRegistrationKey;
