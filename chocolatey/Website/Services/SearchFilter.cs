@@ -12,6 +12,10 @@ namespace NuGetGallery
 
         public bool IncludePrerelease { get; set; }
 
+        public bool ByIdOnly { get; set; }
+
+        public bool ExactIdOnly { get; set; }
+
         public SortProperty SortProperty { get; set; }
 
         public SortDirection SortDirection { get; set; }
@@ -51,6 +55,7 @@ namespace NuGetGallery
         DownloadCount,
         DisplayName,
         Recent,
+        Version
     }
 
     public enum SortDirection

@@ -332,7 +332,8 @@ namespace NuGetGallery
                     return new SortField("DownloadCount", SortField.INT, reverse: true);
                 case SortProperty.Recent:
                     return new SortField("PublishedDate", SortField.LONG, reverse: true);
-            }
+                case SortProperty.Version:
+                    return new SortField("Version", SortField.LONG, reverse: true);
             }
 
             return SortField.FIELD_SCORE;
