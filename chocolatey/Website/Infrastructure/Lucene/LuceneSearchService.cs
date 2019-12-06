@@ -237,10 +237,6 @@ namespace NuGetGallery
             var disjunctionQuery = new BooleanQuery();
             disjunctionQuery.Boost = 0.1f;
 
-            // Suffix wildcard search e.g. jquer*
-            var wildCardQuery = new BooleanQuery();
-            wildCardQuery.Boost = 0.5f;
-
             // Escape the entire term we use for exact searches.
             var escapedSearchTerm = Escape(searchFilter.SearchTerm).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
 
@@ -265,7 +261,12 @@ namespace NuGetGallery
             var wildCardTitleQuery = new WildcardQuery(new Term("Title-Exact", "*" + escapedSearchTerm + "*"));
             wildCardTitleQuery.Boost = 2.5f;
 
-            foreach (var term in GetSearchTerms(searchFilter.SearchTerm))
+            // Suffix wildcard search e.g. jquer*
+            var wildCardQuery = new BooleanQuery();
+            wildCardQuery.Boost = 0.5f;
+
+            var terms = GetSearchTerms(searchFilter.SearchTerm).ToList();
+            foreach (var term in terms)
             {
                 var localTerm = term.to_lower_invariant();
                 onlySearchById = localTerm.StartsWith("id\\:");
