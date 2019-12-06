@@ -19,7 +19,8 @@ namespace NuGetGallery
         private static readonly string[] Fields = new[] { "Id", "Title", "Tags", "Description", "Authors", "Owners" };
         private Lucene.Net.Store.Directory _directory;
 
-        public LuceneSearchService() : this(containsAllVersions: false)
+        public LuceneSearchService()
+            : this(containsAllVersions: false)
         {
         }
 
@@ -75,9 +76,9 @@ namespace NuGetGallery
 
             if (searchFilter.IncludeAllVersions)
             {
-                filter = new QueryWrapperFilter(new TermQuery(new Term("Listed", Boolean.TrueString)));
+                filter = new QueryWrapperFilter(new TermQuery(new Term("InIndex", Boolean.TrueString)));
             }
-            
+
             var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));
 
             if (results.TotalHits == 0 || searchFilter.CountOnly)
@@ -126,7 +127,7 @@ namespace NuGetGallery
             if (!string.IsNullOrEmpty(doc.Get("DownloadCacheDate"))) downloadCacheDate = DateTime.Parse(doc.Get("DownloadCacheDate"), CultureInfo.InvariantCulture);
             DateTime? packageScanResultDate = null;
             if (!string.IsNullOrEmpty(doc.Get("PackageScanResultDate"))) packageScanResultDate = DateTime.Parse(doc.Get("PackageScanResultDate"), CultureInfo.InvariantCulture);
-    
+
             var owners = doc.Get("FlattenedOwners")
                             .split_safe(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                             .Select(o => new User { Username = o })
@@ -195,7 +196,7 @@ namespace NuGetGallery
                 PackageCleanupResultDate = packageCleanupResultDate,
                 ReviewedDate = reviewedDate,
                 ApprovedDate = approvedDate,
-                ReviewedBy = new User { Username = doc.Get("PackageReviewer") }, 
+                ReviewedBy = new User { Username = doc.Get("PackageReviewer") },
                 DownloadCacheStatusForDatabase = doc.Get("DownloadCacheStatus"),
                 DownloadCacheDate = downloadCacheDate,
                 DownloadCache = doc.Get("DownloadCache"),
@@ -236,17 +237,8 @@ namespace NuGetGallery
             var disjunctionQuery = new BooleanQuery();
             disjunctionQuery.Boost = 0.1f;
 
-            // Suffix wildcard search e.g. jquer*
-            var wildCardQuery = new BooleanQuery();
-            wildCardQuery.Boost = 0.5f;
-
             // Escape the entire term we use for exact searches.
             var escapedSearchTerm = Escape(searchFilter.SearchTerm).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
-
-            bool searchLimiter = false;
-            bool onlySearchById = false;
-            bool onlySearchByAuthor = false;
-            bool onlySearchByTag = false;
 
             var exactIdQuery = new TermQuery(new Term("Id-Exact", escapedSearchTerm));
             exactIdQuery.Boost = 7.0f;
@@ -256,7 +248,7 @@ namespace NuGetGallery
             startsIdQuery.Boost = 6.0f;
             var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + escapedSearchTerm + "*"));
             wildCardIdQuery.Boost = 3.0f;
-            
+
             var exactTitleQuery = new TermQuery(new Term("Title-Exact", escapedSearchTerm));
             exactTitleQuery.Boost = 6.5f;
             var startsTitleQuery = new WildcardQuery(new Term("Title-Exact", escapedSearchTerm + "*"));
@@ -264,15 +256,20 @@ namespace NuGetGallery
             var wildCardTitleQuery = new WildcardQuery(new Term("Title-Exact", "*" + escapedSearchTerm + "*"));
             wildCardTitleQuery.Boost = 2.5f;
 
-            foreach (var term in GetSearchTerms(searchFilter.SearchTerm))
+            // Suffix wildcard search e.g. jquer*
+            var wildCardQuery = new BooleanQuery();
+            wildCardQuery.Boost = 0.5f;
+
+            var terms = GetSearchTerms(searchFilter.SearchTerm).ToList();
+            bool onlySearchById = searchFilter.ByIdOnly || searchFilter.ExactIdOnly || terms.AnySafe(t => t.StartsWith("id\\:"));
+            bool onlySearchByExactId = searchFilter.ExactIdOnly;
+            bool onlySearchByAuthor = terms.AnySafe(t => t.StartsWith("author\\:"));
+            bool onlySearchByTag = terms.AnySafe(t => t.StartsWith("tag\\:"));
+            bool searchLimiter = onlySearchById || onlySearchByAuthor || onlySearchByTag;
+
+            foreach (var term in terms)
             {
-                var localTerm = term.to_lower_invariant();
-                onlySearchById = localTerm.StartsWith("id\\:");
-                onlySearchByAuthor = localTerm.StartsWith("author\\:");
-                onlySearchByTag = localTerm.StartsWith("tag\\:");
-                if (onlySearchById || onlySearchByAuthor || onlySearchByTag) searchLimiter = true; 
-                
-                localTerm = term.Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
+                var localTerm = Escape(term).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
                 var termQuery = queryParser.Parse(localTerm);
                 conjuctionQuery.Add(termQuery, Occur.MUST);
                 disjunctionQuery.Add(termQuery, Occur.SHOULD);
@@ -288,18 +285,23 @@ namespace NuGetGallery
                     wildCardQuery.Add(wildCardTermQuery, Occur.MUST);
                 }
             }
-            
+
             // Create an OR of all the queries that we have
             var combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, exactTitleQuery, startsIdQuery, startsTitleQuery, wildCardIdQuery, wildCardTitleQuery, conjuctionQuery, wildCardQuery });
 
-            if (onlySearchById)
+            if (onlySearchByExactId)
+            {
+                combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery });
+            }
+            else if (onlySearchById)
             {
                 combinedQuery = conjuctionQuery.Combine(new Query[] { exactIdQuery, relatedIdQuery, startsIdQuery, wildCardIdQuery, wildCardQuery });
-            } else if (onlySearchByAuthor || onlySearchByTag)
+            }
+            else if (onlySearchByAuthor || onlySearchByTag)
             {
                 combinedQuery = conjuctionQuery.Combine(new Query[] { wildCardQuery });
             }
-            
+
             //if (searchFilter.SortProperty == SortProperty.Relevance)
             //{
             //    // If searching by relevance, boost scores by download count.
@@ -323,32 +325,15 @@ namespace NuGetGallery
             switch (searchFilter.SortProperty)
             {
                 case SortProperty.Relevance:
-                  return SortField.FIELD_SCORE;
+                    return SortField.FIELD_SCORE;
                 case SortProperty.DisplayName:
                     return new SortField("DisplayName", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
                 case SortProperty.DownloadCount:
                     return new SortField("DownloadCount", SortField.INT, reverse: true);
                 case SortProperty.Recent:
                     return new SortField("PublishedDate", SortField.LONG, reverse: true);
-            }
-            switch (searchFilter.SortModeration)
-            {
-                case SortModeration.SubmittedStatus:
-                    return new SortField("SubmittedStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.PendingStatus:
-                    return new SortField("PendingStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.WaitingStatus:
-                    return new SortField("WaitingStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.RespondedStatus:
-                    return new SortField("RespondedStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.ReadyStatus:
-                    return new SortField("ReadyStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.UpdatedStatus:
-                    return new SortField("UpdatedStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.UnknownStatus:
-                    return new SortField("UnknownStatus", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
-                case SortModeration.AllStatuses:
-                    return new SortField("AllStatuses", SortField.STRING, reverse: searchFilter.SortDirection == SortDirection.Descending);
+                case SortProperty.Version:
+                    return new SortField("Version", SortField.LONG, reverse: true);
             }
 
             return SortField.FIELD_SCORE;

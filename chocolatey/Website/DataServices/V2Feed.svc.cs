@@ -35,8 +35,8 @@ namespace NuGetGallery
     public class V2Feed : FeedServiceBase<V2FeedPackage>
     {
         private const int FeedVersion = 2;
-
         private const int DEFAULT_CACHE_TIME_SECONDS_V2FEED = 60;
+        private readonly string _rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
 
         public V2Feed()
         {
@@ -149,15 +149,38 @@ namespace NuGetGallery
         [WebGet]
         public IQueryable<V2FeedPackage> FindPackagesById(string id)
         {
-            var rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
+            if (searchService.ContainsAllVersions)
+            {
+                // this is likely to come back with SearchFilter.Empty();
+                var searchFilter = GetSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, id, includePrerelease: true);
+                searchFilter.IsValid = true;
+                searchFilter.SearchTerm = id;
+                searchFilter.IncludePrerelease = true;
+                searchFilter.IncludeAllVersions = true;
+                // Find packages by Id specific items
+                searchFilter.ExactIdOnly = true;
+                searchFilter.SortProperty = SortProperty.Version;
+                searchFilter.SortDirection = SortDirection.Descending;
+               
+                // rejected packages are already filtered out of this
+                return NugetGallery.Cache.Get(
+                    string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
+                    DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
+                    () => GetResultsFromSearchService(searchFilter)
+                            .ToV2FeedPackageQuery(GetSiteRoot())
+                            .ToList()
+                ).AsQueryable();
+            }
 
             return NugetGallery.Cache.Get(
                 string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
                 DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
-                () => PackageRepo.GetAll().Include(p => p.PackageRegistration)
-                                 .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && (p.StatusForDatabase != rejectedStatus || p.StatusForDatabase == null))
-                                 .ToV2FeedPackageQuery(GetSiteRoot())
-                                 .ToList()).AsQueryable();
+                () => PackageRepo.GetAll()
+                        .Include(p => p.PackageRegistration)
+                        .Where(p => p.PackageRegistration.Id.Equals(id) && (p.StatusForDatabase != _rejectedStatus || p.StatusForDatabase == null))
+                        .ToV2FeedPackageQuery(GetSiteRoot())
+                        .ToList()
+            ).AsQueryable();
         }
 
         [WebGet]

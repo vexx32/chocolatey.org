@@ -12,6 +12,10 @@ namespace NuGetGallery
 
         public bool IncludePrerelease { get; set; }
 
+        public bool ByIdOnly { get; set; }
+
+        public bool ExactIdOnly { get; set; }
+
         public SortProperty SortProperty { get; set; }
 
         public SortDirection SortDirection { get; set; }
@@ -29,11 +33,11 @@ namespace NuGetGallery
         public bool IsValid { get; set; }
         public SearchFilterInvalidReason FilterInvalidReason { get; set; }
 
-        public static SearchFilter Empty()
+        public static SearchFilter Empty(bool isValid = false)
         {
             return new SearchFilter
             {
-                IsValid = false,
+                IsValid = isValid,
                 FilterInvalidReason = SearchFilterInvalidReason.Unknown,
             };
         }
@@ -51,6 +55,7 @@ namespace NuGetGallery
         DownloadCount,
         DisplayName,
         Recent,
+        Version
     }
 
     public enum SortDirection

@@ -224,7 +224,7 @@ namespace NuGetGallery
             return packages.Search(searchTerm);
         }
        
-         private IQueryable<Package> GetResultsFromSearchService(SearchFilter searchFilter)
+         internal IQueryable<Package> GetResultsFromSearchService(SearchFilter searchFilter)
          {
              var result = SearchService.Search(searchFilter);
  

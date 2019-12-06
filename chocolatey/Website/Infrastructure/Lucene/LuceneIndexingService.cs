@@ -35,15 +35,16 @@ namespace NuGetGallery
 {
     public class LuceneIndexingService : IIndexingService
     {
+        private const int LUCENE_CACHE_REBUILD_HOURS = 24;
+        private const int LUCENE_UPDATE_JOB_FREQUENCY_MINUTES = 10;
+        private const int LUCENE_UPDATE_JOB_TIMEOUT_MINUTES = 8;
+        private readonly string _rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
+        private readonly Func<EntitiesContext> _contextThunk;
         private static readonly object IndexWriterLock = new object();
-
-        private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(3);
-
+        private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(LUCENE_CACHE_REBUILD_HOURS);
         private static readonly ConcurrentDictionary<Directory, IndexWriter> WriterCache = new ConcurrentDictionary<Directory, IndexWriter>();
-
         private readonly Directory _directory;
         private IndexWriter _indexWriter;
-        private readonly IEntityRepository<Package> _packageRepository;
         private readonly bool _indexContainsAllVersions;
         private readonly Func<bool> _getShouldAutoUpdate;
 
@@ -51,9 +52,14 @@ namespace NuGetGallery
 
         public bool IsLocal { get { return true; } }
 
-        public LuceneIndexingService(IEntityRepository<Package> packageSource, bool indexContainsAllVersions)
+        public LuceneIndexingService(Func<EntitiesContext> contextThunk, bool indexContainsAllVersions)
         {
-            _packageRepository = packageSource;
+            if (contextThunk == null)
+            {
+                throw new ArgumentNullException("contextThunk");
+            }
+            _contextThunk = contextThunk;
+
             _indexContainsAllVersions = indexContainsAllVersions;
             _directory = new LuceneFileSystem(LuceneCommon.IndexDirectory);
             _getShouldAutoUpdate = () => true;
@@ -69,6 +75,7 @@ namespace NuGetGallery
 
         public void UpdateIndex(bool forceRefresh)
         {
+            // TODO could we rebuild the lucene cache somewhere and then remove the current and replace it with the updated one
             // Always do it if we're asked to "force" a refresh (i.e. manually triggered)
             // Otherwise, no-op unless we're supporting background search indexing.
             if (forceRefresh || _getShouldAutoUpdate())
@@ -101,6 +108,14 @@ namespace NuGetGallery
 
         public void UpdatePackage(Package package)
         {
+            if (_indexContainsAllVersions)
+            {
+                //just update everything since the last write time
+                UpdateIndex(forceRefresh: false);
+                return;
+            }
+
+            // when we only store the latest, we can run the rest of this
             if (_getShouldAutoUpdate())
             {
                 var packageRegistrationKey = package.PackageRegistrationKey;
@@ -109,12 +124,16 @@ namespace NuGetGallery
                 if (!package.IsLatest || !package.IsLatestStable)
                 {
                     // Someone passed us in a version which was e.g. just unlisted? Or just not the latest version which is what we want to index. Doesn't really matter. We'll find one to index.
-                    package = _packageRepository.GetAll()
-                                                .Where(p => (p.IsLatest || p.IsLatestStable) && p.PackageRegistrationKey == packageRegistrationKey)
-                                                .Include(p => p.PackageRegistration)
-                                                .Include(p => p.PackageRegistration.Owners)
-                                                .Include(p => p.SupportedFrameworks)
-                                                .FirstOrDefault();
+                    using (var context = _contextThunk())
+                    {
+                        var packageRepo = new EntityRepository<Package>(context);
+                        package = packageRepo.GetAll()
+                                    .Where(p => (p.IsLatest || p.IsLatestStable) && p.PackageRegistrationKey == packageRegistrationKey)
+                                    .Include(p => p.PackageRegistration)
+                                    .Include(p => p.PackageRegistration.Owners)
+                                    .Include(p => p.SupportedFrameworks)
+                                    .FirstOrDefault();
+                    }
                 }
 
                 // Just update the provided package
@@ -134,37 +153,45 @@ namespace NuGetGallery
 
         private List<PackageIndexEntity> GetPackages(DateTime? lastIndexTime)
         {
-            IQueryable<Package> set = _packageRepository.GetAll();
-
-            if (lastIndexTime.HasValue)
+            using (var context = _contextThunk())
             {
-                // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
-                // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
-                // update independent of the package.
-                set = set.Where(
-                    p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
-                         p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
-            }
-            else if (!_indexContainsAllVersions)
-            {
-                set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
-            }
+                var packageRepo = new EntityRepository<Package>(context);
 
-            set = set.Where(p => p.Listed);
+                IQueryable<Package> set = packageRepo.GetAll();
 
-            var list = set
-                .Include(p => p.PackageRegistration)
-                .Include(p => p.PackageRegistration.Owners)
-                .Include(p => p.SupportedFrameworks)
-                .ToList();
-
-            var packagesForIndexing = list.Select(
-                p => new PackageIndexEntity
+                if (lastIndexTime.HasValue)
                 {
-                    Package = p
-                });
+                    // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
+                    // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
+                    // update independent of the package.
+                    set = set.Where(
+                        p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
+                             p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
+                }
+                else if (!_indexContainsAllVersions)
+                {
+                    set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
+                }
+                else
+                {
+                    // get everything including unlisted
+                    set = set.Where(p => p.StatusForDatabase != _rejectedStatus  || p.StatusForDatabase == null);
+                }
 
-            return packagesForIndexing.ToList();
+                var list = set
+                    .Include(p => p.PackageRegistration)
+                    .Include(p => p.PackageRegistration.Owners)
+                    .Include(p => p.SupportedFrameworks)
+                    .ToList();
+
+                var packagesForIndexing = list.Select(
+                    p => new PackageIndexEntity
+                    {
+                        Package = p
+                    });
+
+                return packagesForIndexing.ToList();
+            }
         }
 
         public void AddPackages(IList<PackageIndexEntity> packages, bool creatingIndex)
@@ -321,8 +348,8 @@ namespace NuGetGallery
             {
                 jobs.Add(
                     new LuceneIndexingJob(
-                        frequence: TimeSpan.FromMinutes(6),
-                        timeout: TimeSpan.FromMinutes(5),
+                        frequence: TimeSpan.FromMinutes(LUCENE_UPDATE_JOB_FREQUENCY_MINUTES),
+                        timeout: TimeSpan.FromMinutes(LUCENE_UPDATE_JOB_TIMEOUT_MINUTES),
                         indexingService: this));
             }
         }

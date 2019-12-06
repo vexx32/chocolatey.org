@@ -50,7 +50,7 @@ namespace NuGetGallery
             //id fields
             document.Add(new Field("Id-Original", Package.PackageRegistration.Id, Field.Store.YES, Field.Index.NO));
 
-            var field = new Field("Id-Exact", Package.PackageRegistration.Id.ToLowerInvariant(), Field.Store.NO, Field.Index.NOT_ANALYZED);
+            var field = new Field("Id-Exact", Package.PackageRegistration.Id.ToLowerInvariant(), Field.Store.YES, Field.Index.NOT_ANALYZED);
             field.Boost = 4.5f;
             document.Add(field);
             
@@ -74,7 +74,7 @@ namespace NuGetGallery
             field.Boost = 0.25f;
             document.Add(field);
 
-            document.Add(new Field("Version", Package.Version.to_string(), Field.Store.YES, Field.Index.NO));
+            document.Add(new Field("Version", Package.Version.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             // title fields
             // If an element does not have a Title, fall back to Id, same as the website.
@@ -82,7 +82,7 @@ namespace NuGetGallery
                                    ? Package.PackageRegistration.Id
                                    : Package.Title;
 
-            field = new Field("Title-Exact", workingTitle.ToLowerInvariant(), Field.Store.NO, Field.Index.NOT_ANALYZED);
+            field = new Field("Title-Exact", workingTitle.ToLowerInvariant(), Field.Store.YES, Field.Index.NOT_ANALYZED);
             field.Boost = 4.0f;
             document.Add(field);
 
@@ -129,6 +129,7 @@ namespace NuGetGallery
             document.Add(new Field("IsLatestStable", Package.IsLatestStable.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             document.Add(new Field("IsPrerelease", Package.IsPrerelease.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             document.Add(new Field("Listed", Package.Listed.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            document.Add(new Field("InIndex", "True", Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             document.Add(new Field("Language", Package.Language.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("LastUpdated", Package.LastUpdated.ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
@@ -183,8 +184,7 @@ namespace NuGetGallery
             if (Package.SupportedFrameworks.AnySafe())
             {
                 string joinedFrameworks = string.Join(";", Package.SupportedFrameworks.Select(f => f.FrameworkName));
-                document.Add(new Field("JoinedSupportedFrameworks", joinedFrameworks, Field.Store.YES,
-                                       Field.Index.NO));
+                document.Add(new Field("JoinedSupportedFrameworks", joinedFrameworks, Field.Store.YES, Field.Index.NO));
             }
 
             string displayName = String.IsNullOrEmpty(Package.Title) ? Package.PackageRegistration.Id : Package.Title;
