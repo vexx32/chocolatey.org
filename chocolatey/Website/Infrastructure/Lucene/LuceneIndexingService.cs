@@ -41,10 +41,8 @@ namespace NuGetGallery
         private readonly string _rejectedStatus = PackageStatusType.Rejected.GetDescriptionOrValue();
         private readonly Func<EntitiesContext> _contextThunk;
         private static readonly object IndexWriterLock = new object();
-
         private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(LUCENE_CACHE_REBUILD_HOURS);
         private static readonly ConcurrentDictionary<Directory, IndexWriter> WriterCache = new ConcurrentDictionary<Directory, IndexWriter>();
-
         private readonly Directory _directory;
         private IndexWriter _indexWriter;
         private readonly bool _indexContainsAllVersions;
@@ -77,6 +75,7 @@ namespace NuGetGallery
 
         public void UpdateIndex(bool forceRefresh)
         {
+            // TODO could we rebuild the lucene cache somewhere and then remove the current and replace it with the updated one
             // Always do it if we're asked to "force" a refresh (i.e. manually triggered)
             // Otherwise, no-op unless we're supporting background search indexing.
             if (forceRefresh || _getShouldAutoUpdate())
