@@ -29,11 +29,11 @@ namespace NuGetGallery
         public bool IsValid { get; set; }
         public SearchFilterInvalidReason FilterInvalidReason { get; set; }
 
-        public static SearchFilter Empty()
+        public static SearchFilter Empty(bool isValid = false)
         {
             return new SearchFilter
             {
-                IsValid = false,
+                IsValid = isValid,
                 FilterInvalidReason = SearchFilterInvalidReason.Unknown,
             };
         }
