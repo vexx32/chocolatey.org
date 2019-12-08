@@ -58,6 +58,12 @@ namespace NuGetGallery
             DateTime timestamp = File.GetLastWriteTimeUtc(LuceneCommon.IndexMetadataPath);
 
             int numRecords = searchFilter.Skip + searchFilter.Take;
+            
+            // we want all results the first time through
+            if (searchFilter.TakeAllResults)
+            {
+                numRecords = Int32.MaxValue;
+            }
 
             var searcher = new IndexSearcher(_directory, readOnly: true);
             var query = ParseQuery(searchFilter);

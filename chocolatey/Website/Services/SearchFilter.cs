@@ -15,6 +15,8 @@ namespace NuGetGallery
         public bool ByIdOnly { get; set; }
 
         public bool ExactIdOnly { get; set; }
+       
+        public bool TakeAllResults { get; set; }
 
         public SortProperty SortProperty { get; set; }
 
