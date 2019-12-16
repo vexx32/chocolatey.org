@@ -88,7 +88,7 @@ namespace NuGetGallery
                     _indexWriter.DeleteAll();
                     _indexWriter.Commit();
 
-                    // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the latest \ latest successful packages
+                    // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the packages
                     lastWriteTime = null;
 
                     // Set the index create time to now. This would tell us when we last rebuilt the index.
