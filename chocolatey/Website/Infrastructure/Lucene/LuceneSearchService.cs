@@ -232,7 +232,8 @@ namespace NuGetGallery
             }
 
             var fields = new[] { "Id", "Title", "Tags", "Description", "Author" };
-            var analyzer = new StandardAnalyzer(LuceneCommon.LuceneVersion);
+            //var analyzer = new StandardAnalyzer(LuceneCommon.LuceneVersion);
+            var analyzer = new PerFieldAnalyzer();
             var queryParser = new MultiFieldQueryParser(LuceneCommon.LuceneVersion, fields, analyzer);
 
             // All terms in the multi-term query appear in at least one of the fields.
