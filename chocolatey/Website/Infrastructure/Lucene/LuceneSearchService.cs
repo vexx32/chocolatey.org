@@ -246,14 +246,16 @@ namespace NuGetGallery
 
             // Escape the entire term we use for exact searches.
             var escapedSearchTerm = Escape(searchFilter.SearchTerm).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
-
-            var exactIdQuery = new TermQuery(new Term("Id-Exact", escapedSearchTerm));
+            
+            // Do not escape id when used against Id-Exact. The results will return incorrectly
+            var idExactSearchTerm = searchFilter.SearchTerm.Replace("id:", string.Empty).Replace("author:", string.Empty).Replace("tag:", string.Empty);
+            var exactIdQuery = new TermQuery(new Term("Id-Exact", idExactSearchTerm));
             exactIdQuery.Boost = 7.0f;
-            var relatedIdQuery = new WildcardQuery(new Term("Id-Exact", escapedSearchTerm + ".*"));
+            var relatedIdQuery = new WildcardQuery(new Term("Id-Exact", idExactSearchTerm + ".*"));
             relatedIdQuery.Boost = 6.5f;
-            var startsIdQuery = new WildcardQuery(new Term("Id-Exact", escapedSearchTerm + "*"));
+            var startsIdQuery = new WildcardQuery(new Term("Id-Exact", idExactSearchTerm + "*"));
             startsIdQuery.Boost = 6.0f;
-            var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + escapedSearchTerm + "*"));
+            var wildCardIdQuery = new WildcardQuery(new Term("Id-Exact", "*" + idExactSearchTerm + "*"));
             wildCardIdQuery.Boost = 3.0f;
 
             var exactTitleQuery = new TermQuery(new Term("Title-Exact", escapedSearchTerm));
