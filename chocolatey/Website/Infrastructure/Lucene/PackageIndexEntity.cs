@@ -74,7 +74,7 @@ namespace NuGetGallery
             field.Boost = 0.25f;
             document.Add(field);
 
-            document.Add(new Field("Version", Package.Version.to_string(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            document.Add(new Field("Version", Package.Version.to_string().ToLowerInvariant(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             // title fields
             // If an element does not have a Title, fall back to Id, same as the website.
