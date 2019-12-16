@@ -267,6 +267,7 @@ namespace NuGetGallery
             var wildCardQuery = new BooleanQuery();
             wildCardQuery.Boost = 0.5f;
 
+            // GetSearchTerms() escapes the search terms, so do not escape again
             var terms = GetSearchTerms(searchFilter.SearchTerm).ToList();
             bool onlySearchById = searchFilter.ByIdOnly || searchFilter.ExactIdOnly || terms.AnySafe(t => t.StartsWith("id\\:"));
             bool onlySearchByExactId = searchFilter.ExactIdOnly;
@@ -276,7 +277,7 @@ namespace NuGetGallery
 
             foreach (var term in terms)
             {
-                var localTerm = Escape(term).Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
+                var localTerm = term.Replace("id\\:", string.Empty).Replace("author\\:", string.Empty).Replace("tag\\:", string.Empty);
                 var termQuery = queryParser.Parse(localTerm);
                 conjuctionQuery.Add(termQuery, Occur.MUST);
                 disjunctionQuery.Add(termQuery, Occur.SHOULD);
