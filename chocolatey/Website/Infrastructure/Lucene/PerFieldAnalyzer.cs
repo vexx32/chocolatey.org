@@ -36,6 +36,7 @@ namespace NuGetGallery
             return new Dictionary<string, Analyzer>(StringComparer.OrdinalIgnoreCase)
             {
                 { "Id", new StandardAnalyzer(LuceneCommon.LuceneVersion, new HashSet<string>()) },
+                { "Id-Exact", new IdExactAnalyzer() },
                 { "Title", new TitleAnalyzer() },
                 { "Description", new DescriptionAnalyzer() },
                 { "Tags", new DescriptionAnalyzer() },
@@ -57,6 +58,21 @@ namespace NuGetGallery
                 TokenStream result = whitespaceAnalyzer.TokenStream(fieldName, new StringReader(partiallyTokenized));
                 result = new LowerCaseFilter(result);
                 return result;
+            }
+        }   
+        
+        //  similar to a StandardAnalyzer except this allows hyphens (-)
+        //  note the base tokenization is now just whitespace in this case
+
+        private class IdExactAnalyzer : Analyzer
+        {
+            private static readonly WhitespaceAnalyzer whitespaceAnalyzer = new WhitespaceAnalyzer();
+
+            public override TokenStream TokenStream(string fieldName, TextReader reader)
+            {
+                var tokenizer = new WhitespaceTokenizer(reader);
+
+                return new LowerCaseFilter(tokenizer);
             }
         }
 
