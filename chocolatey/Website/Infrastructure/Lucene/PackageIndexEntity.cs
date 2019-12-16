@@ -207,19 +207,6 @@ namespace NuGetGallery
             return tokenized.Any() ? string.Join(" ", tokenized) : "";
         }
 
-        internal static IEnumerable<string> TokenizeId(string term)
-        {
-            // First tokenize the result by id-separators. For e.g. tokenize SignalR.EventStream as SignalR and EventStream
-            var tokens = term.Split(IdSeparators, StringSplitOptions.RemoveEmptyEntries);
-
-            // For each token, further attempt to tokenize camelcase values. e.g. .EventStream -> Event, Stream. 
-            var result = tokens.Concat(new[] { term })
-                               .Concat(tokens.SelectMany(CamelCaseTokenize))
-                               .Distinct(StringComparer.OrdinalIgnoreCase)
-                               .ToList();
-            return result;
-        }
-
         private static IEnumerable<string> CamelCaseTokenize(string term)
         {
             const int minTokenLength = 3;
