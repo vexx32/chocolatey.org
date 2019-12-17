@@ -153,29 +153,29 @@ namespace NuGetGallery
                             .Include(p => p.PackageRegistration)
                             .Where(p => p.PackageRegistration.Id.Equals(id) && (p.StatusForDatabase != _rejectedStatus || p.StatusForDatabase == null));
 
-            if (searchService.ContainsAllVersions)
-            {
-                return NugetGallery.Cache.Get(
-                    string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
-                    DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
-                    () =>
-                    {
-                        var searchFilter = GetSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, id, includePrerelease: true);
-                        // Find packages by Id specific items
-                        searchFilter.ExactIdOnly = true;
-                        searchFilter.TakeAllResults = true;
-                        searchFilter.SortProperty = SortProperty.Version;
-                        searchFilter.SortDirection = SortDirection.Descending;
+            //if (searchService.ContainsAllVersions)
+            //{
+            //    return NugetGallery.Cache.Get(
+            //        string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
+            //        DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
+            //        () =>
+            //        {
+            //            var searchFilter = GetSearchFilter(searchService.ContainsAllVersions, HttpContext.Request.RawUrl, id, includePrerelease: true);
+            //            // Find packages by Id specific items
+            //            searchFilter.ExactIdOnly = true;
+            //            searchFilter.TakeAllResults = true;
+            //            searchFilter.SortProperty = SortProperty.Version;
+            //            searchFilter.SortDirection = SortDirection.Descending;
 
-                        return SearchCore(packages, id, string.Empty, includePrerelease: true, searchFilter: searchFilter, useCache: true)
-                            .ToV2FeedPackageQuery(GetSiteRoot())
-                            .ToList();
-                    }).AsQueryable();
-            }
+            //            return SearchCore(packages, id, string.Empty, includePrerelease: true, searchFilter: searchFilter, useCache: true)
+            //                .ToV2FeedPackageQuery(GetSiteRoot())
+            //                .ToList();
+            //        }).AsQueryable();
+            //}
 
             return NugetGallery.Cache.Get(
                 string.Format("V2Feed-FindPackagesById-{0}", id.to_lower()),
-                DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED),
+                DateTime.UtcNow.AddSeconds(DEFAULT_CACHE_TIME_SECONDS_V2FEED * 3),
                 () => packages
                         .ToV2FeedPackageQuery(GetSiteRoot())
                         .ToList()
