@@ -32,6 +32,7 @@ using NuGet;
 using NuGetGallery.MvcOverrides;
 using NugetGallery;
 using NuGetGallery.Infrastructure;
+using System.Text.RegularExpressions;
 
 namespace NuGetGallery
 {
@@ -168,6 +169,8 @@ namespace NuGetGallery
 
             var scanResults = packageSvc.GetPackageScanResults(id, package.Version);
             package.Files = packageSvc.GetPackageFiles(package).ToList();
+            package.Description = FindAndCorrectInvalidMarkdownHeaders(package.Description);
+            package.ReleaseNotes = FindAndCorrectInvalidMarkdownHeaders(package.ReleaseNotes);
             var model = new DisplayPackageViewModel(package, scanResults);
             return View("~/Views/Packages/DisplayPackage.cshtml", model);
         }
@@ -184,6 +187,8 @@ namespace NuGetGallery
 
             var scanResults = packageSvc.GetPackageScanResults(id, version, useCache:false);
             package.Files = packageSvc.GetPackageFiles(package, useCache: false).ToList();
+            package.Description = FindAndCorrectInvalidMarkdownHeaders(package.Description);
+            package.ReleaseNotes = FindAndCorrectInvalidMarkdownHeaders(package.ReleaseNotes);
             var model = new DisplayPackageViewModel(package, scanResults);
 
             if (currentUser.IsBanned)
@@ -1116,6 +1121,19 @@ namespace NuGetGallery
             if (urlPath.StartsWith("/")) return urlPath.Substring(1);
 
             return urlPath;
+        }
+
+        private string FindAndCorrectInvalidMarkdownHeaders(string markdownText)
+        {
+            var headerHashPattern = @"^(#+)([^\s#].*)$";
+
+            if (markdownText == null) return null;
+
+            return Regex.Replace(
+                markdownText,
+                headerHashPattern,
+                (match => match.Groups[1].Value + " " + match.Groups[2].Value),
+                RegexOptions.Multiline);
         }
     }
 }
