@@ -25,6 +25,14 @@
     }
 }
 
+.testimonial-3.card .card-body > div {
+    height: 100px;
+
+    img {
+        max-height: 85px;
+    }
+}
+
 #testimonial-text .col-lg-4, .rating > input {
     display: none;
 }
