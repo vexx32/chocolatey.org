@@ -55,23 +55,23 @@
                     <td><span class="badge badge-pill badge-success">Ready</span></td>
                     break;
                 case PackageSubmittedStatusType.Updated:
-                    <td>
-                        <span class="badge badge-pill badge-orange">Updated</span>
-                        @ViewHelpers.OwnersGravatarListPackages(Model.Package.Owners, 20, Url)   
+                    <td class="d-flex align-items-center border-top-0">
+                        <span class="badge badge-pill badge-orange mr-1">Updated</span>
+                        @ViewHelpers.OwnersGravatarListPackages(Model.Package.Owners, 24, Url)   
                     </td>
                     break;
                 case PackageSubmittedStatusType.Responded:
-                    <td>
-                    <span class="badge badge-pill badge-purple">Responded</span>
-                        @ViewHelpers.OwnersGravatarListPackages(Model.Package.Owners, 20, Url)
+                    <td class="d-flex align-items-center border-top-0">
+                    <span class="badge badge-pill badge-purple mr-1">Responded</span>
+                        @ViewHelpers.OwnersGravatarListPackages(Model.Package.Owners, 24, Url)
                     </td>
                     break;
                 default:
-                    <td>
-                        <span class="badge badge-pill badge-danger">Waiting for Maintainer</span>
+                    <td class="d-flex align-items-center border-top-0">
+                        <span class="badge badge-pill badge-danger mr-1">Waiting for Maintainer</span>
                         @if (!string.IsNullOrWhiteSpace(Model.Package.ReviewerEmailAddress))
                         {
-                            <a href="@Url.Action(MVC.Users.Profiles(Model.Package.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.Package.ReviewerEmailAddress, Model.Package.ReviewerUserName, 20)</a>
+                            <a href="@Url.Action(MVC.Users.Profiles(Model.Package.ReviewerUserName))">@ViewHelpers.GravatarImage(Model.Package.ReviewerEmailAddress, Model.Package.ReviewerUserName, 24)</a>
                         }
                     </td>
                     break;
