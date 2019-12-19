@@ -39,6 +39,8 @@ namespace NuGetGallery
             int submittedCount,
             int waitingCount,
             int respondedCount,
+            int pendingAutoReviewCount,
+            int unknownCount,
             string moderationStatus)
         {
             // TODO: Implement actual sorting
@@ -82,6 +84,8 @@ namespace NuGetGallery
             ModerationSubmittedPackageCount = submittedCount;
             ModerationWaitingPackageCount = waitingCount;
             ModerationRespondedPackageCount = respondedCount;
+            ModerationPendingAutoReviewPackageCount = pendingAutoReviewCount;
+            ModerationUnknownPackageCount = unknownCount;
         }
 
         public int FirstResultIndex { get; set; }
@@ -114,5 +118,7 @@ namespace NuGetGallery
         public int ModerationSubmittedPackageCount { get; private set; }
         public int ModerationWaitingPackageCount { get; private set; }
         public int ModerationRespondedPackageCount { get; private set; }
+        public int ModerationPendingAutoReviewPackageCount { get; private set; }
+        public int ModerationUnknownPackageCount { get; private set; }
     }
 }
