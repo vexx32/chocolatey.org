@@ -1,11 +1,11 @@
 ﻿@using NuGetGallery;
 
 @{
+    Layout = "~/Views/Shared/NewsletterLayout.cshtml";
     ViewBag.Title = "Chocolatey - The package manager for Windows";
     ViewBag.Tab = "Home";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Scripts");
-    Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/home");
 
     // Set to True to show callout. False to hide callout if not relevent.
@@ -146,7 +146,7 @@
                                                     </div>
                                                     <div class="modal-body p-0">
                                                         <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/R9OClPwBpdk" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                            <iframe class="embed-responsive-item" data-src="https://www.youtube.com/embed/R9OClPwBpdk?autoplay=1" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -20,41 +20,13 @@
         @Html.Partial("~/Views/Shared/_AlertTop.cshtml")
     </header>
     <main class="my-auto">
-        @if (TempData.ContainsKey("Message") || TempData.ContainsKey("ErrorMessage"))
-        {
-            <div class="modal fade" id="tempdata-message" tabindex="-1" role="dialog" aria-labelledby="tempdata-message" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-0">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body text-center">
-                            @if (TempData.ContainsKey("Message"))
-                            {
-                                <i class="fas fa-check-circle display-1 text-success" alt="Saved Successfully"></i>
-                                <h3>@TempData["Message"]</h3>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times-circle display-1 text-danger" alt="Not Saved"></i>
-                                <h3>@TempData["ErrorMessage"]</h3>
-                            }
-                        </div>
-                        <div class="modal-footer border-top-0">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+        @Html.Partial("~/Views/Shared/_Modals.cshtml")
         <section id="account" class="container py-3 py-md-5">
             <div class="row">
                 <div class="col-sm-9 col-lg-6 m-auto">
                     <div class="card">
                         <div class="card-header text-center bg-primary">
-                            <img class="logo" alt="Chocolatey Software" src="@Url.Content("~/content/images/just-type-logo.svg")" />
+                            <a href="@Url.RouteUrl(RouteName.Home)"><img class="logo" alt="Chocolatey Software" src="@Url.Content("~/content/images/just-type-logo.svg")" /></a>
                         </div>
                         <div class="card-body">
                             @RenderBody()
@@ -64,7 +36,7 @@
             </div>
         </section>
     </main>
-    <footer class="bg-medium">
+    <footer>
         @Html.Partial("~/Views/Shared/_CopyrightNavigation.cshtml")
     </footer>
     @RenderPage("_CookiePolicy.cshtml")
@@ -73,11 +45,4 @@
     @Bundles.RenderScripts()
 
     @RenderSection("BottomScripts", required: false)
-
-    <script language="javascript" type="text/javascript">
-        CookiesNotice.modal("chocolatey_hide_cookies_notice");
-        if (!getCookie('chocolatey_hide_cookies_notice')) {
-            $(".cookies-popup").css('display', 'block');
-        }
-    </script>
 </body>

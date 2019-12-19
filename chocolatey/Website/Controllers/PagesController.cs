@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System;
+using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
@@ -169,11 +170,18 @@ namespace NuGetGallery
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/ContactTrial.cshtml", contactForm);
 
-            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            var hasError = false;
+            if (contactForm.Email.EndsWith("qq.com"))
             {
                 ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
-                return View("~/Views/Pages/ContactTrial.cshtml", contactForm);
+                hasError = true;
             }
+            if (!contactForm.Machines.Any(char.IsDigit))
+            {
+                ModelState.AddModelError(string.Empty, "The \"Number of Machines\" field must contain a number.");
+                hasError = true;
+            }
+            if (hasError) return View("~/Views/Pages/ContactTrial.cshtml", contactForm);
 
             var from = new MailAddress(contactForm.Email);
 
@@ -355,11 +363,18 @@ Company: {4}
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/ContactSales.cshtml", contactForm);
 
-            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            var hasError = false;
+            if (contactForm.Email.EndsWith("qq.com"))
             {
                 ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
-                return View("~/Views/Pages/ContactSales.cshtml", contactForm);
+                hasError = true;
             }
+            if (!contactForm.Machines.Any(char.IsDigit))
+            {
+                ModelState.AddModelError(string.Empty, "The \"Number of Machines\" field must contain a number.");
+                hasError = true;
+            }
+            if (hasError) return View("~/Views/Pages/ContactSales.cshtml", contactForm);
 
             var from = new MailAddress(contactForm.Email);
 
@@ -408,11 +423,18 @@ Machines: {5}
         {
             if (!ModelState.IsValid) return View("~/Views/Pages/ContactSalesOther.cshtml", contactForm);
 
-            if (!string.IsNullOrWhiteSpace(contactForm.Email) && contactForm.Email.EndsWith("qq.com"))
+            var hasError = false;
+            if (contactForm.Email.EndsWith("qq.com"))
             {
                 ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
-                return View("~/Views/Pages/ContactSalesOther.cshtml", contactForm);
+                hasError = true;
             }
+            if (!contactForm.Machines.Any(char.IsDigit))
+            {
+                ModelState.AddModelError(string.Empty, "The \"Number of Machines\" field must contain a number.");
+                hasError = true;
+            }
+            if (hasError) return View("~/Views/Pages/ContactSalesOther.cshtml", contactForm);
 
             var from = new MailAddress(contactForm.Email);
 

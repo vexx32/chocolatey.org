@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<ResourceViewModel>
 @{
+    Layout = "~/Views/Shared/NewsletterLayout.cshtml";
     ViewBag.Title = "Resources";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Scripts");
-    Bundles.Reference("Scripts/CookiesNotice");
 }
 
 <div id="header" class="bg-medium-dark">

@@ -1,6 +1,7 @@
 ﻿@model PackageListViewModel
 @using NuGetGallery
 @{
+    Layout = "~/Views/Shared/NewsletterLayout.cshtml";
     ViewBag.Title = string.IsNullOrWhiteSpace(Model.SearchTerm) ? "Packages" : "Packages matching " + Model.SearchTerm;
     ViewBag.Tab = "Packages";
     var moderationQueue = !string.IsNullOrWhiteSpace(Model.ModeratorQueue) && Model.ModeratorQueue.Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
@@ -11,7 +12,6 @@
     Bundles.Reference("Content/packages.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/package-list");
-    Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 
     var currentUrl = Request.Url.AbsoluteUri;

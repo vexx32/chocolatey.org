@@ -2,6 +2,7 @@
 @using NuGetGallery
 @model DisplayPackageViewModel
 @{
+    Layout = "~/Views/Shared/NewsletterLayout.cshtml";
     ViewBag.Title = Model.Title + " " + Model.Version;
     ViewBag.Tab = "Packages";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
@@ -12,7 +13,6 @@
     Bundles.Reference("Scripts/packages");
     Bundles.Reference("Scripts/prism");
     Bundles.Reference("Scripts/easymde");
-    Bundles.Reference("Scripts/CookiesNotice");
     Bundles.Reference("Scripts/closeable");
 
     var MarkdownPipeline = new MarkdownPipelineBuilder()
@@ -1001,12 +1001,13 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         }
                     }
                     <div class="collapse @if (Model.Status != PackageStatusType.Approved) {<text>show</text>} " id="add-comment">
+                        <hr />
+                        <a class="h3 d-hash-none @if(Request.Cookies["chocolatey_hide_comment_instructions"] == null){<text>collapse show</text>}else{<text>collapsed</text>}" data-toggle="collapse" href="#instructions" role="button" aria-expanded="true" aria-controls="instructions" title="Instructions for @if(moderationRole){<text>Review</text>}else{<text>Comments</text>}">Instructions for @if(moderationRole){<text>Review</text>}else{<text>Comments</text>}</a>
+                        <div class="ml-0 collapse @if(Request.Cookies["chocolatey_hide_comment_instructions"] == null){<text>show</text>}" id="instructions">
                         @if (moderationRole)
                         {
-                            <hr />
-                            <h3 class="mt-3">Instructions for Review:</h3>
                             <ul>
-                                <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer--moderator-process">moderation</a>.
+                                <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">moderation</a>.
                                 <li>**Please do not reject a package until the end of the conversation.**</li>
                                 <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
                                 @if (Model.Status == PackageStatusType.Approved || Model.Status == PackageStatusType.Exempted)
@@ -1028,8 +1029,6 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         }
                         else
                         {
-                            <hr />
-                            <h3 class="mt-3">Instructions for Comments:</h3>
                             <ul>
                                 <li>You can respond to review comments here.</li>
                                 <li>Keep in mind this is publicly visible, so do not share any sensitive data or anything you wouldn't want to share with the world.</li>
@@ -1039,9 +1038,10 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                 }
                             </ul>
                         }
+                        </div>
                         @using (Html.BeginForm())
                         {
-                            <fieldset class="form">
+                            <fieldset class="form mt-3">
                                 <div class="form-field d-label-none">
                                     @Html.LabelFor(m => m.NewReviewComments)
                                     @Html.TextAreaFor(m => m.NewReviewComments, new {@class = "text-editor"})
@@ -1328,18 +1328,54 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                     @if (Model.ScanResults.AnySafe())
                     {
                         <hr />
-                        <ul class="list-unstyled">
+                        if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            <ul class="list-unstyled list-inline">
+                                <li class="list-inline-item">Legend:</li>
+                                <li class="list-inline-item virus-scan virus-scan-light">
+                                    <span>1-5</span>
+                                </li>
+                                <li class="list-inline-item virus-scan virus-scan-medium">
+                                    <span>6-10</span>
+                                </li>
+                                <li class="list-inline-item virus-scan virus-scan-dark">
+                                    <span>10+</span>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="font-weight-bold"><a href="@Url.LogOn()">Log in</a> or click on link to see number of positives.</p>
+                        }
+                        <ul class="list-unstyled list-virus-scan">
                             @foreach (var fileScan in Model.ScanResults.OrEmptyListIfNull())
                             {
-                                <li>
+                                var fileScanHighlight = string.Empty;
+                                if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                                {
+                                    if (fileScan.Positives > 0 && fileScan.Positives < 6)
+                                    {
+                                        fileScanHighlight = "virus-scan-light";
+                                    }
+                                    else if (fileScan.Positives > 5 && fileScan.Positives < 11)
+                                    {
+                                        fileScanHighlight = "virus-scan-medium";
+                                    }
+                                    else if (fileScan.Positives > 5 && fileScan.Positives < 11)
+                                    {
+                                        fileScanHighlight = "virus-scan-dark";
+                                    }
+                                }
+
+                                <li class="@fileScanHighlight">
                                     <a title="full sha256: @fileScan.Sha256Checksum" href="@fileScan.ScanDetailsUrl">@fileScan.FileName (@fileScan.Sha256Checksum.Substring(0, 12))</a>
                                     @if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
                                     {
-                                        <text>-</text> @fileScan.Positives<text>/</text>@fileScan.TotalScans
+                                        <text>-</text><span><span>@fileScan.Positives</span>/@fileScan.TotalScans</span>
                                     }
                                     else
                                     {
-                                        <text>- ## / </text> @fileScan.TotalScans <text> - Log in or click on link to see number of positives</text>
+                                        <text>- ## / </text> @fileScan.TotalScans
                                     }
                                 </li>
                             }

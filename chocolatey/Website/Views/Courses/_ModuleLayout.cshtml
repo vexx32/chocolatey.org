@@ -8,7 +8,6 @@
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/prism");
     Bundles.Reference("Scripts/courses");
-    Bundles.Reference("Scripts/CookiesNotice");
     var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
 }
@@ -94,7 +93,10 @@
             </div>
         </section>
     </main>
-    @Html.Partial("~/Views/Shared/_BottomNavigation.cshtml")
+    <footer>
+        @Html.Partial("~/Views/Shared/_NewsletterNavigation.cshtml")
+        @Html.Partial("~/Views/Shared/_BottomNavigation.cshtml")
+    </footer>
     @RenderPage("~/Views/Shared/_CookiePolicy.cshtml")
 
     @Bundles.RenderStylesheets("bottom")
@@ -110,11 +112,4 @@
     </script>
 
     <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
-
-    <script language="javascript" type="text/javascript">
-        CookiesNotice.modal("chocolatey_hide_cookies_notice");
-        if (!getCookie('chocolatey_hide_cookies_notice')) {
-            $(".cookies-popup").css('display', 'block');
-        }
-    </script>
 </body>

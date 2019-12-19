@@ -1405,7 +1405,6 @@
     <Content Include="Scripts\bundle.txt" />
     <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\closeable\index.js" />
-    <Content Include="Scripts\CookiesNotice\Index.js" />
     <Content Include="Scripts\courses\courses.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\documentation\documentation.js" />
@@ -1480,7 +1479,7 @@
     <Content Include="Views\Blog\ChocolateyFestComingSoon.md" />
     <Content Include="Views\Blog\StephanieBurrowsJoinsChocolatey.md" />
     <Content Include="Views\Blog\ChocolateyFestReturns2020.md" />
-    <Content Include="Views\Shared\PackagesLayout.cshtml" />
+    <Content Include="Views\Shared\MainLayout.cshtml" />
     <Content Include="Views\Shared\MinimalLayout.cshtml" />
     <Content Include="Views\Packages\_UploadSteps.cshtml" />
     <Content Include="Views\Shared\_AlertTop.cshtml" />
@@ -1743,6 +1742,9 @@
     <Content Include="Views\Documentation\Files\Uninstallation.md" />
     <Content Include="Views\Documentation\Files\Videos.md" />
     <Content Include="Views\Documentation\Files\Why.md" />
+    <Content Include="Views\Shared\NewsletterLayout.cshtml" />
+    <Content Include="Views\Shared\_NewsletterNavigation.cshtml" />
+    <Content Include="Views\Shared\_Modals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
