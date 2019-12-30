@@ -399,7 +399,13 @@ namespace NuGetGallery
                 // If we are searching for something, sort by relevance.
                 sortOrder = q.IsEmpty() ? Constants.PopularitySortOrder : Constants.RelevanceSortOrder;
             }
-            
+
+            if (String.IsNullOrEmpty(moderationStatus))
+            {
+                // If no moderation status is specified, default to All Statuses
+                moderationStatus = Constants.AllModerationStatuses;
+            }
+
             int totalHits = 0;
             int updatedPackagesCount = 0;
             int respondedPackagesCount = 0;
