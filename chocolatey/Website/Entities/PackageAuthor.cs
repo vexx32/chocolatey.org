@@ -17,6 +17,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.ComponentModel.DataAnnotations;
+
 namespace NuGetGallery
 {
     public class PackageAuthor : IEntity
@@ -26,9 +28,7 @@ namespace NuGetGallery
         public Package Package { get; set; }
         public int PackageKey { get; set; }
 
-        /// <remarks>
-        /// Has a max length of 4000. Is not indexed and not used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [StringLength(1000)]
         public string Name { get; set; }
     }
 }

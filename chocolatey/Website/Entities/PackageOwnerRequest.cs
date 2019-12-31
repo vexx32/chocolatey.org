@@ -18,6 +18,7 @@
 // limitations under the License.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NuGetGallery
 {
@@ -29,6 +30,7 @@ namespace NuGetGallery
         public User NewOwner { get; set; }
         public User RequestingOwner { get; set; }
         public int RequestingOwnerKey { get; set; }
+        [StringLength(256)]
         public string ConfirmationCode { get; set; }
         public DateTime RequestDate { get; set; }
     }

@@ -30,6 +30,7 @@ namespace NuGetGallery
         public string Url { get; set; }
         [StringLength(400)]
         public string Image { get; set; }
+        [StringLength(64)]
         public string Username { get; set; }
     }
 }

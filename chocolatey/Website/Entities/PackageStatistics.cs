@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 
 namespace NuGetGallery
@@ -33,7 +34,11 @@ namespace NuGetGallery
         public Package Package { get; set; }
         public int PackageKey { get; set; }
 
+        // do not convert this yet
+        //[StringLength(100)]
         public string IPAddress { get; set; }
+        // do not convert this yet
+        //[StringLength(2000)]
         public string UserAgent { get; set; }
     }
 }

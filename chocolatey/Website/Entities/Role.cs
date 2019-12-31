@@ -18,11 +18,14 @@
 // limitations under the License.
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace NuGetGallery
 {
     public class Role
     {
         public int Key { get; set; }
+        [StringLength(50)]
         public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }

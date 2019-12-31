@@ -48,9 +48,7 @@ namespace NuGetGallery
 
         public int TotalScans { get; set; }
 
-        /// <remarks>
-        ///   Has a max length of 4000. Is not indexed but *IS* used for searches. Db column is nvarchar(max).
-        /// </remarks>
+        [StringLength(2500)]
         public string ScanData { get; set; }
 
         public DateTime? ScanDate { get; set; }
