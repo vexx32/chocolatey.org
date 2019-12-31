@@ -58,7 +58,7 @@ namespace NuGetGallery
             this.courseAchievementsService = courseAchievementsService;
         }
         
-        [Authorize, RequireHttpsAppHarbor]
+        [Authorize, RequireHttpsAppHarbor, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Account()
         {
             var user = GetService<IUserByUsernameQuery>().Execute(Identity.Name);
@@ -74,7 +74,7 @@ namespace NuGetGallery
                 });
         }
 
-        [Authorize, RequireHttpsAppHarbor]
+        [Authorize, RequireHttpsAppHarbor, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Edit()
         {
             var user = userService.FindByUsername(currentUser.Identity.Name);
@@ -106,7 +106,7 @@ namespace NuGetGallery
             return View("~/Views/Users/Edit.cshtml", model);
         }
 
-        [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Edit(EditProfileViewModel profile)
         {
             if (ModelState.IsValid)
@@ -189,7 +189,7 @@ namespace NuGetGallery
             }
         }
 
-        [Authorize, RequireHttpsAppHarbor]
+        [Authorize, RequireHttpsAppHarbor, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Packages()
         {
             var user = userService.FindByUsername(currentUser.Identity.Name);
@@ -211,7 +211,7 @@ namespace NuGetGallery
             return View("~/Views/Users/Packages.cshtml", model);
         }
 
-        [Authorize, ValidateAntiForgeryToken, HttpPost]
+        [Authorize, ValidateAntiForgeryToken, HttpPost, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult GenerateApiKey()
         {
             userService.GenerateApiKey(currentUser.Identity.Name);
@@ -223,7 +223,7 @@ namespace NuGetGallery
             return View("~/Views/Users/ForgotPassword.cshtml");
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -249,7 +249,7 @@ namespace NuGetGallery
             return View("~/Views/Users/ResendConfirmation.cshtml");
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ResendConfirmation(ResendConfirmationEmailViewModel model)
         {
             if (ModelState.IsValid)
@@ -281,7 +281,7 @@ namespace NuGetGallery
             return View("~/Views/Users/ResetPassword.cshtml");
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ResetPassword(string username, string token, PasswordResetViewModel model)
         {
             ViewBag.ResetTokenValid = userService.ResetPasswordWithToken(username, token, model.NewPassword);
@@ -341,13 +341,13 @@ namespace NuGetGallery
             return View("~/Views/Users/Profiles.cshtml", model);
         }
 
-        [Authorize, RequireHttpsAppHarbor]
+        [Authorize, RequireHttpsAppHarbor, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ChangePassword()
         {
             return View("~/Views/Users/ChangePassword.cshtml");
         }
 
-        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, Authorize]
+        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ChangePassword(PasswordChangeViewModel model)
         {
             if (ModelState.IsValid) if (!userService.ChangePassword(currentUser.Identity.Name, model.OldPassword, model.NewPassword)) ModelState.AddModelError("OldPassword", Strings.CurrentPasswordIncorrect);

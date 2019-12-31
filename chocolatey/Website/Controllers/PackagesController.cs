@@ -69,7 +69,7 @@ namespace NuGetGallery
             this.searchSvc = searchService;
         }
 
-        [Authorize]
+        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult UploadPackage()
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
@@ -87,7 +87,7 @@ namespace NuGetGallery
             return View("~/Views/Packages/UploadPackage.cshtml");
         }
 
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult UploadPackage(HttpPostedFileBase uploadFile)
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
@@ -835,7 +835,7 @@ namespace NuGetGallery
             return false;
         }
 
-        [Authorize]
+        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ManagePackageOwners(string id, string version)
         {
             var package = packageSvc.FindPackageByIdAndVersion(id, version);
@@ -848,13 +848,13 @@ namespace NuGetGallery
             return View("~/Views/Packages/ManagePackageOwners.cshtml", model);
         }
 
-        [Authorize]
+        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Delete(string id, string version)
         {
             return GetPackageOwnerActionFormResult(id, version);
         }
 
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Delete(string id, string version, bool? listed)
         {
             return Delete(id, version, listed, Url.Package);
@@ -872,19 +872,19 @@ namespace NuGetGallery
             return Redirect(urlFactory(package));
         }
 
-        [Authorize]
+        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Edit(string id, string version)
         {
             return GetPackageOwnerActionFormResult(id, version);
         }
 
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult Edit(string id, string version, bool? listed)
         {
             return Edit(id, version, listed, Url.Package);
         }
 
-        [Authorize]
+        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult ConfirmOwner(string id, string username, string token)
         {
             if (String.IsNullOrEmpty(token)) return HttpNotFound();
@@ -939,7 +939,7 @@ namespace NuGetGallery
             return HttpNotFound();
         }
 
-        [Authorize]
+        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult VerifyPackage()
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
@@ -979,7 +979,7 @@ namespace NuGetGallery
                 });
         }
 
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult VerifyPackage(bool? listed)
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
@@ -1012,7 +1012,7 @@ namespace NuGetGallery
                 });
         }
 
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult CancelUpload()
         {
             var currentUser = userSvc.FindByUsername(GetIdentity().Name);
