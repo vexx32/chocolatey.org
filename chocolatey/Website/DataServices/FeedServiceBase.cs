@@ -214,14 +214,14 @@ namespace NuGetGallery
                     () =>
                     {
                         Trace.WriteLine("Database search results hit for API (caching results) Search term: '{0}' (prerelease? {1}).".format_with(searchTerm, includePrerelease));
-                        return packages.Search(searchTerm).ToList();
+                        return packages.Search(searchTerm, lowerCaseExpression: false).ToList();
 
                     }).AsQueryable();
             }
 
             Trace.WriteLine("Database search results hit for API (not caching results) Search term: '{0}' (prerelease? {1}).".format_with(searchTerm, includePrerelease));
 
-            return packages.Search(searchTerm);
+            return packages.Search(searchTerm, lowerCaseExpression: false);
         }
        
          internal IQueryable<Package> GetResultsFromSearchService(SearchFilter searchFilter)

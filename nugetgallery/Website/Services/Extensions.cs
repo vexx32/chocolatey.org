@@ -8,28 +8,49 @@ namespace NuGetGallery
     public static class Extensions
     {
         // Search criteria
-        private static Func<string, Expression<Func<Package, bool>>> idCriteria = term =>
+        private static readonly Func<string, Expression<Func<Package, bool>>> idCriteria = term =>
             p => p.PackageRegistration.Id.Contains(term);
 
-        private static Func<string, Expression<Func<Package, bool>>> descriptionCriteria = term =>
+        private static readonly Func<string, Expression<Func<Package, bool>>> descriptionCriteria = term =>
             p => p.Description.Contains(term);
 
-        private static Func<string, Expression<Func<Package, bool>>> summaryCriteria = term =>
+        private static readonly Func<string, Expression<Func<Package, bool>>> summaryCriteria = term =>
             p => p.Summary != null && p.Summary.Contains(term);
 
-        private static Func<string, Expression<Func<Package, bool>>> tagCriteria = term =>
+        private static readonly Func<string, Expression<Func<Package, bool>>> tagCriteria = term =>
             p => p.Tags != null && p.Tags.Contains(term);
 
-        private static Func<string, Expression<Func<Package, bool>>> authorCriteria = term =>
+        private static readonly Func<string, Expression<Func<Package, bool>>> authorCriteria = term =>
             p => p.Authors.Any(a => a.Name.Contains(term));
 
-        private static Func<string, Expression<Func<Package, bool>>>[] searchCriteria = new[] { 
+        private static readonly Func<string, Expression<Func<Package, bool>>>[] searchCriteria = new[] { 
                 idCriteria, 
                 descriptionCriteria,
                 summaryCriteria
         };
 
-        public static IQueryable<Package> Search(this IQueryable<Package> source, string searchTerm)
+        private static readonly Func<string, Expression<Func<Package, bool>>> idLowerCriteria = term =>
+            p => p.PackageRegistration.Id.ToLower().Contains(term);
+
+        private static readonly Func<string, Expression<Func<Package, bool>>> descriptionLowerCriteria = term =>
+            p => p.Description.ToLower().Contains(term);
+
+        private static readonly Func<string, Expression<Func<Package, bool>>> summaryLowerCriteria = term =>
+            p => p.Summary != null && p.Summary.ToLower().Contains(term);
+
+        private static readonly Func<string, Expression<Func<Package, bool>>> tagLowerCriteria = term =>
+            p => p.Tags != null && p.Tags.ToLower().Contains(term);
+
+        private static readonly Func<string, Expression<Func<Package, bool>>> authorLowerCriteria = term =>
+            p => p.Authors.Any(a => a.Name.ToLower().Contains(term));
+
+        private static readonly Func<string, Expression<Func<Package, bool>>>[] searchLowerCriteria = new[] { 
+                idLowerCriteria, 
+                descriptionLowerCriteria,
+                summaryLowerCriteria
+        };
+
+        public static IQueryable<Package> Search(this IQueryable<Package> source, string searchTerm, bool lowerCaseExpression = true)
         {
             if (String.IsNullOrWhiteSpace(searchTerm))
             {
@@ -39,26 +60,43 @@ namespace NuGetGallery
             // Split the search terms by spaces
             var terms = (searchTerm ?? String.Empty).Split();
 
+            var idSearch = searchTerm.to_lower().Contains("id:");
+            var authorSearch = searchTerm.to_lower().Contains("author:");
+            var tagSearch = searchTerm.to_lower().Contains("tag:");
+
             // Build a list of expressions for each term
             var expressions = new List<LambdaExpression>();
             foreach (var term in terms)
             {
-                var localSearchTerm = term.to_string();
+                // doesn't matter if this is lowercased or not
+                var localSearchTerm = term.to_lower().Replace("id:", string.Empty).Replace("author:", string.Empty).Replace("tag:", string.Empty);
 
-                if (localSearchTerm.StartsWith("id:"))
+                if (idSearch)
                 {
-                    expressions.Add(idCriteria(localSearchTerm.Replace("id:", string.Empty)));
+                    expressions.Add(lowerCaseExpression ?
+                        idLowerCriteria(localSearchTerm)
+                        : idCriteria(localSearchTerm)
+                    );
                 }
-                if (localSearchTerm.StartsWith("author:"))
+                else if (authorSearch)
                 {
-                    expressions.Add(authorCriteria(localSearchTerm.Replace("author:", string.Empty)));
+                    expressions.Add(lowerCaseExpression ?
+                        authorLowerCriteria(localSearchTerm)
+                        : authorCriteria(localSearchTerm)
+                    );
                 }
-                else if (localSearchTerm.StartsWith("tag:"))
+                else if (tagSearch)
                 {
-                    expressions.Add(tagCriteria(localSearchTerm.Replace("tag:", string.Empty)));
-                } else
+                    expressions.Add(lowerCaseExpression ?
+                        tagLowerCriteria(localSearchTerm)
+                        : tagCriteria(localSearchTerm)
+                    );
+                }
+                else
                 {
-                    foreach (var criteria in searchCriteria)
+                    var criteriaList = lowerCaseExpression ? searchLowerCriteria : searchCriteria;
+
+                    foreach (var criteria in criteriaList)
                     {
                         expressions.Add(criteria(localSearchTerm));
                     }
