@@ -96,6 +96,7 @@ namespace NuGetGallery
             // TODO: validate input
 
             return userRepo.GetAll()
+                .Include(u => u.Roles)
                 .Where(u => u.EmailAddress == emailAddress)
                 .SingleOrDefault();
         }
