@@ -166,6 +166,8 @@ namespace NuGetGallery
                 return GetResultsFromSearchService(searchFilter);
             }
 
+            Trace.WriteLine("Search filter was invalid ('{0}') Raw Url: '{1}' .".format_with(searchFilter.FilterInvalidReason, HttpContext.Request.RawUrl));
+
             if (!includePrerelease)
             {
                 packages = packages.Where(p => !p.IsPrerelease);
