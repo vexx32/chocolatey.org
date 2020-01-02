@@ -117,6 +117,12 @@ namespace NuGetGallery
 
         public bool IndexContainsAllVersions { get { return ReadAppSettings("IndexContainsAllVersions", (value) => bool.Parse(value ?? bool.TrueString)); } }
 
+        public bool UseBackgroundJobsDatabaseUser { get { return ReadAppSettings("UseBackgroundJobsDatabaseUser", (value) => bool.Parse(value ?? bool.TrueString)); } }
+
+        public string BackgroundJobsDatabaseUserId { get { return ReadAppSettings("BackgroundJobsDatabaseUserId", (value) => value ?? string.Empty); } }
+
+        public string BackgroundJobsDatabaseUserPassword { get { return ReadAppSettings("BackgroundJobsDatabaseUserPassword", (value) => value ?? string.Empty); } }
+
         protected virtual string GetConfiguredSiteRoot()
         {
             return ReadAppSettings("SiteRoot");

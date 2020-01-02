@@ -54,5 +54,9 @@ namespace NuGetGallery
         string ScanResultsKey { get; }
         bool IndexContainsAllVersions { get; }
 
+        bool UseBackgroundJobsDatabaseUser { get; }
+        string BackgroundJobsDatabaseUserId { get; }
+        string BackgroundJobsDatabaseUserPassword { get; }
+
     }
 }
