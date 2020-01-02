@@ -7,7 +7,7 @@ namespace NuGetGallery
     public class RegisterRequest : ISpamValidationModel
     {
         [Required]
-        [StringLength(255)]
+        [StringLength(150)]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[.\S]+\@[.\S]+\.[.\S]+", ErrorMessage = "This doesn't appear to be a valid email address.")]
@@ -31,6 +31,7 @@ namespace NuGetGallery
         [Required]
         [Compare("Password")]
         [DataType(DataType.Password)]
+        [StringLength(64, MinimumLength = 7)]
         [Display(Name = "Password Confirmation")]
         [Hint("Please reenter your password and ensure that it matches the one above.")]
         public string ConfirmPassword { get; set; }

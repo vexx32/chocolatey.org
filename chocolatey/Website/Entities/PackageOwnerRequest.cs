@@ -1,4 +1,5 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2017 - 2019 Chocolatey Software
+// Copyright 2011 - 2017RealDimensions Software, LLC, the original 
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
 // and the authors/contributors of NuGetGallery 
@@ -18,27 +19,19 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Serialization;
 
 namespace NuGetGallery
 {
-    // IMPORTANT:   Removed the TimeStamp column from this class because 
-    //              it's completely tracked by the database layer. Don't
-    //              add it back! :) It will be created by the migration.
-    [Serializable]
-    public class PackageStatistics : IEntity
+    public class PackageOwnerRequest : IEntity
     {
         public int Key { get; set; }
-
-        [XmlIgnore]
-        public Package Package { get; set; }
-        public int PackageKey { get; set; }
-
-        // do not convert this yet
-        //[StringLength(100)]
-        public string IPAddress { get; set; }
-        // do not convert this yet
-        //[StringLength(2000)]
-        public string UserAgent { get; set; }
+        public int PackageRegistrationKey { get; set; }
+        public int NewOwnerKey { get; set; }
+        public User NewOwner { get; set; }
+        public User RequestingOwner { get; set; }
+        public int RequestingOwnerKey { get; set; }
+        [StringLength(256)]
+        public string ConfirmationCode { get; set; }
+        public DateTime RequestDate { get; set; }
     }
 }

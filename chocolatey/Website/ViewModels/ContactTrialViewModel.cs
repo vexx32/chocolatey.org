@@ -32,7 +32,7 @@ namespace NuGetGallery
         public string Message { get; set; }
 
         [Required(ErrorMessage = "Please enter your email address.")]
-        [StringLength(4000)]
+        [StringLength(150)]
         [DataType(DataType.EmailAddress)]
         [Hint("Provide your email address so we can follow up with you.")]
         [RegularExpression(@"[.\S]+\@[.\S]+\.[.\S]+", ErrorMessage = "This doesn't appear to be a valid email address.")]

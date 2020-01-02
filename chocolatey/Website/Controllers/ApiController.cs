@@ -69,8 +69,7 @@ namespace NuGetGallery
 
             packageSvc.AddDownloadStatistics(package, ipAddress, Request.UserAgent);
 
-            if (!string.IsNullOrWhiteSpace(package.ExternalPackageUrl)) return Redirect(package.ExternalPackageUrl);
-            else return packageFileSvc.CreateDownloadPackageActionResult(package);
+            return packageFileSvc.CreateDownloadPackageActionResult(package);
         }
 
         [ActionName("GetNuGetExeApi"), HttpGet, OutputCache(VaryByParam = "none", Location = OutputCacheLocation.ServerAndClient, Duration = 600)]

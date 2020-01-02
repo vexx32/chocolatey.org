@@ -17,12 +17,15 @@
 // limitations under the License.
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NuGetGallery
 {
     public class UserProfileModel
     {
+        [StringLength(64)]
         public string Username { get; set; }
+        [StringLength(150)]
         public string EmailAddress { get; set; }
         public ICollection<PackageViewModel> Packages { get; set; }
         public ICollection<PackageViewModel> PackagesModerationQueue { get; set; }

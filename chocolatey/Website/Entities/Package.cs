@@ -51,8 +51,9 @@ namespace NuGetGallery
         public virtual ICollection<PackageDependency> Dependencies { get; set; }
 
         /// <remarks>
-        ///   Has a max length of 4000. Is not indexed but *IS* used for searches. Db column is nvarchar(max).
+        ///   Has a max length of 4000. Is not indexed but *IS* used for searches.
         /// </remarks>
+        [StringLength(4000)]
         public string Description { get; set; }
 
         /// <remarks>
@@ -60,11 +61,6 @@ namespace NuGetGallery
         /// </remarks>
         public string ReleaseNotes { get; set; }
         public int DownloadCount { get; set; }
-
-        /// <remarks>
-        ///   Is not a property that we support. Maintained for legacy reasons.
-        /// </remarks>
-        public string ExternalPackageUrl { get; set; }
 
         [StringLength(10)]
         public string HashAlgorithm { get; set; }

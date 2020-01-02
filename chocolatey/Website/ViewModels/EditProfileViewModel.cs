@@ -23,7 +23,7 @@ namespace NuGetGallery
     public class EditProfileViewModel
     {
         [Required]
-        [StringLength(255)]
+        [StringLength(150)]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[.\S]+\@[.\S]+\.[.\S]+", ErrorMessage = "This doesn't appear to be a valid email address.")]

@@ -18,13 +18,13 @@ namespace NuGetGallery
                             using (var command = database.Connection.CreateCommand())
                             {
                                 command.CommandText = @"SELECT
-	  SUM(Case When [IsLatest] = 1 Then 1 Else 0 End) AS UniquePackages
-	, SUM(CASE WHEN Listed = 1 THEN 1 ELSE 0 END) AS TotalPackages
+    SUM(Case When [IsLatest] = 1 Then 1 Else 0 End) AS UniquePackages
+  , SUM(CASE WHEN Listed = 1 THEN 1 ELSE 0 END) AS TotalPackages
   , SUM(DownloadCount) AS DownloadCount
-	, SUM(Case When [Status] = 'Submitted' And SubmittedStatus <> 'Waiting' Then 1 Else 0 End) AS PackagesReadyForReview
-	, SUM(Case When [Status] = 'Submitted' Then 1 Else 0 End) AS AllPackagesUnderModeration
-	, (Select AVG(DATEDIFF(HOUR, Created, ApprovedDate)) From dbo.Packages With (NOLOCK) Where [Status] = 'Approved' And ReviewedById is Not Null And Created >= DATEADD(DAY, -30, GETUTCDATE())) AS AverageModerationWaitTime
-	, SUM(Case When IsLatest = 1 And Created >= DATEADD(MONTH, -4, GETUTCDATE()) Then 1 Else 0 End) AS UpToDatePackages
+  , SUM(Case When [Status] = 'Submitted' And SubmittedStatus <> 'Waiting' Then 1 Else 0 End) AS PackagesReadyForReview
+  , SUM(Case When [Status] = 'Submitted' Then 1 Else 0 End) AS AllPackagesUnderModeration
+  , (Select AVG(DATEDIFF(HOUR, Created, ApprovedDate)) From dbo.Packages With (NOLOCK) Where [Status] = 'Approved' And ReviewedById is Not Null And Created >= DATEADD(DAY, -30, GETUTCDATE())) AS AverageModerationWaitTime
+  , SUM(Case When IsLatest = 1 And Created >= DATEADD(MONTH, -4, GETUTCDATE()) Then 1 Else 0 End) AS UpToDatePackages
   , SUM(Case When IsLatest = 1 And Created < DATEADD(YEAR, -1, GETUTCDATE()) Then 1 Else 0 End) AS OlderThanOneYearPackages
   , SUM(Case When [Status] = 'Approved' And [IsLatestStable] = 1 Then 1 Else 0 End) AS ApprovedPackages
   , SUM(Case When [Status] = 'Approved' Then 1 Else 0 End) AS TotalApprovedPackages
@@ -60,8 +60,8 @@ namespace NuGetGallery
   , SUM(Case When PackageScanStatus = 'Exempted' Then 1 Else 0 End) AS TotalPackagesScannedExempted
   , SUM(Case When [IsLatestStable] = 1 And PackageScanStatus = 'Investigate' Then 1 Else 0 End) AS PackagesScannedInvestigate
   , SUM(Case When PackageScanStatus = 'Investigate' Then 1 Else 0 End) AS TotalPackagesScannedInvestigate
-	, (Select COUNT(ScanOverlaps) From (select count([ScanResultKey]) as ScanOverlaps from [dbo].[PackageScanResults] with (nolock) group by ScanResultKey having count(ScanResultKey) > 1) overlaps) AS TotalFileScanOverlaps
-	, (Select COUNT([Key]) From [dbo].[ScanResults] With (NOLOCK)) AS TotalFileScans
+  , (Select COUNT(ScanOverlaps) From (select count([ScanResultKey]) as ScanOverlaps from [dbo].[PackageScanResults] with (nolock) group by ScanResultKey having count(ScanResultKey) > 1) overlaps) AS TotalFileScanOverlaps
+  , (Select COUNT([Key]) From [dbo].[ScanResults] With (NOLOCK)) AS TotalFileScans
 FROM dbo.Packages
 ";
 

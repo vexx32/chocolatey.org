@@ -647,12 +647,6 @@
     <Compile Include="..\..\nugetgallery\Website\ViewModels\ResendConfirmationEmailViewModel.cs">
       <Link>ViewModels\ResendConfirmationEmailViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageOwnerRequest.cs">
-      <Link>Entities\PackageOwnerRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\Role.cs">
-      <Link>Entities\Role.cs</Link>
-    </Compile>
     <Compile Include="..\..\nugetgallery\Website\Infrastructure\CookieTempDataProvider.cs">
       <Link>Infrastructure\CookieTempDataProvider.cs</Link>
     </Compile>
@@ -678,6 +672,9 @@
     <Compile Include="Entities\CourseModule.cs" />
     <Compile Include="Entities\CourseModuleNameType.cs" />
     <Compile Include="Entities\CourseNameType.cs" />
+    <Compile Include="Entities\PackageAuthor.cs" />
+    <Compile Include="Entities\PackageOwnerRequest.cs" />
+    <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\UserCourseAchievement.cs" />
     <Compile Include="Entities\UserCourseModuleAchievement.cs" />
     <Compile Include="Entities\User.cs" />
@@ -723,6 +720,10 @@
     <Compile Include="Migrations\201912010439468_PackageStatusIndex.cs" />
     <Compile Include="Migrations\201912010439468_PackageStatusIndex.Designer.cs">
       <DependentUpon>201912010439468_PackageStatusIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912302335265_AdjustVarCharMaxColumnsPartTwo.cs" />
+    <Compile Include="Migrations\201912302335265_AdjustVarCharMaxColumnsPartTwo.Designer.cs">
+      <DependentUpon>201912302335265_AdjustVarCharMaxColumnsPartTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="RequestModels\RegisterRequest.cs" />
     <Compile Include="RequestModels\SignInRequest.cs" />
@@ -898,9 +899,6 @@
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\Entities\EmailMessage.cs">
       <Link>Entities\EmailMessage.cs</Link>
-    </Compile>
-    <Compile Include="..\..\nugetgallery\Website\Entities\PackageAuthor.cs">
-      <Link>Entities\PackageAuthor.cs</Link>
     </Compile>
     <Compile Include="..\..\nugetgallery\Website\RequestModels\DisplayPackageRequest.cs">
       <Link>RequestModels\DisplayPackageRequest.cs</Link>
