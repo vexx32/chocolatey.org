@@ -173,36 +173,6 @@ namespace NuGetGallery
                 packages = packages.Where(p => !p.IsPrerelease);
             }
 
-            //if (searchFilter.Skip != 0)
-            //{
-            //    packages = packages.Skip(searchFilter.Skip);
-            //}
-
-            //packages = packages.Take(MaxPageSize);
-            //if (searchFilter.Take != 0)
-            //{
-            //    packages = packages.Take(searchFilter.Take);
-            //}
-
-            //switch (searchFilter.SortProperty)
-            //{
-            //    case SortProperty.Relevance:
-            //        //do not change the search order
-            //        break;
-            //    case SortProperty.DownloadCount:
-            //        packages = packages.OrderByDescending(p => p.PackageRegistration.DownloadCount);
-            //        break;
-            //    case SortProperty.DisplayName:
-            //        packages = searchFilter.SortDirection == SortDirection.Ascending ? packages.OrderBy(p => p.Title) : packages.OrderByDescending(p => p.Title);
-            //        break;
-            //    case SortProperty.Recent:
-            //        packages = packages.OrderByDescending(p => p.Published);
-            //        break;
-            //    default:
-            //        //do not change the search order
-            //        break;
-            //}
-
             if (useCache)
             {
                 return NugetGallery.Cache.Get(
@@ -222,6 +192,37 @@ namespace NuGetGallery
             }
 
             Trace.WriteLine("Database search results hit for API (not caching results) Search term: '{0}' (prerelease? {1}).".format_with(searchTerm, includePrerelease));
+
+
+            if (searchFilter.Skip != 0)
+            {
+                packages = packages.Skip(searchFilter.Skip);
+            }
+
+            packages = packages.Take(MaxPageSize);
+            if (searchFilter.Take != 0)
+            {
+                packages = packages.Take(searchFilter.Take);
+            }
+
+            switch (searchFilter.SortProperty)
+            {
+                case SortProperty.Relevance:
+                    //do not change the search order
+                    break;
+                case SortProperty.DownloadCount:
+                    packages = packages.OrderByDescending(p => p.PackageRegistration.DownloadCount);
+                    break;
+                case SortProperty.DisplayName:
+                    packages = searchFilter.SortDirection == SortDirection.Ascending ? packages.OrderBy(p => p.Title) : packages.OrderByDescending(p => p.Title);
+                    break;
+                case SortProperty.Recent:
+                    packages = packages.OrderByDescending(p => p.Published);
+                    break;
+                default:
+                    //do not change the search order
+                    break;
+            }
 
             return packages.Search(searchTerm, lowerCaseExpression: false);
         }
