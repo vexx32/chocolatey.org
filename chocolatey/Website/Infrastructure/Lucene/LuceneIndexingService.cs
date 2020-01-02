@@ -85,8 +85,11 @@ namespace NuGetGallery
                 if ((lastWriteTime == null) || IndexRequiresRefresh() || forceRefresh)
                 {
                     EnsureIndexWriter(creatingIndex: true);
+                    Trace.WriteLine("Lucene Index: Deleting index");
                     _indexWriter.DeleteAll();
+                    Trace.WriteLine("Lucene Index: Index delete completed");
                     _indexWriter.Commit();
+                    Trace.WriteLine("Lucene Index: Index delete committed");
 
                     // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the packages
                     lastWriteTime = null;
@@ -166,29 +169,41 @@ namespace NuGetGallery
                     // update independent of the package.
                     set = set.Where(
                         p => (_indexContainsAllVersions || p.IsLatest || p.IsLatestStable) &&
-                             p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
+                             p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime)
+                    );
+                    Trace.WriteLine("Lucene Indexer: Getting changed results from the database since {0}".format_with(lastIndexTime));
                 }
                 else if (!_indexContainsAllVersions)
                 {
                     set = set.Where(p => p.IsLatest || p.IsLatestStable); // which implies that p.IsListed by the way!
+                    Trace.WriteLine("Lucene Indexer: Getting latest/latest stable results from the database");
                 }
                 else
                 {
                     // get everything including unlisted
                     set = set.Where(p => p.StatusForDatabase != _rejectedStatus  || p.StatusForDatabase == null);
+                    Trace.WriteLine("Lucene Indexer: Getting all results from the database");
                 }
 
-                var list = set
-                    .Include(p => p.PackageRegistration)
-                    .Include(p => p.PackageRegistration.Owners)
-                    .Include(p => p.SupportedFrameworks)
-                    .ToList();
+                var list = MethodExtensionWrappers.WrapExecutionTracingTime(() =>
+                {
+                   return set
+                            .Include(p => p.PackageRegistration)
+                            .Include(p => p.PackageRegistration.Owners)
+                            .Include(p => p.SupportedFrameworks)
+                            .ToList();
+                },"Lucene Indexer: Select from database completed");
 
-                var packagesForIndexing = list.Select(
-                    p => new PackageIndexEntity
+                var packagesForIndexing = MethodExtensionWrappers.WrapExecutionTracingTime(
+                    () =>
                     {
-                        Package = p
-                    });
+                        return list.Select(
+                            p => new PackageIndexEntity
+                            {
+                                Package = p
+                            });
+                    },
+                    "Lucene Indexer: Converted results from what was pulled");
 
                 return packagesForIndexing.ToList();
             }

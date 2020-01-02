@@ -69,9 +69,9 @@ namespace NuGetGallery
 
             container.RegisterPerWebRequest<ISearchService>(() => new LuceneSearchService(configuration.IndexContainsAllVersions));
             container.RegisterPerWebRequest<IEntitiesContext>(() => new EntitiesContext());
-            container.RegisterPerWebRequest<IEntityRepository<User>, EntityRepository<User>>();
+            container.RegisterPerWebRequest<IEntityRepository<User>>(() => new EntityRepository<User>(container.GetInstance<IEntitiesContext>()) {TraceLogEvents = true});
             container.RegisterPerWebRequest<IEntityRepository<PackageRegistration>, EntityRepository<PackageRegistration>>();
-            container.RegisterPerWebRequest<IEntityRepository<Package>, EntityRepository<Package>>();
+            container.RegisterPerWebRequest<IEntityRepository<Package>>(() => new EntityRepository<Package>(container.GetInstance<IEntitiesContext>()) { TraceLogEvents = true });
             container.RegisterPerWebRequest<IEntityRepository<PackageAuthor>, EntityRepository<PackageAuthor>>();
             container.RegisterPerWebRequest<IEntityRepository<PackageFramework>, EntityRepository<PackageFramework>>();
             container.RegisterPerWebRequest<IEntityRepository<PackageDependency>, EntityRepository<PackageDependency>>();
@@ -83,7 +83,15 @@ namespace NuGetGallery
             container.RegisterPerWebRequest<IPackageService, PackageService>();
             container.RegisterPerWebRequest<ICryptographyService, CryptographyService>();
 
-            container.Register<IIndexingService>(() => new LuceneIndexingService(() => new EntitiesContext(LUCENE_TIMEOUT_SECONDS), configuration.IndexContainsAllVersions), Lifestyle.Singleton);
+            container.Register<IIndexingService>(() => new LuceneIndexingService(
+                    () => new EntitiesContext(
+                            configuration.UseBackgroundJobsDatabaseUser ? 
+                              EntitiesContext.AdjustConnectionString("NuGetGallery", configuration.BackgroundJobsDatabaseUserId, configuration.BackgroundJobsDatabaseUserPassword)  
+                            : "NuGetGallery",
+                     LUCENE_TIMEOUT_SECONDS
+                    ),
+                    configuration.IndexContainsAllVersions), 
+                    Lifestyle.Singleton);
             container.Register<IFormsAuthenticationService, FormsAuthenticationService>(Lifestyle.Singleton);
 
             container.RegisterPerWebRequest<IControllerFactory, NuGetControllerFactory>();
