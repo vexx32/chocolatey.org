@@ -36,7 +36,7 @@ EXEC('ALTER TABLE [dbo].[Users] DROP CONSTRAINT ' + @ConstraintName)");
             AlterColumn("Users", "EmailAddress", c => c.String(maxLength: 150));
             AlterColumn("Users", "UnconfirmedEmailAddress", c => c.String(maxLength: 150));
             AlterColumn("Users", "HashedPassword", c => c.String(maxLength: 256));
-            AlterColumn("Users", "PasswordHashAlgorithm", c => c.String(maxLength: 20, nullable: false)); // has a defaultValue: "SHA1", so we need to remove that and readd it separately.
+            AlterColumn("Users", "PasswordHashAlgorithm", c => c.String(maxLength: 20, nullable: false)); // has a defaultValue: "SHA1", so we need to remove that and re-add it separately.
             AlterColumn("Users", "Username", c => c.String(maxLength: 64));
             AlterColumn("Users", "EmailConfirmationToken", c => c.String(maxLength: 256));
             AlterColumn("Users", "PasswordResetToken", c => c.String(maxLength: 256));
@@ -149,7 +149,7 @@ EXEC('ALTER TABLE [dbo].[Users] DROP CONSTRAINT ' + @ConstraintName)");
             AlterColumn("Users", "PasswordResetToken", c => c.String());
             AlterColumn("Users", "EmailConfirmationToken", c => c.String());
             AlterColumn("Users", "Username", c => c.String());
-            AlterColumn("Users", "PasswordHashAlgorithm", c => c.String(nullable: false)); // has a defaultValue: "SHA1", so we need to drop constraint checks to alter
+            AlterColumn("Users", "PasswordHashAlgorithm", c => c.String(nullable: false)); // has a defaultValue: "SHA1", so we need to remove that and re-add it separately.
             AlterColumn("Users", "HashedPassword", c => c.String());
             AlterColumn("Users", "UnconfirmedEmailAddress", c => c.String());
             AlterColumn("Users", "EmailAddress", c => c.String());
