@@ -20,6 +20,7 @@ using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using WebBackgrounder;
@@ -57,6 +58,41 @@ namespace NuGetGallery
             : base(SetConnectionString(nameOrConnectionString))
         {
             InitializeCustomOptions(timeoutSeconds);
+        }
+
+        internal static string AdjustConnectionString(string nameOrConnectionString, string username, string password)
+        {
+            var connectionString = SetConnectionString(nameOrConnectionString);
+            var returnedConnectionString = new StringBuilder();
+
+            var hasReplacedUser = false;
+            var hasReplacedPassword = false;
+
+            var splits = connectionString.Split(new char[] {';'}, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var connString in splits.OrEmptyListIfNull())
+            {
+                if (connString.StartsWith("User"))
+                {
+                    returnedConnectionString.AppendFormat("User Id={0};", username);
+                    hasReplacedUser = true;
+                }
+                else if (connString.StartsWith("Password"))
+                {
+                    returnedConnectionString.AppendFormat("Password={0};", password);
+                    hasReplacedPassword = true;
+                }
+                else
+                {
+                    returnedConnectionString.AppendFormat("{0};", connString);
+                }
+            }
+
+            if (!hasReplacedPassword || !hasReplacedUser)
+            {
+                Trace.WriteLine("Error adjusting connection string - username and password not found to replace.");
+            }
+
+            return returnedConnectionString.to_string();
         }
 
         private static bool TreatAsConnectionString(string nameOrConnectionString)
