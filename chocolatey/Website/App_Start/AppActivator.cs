@@ -98,23 +98,28 @@ namespace NuGetGallery
         {
             var jobs = new List<IJob>();
             var indexer = DependencyResolver.Current.GetService<IIndexingService>();
+            var configuration = DependencyResolver.Current.GetService<IConfiguration>();
 
             if (indexer != null)
             {
                 indexer.RegisterBackgroundJobs(jobs);
             }
 
+            var connectionString = configuration.UseBackgroundJobsDatabaseUser
+                ? EntitiesContext.AdjustConnectionString("NuGetGallery", configuration.BackgroundJobsDatabaseUserId, configuration.BackgroundJobsDatabaseUserPassword)
+                : "NuGetGallery";
+
             if (ConfigurationManager.AppSettings.Get("EnablePackageStatisticsBackgroundJob").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
             {
-                jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(), timeout: TimeSpan.FromMinutes(30)));
+                jobs.Add(new UpdateStatisticsJob(TimeSpan.FromMinutes(15), () => new EntitiesContext(connectionString), timeout: TimeSpan.FromMinutes(30)));
             }
 
             if (ConfigurationManager.AppSettings.Get("EnableWorkItemsBackgroundJob").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
             {
-                jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(), timeout: TimeSpan.FromDays(4)));
+                jobs.Add(new WorkItemCleanupJob(TimeSpan.FromDays(1), () => new EntitiesContext(connectionString), timeout: TimeSpan.FromDays(4)));
             }
 
-            var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext()));
+            var jobCoordinator = new WebFarmJobCoordinator(new EntityWorkItemRepository(() => new EntitiesContext(connectionString)));
             _jobManager = new JobManager(jobs, jobCoordinator)
             {
                 RestartSchedulerOnFailure = true
