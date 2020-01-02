@@ -1,5 +1,6 @@
 ﻿@using Markdig
 @using NuGetGallery
+@using Markdig.Parsers
 @model DisplayPackageViewModel
 @{
     Layout = "~/Views/Shared/NewsletterLayout.cshtml";
@@ -15,7 +16,7 @@
     Bundles.Reference("Scripts/easymde");
     Bundles.Reference("Scripts/closeable");
 
-    var MarkdownPipeline = new MarkdownPipelineBuilder()
+    var markdownPipelineBuilder = new MarkdownPipelineBuilder()
                  .UseSoftlineBreakAsHardlineBreak()
                  .UseAutoLinks()
                  .UseGridTables()
@@ -24,8 +25,11 @@
                  .UseEmphasisExtras()
                  .UseNoFollowLinks()
                  .UseCustomContainers()
-                 .UseBootstrap()
-                 .Build();
+                 .UseBootstrap();
+
+    markdownPipelineBuilder.BlockParsers.TryRemove<IndentedCodeBlockParser>();
+
+    var MarkdownPipeline = markdownPipelineBuilder.Build();
 
     var statuses = Model.Status.GetEnumerationItems().ToList();
     var packageImage = Url.ImageUrl(Model.Id, Model.Version, Model.IconUrl);
