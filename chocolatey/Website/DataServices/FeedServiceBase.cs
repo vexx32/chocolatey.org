@@ -29,6 +29,7 @@ using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Elmah;
 using NuGetGallery.MvcOverrides;
 using QueryInterceptor;
 
@@ -166,7 +167,10 @@ namespace NuGetGallery
                 return GetResultsFromSearchService(searchFilter);
             }
 
-            Trace.WriteLine("Search filter was invalid ('{0}') Raw Url: '{1}' .".format_with(searchFilter.FilterInvalidReason, HttpContext.Request.RawUrl));
+            var invalidSearchFilterMessage = "Search filter was invalid ('{0}') Raw Url: '{1}' .".format_with(searchFilter.FilterInvalidReason, HttpContext.Request.RawUrl);
+            Trace.WriteLine(invalidSearchFilterMessage);
+            // raise this as an exception for even better visibility
+            ErrorSignal.FromCurrentContext().Raise(new SystemException(invalidSearchFilterMessage));
 
             if (!includePrerelease)
             {
