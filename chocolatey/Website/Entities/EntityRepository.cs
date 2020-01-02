@@ -27,27 +27,60 @@ namespace NuGetGallery
     {
         private readonly IEntitiesContext entities;
 
+       public bool TraceLogEvents { get; set; }
+
         public EntityRepository(IEntitiesContext entities)
         {
             this.entities = entities;
+            TraceLogEvents = false;
         }
 
         public void CommitChanges()
         {
-            entities.SaveChanges();
+            if (TraceLogEvents)
+            {
+                MethodExtensionWrappers.WrapExecutionTracingTime(
+                    () => entities.SaveChanges(),
+                    "Save all changes to database");
+            }
+            else
+            {
+                entities.SaveChanges();
+            }
         }
 
         public void DeleteOnCommit(T entity)
         {
-            entities.Set<T>()
-                    .Remove(entity);
+            if (TraceLogEvents)
+            {
+                MethodExtensionWrappers.WrapExecutionTracingTime(
+                    () => entities.Set<T>().Remove(entity),
+                    "Remove '{0}' ('{1}') from database".format_with(typeof(T).Name, entity.Key.to_string()));
+            }
+            else
+            {
+                entities.Set<T>().Remove(entity);
+            }
         }
 
         public T Get(int key)
         {
-            return Cache.Get(string.Format("item-{0}-{1}", typeof(T).Name, key),
-                    DateTime.UtcNow.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES), 
-                    () => entities.Set<T>().Find(key));
+            Func<T> getMethod = () => entities.Set<T>().Find(key);
+            if (TraceLogEvents)
+            {
+                getMethod = () =>
+                    {
+                        return MethodExtensionWrappers.WrapExecutionTracingTime(
+                            () => entities.Set<T>().Find(key),
+                            "Get '{0}' ('{1}') from database".format_with(typeof(T).Name, key.to_string()));
+                    };
+            }
+
+            return Cache.Get(
+                string.Format("item-{0}-{1}", typeof(T).Name, key),
+                DateTime.UtcNow.AddMinutes(Cache.DEFAULT_CACHE_TIME_MINUTES),
+                getMethod
+                );
         }
 
         public IQueryable<T> GetAll()
@@ -57,8 +90,16 @@ namespace NuGetGallery
 
         public int InsertOnCommit(T entity)
         {
-            entities.Set<T>()
-                    .Add(entity);
+            if (TraceLogEvents)
+            {
+                MethodExtensionWrappers.WrapExecutionTracingTime(
+                    () => entities.Set<T>().Add(entity),
+                    () => "Added new '{0}' ('{1}') to database".format_with(typeof(T).Name, entity.Key.to_string()));
+            }
+            else
+            {
+                entities.Set<T>().Add(entity); 
+            }
 
             return entity.Key;
         }

@@ -69,9 +69,9 @@ namespace NuGetGallery
 
             container.RegisterPerWebRequest<ISearchService>(() => new LuceneSearchService(configuration.IndexContainsAllVersions));
             container.RegisterPerWebRequest<IEntitiesContext>(() => new EntitiesContext());
-            container.RegisterPerWebRequest<IEntityRepository<User>, EntityRepository<User>>();
+            container.RegisterPerWebRequest<IEntityRepository<User>>(() => new EntityRepository<User>(container.GetInstance<IEntitiesContext>()) {TraceLogEvents = true});
             container.RegisterPerWebRequest<IEntityRepository<PackageRegistration>, EntityRepository<PackageRegistration>>();
-            container.RegisterPerWebRequest<IEntityRepository<Package>, EntityRepository<Package>>();
+            container.RegisterPerWebRequest<IEntityRepository<Package>>(() => new EntityRepository<Package>(container.GetInstance<IEntitiesContext>()) { TraceLogEvents = true });
             container.RegisterPerWebRequest<IEntityRepository<PackageAuthor>, EntityRepository<PackageAuthor>>();
             container.RegisterPerWebRequest<IEntityRepository<PackageFramework>, EntityRepository<PackageFramework>>();
             container.RegisterPerWebRequest<IEntityRepository<PackageDependency>, EntityRepository<PackageDependency>>();
