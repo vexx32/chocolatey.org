@@ -204,6 +204,14 @@ namespace NuGetGallery.Controllers
             {
                 fileName = fileName.Replace("CommandsApiKey", "CommandsApikey");
             }
+            if (fileName.Equals("CommandsSetapiKey"))
+            {
+                fileName = fileName.Replace("CommandsSetapiKey", "CommandsSetapikey");
+            }
+            if (fileName.Equals("HelpersGetPackageParameters"))
+            {
+                fileName = fileName.Replace("HelpersGetPackageParameters", "HelpersGetPackageparameters");
+            }
 
             var hyphenatedValue = new StringBuilder();
 
