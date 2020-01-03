@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NuGetGallery
 {
@@ -285,6 +288,32 @@ namespace NuGetGallery
             }
 
             return false;
+        }
+
+        public ReadOnlyCollection<string> CheckForStrongPassword(string password)
+        {
+            Regex passwordSymbolPattern = new Regex(@"[!@#$%^&*(),.?:{}|<>]");
+
+            var errors = new List<string>();
+
+            if (!password.Any(char.IsDigit))
+            {
+                errors.Add("Password must contain at least one digit.");
+            }
+            if (!password.Any(char.IsUpper))
+            {
+                errors.Add("Password must contain at least one uppercase character.");
+            }
+            if (!password.Any(char.IsLower))
+            {
+                errors.Add("Password must contain at least one lowercase character.");
+            }
+            if (!passwordSymbolPattern.IsMatch(password))
+            {
+                errors.Add("Password must contain at least one special character.");
+            }
+
+            return errors.AsReadOnly();
         }
     }
 }

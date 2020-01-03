@@ -155,6 +155,17 @@ namespace NuGetGallery
 
             if (!ModelState.IsValid) return View("~/Views/Users/Register.cshtml");
 
+            var errors = userService.CheckForStrongPassword(request.Password);
+            if (errors.Any())
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+
+                return View("~/Views/Users/Register.cshtml", request);
+            }
+
             User user;
             try
             {
@@ -353,6 +364,17 @@ namespace NuGetGallery
             if (ModelState.IsValid) if (!userService.ChangePassword(currentUser.Identity.Name, model.OldPassword, model.NewPassword)) ModelState.AddModelError("OldPassword", Strings.CurrentPasswordIncorrect);
 
             if (!ModelState.IsValid) return View("~/Views/Users/ChangePassword.cshtml", model);
+
+            var errors = userService.CheckForStrongPassword(model.NewPassword);
+            if (errors.Any())
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+
+                return View("~/Views/Users/ChangePassword.cshtml", model);
+            }
 
             return RedirectToAction(MVC.Users.PasswordChanged());
         }

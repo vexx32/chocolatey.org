@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace NuGetGallery
 {
@@ -31,5 +32,7 @@ namespace NuGetGallery
         User GeneratePasswordResetToken(string usernameOrEmail, int tokenExpirationMinutes);
 
         bool ResetPasswordWithToken(string username, string token, string newPassword);
+
+        ReadOnlyCollection<string> CheckForStrongPassword(string password);
     }
 }
