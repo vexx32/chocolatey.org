@@ -129,7 +129,7 @@ namespace NuGetGallery.Controllers
                 if (post != null) return View("~/Views/Pages/MarkdownPostArticle.cshtml", "~/Views/Blog/_Layout.cshtml", post);
             }
 
-            return RedirectToAction("PageNotFound", "Error");
+            return RedirectToAction("Index");
         }
 
         private IEnumerable<MarkdownPostViewModel> GetPostsByMostRecentFirst()

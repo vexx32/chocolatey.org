@@ -60,7 +60,7 @@ namespace NuGetGallery.Controllers
                 return View("~/Views/Resources/{0}.cshtml".format_with(resourceType), posts);
             }
 
-            return RedirectToAction("PageNotFound", "Error");
+            return RedirectToRoute(RouteName.Resources, new { resourceType = "home" });
         }
 
         [HttpGet, OutputCache(VaryByParam = "*", Location = OutputCacheLocation.Any, Duration = 7200)]
@@ -80,7 +80,7 @@ namespace NuGetGallery.Controllers
                 if (post != null) return View("~/Views/Resources/Post.cshtml", "~/Views/Resources/_Layout.cshtml", post);
             }
 
-            return RedirectToAction("PageNotFound", "Error");
+            return RedirectToAction("Resources");
         }
 
         private static string EnsureTrailingSlash(string siteRoot)
