@@ -304,11 +304,13 @@ namespace NuGetGallery
                 new { controller = "Resource", action = "Resources", resourceType = "home" }
                 );
 
-            routes.MapRouteSeo(
-                RouteName.ResourceName,
-                "resources/{resourceType}/{resourceName}",
-                new { controller = "Resource", action = "ResourceName" }
-                );
+            var resourceNameRoute = new Route("resources/{resourceType}/{resourceName}", new RouteValueDictionary(new { controller = "Resource", action = "ResourceName" }), new HyphenatedRouteHandler());
+
+            // ResourceName redirects
+            routes.Redirect(r => r.MapRoute("ManagingWindowsAtFacebookRedirect", "resources/case-studies/managing-windows-at-facebook")).To(resourceNameRoute, new { resourceType="case-studies", resourceName = "winops-2017-dan-sedlacek-managing-windows-at-facebook" });
+
+            // Add in ResourceName route after redirects have been made
+            routes.Add(RouteName.ResourceName, resourceNameRoute);
 
             var docsRoute = new Route("docs/{docName}", new RouteValueDictionary(new { controller = "Documentation", action = "Documentation", docName = "home" }), new HyphenatedRouteHandler());
             
