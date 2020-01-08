@@ -42,7 +42,7 @@ namespace NuGetGallery.Controllers
                 return View(styleguideName);
             }
 
-            return RedirectToAction("PageNotFound", "Error");
+            return RedirectToRoute(RouteName.Styleguide, new { styleguideName = "home" });
         }
 
     }

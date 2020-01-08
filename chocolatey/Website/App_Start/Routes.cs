@@ -304,18 +304,23 @@ namespace NuGetGallery
                 new { controller = "Resource", action = "Resources", resourceType = "home" }
                 );
 
-            routes.MapRouteSeo(
-                RouteName.ResourceName,
-                "resources/{resourceType}/{resourceName}",
-                new { controller = "Resource", action = "ResourceName" }
-                );
+            var resourceNameRoute = new Route("resources/{resourceType}/{resourceName}", new RouteValueDictionary(new { controller = "Resource", action = "ResourceName" }), new HyphenatedRouteHandler());
 
-	    var docsRoute = routes.MapRouteSeo(
-                RouteName.Docs,
-                "docs/{docName}", 
-                new { controller = "Documentation", action = "Documentation", docName = "home" }
-                );
+            // ResourceName redirects
+            routes.Redirect(r => r.MapRoute("ManagingWindowsAtFacebookRedirect", "resources/case-studies/managing-windows-at-facebook")).To(resourceNameRoute, new { resourceType="case-studies", resourceName = "winops-2017-dan-sedlacek-managing-windows-at-facebook" });
+
+            // Add in ResourceName route after redirects have been made
+            routes.Add(RouteName.ResourceName, resourceNameRoute);
+
+            var docsRoute = new Route("docs/{docName}", new RouteValueDictionary(new { controller = "Documentation", action = "Documentation", docName = "home" }), new HyphenatedRouteHandler());
             
+            // Documentation redirects
+            routes.Redirect(r => r.MapRoute("InstallRedirect", "docs/install")).To(docsRoute, new { docName = "installation" });
+            routes.Redirect(r => r.MapRoute("FeaturesShimsRedirect", "docs/features-shims")).To(docsRoute, new { docName = "features-shim" });
+
+            // Add in Docs route after redirects have been made
+            routes.Add(RouteName.Docs, docsRoute);
+
             // temporary redirect
             routes.Redirect(r => r.MapRoute("CentralManagementFeature", "features-chocolatey-central-management")).To(docsRoute, new { docName = "features-chocolatey-central-management" });
 

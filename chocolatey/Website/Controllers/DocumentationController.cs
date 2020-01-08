@@ -88,7 +88,7 @@ namespace NuGetGallery.Controllers
                 if (post != null) return View("~/Views/Documentation/Documentation.cshtml", "~/Views/Documentation/_Layout.cshtml", post);
             }
 
-            return RedirectToAction("PageNotFound", "Error");
+            return RedirectToRoute(RouteName.Docs, new { docName = "home" });
         }
 
         private DocumentationSearchViewModel GetSearch(string docName, string q)
@@ -207,10 +207,6 @@ namespace NuGetGallery.Controllers
             if (fileName.Equals("CommandsSetapiKey"))
             {
                 fileName = fileName.Replace("CommandsSetapiKey", "CommandsSetapikey");
-            }
-            if (fileName.Equals("HelpersGetPackageParameters"))
-            {
-                fileName = fileName.Replace("HelpersGetPackageParameters", "HelpersGetPackageparameters");
             }
 
             var hyphenatedValue = new StringBuilder();
