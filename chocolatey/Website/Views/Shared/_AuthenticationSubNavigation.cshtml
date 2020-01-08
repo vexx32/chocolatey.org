@@ -40,10 +40,16 @@
                 </a>
             </li>
             <li>
-                <a class="ux_account_action" href="@Url.LogOff()">
-                    <span class="fas fa-sign-out-alt" alt="Log Off"></span>
-                    <span>Log Off</span>
-                </a>
+                @using (Html.BeginForm("LogOff", "Authentication", FormMethod.Post))
+                {
+                    <fieldset class="form">
+                        @Html.AntiForgeryToken()
+                        <button class="btn btn-link align-items-center p-0 text-decoration-none" type="submit">
+                            <span class="fas fa-sign-out-alt" alt="Log Off"></span>
+                            <span class="font-weight-bold">Log Off</span>
+                        </button>
+                    </fieldset>
+                }
             </li>
             }
         </ul>
