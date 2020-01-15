@@ -14,7 +14,7 @@
     <AssemblyName>NuGetGallery.Website</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
@@ -1069,6 +1069,7 @@
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
+    <Content Include="Content\Images\blog\increased-web-traffic.png" />
     <Content Include="Content\Images\blog\redesign-badges.jpg" />
     <Content Include="Content\Images\blog\redesign-default-view.gif" />
     <Content Include="Content\Images\blog\redesign-filter-dropdown.jpg" />
@@ -1076,6 +1077,7 @@
     <Content Include="Content\Images\blog\redesign-install-tabs-puppet.jpg" />
     <Content Include="Content\Images\blog\redesign-install-tabs.jpg" />
     <Content Include="Content\Images\blog\redesign-show-hide.gif" />
+    <Content Include="Content\Images\blog\request-latency.png" />
     <Content Include="Content\Images\boxstarter.png" />
     <Content Include="Content\Images\businesses\Ansible-red-sm.png" />
     <Content Include="Content\Images\businesses\Artifactory-sm.png" />
@@ -1744,6 +1746,7 @@
     <Content Include="Views\Shared\NewsletterLayout.cshtml" />
     <Content Include="Views\Shared\_NewsletterNavigation.cshtml" />
     <Content Include="Views\Shared\_Modals.cshtml" />
+    <Content Include="Views\Blog\ChocolateyCommunityRepositoryServiceInterruptions.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1826,7 +1829,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>55881</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
