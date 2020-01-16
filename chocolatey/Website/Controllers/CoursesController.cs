@@ -174,7 +174,7 @@ namespace NuGetGallery
             return View("~/Views/Courses/{0}/{1}.cshtml".format_with(courseName, courseModuleName), model);
         }
 
-        [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult CourseName(CourseViewModel viewModel, string courseName, string courseModuleName)
         {
             courseName = courseName.Replace("-", "");
