@@ -1,7 +1,7 @@
 Url: remove-support-for-old-tls-versions
 Title: Removing Support For Old TLS Versions On The Chocolatey Website
 Author: Chocolatey Operations Team
-Published: 20200222
+Published: 20200123
 Tags: News, Status, Infrastructure
 Keywords: downtime, infrastructure, tls
 Summary: We will be removing support for TLS 1.0 and TLS 1.1 from the Chocolatey Website on 3 February 2020.
@@ -18,13 +18,13 @@ While the removal of support for older TLS protocols started some time ago acros
 
 With TLS 1.0 and 1.1 now responsible for less than 3.3% of traffic to Chocolatey.org and the end-of-life for [Windows Server 2008 (and R2)](https://support.microsoft.com/en-gb/help/4456235/end-of-support-for-windows-server-2008-and-windows-server-2008-r2) on-premises* and [Windows 7](https://support.microsoft.com/en-gb/help/4057281/windows-7-support-ended-on-january-14-2020) occurring on 14 January 2020, support for these older protocols over potential security issues no longer makes sense.
 
-`*  Customers using Microsoft Azure may qualify for an additional 3 years of Critical and Important security updates at no additional charge - see "[end of support](https://support.microsoft.com/en-gb/help/4456235/end-of-support-for-windows-server-2008-and-windows-server-2008-r2)" for details.
+\*  Customers using Microsoft Azure may qualify for an additional 3 years of Critical and Important security updates at no additional charge - see "[end of support](https://support.microsoft.com/en-gb/help/4456235/end-of-support-for-windows-server-2008-and-windows-server-2008-r2)" for details.
 
 ### What does this mean for you?
 
 With modern browsers (such as Firefox, Edge, Chrome etc.) supporting TLS 1.2 for many years now, there should not be anything for you to do when browsing Chocolatey.org. Many major websites today have already removed support for these older protocols so if there was an issue with your browser and TLS 1.2 you would know about it by now.
 
-While your operating system may support TLS 1.2 it’s important to remember that it may have to be enabled. If you are working from PowerShell you can find out which protocols your system supports by running this code:
+While your operating system may support TLS 1.2 it's important to remember that it may have to be enabled. If you are working from PowerShell you can find out which protocols your system supports by running this code:
 
 ```powershell
 [Enum]::GetNames([Net.SecurityProtocolType]) -contains 'Tls12'
@@ -52,4 +52,4 @@ If you find yourself provisioning machines such as Windows 7, Windows Server 200
 
 ### Conclusion
 
-We understand that this change may put additional burden on a very small set of our user base. Given the number of major web sites who have already gone through this change we anticipate that the burden will be small. However, if you have any questions or concerns related to this announcement, please do not hesitate to [contact us](https://chocolatey.org/support) using the means are available to you depending on your edition - you’ll find these contact methods listed on the [support page](https://chocolatey.org/support).
+We understand that this change may put additional burden on a very small set of our user base. Given the number of major web sites who have already gone through this change we anticipate that the burden will be small. However, if you have any questions or concerns related to this announcement, please do not hesitate to [contact us](https://chocolatey.org/support) using the means are available to you depending on your edition - you'll find these contact methods listed on the [support page](https://chocolatey.org/support).
