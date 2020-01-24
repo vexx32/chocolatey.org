@@ -107,6 +107,11 @@
     {
         <meta name="robots" content="noindex" />
     }
+    @if (!string.IsNullOrWhiteSpace(Model.Summary))
+    {
+        <meta property="og:description" content="@Model.Summary" />
+        <meta property="description" content="@Model.Summary" />
+    }
 }
 @if (!User.Identity.IsAuthenticated)
 {
