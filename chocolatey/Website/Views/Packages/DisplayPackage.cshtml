@@ -1401,7 +1401,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                     {
                                         fileScanHighlight = "virus-scan-medium";
                                     }
-                                    else if (fileScan.Positives > 5 && fileScan.Positives < 11)
+                                    else if (fileScan.Positives > 10)
                                     {
                                         fileScanHighlight = "virus-scan-dark";
                                     }
