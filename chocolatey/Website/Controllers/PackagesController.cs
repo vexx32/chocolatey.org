@@ -464,7 +464,7 @@ namespace NuGetGallery
                 switch (searchFilter.SortModeration)
                 {
                     case SortModeration.AllStatuses:
-                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase == unknownStatus || p.StatusForDatabase == null);
+                        packageVersions = packageVersions.Where(p => !p.IsPrerelease).Where(p => p.StatusForDatabase != unknownStatus && p.StatusForDatabase != null);
                         packagesToShow = resubmittedPackages.Union(respondedPackages).Union(unreviewedPackages).Union(pendingAutoReviewPackages).Union(waitingForMaintainerPackages);
                         switch (searchFilter.SortProperty)
                         {
@@ -626,11 +626,6 @@ namespace NuGetGallery
                 if ((searchFilter.Skip + searchFilter.Take) >= packagesToShow.Count() & string.IsNullOrWhiteSpace(q)) packagesToShow = packagesToShow.Union(packageVersions.OrderByDescending(pv => pv.PackageRegistration.DownloadCount).ToList());
 
                 packagesToShow = packagesToShow.Skip(searchFilter.Skip).Take(searchFilter.Take);
-
-                if (!string.IsNullOrWhiteSpace(q) && (searchFilter.SortModeration.Equals(SortModeration.UnknownStatus) || searchFilter.SortModeration.Equals(SortModeration.AllStatuses)) || searchFilter.SortModeration.Equals(SortModeration.UnknownStatus))
-                {
-                    totalHits = totalHits - unknownPackagesCount;
-                }
             }
             else
             {
