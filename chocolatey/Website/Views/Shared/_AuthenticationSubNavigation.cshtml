@@ -1,34 +1,33 @@
 ﻿<nav class="navbar bg-white border-bottom d-flex">
     <div class="container">
-        <ul>
+        <ul class="mr-0 d-none d-sm-flex">
             @if (ViewContext.RouteData.Values["Action"].Equals("DisplayPackage"))
             {
-                <li class="d-none d-sm-flex">
+                <li>
                     <a href="@Url.RouteUrl(RouteName.ListPackages)">
                         <span class="fas fa-download" alt="Packages"></span>
                         <span>Packages</span>
                     </a>
                 </li>
             }
-            @if (!User.Identity.IsAuthenticated)
-            {
+        </ul>
+        <ul class="ux_login ml-sm-0 d-none">
             <li>
-                <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
+                <a href="@Url.Action(MVC.Users.Register())">
                     <span class="fas fa-user-plus" alt="Signup"></span>
                     <span>Signup</span>
                 </a>
             </li>
             <li>
-                <a class="ux_account" href="@Url.LogOn()">
+                <a href="@Url.LogOn()">
                     <span class="fas fa-sign-in-alt" alt="Login"></span>
                     <span>Login</span>
                 </a>
             </li>
-            }
-            else
-            {
+        </ul>
+        <ul class="ux_logoff ml-sm-0 d-none">
             <li>
-                <a class="ux_account" href="@Url.Action(MVC.Users.Account())">
+                <a href="@Url.Action(MVC.Users.Account())">
                     <span class="fas fa-cogs" alt="Account"></span>
                     <span>Account</span>
                 </a>
@@ -51,7 +50,6 @@
                     </fieldset>
                 }
             </li>
-            }
         </ul>
     </div>
 </nav>

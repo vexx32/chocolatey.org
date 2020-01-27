@@ -458,20 +458,16 @@ function getCookie(name) {
     return false;
 }
 
-// Set Login Cookie
+// Set Login/Logoff Navigation
 $(function () {
-    var acount = $(".ux_account");
-    var action = $(".ux_account_action");
+    var uxLogoff = $('.ux_logoff');
+    var uxLogin = $('.ux_login');
     if (getCookie('.ChocolateyGalleryAuthentication')) {
-        acount.html('<span class="fas fa-cogs" alt="Account"></span><span>Account</span>');
-        acount.prop('href', '/account');
-        action.html('<span class="fas fa-sign-out-alt" alt="Log Off"></span><span>Log Off</span>');
-        action.prop('href', '/users/account/LogOff');
+        uxLogoff.removeClass('d-none');
+        uxLogin.addClass('d-none');
     } else {
-        acount.html('<span class="fas fa-sign-in-alt" alt="Login"></span><span>Login</span>');
-        acount.prop('href', '/users/account/LogOn');
-        action.html('<span class="fas fa-user-plus" alt="Signup"></span><span>Signup</span>');
-        action.prop('href', '/account/Register');
+        uxLogoff.addClass('d-none');
+        uxLogin.removeClass('d-none');
     }
 });
 
