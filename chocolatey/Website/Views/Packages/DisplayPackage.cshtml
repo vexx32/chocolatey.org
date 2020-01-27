@@ -760,7 +760,7 @@ choco upgrade @Model.Id.ToLower() -y --source=&quot;'STEP 3 URL'&quot; [other op
                                     <p>Add this to a PowerShell script or use a Batch script with tools and in places where you are calling directly to Chocolatey. If you are integrating, keep in mind enhanced exit codes.</p>
                                     <p>If you do use a PowerShell script, use the following to ensure bad exit codes are shown as failures:</p>
 <pre class="language-powershell line-numbers border py-3"><code>
-choco upgrade @Model.Id.ToLower() -y --source="'STEP 3 URL'" 
+choco upgrade @Model.Id.ToLower() -y --source="'STEP 3 URL'"
 $exitCode = $LASTEXITCODE
 
 Write-Verbose "Exit code was $exitCode"
@@ -1401,7 +1401,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                     {
                                         fileScanHighlight = "virus-scan-medium";
                                     }
-                                    else if (fileScan.Positives > 10)
+                                    else
                                     {
                                         fileScanHighlight = "virus-scan-dark";
                                     }
