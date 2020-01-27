@@ -15,17 +15,24 @@
     Bundles.Reference("Scripts/closeable");
 
     var currentUrl = Request.Url.AbsoluteUri;
-    var BaseHref = Request.Url.GetLeftPart(UriPartial.Authority);
     var FullHref = Request.Url.GetLeftPart(UriPartial.Path);
     var packageWarning = Request.Cookies["chocolatey_hide_packages_warning"] == null;
 }
-@if (!currentUrl.Contains("sortOrder"))
-{
-    if (currentUrl.Contains("moderatorQueue=true") || Request.RawUrl == Url.RouteUrl(RouteName.ListPackages) || Request.RawUrl == Url.RouteUrl(RouteName.SearchResults))
-    {
-        @Html.Partial("~/Views/Shared/_Loader.cshtml")
-    }
-}
+
+@Html.Partial("~/Views/Shared/_Loader.cshtml")
+<section id="secondaryNav">
+    <div class="bg-primary">
+        <div class="container py-2">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Shared/_AuthenticationSubNavigation.cshtml")
+    @Html.Partial("~/Views/Shared/_PackageStatusSubNavigation.cshtml")
+</section>
 <section id="package" class="container py-3 py-lg-5 body-tabs">
     @if (!User.Identity.IsAuthenticated)
     {
@@ -211,7 +218,7 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm text-right">
-                                        <a href="@if(@FullHref == @BaseHref + "/packages"){<text>@Url.RouteUrl(RouteName.ListPackages)</text>}else if(@FullHref == @BaseHref + "/search"){<text>@Url.RouteUrl(RouteName.SearchResults)</text>}" class="btn btn-outline-primary"><span class="fas fa-sync"></span><span class="d-sm-none d-md-inline-block ml-2 ml-sm-0 ml-md-2">Reset Filters</span></a>
+                                        <a href="@if(@FullHref.Contains("/packages")){<text>@Url.RouteUrl(RouteName.ListPackages)</text>}else{<text>@Url.RouteUrl(RouteName.SearchResults)</text>}" class="btn btn-outline-primary"><span class="fas fa-sync"></span><span class="d-sm-none d-md-inline-block ml-2 ml-sm-0 ml-md-2">Reset Filters</span></a>
                                     </div>
                                 </div>
                             </fieldset>
@@ -244,9 +251,9 @@
                 </ul>
             }
 
-            @if (@FullHref == @BaseHref + "/packages")
+            @if (@FullHref.Contains("/packages"))
             {@ViewHelpers.PreviousNextPager(Model.Pager)}
-            else if (@FullHref == @BaseHref + "/search")
+            else
             {@ViewHelpers.PreviousNextPager(Model.PagerSearch)}
         </div>
         @if (!String.IsNullOrEmpty(Model.SearchTerm))

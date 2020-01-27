@@ -1,0 +1,51 @@
+﻿<nav class="navbar bg-white border-bottom d-flex">
+    <div class="container">
+        <ul>
+            @if (ViewContext.RouteData.Values["Action"].Equals("DisplayPackage"))
+            {
+                <li class="d-none d-sm-flex">
+                    <a href="@Url.RouteUrl(RouteName.ListPackages)">
+                        <span class="fas fa-download" alt="Packages"></span>
+                        <span>Packages</span>
+                    </a>
+                </li>
+            }
+            @if (!User.Identity.IsAuthenticated)
+            {
+            <li>
+                <a class="ux_account_action" href="@Url.Action(MVC.Users.Register())">
+                    <span class="fas fa-user-plus" alt="Signup"></span>
+                    <span>Signup</span>
+                </a>
+            </li>
+            <li>
+                <a class="ux_account" href="@Url.LogOn()">
+                    <span class="fas fa-sign-in-alt" alt="Login"></span>
+                    <span>Login</span>
+                </a>
+            </li>
+            }
+            else
+            {
+            <li>
+                <a class="ux_account" href="@Url.Action(MVC.Users.Account())">
+                    <span class="fas fa-cogs" alt="Account"></span>
+                    <span>Account</span>
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action(MVC.Users.Profiles(User.Identity.Name))">
+                    <span class="fas fa-user-alt" alt="Profile"></span>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li>
+                <a class="ux_account_action" href="@Url.LogOff()">
+                    <span class="fas fa-sign-out-alt" alt="Log Off"></span>
+                    <span>Log Off</span>
+                </a>
+            </li>
+            }
+        </ul>
+    </div>
+</nav>

@@ -396,9 +396,3 @@ footer {
         padding: 0 2rem;
     }
 }
-
-@include media-breakpoint-up(xl) {
-    #header {
-        margin-top: -1rem;
-    }
-}

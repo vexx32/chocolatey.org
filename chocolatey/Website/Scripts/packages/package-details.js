@@ -53,7 +53,32 @@ $(function () {
     // Files hidden on load and toggled
     $('[class*="file-path-"]').on('show.bs.collapse', function () {
         if (!$(this).find('pre').hasClass('line-numbers')) {
-            $(this).find('pre').addClass('line-numbers').find("code").addClass('language-powershell');
+            var langBrush = $(this).parent().find('span').first().text();
+            if (langBrush.indexOf("\\") >= 0) {
+                // Find everything after last \ if there is one
+                langBrush = langBrush.substr(langBrush.lastIndexOf("\\") + 1);
+            }
+            // Find everything after first . (file extension)
+            langBrush = langBrush.substring(langBrush.indexOf('.') + 1);
+            switch (langBrush) {
+                case "ps1":
+                case "psm1":
+                    langBrush = "powershell";
+                    break;
+                case "xml":
+                case "config":
+                case "nuspec":
+                case "nuspec.template":
+                    langBrush = "xml";
+                    break;
+                case "js":
+                case "json":
+                    langBrush = "js";
+                    break;
+                default:
+                    langBrush = "none";
+            }
+            $(this).find('pre').addClass('line-numbers').find("code").addClass('language-' + langBrush);
             Prism.highlightElement($(this).find('code')[0]);
         }
     });

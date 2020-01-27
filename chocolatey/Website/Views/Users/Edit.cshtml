@@ -7,6 +7,9 @@
     Bundles.Reference("Scripts/validation");
 }
 
+<section id="secondaryNav">
+    @Html.Partial("~/Views/Shared/_AuthenticationSubNavigation.cshtml")
+</section>
 <section id="account" class="py-3 py-lg-5 edit-profile">
     <div class="container">
         @Html.ValidationSummary(true)

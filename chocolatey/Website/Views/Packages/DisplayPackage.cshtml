@@ -113,6 +113,10 @@
     @Html.Partial("~/Views/Packages/_CommunityInfoDisclaimer.cshtml")
 }
 @Html.Partial("~/Views/Shared/_Loader.cshtml")
+<section id="secondaryNav">
+    @Html.Partial("~/Views/Shared/_AuthenticationSubNavigation.cshtml")
+    @Html.Partial("~/Views/Shared/_PackageStatusSubNavigation.cshtml")
+</section>
 <section class="container py-3 py-lg-5">
     <div id="package-sidebar" class="row">
         @*Desktop Sidebar*@
@@ -1204,7 +1208,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                             <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="true">Hide</button>
                             @Model.Id<span>.nuspec</span>
                             <div class="@packageFile collapse show">
-<pre class="line-numbers"><code class="language-powershell">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+<pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!-- This is not exact, it's only based on what is stored about the package --&gt;
 &lt;!-- description and releaseNotes left out for brevity --&gt;
 &lt;package&gt;
@@ -1316,9 +1320,36 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                         <button type="button" class="btn btn-sm btn-secondary mr-2" data-toggle="collapse" data-target=".@packageFile" role="button" aria-expanded="false">Show</button>
                                     }
                                 }
-                                @file.FilePath
+                                <span class="file-name">@file.FilePath</span>
                                 <div class="@packageFile collapse @if(expandFile){<text>show</text>}">
-                                    <pre class="@if(expandFile){<text>line-numbers</text>}"><code class="@if(expandFile){<text>language-powershell</text>}">@file.FileContent</code></pre>
+                                    @{ var langBrush = ""; }
+                                    @switch (Path.GetExtension(file.FilePath))
+                                    {
+                                        case ".ps1":
+                                        case ".psm1":
+                                            langBrush = "powershell";
+                                            break;
+                                        case ".xml":
+                                        case ".config":
+                                        case ".nuspec":
+                                            langBrush = "xml";
+                                            break;
+                                        case ".js":
+                                        case ".json":
+                                            langBrush = "js";
+                                        break;
+                                        case ".template":
+                                            langBrush = "none";
+                                            if (file.FilePath.EndsWith(".nuspec.template"))
+                                            {
+                                                langBrush = "xml";
+                                            }
+                                            break;
+                                        default:
+                                            langBrush = "none";
+                                            break;
+                                    }
+                                    <pre class="@if(expandFile){<text>line-numbers</text>}"><code class="@if(expandFile){<text>language-</text>@langBrush}">@file.FileContent</code></pre>
                                 </div>
                             </div>
                         }

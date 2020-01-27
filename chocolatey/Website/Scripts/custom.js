@@ -128,10 +128,16 @@ $(function () {
             collapseNav.on('shown.bs.collapse', function () {
                 if (/pricing/.test(window.location.href)) {
                     $('html, body').scrollTop($(this).offset().top - 120);
-                } else {
+                } else if (!window.sessionStorage.getItem('prevent-scroll')) {
                     $('html, body').scrollTop($(this).offset().top - 60);
+                    if ($(this).attr('id') == 'files') {
+                        window.sessionStorage.setItem('prevent-scroll', 'files');
+                    }
                 }
             });
+        }
+        if (collapseNav.length && collapseNav.attr('id') != 'files' && window.sessionStorage.getItem('prevent-scroll')) {
+            sessionStorage.removeItem('prevent-scroll');
         }
     }
     // Change hash on tab/collapse click and prevent scrolling

@@ -27,6 +27,9 @@
 <body>
     @Html.Partial("~/Views/Shared/_TopNavigation.cshtml")
     <main id="docs" class="mb-auto">
+        <section id="secondaryNav">
+            @Html.Partial("~/Views/Shared/_AuthenticationSubNavigation.cshtml")
+        </section>
         <section class="pt-3 pt-lg-5 module-top">
             <div class="container">
                 <h1>@ViewBag.Title</h1>
