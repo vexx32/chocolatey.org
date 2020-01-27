@@ -118,8 +118,6 @@
                                         <button type="submit" name="moderationStatus" value="@Constants.ReadyModerationStatus" class="bg-transparent border-0 btn-link text-dark">@moderationReadyPackageCount Ready</button>
                                         <span>|</span>
                                         <button type="submit" name="moderationStatus" value="@Constants.PendingModerationStatus" class="bg-transparent border-0 btn-link text-dark">@Model.ModerationPendingAutoReviewPackageCount Pending</button>
-                                        <span>|</span>
-                                        <button type="submit" name="moderationStatus" value="@Constants.UnknownModerationStatus" class="bg-transparent border-0 btn-link text-dark">@Model.ModerationUnknownPackageCount Unreviewed</button>
                                         <input type="hidden" name="prerelease" value="false" />
                                         <input type="hidden" name="sortOrder" value="@Model.SortOrder" />
                                     </fieldset>
@@ -193,7 +191,6 @@
                                             @ViewHelpers.Option(Constants.WaitingModerationStatus, "Waiting", Model.ModerationStatus)
                                             @ViewHelpers.Option(Constants.RespondedModerationStatus, "Responded", Model.ModerationStatus)
                                             @ViewHelpers.Option(Constants.ReadyModerationStatus, "Ready", Model.ModerationStatus)
-                                            @ViewHelpers.Option(Constants.UnknownModerationStatus, "Unknown", Model.ModerationStatus)
                                         </select>
                                     </div>
                                     <div class="col-sm mb-2 mb-sm-0">
