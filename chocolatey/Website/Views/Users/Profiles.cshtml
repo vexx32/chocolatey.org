@@ -73,7 +73,7 @@
         <div class="row profile-packages card-row">
             @foreach (var package in Model.PackagesModerationQueue)
             {
-                var submittedStatus = "Reviewed, waiting for user action";
+                var submittedStatus = "Waiting for Maintainer";
 
                 switch (package.SubmittedStatus)
                 {
@@ -85,6 +85,9 @@
                         break;
                     case PackageSubmittedStatusType.Responded:
                         submittedStatus = "Responded";
+                        break;
+                    case PackageSubmittedStatusType.Pending:
+                        submittedStatus = "Pending Automated Review";
                         break;
                     default:
                         break;
