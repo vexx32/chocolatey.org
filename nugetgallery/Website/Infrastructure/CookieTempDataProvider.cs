@@ -32,7 +32,15 @@ namespace NuGetGallery
             }
             foreach (var key in cookie.Values.AllKeys)
             {
-                dictionary[key] = cookie[key];
+                // As the index setter on HttpCookie does not guard against null keys,
+                // we should guard against ArgumentNullException on Dictionary.Insert
+                // when key == null.
+                if (key == null)
+                {
+                    continue;
+                }
+
+                dictionary[key] = HttpUtility.UrlDecode(cookie[key]);
             }
             cookie.Expires = DateTime.MinValue;
             cookie.Value = String.Empty;
@@ -58,9 +66,18 @@ namespace NuGetGallery
             {
                 var cookie = new HttpCookie(TempDataCookieKey);
                 cookie.HttpOnly = true;
+                cookie.Secure = true;
                 foreach (var item in values)
                 {
-                    cookie[item.Key] = Convert.ToString(item.Value, CultureInfo.InvariantCulture);
+                    // As the index setter on HttpCookie does not guard against null keys,
+                    // we should guard against ArgumentNullException on Dictionary.Insert
+                    // when key == null.
+                    if (item.Key == null)
+                    {
+                        continue;
+                    }
+
+                    cookie[item.Key] = HttpUtility.UrlEncode(Convert.ToString(item.Value, CultureInfo.InvariantCulture));
                 }
                 httpContext.Response.Cookies.Add(cookie);
             }
