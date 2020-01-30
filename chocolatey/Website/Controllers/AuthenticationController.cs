@@ -45,7 +45,7 @@ namespace NuGetGallery
             return View();
         }
 
-        [HttpPost, RequireHttpsAppHarbor]
+        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
         public virtual ActionResult LogOn(SignInRequest request, string returnUrl)
         {
             // TODO: modify the Object.cshtml partial to make the first text box autofocus, or use additional metadata
@@ -77,6 +77,7 @@ namespace NuGetGallery
             return SafeRedirect(returnUrl);
         }
 
+        [HttpPost, RequireHttpsAppHarbor, ValidateAntiForgeryToken]
         public virtual ActionResult LogOff(string returnUrl)
         {
             formsAuthSvc.SignOut();
