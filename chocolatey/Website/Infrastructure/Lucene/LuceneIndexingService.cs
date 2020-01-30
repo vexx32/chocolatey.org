@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Elmah;
 using Lucene.Net.Index;
@@ -84,12 +85,28 @@ namespace NuGetGallery
 
                 if ((lastWriteTime == null) || IndexRequiresRefresh() || forceRefresh)
                 {
-                    EnsureIndexWriter(creatingIndex: true);
-                    Trace.WriteLine("Lucene Index: Deleting index");
-                    _indexWriter.DeleteAll();
-                    Trace.WriteLine("Lucene Index: Index delete completed");
-                    _indexWriter.Commit();
-                    Trace.WriteLine("Lucene Index: Index delete committed");
+                    void handleOutOfMemory()
+                    {
+                        _indexWriter.Dispose();
+                        _indexWriter = null;
+
+                        EnsureIndexWriter(creatingIndex: true);
+                    }
+
+                    void nukeIndex()
+                    {
+                        EnsureIndexWriter(creatingIndex: true);
+                        Debug.Assert(_indexWriter != null);
+
+                        Trace.WriteLine("Lucene Index: Deleting index");
+                        _indexWriter.DeleteAll();
+                        Trace.WriteLine("Lucene Index: Index delete completed");
+
+                        _indexWriter.Commit();
+                        Trace.WriteLine("Lucene Index: Index delete committed");
+                    }
+
+                    DoAndRetryOnOutOfMemory(nukeIndex, handleOutOfMemory);
 
                     // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the packages
                     lastWriteTime = null;
@@ -131,26 +148,34 @@ namespace NuGetGallery
                     {
                         var packageRepo = new EntityRepository<Package>(context);
                         package = packageRepo.GetAll()
-                                    .Where(p => (p.IsLatest || p.IsLatestStable) && p.PackageRegistrationKey == packageRegistrationKey)
-                                    .Include(p => p.PackageRegistration)
-                                    .Include(p => p.PackageRegistration.Owners)
-                                    .Include(p => p.SupportedFrameworks)
-                                    .FirstOrDefault();
+                            .Where(p => (p.IsLatest || p.IsLatestStable) && p.PackageRegistrationKey == packageRegistrationKey)
+                            .Include(p => p.PackageRegistration)
+                            .Include(p => p.PackageRegistration.Owners)
+                            .Include(p => p.SupportedFrameworks)
+                            .FirstOrDefault();
                     }
                 }
 
-                // Just update the provided package
+                void handleOutOfMemory() => DisposeAndEnsureIndexWriter(creatingIndex: false);
+
                 EnsureIndexWriter(creatingIndex: false);
+
+                // Just update the provided package
                 if (package != null)
                 {
-                    var indexEntity = new PackageIndexEntity(package);
-                    _indexWriter.UpdateDocument(updateTerm, indexEntity.ToDocument());
+                    var document = new PackageIndexEntity(package).ToDocument();
+
+                    DoAndRetryOnOutOfMemory(
+                        () => _indexWriter.UpdateDocument(updateTerm, document),
+                        handleOutOfMemory,
+                        waitMilliseconds: 50);
                 }
                 else
                 {
-                    _indexWriter.DeleteDocuments(updateTerm);
+                    DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(new Term[] { updateTerm }), handleOutOfMemory, waitMilliseconds: 50);
                 }
-                _indexWriter.Commit();
+
+                DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), handleOutOfMemory);
             }
         }
 
@@ -219,19 +244,109 @@ namespace NuGetGallery
 
         private void AddPackagesCore(IList<PackageIndexEntity> packages, bool creatingIndex)
         {
+            void handleOutOfMemory() => DisposeAndEnsureIndexWriter(creatingIndex);
             if (!creatingIndex)
             {
                 // If this is not the first time we're creating the index, clear any package registrations for packages we are going to updating.
                 var packagesToDelete = from packageRegistrationKey in packages.Select(p => p.Package.PackageRegistrationKey).Distinct()
                                        select new Term("PackageRegistrationKey", packageRegistrationKey.ToString(CultureInfo.InvariantCulture));
-                _indexWriter.DeleteDocuments(packagesToDelete.ToArray());
+
+                DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(packagesToDelete.ToArray()), handleOutOfMemory);
             }
+
+            EnsureIndexWriter(creatingIndex);
 
             // As per http://stackoverflow.com/a/3894582. The IndexWriter is CPU bound, so we can try and write multiple packages in parallel.
             // The IndexWriter is thread safe and is primarily CPU-bound.
             Parallel.ForEach(packages, AddPackage);
 
-            _indexWriter.Commit();
+            Debug.Assert(_indexWriter != null);
+            DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), handleOutOfMemory);
+        }
+
+        /// <summary>
+        /// Execute a function which may need to be retried upon encountering an OutOfMemoryException.
+        /// </summary>
+        /// <param name="action">Action to try/retry.</param>
+        /// <param name="handleException">Action to take to handle the OutOfMemoryException.</param>
+        /// <param name="numberOfAttempts">Number of retry attempts.</param>
+        /// <param name="waitMilliseconds">Milliseconds to wait between retry attempts.</param>
+        /// <param name="increaseWaitOnRetryMilliseconds">Additional wait time between successive retry attempts if there is a repeated failure.
+        /// <remarks>
+        /// Per https://lucenenetdocs.azurewebsites.net/api/Lucene.Net/Lucene.Net.Index.IndexWriter.html we should expect and handle OutOfMemoryException.
+        /// </remarks>
+        private static void DoAndRetryOnOutOfMemory(Action action, Action handleException, int numberOfAttempts = 3, int waitMilliseconds = 100, int increaseWaitOnRetryMilliseconds = 0)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            DoAndRetryOnOutOfMemory(
+                () =>
+                    {
+                        action.Invoke();
+                        return true;
+                    },
+                handleException,
+                numberOfAttempts,
+                waitMilliseconds,
+                increaseWaitOnRetryMilliseconds);
+        }
+
+        /// <summary>
+        /// Execute a function which may need to be retried upon encountering an OutOfMemoryException.
+        /// </summary>
+        /// <typeparam name="T">Return type from the function.</typeparam>
+        /// <param name="function">Action to try/retry.</param>
+        /// <param name="handleException">Action to take to handle the OutOfMemoryException.</param>
+        /// <param name="numberOfAttempts">Number of retry attempts.</param>
+        /// <param name="waitMilliseconds">Milliseconds to wait between retry attempts.</param>
+        /// <param name="increaseWaitOnRetryMilliseconds">Additional wait time between successive retry attempts if there is a repeated failure.</param>
+        /// <returns>The result from the executed function upon successful execution.</returns>
+        /// <remarks>
+        /// Per https://lucenenetdocs.azurewebsites.net/api/Lucene.Net/Lucene.Net.Index.IndexWriter.html we should expect and handle OutOfMemoryException.
+        /// </remarks>
+        private static T DoAndRetryOnOutOfMemory<T>(Func<T> function, Action handleException, int numberOfAttempts = 3, int waitMilliseconds = 100, int increaseWaitOnRetryMilliseconds = 0)
+        {
+            if (numberOfAttempts <= 0)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("The parameter '{0}' must be greater than zero.", nameof(numberOfAttempts)));
+            }
+
+            var result = default(T);
+            if (function == null)
+            {
+                return result;
+            }
+
+            Trace.WriteLine("Starting retryable action");
+
+            for (int attempts = 1; attempts <= numberOfAttempts; attempts++)
+            {
+                try
+                { 
+                    result = function.Invoke();
+                    break;
+                }
+                catch (OutOfMemoryException ex)
+                {
+                    if (attempts >= numberOfAttempts)
+                    {
+                        throw ex;
+                    }
+                    else {
+                        Trace.WriteLine("Out of Memory exception detected. Executing failure handling.");
+                        handleException.Invoke();
+                    }
+
+                    Thread.Sleep(waitMilliseconds + (attempts * increaseWaitOnRetryMilliseconds));
+                    Trace.WriteLine("Retrying action.");
+                }
+            }
+
+            Trace.WriteLine("Retryable action succeeded.");
+            return result;
         }
 
         public virtual DateTime? GetLastWriteTime()
@@ -246,7 +361,11 @@ namespace NuGetGallery
 
         private void AddPackage(PackageIndexEntity packageInfo)
         {
-            _indexWriter.AddDocument(packageInfo.ToDocument());
+            EnsureIndexWriter(creatingIndex: false);
+
+            DoAndRetryOnOutOfMemory(
+                () => _indexWriter.AddDocument(packageInfo.ToDocument()), 
+                handleException: () => DisposeAndEnsureIndexWriter(creatingIndex: false));
         }
 
         protected void EnsureIndexWriter(bool creatingIndex)
@@ -270,6 +389,14 @@ namespace NuGetGallery
                     EnsureIndexWriterCore(creatingIndex);
                 }
             }
+        }
+
+        protected void DisposeAndEnsureIndexWriter(bool creatingIndex)
+        {
+            _indexWriter.Dispose();
+            _indexWriter = null;
+
+            EnsureIndexWriter(creatingIndex);
         }
 
         private void EnsureIndexWriterCore(bool creatingIndex)
