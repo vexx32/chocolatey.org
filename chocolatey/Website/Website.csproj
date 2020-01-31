@@ -1409,6 +1409,7 @@
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
     <Content Include="Scripts\home\bundle.txt" />
+    <Content Include="Scripts\install-steps\install-steps.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\manageowners\bundle.txt" />
     <Content Include="Scripts\manageowners\knockout.3.5.0.js" />
