@@ -677,5 +677,11 @@ SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
                     TotalFileScans = stats.TotalFileScans.ToString("n0")
                 }, JsonRequestBehavior.AllowGet);
         }
+
+        [ActionName("Home")]
+        public virtual ActionResult IsAuthenticatedAjax()
+        {
+            return Json(new { isAuthenticated = @Request.IsAuthenticated }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

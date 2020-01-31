@@ -460,16 +460,31 @@ function getCookie(name) {
 
 // Set Login/Logoff Navigation
 $(function () {
+    // Only check authentication on certain parts of the site
+    var authenticatedURL = window.location.href.indexOf("/packages") > -1 || window.location.href.indexOf("/courses") > -1 || window.location.href.indexOf("/account") > -1 || window.location.href.indexOf("/profiles") > -1;
+    if (authenticatedURL) {
+        $.ajax({
+            type: "POST",
+            url: window.location.protocol + "//" + window.location.host,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: authenticationSuccess
+        });
+    }
+});
+
+function authenticationSuccess(data, status) {
     var uxLogoff = $('.ux_logoff');
     var uxLogin = $('.ux_login');
-    if (getCookie('.ChocolateyGalleryAuthentication')) {
+    $('.authentication-error').remove();
+    if (data.isAuthenticated) {
         uxLogoff.removeClass('d-none');
         uxLogin.addClass('d-none');
     } else {
         uxLogoff.addClass('d-none');
         uxLogin.removeClass('d-none');
     }
-});
+}
 
 // Invisible input used for newsletter form
 var tmpElement = document.createElement('input');
