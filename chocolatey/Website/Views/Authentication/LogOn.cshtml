@@ -20,7 +20,7 @@
 <h3 class="text-center">Chocolatey Community Login</h3>
 <p class="text-center"><small>Don't have an account yet? <a href="@Url.Action(MVC.Users.Register())">Register now.</a></small></p>
 <hr class="mb-0" />
-@using (Html.BeginForm())
+@using (Html.BeginForm("LogOn", "Authentication", FormMethod.Post, new { id = "i-recaptcha" }))
 {
     <fieldset class="form">
         <legend class="d-none">Log On Form</legend>
@@ -52,11 +52,6 @@
     </fieldset>
 }     
 @section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
     <script language="javascript" type="text/javascript">
         ((window.gitter = {}).chat = {}).options = {
             room: 'chocolatey/chocolatey.org'

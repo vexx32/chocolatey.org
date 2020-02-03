@@ -25,7 +25,7 @@
                 <div class="callout callout-warning">
                     <strong>If you have found an issue or have questions</strong> (related to open source usage or package install issues), do not use this form! Please see <a href="@Url.RouteUrl(RouteName.Support)">Support</a> and <a href="@Url.RouteUrl(RouteName.ReportIssue)">Report Issue</a> for details.
                 </div>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("ContactGeneral", "Pages", FormMethod.Post, new { id = "i-recaptcha" }))
                 {
                 <fieldset class="form">
                     <legend class="d-none">Question or comments?</legend>
@@ -93,11 +93,3 @@
         </div>
     </div>
 </section>
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
-}

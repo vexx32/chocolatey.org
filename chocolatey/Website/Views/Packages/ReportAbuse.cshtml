@@ -39,7 +39,7 @@
             <div class="callout callout-danger">
                 <p><strong>Do not share sensitive information with this form.</strong></p>
             </div>
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("ReportAbuse", "Packages", FormMethod.Post, new { id = "i-recaptcha" }))
             {
                 <fieldset class="form">
                     <legend class="d-none">Report Abuse</legend>
@@ -89,11 +89,6 @@
 </section>
 
 @section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
     <script language="javascript" type="text/javascript">
         ((window.gitter = {}).chat = {}).options = {
             room: 'chocolatey/chocolatey.org'

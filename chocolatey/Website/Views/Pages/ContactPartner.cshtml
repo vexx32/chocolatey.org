@@ -22,7 +22,7 @@
             <div class="col-lg-8">
                 <h2 class="text-primary">Partner with Chocolatey Software</h2>
                 <h4>Please provide the information below and we'll reach out as soon as possible.</h4>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("ContactPartner", "Pages", FormMethod.Post, new { id = "i-recaptcha" }))
                 {
                     <fieldset class="form">
                         <legend class="d-none">Question or comments?</legend>
@@ -86,11 +86,3 @@
         </div>
     </div>
 </section>
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
-}

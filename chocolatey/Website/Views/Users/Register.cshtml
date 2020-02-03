@@ -18,7 +18,7 @@
 <h3 class="text-center">Create a New Account</h3>
 <p class="text-center"><small>Already have an account? <a href="@Url.LogOn()">Log On.</a></small></p>
 <hr class="mb-0" />
-@using (Html.BeginForm())
+@using (Html.BeginForm("Register", "Users", FormMethod.Post, new { id = "i-recaptcha" }))
 {
     <fieldset class="form">
         <legend class="d-none">Register Form</legend>
@@ -55,12 +55,4 @@
         <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Register" title="Register" />
         <p class="mb-0 mt-2 text-center"><small><a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a></small></p>
     </fieldset>
-}
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
 }

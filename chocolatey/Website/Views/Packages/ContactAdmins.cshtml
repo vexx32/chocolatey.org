@@ -39,7 +39,7 @@
             <div class="callout callout-danger">
                 <p><strong>Do not share sensitive information with this form.</strong></p>
             </div>
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("ContactAdmins", "Packages", FormMethod.Post, new { id = "i-recaptcha" }))
             {
                 <fieldset class="form">
                     <legend class="d-none">Contact Admins</legend>
@@ -79,11 +79,3 @@
         </div>
     </div>
 </section>
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
-}
