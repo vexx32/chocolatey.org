@@ -1,5 +1,5 @@
 # =====================================================================
-# Copyright 2017 - Present Chocolatey Software, Inc, and the
+# Copyright 2017 - 2020 Chocolatey Software, Inc, and the
 # original authors/contributors from ChocolateyGallery
 # Copyright 2011 - 2017 RealDimensions Software, LLC, and the
 # original authors/contributors from ChocolateyGallery
@@ -86,13 +86,13 @@ Fix-PowerShellOutputRedirectionBug
 # will typically produce a message for PowerShell v2 (just an info
 # message though)
 try {
-  # Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
-  # Use integers because the enumeration values for TLS 1.2 and TLS 1.1 won't
-  # exist in .NET 4.0, even though they are addressable if .NET 4.5+ is
+  # Set TLS 1.2 (3072) as that is the minimum required by Chocolatey.org.
+  # Use integers because the enumeration value for TLS 1.2 won't exist
+  # in .NET 4.0, even though they are addressable if .NET 4.5+ is
   # installed (.NET 4.5 is an in-place upgrade).
-  [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48
+  [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 } catch {
-  Write-Output 'Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. If you see underlying connection closed or trust errors, you may need to do one or more of the following: (1) upgrade to .NET Framework 4.5+ and PowerShell v3, (2) specify internal Chocolatey package location (set $env:chocolateyDownloadUrl prior to install or host the package internally), (3) use the Download + PowerShell method of install. See https://chocolatey.org/install for all install options.'
+  Write-Output 'Unable to set PowerShell to use TLS 1.2. This is required for contacting Chocolatey as of 03 FEB 2020. https://chocolatey.org/blog/remove-support-for-old-tls-versions. If you see underlying connection closed or trust errors, you may need to do one or more of the following: (1) upgrade to .NET Framework 4.5+ and PowerShell v3+, (2) Call [System.Net.ServicePointManager]::SecurityProtocol = 3072; in PowerShell prior to attempting installation, (3) specify internal Chocolatey package location (set $env:chocolateyDownloadUrl prior to install or host the package internally), (4) use the Download + PowerShell method of install. See https://chocolatey.org/docs/installation for all install options.'
 }
 
 function Get-Downloader {
@@ -267,8 +267,8 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # SIG # Begin signature block
 # MIIcpwYJKoZIhvcNAQcCoIIcmDCCHJQCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCwOp6FidSBO5Iv
-# lE9iERBozojbv+kSIs4jFgY+Ky11ZqCCF7EwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDNxwdauklvXMYd
+# R6F324woy4ZDT1pBVoUMp0tAZ0LTVKCCF7EwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -400,22 +400,22 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # QTIgQXNzdXJlZCBJRCBDb2RlIFNpZ25pbmcgQ0ECEAf7Rdn3C1UpA2CXtPThQ3Aw
 # DQYJYIZIAWUDBAIBBQCggYQwGAYKKwYBBAGCNwIBDDEKMAigAoAAoQKAADAZBgkq
 # hkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGC
-# NwIBFTAvBgkqhkiG9w0BCQQxIgQgXsA5aCMtwLzuWhLs2FaLNT7REsusAIhwY2Iq
-# EkDS/Q8wDQYJKoZIhvcNAQEBBQAEggEArJzii4jIhomTeGpuqOAkkDvDQqvjf4Wq
-# IBlW4TP7BefeE/t+VzrwUmYJbJkaUOJBNzKvhXsCLieTPZIDCrEmdppIAUnDUlXa
-# +1W/liIDUNt5ah+UT+J/R2KluLt0pWDaihoMNTTTcxC7M1NMyg6tSnlTYLvpUqLj
-# LX8dJvNGcpiJ4imA/MvNPo7UC89xvm906L1o7iEpkUNBM2Dn2XSFflWDL+8+Q8L7
-# Chea9WExm20eB8Yf9KydxZCqg6jWtIrQ5cTggGo6ziYNzi0q+PBrREUE0euoq+Y5
-# /lwJwEKQ6vlUcGDVHYXNbd5YPqtYMEt5qV17TghBplxoLQCdhbpHeqGCAg8wggIL
+# NwIBFTAvBgkqhkiG9w0BCQQxIgQgVOMYjIaBHu7LkOhlbFNa1FFBBUFQu8BKOfZZ
+# AK2CtCUwDQYJKoZIhvcNAQEBBQAEggEAccxIsQDitasvwWmCy+JQLBU4qNfShPld
+# fVFg7Dte5/KpHMEd6rgw0ECoN1H8nabSf3dVMPDWGTdXzYVc+zB5Nmhlwy/9CGAs
+# XmIICX16xcwYb18miih52j/m5JXT4NhTIl/+e5mF4nyoJUJeBJwIUSDuV3rHyOpE
+# 90BGZXJPX2ItGbp1J//bMDECzkxRtSRDxNCQ8QlS0YBc2h+ftQFmlmb86N8XCqdB
+# 32paBD1OmhH7tVB9eXQRQ9rtNLbVUB790d/IGYkHU7zlVMwxpI7wYNqgdcV9bv5z
+# O9GaG8QaQXxxtIB/hH5m5wWvcberqJb2qr5Ke6U1mPV1T6G6TGdctKGCAg8wggIL
 # BgkqhkiG9w0BCQYxggH8MIIB+AIBATB2MGIxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xITAfBgNV
 # BAMTGERpZ2lDZXJ0IEFzc3VyZWQgSUQgQ0EtMQIQAwGaAjr/WLFr1tXq5hfwZjAJ
 # BgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-# CQUxDxcNMTgwNzA0MjAyOTU3WjAjBgkqhkiG9w0BCQQxFgQUCIzjahafhtTjn6Nk
-# oo8bBRxKBmswDQYJKoZIhvcNAQEBBQAEggEAGEYMaE39CtWQozI5L+tmWxb7JSOA
-# DgUlD3f6oJ5/Y/IYWovlninVi1ZV7PeOfyCHP+W2zrD51AXRX2ZW7EF6MBaNqUP5
-# ye+h24SqvqxTbiv01uiS7r5u6Grr1H6/9OLn7yUSK/9lJ+k2Ee0QRlXi5/rVmT05
-# BBxpRGDpppGM6fPZA8J2zAvxrz0RuTB0uUa48TpmZu2PyB59Rt+GIwNXDts4cRXY
-# 9SxAsrtpCJastjdJwT+hAPTtPfrUVYiLLjG3Ft6+8r9WGSlQWUwgAzXtKoP+Hbsv
-# 9WT3RRowlsmEvOVqdEHh2pIPfpQgIzf+D7fAr6BZCAvrJiMYMfQVs4QMDA==
+# CQUxDxcNMjAwMjAzMjMyMDM0WjAjBgkqhkiG9w0BCQQxFgQUSnVQXFG9NidxPlpR
+# Zbf9t65cx2kwDQYJKoZIhvcNAQEBBQAEggEAjYp0Jxu1YrtyAMqkTcZGZiCIlXmU
+# lMC4R2U7khCr43di3jOtC30GguZwi7ufRNR5pH99y3NXvgSyxyaVgm5oVwImehXH
+# CutecXG6SnVgdfxfYUwm/Wc53+CiVLOPEiM0JkC/DfkrAHXj5t4o1UnB0tNVTk34
+# tl2SLjCMlUekev/q60E6urwhhrYLPwXkW78O6m45z1s/DtjXVR0n8IvTYog2deoq
+# Dc+8nI3SEw9iq9MHM71/pZvXaLZy5jdA1fjT/zYeETZDmG+lCkjiqKA92432FDV0
+# w13XwJt/8OrVhpknNJUYbZhGzk4pwCyCUyDjtbbw6z09Yh7haC5WZ4HdbA==
 # SIG # End signature block

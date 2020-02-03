@@ -1,5 +1,5 @@
 # =====================================================================
-# Copyright 2017 - Present Chocolatey Software, Inc, and the
+# Copyright 2017 - 2020 Chocolatey Software, Inc, and the
 # original authors/contributors from ChocolateyGallery
 # Copyright 2011 - 2017 RealDimensions Software, LLC, and the
 # original authors/contributors from ChocolateyGallery
@@ -59,6 +59,20 @@ function Fix-PowerShellOutputRedirectionBug {
 }
 
 Fix-PowerShellOutputRedirectionBug
+
+# Attempt to set highest encryption available for SecurityProtocol.
+# PowerShell will not set this by default (until maybe .NET 4.6.x). This
+# will typically produce a message for PowerShell v2 (just an info
+# message though)
+try {
+  # Set TLS 1.2 (3072) as that is the minimum required by Chocolatey.org.
+  # Use integers because the enumeration value for TLS 1.2 won't exist
+  # in .NET 4.0, even though they are addressable if .NET 4.5+ is
+  # installed (.NET 4.5 is an in-place upgrade).
+  [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+} catch {
+  Write-Output 'Unable to set PowerShell to use TLS 1.2. This is required for contacting Chocolatey as of 03 FEB 2020. https://chocolatey.org/blog/remove-support-for-old-tls-versions. If you see underlying connection closed or trust errors, you may need to do one or more of the following: (1) upgrade to .NET Framework 4.5+ and PowerShell v3+, (2) Call [System.Net.ServicePointManager]::SecurityProtocol = 3072; in PowerShell prior to attempting installation, (3) specify internal Chocolatey package location (set $env:chocolateyDownloadUrl prior to install or host the package internally), (4) use the Download + PowerShell method of install. See https://chocolatey.org/docs/installation for all install options.'
+}
 
 function Download-File {
 param (
@@ -164,8 +178,8 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # SIG # Begin signature block
 # MIIcpwYJKoZIhvcNAQcCoIIcmDCCHJQCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBv70cU1pPKGq4H
-# XlrAowF2NqolGzue2OyILLEJ7jPhDqCCF7EwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCKNsxLJzuupWvF
+# u0P8C+MQaRpc+RAd3XsZlTBV8ziZJaCCF7EwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -297,22 +311,22 @@ Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
 # QTIgQXNzdXJlZCBJRCBDb2RlIFNpZ25pbmcgQ0ECEAf7Rdn3C1UpA2CXtPThQ3Aw
 # DQYJYIZIAWUDBAIBBQCggYQwGAYKKwYBBAGCNwIBDDEKMAigAoAAoQKAADAZBgkq
 # hkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGC
-# NwIBFTAvBgkqhkiG9w0BCQQxIgQg4gPo4SV8ppSJwfoOf45IZJ4ew4El9WCCaatd
-# VZ8MlB0wDQYJKoZIhvcNAQEBBQAEggEATVAEDysoCJWQ6fegkzwUvqFP9OIq75Mp
-# BW1AAnoVJ5XkWRK7eVa2EmU576edxvVArH0klCnn/ywsX4/a2CZ3K4CpjvHVepcN
-# iUVAMEA/+DskCZvYI+rs/FHh5OUe6xPcnnj/KCnGXU9DIv2T9rmETcbgHPYLqYqs
-# WvfxcvcvTWHQbmpOlmG3SGwX43DGEJcouqdNYNE/+TMHzmdfMBeCdaOHNCLGViaC
-# jMC1OGFxSDC48XlFMXKR0cy0LIx09YIko0tAKSNSf1L6/PuXZLSn2q2JCRKIJkS9
-# GgprQqMknoN8ScVHyWDw8f9Chn/N8HX8XvKIrDN3/EaqG/Vo2l4s1KGCAg8wggIL
+# NwIBFTAvBgkqhkiG9w0BCQQxIgQgQg0a9c0Q/L08FbpsX5mxywxq3IcA8wj1T/+r
+# PY+QVUEwDQYJKoZIhvcNAQEBBQAEggEANnXMQzsDqro9rRnHWcYYcUUMNbDOhzKR
+# K3H+VbV80Yy7rJIyNsKoPqdTfoQKLlmBEJxL/EztVfxtaeezNTKoYeUCfuNcHdjy
+# jTK1B5hEG8zpTQCiWuvBLcA1QCWqJCmP//xd+W0Ft8g+UfRP9DExEaHH+l9/dTRY
+# 9iYg9goIcV7wbDrKNF2u4zbg2BuBVpq3tQ20nbabjQ08BBz1O5XIsQmWUwxMNk5L
+# iz9bdecnCbn3xHzI5aEJpWhzjy96aFI7UnnlYuZQMqBz8sirboowwld7UsaCadPP
+# REcQQzTkKrmdI0YCN9NahxQkOkFbJJHgyQBLsOwQJWyL6YCLs/6v9aGCAg8wggIL
 # BgkqhkiG9w0BCQYxggH8MIIB+AIBATB2MGIxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xITAfBgNV
 # BAMTGERpZ2lDZXJ0IEFzc3VyZWQgSUQgQ0EtMQIQAwGaAjr/WLFr1tXq5hfwZjAJ
 # BgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-# CQUxDxcNMTgwNzA0MjAzMDAwWjAjBgkqhkiG9w0BCQQxFgQUQW6bOzXcgzjsqSGN
-# Xb6X9TfwdbwwDQYJKoZIhvcNAQEBBQAEggEAh4hd9Hl7CXUjC4wAZgqIHbi9d3zj
-# VyS3kGrQKE5Ry0ZWalpL/LtLRx+8TNYTAHiN9629Y5lNThd1FLKJoV9sk63ZmPYI
-# 63xc3YZE2zZ5t9ArYsnR05iGfQJEIpFIC+V3k/XlOtlGLyReyRtObQgk3a/b5FYI
-# xL56rSQ+qyWdRImYKGo9WJKT7/1QdwQE08CkIuEYaSytBLpK3ZILUoUOBWTqYKCn
-# NEkLAqiaWvLP96uySnGt0mr5f0lwJtOMrPT7JpE4jasN8JcW54XMXXgcv+SUeJhU
-# JQRCn/AA6cL9HkwpTCJvhsdmtA1CdaMtaI6hDJk78scuxge8RDjGGd4QoQ==
+# CQUxDxcNMjAwMjAzMjMyMDM2WjAjBgkqhkiG9w0BCQQxFgQUcsRIeBCIm/C907OG
+# RsTDvPTje0MwDQYJKoZIhvcNAQEBBQAEggEAdUd2R6Yx1/1uKpp3QlAnNDEQRFs+
+# vSs7ULRhWW2pvljboPs2NX2FRN93+LMSEB6xiONyrJcnXdC1hBUPwoccBclwNVUu
+# eLyHTBfH6lT7IVUvZqA2Zy6zeNK6B5Fkd/68q4RIojOxW2DDPOJUD9t2qU2v5xzh
+# 7vmQIHvfwPU0wNWqw+ekZCdx6Yfo9/UIE10wPrkzdyXFEdZaDOAxYcgzsnMi7Lix
+# zphGqOxLrudU3O3Y6IQpQANUCf6fRPMefaxHyTqbLgJ5wqTgQ3UWXNiQrCjmJvY/
+# QdvpFbCS6Epa9EeMx+C1W+6ig8g91ivnDxdGKJB/Iq6zF/O6n60h4XPybw==
 # SIG # End signature block

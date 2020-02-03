@@ -41,8 +41,8 @@
             <h4 class="mb-3">Know the Requirements:</h4>
             <ul>
                 <li>Windows 7+ / Windows Server 2003+</li>
-                <li>PowerShell v2+</li>
-                <li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)</li>
+                <li>PowerShell v2+ (minimum is v3 for install from this website due to <a href="https://chocolatey.org/blog/remove-support-for-old-tls-versions">TLS 1.2 requirement</a>)</li>
+                <li>.NET Framework 4+ (the installation will attempt to install .NET 4.0 if you do not have it installed)(minimum is 4.5 for install from this website due to <a href="https://chocolatey.org/blog/remove-support-for-old-tls-versions">TLS 1.2 requirement</a>)</li>
             </ul>
             <hr class="my-3" />
             <h4 class="mb-3">Chocolatey Install:</h4>
@@ -71,18 +71,18 @@
                             <p>Now run the following command:</p>
                             <div class="input-group">
                                 <input type="text" class="form-control"
-                                        value="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))"
+                                        value="Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))"
                                         aria-label="Install with powershell.exe command"
                                         readonly>
                                 <div class="input-group-append">
                                     <button class="btn btn-primary tt"
-                                            aria-label="Copy Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)) to Clipboard"
+                                            aria-label="Copy Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)) to Clipboard"
                                             data-toggle="tooltip"
                                             title="Copy to Clipboard"
-                                            data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))">
+                                            data-clipboard-text="Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))">
                                         <i class="fas fa-clipboard" aria-hidden="true">
                                             <span class="sr-only">
-                                                Copy Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)) to Clipboard
+                                                Copy Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;)) to Clipboard
                                             </span>
                                         </i>
                                     </button>
@@ -224,11 +224,11 @@ Fix-PowerShellOutputRedirectionBug
 # will typically produce a message for PowerShell v2 (just an info
 # message though)
 try {
-# Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
+# Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192)
 # Use integers because the enumeration values for TLS 1.2 and TLS 1.1 won't
 # exist in .NET 4.0, even though they are addressable if .NET 4.5+ is
 # installed (.NET 4.5 is an in-place upgrade).
-[System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48
+[System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192
 } catch {
 Write-Output 'Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. If you see underlying connection closed or trust errors, you may need to upgrade to .NET Framework 4.5+ and PowerShell v3+.'
 }
@@ -433,8 +433,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 
                                         </div>
                                         <div class="tab-pane fade" id="ansible" role="tabpanel" aria-labelledby="ansible-tab">
-                                          <p>1. Follow the steps in the Generic tab, you will need to have finished getting a script ready and accessible over a url to complete this part.</p> 
-                                          <p>2. Add the following to your playbook:</p> 
+                                          <p>1. Follow the steps in the Generic tab, you will need to have finished getting a script ready and accessible over a url to complete this part.</p>
+                                          <p>2. Add the following to your playbook:</p>
 <pre class="language-yaml line-numbers border py-3"><code>
 - name: Ensure Chocolatey installed from internal repo
   win_chocolatey:
@@ -455,7 +455,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 #  https://chocolatey.org/api/v2/package/chocolatey
 node['chocolatey']['install_vars']['chocolateyDownloadUrl'] = 'STEP 3 URL/check_this/chocolatey.VERSION.nupkg'
 node['chocolatey']['upgrade'] = true
-include_recipe 'chocolatey::default' 
+include_recipe 'chocolatey::default'
 </code></pre>
                                           <p>The install of Chocolatey is separate from the Chef built-in resources. You will need the <a href="https://supermarket.chef.io/cookbooks/chocolatey/" target="_blank" rel="noreferrer">Chocolatey Cookbook</a>.</p>
                                         </div>
@@ -464,8 +464,8 @@ include_recipe 'chocolatey::default'
                                             <p>Requires Otter Chocolatey Extension. See docs at <a href="https://inedo.com/den/otter/chocolatey" target="_blank" rel="noreferrer">https://inedo.com/den/otter/chocolatey</a>.</p>
                                         </div>
                                         <div class="tab-pane fade" id="psdsc" role="tabpanel" aria-labelledby="psdsc-tab">
-                                          <p>1. Follow the steps in the Generic tab, you will need to have finished getting a script ready and accessible over a url to complete this part.</p> 
-                                          <p>2. Add the following to your DSC script:</p> 
+                                          <p>1. Follow the steps in the Generic tab, you will need to have finished getting a script ready and accessible over a url to complete this part.</p>
+                                          <p>2. Add the following to your DSC script:</p>
 <pre class="language-powershell line-numbers border py-3"><code>
 cChocoInstaller InstallChocolatey
 {
@@ -493,8 +493,8 @@ class {'chocolatey':
                                             <p>See docs at <a href="https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html" target="_blank" rel="noreferrer">https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.chocolatey.html</a>.</p>
                                         </div>
                                     </div>
-                    
-   
+
+
                     @*Step 5*@
                     <h4 class="mt-4">5. Ensure you are set up for organizational deployment</h4>
                     <p>Please see the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">organizational deployment guide</a>.</p>
@@ -518,7 +518,7 @@ class {'chocolatey':
                 <h4 class="mb-3">Chocolatey Licensed Install:</h4>
                 <p>Are you also installing a commercial edition of Chocolatey?</p>
                 <p>Please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation-licensed" })">Install the Licensed Edition</a>.</p>
-                
+
                 <hr class="my-3" />
                     <h4 class="mb-3">Advanced Chocolatey Install:</h4>
                     <p>Are you installing behind a proxy, need a completely offline install, or wanting to install a licenced edition of Chocolatey? Need even more options? Visit our Documentation or take our new Installation Course to help you get up and running with Chocolatey!</p>
