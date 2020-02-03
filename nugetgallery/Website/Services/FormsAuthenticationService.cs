@@ -31,17 +31,17 @@ namespace NuGetGallery
             );
 
             string encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-            //var sslRequired = ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
-
+            var sslRequired = System.Configuration.ConfigurationManager.AppSettings.Get("ForceSSL").Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase);
             var formsCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-            //todo switch to HttpOnly
-            //{
-            //    HttpOnly = true,
-            //    Secure = sslRequired
-            //};
+
+            if (!HttpContext.Current.Request.IsLocal)
+            {
+                formsCookie.HttpOnly = true;
+                formsCookie.Secure = sslRequired;
+            }
 
             context.Response.Cookies.Add(formsCookie);
+
         }
 
         public void SignOut()
