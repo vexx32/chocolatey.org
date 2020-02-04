@@ -21,7 +21,7 @@
             <div class="col-xl-10 mx-auto">
                 <h2 class="text-primary">Blocked IP Address</h2>
                 <h4>Please provide the information below and we'll reach out as soon as possible.</h4>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("ContactBlocked", "Pages", FormMethod.Post, new { id = "i-recaptcha" }))
                 {
                 <fieldset class="form">
                     <legend class="d-none">Blocked IP Address</legend>
@@ -87,11 +87,3 @@
         </div>
     </div>
 </section>
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
-}

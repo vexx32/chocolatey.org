@@ -22,7 +22,7 @@
             <div class="col-xl-6 mx-auto">
                 <h2 class="text-primary">Chocolatey Software Student Discount</h2>
                 <h4>Please provide the information below and we'll reach out as soon as possible.</h4>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("Discount", "Pages", FormMethod.Post, new { id = "i-recaptcha" }))
                 {
                     <fieldset class="form">
                         <legend class="d-none">Student Discount</legend>
@@ -58,11 +58,3 @@
         </div>
     </div>
 </section>
-
-@section BottomScripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('fieldset').parent().attr('id', 'i-recaptcha');
-        });
-    </script>
-}
