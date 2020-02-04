@@ -476,10 +476,12 @@ $(function () {
 function authenticationSuccess(data, status) {
     var uxLogoff = $('.ux_logoff');
     var uxLogin = $('.ux_login');
+    var uxProfile = $('.ux_profile');
     $('.authentication-error').remove();
     if (data.isAuthenticated) {
         uxLogoff.removeClass('d-none');
         uxLogin.addClass('d-none');
+        uxProfile.find('a').prop('href', '/profiles/' + data.userName);
     } else {
         uxLogoff.addClass('d-none');
         uxLogin.removeClass('d-none');

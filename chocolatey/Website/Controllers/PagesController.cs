@@ -20,6 +20,7 @@ using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -32,11 +33,14 @@ namespace NuGetGallery
     {
         private readonly IAggregateStatsService statsSvc;
         private readonly IMessageService messageService;
+        private readonly IPrincipal currentUser;
 
-        public PagesController(IAggregateStatsService statsSvc, IMessageService messageService)
+        public PagesController(IAggregateStatsService statsSvc, IMessageService messageService, IPrincipal currentUser)
         {
             this.statsSvc = statsSvc;
             this.messageService = messageService;
+            this.currentUser = currentUser;
+
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
@@ -681,7 +685,17 @@ SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
         [ActionName("Home")]
         public virtual ActionResult IsAuthenticatedAjax()
         {
-            return Json(new { isAuthenticated = @Request.IsAuthenticated }, JsonRequestBehavior.AllowGet);
+            if (Request.IsAuthenticated)
+            {
+                return Json(
+                    new
+                    {
+                        isAuthenticated = true,
+                        userName = currentUser.Identity.Name
+                    }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { isAuthenticated = false }, JsonRequestBehavior.AllowGet);
         }
     }
 }
