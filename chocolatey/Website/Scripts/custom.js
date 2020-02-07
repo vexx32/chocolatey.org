@@ -1,5 +1,6 @@
 // Preloader
 $(window).on('load', function () {
+    $('.authentication-error').remove();
     $('#loader').fadeOut(500, function () {
         $(this).remove();
     });
@@ -477,7 +478,6 @@ function authenticationSuccess(data, status) {
     var uxLogoff = $('.ux_logoff');
     var uxLogin = $('.ux_login');
     var uxProfile = $('.ux_profile');
-    $('.authentication-error').remove();
     if (data.isAuthenticated) {
         uxLogoff.removeClass('d-none');
         uxLogin.addClass('d-none');
