@@ -1,4 +1,5 @@
-﻿<nav class="navbar bg-white border-bottom d-flex">
+﻿@Html.Partial("~/Views/Shared/_Loader.cshtml")
+<nav class="navbar bg-white border-bottom d-flex">
     <div class="container">
         <div class="authentication-error mx-auto text-danger">
             <p class="mb-0">Please enable JavaScript to view this sub navigation.</p>
@@ -35,7 +36,7 @@
                     <span>Account</span>
                 </a>
             </li>
-            <li>
+            <li class="ux_profile">
                 <a href="@Url.Action(MVC.Users.Profiles(User.Identity.Name))">
                     <span class="fas fa-user-alt" alt="Profile"></span>
                     <span>Profile</span>

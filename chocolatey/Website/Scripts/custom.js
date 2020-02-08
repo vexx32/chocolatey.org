@@ -1,5 +1,6 @@
 // Preloader
 $(window).on('load', function () {
+    $('.authentication-error').remove();
     $('#loader').fadeOut(500, function () {
         $(this).remove();
     });
@@ -476,10 +477,11 @@ $(function () {
 function authenticationSuccess(data, status) {
     var uxLogoff = $('.ux_logoff');
     var uxLogin = $('.ux_login');
-    $('.authentication-error').remove();
+    var uxProfile = $('.ux_profile');
     if (data.isAuthenticated) {
         uxLogoff.removeClass('d-none');
         uxLogin.addClass('d-none');
+        uxProfile.find('a').prop('href', '/profiles/' + data.userName);
     } else {
         uxLogoff.addClass('d-none');
         uxLogin.removeClass('d-none');
