@@ -22,3 +22,6 @@ Thumbs.db
 TestResults
 
 UpgradeLog*.htm
+
+tools/**
+!tools/packages.config
