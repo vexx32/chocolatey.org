@@ -1844,7 +1844,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <Import Project="$(SolutionDir)\packages\RazorGenerator.MsBuild.*\tools\RazorGenerator.targets" />
   <Import Project="$(ProjectDir)Cassette.targets" />
   <PropertyGroup>
