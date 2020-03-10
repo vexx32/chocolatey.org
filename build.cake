@@ -143,8 +143,15 @@ Task("Clean")
     CleanDirectory(buildData.BuildArtifactsDirectoryPath);
 });
 
-Task("Build")
+Task("Restore")
     .IsDependentOn("Clean")
+    .Does<BuildData>(buildData =>
+{
+    NuGetRestore(buildData.SolutionFilePath);
+});
+
+Task("Build")
+    .IsDependentOn("Restore")
     .Does<BuildData>(buildData =>
 {
     MSBuild(buildData.SolutionFilePath, new MSBuildSettings {
