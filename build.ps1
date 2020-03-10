@@ -180,7 +180,7 @@ if(-Not $SkipToolPackageRestore.IsPresent) {
     }
 
     Write-Verbose -Message "Restoring tools from NuGet..."
-    
+
     $NuGetOutput = Invoke-Expression "& $env:NUGET_EXE_INVOCATION install -ExcludeVersion -OutputDirectory `"$TOOLS_DIR`""
 
     if ($LASTEXITCODE -ne 0) {
@@ -252,5 +252,10 @@ $cakeArguments += $ScriptArgs
 
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& $CAKE_EXE_INVOCATION $($cakeArguments -join " ")"
+Invoke-Expression "& $CAKE_EXE_INVOCATION --bootstrap"
+if ($LASTEXITCODE -eq 0)
+{
+    Invoke-Expression "& $CAKE_EXE_INVOCATION $($cakeArguments -join " ")"
+}
+
 exit $LASTEXITCODE
