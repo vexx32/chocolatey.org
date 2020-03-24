@@ -5,12 +5,17 @@ A resource can have multiple Tags. Every resource must be tagged with the year i
 * success-story 
 * case-study
 * chocolatey-fest
+* tutorial
+* chocolatey-for-business
+* self-service
+* c4b
 * 2014
 * 2015
 * 2016
 * 2017
 * 2018
 * 2019
+* 2020
 
 ### Types
 A resource can only have one Type.
@@ -25,5 +30,6 @@ Each Type of file (Customer Success Story, Video, or Case Study) has a correspon
 * Customer Success Story - 01
 * Case Study - 02
 * Video - 03
+* Tutorial - 04
 
 For example: File name of "01-02-Example" would mean that it is a Customer Success Story and the 2nd file. The "01-02" part of the file name corresponds to the image that is used. In this example, the image associated with this file would be located in "images/videos/01-02.jpg".

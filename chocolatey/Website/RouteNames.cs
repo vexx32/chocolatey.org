@@ -104,5 +104,7 @@ namespace NuGetGallery
         public const string SearchResults = "search";
         public const string Styleguide = "Styleguide";
         public const string Business = "Business";
+        public const string Solutions = "Solutions";
+        public const string SelfService = "SelfService";
     }
 }

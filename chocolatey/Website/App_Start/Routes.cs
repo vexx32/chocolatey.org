@@ -336,6 +336,14 @@ namespace NuGetGallery
                 new { controller = "Courses", action = "CourseName", courseName = "home", courseModuleName = "home" }
                 );
 
+            var solutionsRoute = routes.MapRoute(
+                RouteName.Solutions,
+                "solutions/{solutionName}",
+                new { controller = "Solutions", action = "Solutions", solutionName = "home" }
+                );
+
+            routes.Redirect(r => r.MapRoute(RouteName.SelfService, "self-service")).To(solutionsRoute);
+
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 
             routes.MapRoute(

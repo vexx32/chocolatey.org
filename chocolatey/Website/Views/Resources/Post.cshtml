@@ -101,9 +101,18 @@
         </div>
         <div class="row">
             <div class="col-12 mx-auto">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.Video" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+                @if (!String.IsNullOrEmpty(Model.Video))
+                {
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.Video" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                }
+                else
+                { 
+                    <video class="embed-responsive embed-responsive-16by9" controls>
+                        <source src="@Url.Content("~/content/images/" + Model.InternalVideo)" type="video/mp4">
+                    </video>
+                }
             </div>
             @if (Model.Type.Contains("Customer Success Story"))
             {

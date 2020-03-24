@@ -669,3 +669,17 @@ function searchHelpHide() {
 $('.nav-search button, .search-box input, .search-box button, .search-box .search-help').click(function (event) {
     event.stopPropagation();
 });
+
+// Show image overlays on <video> element until clicked
+$.each($('.video-overlay'), function () {
+    $($(this)).click(function () {
+        var videoOverlayImage = $(this).find('.video-overlay-image');
+        var videoOverlayEmbed = $(this).find('.video-overlay-embed');
+
+        if (videoOverlayEmbed.hasClass('d-none')) {
+            videoOverlayImage.addClass('d-none');
+            videoOverlayEmbed.removeClass('d-none');
+            videoOverlayEmbed.get(0).play();
+        }
+    });
+});

@@ -333,12 +333,6 @@ a + .collapse.show, a + .collapsing {
     }
 }
 
-/*List*/
-.divider-list li:not(:last-child) {
-    border-bottom: 1px solid #ced4da;
-    display: block;
-}
-
 /*Switches*/
 .custom-switch .custom-control-label::after {
     top: 2px;

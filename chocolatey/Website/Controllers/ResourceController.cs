@@ -100,7 +100,7 @@ namespace NuGetGallery.Controllers
                 posts.Add(GetPost(postFile));
             }
 
-            return posts.OrderByDescending(p => p.Published).ToList();
+            return posts.OrderByDescending(p => p.Published).ThenBy(p => p.Title).ToList();
         }
 
         private ResourceViewModel GetPost(string filePath, string resourceName = null)
@@ -129,6 +129,7 @@ namespace NuGetGallery.Controllers
                 model.Quote = GetPostMetadataValue("Quote", contents);
                 model.Summary = GetPostMetadataValue("Summary", contents);
                 model.Post = Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
+                model.InternalVideo = GetPostMetadataValue("InternalVideo", contents);
             }
 
             return model;
