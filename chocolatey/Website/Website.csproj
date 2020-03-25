@@ -663,6 +663,7 @@
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\SolutionsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\StyleguideController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Entities\Course.cs" />
@@ -1253,6 +1254,7 @@
     <Content Include="Content\Images\gui.png" />
     <Content Include="Content\Images\ChocolateyGUI_main_screen.png" />
     <Content Include="Content\Images\headerbackground.png" />
+    <Content Include="Content\Images\headers\c4b-banner.jpg" />
     <Content Include="Content\Images\headers\chocolatey-staff.jpg" />
     <Content Include="Content\Images\headers\home.jpg" />
     <Content Include="Content\Images\headers\web.jpg" />
@@ -1305,6 +1307,8 @@
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\styleguide\logo-space.jpg" />
+    <Content Include="Content\Images\sync-watch.png" />
+    <Content Include="Content\Images\tangled-arrows.png" />
     <Content Include="Content\Images\team\gary-sq.jpg" />
     <Content Include="Content\Images\team\gary.png" />
     <Content Include="Content\Images\team\mukesh-sq.jpg" />
@@ -1589,7 +1593,6 @@
     <Content Include="Views\Courses\CreatingChocolateyPackages\ChocoNewCommand.cshtml" />
     <Content Include="Views\Pages\Sitemap.cshtml" />
     <Content Include="Views\Pages\Community.cshtml" />
-    <Content Include="Views\Pages\Products.cshtml" />
     <Content Include="Views\Pages\HowChocolateyWorks.cshtml" />
     <Content Include="Views\Pages\WhyChocolatey.cshtml" />
     <Content Include="Views\Pages\UseCases.cshtml" />
@@ -1774,6 +1777,9 @@
     <Content Include="Views\Documentation\Files\ReleaseNotesChocoCli.md" />
     <Content Include="Views\Documentation\Files\ReleaseNotesChocolateyGui.md" />
     <Content Include="Views\Solutions\SelfServiceAnywhere.cshtml" />
+    <Content Include="Views\Products\Home.cshtml" />
+    <Content Include="Views\Products\ChocolateyForBusiness.cshtml" />
+    <Content Include="Views\Pages\_TrustedBusinessCarousel.cshtml" />
     <Content Include="Views\Pages\Covid19.cshtml" />
     <Content Include="Views\Pages\_SelfServiceResources.cshtml" />
     <Content Include="Views\Resources\Files\04-0502-C4BSelfServiceAndChocolateyGuiDemo.md" />
@@ -1793,6 +1799,7 @@
     <Content Include="Views\Resources\Files\04-0401-C4BPackageInternalizerPart1.md" />
     <Content Include="Views\Resources\Files\04-0402-C4BPackageInternalizerPart2.md" />
     <Content Include="Views\Resources\Files\04-06-C4BChocolateyCentralManagement.md" />
+    <Content Include="Views\Shared\_C4BSubNavigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

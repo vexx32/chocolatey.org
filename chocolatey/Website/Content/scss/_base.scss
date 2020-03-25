@@ -22,7 +22,7 @@ q {
     display: inline-block;
 }
 
-.sticky-top:not(th):not(tr):not(.sticky-nav) {
+.sticky-top:not(th):not(tr):not(.sticky-nav):not(.c4b-nav) {
     top: 1rem;
 }
 #docs .docs-left .sticky-top {
@@ -243,11 +243,11 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
     bottom: 0;
 }
 
-.shape-border-white::before {
+.shape-border-white::before, .shape-border-white .shape-border::before {
     background: $white;
 }
 
-.shape-border-light::before {
+.shape-border-light::before, .shape-border-light .shape-border::before {
     background: $light;
 }
 

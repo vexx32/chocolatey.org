@@ -111,13 +111,14 @@ namespace NuGetGallery
                });
 
             var productsRoute = routes.MapRoute(
-                RouteName.Products, "products", new
-                {
-                    controller = "Pages",
-                    Action = "Products"
-                });
+                RouteName.Products,
+                "products/{productName}",
+                new { controller = "Products", action = "Products", productName = "home" }
+                );
 
-            routes.Redirect(r => r.MapRoute(RouteName.Business, "business")).To(productsRoute);
+            routes.Redirect(r => r.MapRoute(RouteName.Business, "business")).To(productsRoute, new { productName = "chocolatey-for-business"});
+            routes.Redirect(r => r.MapRoute(RouteName.ChocolateyForBusiness, "chocolatey-for-business")).To(productsRoute, new {productName = "chocolatey-for-business"});
+            routes.Redirect(r => r.MapRoute(RouteName.C4B, "c4b")).To(productsRoute, new { productName = "chocolatey-for-business" });
 
             routes.MapRouteSeo(
                RouteName.WhyChocolatey, "why-chocolatey", new

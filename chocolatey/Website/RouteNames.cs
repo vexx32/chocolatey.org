@@ -108,5 +108,7 @@ namespace NuGetGallery
         public const string Solutions = "Solutions";
         public const string SelfService = "SelfService";
         public const string Covid19 = "Covid19";
+        public const string ChocolateyForBusiness = "ChocolateyForBusiness";
+        public const string C4B = "C4B";
     }
 }
