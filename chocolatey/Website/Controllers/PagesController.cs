@@ -664,6 +664,12 @@ Thanks for requesting a discount. Please see the link below:
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Covid19()
+        {
+            return View("~/Views/Pages/Covid19.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
         public FileResult InstallerBatchFile()
         {
             const string batchFile = @"@echo off

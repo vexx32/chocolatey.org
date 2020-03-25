@@ -288,6 +288,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.Covid19, "covid-19", new
+                {
+                    controller = "Pages",
+                    Action = "Covid19"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Styleguide,
                 "styleguide/{styleguideName}",
                 new { controller = "Styleguide", action = "Styleguide", styleguideName = "home" }

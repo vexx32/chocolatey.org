@@ -1139,6 +1139,7 @@
     <Content Include="Content\Images\community-mockup.gif" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
+    <Content Include="Content\Images\covid-response.png" />
     <Content Include="Content\Images\dep-graph.svg" />
     <Content Include="Content\Images\docs\chocolateyicon.gif" />
     <Content Include="Content\Images\docs\chocolateyicon.png" />
@@ -1333,6 +1334,7 @@
     <Content Include="Content\Images\videos\03-01.jpg" />
     <Content Include="Content\Images\videos\04-01.jpg" />
     <Content Include="Content\Images\videos\04-02.jpg" />
+    <Content Include="Content\Images\videos\blog-01.jpg" />
     <Content Include="Content\Images\videos\CaseStudy.jpg" />
     <Content Include="Content\Images\videos\01-01.jpg" />
     <Content Include="Content\Images\videos\02-01.jpg" />
@@ -1759,6 +1761,7 @@
     <Content Include="Views\Shared\_PackageStatusSubNavigation.cshtml" />
     <Content Include="Views\Shared\_ResourceSubNavigation.cshtml" />
     <Content Include="Views\Solutions\SelfServiceAnywhere.cshtml" />
+    <Content Include="Views\Pages\Covid19.cshtml" />
     <Content Include="Views\Pages\_SelfServiceResources.cshtml" />
     <Content Include="Views\Resources\Files\04-01-C4BSelfServiceAndChocolateyGuiDemo.md" />
     <Content Include="Views\Resources\Files\04-02-C4BSelfServiceAndChocolateyGuiIntro.md" />
