@@ -16,13 +16,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using NuGetGallery.Infrastructure;
 
 namespace NuGetGallery
 {
-    public class ContactSalesViewModel : ISpamValidationModel
+    public class ContactQuickDeploymentViewModel : ISpamValidationModel
     {
         [AllowHtml]
         [Display(Name = "Enter your message")]
@@ -54,7 +57,39 @@ namespace NuGetGallery
         [Required(ErrorMessage = "We need this as a way to contact you in case you don't receive our emails.")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Number of Machines")]
+        [Display(Name = "Country")]
+        [Required(ErrorMessage = "Please make a selection.")]
+        public string Country { get; set; }
+
+        public IEnumerable<SelectListItem> CountryList
+        {
+            get
+            {
+                List<string> CountryDropdownList = new List<string>();
+                foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+                {
+                    RegionInfo regions = new RegionInfo(ci.LCID);
+                    if (!(CountryDropdownList.Contains(regions.EnglishName)))
+                    {
+                        CountryDropdownList.Add(regions.EnglishName);
+
+                        if (regions.EnglishName == "United States")
+                        {
+                            yield return new SelectListItem { Text = regions.EnglishName, Value = regions.EnglishName, Selected = true };
+                        }
+                        else
+                        {
+                            yield return new SelectListItem { Text = regions.EnglishName, Value = regions.EnglishName };
+                        }
+                    }
+                }
+
+                yield return new SelectListItem { Text = "Other...", Value = "Other..." };
+
+            }
+        }
+
+        [Display(Name = "Number of Endpoints/Nodes/Machines")]
         [Required(ErrorMessage = "Please enter the number of machines you plan to install Chocolatey on.")]
         public string Machines { get; set; }
 

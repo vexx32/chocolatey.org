@@ -826,6 +826,7 @@
     <Compile Include="ViewModels\ContactDiscountViewModel.cs" />
     <Compile Include="ViewModels\ContactBlockedViewModel.cs" />
     <Compile Include="ViewModels\ContactGeneralViewModel.cs" />
+    <Compile Include="ViewModels\ContactQuickDeploymentViewModel.cs" />
     <Compile Include="ViewModels\CourseLeftViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleViewModel.cs" />
@@ -1430,6 +1431,7 @@
     <Content Include="Scripts\validation\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\validation\MicrosoftMvcValidation.js" />
     <Content Include="Views\Packages\UploadPackage.cshtml" />
+    <Content Include="Views\Pages\ContactQuickDeployment.cshtml" />
     <Content Include="Views\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>

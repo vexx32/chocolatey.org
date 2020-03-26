@@ -246,6 +246,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.ContactQuickDeployment, "contact/quick-deployment", new
+                {
+                    controller = "Pages",
+                    Action = "ContactQuickDeployment"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
                     controller = "Pages",

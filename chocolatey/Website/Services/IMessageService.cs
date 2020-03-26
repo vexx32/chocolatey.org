@@ -41,6 +41,7 @@ namespace NuGetGallery
         void ContactPartner(MailAddress fromAddress, string message, string optionalSubject);
         void ContactSales(MailAddress fromAddress, string message, string optionalSubject, bool pipeline);
         void ContactBlocked(MailAddress fromAddress, string message, string optionalSubject);
+        void ContactQuickDeployment(MailAddress fromAddress, string message, string optionalSubject);
         void Discount(string message, string emailTo, string fullName, string discountType);
         void SendNewAccountEmail(MailAddress toAddress, string confirmationUrl);
         void SendEmailChangeConfirmationNotice(MailAddress newEmailAddress, string confirmationUrl);
