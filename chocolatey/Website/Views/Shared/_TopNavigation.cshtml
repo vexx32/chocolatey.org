@@ -1,7 +1,7 @@
 ﻿@using NuGetGallery
 
 <header class="w-100">
-    <div class="d-none d-sm-block">@Html.Partial("~/Views/Shared/_AlertTop.cshtml")</div>
+    @Html.Partial("~/Views/Shared/_AlertTop.cshtml")
     <nav id="topNav" class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand p-0" href="@Url.Home()">
             <img class="d-none d-lg-block" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_square.svg")" />

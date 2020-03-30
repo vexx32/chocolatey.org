@@ -9,7 +9,7 @@
     Bundles.Reference("Scripts/home");
 
     // Set to True to show callout. False to hide callout if not relevent.
-    var callout = false;
+    var callout = true;
 }
 
 <div id="header" class="bg-medium-dark ">
@@ -32,10 +32,12 @@
                     <img height="100" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
                 </div>
                 <div class="col-lg-6 mb-4 mb-lg-0 text-center">
-                    <p class="mb-0"><strong>We are pretty excited to finally share a new Chocolatey release! And this release won't disappoint. Loads of bug fixes, enhanced exit codes for search, list, info and outdated when results are returned versus nothing being returned, and some really nice improvements.</strong></p>
+                    <p class="mb-0"><strong>
+                        Regarding COVID-19, Chocolatey Software is working harder than ever to provide solutions and resources for our customers and community. We'll continue to add to this area so check back often.
+                    </strong></p>
                 </div>
                 <div class="col-lg-3 text-center text-lg-left">
-                    <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "release-notes"})#march-15-2019" class="btn btn-primary">See Release Notes<span class="fas fa-angle-right"></span></a>
+                    <a href="@Url.RouteUrl(RouteName.Covid19)" class="btn btn-primary">Read More<span class="fas fa-angle-right"></span></a>
                 </div>
             </div>
         </div>
