@@ -1291,6 +1291,7 @@
     <Content Include="Content\Images\packageOwnerActionIcons.png" />
     <Content Include="Content\Images\packagesDefaultIcon.png" />
     <Content Include="Content\Images\profile-chocolatey-repository.jpg" />
+    <Content Include="Content\Images\quick-deployment-environment-chart.jpg" />
     <Content Include="Content\Images\rd_logo.png" />
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
@@ -1761,6 +1762,7 @@
     <Content Include="Views\Pages\_SelfServiceResources.cshtml" />
     <Content Include="Views\Resources\Files\04-01-C4BSelfServiceAndChocolateyGuiDemo.md" />
     <Content Include="Views\Resources\Files\04-02-C4BSelfServiceAndChocolateyGuiIntro.md" />
+    <Content Include="Views\Blog\EnableRemoteWorkQuickDeploymentEnvironment.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
