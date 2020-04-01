@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -53,6 +53,23 @@ namespace NuGetGallery
 
         public bool IsLocal { get { return true; } }
 
+        private IndexWriter Index
+        {
+            get
+            {
+                // Lock so that we can block in the getter if we're in error recovery.
+                // The reference should resolve when the recovery code completes.
+                lock (IndexWriterLock)
+                {
+                    return _indexWriter;
+                }
+            }
+            set
+            {
+                _indexWriter = value;
+            }
+        }
+
         public LuceneIndexingService(Func<EntitiesContext> contextThunk, bool indexContainsAllVersions)
         {
             if (contextThunk == null)
@@ -85,29 +102,20 @@ namespace NuGetGallery
 
                 if ((lastWriteTime == null) || IndexRequiresRefresh() || forceRefresh)
                 {
-                    DoAndRetryOnOutOfMemory(
-                        () =>
-                        {
-                            // nuke index
-                            EnsureIndexWriter(creatingIndex: true);
-                            Debug.Assert(_indexWriter != null);
+                    void deleteIndex()
+                    {
+                        EnsureIndexWriter(creatingIndex: true);
+                        Debug.Assert(Index != null);
 
-                            Trace.WriteLine("Lucene Index: Deleting index");
-                            _indexWriter.DeleteAll();
-                            Trace.WriteLine("Lucene Index: Index delete completed");
+                        Trace.WriteLine("Lucene Index: Deleting index");
+                        Index.DeleteAll();
+                        Trace.WriteLine("Lucene Index: Index delete completed");
 
-                            _indexWriter.Commit();
-                            Trace.WriteLine("Lucene Index: Index delete committed");
-                        },
-                        () =>
-                        {
-                            // handle out of memory
-                            _indexWriter.Dispose();
-                            _indexWriter = null;
+                        Index.Commit();
+                        Trace.WriteLine("Lucene Index: Index delete committed");
+                    }
 
-                            EnsureIndexWriter(creatingIndex: true);
-                        }
-                    );
+                    DoAndRetryOnOutOfMemory(deleteIndex, () => DisposeAndEnsureIndexWriter(creatingIndex: true));
 
                     // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the packages
                     lastWriteTime = null;
@@ -165,16 +173,16 @@ namespace NuGetGallery
                     var document = new PackageIndexEntity(package).ToDocument();
 
                     DoAndRetryOnOutOfMemory(
-                        () => _indexWriter.UpdateDocument(updateTerm, document),
+                        () => Index.UpdateDocument(updateTerm, document),
                         () => DisposeAndEnsureIndexWriter(creatingIndex: false),
                         waitMilliseconds: 50);
                 }
                 else
                 {
-                    DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(new Term[] { updateTerm }), () => DisposeAndEnsureIndexWriter(creatingIndex: false), waitMilliseconds: 50);
+                    DoAndRetryOnOutOfMemory(() => Index.DeleteDocuments(new Term[] { updateTerm }), () => DisposeAndEnsureIndexWriter(creatingIndex: false), waitMilliseconds: 50);
                 }
 
-                DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), () => DisposeAndEnsureIndexWriter(creatingIndex: false));
+                DoAndRetryOnOutOfMemory(() => Index.Commit(), () => DisposeAndEnsureIndexWriter(creatingIndex: false));
             }
         }
 
@@ -205,18 +213,18 @@ namespace NuGetGallery
                 else
                 {
                     // get everything including unlisted
-                    set = set.Where(p => p.StatusForDatabase != _rejectedStatus  || p.StatusForDatabase == null);
+                    set = set.Where(p => p.StatusForDatabase != _rejectedStatus || p.StatusForDatabase == null);
                     Trace.WriteLine("Lucene Indexer: Getting all results from the database");
                 }
 
                 var list = MethodExtensionWrappers.WrapExecutionTracingTime(() =>
                 {
-                   return set
+                    return set
                             .Include(p => p.PackageRegistration)
                             .Include(p => p.PackageRegistration.Owners)
                             .Include(p => p.SupportedFrameworks)
                             .ToList();
-                },"Lucene Indexer: Select from database completed");
+                }, "Lucene Indexer: Select from database completed");
 
                 var packagesForIndexing = MethodExtensionWrappers.WrapExecutionTracingTime(
                     () =>
@@ -249,7 +257,7 @@ namespace NuGetGallery
                 var packagesToDelete = from packageRegistrationKey in packages.Select(p => p.Package.PackageRegistrationKey).Distinct()
                                        select new Term("PackageRegistrationKey", packageRegistrationKey.ToString(CultureInfo.InvariantCulture));
 
-                DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(packagesToDelete.ToArray()), () => DisposeAndEnsureIndexWriter(creatingIndex));
+                DoAndRetryOnOutOfMemory(() => Index.DeleteDocuments(packagesToDelete.ToArray()), () => DisposeAndEnsureIndexWriter(creatingIndex));
             }
 
             EnsureIndexWriter(creatingIndex);
@@ -258,8 +266,8 @@ namespace NuGetGallery
             // The IndexWriter is thread safe and is primarily CPU-bound.
             Parallel.ForEach(packages, AddPackage);
 
-            Debug.Assert(_indexWriter != null);
-            DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), () => DisposeAndEnsureIndexWriter(creatingIndex));
+            Debug.Assert(Index != null);
+            DoAndRetryOnOutOfMemory(() => Index.Commit(), () => DisposeAndEnsureIndexWriter(creatingIndex));
         }
 
         /// <summary>
@@ -323,7 +331,7 @@ namespace NuGetGallery
             for (int attempts = 1; attempts <= numberOfAttempts; attempts++)
             {
                 try
-                { 
+                {
                     result = function.Invoke();
                     break;
                 }
@@ -333,7 +341,8 @@ namespace NuGetGallery
                     {
                         throw ex;
                     }
-                    else {
+                    else
+                    {
                         Trace.WriteLine("Out of Memory exception detected. Executing failure handling.");
                         handleException.Invoke();
                     }
@@ -362,25 +371,20 @@ namespace NuGetGallery
             EnsureIndexWriter(creatingIndex: false);
 
             DoAndRetryOnOutOfMemory(
-                () => _indexWriter.AddDocument(packageInfo.ToDocument()), 
+                () => Index.AddDocument(packageInfo.ToDocument()),
                 handleException: () => DisposeAndEnsureIndexWriter(creatingIndex: false));
         }
 
         protected void EnsureIndexWriter(bool creatingIndex)
         {
-            if (_indexWriter == null)
+            if (Index == null)
             {
-                if (WriterCache.TryGetValue(_directory, out _indexWriter))
-                {
-                    Debug.Assert(_indexWriter != null);
-                    return;
-                }
-
                 lock (IndexWriterLock)
                 {
-                    if (WriterCache.TryGetValue(_directory, out _indexWriter))
+                    if (WriterCache.TryGetValue(_directory, out IndexWriter indexWriter))
                     {
-                        Debug.Assert(_indexWriter != null);
+                        Debug.Assert(indexWriter != null);
+                        Index = indexWriter;
                         return;
                     }
 
@@ -391,10 +395,16 @@ namespace NuGetGallery
 
         protected void DisposeAndEnsureIndexWriter(bool creatingIndex)
         {
-            _indexWriter.Dispose();
-            _indexWriter = null;
+            lock (IndexWriterLock)
+            {
+                // Remove the writer from the cache so the subsequent check forces it to be re-created.
+                bool removed = WriterCache.TryRemove(_directory, out IndexWriter writer);
+                Debug.Assert(removed && writer == Index);
+                Index.Dispose();
+                Index = null;
 
-            EnsureIndexWriter(creatingIndex);
+                EnsureIndexWriter(creatingIndex);
+            }
         }
 
         private void EnsureIndexWriterCore(bool creatingIndex)
@@ -402,22 +412,22 @@ namespace NuGetGallery
             var analyzer = new PerFieldAnalyzer();
             try
             {
-                _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
+                Index = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
             }
             catch (LockObtainFailedException ex)
             {
                 DirectoryInfo luceneIndexDirectory = new DirectoryInfo(LuceneCommon.IndexDirectory);
                 FSDirectory luceneFSDirectory = FSDirectory.Open(luceneIndexDirectory, new Lucene.Net.Store.SimpleFSLockFactory(luceneIndexDirectory));
                 IndexWriter.Unlock(luceneFSDirectory);
-                _indexWriter = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
+                Index = new IndexWriter(_directory, analyzer, create: creatingIndex, mfl: IndexWriter.MaxFieldLength.UNLIMITED);
 
                 // Log but swallow the exception
                 ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
             // Should always be add, due to locking
-            var got = WriterCache.GetOrAdd(_directory, _indexWriter);
-            Debug.Assert(got == _indexWriter);
+            var got = WriterCache.GetOrAdd(_directory, Index);
+            Debug.Assert(got == Index);
         }
 
         protected internal static bool IndexRequiresRefresh()
