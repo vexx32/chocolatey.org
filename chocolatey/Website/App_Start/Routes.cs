@@ -246,6 +246,13 @@ namespace NuGetGallery
                 });
 
             routes.MapRouteSeo(
+                RouteName.ContactQuickDeployment, "contact/quick-deployment", new
+                {
+                    controller = "Pages",
+                    Action = "ContactQuickDeployment"
+                });
+
+            routes.MapRouteSeo(
                 RouteName.Support, "support", new
                 {
                     controller = "Pages",
@@ -278,6 +285,13 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "Security"
+                });
+
+            routes.MapRouteSeo(
+                RouteName.Covid19, "covid-19", new
+                {
+                    controller = "Pages",
+                    Action = "Covid19"
                 });
 
             routes.MapRouteSeo(
@@ -335,6 +349,14 @@ namespace NuGetGallery
                 "courses/{courseName}/{courseModuleName}",
                 new { controller = "Courses", action = "CourseName", courseName = "home", courseModuleName = "home" }
                 );
+
+            var solutionsRoute = routes.MapRoute(
+                RouteName.Solutions,
+                "solutions/{solutionName}",
+                new { controller = "Solutions", action = "Solutions", solutionName = "home" }
+                );
+
+            routes.Redirect(r => r.MapRoute(RouteName.SelfService, "self-service")).To(solutionsRoute);
 
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 

@@ -60,7 +60,7 @@ a[data-toggle="collapse"].collapsed:not(.collapse-nav), .docs-left button.navbar
     }
 }
 
-.rating > label, .rating li {
+.rating > label, .rating li, .list-circle li.list-circle-fa-star {
     &::before {
         @extend %fa-icon;
         @extend .fas;
@@ -68,13 +68,82 @@ a[data-toggle="collapse"].collapsed:not(.collapse-nav), .docs-left button.navbar
     }
 }
 
+.list-circle li.list-circle-fa-cogs {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-cogs);
+    }
+}
+
+.list-circle li.list-circle-fa-users {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-users);
+    }
+}
+
+.list-circle li.list-circle-fa-user-lock {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-user-lock);
+    }
+}
+
+.list-circle li.list-circle-fa-paper-plane {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-paper-plane);
+    }
+}
+
+.list-circle li.list-circle-fa-edit {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-edit);
+    }
+}
+
+.list-curve p:first-child {
+    &::after {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-up);
+    }
+}
+
+.list-curve p:not(:last-child) {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-times);
+    }
+}
+
+.list-curve p:last-child {
+    &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-check);
+    }
+}
+
+#topNav .navbar-collapse .dropdown-toggle, .list-curve p:last-child {
+    &::after {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-down);
+    }
+}
+
 #topNav {
     .navbar-collapse {
         .dropdown-toggle {
             &::after {
-                @extend %fa-icon;
-                @extend .fas;
-                content: fa-content($fa-var-angle-down);
                 position: absolute;
                 top: 25%;
                 color: $primary;

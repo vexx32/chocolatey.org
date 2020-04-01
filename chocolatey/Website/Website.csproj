@@ -662,6 +662,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
+    <Compile Include="Controllers\SolutionsController.cs" />
     <Compile Include="Controllers\StyleguideController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Entities\Course.cs" />
@@ -825,6 +826,7 @@
     <Compile Include="ViewModels\ContactDiscountViewModel.cs" />
     <Compile Include="ViewModels\ContactBlockedViewModel.cs" />
     <Compile Include="ViewModels\ContactGeneralViewModel.cs" />
+    <Compile Include="ViewModels\ContactQuickDeploymentViewModel.cs" />
     <Compile Include="ViewModels\CourseLeftViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleAchievementViewModel.cs" />
     <Compile Include="ViewModels\CourseModuleViewModel.cs" />
@@ -1053,6 +1055,8 @@
     <Content Include="Content\easymde.min.css" />
     <Content Include="Content\fonts\fa-brands-400.svg" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
+    <Content Include="Content\Images\04-01-C4BSelfServiceAndChocolateyGuiDemo.mp4" />
+    <Content Include="Content\Images\04-02-C4BSelfServiceAndChocolateyGuiIntro.mp4" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\404.svg" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
@@ -1135,6 +1139,7 @@
     <Content Include="Content\Images\community-mockup.gif" />
     <Content Include="Content\Images\contribGraphic.png" />
     <Content Include="Content\Images\copy.png" />
+    <Content Include="Content\Images\covid-response.png" />
     <Content Include="Content\Images\dep-graph.svg" />
     <Content Include="Content\Images\docs\chocolateyicon.gif" />
     <Content Include="Content\Images\docs\chocolateyicon.png" />
@@ -1287,10 +1292,12 @@
     <Content Include="Content\Images\packageOwnerActionIcons.png" />
     <Content Include="Content\Images\packagesDefaultIcon.png" />
     <Content Include="Content\Images\profile-chocolatey-repository.jpg" />
+    <Content Include="Content\Images\quick-deployment-environment-chart.jpg" />
     <Content Include="Content\Images\rd_logo.png" />
     <Content Include="Content\Images\RealDimensionsLogo.png" />
     <Content Include="Content\Images\recommended.png" />
     <Content Include="Content\Images\recommendedSmall.png" />
+    <Content Include="Content\Images\remote-work.png" />
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
@@ -1325,6 +1332,9 @@
     <Content Include="Content\Images\videos\03-20.jpg" />
     <Content Include="Content\Images\videos\03-21.jpg" />
     <Content Include="Content\Images\videos\03-01.jpg" />
+    <Content Include="Content\Images\videos\04-01.jpg" />
+    <Content Include="Content\Images\videos\04-02.jpg" />
+    <Content Include="Content\Images\videos\blog-01.jpg" />
     <Content Include="Content\Images\videos\CaseStudy.jpg" />
     <Content Include="Content\Images\videos\01-01.jpg" />
     <Content Include="Content\Images\videos\02-01.jpg" />
@@ -1393,6 +1403,7 @@
     <Content Include="Content\fonts\fa-solid-900.woff" />
     <Content Include="Content\fonts\fa-solid-900.woff2" />
     <Content Include="Content\scss\_search.scss" />
+    <Content Include="Content\scss\_lists.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1423,6 +1434,7 @@
     <Content Include="Scripts\validation\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\validation\MicrosoftMvcValidation.js" />
     <Content Include="Views\Packages\UploadPackage.cshtml" />
+    <Content Include="Views\Pages\ContactQuickDeployment.cshtml" />
     <Content Include="Views\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -1750,6 +1762,12 @@
     <Content Include="Views\Shared\_ResourceSubNavigation.cshtml" />
     <Content Include="Views\Documentation\Files\ReleaseNotesChocoCli.md" />
     <Content Include="Views\Documentation\Files\ReleaseNotesChocolateyGui.md" />
+    <Content Include="Views\Solutions\SelfServiceAnywhere.cshtml" />
+    <Content Include="Views\Pages\Covid19.cshtml" />
+    <Content Include="Views\Pages\_SelfServiceResources.cshtml" />
+    <Content Include="Views\Resources\Files\04-01-C4BSelfServiceAndChocolateyGuiDemo.md" />
+    <Content Include="Views\Resources\Files\04-02-C4BSelfServiceAndChocolateyGuiIntro.md" />
+    <Content Include="Views\Blog\EnableRemoteWorkQuickDeploymentEnvironment.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

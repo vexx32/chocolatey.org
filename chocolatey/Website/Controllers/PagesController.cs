@@ -520,7 +520,62 @@ Blocked IP Address: {5}
 
             return View("~/Views/Pages/Thanks.cshtml");
         }
-        
+
+        [HttpGet]
+        public ActionResult ContactQuickDeployment()
+        {
+            return View("~/Views/Pages/ContactQuickDeployment.cshtml", new ContactQuickDeploymentViewModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateFormResponse]
+        public virtual ActionResult ContactQuickDeployment(ContactQuickDeploymentViewModel contactForm)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Pages/ContactQuickDeployment.cshtml", contactForm);
+
+            var hasError = false;
+            if (contactForm.Email.EndsWith("qq.com"))
+            {
+                ModelState.AddModelError(string.Empty, "Please use an alternative email address. This domain is known to send spam.");
+                hasError = true;
+            }
+            if (!contactForm.Machines.Any(char.IsDigit))
+            {
+                ModelState.AddModelError(string.Empty, "The \"Number of Machines\" field must contain a number.");
+                hasError = true;
+            }
+            if (hasError) return View("~/Views/Pages/ContactQuickDeployment.cshtml", contactForm);
+
+            var from = new MailAddress(contactForm.Email);
+
+            var message = @"
+### Contact
+Name: {0} {1}
+Email: {2}
+Phone: {3}
+Country: {4}
+Company: {5}
+Endpoints/Nodes/Machines: {6}
+
+### Message
+{7}
+".format_with(contactForm.FirstName,
+              contactForm.LastName,
+              contactForm.Email,
+              contactForm.PhoneNumber,
+              contactForm.Country,
+              contactForm.CompanyName,
+              contactForm.Machines,
+              contactForm.Message);
+
+            var additionalSubject = contactForm.CompanyName;
+
+            messageService.ContactQuickDeployment(from, message, additionalSubject);
+
+            TempData["Message"] = "Your message has been sent. You may receive follow up emails from '{0}', so make any necessary adjustments to spam filters.".format_with(Configuration.ReadAppSettings("ContactUsEmail"));
+
+            return View("~/Views/Pages/Thanks.cshtml");
+        }
+
         [HttpGet]
         public ActionResult Discount()
         {
@@ -606,6 +661,12 @@ Thanks for requesting a discount. Please see the link below:
         {
             return RedirectToAction("Documentation", "Documentation", new {docName = "security"});
             //return View("~/Views/Documentation/Security.cshtml", "~/Views/Documentation/_Layout.cshtml");
+        }
+
+        [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]
+        public ActionResult Covid19()
+        {
+            return View("~/Views/Pages/Covid19.cshtml");
         }
 
         [HttpGet, OutputCache(CacheProfile = "Cache_2Hours")]

@@ -1,5 +1,6 @@
 .notice-text a {
     color: $white;
+    font-size: 79%;
 
     &:hover {
         color: $medium-dark;
@@ -186,6 +187,10 @@
 }
 
 @include media-breakpoint-up(sm) {
+    .notice-text a {
+        font-size: 100%;
+    }
+
     #topNav {
         height: 79px;
 
@@ -306,7 +311,7 @@
             }
 
             .nav-link {
-                padding: .5rem .8rem;
+                padding: .5rem .4rem;
                 color: $white;
                 margin: 0;
             }
