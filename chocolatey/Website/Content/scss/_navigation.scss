@@ -311,9 +311,10 @@
             }
 
             .nav-link {
-                padding: .5rem .4rem;
+                padding: .5rem .7rem;
                 color: $white;
                 margin: 0;
+                font-size: 1rem;
             }
 
             .dropdown-menu {
@@ -343,6 +344,7 @@
         .navbar-collapse {
             .nav-link {
                 padding: .5rem 1.25rem;
+                font-size: 1.2rem;
             }
         }
     }
