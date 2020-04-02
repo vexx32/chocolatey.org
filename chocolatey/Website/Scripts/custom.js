@@ -49,12 +49,7 @@ $(document).ready(function () {
     });
     // Fade in animation
     $('.dropdown').on('show.bs.dropdown', function () {
-        if ($(window).width() < 992) {
-            var height = $('header .alert').outerHeight();
-        }
-        else {
-            var height = $('nav.navbar').outerHeight() + $('header .alert').outerHeight();
-        }
+        var height = $('header').outerHeight();
         var top = -$(window).scrollTop() + height;
         var $dropdown = $(this).find('.dropdown-menu').first();
         $dropdown.css("top", top);
