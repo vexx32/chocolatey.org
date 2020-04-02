@@ -33,10 +33,10 @@ if (!getCookie('chocolatey_hide_cookies_notice')) {
 $(document).ready(function () {
     // Top Alert
     var notice = window.sessionStorage.getItem('notice');
-    if (notice) {
-        $(".notice-text").addClass("d-none");
+    if (!notice && !$(".notice-text").hasClass('d-none')) {
+        $('.notice-text').show();
     }
-    $('.notice-text').click(function () {
+    $('.notice-text button').click(function () {
         sessionStorage.setItem('notice', 'true');
     });
     // Dropdowns on desktop
