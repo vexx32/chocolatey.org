@@ -365,14 +365,6 @@ footer {
     }
 }
 
-@include media-breakpoint-up(md) {
-    .divider-list li:not(:last-child) {
-        border-right: 1px solid #ced4da;
-        border-bottom: 0;
-        display: inline-block;
-    }
-}
-
 @include media-breakpoint-up(lg) {
     .copyBox {
         max-width: 550px;
