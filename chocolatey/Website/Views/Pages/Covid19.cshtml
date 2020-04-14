@@ -53,7 +53,7 @@
             </div>
         </div>
         @*Blog Post*@
-        <div class="card my-3 my-lg-5">
+        <div class="card mt-3 mt-lg-4">
             <div class="card-body h-100">
                 <div class="row h-100">
                     <div class="d-none d-sm-block col-sm-3 col-xl-2 text-center blog-img">
@@ -71,6 +71,36 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5 bg-white">
+    <div class="container">
+        @*Folding@home*@
+        <h2 class="text-center mb-3">Join the Chocolatey Team on the Folding@home Project!</h2>
+        <div class="row align-items-center">
+            <div class="col-lg-6 justify-content-center">
+                <div class="embed-responsive embed-responsive-16by9 shadow">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/nKqLtwMOfg4?loop=1&playlist=nKqLtwMOfg4" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-3 mt-lg-0">
+                <p>
+                    Chocolatey has started their own team for <a href="https://stats.foldingathome.org/team/261550" rel="nofollow" target="_blank">Folding@home</a>! This project is focused on disease research.
+                    The problems they are solving include many challenging computer calculations, and they need our help to find cures. The <a href="@Url.Package("fah")">Folding@home software</a> allows you to share your unused computer
+                    power with them so that even more research can be done. Once the <a href="@Url.Package("fah")">software is installed</a>, everything is performed in the background on your machine and will not slow your computer down at all.
+                </p>
+                <ul>
+                    <li>What is Folding@home? <a href="https://foldingathome.org/" rel="nofollow" target="_blank">Learn more here</a>.</li>
+                    <li><a href="https://stats.foldingathome.org/team/261550" rel="nofollow" target="_blank">View Folding@home Chocolatey team stats and information</a>.</li>
+                </ul>
+                <p>Click the button below to visit the <a href="@Url.Package("fah")">Folding@home Chocolatey package</a>, and help find cures to common diseases today.</p>
+                <div class="mt-auto"><a class="btn btn-primary" href="@Url.Package("fah")">Get Started<span class="fas fa-angle-right"></span></a></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5">
+    <div class="container">
         @*Additional Resources*@
         <h2 class="text-center mb-3 pt-1">Additional Resources in Response to COVID-19</h2>
         @Html.Partial("~/Views/Pages/_SelfServiceResources.cshtml")
