@@ -8,4 +8,4 @@ git submodule update --remote --rebase
 Copy-Item "choco.wiki\images\*" "chocolatey\Website\content\images\docs" -Force -Recurse
 
 # copy the md
-Copy-Item "choco.wiki\*.md" "chocolatey\Website\Views\Documentation\Files" -Force -Recurse
+Copy-Item "choco.wiki\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Force -Recurse

@@ -14,7 +14,7 @@
     <AssemblyName>NuGetGallery.Website</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
@@ -1223,6 +1223,10 @@
     <Content Include="Content\Images\docs\moderation-6.jpg" />
     <Content Include="Content\Images\docs\msysgit.png" />
     <Content Include="Content\Images\docs\msysgit2.png" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-architecture.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-hyperv.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-hypervapp.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk.gif" />
     <Content Include="Content\Images\docs\recompile\choco_delete_pkg_files.png" />
     <Content Include="Content\Images\docs\recompile\choco_download_zip.png" />
     <Content Include="Content\Images\docs\recompile\choco_npp_download.png" />
@@ -1768,6 +1772,11 @@
     <Content Include="Views\Resources\Files\04-01-C4BSelfServiceAndChocolateyGuiDemo.md" />
     <Content Include="Views\Resources\Files\04-02-C4BSelfServiceAndChocolateyGuiIntro.md" />
     <Content Include="Views\Blog\EnableRemoteWorkQuickDeploymentEnvironment.md" />
+    <Content Include="Views\Documentation\Files\QuickDeploymentDesktopReadme.md" />
+    <Content Include="Views\Documentation\Files\QuickDeploymentEnvironment.md" />
+    <Content Include="Views\Documentation\Files\QuickDeploymentFirewallChanges.md" />
+    <Content Include="Views\Documentation\Files\QuickDeploymentSetup.md" />
+    <Content Include="Views\Documentation\Files\QuickDeploymentSslSetup.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
