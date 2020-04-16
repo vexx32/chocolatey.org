@@ -1055,8 +1055,6 @@
     <Content Include="Content\easymde.min.css" />
     <Content Include="Content\fonts\fa-brands-400.svg" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
-    <Content Include="Content\Images\04-01-C4BSelfServiceAndChocolateyGuiDemo.mp4" />
-    <Content Include="Content\Images\04-02-C4BSelfServiceAndChocolateyGuiIntro.mp4" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\404.svg" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
@@ -1336,8 +1334,8 @@
     <Content Include="Content\Images\videos\03-20.jpg" />
     <Content Include="Content\Images\videos\03-21.jpg" />
     <Content Include="Content\Images\videos\03-01.jpg" />
-    <Content Include="Content\Images\videos\04-01.jpg" />
-    <Content Include="Content\Images\videos\04-02.jpg" />
+    <Content Include="Content\Images\videos\04-0502.jpg" />
+    <Content Include="Content\Images\videos\04-0501.jpg" />
     <Content Include="Content\Images\videos\blog-01.jpg" />
     <Content Include="Content\Images\videos\CaseStudy.jpg" />
     <Content Include="Content\Images\videos\01-01.jpg" />
@@ -1409,6 +1407,7 @@
     <Content Include="Content\scss\_search.scss" />
     <Content Include="Content\scss\_lists.scss" />
     <Content Include="Import-QuickDeployCertificate.ps1" />
+    <Content Include="Content\scss\_ribbons.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1770,8 +1769,8 @@
     <Content Include="Views\Solutions\SelfServiceAnywhere.cshtml" />
     <Content Include="Views\Pages\Covid19.cshtml" />
     <Content Include="Views\Pages\_SelfServiceResources.cshtml" />
-    <Content Include="Views\Resources\Files\04-01-C4BSelfServiceAndChocolateyGuiDemo.md" />
-    <Content Include="Views\Resources\Files\04-02-C4BSelfServiceAndChocolateyGuiIntro.md" />
+    <Content Include="Views\Resources\Files\04-0502-C4BSelfServiceAndChocolateyGuiDemo.md" />
+    <Content Include="Views\Resources\Files\04-0501-C4BSelfServiceAndChocolateyGuiIntro.md" />
     <Content Include="Views\Blog\EnableRemoteWorkQuickDeploymentEnvironment.md" />
     <Content Include="Views\Documentation\Files\QuickDeploymentDesktopReadme.md" />
     <Content Include="Views\Documentation\Files\QuickDeploymentEnvironment.md" />
@@ -1779,6 +1778,7 @@
     <Content Include="Views\Documentation\Files\QuickDeploymentSetup.md" />
     <Content Include="Views\Documentation\Files\QuickDeploymentSslSetup.md" />
     <Content Include="Views\Documentation\Files\QuickDeploymentClientSetup.md" />
+    <Content Include="Views\Resources\Features.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -6,7 +6,7 @@ Name: Dan Franciscus
 Company: Institute for Advanced Study
 Position: Systems Engineer
 Video: d-1jx5hXtyg
-Tags: featured case-study chocolatey-fest 2018
+Tags: showcase case-study chocolatey-fest 2018
 Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/02-01.jpg" alt="How I Completely Automated Managing Windows Desktop Software...Forever" title="How I Completely Automated Managing Windows Desktop Software...Forever" />
 Summary: Dan Franciscus talks about how he found Chocolatey and built the processes using just PowerShell to automate 95% of software deployment and upgrades.
 ---

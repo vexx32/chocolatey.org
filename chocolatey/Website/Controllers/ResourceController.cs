@@ -100,7 +100,10 @@ namespace NuGetGallery.Controllers
                 posts.Add(GetPost(postFile));
             }
 
-            return posts.OrderByDescending(p => p.Published).ThenBy(p => p.Title).ToList();
+            var featuredList = posts.Where(p => p.Type == "Feature").OrderBy(p => postFiles).ToList();
+            var regularList = posts.Where(p => p.Type != "Feature").OrderByDescending(p => p.Published).ThenBy(p => p.Title).ToList();
+
+            return featuredList.Union(regularList);
         }
 
         private ResourceViewModel GetPost(string filePath, string resourceName = null)

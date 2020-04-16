@@ -18,13 +18,13 @@
     }
 }
 
-.home-list .card .card-body {
+.home-list .card:not(.resource-new) .card-body, .home-list .card.resource-new .col-lg-4 > div {
     background: $primary;
     height: 320px;
     transition: all 0.3s ease;
     color: $white;
 }
-.home-list .card:hover .card-body {
+.home-list .card:not(.resource-new):hover .card-body, .home-list .card.resource-new:hover .col-lg-4 > div {
     background: #3d8dd1;
 }
 
@@ -34,7 +34,7 @@
         .card {
             transition: all 0.3s ease;
 
-            .card-header span, .card-footer p {
+            .card-header span, .card-footer p, &.resource-new .col-lg-8 div {
                 color: $dark;
             }
 
