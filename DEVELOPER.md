@@ -10,5 +10,6 @@ Set-AuthenticodeSignature -Filepath ".\chocolatey\Website\Install.ps1" -Cert $ce
 Set-AuthenticodeSignature -Filepath ".\chocolatey\Website\Install.Versioned.ps1" -Cert $cert -TimeStampServer $timeStampServer -IncludeChain NotRoot -HashAlgorithm SHA256
 Set-AuthenticodeSignature -Filepath ".\chocolatey\Website\InstallAbsoluteLatest.ps1" -Cert $cert -TimeStampServer $timeStampServer -IncludeChain NotRoot -HashAlgorithm SHA256
 Set-AuthenticodeSignature -Filepath ".\chocolatey\Website\Install-LastPoshClient.ps1" -Cert $cert -TimeStampServer $timeStampServer -IncludeChain NotRoot -HashAlgorithm SHA256
+Set-AuthenticodeSignature -Filepath ".\chocolatey\Website\Import-QuickDeployCertificate.ps1" -Cert $cert -TimeStampServer $timeStampServer -IncludeChain NotRoot -HashAlgorithm SHA256
 ~~~
 

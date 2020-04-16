@@ -1408,6 +1408,7 @@
     <Content Include="Content\fonts\fa-solid-900.woff2" />
     <Content Include="Content\scss\_search.scss" />
     <Content Include="Content\scss\_lists.scss" />
+    <Content Include="Import-QuickDeployCertificate.ps1" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
