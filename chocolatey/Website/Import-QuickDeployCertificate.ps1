@@ -14,6 +14,7 @@
 # limitations under the License.
 # =====================================================================
 
+# Disabled for now. Please contact support if you need to use a different hostname
 # Environment Variables, specified as $env:NAME in PowerShell.exe and %NAME% in cmd.exe.
 # If you need to adjust the repohostname or the repohost port, you can also pass those in as environment variables
 # - $env:RepoHostName = 'chocoserver' #do not pass scheme, such as https, and do not pass port or any path
@@ -27,7 +28,7 @@ using namespace System.Security.Cryptography.X509Certificates
 param(
     [parameter()]
     [string]
-    $RepoHostName = 'chocoserver'
+    $RepoHostName = 'chocoserver',
     [parameter()]
     [uint16]
     $RepoHostPort = 8443
@@ -54,16 +55,17 @@ public static class Dummy {
 $callback = [System.Net.ServicePointManager]::ServerCertificateValidationCallback = [dummy]::GetDelegate()
 
 # Allow setting environment variables into the script
-if ($env:RepoHostName) {
-  $RepoHostName = $env:RepoHostName
-  Write-Output "Setting repository to environment value of $RepoHostName"
-}
-if ($env:RepoHostPort) {
-  $RepoHostPort = $env:RepoHostPort
-  Write-Output "Setting repository port to environment value of $RepoHostPort"
-}
+# Disable for now - contact support if you have changed the host name for QDE
+# if ($env:RepoHostName) {
+#   $RepoHostName = $env:RepoHostName
+#   Write-Output "Setting repository to environment value of $RepoHostName"
+# }
+# if ($env:RepoHostPort) {
+#   $RepoHostPort = $env:RepoHostPort
+#   Write-Output "Setting repository port to environment value of $RepoHostPort"
+# }
 
-# Do it Matthias's way 
+# Do it Matthias's way
 function Get-RemoteCertificate {
     param(
         [Alias('CN')]
@@ -112,8 +114,8 @@ finally {
 # SIG # Begin signature block
 # MIIcpwYJKoZIhvcNAQcCoIIcmDCCHJQCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDNAU3W3e7P/c5y
-# fZ1Frbdq1fQQpwiSEUJM/VWd95rg+qCCF7EwggUwMIIEGKADAgECAhAECRgbX9W7
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCdcfUno+ciN8Ov
+# gBcggYv2HpWjv/boi79+9RVctzLYjKCCF7EwggUwMIIEGKADAgECAhAECRgbX9W7
 # ZnVTQ7VvlVAIMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNV
 # BAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzEwMjIxMjAwMDBa
@@ -245,22 +247,22 @@ finally {
 # QTIgQXNzdXJlZCBJRCBDb2RlIFNpZ25pbmcgQ0ECEAf7Rdn3C1UpA2CXtPThQ3Aw
 # DQYJYIZIAWUDBAIBBQCggYQwGAYKKwYBBAGCNwIBDDEKMAigAoAAoQKAADAZBgkq
 # hkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGC
-# NwIBFTAvBgkqhkiG9w0BCQQxIgQgsXs96V6+UaP6k3dPD6BHqg0Ef6alye3DtZ93
-# wErSSMMwDQYJKoZIhvcNAQEBBQAEggEAYJ5ApzMrLi5Ja4V2zvn4riHKT3HUuR/c
-# HaJo8XkTer3O6DzVH2lPr+N2e6EID8YVBtpjGWM/MREOh3d9An5IEOMTCBimUpAz
-# 9t1o45CfjmDM3E7nVvdkvt/sTZ04x8LvlPDz9nliBSzNFTP6gH/1hVu4XBM3RBVq
-# 95uuJEOVQ7JUiuA2ou525FLJZV9kW2whjEGhfupmuJqa2V6xrZ025dG4XASjsIGT
-# 2lUijf1go891gclqFmwXCV0bH4kXZQg42wNPRdlE0BoleS0n+J3WD+v0luQ5rcF3
-# 812WGvJBXA757AvzOvgpx8t8nch26cf/UMPP3GT4pPnkZq/i+K/v5KGCAg8wggIL
+# NwIBFTAvBgkqhkiG9w0BCQQxIgQgOAm6tKj44goWH7hmrlsaUfdc0aoE8215gztS
+# eGM/bc4wDQYJKoZIhvcNAQEBBQAEggEAeQ+y6UxUYty9f4+FLHwgYbbiv/QQ9mZw
+# HIbMVCaU5bT73S/zDLR9+MEM1wrmmCQ8UNll0M/bg8iLltnRQqLG4QuS5G1e8zXT
+# pPqNvJBbir2/QcZSr2ef2Lp0UOC2tGEQW8k5q2slVULFTlHMudPBXS67iK0CAYZg
+# WzdNYoEo3mCOfn/38/1QpFSFvMY67pbiZjZTFCSSe+P9rWd3a+DyUahF4Bgx/QYa
+# jTgQemDBtGGpL/whNXuP2wLG7kinqsrye4I9vfyO5kQXgVIMQmKdnONMrqXEoDp2
+# XqPscAoi75R33bi9lieZjGK1iAhqDdm0zTZra5EK7CqjeKFVulpe6KGCAg8wggIL
 # BgkqhkiG9w0BCQYxggH8MIIB+AIBATB2MGIxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xITAfBgNV
 # BAMTGERpZ2lDZXJ0IEFzc3VyZWQgSUQgQ0EtMQIQAwGaAjr/WLFr1tXq5hfwZjAJ
 # BgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-# CQUxDxcNMjAwNDE2MDA1MDU4WjAjBgkqhkiG9w0BCQQxFgQUWxCHM2jgq/e/6p7W
-# A/E51eO6SZgwDQYJKoZIhvcNAQEBBQAEggEAU6OXt66EV7ss6lt4w3THCh/GIHa9
-# apVOaBQDq8JZPKXOxAUHTAh9FNZ6k4HZ6VE12hdoWhcEN7pllFWbYrR+PKH/Yh15
-# NC+UrwI9c9Lh8JMKz4wBF8pCpbDkq6IxiM4CH32qHb4B/3+Nn4vLE+fmrVJSCmUa
-# vh6puoYPxoX5NvK6Qt9zPsZvPWW3jITfPwS1qmqoAZIagm3N8tA7vTmOyhWFWaES
-# 3CuDDPI0OcXtt7I0QzDyOlYczG7wNYFMp7QJ/QKKXyCKbOFrIbBLsouqzf8JeY2z
-# EobuY0NgK3OV3GSBSP4+U0kezr9QjbyhhtzsYsaJ9YQlktzjwof/A7U5Gw==
+# CQUxDxcNMjAwNDE2MDEwNzEzWjAjBgkqhkiG9w0BCQQxFgQUhcTRZVo+58xd4Iro
+# HSlaav5BRqcwDQYJKoZIhvcNAQEBBQAEggEAX41LuRI1SlNTuGF4TGR3XkNRVPfQ
+# nEE/l1VK/C7Y8QxlUfRSMHwX5wXEwBQZlRIE73MscEl1tjA5+K00FIglOqn6EKMw
+# cbOEQjPHjexcfSA6ve9vBzo2MykqG2MAhd05S0BTkuOhpeUcp7u3CqgPuDv5/pGq
+# zsHYE/dyNoYn43FZHtn7CKGmr4vtsKDo9lo4mswsDo8mJny0RtOFRFXX6jc6idLo
+# cAEFzw5GoHKV/2ewc6P8qt+EBXhgkov94lUqadPXfgw8+QRxqULCp+UnKIaqK7X7
+# 0E7EZFwgrA3l7BmJF/OcKa9weKQeZRXrGqFbTBARSjsFEqqCnGTBY3SJgQ==
 # SIG # End signature block
