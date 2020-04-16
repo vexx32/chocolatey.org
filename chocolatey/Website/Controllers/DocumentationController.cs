@@ -50,6 +50,7 @@ namespace NuGetGallery.Controllers
                  .UseNoFollowLinks()
                  .UseCustomContainers()
                  .UseBootstrap()
+                 .UseEmojiAndSmiley()
                  .Build();
         }
 
