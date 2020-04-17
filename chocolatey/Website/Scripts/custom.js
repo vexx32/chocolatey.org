@@ -678,3 +678,13 @@ $.each($('.video-overlay'), function () {
         }
     });
 });
+
+// Style blockquotes in markdown based on content
+$.each($('blockquote'), function () {
+    var warningEmoji = String.fromCodePoint(0x26A0);
+
+    if ($(this).text().indexOf(warningEmoji) >= 0) {
+        // Contains warning emoji
+        $(this).addClass('callout-warning');
+    }
+});
