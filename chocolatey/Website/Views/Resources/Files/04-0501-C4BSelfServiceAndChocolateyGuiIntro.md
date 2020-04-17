@@ -10,4 +10,4 @@ Tags: 2020 tutorial c4b chocolatey-for-business self-service feature c4b-feature
 Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/04-0501.jpg" alt="Chocolatey for Business Self-Service and Chocolatey GUI Part: 1" title="Chocolatey for Business Self-Service and Chocolatey GUI Part: 1" />
 Summary: Chocolatey for Business Self-Service and Chocolatey GUI Part: 1
 ---
-<h5 class="text-center"><a href="/resources/features/chocolatey-for-business-self-service-and-chocolatey-gui-demo">Click here</a> to view Part 2 of this video series and see a demo of <a href="/resources/features/chocolatey-for-business-self-service-and-chocolatey-gui-demo">Chocolatey for Business Self-Service and Chocolatey GUI</a>.</h5>
+<h5 class="text-center"><a href="/resources/features/chocolatey-for-business-self-service-and-chocolatey-gui-demo">Click here</a> to see the next video in this series.</h5>

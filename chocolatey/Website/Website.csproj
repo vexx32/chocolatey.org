@@ -1334,8 +1334,15 @@
     <Content Include="Content\Images\videos\03-20.jpg" />
     <Content Include="Content\Images\videos\03-21.jpg" />
     <Content Include="Content\Images\videos\03-01.jpg" />
-    <Content Include="Content\Images\videos\04-0502.jpg" />
+    <Content Include="Content\Images\videos\04-01.jpg" />
+    <Content Include="Content\Images\videos\04-02.jpg" />
+    <Content Include="Content\Images\videos\04-0301.jpg" />
+    <Content Include="Content\Images\videos\04-0302.jpg" />
+    <Content Include="Content\Images\videos\04-0401.jpg" />
+    <Content Include="Content\Images\videos\04-0402.jpg" />
     <Content Include="Content\Images\videos\04-0501.jpg" />
+    <Content Include="Content\Images\videos\04-0502.jpg" />
+    <Content Include="Content\Images\videos\04-06.jpg" />
     <Content Include="Content\Images\videos\blog-01.jpg" />
     <Content Include="Content\Images\videos\CaseStudy.jpg" />
     <Content Include="Content\Images\videos\01-01.jpg" />
@@ -1779,6 +1786,13 @@
     <Content Include="Views\Documentation\Files\QuickDeploymentSslSetup.md" />
     <Content Include="Views\Documentation\Files\QuickDeploymentClientSetup.md" />
     <Content Include="Views\Resources\Features.cshtml" />
+    <Content Include="Views\Resources\Files\04-01-C4BIntroduction.md" />
+    <Content Include="Views\Resources\Files\04-02-C4BWhyChocolatey.md" />
+    <Content Include="Views\Resources\Files\04-0301-C4BPackageBuilderPart1.md" />
+    <Content Include="Views\Resources\Files\04-0302-C4BPackageBuilderPart2.md" />
+    <Content Include="Views\Resources\Files\04-0401-C4BPackageInternalizerPart1.md" />
+    <Content Include="Views\Resources\Files\04-0402-C4BPackageInternalizerPart2.md" />
+    <Content Include="Views\Resources\Files\04-06-C4BChocolateyCentralManagement.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
