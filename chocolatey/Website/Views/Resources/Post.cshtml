@@ -39,6 +39,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
 }
 
 <section id="secondaryNav">
@@ -93,25 +94,13 @@
             <hr class="d-sm-none" />
             <ul class="list-unstyled mb-0 d-flex justify-content-center">
                 <li class="mr-2" style="margin-top: -1px;">
-                    @if (Model.Type.Contains("Customer Success Story"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/success-stories/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Fsuccess-stories%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
-                    else if (Model.Type.Contains("Video"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/videos/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Fvideos%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
-                    else if (Model.Type.Contains("Case Study"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/case-studies/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Fcase-studies%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
-                    else if (Model.Type.Contains("Feature"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/features/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Ffeatures%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
+                    <div class="fb-share-button" data-href="https://chocolatey.org/@Request.RawUrl" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2F@Request.RawUrl&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                 </li>
                 <li class="list-inline-item">
                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
+                </li>
+                <li class="list-inline-item">
+                    <script type="IN/Share" data-url="https://chocolatey.org/@Request.RawUrl"></script>
                 </li>
             </ul>
         </div>

@@ -10,10 +10,13 @@
     <hr class="d-sm-none" />
     <ul class="list-unstyled mb-0 d-flex justify-content-center">
         <li class="mr-2" style="margin-top: -1px;">
-            <div class="fb-share-button" data-href="@Request.RawUrl" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2F@Request.RawUrl&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+            <div class="fb-share-button" data-href="@Request.RawUrl" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2F@Request.RawUrl&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+        </li>
+        <li class="list-inline-item mr-2">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
         </li>
         <li class="list-inline-item">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
+            <script type="IN/Share" data-url="https://chocolatey.org/@Request.RawUrl"></script>
         </li>
     </ul>
 </div>
