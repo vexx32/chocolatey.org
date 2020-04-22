@@ -70,6 +70,11 @@
                         @Html.ValidationMessageFor(m => m.Machines)
                     </div>
                     <div class="form-field">
+                        <div>@Html.LabelFor(m => m.Hypervisor) <span class="fas fa-asterisk"></span></div>
+                        @Html.DropDownListFor(m => m.Hypervisor, Model.HypervisorItems, "Select...", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Hypervisor)
+                    </div>
+                    <div class="form-field">
                         @Html.LabelFor(m => m.Message) <span class="fas fa-asterisk"></span>
                         @Html.TextAreaFor(m => m.Message, new { @rows = 5 })
                         @Html.ValidationMessageFor(m => m.Message)

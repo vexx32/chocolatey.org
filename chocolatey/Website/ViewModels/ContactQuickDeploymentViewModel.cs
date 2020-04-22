@@ -93,6 +93,21 @@ namespace NuGetGallery
         [Required(ErrorMessage = "Please enter the number of machines you plan to install Chocolatey on.")]
         public string Machines { get; set; }
 
+        [Display(Name = "Choose your hypervisor")]
+        [Required(ErrorMessage = "Please make a selection.")]
+        public string Hypervisor { get; set; }
+
+        public IEnumerable<SelectListItem> HypervisorItems
+        {
+            get
+            {
+                yield return new SelectListItem { Text = "Hyper-V", Value = "Hyper-V" };
+                yield return new SelectListItem { Text = "VMWare", Value = "VMWare" };
+                yield return new SelectListItem { Text = "Other", Value = "Other" };
+                yield return new SelectListItem { Text = "I don't know", Value = "I don't know" };
+            }
+        }
+
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please check the box to agree to terms of this form.")]
         public bool CheckBox { get; set; }
 
