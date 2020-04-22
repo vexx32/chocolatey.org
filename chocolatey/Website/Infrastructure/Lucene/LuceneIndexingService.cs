@@ -85,28 +85,29 @@ namespace NuGetGallery
 
                 if ((lastWriteTime == null) || IndexRequiresRefresh() || forceRefresh)
                 {
-                    void handleOutOfMemory()
-                    {
-                        _indexWriter.Dispose();
-                        _indexWriter = null;
+                    DoAndRetryOnOutOfMemory(
+                        () =>
+                        {
+                            // nuke index
+                            EnsureIndexWriter(creatingIndex: true);
+                            Debug.Assert(_indexWriter != null);
 
-                        EnsureIndexWriter(creatingIndex: true);
-                    }
+                            Trace.WriteLine("Lucene Index: Deleting index");
+                            _indexWriter.DeleteAll();
+                            Trace.WriteLine("Lucene Index: Index delete completed");
 
-                    void nukeIndex()
-                    {
-                        EnsureIndexWriter(creatingIndex: true);
-                        Debug.Assert(_indexWriter != null);
+                            _indexWriter.Commit();
+                            Trace.WriteLine("Lucene Index: Index delete committed");
+                        },
+                        () =>
+                        {
+                            // handle out of memory
+                            _indexWriter.Dispose();
+                            _indexWriter = null;
 
-                        Trace.WriteLine("Lucene Index: Deleting index");
-                        _indexWriter.DeleteAll();
-                        Trace.WriteLine("Lucene Index: Index delete completed");
-
-                        _indexWriter.Commit();
-                        Trace.WriteLine("Lucene Index: Index delete committed");
-                    }
-
-                    DoAndRetryOnOutOfMemory(nukeIndex, handleOutOfMemory);
+                            EnsureIndexWriter(creatingIndex: true);
+                        }
+                    );
 
                     // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the packages
                     lastWriteTime = null;
@@ -156,8 +157,6 @@ namespace NuGetGallery
                     }
                 }
 
-                void handleOutOfMemory() => DisposeAndEnsureIndexWriter(creatingIndex: false);
-
                 EnsureIndexWriter(creatingIndex: false);
 
                 // Just update the provided package
@@ -167,15 +166,15 @@ namespace NuGetGallery
 
                     DoAndRetryOnOutOfMemory(
                         () => _indexWriter.UpdateDocument(updateTerm, document),
-                        handleOutOfMemory,
+                        () => DisposeAndEnsureIndexWriter(creatingIndex: false),
                         waitMilliseconds: 50);
                 }
                 else
                 {
-                    DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(new Term[] { updateTerm }), handleOutOfMemory, waitMilliseconds: 50);
+                    DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(new Term[] { updateTerm }), () => DisposeAndEnsureIndexWriter(creatingIndex: false), waitMilliseconds: 50);
                 }
 
-                DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), handleOutOfMemory);
+                DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), () => DisposeAndEnsureIndexWriter(creatingIndex: false));
             }
         }
 
@@ -244,14 +243,13 @@ namespace NuGetGallery
 
         private void AddPackagesCore(IList<PackageIndexEntity> packages, bool creatingIndex)
         {
-            void handleOutOfMemory() => DisposeAndEnsureIndexWriter(creatingIndex);
             if (!creatingIndex)
             {
                 // If this is not the first time we're creating the index, clear any package registrations for packages we are going to updating.
                 var packagesToDelete = from packageRegistrationKey in packages.Select(p => p.Package.PackageRegistrationKey).Distinct()
                                        select new Term("PackageRegistrationKey", packageRegistrationKey.ToString(CultureInfo.InvariantCulture));
 
-                DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(packagesToDelete.ToArray()), handleOutOfMemory);
+                DoAndRetryOnOutOfMemory(() => _indexWriter.DeleteDocuments(packagesToDelete.ToArray()), () => DisposeAndEnsureIndexWriter(creatingIndex));
             }
 
             EnsureIndexWriter(creatingIndex);
@@ -261,7 +259,7 @@ namespace NuGetGallery
             Parallel.ForEach(packages, AddPackage);
 
             Debug.Assert(_indexWriter != null);
-            DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), handleOutOfMemory);
+            DoAndRetryOnOutOfMemory(() => _indexWriter.Commit(), () => DisposeAndEnsureIndexWriter(creatingIndex));
         }
 
         /// <summary>
@@ -311,7 +309,7 @@ namespace NuGetGallery
         {
             if (numberOfAttempts <= 0)
             {
-                throw new ArgumentOutOfRangeException(string.Format("The parameter '{0}' must be greater than zero.", nameof(numberOfAttempts)));
+                throw new ArgumentOutOfRangeException(string.Format("The parameter '{0}' must be greater than zero.", numberOfAttempts.GetType().Name));
             }
 
             var result = default(T);
