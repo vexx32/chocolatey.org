@@ -29,7 +29,7 @@ It's called Self-Service, which allows those folks to be able to manage software
 We've set up a [solutions page specifically about this here.](/solutions/self-service)
 
 ### Ready to Go Environment
-Another thing we've done in response to this time is prepared a full environment based on our Chocolatey infrastructure architecture recommendations. Currently, it takes about two days to get everything provisioned, stood up, and ready to go - optimistically. We have prepared a quick deployment environment appliance that you can set up in Hyper-V or in your VMware infrastructure and be up and running in hours.
+Another thing we've done in response to this time is prepared a full environment based on our Chocolatey infrastructure architecture recommendations. Currently, it takes about two days to get everything provisioned, stood up, and ready to go - optimistically. We have prepared a [Quick Deployment Environment (QDE)](/docs/quick-deployment-environment) appliance that you can set up in Hyper-V or in your VMware infrastructure and be up and running in hours.
 
 <div class="text-center"><img class="img-fluid border mb-3 w-75" src="/content/images/quick-deployment-environment-chart.jpg" alt="Quick Deployment Environment Chart" title="Quick Deployment Environment Chart"></div>
 

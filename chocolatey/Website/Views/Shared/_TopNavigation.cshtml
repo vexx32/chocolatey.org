@@ -115,13 +115,23 @@
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Solutions</h4>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Solutions, new {solutionName = "home"})">Self-Service Anywhere</a>
                                             <p class="d-none d-md-block">
                                                 Chocolatey provides a unique approach to managing your end-user software (desktops / laptops) and can be combined with your existing solutions. 
                                                 Chocolatey for Business (C4B) enables better security, enhanced visibility with centralized reporting, and a self-service GUI. Self-Service Anywhere allows non-administrators to easily access and manage IT approved software from the office, from home, or anywhere they have an internet connection.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "quick-deployment-environment" })">Quick Deployment Environment (QDE)</a>
+                                            <p class="d-none d-md-block">
+                                                The Quick Deployment Environment (QDE) provides a single virtual machine appliance to be imported into your hypervisor-of-choice, which contains most of the various components of a Chocolatey organizational solution. Deploy recommended architecture in 2-3 hours.
                                             </p>
                                         </li>
                                     </ul>
