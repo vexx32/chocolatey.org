@@ -555,9 +555,10 @@ Phone: {3}
 Country: {4}
 Company: {5}
 Endpoints/Nodes/Machines: {6}
+Hypervisor: {7}
 
 ### Message
-{7}
+{8}
 ".format_with(contactForm.FirstName,
               contactForm.LastName,
               contactForm.Email,
@@ -565,6 +566,7 @@ Endpoints/Nodes/Machines: {6}
               contactForm.Country,
               contactForm.CompanyName,
               contactForm.Machines,
+              contactForm.Hypervisor,
               contactForm.Message);
 
             var additionalSubject = contactForm.CompanyName;
