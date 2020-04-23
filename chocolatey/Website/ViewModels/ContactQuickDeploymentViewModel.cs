@@ -102,7 +102,7 @@ namespace NuGetGallery
             get
             {
                 yield return new SelectListItem { Text = "Hyper-V", Value = "Hyper-V" };
-                yield return new SelectListItem { Text = "VMWare", Value = "VMWare" };
+                yield return new SelectListItem { Text = "VMware", Value = "VMware" };
                 yield return new SelectListItem { Text = "Other", Value = "Other" };
                 yield return new SelectListItem { Text = "I don't know", Value = "I don't know" };
             }
