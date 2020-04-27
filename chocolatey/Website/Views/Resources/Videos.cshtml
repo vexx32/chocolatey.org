@@ -17,6 +17,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
 }
 
 <section id="secondaryNav">
@@ -43,12 +44,16 @@
                         {
                             @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "case-studies", resourceName = post.UrlPath })
                         }
+                        else if (post.Type.Contains("Feature"))
+                        {
+                            @Url.RouteUrl(RouteName.ResourceName, new { resourceType= "features", resourceName = post.UrlPath })
+                        }
                     ">
                         <div class="card h-100">
                             <div class="card-header font-weight-bold bg-medium-light text-center">
                                 @if (post.Type.Contains("Customer Success Story"))
                                 {
-                                    <span class="fas fa-star" alt="Customer Success Stories"></span>
+                                    <span class="fas fa-trophy" alt="Customer Success Stories"></span>
                                 }
                                 else if (post.Type.Contains("Video"))
                                 {
@@ -58,21 +63,22 @@
                                 {
                                     <span class="fas fa-briefcase" alt="Case Studies"></span>
                                 }
-                                <span>@post.Type</span>
+                                else if (post.Type.Contains("Feature"))
+                                {
+                                    <span class="fas fa-star" alt="Feature"></span>
+                                }
+                                <span>
+                                    @if (post.Type.Contains("Feature") && post.Tags.Contains("c4b-feature"))
+                                    {
+                                        <text>C4B </text>
+                                    } else if (post.Type.Contains("Feature") && post.Tags.Contains("open-source-feature")) { 
+                                        <text>Open Source </text>
+                                    }
+                                    @post.Type
+                                </span>
                             </div>
                             <div class="card-body p-0">
-                                @if (post.Type.Contains("Customer Success Story"))
-                                {
-                                    @Html.Raw(post.Image)
-                                }
-                                else if (post.Type.Contains("Video"))
-                                {
-                                    @Html.Raw(post.Image)
-                                }
-                                else if (post.Type.Contains("Case Study"))
-                                {
-                                    @Html.Raw(post.Image)
-                                }
+                                @Html.Raw(post.Image)
                             </div>
                             <div class="card-footer">
                                 @if (post.Type.Contains("Customer Success Story"))
@@ -80,7 +86,7 @@
                                     <h5>@post.Company</h5>
                                     <p><small><i>@post.Name, @post.Position</i></small></p>
                                 }
-                                else if (post.Type.Contains("Video") || post.Type.Contains("Case Study"))
+                                else
                                 {
                                     <h5>@post.Title</h5>
                                 }

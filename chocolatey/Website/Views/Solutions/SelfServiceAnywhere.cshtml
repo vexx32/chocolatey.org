@@ -19,19 +19,30 @@
 </div>
 <section class="pb-3 pb-lg-5">
     <div class="container">
-        <div class="row resource-list">
-            <div class="col-lg-4 order-2 order-lg-1">
+        <div class="row">
+            <div class="col-lg-4 order-2 order-lg-1 video-story resource-list">
                 <div class="card">
-                    <div class="card-body p-0">
-                        <div class="video-overlay">
-                            <img class="img-fluid video-overlay-image" src="@Url.Content("~/content/images/videos/04-02.jpg")" alt="Self-Service and Chocolatey GUI Intro" title="Self-Service and Chocolatey GUI Intro" />
-                            <video class="embed-responsive embed-responsive-16by9 video-overlay-embed d-none" controls>
-                                <source src="@Url.Content("~/content/images/04-02-C4BSelfServiceAndChocolateyGuiIntro.mp4")" type="video/mp4">
-                            </video>
-                        </div>
+                    <div class="text-center card-body p-0" data-toggle="modal" data-target="#self-service-1">
+                        <img class="img-fluid" src="@Url.Content("~/content/images/videos/04-0501.jpg")" alt="Chocolatey for Business Self-Service and Chocolatey GUI Part: 1" title="Chocolatey for Business Self-Service and Chocolatey GUI Part: 1" />
                     </div>
                     <div class="card-footer">
-                        <h5 class="mb-0 text-center">Chocolatey for Business Self-Service and Chocolatey GUI Intro</h5>
+                        <h5 class="mb-0 text-center">Chocolatey for Business Self-Service and Chocolatey GUI Part: 1</h5>
+                    </div>
+                </div>
+                <div class="modal fade" id="self-service-1" tabindex="-1" role="dialog" aria-labelledby="Chocolatey for Business Self-Service and Chocolatey GUI Part: 1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body p-0">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" data-src="https://www.youtube.com/embed/Thw9GpQaZ6M?autoplay=1" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

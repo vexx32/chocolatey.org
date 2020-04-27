@@ -164,7 +164,7 @@
                 border-color: $primary;
             }
 
-            a, .btn-link {
+            a:not(.btn), .btn-link {
                 display: flex;
                 flex-direction: column;
 
@@ -177,12 +177,6 @@
                 }
             }
         }
-    }
-}
-#secondaryNav.packagesNav {
-
-    ul {
-        margin: 0 auto;
     }
 }
 
@@ -213,15 +207,10 @@
         }
     }
 
-    #secondaryNav.successStoryNav {
-
-        ul {
-            margin: 0;
-        }
-
+    #secondaryNav.c4b-nav {
         .btn {
             position: absolute;
-            right: 1.5rem;
+            right: 1rem;
         }
     }
 }
@@ -250,20 +239,6 @@
                     border-right: 1px solid #ced4da;
                 }
             }
-        }
-    }
-
-    #secondaryNav.successStoryNav {
-
-        ul {
-            margin: 0 auto;
-        }
-    }
-
-    #secondaryNav.packagesNav {
-
-        ul {
-            margin: 0;
         }
     }
 }
@@ -335,6 +310,13 @@
                     }
                 }
             }
+        }
+    }
+
+    #secondaryNav.c4b-nav {
+        .btn {
+            position: absolute;
+            right: 1.5rem;
         }
     }
 }

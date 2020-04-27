@@ -9,7 +9,7 @@ Tags: chocolatey-fest 2018
 Image: <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/videos/03-14.jpg" alt="Using Chocolatey & Puppet at Yelp" title="Using Chocolatey & Puppet at Yelp" />
 Summary: Discover how Mark Gewurz and Peter Sisk used Chocolatey to remove local admin at Yelp, reducing both IT support overhead and malware incidents.
 ---
-How we used Chocolatey to remove local admin at Yelp, reducing both IT support overhead and malware incidents. Using a combination of Chocolatey Self Service and Puppet, users can install the software they need to be productive from a trusted source. Hear how Yelp found a balance between security and convenience and learn about the automation with AU and Jenkins that allows us to keep our internal software catalog up to date.
+How we used Chocolatey to remove local admin at Yelp, reducing both IT support overhead and malware incidents. Using a combination of Chocolatey Self-Service and Puppet, users can install the software they need to be productive from a trusted source. Hear how Yelp found a balance between security and convenience and learn about the automation with AU and Jenkins that allows us to keep our internal software catalog up to date.
 
 Resources:
 * https://chocolateyfest.com

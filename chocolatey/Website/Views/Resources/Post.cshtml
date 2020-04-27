@@ -19,6 +19,10 @@
     {
         <link rel="canonical" href="https://chocolatey.org/resources/case-studies/@Model.UrlPath" />
     }
+    else if (Model.Type.Contains("Feature"))
+    {
+        <link rel="canonical" href="https://chocolatey.org/resources/features/@Model.UrlPath" />
+    }
     @if (!string.IsNullOrWhiteSpace(Model.Summary))
     {
         <meta property="og:description" content="@Model.Summary" />
@@ -35,6 +39,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
 }
 
 <section id="secondaryNav">
@@ -46,7 +51,7 @@
         {
             <h1>@Model.Name at @Model.Company</h1>
         }
-        else if (Model.Type.Contains("Video") || Model.Type.Contains("Case Study"))
+        else if (Model.Type.Contains("Video") || Model.Type.Contains("Case Study") || Model.Type.Contains("Feature"))
         {
             <h1>@Model.Title</h1>
         }
@@ -68,11 +73,19 @@
                     {
                         <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "case-studies"})">Case Studies</a></li>
                     }
+                    else if (Model.Type.Contains("Feature") && Model.Tags.Contains("c4b-feature"))
+                    {
+                        <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "features"})#c4b">C4B Features</a></li>
+                    }
+                    else if (Model.Type.Contains("Feature") && Model.Tags.Contains("open-source-feature"))
+                    {
+                        <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "features"})#open-source">Open Source Features</a></li>
+                    }
                     @if (Model.Type.Contains("Customer Success Story"))
                     {
                         <li class="breadcrumb-item active" aria-current="page">@Model.Name at @Model.Company</li>
                     }
-                    else if (Model.Type.Contains("Video") || Model.Type.Contains("Case Study"))
+                    else if (Model.Type.Contains("Video") || Model.Type.Contains("Case Study") || Model.Type.Contains("Feature"))
                     {
                         <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
                     }
@@ -81,21 +94,13 @@
             <hr class="d-sm-none" />
             <ul class="list-unstyled mb-0 d-flex justify-content-center">
                 <li class="mr-2" style="margin-top: -1px;">
-                    @if (Model.Type.Contains("Customer Success Story"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/success-stories/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Fsuccess-stories%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
-                    else if (Model.Type.Contains("Video"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/videos/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Fvideos%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
-                    else if (Model.Type.Contains("Case Study"))
-                    {
-                        <div class="fb-share-button" data-href="https://chocolatey.org/resources/case-studies/@Model.UrlPath" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2Fresources%2Fcase-studies%2F@Model.UrlPath&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                    }
+                    <div class="fb-share-button" data-href="https://chocolatey.org/@Request.RawUrl" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchocolatey.org%2F@Request.RawUrl&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                 </li>
                 <li class="list-inline-item">
                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
+                </li>
+                <li class="list-inline-item">
+                    <script type="IN/Share" data-url="https://chocolatey.org/@Request.RawUrl"></script>
                 </li>
             </ul>
         </div>
@@ -107,8 +112,8 @@
                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.Video" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 }
-                else
-                { 
+                else if (!String.IsNullOrEmpty(Model.InternalVideo))
+                {
                     <video class="embed-responsive embed-responsive-16by9" controls>
                         <source src="@Url.Content("~/content/images/" + Model.InternalVideo)" type="video/mp4">
                     </video>
@@ -138,5 +143,11 @@
                 </div>
             }
         </div>
+        @if (Model.Type.Contains("Feature") && Model.Tags.Contains("c4b-feature"))
+        {
+            <div class="row">
+                @*Loop through videos*@
+            </div>
+        }
     </div>
 </section>
