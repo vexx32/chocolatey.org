@@ -102,20 +102,19 @@ namespace NuGetGallery
 
                 if ((lastWriteTime == null) || IndexRequiresRefresh() || forceRefresh)
                 {
-                    void deleteIndex()
-                    {
-                        EnsureIndexWriter(creatingIndex: true);
-                        Debug.Assert(Index != null);
+                    DoAndRetryOnOutOfMemory(
+                        () =>
+                        {
+                            EnsureIndexWriter(creatingIndex: true);
+                            Debug.Assert(Index != null);
 
-                        Trace.WriteLine("Lucene Index: Deleting index");
-                        Index.DeleteAll();
-                        Trace.WriteLine("Lucene Index: Index delete completed");
+                            Trace.WriteLine("Lucene Index: Deleting index");
+                            Index.DeleteAll();
+                            Trace.WriteLine("Lucene Index: Index delete completed");
 
-                        Index.Commit();
-                        Trace.WriteLine("Lucene Index: Index delete committed");
-                    }
-
-                    DoAndRetryOnOutOfMemory(deleteIndex, () => DisposeAndEnsureIndexWriter(creatingIndex: true));
+                            Index.Commit();
+                            Trace.WriteLine("Lucene Index: Index delete committed");
+                        }, () => DisposeAndEnsureIndexWriter(creatingIndex: true));
 
                     // Reset the lastWriteTime to null. This will allow us to get a fresh copy of all the packages
                     lastWriteTime = null;
@@ -381,7 +380,8 @@ namespace NuGetGallery
             {
                 lock (IndexWriterLock)
                 {
-                    if (WriterCache.TryGetValue(_directory, out IndexWriter indexWriter))
+                    IndexWriter indexWriter = null;
+                    if (WriterCache.TryGetValue(_directory, out indexWriter))
                     {
                         Debug.Assert(indexWriter != null);
                         Index = indexWriter;
@@ -398,7 +398,8 @@ namespace NuGetGallery
             lock (IndexWriterLock)
             {
                 // Remove the writer from the cache so the subsequent check forces it to be re-created.
-                bool removed = WriterCache.TryRemove(_directory, out IndexWriter writer);
+                IndexWriter writer = null;
+                bool removed = WriterCache.TryRemove(_directory, out writer);
                 Debug.Assert(removed && writer == Index);
                 Index.Dispose();
                 Index = null;
