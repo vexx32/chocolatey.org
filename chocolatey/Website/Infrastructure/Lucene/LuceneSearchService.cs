@@ -80,7 +80,9 @@ namespace NuGetGallery
 
             if (searchFilter.IncludeAllVersions)
             {
-                filter = new QueryWrapperFilter(new TermQuery(new Term("InIndex", Boolean.TrueString)));
+                filter = searchFilter.IncludePrerelease ? 
+                    new QueryWrapperFilter(new TermQuery(new Term("InIndex", Boolean.TrueString))) 
+                    : new QueryWrapperFilter(new TermQuery(new Term("IsPrerelease", Boolean.FalseString)));
             }
 
             var results = searcher.Search(query, filter: filter, n: numRecords, sort: new Sort(GetSortField(searchFilter)));
