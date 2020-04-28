@@ -325,8 +325,6 @@ namespace NuGetGallery
                 return result;
             }
 
-            Trace.WriteLine("Starting retryable action");
-
             for (int attempts = 1; attempts <= numberOfAttempts; attempts++)
             {
                 try
@@ -347,11 +345,10 @@ namespace NuGetGallery
                     }
 
                     Thread.Sleep(waitMilliseconds + (attempts * increaseWaitOnRetryMilliseconds));
-                    Trace.WriteLine("Retrying action.");
+                    Trace.WriteLine("Retrying action {0}/{1}.".format_with(attempts, numberOfAttempts));
                 }
             }
 
-            Trace.WriteLine("Retryable action succeeded.");
             return result;
         }
 
