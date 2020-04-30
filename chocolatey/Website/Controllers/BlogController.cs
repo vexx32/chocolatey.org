@@ -44,7 +44,17 @@ namespace NuGetGallery.Controllers
 
             MarkdownPipeline = new MarkdownPipelineBuilder()
                  .UseSoftlineBreakAsHardlineBreak()
-                 .UseAdvancedExtensions()
+                 .UseAutoLinks()
+                 .UseGridTables()
+                 .UsePipeTables()
+                 .UseAutoIdentifiers()
+                 .UseEmphasisExtras()
+                 .UseNoFollowLinks()
+                 .UseCustomContainers()
+                 .UseBootstrap()
+                 .UseEmojiAndSmiley()
+                 .UseCustomContainers()
+                 .UseGenericAttributes()
                  .Build();
         }
 
