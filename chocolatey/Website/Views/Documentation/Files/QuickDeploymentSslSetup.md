@@ -15,6 +15,10 @@ Under the following situations you would want to run the script that follows:
 > Just let things happen, as things are working as expected.
 
 
+>:warning: **WARNING**
+>
+> If you provide your own certificate, it needs to include the private key to allow for export. Nexus requires this.
+
 > :memo: **NOTE**: Please run the below from an administrative PowerShell session.
 
 Once complete, this script will generate new SSL certificates for all services and move them to the appropriate locations and configure the services to use them.
@@ -22,5 +26,15 @@ Once complete, this script will generate new SSL certificates for all services a
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; . C:\choco-setup\files\New-SslCertificates.ps1
 ```
+
+> :warning: **WARNING**
+>
+> tl;dr: Think long and hard before changing the QDE hostname
+>
+> Renaming the QDE host requires a lot of things and needs to be completed FIRST prior to ANYTHING that is done on the QDE box. It is strongly recommended **NOT** to rename unless you absolutely need to. The most important reason has to do with how a client installs from QDE - it must learn to trust the QDE certificate. Once renamed, the easy option that's provided for you goes away and you will need to provide a hosted solution with an already trusted certificate.
+> You can provide your own certificate that is already trusted on machines as part of the [[SSL/TLS Setup|QuickDeploymentSslSetup]]. Your other option is to host the script to trust the certificate with an already trusted certificate. You will find a template that you will need to edit at `c:\choco_setup_files` (in the QDE) named `Import-ChocoServerCertificate.ps1`.
+>
+> Please contact support if you need help here.
+
 
 [[Quick Deployment Environment|QuickDeploymentEnvironment]]
