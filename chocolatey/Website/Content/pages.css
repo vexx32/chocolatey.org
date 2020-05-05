@@ -163,6 +163,9 @@
 .blogShare li {
     height: 28px;
 }
+.blogShare li:not(:last-child) {
+    margin-right: .5rem;
+}
 /*Kickstarter- Sponsors*/
 @media (min-width: 576px) {
     #sponsors .card .card-body {

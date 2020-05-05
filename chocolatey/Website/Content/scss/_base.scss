@@ -338,6 +338,14 @@ a + .collapse.show, a + .collapsing {
     top: 2px;
 }
 
+/*Tables*/
+.table-thead-d-none thead {
+    display: none;
+}
+
+.table-w-50 td {
+    width: 50%;
+}
 /*z-index*/
 .z-index-1 {
     z-index: 1;

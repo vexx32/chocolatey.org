@@ -14,7 +14,7 @@
     box-shadow: none;
 }
 
-[class*="callout-"] p:last-child, blockquote p:last-child {
+[class*="callout-"] p:last-child, [class*="callout-"] ul:last-child, blockquote p:last-child, blockquote ul:last-child {
     margin-bottom: 0;
 }
 

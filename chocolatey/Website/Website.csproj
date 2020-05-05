@@ -1800,6 +1800,7 @@
     <Content Include="Views\Resources\Files\04-0402-C4BPackageInternalizerPart2.md" />
     <Content Include="Views\Resources\Files\04-06-C4BChocolateyCentralManagement.md" />
     <Content Include="Views\Shared\_C4BSubNavigation.cshtml" />
+    <Content Include="Views\Blog\HowToDeliverWorkFromHomeInUnprecedentedTimesWithChocolateySelfServiceAnywhere.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

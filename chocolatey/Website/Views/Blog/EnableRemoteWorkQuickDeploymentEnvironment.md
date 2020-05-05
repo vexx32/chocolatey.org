@@ -7,7 +7,7 @@ Keywords: chocolatey, rob reynolds, covid-19, self-service, quick deployment, re
 Summary: As part of the current pandemic, Chocolatey Software is responding in a number of ways. One of those ways is to enable organizations like yours to implement more modern infrastructure that better supports a remote workforce. Another thing we've done in response to this time is prepared a full environment based on our Chocolatey infrastructure architecture recommendations.
 ---
 <hr class="mt-0 mb-3 w-75 mx-auto" />
-<h4 class="text-center mb-0"><i>"How do you enable remote workers without compromising security?"</i></h3>
+<h4 class="text-center mb-0"><i>"How do you enable remote workers without compromising security?"</i></h4>
 <hr class="my-3 w-75 mx-auto" />
 
 I don't start this off lightly. We are in unprecedented times. If someone told me a little over a month ago that near all businesses across the world would suddenly be working from home due to a pandemic, I wouldn't have believed you. Neither would half of the population. You probably wouldn't have believed it. You probably find it hard to believe even still.
