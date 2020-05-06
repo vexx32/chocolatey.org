@@ -51,6 +51,8 @@ namespace NuGetGallery.Controllers
                  .UseCustomContainers()
                  .UseBootstrap()
                  .UseEmojiAndSmiley()
+                 .UseCustomContainers()
+                 .UseGenericAttributes()
                  .Build();
         }
 
