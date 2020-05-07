@@ -9,3 +9,4 @@ Copy-Item "choco.wiki\images\*" "chocolatey\Website\content\images\docs" -Force 
 
 # copy the md
 Copy-Item "choco.wiki\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Force -Recurse
+Copy-Item "choco.wiki\*.md" "chocolatey\Website\Views\Documentation\Files" -Force -Recurse
