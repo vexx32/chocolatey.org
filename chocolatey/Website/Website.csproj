@@ -1140,6 +1140,7 @@
     <Content Include="Content\Images\copy.png" />
     <Content Include="Content\Images\covid-response.png" />
     <Content Include="Content\Images\dep-graph.svg" />
+    <Content Include="Content\Images\docs\C4B-implementation-diagram.jpg" />
     <Content Include="Content\Images\docs\chocolateyicon.gif" />
     <Content Include="Content\Images\docs\chocolateyicon.png" />
     <Content Include="Content\Images\docs\chocolateynhprofiler.png" />
@@ -1802,6 +1803,7 @@
     <Content Include="Views\Resources\Files\04-06-C4BChocolateyCentralManagement.md" />
     <Content Include="Views\Shared\_C4BSubNavigation.cshtml" />
     <Content Include="Views\Blog\HowToDeliverWorkFromHomeInUnprecedentedTimesWithChocolateySelfServiceAnywhere.md" />
+    <Content Include="Views\Documentation\Files\ChocolateyForBusinessQuickStartGuide.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
