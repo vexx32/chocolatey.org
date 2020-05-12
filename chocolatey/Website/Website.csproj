@@ -662,6 +662,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\SolutionsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\StyleguideController.cs" />
@@ -1248,6 +1249,7 @@
     <Content Include="Content\Images\editIcon.png" />
     <Content Include="Content\Images\editProfile.png" />
     <Content Include="Content\Images\errorPage.png" />
+    <Content Include="Content\Images\events\01-01.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
@@ -1306,6 +1308,8 @@
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
+    <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
+    <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\styleguide\logo-space.jpg" />
     <Content Include="Content\Images\sync-watch.png" />
@@ -1421,6 +1425,7 @@
     <Content Include="Content\scss\_lists.scss" />
     <Content Include="Import-QuickDeployCertificate.ps1" />
     <Content Include="Content\scss\_ribbons.scss" />
+    <Content Include="Content\scss\_countdown.scss" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1805,6 +1810,7 @@
     <Content Include="Views\Shared\_C4BSubNavigation.cshtml" />
     <Content Include="Views\Blog\HowToDeliverWorkFromHomeInUnprecedentedTimesWithChocolateySelfServiceAnywhere.md" />
     <Content Include="Views\Documentation\Files\ChocolateyForBusinessQuickStartGuide.md" />
+    <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

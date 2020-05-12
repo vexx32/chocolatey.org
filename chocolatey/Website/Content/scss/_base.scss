@@ -94,6 +94,16 @@ code:not([class*="language-"]) {
             border-color: darken(#242729, 15%);
         }
     }
+
+    &.btn-linkedin {
+        background: #2867B2;
+        border-color: #2867B2;
+
+        &:hover, &:focus, &:active, &:active:focus {
+            background: darken(#2867B2, 15%);
+            border-color: darken(#2867B2, 15%);
+        }
+    }
 }
 
 /*Backgrounds & Text*/
@@ -216,6 +226,15 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
     border-top: 1px solid rgba(255,255,255,.2);
 }
 
+.border-top-dark {
+    border-top: 1px solid lighten($dark, 15%);
+}
+
+/*Text*/
+.text-muted-dark {
+    color: lighten($dark, 30%);
+}
+
 /*Curve*/
 .shape-border {
     position: relative;
@@ -277,11 +296,20 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
 }
 
 /*Random Borders*/
-.border-hr {
+.border-hr, .border-hr-lg {
     border: 3px solid $blue;
+    border-radius: $border-radius;
+}
+
+.border-hr {
     width: 50px;
     margin-left: 0;
-    border-radius: $border-radius;
+}
+
+.border-hr-lg {
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*Load More/Show Less*/
