@@ -2,18 +2,6 @@
 .form-field label {
     color: #21446d !important;
 }
-/*Package Overview*/
-.badge-orange {
-    background: #fd7e14
-}
-.badge-purple {
-    background: #6f42c1;
-    color: white;
-}
-.badge-outline-primary {
-    background: white;
-    border: 1px solid #5c9fd8;
-}
 /*Package List View*/
 .package-list-view .package-image-header {
     width: 50px;

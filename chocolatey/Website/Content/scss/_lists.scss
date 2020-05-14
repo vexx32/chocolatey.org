@@ -171,6 +171,14 @@ ul.list-style-type-disc, .blockquote.list-style-type-disc > ul {
     list-style-type: disc;
 }
 
+.list-speaker li:not(:first-child):not(:nth-child(2)):before {
+    content: " and ";
+}
+
+#events li:last-child hr {
+    display: none;
+}
+
 @include media-breakpoint-up(md) {
     .divider-list li:not(:last-child) {
         border-right: 1px solid #ced4da;

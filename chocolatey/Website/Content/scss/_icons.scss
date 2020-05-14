@@ -124,7 +124,7 @@ a[data-toggle="collapse"].collapsed:not(.collapse-nav), .docs-left button.navbar
     }
 }
 
-.list-curve p:last-child, .list-circle li.list-circle-fa-check {
+.list-curve p:last-child, .list-circle li.list-circle-fa-check, .list-circle.list-circle-fa-check li {
     &::before {
         @extend %fa-icon;
         @extend .fas;
