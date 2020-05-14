@@ -423,7 +423,7 @@ Install-ChocolateyFromPackage $localChocolateyPackageFilePath
 </code></pre>
                     </div>
                     <h5 class="mt-4">2. Make script accessible by internal url</h5>
-                    <p>Put the script somewhere internally that can be accessed by a url (like a raw/binary repository in Nexus, Artifactory, or ProGet).</p>
+                    <p>Put the script somewhere internally that can be accessed by a url (like a raw/binary repository in Nexus, Artifactory, or ProGet). Do NOT put the script on a NuGet type repository (where your packages will be), create a new Raw/Binary repository.</p>
                     <h5 class="mt-4">3. Install/Deploy Chocolatey internally </h5>
                     <p>Now you can do similar to the individual side, but your command will be something like:</p>
 <pre class="language-powershell border py-3"><code>
