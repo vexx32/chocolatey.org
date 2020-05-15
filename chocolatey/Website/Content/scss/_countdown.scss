@@ -1,0 +1,97 @@
+.countdown-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px;
+
+    &.countdown-container-absolute-center {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: -40px;
+        z-index: 999;
+    }
+
+    &.countdown-container-blocks {
+        > div {
+            box-shadow: $box-shadow;
+            background: $white;
+            color: $dark;
+            border-radius: $border-radius;
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+
+        &:not(:last-child) {
+            margin-right: 7.5px;
+        }
+
+        > :first-child {
+            font-size: $h3-font-size;
+            font-weight: bold;
+            color: $primary;
+        }
+
+        * {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.calendar-date {
+    box-shadow: $box-shadow;
+    text-align: center;
+    font-weight: bold;
+
+    div:first-child {
+        background: $danger;
+        color: $white;
+        padding: .25rem 0;
+        font-size: $h3-font-size;
+    }
+
+    div:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $white;
+        font-size: $display4-size;
+        padding: .5rem;
+
+        sup {
+            font-size: $h3-font-size;
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .countdown-container {
+        &.countdown-container-absolute-center {
+            top: -50px;
+        }
+
+        &.countdown-container-blocks {
+            > div {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        > div {
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            > :first-child {
+                font-size: $h1-font-size;
+            }
+        }
+    }
+}

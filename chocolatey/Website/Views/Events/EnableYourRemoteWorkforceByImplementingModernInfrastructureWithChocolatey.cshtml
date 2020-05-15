@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Webinar: Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/jquery-countdown");
+
+    var openingTagline = "Deploying software to remote desktop and endpoint devices is not always easy, especially in highly regulated and locked down environments. This can be even more challenging if your IT team is overworked, and you need to ensure your users are productive with no vulnerabilities.";
+}
+@section ExtraHeaders {
+    <meta property="og:description" content="@openingTagline" />
+    <meta property="description" content="@openingTagline" />
+}
+<div class="bg-dark text-white border-top-dark text-center">
+    <section class="pt-3 pt-lg-5 pb-5">
+        <div class="container-fluid pt-lg-3">
+            <h4 class="mb-0 text-muted-dark">LIVE ONLINE WEBINAR</h4>
+            <h1 class="mb-0 display-4">Enable Your Remote Workforce by Implementing <br class="d-none d-md-block" />Modern Infrastructure with Chocolatey</h1>
+            <hr class="mt-3 mb-4 mb-md-5 border-hr-lg">
+            <h5>
+                <span class="mr-md-4 mb-3 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> Thursday, 4<sup>th</sup> June</span>
+                <br class="d-md-none" />
+                <span><i class="fas fa-clock"></i> 10-11 AM CDT <br class="d-sm-none" />(8-9 AM PDT / 3-4 PM GMT)</span>
+            </h5>
+            <a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer" class="btn btn-success btn-lg my-4 mb-md-5"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
+        </div>
+    </section>
+    <div class="position-relative"><div id="countdown" class="countdown-container countdown-container-blocks countdown-container-absolute-center"></div></div>
+    <div class="shape-border shape-border-bottom"></div>
+</div>
+<section class="pb-3 pt-lg-3 pb-lg-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>Overview</h3>
+                <p><i>@openingTagline</i></p>
+                <p>
+                    After the first weeks of remote working, organizations are beginning to see the cracks in their remote working approaches and recognize that they need a more scalable, automated, and secure solution.
+                </p>
+                <p>
+                    When faced with unplanned events or special projects, organizations can be required to set-up remote workers with very little notice.
+                    Many IT teams are not equipped to add and secure remote workers in such  short timeframes.
+                </p>
+                <p>
+                    Chocolatey provides a unique approach to managing end-user software that can also be combined with existing solutions.
+                </p>
+                <p><a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer">Register</a> for this hands-on webinar to learn more about:</p>
+                <ul class="list-circle list-circle-success-fade">
+                    <li class="list-circle-fa-check"><a href="@Url.RouteUrl(RouteName.Solutions, new {solutionName = "self-service-anywhere"})" target="_blank">Self-Service Anywhere</a> enables non-administrators to easily access and manage IT approved software from the office, from home, or anywhere they have an internet connection.</li>
+                    <li class="list-circle-fa-check">
+                        Get started quickly by Implementing Modern Infrastructure to Support Remote Workforce. Chocolatey has developed a <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "quick-deployment-environment" })" target="_blank">Quick Deployment Environment (QDE)</a>
+                        based on infrastructure architecture recommendations that can have teams up and running in 2 hours, with pre-installed key productivity application packages.
+                    </li>
+                    <li class="list-circle-fa-check">Chocolatey for Business (C4B) has helped thousands of system admins save time, reduce downtime, and accelerate deployments.</li>
+                </ul>
+                <p>
+                    This session will also provide an overview of how Chocolatey helps with Windows Automation, together with a live demo, and practical hands-on advice.
+                    We'll also cover roadmap items for upcoming releases and have time for questions / feedback. <a class="d-none d-sm-inline-block" href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer">Register Now<i class="fas fa-angle-right"></i></a>
+                </p>
+                <a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer" class="btn btn-lg btn-success d-sm-none">Reserve My Spot Now</a>
+                <hr class="my-4 d-sm-none" />
+                <h3 class="mt-sm-4">Event Details</h3>
+                <div class="row align-items-center">
+                    <div class="d-none d-sm-block col-sm-4 col-md-3">
+                        <div class="calendar-date">
+                            <div>June</div>
+                            <div>4<sup>th</sup></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-9">
+                        <ul class="list-unstyled mb-0 h5">
+                            <li class="mb-2"><strong>Title: </strong>Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey</li>
+                            <li class="mb-2"><strong>Date: </strong>Thursday, 4<sup>th</sup> June</li>
+                            <li class="mb-2"><strong>Time: </strong>10-11 AM CDT (8-9 AM PDT / 3-4 PM GMT)<br /><small><a href="https://everytimezone.com/s/5b697026" target="_blank" rel="noreferrer">Convert to your time zone<i class="fas fa-angle-right"></i></a></small></li>
+                            <li><strong>Duration: </strong>1 hour</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-sm-4 mt-lg-0">
+                <hr class="my-4 d-sm-none" />
+                <h3>Speakers:</h3>
+                <div class="mb-4 mb-lg-5">
+                    <div class="d-flex mb-2 align-items-center">
+                        <div class="mr-3">
+                            <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/paul-broadwith.jpg")" alt="Paul Broadwith" title="Paul Broadwith" />
+                        </div>
+                        <div>
+                            <h5 class="font-weight-bold text-primary mb-0">Paul Broadwith</h5>
+                            <p class="mb-0"><strong>Senior Technical Engineer at Chocolatey</strong></p>
+                        </div>
+                    </div>
+                    <p class="mb-2">Paul Broadwith of Glasgow Scotland has 25+ years in IT in financial, government, manufacturing and services sectors. He is the Lead Engineer on Boxstarter and cChoco DSC Resource.</p>
+                    <div class="d-flex">
+                        <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="https://www.linkedin.com/in/paulbroadwith" target="_blank" rel="noreferrer" title="View more about Paul Broadwith on LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
+                        <a class="btn btn-sm btn-secondary btn-twitter" href="https://twitter.com/pauby" target="_blank" rel="noreferrer" title="View more about Paul Broadwith on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex mb-2 align-items-center">
+                        <div class="mr-3">
+                            <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/rob-reynolds.jpg")" alt="Rob Reynolds" title="Rob Reynolds" />
+                        </div>
+                        <div>
+                            <h5 class="font-weight-bold text-primary mb-0">Rob Reynolds</h5>
+                            <p class="mb-0"><strong>Chocolatey Founder</strong></p>
+                        </div>
+                    </div>
+                    <p class="mb-2">Rob is a developer turned founder with 14+ years experience in infrastructure automation and modern automation approaches. He excels in taking hard concepts and making them approachable and easy.</p>
+                    <div class="d-flex">
+                        <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="https://www.linkedin.com/in/robreynolds" target="_blank" rel="noreferrer" title="View more about Rob Reynolds on LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
+                        <a class="btn btn-sm btn-secondary btn-twitter" href="https://twitter.com/ferventcoder" target="_blank" rel="noreferrer" title="View more about Rob Reynolds on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-3 py-lg-5 bg-primary">
+    <div class="container text-center">
+        <h2>Empower Your Remote Users While Maintaining Security Policies with Chocolatey</h2>
+        <h3 class="mb-3">Spots Are Limited. Secure Your Spot Today!</h3>
+        <a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer" class="btn btn-lg btn-light">Reserve My Spot Now</a>
+    </div>
+</section>
+
+@section BottomScripts {
+    <script>
+        $(function () {
+            // Update date in function below. Date is YYYY/MM/DD HH:MM:SS.
+            $('#countdown').countdown('2020/06/04 10:00:00 CDT', function (event) {
+                $(this).html(event.strftime(
+                    '<div><div>%D</div><p>Days</p></div>'
+                    + '<div><div>%H</div><p>Hours</p></div>'
+                    + '<div><div>%M</div><p>Minutes</p></div>'
+                    + '<div><div>%S</div><p>Seconds</p></div>'
+                ));
+            });
+
+            // Uncomment below to pause timer to allow for styling
+            //$('#countdown').countdown('pause');
+        });
+    </script>
+}

@@ -359,6 +359,14 @@ namespace NuGetGallery
 
             routes.Redirect(r => r.MapRoute(RouteName.SelfService, "self-service")).To(solutionsRoute);
 
+            var eventsRoute = routes.MapRoute(
+                RouteName.Events,
+                "events/{eventName}",
+                new { controller = "Events", action = "Events", eventName = "home" }
+                );
+
+            routes.Redirect(r => r.MapRoute(RouteName.CurrentWebinar, "webinar")).To(eventsRoute, new { eventName = "enable-your-remote-workforce-by-implementing-modern-infrastructure-with-chocolatey" });
+
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 
             routes.MapRoute(
