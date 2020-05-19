@@ -1066,9 +1066,11 @@
     <Content Include="Content\Images\Badges\CreatingChocolateyPackages.png" />
     <Content Include="Content\Images\Badges\GettingStartedWithChocolatey.png" />
     <Content Include="Content\Images\Badges\InstallingUpgradingUninstalling.png" />
+    <Content Include="Content\Images\blog\1billion.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
+    <Content Include="Content\Images\blog\DrEvilOneBillionInstalls.jpg" />
     <Content Include="Content\Images\blog\increased-web-traffic.png" />
     <Content Include="Content\Images\blog\redesign-badges.jpg" />
     <Content Include="Content\Images\blog\redesign-default-view.gif" />
@@ -1811,6 +1813,7 @@
     <Content Include="Views\Blog\HowToDeliverWorkFromHomeInUnprecedentedTimesWithChocolateySelfServiceAnywhere.md" />
     <Content Include="Views\Documentation\Files\ChocolateyForBusinessQuickStartGuide.md" />
     <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
+    <Content Include="Views\Blog\OneBillionInstalls.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
