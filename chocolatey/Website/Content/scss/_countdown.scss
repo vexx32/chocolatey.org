@@ -49,6 +49,8 @@
     box-shadow: $box-shadow;
     text-align: center;
     font-weight: bold;
+    max-width: 160px;
+    margin: 0 auto;
 
     div:first-child {
         background: $danger;
@@ -64,6 +66,7 @@
         background: $white;
         font-size: $display4-size;
         padding: .5rem;
+        color: $dark;
 
         sup {
             font-size: $h3-font-size;

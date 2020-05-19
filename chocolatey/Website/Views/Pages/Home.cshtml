@@ -26,19 +26,43 @@
 @if (callout == true)
 {
     <section id="callout" class="bg-medium-dark">
-        <div class="container py-3 py-lg-5">
-            <div class="row align-items-center">
-                <div class="col-lg-3 mb-4 mb-lg-0 d-none d-lg-block text-right">
-                    <img height="100" alt="Chocolatey Software" src="@Url.Content("~/content/images/logo_small.svg")" />
+        <div class="container-fluid py-3 py-lg-5">
+            <div class="text-center">
+                <h4 class="text-primary mb-0">WEBINAR:</h4>
+                <h3 class="mb-3 mb-md-1">Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey</h3>
+                <h5>
+                    <span class="mr-md-4 mb-1 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> Thursday, 4<sup>th</sup> June</span>
+                    <br class="d-md-none" />
+                    <span><i class="fas fa-clock"></i> 10-11 AM CDT <br class="d-sm-none" />(8-9 AM PDT / 3-4 PM GMT)</span>
+                </h5>
+            </div>
+            <div class="row divider-row my-4">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-3 text-md-right ml-md-auto order-2">
+                            <h5 class="font-weight-bold text-primary mb-0">Paul Broadwith</h5>
+                            <p class="mb-0"><strong>Senior Technical Engineer at Chocolatey</strong></p>
+                        </div>
+                        <div class="order-1 order-md-2 mr-3 mr-md-0">
+                            <img class="rounded shadow" width="60" src="@Url.Content("~/content/images/speakers/paul-broadwith.jpg")" alt="Paul Broadwith" title="Paul Broadwith" />
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6 mb-4 mb-lg-0 text-center">
-                    <p class="mb-0"><strong>
-                        Regarding COVID-19, Chocolatey Software is working harder than ever to provide solutions and resources for our customers and community. We'll continue to add to this area so check back often.
-                    </strong></p>
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                            <img class="rounded shadow" width="60" src="@Url.Content("~/content/images/speakers/rob-reynolds.jpg")" alt="Rob Reynolds" title="Rob Reynolds" />
+                        </div>
+                        <div>
+                            <h5 class="font-weight-bold text-primary mb-0">Rob Reynolds</h5>
+                            <p class="mb-0"><strong>Chocolatey Founder</strong></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3 text-center text-lg-left">
-                    <a href="@Url.RouteUrl(RouteName.Covid19)" class="btn btn-primary">Read More<span class="fas fa-angle-right"></span></a>
-                </div>
+            </div>
+            <div class="text-center">
+                <a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer" class="btn btn-success btn-lg mb-2"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
+                <p class="mb-0"><a href="@Url.RouteUrl(RouteName.Events, new { eventName = "enable-your-remote-workforce-by-implementing-modern-infrastructure-with-chocolatey" })">Learn More<span class="fas fa-angle-right"></span></a></p>
             </div>
         </div>
     </section>
