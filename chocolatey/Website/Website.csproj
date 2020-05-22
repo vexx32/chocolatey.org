@@ -1828,6 +1828,14 @@
     <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
     <Content Include="Views\Blog\OneBillionInstalls.md" />
     <Content Include="Views\Blog\AnnouncingDeployments.md" />
+    <Content Include="Views\Documentation\Files\CentralManagement.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementComputers.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementDeployments.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementGroups.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementReports.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementSetup.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementSoftware.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementClientSetup.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

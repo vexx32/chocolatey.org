@@ -242,7 +242,7 @@ class {'chocolatey':
 package {'chocolatey':
   ensure   => latest,
   provider => chocolatey,
-  source   => 'https://<internal_repo>/chocolatey',
+  source   => 'https://<internal_repo>/',
 }
 
 ## - Configure Chocolatey -
@@ -282,11 +282,14 @@ chocolateysource {'chocolatey.licensed':
 
 ## Add default sources for your internal repositories
 chocolateysource {'internal_chocolatey':
-  ensure   => present,
-  location => 'http://internal_location/OData/endpoint',
-  priority => 1,
-  username => 'optional',
-  password => 'optional,not ensured',
+  ensure             => present,
+  location           => 'http://internal_location/OData/endpoint',
+  priority           => 1,
+  username           => 'optional',
+  password           => 'optional,not ensured',
+  bypass_proxy       => true,
+  admin_only         => false,
+  allow_self_service => false,
 }
 
 ### Features
@@ -473,9 +476,6 @@ chocolateyfeature {'useBackgroundServiceWithNonAdministratorsOnly':
   require => Package['chocolatey-agent'],
 }
 
-## You still need to figure out how to set up a source as allowed for
-## Self-service until the Puppet module gets that attribute added to
-## chocolateysource
 ## We don't recommend disabling this unless you've removed all sources
 ##  except for your internal and they are fine for self-service
 #chocolateyfeature {'useBackgroundServiceWithSelfServiceSourcesOnly':
@@ -487,6 +487,30 @@ chocolateyfeature {'useBackgroundServiceWithNonAdministratorsOnly':
 chocolateyfeature {'useBackgroundService':
   ensure  => enabled,
   require => Chocolateyfeature['useBackgroundServiceWithNonAdministratorsOnly'],
+}
+
+## Allow Non-Admins to Uninstall Packages
+chocolateyconfig {'backgroundServiceAllowedCommands':
+  value   => 'install,upgrade,uninstall',
+  require => Package['chocolatey.extension'],
+}
+
+chocolateyfeature {'allowBackgroundServiceUninstallsFromUserInstallsOnly':
+  ensure  => enabled,
+  require => Package['chocolatey.extension'],
+}
+
+
+## Add repositories allowed for self-service - Requires at least v3.20
+# https://forge.puppet.com/puppetlabs/chocolatey/changelog#320---2019-02-19
+chocolateysource {'repo_for_self_service':
+  ensure             => present,
+  location           => 'http://internal_location/OData/endpoint',
+  priority           => 1,
+  username           => 'optional',
+  password           => 'optional,not ensured',
+  bypass_proxy       => true,
+  allow_self_service => true,
 }
 
 package {'dotnet4.5.2':
