@@ -1072,6 +1072,8 @@
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_AdvancedCommand_Tips_SM-lg.png" />
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_BasicCommand_SM-lg.png" />
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_Groups_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_UpdateOrder.gif" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_View.gif" />
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_View_SM-lg.png" />
     <Content Include="Content\Images\blog\CCM_Deployments_Reports_DeploymentDetails_SM-lg.png" />
     <Content Include="Content\Images\blog\CCM_Deployments_Reports_ErrorLog_SM-lg.png" />

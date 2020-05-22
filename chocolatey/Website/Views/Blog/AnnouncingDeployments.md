@@ -26,7 +26,7 @@ We are gearing up for the 3rd release of Chocolatey Central Management (CCM), an
 <!-- /TOC -->
 
 ### Why Did We Create Central Management Deployments?
-We often hear from Windows System Engineers that they are looking for a simple and easy way to manage Windows endpoints that offers advanced functionality when they need it. As Chocolatey Software has been a leader in Windows automation for over nine years, it was a natural progression to offer a simple and intuitive solution to managing remote Windows endpoints, especially given Chocolatey’s proven track record of making hard concepts approachable.
+We often hear from Windows System Engineers that they are looking for a simple and easy way to manage Windows endpoints that offers advanced functionality when they need it. As Chocolatey Software has been a leader in Windows automation for over nine years, it was a natural progression to offer a simple and intuitive solution for managing remote Windows endpoints, especially given Chocolatey’s guiding principle of making hard concepts approachable.
 
 What prompted Chocolatey Software to create a solution for managing endpoints, and why was it the number one feature request?
 
@@ -52,9 +52,12 @@ There are existing solutions out there that for one reason or another have falle
 To draw on the last point a bit more, almost every endpoint management solution out there only reports software inventory based on what is listed in Programs and Features. We've found that software listed in Programs and Features only accounts for about 50-80% of the software that is being managed on Windows machines. With Chocolatey, you can manage 100% of the software you need to deploy. Security conscious organizations need to be able to report on and manage 100% of things that can have security findings.
 
 ### What is Central Management Deployments?
+
+<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_Deployments_Edit_UpdateOrder.gif" alt="View Deployment - Steps" title="View Deployment - Steps" /></div>
+
 We are excited to add Deployments to Chocolatey Central Management (CCM). This will enable teams to securely manage endpoints w/PowerShell scripts and states of Chocolatey packages directly. The CCM web interface helps with easy set-up, management, and reporting on deployments to endpoints. This will be part of the Chocolatey for Business (C4B) offering and current customers will be able to take advantage of it when released.
 
-We still recommend organizations use configuration management (Puppet, Ansible, Chef, etc) as these solutions offer the ability to correct configuration drift on a set of machines, ensuring a particular state. Central Management (including Deployments) provides a fantastic set of features to complement configuration management. CCM Deployments provides IT teams the ability to easily orchestrate simple or complex scenarios in a fraction of the time than using traditional approaches.
+Cental Management (including Deployments) provides a fantastic set of features that give organizations complete software management. Organizations using configuration management (like Puppet, Ansible, Chef, etc) will find that Central Management is complementary to what they provide. While configuration managers do really well with ensuring state and correcting configuration drift, orchestration, especially cross machine, is an area that configuration management isn't as strong. CCM Deployments provides IT teams the ability to easily orchestrate simple or complex scenarios in a fraction of the time over traditional approaches.
 
 With the initial release of CCM Deployments, you will find the following functionality:
 
@@ -88,12 +91,9 @@ The sections are:
 * Completed - these are deployments that have finished, with whatever status they might have ended up in
 
 #### Creating And Editing A Deployment
-If we have a deployment that is in draft/ready status, we can look over and edit aspects of it:
+If we have a deployment that is in draft/ready status, we can look over the aspects of it:
 
-<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_Deployments_Edit_SM-lg.png" alt="View Deployment - Steps" title="View Deployment - Steps" /></div>
-
-We can expand steps to see more information about them:
-<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_Deployments_Edit_View_SM-lg.png" alt="View Deployment - Expand Steps" title="View Deployment - Expand Steps" /></div>
+<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_Deployments_Edit_View.gif" alt="View Deployment - Expand Steps" title="View Deployment - Expand Steps" /></div>
 
 If we want to edit any of the steps for a deployment that has not been activated, we bring up that step and take a look at the different sections. The script side has basic and advanced types. This is basic:
 
@@ -138,4 +138,4 @@ We're also enhancing the documentation for CCM, including supporting materials a
 After everything releases, we'll rev the version of [Quick Deployment Environment (QDE)](https://chocolatey.org/docs/quick-deployment-environment) to include CCM w/Deployments so folks will have another way of getting up and running quickly.
 
 ### When Can I Get Deployments?
-The timeline for release is early June, with betas going out to select customers soon. Reach out your Chocolatey Software representative for more details. If you are not a current customer, you can also [reach out to our team](https://chocolatey.org/contact/trial) to get started. We are excited to get it in your hands!
+The timeline for release is early June, with betas going out to select customers soon. Reach out to your Chocolatey Software representative for more details. If you are not a current customer, you can also [reach out to our team](https://chocolatey.org/contact/trial) to get started. We are excited to get it in your hands!
