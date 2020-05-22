@@ -134,7 +134,10 @@
     <div class="shape-border shape-border-top shape-border-light"></div>
     <section class="py-3 py-lg-5">
         <div class="container">
-            <h1 class="mb-5 text-center"><strong>Helpful Resources</strong></h1>
+            <h1 class="mb-5 text-center"><strong>COVID-19 Resources</strong></h1>
+            @Html.Partial("~/Views/Pages/_SelfServiceResources.cshtml")
+            @*TODO: Put this section back when timing is more relevent and remove COVID-19 resources*@
+            @*<h1 class="mb-5 text-center"><strong>Helpful Resources</strong></h1>
             <div class="row resource-list resource-d-3">
                 @foreach (var post in @Model)
                 {
@@ -214,7 +217,7 @@
                 <div class="col-12">
                     <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "videos"})" class="btn btn-light">See More Videos</a>
                 </div>
-            </div>
+            </div>*@
         </div>
     </section>
     <div class="shape-border shape-border-bottom"></div>
