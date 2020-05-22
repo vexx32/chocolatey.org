@@ -25,71 +25,97 @@
 </div>
 @if (callout == true)
 {
-    <section id="callout" class="bg-medium-dark">
-        <div class="container-fluid py-3 py-lg-5">
-            <div class="text-center">
-                <h4 class="text-primary mb-0">WEBINAR:</h4>
-                <h3 class="mb-3 mb-md-1">Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey</h3>
-                <h5>
-                    <span class="mr-md-4 mb-1 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> Thursday, 4<sup>th</sup> June</span>
-                    <br class="d-md-none" />
-                    <span><i class="fas fa-clock"></i> 10-11 AM CDT <br class="d-sm-none" />(8-9 AM PDT / 3-4 PM GMT)</span>
-                </h5>
-            </div>
-            <div class="row divider-row my-4">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-3 text-md-right ml-md-auto order-2">
-                            <h5 class="font-weight-bold text-primary mb-0">Paul Broadwith</h5>
-                            <p class="mb-0"><strong>Senior Technical Engineer at Chocolatey</strong></p>
-                        </div>
-                        <div class="order-1 order-md-2 mr-3 mr-md-0">
-                            <img class="rounded shadow" width="60" src="@Url.Content("~/content/images/speakers/paul-broadwith.jpg")" alt="Paul Broadwith" title="Paul Broadwith" />
-                        </div>
-                    </div>
+    <section class="bg-white">
+        <div class="container-fluid pt-3 pt-lg-5">
+            <div class="d-lg-flex align-items-center justify-content-center">
+                <div class="order-lg-2 text-center text-lg-left">
+                    <h3 class="mb-0"><i>Announcing:</i></h3>
+                    <h2 class="mb-0">Chocolatey Central Management</h2>
+                    <h1 class="font-weight-bold display-4 mb-3">Deployments</h1>
+                    <p class="text-left mx-auto" style="max-width: 700px;">
+                        We are gearing up for the 3rd release of Chocolatey Central Management (CCM), and this one will include an amazing feature that many of you may have been waiting for -
+                        managing endpoints with a full Chocolatey solution! We are really excited to share with you what Central Management Deployments will offer and how you can get your hands on it!
+                    </p>
+                    <a href="@Url.RouteUrl(RouteName.BlogArticle, new { articleName = "announcing-deployments" })" class="btn btn-primary btn-lg mb-3 mb-lg-0">Read The Blog <i class="fas fa-angle-right"></i></a>
                 </div>
-                <div class="col-md-6">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-3">
-                            <img class="rounded shadow" width="60" src="@Url.Content("~/content/images/speakers/rob-reynolds.jpg")" alt="Rob Reynolds" title="Rob Reynolds" />
-                        </div>
-                        <div>
-                            <h5 class="font-weight-bold text-primary mb-0">Rob Reynolds</h5>
-                            <p class="mb-0"><strong>Chocolatey Founder</strong></p>
-                        </div>
-                    </div>
+                <div class="mr-lg-5">
+                    <div class="text-center text-lg-right"><img class="img-fluid" width="700" src="@Url.Content("~/content/images/ccm/CCM_Mockup_ReportEdit.png")" /></div>
                 </div>
-            </div>
-            <div class="text-center">
-                <a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer" class="btn btn-success btn-lg mb-2"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
-                <p class="mb-0"><a href="@Url.RouteUrl(RouteName.Events, new { eventName = "enable-your-remote-workforce-by-implementing-modern-infrastructure-with-chocolatey" })">Learn More<span class="fas fa-angle-right"></span></a></p>
             </div>
         </div>
     </section>
+    <div class="bg-medium-dark">
+        <div class="shape-border shape-border-top"></div>
+        <section id="callout">
+            <div class="container-fluid py-3 py-lg-5">
+                <div class="text-center">
+                    <h4 class="text-primary mb-0">WEBINAR:</h4>
+                    <h3 class="mb-3 mb-md-1">Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey</h3>
+                    <h5>
+                        <span class="mr-md-4 mb-1 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> Thursday, 4<sup>th</sup> June</span>
+                        <br class="d-md-none" />
+                        <span><i class="fas fa-clock"></i> 10-11 AM CDT <br class="d-sm-none" />(8-9 AM PDT / 3-4 PM GMT)</span>
+                    </h5>
+                </div>
+                <div class="row divider-row my-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <div class="d-flex align-items-center">
+                            <div class="mr-3 text-md-right ml-md-auto order-2">
+                                <h5 class="font-weight-bold text-primary mb-0">Paul Broadwith</h5>
+                                <p class="mb-0"><strong>Senior Technical Engineer at Chocolatey</strong></p>
+                            </div>
+                            <div class="order-1 order-md-2 mr-3 mr-md-0">
+                                <img class="rounded shadow" width="60" src="@Url.Content("~/content/images/speakers/paul-broadwith.jpg")" alt="Paul Broadwith" title="Paul Broadwith" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <div class="mr-3">
+                                <img class="rounded shadow" width="60" src="@Url.Content("~/content/images/speakers/rob-reynolds.jpg")" alt="Rob Reynolds" title="Rob Reynolds" />
+                            </div>
+                            <div>
+                                <h5 class="font-weight-bold text-primary mb-0">Rob Reynolds</h5>
+                                <p class="mb-0"><strong>Chocolatey Founder</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg" target="_blank" rel="noreferrer" class="btn btn-success btn-lg mb-2"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
+                    <p class="mb-0"><a href="@Url.RouteUrl(RouteName.Events, new { eventName = "enable-your-remote-workforce-by-implementing-modern-infrastructure-with-chocolatey" })">Learn More<span class="fas fa-angle-right"></span></a></p>
+                </div>
+            </div>
+        </section>
+        <div class="shape-border shape-border-bottom shape-border-white"></div>
+    </div>
 }
-<section class="@if (callout == false){<text>bg-medium-dark</text>}">
-    <div class="container py-3 py-lg-5">
-        <div class="row divider-row">
-            <div class="col-lg-3 mb-4 mb-lg-0 text-center">
-                <h2>Modernize</h2>
-                <p>Simplify software management with cutting-edge technology</p>
-            </div>
-            <div class="col-lg-3 mb-4 mb-lg-0 text-center">
-                <h2>Accelerate</h2>
-                <p>Rapidly create, test, and deploy critical updates</p>
-            </div>
-            <div class="col-lg-3 mb-4 mb-lg-0 text-center">
-                <h2>Integrate</h2>
-                <p>Integrate with existing cloud and on-premise technologies</p>
-            </div>
-            <div class="col-lg-3 text-center">
-                <h2>Automate</h2>
-                <p>Easily automate your entire Windows software lifecycle</p>
+else
+{
+    <section class="@if (callout == false){<text>bg-medium-dark</text>}">
+        <div class="container py-3 py-lg-5">
+            <div class="row divider-row">
+                <div class="col-lg-3 mb-4 mb-lg-0 text-center">
+                    <h2>Modernize</h2>
+                    <p>Simplify software management with cutting-edge technology</p>
+                </div>
+                <div class="col-lg-3 mb-4 mb-lg-0 text-center">
+                    <h2>Accelerate</h2>
+                    <p>Rapidly create, test, and deploy critical updates</p>
+                </div>
+                <div class="col-lg-3 mb-4 mb-lg-0 text-center">
+                    <h2>Integrate</h2>
+                    <p>Integrate with existing cloud and on-premise technologies</p>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <h2>Automate</h2>
+                    <p>Easily automate your entire Windows software lifecycle</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="shape-border shape-border-bottom shape-border-white"></div>
-</section>
+        <div class="shape-border shape-border-bottom shape-border-white"></div>
+    </section>
+}
 <section class="bg-white">
     <div class="container">
         <div id="informationCarousel" class="carousel slide carousel-fade information-carousel" data-ride="carousel" data-touch="true">

@@ -1141,6 +1141,7 @@
     <Content Include="Content\Images\businesses\Yelp.png" />
     <Content Include="Content\Images\ccm-computer-white.jpg" />
     <Content Include="Content\Images\ccm-mockup.jpg" />
+    <Content Include="Content\Images\ccm\CCM_Mockup_ReportEdit.png" />
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\choco-chefconf.jpg" />
     <Content Include="Content\Images\choco-ps-summit.jpg" />
@@ -1369,6 +1370,7 @@
     <Content Include="Content\Images\videos\04-06.jpg" />
     <Content Include="Content\Images\videos\blog-01.jpg" />
     <Content Include="Content\Images\videos\blog-02.jpg" />
+    <Content Include="Content\Images\videos\blog-03.jpg" />
     <Content Include="Content\Images\videos\CaseStudy.jpg" />
     <Content Include="Content\Images\videos\01-01.jpg" />
     <Content Include="Content\Images\videos\02-01.jpg" />
