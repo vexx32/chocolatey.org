@@ -101,7 +101,7 @@ If we want to edit any of the steps for a deployment that has not been activated
 
 Note the advanced items (which are not expanded by default):
 
-* Execution timeout in seconds - how long to let the command run before timing oug? Defaults to `4 hours`.
+* Execution timeout in seconds - how long to let the command run before timing out? Defaults to `4 hours`.
 * Valid exit codes - what exit codes indicate success? Defaults to `0, 1605, 1614, 1641, 3010`.
 * Machine contact timeout in minutes - how long to attempt contact with a computer before timing out. This is set at `20 minutes` in the first release. In a future release we'll allow you to configure this, but this is set by default in this release.
 * Fail overall deployment if not successful - Should the deployment status show failed if this step is not successful? Defaults to `true`.
