@@ -1067,6 +1067,17 @@
     <Content Include="Content\Images\Badges\GettingStartedWithChocolatey.png" />
     <Content Include="Content\Images\Badges\InstallingUpgradingUninstalling.png" />
     <Content Include="Content\Images\blog\1billion.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_AdvancedCommand_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_AdvancedCommand_Tips_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_BasicCommand_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_Groups_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_View_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Reports_DeploymentDetails_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Reports_ErrorLog_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Reports_StepDetails_SM-lg.png" />
+    <Content Include="Content\Images\blog\CCM_Deployments_TopLevel_SM-lg.png" />
+    <Content Include="Content\Images\blog\centralmanagement.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-announce.png" />
     <Content Include="Content\Images\blog\chocolatey-fest-no-year.png" />
     <Content Include="Content\Images\blog\chocolatey-fest.png" />
@@ -1814,6 +1825,7 @@
     <Content Include="Views\Documentation\Files\ChocolateyForBusinessQuickStartGuide.md" />
     <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
     <Content Include="Views\Blog\OneBillionInstalls.md" />
+    <Content Include="Views\Blog\AnnouncingDeployments.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
