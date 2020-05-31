@@ -22,6 +22,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -50,6 +51,19 @@ namespace NuGetGallery
         public static void PreStart()
         {
             MiniProfilerPreStart();
+
+            // Enable TLS 1.3, TLS 1.2, TLS 1.1, and TLS 1.0 for all WebClients. Specifically, for
+            // Services\ImageFileService.cs#DownloadImage() to allow downloading package icons served from CDNs that
+            // have disabled TLS <1.2 from .NET 4.0. This also disables SSLv3, if it was enabled by default.
+            SecurityProtocolType enabledProtocols = 0;
+            foreach (int protocol in new int[] { 12288, 3072, 768, 192 })
+            {
+                if (Enum.IsDefined(typeof(SecurityProtocolType), protocol))
+                {
+                    enabledProtocols |= (SecurityProtocolType)protocol;
+                }
+            }
+            ServicePointManager.SecurityProtocol = enabledProtocols;
         }
 
         public static void PostStart()
