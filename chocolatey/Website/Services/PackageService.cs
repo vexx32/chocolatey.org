@@ -22,6 +22,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
+using System.Threading.Tasks;
 using System.Transactions;
 using Elmah;
 using NuGet;
@@ -93,17 +94,6 @@ namespace NuGetGallery
             var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage, currentUser);
             packageRegistration.Packages.Add(package);
 
-            try
-            {
-                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, sendMaintainerEmail: false, submittedStatus: package.SubmittedStatus, assignReviewer: false);
-                imageFileSvc.DeleteCachedImage(packageRegistration.Id, package.Version);
-                imageFileSvc.CacheAndGetImage(package.IconUrl, packageRegistration.Id, package.Version);
-            }
-            catch (Exception)
-            {
-                //ignore
-            }
-
             using (var tx = new TransactionScope())
             {
                 using (var stream = nugetPackage.GetStream())
@@ -115,14 +105,39 @@ namespace NuGetGallery
                 }
             }
 
+            // Run the following without stopping grabbing the item
+            TaskEx.Run(() => UpdateAndNotifyPackageSubmission(package, currentUser));
+
+            //NotifyIndexingService();
+
+            return package;
+        }
+
+       
+        public void UpdateAndNotifyPackageSubmission(Package package, User currentUser)
+        {
+            // Do the following:
+            // - changes package status
+            // - deletes the image cache and recreates
+            // - invalidates caches
+            // - notify for moderation
+
+            try
+            {
+                ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, sendMaintainerEmail: false, submittedStatus: package.SubmittedStatus, assignReviewer: false);
+                imageFileSvc.DeleteCachedImage(package.PackageRegistration.Id, package.Version);
+                imageFileSvc.CacheAndGetImage(package.IconUrl, package.PackageRegistration.Id, package.Version);
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+
             if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted) NotifyForModeration(package, comments: string.Empty);
 
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
             Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", package.Key));
-            NotifyIndexingService();
-
-            return package;
         }
 
         public void DeletePackage(string id, string version)
@@ -763,7 +778,7 @@ namespace NuGetGallery
             }
             Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
             InvalidateCache(package);
-            NotifyIndexingService(package.Packages.FirstOrDefault());
+            //NotifyIndexingService(package.Packages.FirstOrDefault());
         }
 
         public void RemovePackageOwner(PackageRegistration package, User user)
@@ -776,7 +791,7 @@ namespace NuGetGallery
 
                 Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
                 InvalidateCache(package); 
-                NotifyIndexingService(package.Packages.FirstOrDefault());
+                // NotifyIndexingService(package.Packages.FirstOrDefault());
 
                 return;
             }
@@ -785,7 +800,7 @@ namespace NuGetGallery
             packageRepo.CommitChanges();
             Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
             InvalidateCache(package);
-            NotifyIndexingService(package.Packages.FirstOrDefault());
+            // NotifyIndexingService(package.Packages.FirstOrDefault());
         }
 
         // TODO: Should probably be run in a transaction
@@ -897,7 +912,10 @@ namespace NuGetGallery
             SendReviewerEmail(package, newReviewComments, user, reviewer);
 
             InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
+            //if (package.Status == PackageStatusType.Approved || package.Status == PackageStatusType.Exempted)
+            //{
+            //    NotifyIndexingService(package);
+            //}
         }
 
         private void SendMaintainerEmail(Package package, string reviewComments, User user, bool sendMaintainerEmail, bool statusChanged, bool submittedStatusChanged, bool reviewCommentsIsOnlyStatusChange)
@@ -979,7 +997,6 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
         }
 
         public void UpdateSubmittedStatusAfterAutomatedReviews(Package package)
@@ -1073,8 +1090,6 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
-
         }
 
         public void ResetPackageTestStatus(Package package)
@@ -1082,8 +1097,6 @@ namespace NuGetGallery
             package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Pending;
             packageRepo.CommitChanges();
-            InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
         }
 
         public void ResetPackageValidationStatus(Package package)
@@ -1091,15 +1104,12 @@ namespace NuGetGallery
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Pending;
             if (package.Status == PackageStatusType.Submitted) package.SubmittedStatus = PackageSubmittedStatusType.Pending;
             packageRepo.CommitChanges();
-            InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
         }
 
         public void SaveMinorPackageChanges(Package package)
         {
             packageRepo.CommitChanges();
             InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
         }
 
         public void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer)
@@ -1124,8 +1134,6 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             packageRegistrationRepo.CommitChanges();
-            InvalidateCache(package.PackageRegistration);
-            NotifyIndexingService(package);
         }
 
         // TODO: Should probably be run in a transaction
@@ -1170,7 +1178,6 @@ namespace NuGetGallery
             packageOwnerRequestRepository.CommitChanges();
             InvalidateCache(package);
             Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", newOwner.Username));
-            NotifyIndexingService(package.Packages.FirstOrDefault());
 
             return newRequest;
         }
@@ -1202,32 +1209,38 @@ namespace NuGetGallery
                     select request).FirstOrDefault();
         }
 
-        private void NotifyIndexingService()
-        {
-            indexingSvc.UpdateIndex(forceRefresh:false);
-        }
+        //private void NotifyIndexingService()
+        //{
+        //    // run on background thread
+        //    TaskEx.Run(() => indexingSvc.UpdateIndex(forceRefresh:false));
+        //}
 
         private void NotifyIndexingService(Package package)
         {
-            indexingSvc.UpdatePackage(package);
+            // run on background thread
+            TaskEx.Run(() => indexingSvc.UpdatePackage(package));
         }
 
         private void InvalidateCache(PackageRegistration packageRegistration)
         {
-            Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", packageRegistration.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", packageRegistration.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", packageRegistration.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", packageRegistration.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("packageDownload-{0}", packageRegistration.Id.to_lower()));
-            Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, packageRegistration.Key));
-            // these are package key specific
-            //Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", packageRegistration.Key));
-            //Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", packageRegistration.Key));
+            TaskEx.Run(
+                () =>
+                {
+                    Cache.InvalidateCacheItem(string.Format("packageregistration-{0}", packageRegistration.Id.to_lower()));
+                    Cache.InvalidateCacheItem(string.Format("V2Feed-FindPackagesById-{0}", packageRegistration.Id.to_lower()));
+                    Cache.InvalidateCacheItem(string.Format("V2Feed-Search-{0}", packageRegistration.Id.to_lower()));
+                    Cache.InvalidateCacheItem(string.Format("packageVersions-{0}", packageRegistration.Id.to_lower()));
+                    Cache.InvalidateCacheItem(string.Format("packageDownload-{0}", packageRegistration.Id.to_lower()));
+                    Cache.InvalidateCacheItem(string.Format("item-{0}-{1}", typeof(Package).Name, packageRegistration.Key));
+                    // these are package key specific
+                    //Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", packageRegistration.Key));
+                    //Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", packageRegistration.Key));
+                });
         }
 
         private void NotifyForModeration(Package package, string comments)
         {
-            messageSvc.SendPackageModerationEmail(package, comments, Constants.MODERATION_SUBMITTED, null);
+            TaskEx.Run(() => messageSvc.SendPackageModerationEmail(package, comments, Constants.MODERATION_SUBMITTED, null));
         }
     }
 }
