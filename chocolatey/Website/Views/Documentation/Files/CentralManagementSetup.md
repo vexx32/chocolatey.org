@@ -1,6 +1,8 @@
 # Chocolatey Central Mangement Setup
 
 > :warning: **WARNING**: This is a Work in Progress. Please check back later
+>
+> Also see [[Chocolatey Central Management in Features|FeaturesChocolateyCentralManagement]].
 
 <!-- TOC depthFrom:2 -->
 
@@ -15,6 +17,11 @@
 <!-- /TOC -->
 
 ## Summary
+
+> :warning: **WARNING**: This is a Work in Progress. Please check back later
+>
+> Also see [[Chocolatey Central Management in Features|FeaturesChocolateyCentralManagement]].
+
 Installing CCM takes a little more pre-thought than simply running the package installs.
 
 
@@ -93,9 +100,17 @@ ___
 
 > :memo: **NOTE**: You could be installing several of these if your environment is large enough.
 
+> :warning: **WARNING**
+>
+> Timezones are super important here and time synchronization is really important when generating SSL Certificates. You want to make sure you have this correct and good. Otherwise there is a potential edge case you could generate an SSL Certificate that is not yet valid. As the service package could generate an SSL certificate if you don't pass an existing thumbprint, its best to ensure that time synchronization is not an issue with the machine you are installing this on.
+
 ___
 ## Step 4: Install Central Management Web Package
 
 > :warning: **WARNING**: Ensure you have completed installing the database package first on whatever machine the database is on.
 
 > :memo: **NOTE**: At this time we don't recommend opening internet access to CCM web. However, if you choose to, you will want to set up SSL/TLS certificates to ensure communication is encrypted over the internet.
+
+
+
+[[Chocolatey Central Management|CentralManagement]]
