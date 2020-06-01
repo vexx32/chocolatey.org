@@ -1243,6 +1243,8 @@
     <Content Include="Content\Images\docs\quickdeploy\QDE-architecture.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-hyperv.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-hypervapp.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk-esx.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk-fusion.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk.gif" />
     <Content Include="Content\Images\docs\recompile\choco_delete_pkg_files.png" />
     <Content Include="Content\Images\docs\recompile\choco_download_zip.png" />
