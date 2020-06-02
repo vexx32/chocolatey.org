@@ -1,0 +1,158 @@
+﻿@model IEnumerable<EventViewModel>
+@using System.Linq
+@{
+    ViewBag.Title = "Events";
+    Bundles.Reference("Content/dist/chocolatey.slim.css");
+    Bundles.Reference("Scripts");
+    Bundles.Reference("Scripts/jquery-countdown");
+
+    var description = "Find past and upcoming webinars, workshops, and conferences by Chocolatey.";
+}
+@section ExtraHeaders {
+    <meta property="og:description" content="@description" />
+    <meta property="description" content="@description" />
+}
+
+<div id="header" class="bg-medium-dark">
+    <section class="py-3 py-lg-5">
+        <div class="container py-3 text-center">
+            <h1 class="display-3">Chocolatey Events</h1>
+            <h3 class="mb-0">Find past and upcoming webinars, workshops, and conferences.</h3>
+        </div>
+    </section>
+    <div class="shape-border shape-border-bottom"></div>
+</div>
+<section id="events" class="pb-3 pb-lg-5">
+    <div class="container">
+        @if (Model.Any(x => x.EventDate > DateTime.Now))
+        {
+            <h2>Upcoming Events</h2>
+            <hr />
+            <ul class="list-unstyled">
+                @foreach (var post in @Model.Where(x => x.EventDate > DateTime.Now))
+                {
+                    var badgeClass = "";
+                    switch (post.Type)
+                    {
+                        case "workshop":
+                            badgeClass = "badge-purple";
+                            break;
+                        case "conference":
+                            badgeClass = "badge-warning";
+                            break;
+                        case "webinar":
+                            badgeClass = "badge-success";
+                            break;
+                        default:
+                            badgeClass = "badge-secondary";
+                            break;
+                    }
+                    <li>
+                        <div class="row">
+                            <div class="col-md-3 text-center mb-3 mb-md-0">
+                                @Html.Raw(post.Image)
+                            </div>
+                            <div class="col">
+                                <div class="d-flex justify-content-between align-items-md-center mb-3">
+                                    <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>@post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")<br class="d-md-none" /><i class="fas fa-clock text-secondary ml-md-3 mr-1"></i>@post.Time</p>
+                                    <div>
+                                        <span class="badge badge-pill text-right text-capitalize @badgeClass">@post.Type</span>
+                                    </div>
+                                </div>
+                                <h4>@post.Title</h4>
+                                @if (post.Summary.Length < 200)
+                                {
+                                    @post.Summary
+                                }
+                                else
+                                {
+                                    @post.Summary.Substring(0, 200)<a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })">... Keep Reading<i class="fas fa-angle-right"></i></a>
+                                }
+                                @if (post.Speakers != null)
+                                {
+                                    <ul class="list-unstyled list-inline list-speaker mt-3">
+                                        <li class="list-inline-item mr-0"><i class="fas fa-microphone text-secondary mr-1"></i>Speakers: </li>
+                                        @foreach (var speaker in post.Speakers)
+                                        {
+                                            <li class="list-inline-item mr-0">@speaker</li>
+                                        }
+                                    </ul>
+                                }
+                                <div class="mt-3 text-center text-md-right">
+                                    <a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })" class="btn btn-outline-primary">Learn More</a>
+                                    <a href="@post.RegisterLink" class="btn btn-primary" target="_blank" rel="nofollow">Register Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </li>
+                }
+            </ul>
+        }
+        @if (Model.Any(x => x.EventDate < DateTime.Now))
+        {
+            <h2 class="@if(Model.Any(x => x.EventDate > DateTime.Now)){ <text>mt-5</text>}">On-Demand Events</h2>
+            <hr />
+            <ul class="list-unstyled">
+                @foreach (var post in @Model.Where(x => x.EventDate < DateTime.Now))
+                {
+                    var badgeClass = "";
+                    switch (post.Type)
+                    {
+                        case "workshop":
+                            badgeClass = "badge-purple";
+                            break;
+                        case "conference":
+                            badgeClass = "badge-warning";
+                            break;
+                        case "webinar":
+                            badgeClass = "badge-success";
+                            break;
+                        default:
+                            badgeClass = "badge-secondary";
+                            break;
+                    }
+                    <li>
+                        <div class="row">
+                            <div class="col-md-3 text-center mb-3 mb-md-0">
+                                @Html.Raw(post.Image)
+                            </div>
+                            <div class="col">
+                                <div class="d-flex justify-content-between align-items-md-center mb-3">
+                                    <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>Past event from @post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</p>
+                                    <div>
+                                        <span class="badge badge-pill text-right text-capitalize @badgeClass">@post.Type</span>
+                                    </div>
+                                </div>
+                                <h4>@post.Title</h4>
+                                @if (post.Summary.Length < 138)
+                                {
+                                    @post.Summary
+                                }
+                                else
+                                {
+                                    @post.Summary.Substring(0, 200)<a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })">... Keep Reading<i class="fas fa-angle-right"></i></a>
+                                }
+                                @if (post.Speakers != null)
+                                {
+                                    <ul class="list-unstyled list-inline list-speaker mt-3">
+                                        <li class="list-inline-item mr-0"><i class="fas fa-microphone text-secondary mr-1"></i>Speakers: </li>
+                                        @foreach (var speaker in post.Speakers)
+                                        {
+                                            <li class="list-inline-item mr-0">@speaker</li>
+                                        }
+                                    </ul>
+                                }
+                                <div class="mt-3 text-center text-md-right">
+                                    <a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })" class="btn btn-outline-primary">Learn More</a>
+                                    <a href="@post.RegisterLink" class="btn btn-primary" target="_blank" rel="nofollow">Watch Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</section>

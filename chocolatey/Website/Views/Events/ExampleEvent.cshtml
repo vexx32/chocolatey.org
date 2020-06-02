@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<EventViewModel>
 @{
-    ViewBag.Title = "Webinar: Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey";
+    ViewBag.Title = "Example Event";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/jquery-countdown");
 
-    var description = "Deploying software to remote desktop and endpoint devices is not always easy, especially in highly regulated and locked down environments. This can be even more challenging if your IT team is overworked, and you need to ensure your users are productive with no vulnerabilities.";
+    var description = "This description is what shows up when this url is shared via social media and used for website SEO.";
 }
 @section ExtraHeaders {
     <meta property="og:description" content="@description" />
@@ -13,7 +13,7 @@
 }
 @foreach (var post in @Model)
 {
-    if (post.Title.Equals("Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey"))
+    if (post.Title.Equals("Example Event"))
     {
         @* Used by JS to configure countdown clock *@
         <input class="date" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("yyyy/MM/dd")" />
@@ -24,7 +24,7 @@
             <section class="pt-3 pt-lg-5 pb-5">
                 <div class="container-fluid pt-lg-3">
                     <h4 class="mb-0 text-muted-dark">WEBINAR</h4>
-                    <h1 class="mb-0 display-4">Enable Your Remote Workforce by Implementing <br class="d-none d-md-block" />Modern Infrastructure with Chocolatey</h1>
+                    <h1 class="mb-0 display-4">Example <br class="d-none d-md-block" />Title</h1>
                     <hr class="mt-3 mb-4 mb-md-5 border-hr-lg">
                     <h5 class="countdown-date">
                         <span class="mr-md-4 mb-3 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> @post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</span>
@@ -71,33 +71,33 @@
                         <div class="event-speaker">
                             <div class="d-flex mb-2 align-items-center">
                                 <div class="mr-3">
-                                    <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/paul-broadwith.jpg")" alt="Paul Broadwith" title="Paul Broadwith" />
+                                    <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/default-speaker.jpg")" alt="Jane Doe" title="Jane Doe" />
                                 </div>
                                 <div>
-                                    <h5 class="font-weight-bold text-primary mb-0">Paul Broadwith</h5>
-                                    <p class="mb-0"><strong>Senior Technical Engineer at Chocolatey</strong></p>
+                                    <h5 class="font-weight-bold text-primary mb-0">Jane Doe</h5>
+                                    <p class="mb-0"><strong>Position at Company</strong></p>
                                 </div>
                             </div>
-                            <p class="mb-2">Paul Broadwith of Glasgow Scotland has 25+ years in IT in financial, government, manufacturing and services sectors. He is the Lead Engineer on Boxstarter and cChoco DSC Resource.</p>
+                            <p class="mb-2">Here is a really short bio on Jane Doe. Make this no more than 3 sentences. Remove if needed.</p>
                             <div class="d-flex">
-                                <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="https://www.linkedin.com/in/paulbroadwith" target="_blank" rel="noreferrer" title="View more about Paul Broadwith on LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
-                                <a class="btn btn-sm btn-secondary btn-twitter" href="https://twitter.com/pauby" target="_blank" rel="noreferrer" title="View more about Paul Broadwith on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="#" target="_blank" rel="noreferrer" title="LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
+                                <a class="btn btn-sm btn-secondary btn-twitter" href="#" target="_blank" rel="noreferrer" title="Twitter"><i class="fab fa-twitter"></i> Twitter</a>
                             </div>
                         </div>
                         <div class="event-speaker">
                             <div class="d-flex mb-2 align-items-center">
                                 <div class="mr-3">
-                                    <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/rob-reynolds.jpg")" alt="Rob Reynolds" title="Rob Reynolds" />
+                                    <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/default-speaker.jpg")" alt="John Doe" title="John Doe" />
                                 </div>
                                 <div>
-                                    <h5 class="font-weight-bold text-primary mb-0">Rob Reynolds</h5>
-                                    <p class="mb-0"><strong>Chocolatey Founder</strong></p>
+                                    <h5 class="font-weight-bold text-primary mb-0">John Doe</h5>
+                                    <p class="mb-0"><strong>Position at Company</strong></p>
                                 </div>
                             </div>
-                            <p class="mb-2">Rob is a developer turned founder with 14+ years experience in infrastructure automation and modern automation approaches. He excels in taking hard concepts and making them approachable and easy.</p>
+                            <p class="mb-2">Here is a really short bio on Jane Doe. Make this no more than 3 sentences. Remove if needed.</p>
                             <div class="d-flex">
-                                <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="https://www.linkedin.com/in/robreynolds" target="_blank" rel="noreferrer" title="View more about Rob Reynolds on LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
-                                <a class="btn btn-sm btn-secondary btn-twitter" href="https://twitter.com/ferventcoder" target="_blank" rel="noreferrer" title="View more about Rob Reynolds on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="#" target="_blank" rel="noreferrer" title="LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
+                                <a class="btn btn-sm btn-secondary btn-twitter" href="#" target="_blank" rel="noreferrer" title="Twitter"><i class="fab fa-twitter"></i> Twitter</a>
                             </div>
                         </div>
                     </div>

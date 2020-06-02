@@ -840,6 +840,7 @@
     <Compile Include="ViewModels\CourseAchievementViewModel.cs" />
     <Compile Include="ViewModels\DocumentationSearchViewModel.cs" />
     <Compile Include="ViewModels\DocumentationViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ListPackageItemViewModel.cs" />
     <Compile Include="ViewModels\MarkdownPostViewModel.cs" />
     <Compile Include="ViewModels\PasswordChangeViewModel.cs" />
@@ -1267,6 +1268,7 @@
     <Content Include="Content\Images\editIcon.png" />
     <Content Include="Content\Images\editProfile.png" />
     <Content Include="Content\Images\errorPage.png" />
+    <Content Include="Content\Images\events\00.jpg" />
     <Content Include="Content\Images\events\01-01.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
@@ -1326,6 +1328,7 @@
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
+    <Content Include="Content\Images\speakers\default-speaker.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
     <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
     <Content Include="Content\Images\stackexchange.png" />
@@ -1832,6 +1835,8 @@
     <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
     <Content Include="Views\Blog\OneBillionInstalls.md" />
     <Content Include="Views\Blog\AnnouncingDeployments.md" />
+    <Content Include="Views\Events\Home.cshtml" />
+    <Content Include="Views\Events\Files\01-01-EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.md" />
     <Content Include="Views\Documentation\Files\CentralManagement.md" />
     <Content Include="Views\Documentation\Files\CentralManagementComputers.md" />
     <Content Include="Views\Documentation\Files\CentralManagementDeployments.md" />

@@ -688,3 +688,36 @@ $.each($('blockquote'), function () {
         $(this).addClass('callout-warning');
     }
 });
+
+// Countdown clocks
+$(function () {
+    var countdownDate = $('.date').val();
+    var countdownHour = $('.hour').val();
+    var countdownMinutes = $('.minutes').val();
+    var ellapsedButtonText = 'Watch On-Demand Now';
+
+    $('.countdown-container').each(function () {
+        $(this).countdown(countdownDate + ' ' + countdownHour + ':' + countdownMinutes + ':00', function (event) {
+            if (event.elapsed) {
+                $('.countdown-details').add($('.countdown-container').add($('.countdown-date'))).remove();
+                $('#countdown-header section').removeClass('pb-5').addClass('pb-0');
+                $('a').each(function () {
+                    $(this).html($(this).html()
+                        .replace('Reserve My Spot Now', ellapsedButtonText)
+                        .replace('Register Now', ellapsedButtonText)
+                        .replace('Register', ellapsedButtonText));
+                });
+            } else {
+                $(this).html(event.strftime(
+                    '<div><div>%D</div><p>Days</p></div>'
+                    + '<div><div>%H</div><p>Hours</p></div>'
+                    + '<div><div>%M</div><p>Minutes</p></div>'
+                    + '<div><div>%S</div><p>Seconds</p></div>'
+                ));
+            };
+        })
+    });
+
+    // Uncomment below to pause timer to allow for styling
+    //$('.countdown-container').countdown('pause');
+});

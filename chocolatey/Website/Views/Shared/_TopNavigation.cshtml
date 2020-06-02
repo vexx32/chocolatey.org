@@ -71,7 +71,7 @@
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Product</h4>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Products, new {productName = "chocolatey-for-business"})">Chocolatey for Business</a>
@@ -87,7 +87,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Compare)">Compare Editions</a>
@@ -100,6 +100,14 @@
                                             <p class="d-none d-md-block">I'm ready to get started now!</p>
                                         </li>
                                         <li><a href="@Url.RouteUrl(RouteName.Support)">Support</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Events, new { eventName = "home" })">Events</a>
+                                            <p class="d-none d-md-block">Find past and upcoming webinars, workshops, and conferences.</p>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -149,7 +157,7 @@
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Community</h4>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.ListPackages)">Community Packages</a>
@@ -157,11 +165,19 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <ul>
                                         <li><a href="@Url.RouteUrl(RouteName.Community)">Community Resources</a></li>
                                         <li><a href="https://github.com/chocolatey" target="_blank" rel="noreferrer">Chocolatey on GitHub</a></li>
                                         <li><a href="@Url.RouteUrl(RouteName.BlogHome)">Blog</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Events, new { eventName = "home" })">Events</a>
+                                            <p class="d-none d-md-block">Find past and upcoming webinars, workshops, and conferences.</p>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -201,6 +217,10 @@
                                 </div>
                                 <div class="col-md-4">
                                     <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Events, new { eventName = "home" })">Events</a>
+                                            <p class="d-none d-md-block">Find past and upcoming webinars, workshops, and conferences.</p>
+                                        </li>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Covid19)">COVID-19 Resources</a>
                                             <p class="d-none d-md-block">Chocolatey Software is working harder than ever to provide solutions and resources for our customers and community. We'll continue to add to this area so check back often.</p>
