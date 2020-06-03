@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<EventViewModel>
 @{
-    ViewBag.Title = "Webinar: Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey";
+    ViewBag.Title = "Webinar: Chocolatey Deployments - Easily Orchestrate Amazing Things!";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Scripts");
     Bundles.Reference("Scripts/jquery-countdown");
 
-    var description = "Deploying software to remote desktop and endpoint devices is not always easy, especially in highly regulated and locked down environments. This can be even more challenging if your IT team is overworked, and you need to ensure your users are productive with no vulnerabilities.";
+    var description = "Chocolatey Central Management now includes the premiere feature of managing endpoints through a Chocolatey-centered solution aka Deployments. We are excited to share what Deployments is all about!";
 }
 @section ExtraHeaders {
     <meta property="og:description" content="@description" />
@@ -13,28 +13,46 @@
 }
 @foreach (var post in @Model)
 {
-    if (post.Title.Equals("Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey"))
+    if (post.Title.Equals("Chocolatey Deployments - Easily Orchestrate Amazing Things!"))
     {
         @* Used by JS to configure countdown clock *@
         <input class="date" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("yyyy/MM/dd")" />
         <input class="hour" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("HH")" />
         <input class="minutes" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("mm")" />
 
-        <div id="countdown-header" class="bg-dark text-white border-top-dark text-center">
+        <div id="countdown-header" class="bg-primary text-center">
             <section class="pt-3 pt-lg-5 pb-5">
                 <div class="container-fluid pt-lg-3">
-                    <h4 class="mb-0 text-muted-dark">WEBINAR</h4>
-                    <h1 class="mb-0 display-4">Enable Your Remote Workforce by Implementing <br class="d-none d-md-block" />Modern Infrastructure with Chocolatey</h1>
-                    <hr class="mt-3 mb-4 mb-md-5 border-hr-lg">
-                    <h5 class="countdown-date">
+                    <div class="d-md-flex align-items-center justify-content-center mb-4">
+                        <div class="order-md-2 text-center text-md-left">
+                            <h3 class="mb-0">WEBINAR</h3>
+                            <h1 class="mb-0 display-4 d-none d-xl-block">Chocolatey Deployments -<br>Easily Orchestrate Amazing Things!</h1>
+                            <h1 class="mb-0 d-xl-none">Chocolatey Deployments -<br>Easily Orchestrate Amazing Things!</h1>
+                            <h5 class="countdown-date d-none d-lg-block mt-3">
+                                <span class="mr-md-4 mb-3 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> @post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</span>
+                                <br class="d-md-none" />
+                                <span><i class="fas fa-clock"></i> @post.Time</span>
+                            </h5>
+                        </div>
+                        <div class="mr-md-3 pr-md-3 mr-lg-5 pr-lg-5 d-none d-md-flex border-right">
+                            <div class="d-flex flex-column">
+                                <div class="text-center">
+                                    <img class="img-fluid" width="350" src="@Url.Content("~/content/images/chocolatey-logo.png")" /><br />
+                                    <img class="img-fluid" width="300" src="@Url.Content("~/content/images/ccm/central-management-logo.png")" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-3 mb-4 d-md-none border-hr-lg border-hr-white">
+                    <h5 class="countdown-date d-lg-none">
                         <span class="mr-md-4 mb-3 mb-md-0 d-inline-block"><i class="fas fa-calendar"></i> @post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</span>
                         <br class="d-md-none" />
                         <span><i class="fas fa-clock"></i> @post.Time</span>
                     </h5>
-                    <a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-success btn-lg my-4 mb-md-5"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
+                    <a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-light btn-lg my-4 mb-md-5"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
                 </div>
             </section>
-            <div class="position-relative"><div class="countdown-container countdown-container-blocks countdown-container-absolute-center"></div></div>
+            <div class="position-relative"><div class="countdown-container countdown-container-blocks countdown-container-absolute-center countdown-container-success"></div></div>
             <div class="shape-border shape-border-bottom"></div>
         </div>
         <section class="pb-3 pt-lg-3 pb-lg-5">
@@ -58,7 +76,7 @@
                                     <ul class="list-unstyled mb-0 h5">
                                         <li class="mb-2"><strong>Title: </strong>@post.Title</li>
                                         <li class="mb-2"><strong>Date: </strong>@post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</li>
-                                        <li class="mb-2"><strong>Time: </strong>@post.Time<br /><small><a href="https://everytimezone.com/s/5b697026" target="_blank" rel="noreferrer">Convert to your time zone<i class="fas fa-angle-right"></i></a></small></li>
+                                        <li class="mb-2"><strong>Time: </strong>@post.Time<br /><small><a href="https://everytimezone.com/s/f56d0907" target="_blank" rel="noreferrer">Convert to your time zone<i class="fas fa-angle-right"></i></a></small></li>
                                         <li><strong>Duration: </strong>@post.Duration</li>
                                     </ul>
                                 </div>
@@ -71,17 +89,17 @@
                         <div class="event-speaker">
                             <div class="d-flex mb-2 align-items-center">
                                 <div class="mr-3">
-                                    <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/paul-broadwith.jpg")" alt="Paul Broadwith" title="Paul Broadwith" />
+                                    <img class="rounded shadow" width="75" src="@Url.Content("~/content/images/speakers/gary-ewan-park.jpg")" alt="Gary Ewan Park" title="Gary Ewan Park" />
                                 </div>
                                 <div>
-                                    <h5 class="font-weight-bold text-primary mb-0">Paul Broadwith</h5>
-                                    <p class="mb-0"><strong>Senior Technical Engineer at Chocolatey</strong></p>
+                                    <h5 class="font-weight-bold text-primary mb-0">Gary Ewan Park</h5>
+                                    <p class="mb-0"><strong>Senior Software Engineer at Chocolatey Software</strong></p>
                                 </div>
                             </div>
-                            <p class="mb-2">Paul Broadwith of Glasgow Scotland has 25+ years in IT in financial, government, manufacturing and services sectors. He is the Lead Engineer on Boxstarter and cChoco DSC Resource.</p>
+                            <p class="mb-2">Gary Ewan Park has 10+ years working as a developer in the Oil and Gas Industry. He is the primary maintainer on the Chocolatey GUI project.</p>
                             <div class="d-flex">
-                                <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="https://www.linkedin.com/in/paulbroadwith" target="_blank" rel="noreferrer" title="View more about Paul Broadwith on LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
-                                <a class="btn btn-sm btn-secondary btn-twitter" href="https://twitter.com/pauby" target="_blank" rel="noreferrer" title="View more about Paul Broadwith on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a class="btn btn-sm btn-secondary btn-linkedin mr-2" href="https://www.linkedin.com/in/gep13" target="_blank" rel="noreferrer" title="View more about Gary Ewan Park on LinkedIn">Linked <i class="fab fa-linkedin"></i></a>
+                                <a class="btn btn-sm btn-secondary btn-twitter" href="https://twitter.com/gep13" target="_blank" rel="noreferrer" title="View more about Gary Ewan Park on Twitter"><i class="fab fa-twitter"></i> Twitter</a>
                             </div>
                         </div>
                         <div class="event-speaker">
@@ -91,7 +109,7 @@
                                 </div>
                                 <div>
                                     <h5 class="font-weight-bold text-primary mb-0">Rob Reynolds</h5>
-                                    <p class="mb-0"><strong>Chocolatey Founder</strong></p>
+                                    <p class="mb-0"><strong>Chocolatey Software Founder</strong></p>
                                 </div>
                             </div>
                             <p class="mb-2">Rob is a developer turned founder with 14+ years experience in infrastructure automation and modern automation approaches. He excels in taking hard concepts and making them approachable and easy.</p>
@@ -106,7 +124,7 @@
         </section>
         <section class="py-3 py-lg-5 bg-primary">
             <div class="container text-center">
-                <h2>@post.Tagline</h2>
+                <h2>@post.Title</h2>
                 <h3 class="mb-3">Spots Are Limited. Secure Your Spot Today!</h3>
                 <a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-light">Reserve My Spot Now</a>
             </div>
