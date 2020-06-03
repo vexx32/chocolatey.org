@@ -43,6 +43,10 @@
             margin-bottom: 0;
         }
     }
+
+    &.countdown-container-success  > div > :first-child {
+        color: $success;
+    }
 }
 
 .calendar-date {

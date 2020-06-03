@@ -301,6 +301,10 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
     border-radius: $border-radius;
 }
 
+.border-hr.border-hr-white, .border-hr-lg.border-hr-white {
+    border: 3px solid $white;
+}
+
 .border-hr {
     width: 50px;
     margin-left: 0;

@@ -1143,9 +1143,11 @@
     <Content Include="Content\Images\ccm-computer-white.jpg" />
     <Content Include="Content\Images\ccm-mockup.jpg" />
     <Content Include="Content\Images\ccm\CCM_Mockup_ReportEdit.png" />
+    <Content Include="Content\Images\ccm\central-management-logo.png" />
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\choco-chefconf.jpg" />
     <Content Include="Content\Images\choco-ps-summit.jpg" />
+    <Content Include="Content\Images\chocolatey-logo.png" />
     <Content Include="Content\Images\chocolatey-staff.jpg" />
     <Content Include="Content\Images\chocolateyHeadquarters.jpg" />
     <Content Include="Content\Images\Chocolatey_Future.png" />
@@ -1270,6 +1272,7 @@
     <Content Include="Content\Images\errorPage.png" />
     <Content Include="Content\Images\events\00.jpg" />
     <Content Include="Content\Images\events\01-01.jpg" />
+    <Content Include="Content\Images\events\01-02.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
@@ -1329,6 +1332,7 @@
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\speakers\default-speaker.jpg" />
+    <Content Include="Content\Images\speakers\gary-ewan-park.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
     <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
     <Content Include="Content\Images\stackexchange.png" />
@@ -1845,6 +1849,8 @@
     <Content Include="Views\Documentation\Files\CentralManagementSetup.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSoftware.md" />
     <Content Include="Views\Documentation\Files\CentralManagementClientSetup.md" />
+    <Content Include="Views\Events\Files\01-02-ChocolateyDeployments.md" />
+    <Content Include="Views\Events\ChocolateyDeployments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
