@@ -83,7 +83,7 @@ namespace NuGetGallery.Controllers
                 posts.Add(GetPost(postFile));
             }
 
-            return posts.Where(p => p.IsArchived.Equals("false")).OrderBy(p => p.EventDate);
+            return posts.Where(p => p.IsArchived.Equals("false")).OrderByDescending(p => p.EventDate);
         }
 
         private EventViewModel GetPost(string filePath, string eventName = null)
