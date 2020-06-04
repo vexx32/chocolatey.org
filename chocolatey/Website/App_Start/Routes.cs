@@ -365,7 +365,7 @@ namespace NuGetGallery
                 new { controller = "Events", action = "Events", eventName = "home" }
                 );
 
-            routes.Redirect(r => r.MapRoute(RouteName.CurrentWebinar, "webinar")).To(eventsRoute, new { eventName = "enable-your-remote-workforce-by-implementing-modern-infrastructure-with-chocolatey" });
+            routes.Redirect(r => r.MapRoute(RouteName.CurrentWebinar, "webinar")).To(eventsRoute, new { eventName = "chocolatey-deployments" });
 
             routes.MapRoute(RouteName.Stats, "stats", MVC.Pages.Stats());
 

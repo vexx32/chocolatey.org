@@ -270,6 +270,10 @@ input[type="text"]:disabled, .video-story div[data-toggle]:hover {
     background: $light;
 }
 
+.shape-border-primary::before {
+    background: $primary;
+}
+
 /*Terminal*/
 #terminal .maximize {
     border: 2px solid;
@@ -412,7 +416,7 @@ footer {
     background: $medium-dark;
 }
 
-@media (min-width: 576px) {
+@include media-breakpoint-up(sm) {
     #terminal .terminal-body {
         height: 300px;
     }
@@ -423,6 +427,10 @@ footer {
 
     .btn:not(.btn-preferences) + .btn:not(.btn-sm):not(.btn-docs) {
         margin-top: 0;
+    }
+
+    .text-sm-center {
+        text-align: center;
     }
 }
 
