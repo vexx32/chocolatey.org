@@ -697,7 +697,7 @@ $(function () {
     var ellapsedButtonText = 'Watch On-Demand Now';
 
     $('.countdown-container').each(function () {
-        $(this).countdown(countdownDate + ' ' + countdownHour + ':' + countdownMinutes + ':00', function (event) {
+        $(this).countdown(countdownDate + ' ' + countdownHour + ':' + countdownMinutes + ':00 UTC', function (event) {
             if (event.elapsed) {
                 $('.countdown-details').add($('.countdown-container').add($('.countdown-date'))).remove();
                 $('#countdown-header section').removeClass('pb-5').addClass('pb-0');

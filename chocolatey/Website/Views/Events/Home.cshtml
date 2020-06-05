@@ -24,12 +24,12 @@
 </div>
 <section id="events" class="pb-3 pb-lg-5">
     <div class="container">
-        @if (Model.Any(x => x.EventDate > DateTime.Now))
+        @if (Model.Any(x => x.EventDate > DateTime.UtcNow))
         {
             <h2>Upcoming Events</h2>
             <hr />
             <ul class="list-unstyled">
-                @foreach (var post in @Model.Where(x => x.EventDate > DateTime.Now))
+                @foreach (var post in @Model.Where(x => x.EventDate > DateTime.UtcNow))
                 {
                     var badgeClass = "";
                     switch (post.Type)
@@ -89,12 +89,12 @@
                 }
             </ul>
         }
-        @if (Model.Any(x => x.EventDate < DateTime.Now))
+        @if (Model.Any(x => x.EventDate < DateTime.UtcNow))
         {
-            <h2 class="@if(Model.Any(x => x.EventDate > DateTime.Now)){ <text>mt-5</text>}">On-Demand Events</h2>
+            <h2 class="@if(Model.Any(x => x.EventDate > DateTime.UtcNow)){ <text>mt-5</text>}">On-Demand Events</h2>
             <hr />
             <ul class="list-unstyled">
-                @foreach (var post in @Model.Where(x => x.EventDate < DateTime.Now))
+                @foreach (var post in @Model.Where(x => x.EventDate < DateTime.UtcNow))
                 {
                     var badgeClass = "";
                     switch (post.Type)

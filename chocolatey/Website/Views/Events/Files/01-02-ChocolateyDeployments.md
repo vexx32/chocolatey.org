@@ -1,7 +1,7 @@
 IsArchived: false
 Url: chocolatey-deployments
 Type: webinar
-EventDate: 20200623T10:00:00
+EventDate: 20200623T15:00:00
 Time: 10-11 AM CDT (8-9 AM PDT / 3-4 PM GMT)
 Duration: 1 hour
 Title: Chocolatey Deployments - Easily Orchestrate Amazing Things!

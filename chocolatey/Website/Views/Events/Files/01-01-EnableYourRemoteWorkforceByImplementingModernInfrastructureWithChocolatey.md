@@ -1,7 +1,7 @@
 IsArchived: false
 Url: enable-your-remote-workforce-by-implementing-modern-infrastructure-with-chocolatey
 Type: webinar
-EventDate: 20200604T10:00:00
+EventDate: 20200604T15:00:00
 Time: 10-11 AM CDT (8-9 AM PDT / 3-4 PM GMT)
 Duration: 1 hour
 Title: Enable Your Remote Workforce by Implementing Modern Infrastructure with Chocolatey
