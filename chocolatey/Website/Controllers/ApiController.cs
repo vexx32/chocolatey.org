@@ -170,11 +170,27 @@ namespace NuGetGallery
                 {
                     return new HttpStatusCodeWithBodyResult(
                         HttpStatusCode.Forbidden,
-                        string.Format("The package {0} have a previous version in a submitted state, and no approved stable releases.",
+                        string.Format("The package {0} has a previous version in a submitted state, and no approved stable releases. Please work to have the existing package version approved or rejected first.",
                             packageToPush.Id),
                         string.Format(@"
 Please wait until a minimum of 1 version of the {0} package have been approved,
 before pushing a new version.
+
+If the package is currently failing, please see any failure emails sent
+out on why it could be failing, as well as instructions on how to fix
+any moderation related failures.",
+                            packageToPush.Id));
+                }
+
+                var allowedNumberOfPackageVersionsInSubmittedStatus = 10;
+                if (packageRegistration.Packages.Count(p => p.Status == PackageStatusType.Submitted) >= allowedNumberOfPackageVersionsInSubmittedStatus)
+                {
+                    return new HttpStatusCodeWithBodyResult(
+                        HttpStatusCode.Forbidden,
+                        string.Format("The package {0} has {1} versions currently in a submitted state. For moderation purposes we limit to {1} versions in moderation at a time. Please wait to have the existing package version(s) approved or rejected first.",
+                            packageToPush.Id, allowedNumberOfPackageVersionsInSubmittedStatus),
+                        string.Format(@"
+Please wait to submit more versions of {0} until the current versions are approved or rejected.
 
 If the package is currently failing, please see any failure emails sent
 out on why it could be failing, as well as instructions on how to fix
