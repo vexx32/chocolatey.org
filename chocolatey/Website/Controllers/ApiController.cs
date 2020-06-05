@@ -170,7 +170,7 @@ namespace NuGetGallery
                 {
                     return new HttpStatusCodeWithBodyResult(
                         HttpStatusCode.Forbidden,
-                        string.Format("The package {0} have a previous version in a submitted state, and no approved stable releases.",
+                        string.Format("The package {0} has a previous version in a submitted state, and no approved stable releases. Please work to have the existing package version approved or rejected first.",
                             packageToPush.Id),
                         string.Format(@"
 Please wait until a minimum of 1 version of the {0} package have been approved,
