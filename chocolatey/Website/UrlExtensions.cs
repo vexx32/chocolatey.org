@@ -168,11 +168,6 @@ namespace NuGetGallery
                 actionResult.AddRouteValue("username", username).AddRouteValue("token", token), protocol: protocol);
         }
 
-        public static string VerifyPackage(this UrlHelper url)
-        {
-            return url.Action(MVC.Packages.VerifyPackage());
-        }
-
         internal static string EnsureTrailingSlash(string url)
         {
             if (url != null && !url.EndsWith("/", StringComparison.OrdinalIgnoreCase)) return url + '/';

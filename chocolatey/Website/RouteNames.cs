@@ -95,9 +95,7 @@ namespace NuGetGallery
         public const string UserAction = "UserAction";
         public const string PasswordReset = "PasswordReset";
         public const string NewSubmission = "NewSubmission";
-        public const string VerifyPackage = "VerifyPackage";
         public const string VerifyPackageKey = "VerifyPackageKey";
-        public const string CancelUpload = "CancelUpload";
         public const string CuratedFeed = "CuratedFeed";
         public const string CreateCuratedPackageForm = "CreateCuratedPackageForm";
         public const string CuratedPackages = "CuratedPackages";

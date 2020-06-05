@@ -398,10 +398,6 @@ namespace NuGetGallery
 
             var uploadPackageRoute = routes.MapRoute(RouteName.UploadPackage, "packages/upload", MVC.Packages.UploadPackage());
 
-            routes.MapRoute(RouteName.VerifyPackage, "packages/verify-upload", MVC.Packages.VerifyPackage());
-
-            routes.MapRoute(RouteName.CancelUpload, "packages/cancel-upload", MVC.Packages.CancelUpload());
-
             routes.MapRoute(
                 RouteName.PackageOwnerConfirmation, "packages/{id}/owners/{username}/confirm/{token}", new
                 {
