@@ -82,7 +82,7 @@ Example `.cshmtl` file: `AwesomeConference.cshtml`
 | IsArchived        | true     | true or false								| false                             | If this field is set to `true`, then it will not appear in the list of events, and the event page will be redirected back to the main events area. |
 | URL               | true     | string											| example-event	                    | This will be the title of the event, all lowercase, with dashes in between each word. |
 | Type              | true     | webinar, workshop, conference					| webinar                           | |
-| EventDate         | true     | yyyyMMddTHH:mm:ss								| 20250101T10:00:00                 | This date is primarily used to configure the countdown clock via JS. This is done automatically. |
+| EventDate         | true     | yyyyMMddTHH:mm:ss								| 20250101T15:00:00                 | This date is primarily used to configure the countdown clock via JS, and to move items on the main event page from "upcoming" to "on-demand". The format uses a 24-hour clock from 0 to 23 and should be set to UTC. |
 | Time              | true     | string											| 10-11 AM CDT (8-9 AM PDT / 3-4 PM GMT) | This is the user friendly time of the event. This format can be whatever makes sense for the event. |
 | Duration          | true     | string											| 1 hour | The estimated length of event. |
 | Title             | true     | string with every word capitalized				| Example Event                     | |
