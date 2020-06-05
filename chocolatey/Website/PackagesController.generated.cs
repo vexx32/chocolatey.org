@@ -194,17 +194,6 @@ namespace NuGetGallery {
         }
 
 
-        public override System.Web.Mvc.ActionResult UploadPackage(System.Web.HttpPostedFileBase uploadFile) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UploadPackage);
-
-
-            callInfo.RouteValueDictionary.Add("uploadFile", uploadFile);
-
-
-            return callInfo;
-        }
-
-
         public override System.Web.Mvc.ActionResult DisplayPackage(string id, string version) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DisplayPackage);
 
@@ -419,31 +408,6 @@ namespace NuGetGallery {
 
             callInfo.RouteValueDictionary.Add("token", token);
 
-
-            return callInfo;
-        }
-
-
-        public override System.Web.Mvc.ActionResult VerifyPackage() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.VerifyPackage);
-
-            return callInfo;
-        }
-
-
-        public override System.Web.Mvc.ActionResult VerifyPackage(bool? listed) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.VerifyPackage);
-
-
-            callInfo.RouteValueDictionary.Add("listed", listed);
-
-
-            return callInfo;
-        }
-
-
-        public override System.Web.Mvc.ActionResult CancelUpload() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.CancelUpload);
 
             return callInfo;
         }

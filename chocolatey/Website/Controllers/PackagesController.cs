@@ -43,7 +43,6 @@ namespace NuGetGallery
         // TODO: improve validation summary emphasis
 
         private readonly IPackageService packageSvc;
-        private readonly IUploadFileService uploadFileSvc;
         private readonly IUserService userSvc;
         private readonly IMessageService messageService;
         private readonly IAutomaticallyCuratePackageCommand autoCuratedPackageCmd;
@@ -57,11 +56,10 @@ namespace NuGetGallery
         }
 
         public PackagesController(
-            IPackageService packageSvc, IUploadFileService uploadFileSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
+            IPackageService packageSvc, IUserService userSvc, IMessageService messageService, IAutomaticallyCuratePackageCommand autoCuratedPackageCmd,
             IConfiguration configuration, ISearchService searchService)
         {
             this.packageSvc = packageSvc;
-            this.uploadFileSvc = uploadFileSvc;
             this.userSvc = userSvc;
             this.messageService = messageService;
             this.autoCuratedPackageCmd = autoCuratedPackageCmd;
@@ -72,92 +70,7 @@ namespace NuGetGallery
         [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public virtual ActionResult UploadPackage()
         {
-            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
-
-            if (currentUser.IsBanned)
-            {
-                return RedirectToRoute(RouteName.VerifyPackage);
-            }
-
-            using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
-            {
-                if (existingUploadFile != null) return RedirectToRoute(RouteName.VerifyPackage);
-            }
-
             return View("~/Views/Packages/UploadPackage.cshtml");
-        }
-
-        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public virtual ActionResult UploadPackage(HttpPostedFileBase uploadFile)
-        {
-            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
-
-            if (currentUser.IsBanned)
-            {
-                return RedirectToRoute(RouteName.VerifyPackage);
-            }
-
-            using (var existingUploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
-            {
-                if (existingUploadFile != null) return new HttpStatusCodeResult(409, "Cannot upload file because an upload is already in progress.");
-            }
-
-            if (uploadFile == null)
-            {
-                ModelState.AddModelError(String.Empty, Strings.UploadFileIsRequired);
-                return View("~/Views/Packages/UploadPackage.cshtml");
-            }
-
-            if (!Path.GetExtension(uploadFile.FileName).Equals(Constants.NuGetPackageFileExtension, StringComparison.OrdinalIgnoreCase))
-            {
-                ModelState.AddModelError(String.Empty, Strings.UploadFileMustBeNuGetPackage);
-                return View("~/Views/Packages/UploadPackage.cshtml");
-            }
-
-            IPackage nuGetPackage;
-            try
-            {
-                using (var uploadStream = uploadFile.InputStream)
-                {
-                    nuGetPackage = ReadNuGetPackage(uploadStream);
-                }
-            }
-            catch
-            {
-                ModelState.AddModelError(String.Empty, Strings.FailedToReadUploadFile);
-                return View("~/Views/Packages/UploadPackage.cshtml");
-            }
-
-            var packageRegistration = packageSvc.FindPackageRegistrationById(nuGetPackage.Id, useCache: false);
-            if (packageRegistration != null && !packageRegistration.Owners.AnySafe(x => x.Key == currentUser.Key))
-            {
-                ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageIdNotAvailable, packageRegistration.Id));
-                return View("~/Views/Packages/UploadPackage.cshtml");
-            }
-
-            var package = packageSvc.FindPackageByIdAndVersion(nuGetPackage.Id, nuGetPackage.Version.ToStringSafe());
-            if (package != null)
-            {
-                switch (package.Status)
-                {
-                    case PackageStatusType.Rejected:
-                        ModelState.AddModelError(String.Empty, string.Format("This package has been {0} and can no longer be submitted.", package.Status.GetDescriptionOrValue().ToLower()));
-                        return View("~/Views/Packages/UploadPackage.cshtml");
-                    case PackageStatusType.Submitted:
-                        //continue on
-                        break;
-                    default:
-                        ModelState.AddModelError(String.Empty, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, package.PackageRegistration.Id, package.Version));
-                        return View("~/Views/Packages/UploadPackage.cshtml");
-                }
-            }
-
-            using (var fileStream = nuGetPackage.GetStream())
-            {
-                uploadFileSvc.SaveUploadFile(currentUser.Key, fileStream);
-            }
-
-            return RedirectToRoute(RouteName.VerifyPackage);
         }
 
         [HttpGet]
@@ -932,88 +845,6 @@ namespace NuGetGallery
         private ActionResult PackageNotFound(string id, string version)
         {
             return HttpNotFound();
-        }
-
-        [Authorize, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public virtual ActionResult VerifyPackage()
-        {
-            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
-
-            if (currentUser.IsBanned)
-            {
-                TempData["ErrorMessage"] = string.Format("Unable to find uploaded file for user '{0}'. Please try using choco.exe push instead.", currentUser.Username);
-                return RedirectToRoute(RouteName.UploadPackage);
-            }
-
-            IPackage package;
-            using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
-            {
-                if (uploadFile == null)
-                {
-                    TempData["ErrorMessage"] = string.Format("Unable to find uploaded file for user '{0}'. Please try using choco.exe push instead.", currentUser.Username);
-                    return RedirectToRoute(RouteName.UploadPackage);
-                }
-
-                package = ReadNuGetPackage(uploadFile);
-            }
-
-            return View(
-                "~/Views/Packages/VerifyPackage.cshtml", new VerifyPackageViewModel
-                {
-                    Id = package.Id,
-                    Version = package.Version.ToStringSafe(),
-                    Title = package.Title,
-                    Summary = package.Summary,
-                    Description = package.Description,
-                    RequiresLicenseAcceptance = package.RequireLicenseAcceptance,
-                    LicenseUrl = package.LicenseUrl.ToStringSafe(),
-                    Tags = package.Tags,
-                    ProjectUrl = package.ProjectUrl.ToStringSafe(),
-                    Authors = package.Authors.Flatten(),
-                    Listed = package.Listed
-                });
-        }
-
-        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public virtual ActionResult VerifyPackage(bool? listed)
-        {
-            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
-
-            IPackage nugetPackage;
-            using (var uploadFile = uploadFileSvc.GetUploadFile(currentUser.Key))
-            {
-                if (uploadFile == null) return HttpNotFound();
-                nugetPackage = ReadNuGetPackage(uploadFile);
-            }
-
-            Package package;
-            using (var tx = new TransactionScope())
-            {
-                package = packageSvc.CreatePackage(nugetPackage, currentUser);
-                packageSvc.PublishPackage(package.PackageRegistration.Id, package.Version);
-                if (listed.HasValue && listed.Value == false) packageSvc.MarkPackageUnlisted(package);
-                uploadFileSvc.DeleteUploadFile(currentUser.Key);
-                autoCuratedPackageCmd.Execute(package, nugetPackage);
-                tx.Complete();
-            }
-
-            TempData["Message"] = string.Format(
-                "You have successfully created '{0}' version '{1}'. The package is now under review by the moderators and will show up once approved.", package.PackageRegistration.Id, package.Version);
-            return RedirectToRoute(
-                RouteName.DisplayPackage, new
-                {
-                    package.PackageRegistration.Id,
-                    package.Version
-                });
-        }
-
-        [Authorize, HttpPost, ValidateAntiForgeryToken, OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public virtual ActionResult CancelUpload()
-        {
-            var currentUser = userSvc.FindByUsername(GetIdentity().Name);
-            uploadFileSvc.DeleteUploadFile(currentUser.Key);
-
-            return RedirectToAction(MVC.Packages.UploadPackage());
         }
 
         [HttpPost]

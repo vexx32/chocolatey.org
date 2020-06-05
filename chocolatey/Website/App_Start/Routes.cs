@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +32,7 @@ namespace NuGetGallery
             routes.IgnoreRoute("{*Scripts}", new { scripts = @"(.*/)?Scripts(/.*)?" });
 
             routes.MapRoute(RouteName.Home, "", MVC.Pages.Home());
-        
+
             routes.MapRouteSeo(
                 RouteName.InstallerBatchFile, "installChocolatey.cmd", new
                 {
@@ -45,8 +45,8 @@ namespace NuGetGallery
                {
                    controller = "Pages",
                    Action = "Features"
-               });          
-            
+               });
+
             routes.MapRouteSeo(
                RouteName.About, "about", new
                {
@@ -59,22 +59,22 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "Notice"
-                }); 
-            
+                });
+
             var pricingRoute = routes.MapRoute(
                 RouteName.Pricing, "pricing", new
                 {
                     controller = "Pages",
                     Action = "Pricing"
                 });
-            
+
             routes.MapRoute(
                 RouteName.Discount, "discount", new
                 {
                     controller = "Pages",
                     Action = "Discount"
-                });  
-            
+                });
+
             routes.MapRoute(
                 RouteName.Evaluation, "evaluation", new
                 {
@@ -181,8 +181,8 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "MediaKit"
-                });  
-            
+                });
+
             routes.MapRouteSeo(
                 RouteName.Company, "company", new
                 {
@@ -202,8 +202,8 @@ namespace NuGetGallery
                 {
                     controller = "Pages",
                     Action = "ContactUs"
-                });    
-            
+                });
+
             routes.MapRouteSeo(
                 RouteName.ContactGeneral, "contact/general", new
                 {
@@ -238,7 +238,7 @@ namespace NuGetGallery
                     controller = "Pages",
                     Action = "ContactSalesOther"
                 });
-                
+
             routes.MapRouteSeo(
                 RouteName.ContactBlocked, "contact/blocked-ip-address", new
                 {
@@ -259,28 +259,28 @@ namespace NuGetGallery
                     controller = "Pages",
                     Action = "Support"
                 });
-           
+
             routes.MapRouteSeo(
                 RouteName.ReportIssue, "bugs", new
                 {
                     controller = "Pages",
                     Action = "ReportIssue"
-                });    
-        
+                });
+
             routes.MapRouteSeo(
                 RouteName.Press, "press", new
                 {
                     controller = "Pages",
                     Action = "Press"
-                });  
-        
+                });
+
             routes.MapRouteSeo(
                 RouteName.Partner, "partner", new
                 {
                     controller = "Pages",
                     Action = "Partner"
-                });    
-        
+                });
+
             routes.MapRouteSeo(
                 RouteName.Security, "security", new
                 {
@@ -305,8 +305,8 @@ namespace NuGetGallery
                 RouteName.BlogHome,
                 "blog/",
                 new { controller = "Blog", action = "Index" }
-                );          
-            
+                );
+
             routes.MapRouteSeo(
                 RouteName.BlogArticle,
                 "blog/{articleName}",
@@ -328,7 +328,7 @@ namespace NuGetGallery
             routes.Add(RouteName.ResourceName, resourceNameRoute);
 
             var docsRoute = new Route("docs/{docName}", new RouteValueDictionary(new { controller = "Documentation", action = "Documentation", docName = "home" }), new HyphenatedRouteHandler());
-            
+
             // Documentation redirects
             routes.Redirect(r => r.MapRoute("InstallRedirect", "docs/install")).To(docsRoute, new { docName = "installation" });
             routes.Redirect(r => r.MapRoute("FeaturesShimsRedirect", "docs/features-shims")).To(docsRoute, new { docName = "features-shim" });
@@ -375,7 +375,7 @@ namespace NuGetGallery
                     controller = "RSS",
                     Action = "feed.rss"
                 });
-            
+
             routes.MapRoute(
             "blog rss feed", "blog.rss", new
             {
@@ -398,10 +398,6 @@ namespace NuGetGallery
 
             var uploadPackageRoute = routes.MapRoute(RouteName.UploadPackage, "packages/upload", MVC.Packages.UploadPackage());
 
-            routes.MapRoute(RouteName.VerifyPackage, "packages/verify-upload", MVC.Packages.VerifyPackage());
-
-            routes.MapRoute(RouteName.CancelUpload, "packages/cancel-upload", MVC.Packages.CancelUpload());
-
             routes.MapRoute(
                 RouteName.PackageOwnerConfirmation, "packages/{id}/owners/{username}/confirm/{token}", new
                 {
@@ -409,7 +405,7 @@ namespace NuGetGallery
                     action = "ConfirmOwner"
                 });
 
-            // We need the following two routes (rather than just one) due to Routing's 
+            // We need the following two routes (rather than just one) due to Routing's
             // Consecutive Optional Parameter bug. :(
             var packageDisplayRoute = routes.MapRoute(
                 RouteName.DisplayPackage, "packages/{id}/{version}", MVC.Packages.DisplayPackage().AddRouteValue("version", UrlParameter.Optional), null /*defaults*/, new
@@ -457,7 +453,7 @@ namespace NuGetGallery
                 {
                     httpMethod = new HttpMethodConstraint("GET")
                 });
-            
+
             // V1 Routes
             routes.MapRoute("v1Legacy" + RouteName.PushPackageApi, "PackageFiles/{apiKey}/nupkg", MVC.Api.CreatePackagePost());
             routes.MapRoute("v1Legacy" + RouteName.PublishPackageApi, "PublishedPackages/Publish", MVC.Api.PublishPackage());
@@ -500,53 +496,53 @@ namespace NuGetGallery
             routes.MapServiceRoute(RouteName.V2ApiSubmittedFeed, "api/v2/submitted", typeof(V2SubmittedFeed));
 
             routes.MapRoute(
-                 "v2" + RouteName.TestPackageApi, 
-                 "api/v2/test/{id}/{version}", 
-                 MVC.Api.TestPackage(), 
+                 "v2" + RouteName.TestPackageApi,
+                 "api/v2/test/{id}/{version}",
+                 MVC.Api.TestPackage(),
                  defaults: null,
                  constraints: new
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
             );
-            
+
             routes.MapRoute(
-                 "v2" + RouteName.ValidatePackageApi, 
+                 "v2" + RouteName.ValidatePackageApi,
                  "api/v2/validate/{id}/{version}",
-                 MVC.Api.ValidatePackage(), 
+                 MVC.Api.ValidatePackage(),
                  defaults: null,
                  constraints: new
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
             );
-            
+
             routes.MapRoute(
-                 "v2" + RouteName.CleanupPackageApi, 
+                 "v2" + RouteName.CleanupPackageApi,
                  "api/v2/cleanup/{id}/{version}",
-                 MVC.Api.CleanupPackage(), 
+                 MVC.Api.CleanupPackage(),
                  defaults: null,
                  constraints: new
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
-            );   
-            
+            );
+
             routes.MapRoute(
                  "v2" + RouteName.DownloadCachePackageApi,
                  "api/v2/cache/{id}/{version}",
-                 MVC.Api.DownloadCachePackage(), 
+                 MVC.Api.DownloadCachePackage(),
                  defaults: null,
                  constraints: new
                  {
                     httpMethod = new HttpMethodConstraint("POST")
                  }
-            ); 
-            
+            );
+
             routes.MapRoute(
                  "v2" + RouteName.ScanPackageApi,
                  "api/v2/scan/{id}/{version}",
-                 MVC.Api.ScanPackage(), 
+                 MVC.Api.ScanPackage(),
                  defaults: null
             );
 
@@ -569,7 +565,7 @@ namespace NuGetGallery
 
             routes.Redirect(
                 r => r.MapRoute(
-                    "PackageActions", "Package/{action}/{id}", MVC.Packages.ContactOwners(), null /*defaults*/, // This next bit looks bad, but it's not. It will never change because 
+                    "PackageActions", "Package/{action}/{id}", MVC.Packages.ContactOwners(), null /*defaults*/, // This next bit looks bad, but it's not. It will never change because
                     // it's mapping the legacy routes to the new better routes.
                     new
                     {
