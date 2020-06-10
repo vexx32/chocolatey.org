@@ -625,16 +625,11 @@ $('.btn').click(function () {
 });
 
 // Search box
-$('.search-box').each(function () {
-    if (!$(this).parent().hasClass('nav-search')) {
-        $(this).removeClass('d-none');
-    }
-});
 $('.nav-search .btn-search').click(function () {
     var btnSearch = $('.nav-search .btn-search');
     var btnSearchOption = btnSearch.prev().find('button');
 
-    btnSearch.addClass('d-none').parent().find('form').removeClass('d-none').find('input').focus();
+    btnSearch.addClass('d-none').parent().find('.nav-search-container').removeClass('d-none').find('form').removeClass('d-none').find('input').focus();
     if (!btnSearchOption.hasClass('btn-docs') && document.location.pathname.indexOf("/docs") != 0) {
         btnSearchOption.html('<span class="small"><i class="fas fa-search" alt="Search Packages"></i> Packages</span>');
         btnSearchOption.after('<button class="btn btn-light btn-docs" type="submit" formaction="/docs/search"><span class="small"><i class="fas fa-file" alt="Search Docs"></i> Docs</span></button>');
@@ -648,7 +643,8 @@ $('.nav-search .btn-search').click(function () {
 });
 $(window).on("resize click", function () {
     if ($('.nav-search .btn-search').hasClass('d-none')) {
-        $('.nav-search form').addClass('d-none').next().removeClass('d-none');
+        $('.nav-search-container').addClass('d-none').find('form').addClass('d-none');
+        $('.btn-search').removeClass('d-none');
 
         if (window.innerWidth < 625) {
             $('#topNav').find('.navbar-brand').removeClass('d-none').next().removeClass('w-100').find('.nav-search').removeClass('w-100');
