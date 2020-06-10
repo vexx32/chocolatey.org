@@ -1181,6 +1181,11 @@
     <Content Include="Content\Images\docs\cloudflare_ratelimiting.png" />
     <Content Include="Content\Images\docs\cloudflare_ratelimiting_choco.png" />
     <Content Include="Content\Images\docs\cloudflare_ratelimiting_choco_install.png" />
+    <Content Include="Content\Images\docs\computers\ccm-computers-delete-confirm.png" />
+    <Content Include="Content\Images\docs\computers\ccm-computers-delete-menu.png" />
+    <Content Include="Content\Images\docs\computers\ccm-computers-details-menu.png" />
+    <Content Include="Content\Images\docs\computers\ccm-computers-details.png" />
+    <Content Include="Content\Images\docs\computers\ccm-computers-nav.png" />
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
@@ -1227,6 +1232,11 @@
     <Content Include="Content\Images\docs\gifs\choco_upgrade_noop.gif" />
     <Content Include="Content\Images\docs\git-tfs.png" />
     <Content Include="Content\Images\docs\git-tfs2.png" />
+    <Content Include="Content\Images\docs\groups\ccm-groups-edit.png" />
+    <Content Include="Content\Images\docs\groups\ccm-groups-eligibility.png" />
+    <Content Include="Content\Images\docs\groups\ccm-groups-menu.png" />
+    <Content Include="Content\Images\docs\groups\ccm-groups-modal-new.png" />
+    <Content Include="Content\Images\docs\groups\ccm-groups-new.png" />
     <Content Include="Content\Images\docs\gui\in-action-with-branding.gif" />
     <Content Include="Content\Images\docs\gui\in-action.gif" />
     <Content Include="Content\Images\docs\gui\main-screen-with-branding.png" />
@@ -1850,6 +1860,9 @@
     <Content Include="Views\Documentation\Files\CentralManagementClientSetup.md" />
     <Content Include="Views\Events\Files\01-02-ChocolateyDeployments.md" />
     <Content Include="Views\Events\ChocolateyDeployments.cshtml" />
+    <Content Include="Views\Documentation\Files\CentralManagementSetupDatabase.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementSetupService.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementSetupWeb.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
