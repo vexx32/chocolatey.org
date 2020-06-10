@@ -81,7 +81,6 @@ namespace NuGetGallery
             var profiles = profilesService.GetUserProfiles(user);
             var twitter = profiles.Where(x => x.Name == SiteProfileConstants.Twitter).Select(p => p.Url.Replace(SiteProfileConstants.TwitterProfilePrefix, string.Empty)).FirstOrDefault();
             var github = profiles.Where(x => x.Name == SiteProfileConstants.Github).Select(p => p.Url.Replace(SiteProfileConstants.GithubProfilePrefix, string.Empty)).FirstOrDefault();
-            var codeplex = profiles.Where(x => x.Name == SiteProfileConstants.Codeplex).Select(p => p.Url.Replace(SiteProfileConstants.CodeplexProfilePrefix, string.Empty)).FirstOrDefault();
             var stackExchange = profiles.Where(x => x.Name == SiteProfileConstants.StackExchange).Select(p => p.Url).FirstOrDefault();
             var homepage = profiles.Where(x => x.Name == SiteProfileConstants.Homepage).Select(p => p.Url).FirstOrDefault();
             var blogUrl = profiles.Where(x => x.Name == SiteProfileConstants.Blog).Select(p => p.Url).FirstOrDefault();
@@ -96,7 +95,6 @@ namespace NuGetGallery
                 PendingNewEmailAddress = user.UnconfirmedEmailAddress,
                 TwitterUserName = twitter,
                 GithubUserName = github,
-                CodeplexUserName = codeplex,
                 StackExchangeUrl = stackExchange,
                 HomepageUrl = homepage,
                 BlogUrl = blogUrl,
