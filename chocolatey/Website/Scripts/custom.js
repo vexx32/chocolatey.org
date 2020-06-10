@@ -206,12 +206,19 @@ $(document).on('click', 'input[type=text]', function () {
 
 // Toggle and scroll to collapse elements on click
 $('.collapse-nav').click(function () {
+    // Expand collapsed element if not already
     $(this).parent().parent().find(".active").removeClass("active");
     $(this).addClass('active');
     if (!$(this.hash).hasClass('show')) {
         $(this.hash).collapse('show');
     }
-    $('html, body').animate({ scrollTop: $(this.hash).offset().top - 120 }, 1100);
+
+    // Find scroll position and scroll to it
+    var collapseScrollHeight = $(this.hash).offset().top - $('[data-toggle="collapse"][href="' + $(this).attr('href') + '"]').outerHeight(true);
+    if ($('.sticky-top:not(.vertical-nav)').length) {
+        collapseScrollHeight = collapseScrollHeight - $('.sticky-top').outerHeight(true);
+    }
+    $('html, body').animate({ scrollTop: collapseScrollHeight }, 1100 );
 });
 
 // Smooth Scroll
