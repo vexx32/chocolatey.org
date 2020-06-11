@@ -1,11 +1,6 @@
 # Chocolatey Central Mangement (CCM)
 
-> :warning: **WARNING**: This is a Work in Progress. Please check back later
->
-> Also see [[Chocolatey Central Management in Features|FeaturesChocolateyCentralManagement]].
-
-## Summary
-Chocolatey Central Management (CCM) provides you insights across your desktop and endpoint environments.
+Chocolatey Central Management (CCM) provides you insights across your desktop and endpoint environments. CCM is available with Chocolatey for Business only.
 
 Once installed and configured, you can use CCM to:
 
@@ -16,12 +11,10 @@ Once installed and configured, you can use CCM to:
 
 ![CCM Overview](images/features/ccm/ccm_overview.jpg)
 
-
 This provides an overview on Chocolatey Central Mangement (CCM). It provides both setup and use of CCM.
 
 <!-- TOC depthFrom:2 depthTo:5 -->
 
-- [Summary](#summary)
 - [CCM Components](#ccm-components)
 - [Getting CCM](#getting-ccm)
 - [Stay Up To Speed](#stay-up-to-speed)
@@ -29,9 +22,13 @@ This provides an overview on Chocolatey Central Mangement (CCM). It provides bot
   - [Setup / Installation](#setup--installation)
   - [Using Central Management](#using-central-management)
 - [Related Articles](#related-articles)
+- [Roadmap](#roadmap)
 - [FAQs](#faqs)
+  - [How do I take advantage of Chocolatey Central Management?](#how-do-i-take-advantage-of-chocolatey-central-management)
+  - [I'm a licensed customer, now what?](#im-a-licensed-customer-now-what)
   - [Will this become available for lower editions of Chocolatey?](#will-this-become-available-for-lower-editions-of-chocolatey)
   - [What's the minimum version of the Chocolatey packages I need to use CCM?](#whats-the-minimum-version-of-the-chocolatey-packages-i-need-to-use-ccm)
+  - [Where can I find all the log files for Chocolatey Central Management](#where-can-i-find-all-the-log-files-for-chocolatey-central-management)
 
 <!-- /TOC -->
 
@@ -83,16 +80,43 @@ If you are not a customer yet, you can [reach out for a trial](https://chocolate
 * [[CCM Deployments|CentralManagementDeployments]]
 * [[CCM Reports|CentralManagementReports]]
 
-
 ## Related Articles
 
 * [[Quick Deployment Environment (QDE)|QuickDeploymentEnvironment]]
 
-## FAQs
-### Will this become available for lower editions of Chocolatey?
+## Roadmap
 
+Chocolatey Central Management will allow:
+
+* ~~Centralized Software Management for your entire organization.~~ Completed June 2020.
+* ~~Centralized reporting of software.~~ Completed May 2019
+* ~~Know immediately what software is out of date and on what machines.~~ Completed May 2019
+* ~~Know within seconds the entire estate of software and what versions are installed.~~ Completed May 2019
+  * ~~Including zips and archives* that do not show up in Programs and Features~~ Completed May 2019
+  * ~~Including internal software* that does not show up in Programs and Features~~ Completed May 2019
+* Adhoc reporting for a particular machine or set of machines
+* ~~Run arbitrary Chocolatey commands against one or more machines~~ Completed June 2020.
+* ~~See how many machines you are actively managing in your organization~~ Completed May 2019
+* More...
+
+\* - When deployed through Chocolatey.
+
+## FAQs
+### How do I take advantage of Chocolatey Central Management?
+You must have a [Business edition of Chocolatey](https://chocolatey.org/compare). Business editions are great for organizations that need to manage the total software lifecycle.
+
+### I'm a licensed customer, now what?
+See [Getting CCM](#getting-ccm).
+
+### Will this become available for lower editions of Chocolatey?
 CCM will only be available in Chocolatey for Business (C4B).
 
 ### What's the minimum version of the Chocolatey packages I need to use CCM?
-
 See [CCM Components](#ccm-components).
+
+### Where can I find all the log files for Chocolatey Central Management
+Chocolatey Central Management is made up of a number of components, so there will be a few possible places to find the log files, which you may be asked for when engaging with support.
+
+* The Chocolatey Central Management Website log file located at `c:\tools\chocolatey-management-web\App_Data\Logs\ccm-website.log`. If you are on a version of CCM prior to 0.2.0, the log will be located at `c:\tools\chocolatey-management-web\App_Data\Logs\Logs.txt`.
+* The Chocolatey Central Management service log file is located at `$env:ChocolateyInstall\logs\ccm-service.log`. If you are on a version of CCM prior to 0.2.0, the log will be located at `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service\logs\chocolatey.service.host.log`.
+* The Chocolatey Agent log file is located at `$env:ChocolateyInstall\logs\chocolatey-agent.log`. If you are on a version of Chocolatey Agent prior to 0.10.0, the log will be located at `$env:ChocolateyInstall\lib\chocolatey-agent\tools\service\logs\chocolatey-agent.log`.

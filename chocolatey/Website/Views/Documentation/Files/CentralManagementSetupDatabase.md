@@ -24,6 +24,13 @@
 
 ## Summary
 
+At the end of this, we should have a fully ready to go SQL Server:
+
+* Installed
+* Configured
+* Database package deployed creating the database
+* Permissions added
+
 > :warning: **WARNING**
 >
 > Unless otherwise noted, please follow these steps in ***exact*** order. These steps build on each other and need to be completed in order.
@@ -83,7 +90,7 @@ In preparing SQL Server, you need to do the following:
 * Ensure the TcpPort is 1433 (or know what it is you need to connect to)
 * Set SQL Server Mixed Mode Authentication
 * Restart SQL Server
-* Open Windows Firewall ports for TCP access (and SQL Server Browswer in most cases)
+* Open Windows Firewall ports for TCP access (and SQL Server Browser in most cases)
 
 We've prepared a handy script (that may turn into a package later) to help you ensure you have SQL Server set up properly.
 
@@ -141,7 +148,6 @@ netsh advfirewall firewall add rule name="SQL Server Browser 1434" dir=in action
 ```
 
 ___
-
 ## Step 2: Install Central Management Database Package
 
 > :warning: **WARNING**: CCM packages do ***NOT*** install SQL Server. You must take care of that in the prerequisites. Do not even start on central management installs until you have a SQL Server instance up and ready. I repeat, SQL Server engine must be already installed.
@@ -174,7 +180,6 @@ choco install chocolatey-management-database -y --package-parameters-sensitive="
 ```
 
 ___
-
 ## Step 3: Set up SQL Server Logins And Access
 
 Once we have the database, we can create logins and map those logins to users in the database.

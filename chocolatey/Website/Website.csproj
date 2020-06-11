@@ -1189,6 +1189,8 @@
     <Content Include="Content\Images\docs\cup.png" />
     <Content Include="Content\Images\docs\cverExample.png" />
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
+    <Content Include="Content\Images\docs\features\ccm\agent_ccm_communication.png" />
+    <Content Include="Content\Images\docs\features\ccm\agent_ccm_setup_good.png" />
     <Content Include="Content\Images\docs\features\ccm\ccm_overview.jpg" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_500.png" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_inline.png" />
@@ -1210,6 +1212,8 @@
     <Content Include="Content\Images\docs\features\features_package_reducer_optimize.png" />
     <Content Include="Content\Images\docs\features\features_package_throttle.png" />
     <Content Include="Content\Images\docs\features\features_recompile_packages.png" />
+    <Content Include="Content\Images\docs\features\features_selfservice_video1.jpg" />
+    <Content Include="Content\Images\docs\features\features_selfservice_video2.jpg" />
     <Content Include="Content\Images\docs\features\features_shimgen.png" />
     <Content Include="Content\Images\docs\features\features_software_audit.png" />
     <Content Include="Content\Images\docs\features\features_synchronize.png" />
@@ -1264,6 +1268,10 @@
     <Content Include="Content\Images\docs\recompile\choco_npp_download.png" />
     <Content Include="Content\Images\docs\recompile\choco_rename_nupkg_zip.png" />
     <Content Include="Content\Images\docs\reducemoderationemail.png" />
+    <Content Include="Content\Images\docs\software\ccm-software-details-menu.png" />
+    <Content Include="Content\Images\docs\software\ccm-software-details-page.png" />
+    <Content Include="Content\Images\docs\software\ccm-software-main.png" />
+    <Content Include="Content\Images\docs\software\ccm-software-nav.png" />
     <Content Include="Content\Images\docs\statlight.png" />
     <Content Include="Content\Images\docs\triage-broken.jpg" />
     <Content Include="Content\Images\docs\triage-download.jpg" />
