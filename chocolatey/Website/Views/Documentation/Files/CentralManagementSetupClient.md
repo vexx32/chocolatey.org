@@ -1,8 +1,9 @@
 # Chocolatey Central Mangement Client Setup
+This will guide us through getting an agent installed and configured to check into Central Management and to be set up for handling deployment tasks.
 
+___
 <!-- TOC depthFrom:2 -->
 
-- [Summary](#summary)
 - [Setup](#setup)
   - [Step 1: Install Chocolatey Agent](#step-1-install-chocolatey-agent)
   - [Step 2: Update Configuration](#step-2-update-configuration)
@@ -20,13 +21,10 @@
 
 <!-- /TOC -->
 
-## Summary
-This will guide us through getting an agent installed and configured to check into Central Management and to be set up for handling deployment tasks.
-
 ___
 ## Setup
 ### Step 1: Install Chocolatey Agent
-First you need Chocolatey Agent installed. As there may be some steps involved with the install of the agent, please see [[Chocolatey Agent Setup|FeaturesAgentService]].
+First you need Chocolatey Agent installed. As there may be some steps involved with the install of the agent, please see [[Chocolatey Agent Setup|FeaturesAgentService#setup]].
 
 ___
 ### Step 2: Update Configuration
@@ -38,6 +36,9 @@ choco feature enable --name="'useChocolateyCentralManagement'"
 # Requires Chocolatey Licensed Extension v2.1.0+, Chocolatey-Agent v0.10.0+, and Chocolatey Central Management v0.2.0+:
 choco feature enable --name="'useChocolateyCentralManagementDeployments'"
 ```
+
+> :warning: **WARNING**: The Chocolatey Agent installed on the same machine that has the CCM Service installed will share the `centralManagementServiceUrl` setting, so that agent can only report into that CCM Service.
+
 
 Please see config settings and features below for a full list.
 
@@ -56,6 +57,9 @@ Please see config settings and features below for a full list.
 * `centralManagementDeploymentCheckTimerIntervalInSeconds` = **'180'** - Amount of time, in seconds, between each execution of the background service to check for a new deployment step from Chocolatey Central Management. Defaults to '180'. Available in business editions v2.1.0+ only.
 * `centralManagementClientCommunicationSaltAdditivePassword` = **' '** - Chocolatey Central Management Client Communication Salt Additive - The salt additive to use in the salt recipe for encrypting and verifying communication from an agent TO an instance of Central Management Service (will need to be set the same on all clients contacting that service AND the instance of the management service itself). When not set a default encryption phrase set by the system will be used. When set the unencrypted value must match exactly with what is set in the configuration for Central Management Service and every client contacting that instance of Central Management Service. Value is not shared over the wire. Because this is a much more involved process, it is recommended only setting this if you are transmitting messages over the internet. Defaults to ''. Needs to be at least 8 characters long if set or it will throw errors and use the default. Available in business editions v2.1.0+ only. Requires Chocolatey Agent v0.10.0+ and Central Management 0.2.0+. IMPORTANT: If this value is set, agents less than v0.10.0 will be unable to contact Central Management to report in.
 * `centralManagementServiceCommunicationSaltAdditivePassword` = **' '** - Chocolatey Central Management Communication Salt Additive - The salt additive to use in the salt recipe for encrypting and verifying communication FROM an instance of Central Management Service to an agent (will need to be set the same on all clients contacting that service AND the instance of the management service itself). When not set a default encryption phrase set by the system will be used. When set the unencrypted value must match exactly with what is set in the configuration for Central Management Service and every client contacting that instance of Central Management Service. Value is not shared over the wire. Because this is a much more involved process, it is recommended only setting this if you are transmitting messages over the internet. Defaults to ''. Needs to be at least 8 characters long if set or it will throw errors and use the default. Available in business editions v2.1.0+ only. Requires Chocolatey Agent v0.10.0+ and Central Management 0.2.0+.
+
+> :warning: **WARNING**: The Chocolatey Agent installed on the same machine that has the CCM Service installed will share the `centralManagementServiceUrl` setting, so that agent can only report into that CCM Service.
+
 
 Also found at [[Chocolatey Configuration|ChocolateyConfiguration]].
 
@@ -133,5 +137,5 @@ There is a known issue with the beta release of Chocolatey Central Management wh
 
 When reporting a larger number of packages (approximately 200), this error may be reported.  This is due to the size of the information, in bytes, being too large to send between the Chocolatey Agent Service and the Chocolatey Central Management Service.  This has been identified as a [bug](https://github.com/chocolatey/chocolatey-licensed-issues/issues/95), which is due to be corrected in version 0.1.1 of Chocolatey Central Management
 
-
-[[Chocolatey Central Management|CentralManagement]]
+___
+[[Central Management Setup|CentralManagementSetup]] | [[Chocolatey Central Management|CentralManagement]]

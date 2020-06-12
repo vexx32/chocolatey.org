@@ -1,8 +1,14 @@
 # Central Mangement Windows Service(s) Setup
 
+This is the service that the agents (chocolatey-agent) communicates with. You could install one or more of these depending on the size of your environment (not multiple on one machine though). The FQDN and certificate used determine what the URL will be for the agents to check into Central Management.
+
+> :warning: **WARNING**
+>
+> Unless otherwise noted, please follow these steps in ***exact*** order. These steps build on each other and need to be completed in order.
+
+___
 <!-- TOC depthFrom:2 depthTo:5 -->
 
-- [Summary](#summary)
 - [Step 1: Complete Prerequisites](#step-1-complete-prerequisites)
   - [Script for some prerequisites](#script-for-some-prerequisites)
 - [Step 2: Install Central Management Service Package](#step-2-install-central-management-service-package)
@@ -44,10 +50,6 @@
   - [ERROR: Cannot index into a null array](#error-cannot-index-into-a-null-array)
 
 <!-- /TOC -->
-
-## Summary
-
-This is the service that the agents (chocolatey-agent) communicates with. You could install one or more of these depending on the size of your environment (not multiple on one machine though). The FQDN and certificate used determine what the URL will be for the agents to check into Central Management.
 
 ____
 ## Step 1: Complete Prerequisites
@@ -110,7 +112,7 @@ Note items with "`:`" mean a value should be provided, items without are simply 
 * `/SqlServerInstance:` - Instance name of the SQL Server database to connect to. Alternative to passing full connection string with `/ConnectionString`. Uses `/Database` (below) to build a connection string. Defaults to `<LOCAL COMPUTER FQDN NAME>`.
 * `/Database:` - Name of the SQL Server database to use. Alternative to passing full connection string with `/ConnectionString`. Uses `/SqlServerInstance` (above) to build a connection string. Defaults to `ChocolateyManagement`.
 
-**NOTE:** If the Chocolatey Agent is installed on the same machine that has the CCM Service installed, it can only report into that CCM Service as they will share a
+> :memo: **NOTE**: Items suffixed with "`:`" mean a value should be provided, items without are simply switches.
 
 ### Service Settings
 
@@ -120,11 +122,11 @@ Note items with "`:`" mean a value should be provided, items without are simply 
 * Service Startup:                      **Automatic**
 * Service Username:                     **ChocolateyLocalAdmin** or '`/Username:`'
 
-
 ### Chocolatey Configuration
 
 * `centralManagementServiceUrl` = **' '** (empty) - The URL that should be used to communicate with Chocolatey Central Management. It should look something like https://servicemachineFQDN:24020/ChocolateyManagementService. See https://chocolatey.org/docs/central-management-setup-service#fqdn-usage. Defaults to '' (empty). NOTE: Chocolatey Agent and CCM Service share this value on a machine that contains both. If blank, the CCM Service will construct a URL based on defaults of the machine, but is required to be set for Agents.
 
+> :warning: **WARNING**: The Chocolatey Agent installed on the same machine that has the CCM Service installed will share the `centralManagementServiceUrl` setting, so that agent can only report into that CCM Service.
 
 ### Chocolatey Managed Password
 
@@ -408,4 +410,5 @@ When reporting a larger number of packages (approximately 200), this error may b
 
 This error can be reported when installing the Chocolatey Central Management Service.  This can happen depending on the netsh binding that are currently present on the machine that is being installed on.  If for example, you have enabled SNI on a website on the machine that you are installing onto, then this error may occur.  This has been identified as a [bug](https://github.com/chocolatey/chocolatey-licensed-issues/issues/96), which is due to be corrected in version 0.1.1 of Chocolatey Central Management.
 
+___
 [[Central Management Setup|CentralManagementSetup]] | [[Chocolatey Central Management|CentralManagement]]

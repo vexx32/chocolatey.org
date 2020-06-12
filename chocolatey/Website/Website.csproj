@@ -1192,6 +1192,7 @@
     <Content Include="Content\Images\docs\features\ccm\agent_ccm_communication.png" />
     <Content Include="Content\Images\docs\features\ccm\agent_ccm_setup_good.png" />
     <Content Include="Content\Images\docs\features\ccm\ccm_overview.jpg" />
+    <Content Include="Content\Images\docs\features\ccm\central-management.png" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_500.png" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_inline.png" />
     <Content Include="Content\Images\docs\features\ccm\test_email_sent_correctly.png" />
@@ -1865,12 +1866,12 @@
     <Content Include="Views\Documentation\Files\CentralManagementReports.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetup.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSoftware.md" />
-    <Content Include="Views\Documentation\Files\CentralManagementClientSetup.md" />
     <Content Include="Views\Events\Files\01-02-ChocolateyDeployments.md" />
     <Content Include="Views\Events\ChocolateyDeployments.cshtml" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupDatabase.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupService.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupWeb.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementSetupClient.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

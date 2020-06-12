@@ -1,22 +1,9 @@
 # Chocolatey Central Mangement Setup
 
-<!-- TOC depthFrom:2 depthTo:5 -->
-
-- [Summary](#summary)
-- [High Level Requirements](#high-level-requirements)
-- [Step 1: Internalize Packages](#step-1-internalize-packages)
-- [Step 2: Setup Central Management Database](#step-2-setup-central-management-database)
-- [Step 3: Setup Central Mangement Windows Service(s)](#step-3-setup-central-mangement-windows-services)
-- [Step 4: Setup Central Management Website](#step-4-setup-central-management-website)
-
-<!-- /TOC -->
-
-## Summary
-
 Installing CCM takes a little more pre-thought than simply running the package installs.
 While it is envisioned that CCM will be installed across multiple servers (split installation), it is certainly possible to run CCM on a single server (monolithic).
 
-When setting up Central ManagementCurrently, the CCM packages do not provision the SQL Server Database Permissions that are required for the CCM components to function.  It is assumed that the necessary permissions have already been provided (see the [FAQ](#how-can-i-add-sql-server-permissions-through-powershell) for one method of doing it).
+When setting up Central Management, currently, the CCM packages do not provision the SQL Server Database Permissions that are required for the CCM components to function.  It is assumed that the necessary permissions have already been provided (see the [FAQ](#how-can-i-add-sql-server-permissions-through-powershell) for one method of doing it).
 
 > :memo: **NOTE**
 >
@@ -31,6 +18,19 @@ When setting up Central ManagementCurrently, the CCM packages do not provision t
 >
 > If this seems like a lot to set up, you have the ability to get access to the [[Quick Deployment Environment (QDE)|QuickDeploymentEnvironment]]. It comes preloaded with Central Management and other Chocolatey recommended infrastructure. Please see [[Quick Deployment Environment (QDE)|QuickDeploymentEnvironment]].
 
+___
+<!-- TOC depthFrom:2 depthTo:5 -->
+
+- [High Level Requirements](#high-level-requirements)
+- [Step 1: Internalize Packages](#step-1-internalize-packages)
+- [Step 2: Setup Central Management Database](#step-2-setup-central-management-database)
+- [Step 3: Setup Central Mangement Windows Service(s)](#step-3-setup-central-mangement-windows-services)
+- [Step 4: Setup Central Management Website](#step-4-setup-central-management-website)
+- [Step 5: Setting up Agent Machines](#step-5-setting-up-agent-machines)
+
+<!-- /TOC -->
+
+____
 ## High Level Requirements
 Central Management packages require at a minimum:
 
@@ -46,7 +46,7 @@ ___
 The complete installation of CCM requires several packages that are available from the community repository. Let's get them internalized. We will internalize them to a `C:\packages` directory. It is highly recommended that you push the packages to an internal repository before continuing with other steps in this guide. Change the values in the last line of this script to match what you need in your environment.
 
 ```powershell
-# Remote the < >
+# Remove the < >
 $YourInternalRepositoryPushUrl = '<INSERT REPOSITORY URL HERE>'
 $YourInternalRepositoryApiKey = '<YOUR API KEY HERE>'
 $YourBusinessLicenseGuid = '<INSERT NON-TRIAL C4B LICENSE GUID HERE>'
@@ -102,5 +102,11 @@ Please see [[Central Management Web Setup|CentralManagementSetupWeb]].
 
 > :memo: **NOTE**: If Step 1 or 2 is not succesful, do not move on to this step until you resolve issues with previous steps.
 
+___
+## Step 5: Setting up Agent Machines
 
+Please see [[Central Management Client Setup|CentralManagementSetupClient]].
+
+
+___
 [[Chocolatey Central Management|CentralManagement]]
