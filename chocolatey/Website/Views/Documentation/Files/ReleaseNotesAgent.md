@@ -14,12 +14,18 @@ This covers the release notes for the Chocolatey Agent Service (`chocolatey-agen
 
 
 ## 0.10.0 (unreleased)
+### BREAKING CHANGES
+ * Chocolatey Agent v0.10.0 will only work with Central Management v0.2.0+. Please upgrade Central Management first if you are using CCM with the agent service.
+
+> :memo: **NOTE**: Log locations have changed. Please see [[Log File for Chocolatey Agent|FeaturesAgentService#log-file-location-for-chocolatey-agent]] for more information.
+
 ### FEATURES
  * Execution for Central Management Deployments
 
 ### BUG FIXES
  * Fix - Monitoring chocolatey.config for changes could potentially lock the file from being written to by choco
  * Fix - Logging - the service stops responding to calls and stops logging after choco configuration file is edited
+ * Fix - CCM Reporting - Do not report unfound packages as outdated
 
 ### IMPROVEMENTS
  * Logging - Log to the root logs folder of Chocolatey Installation
