@@ -14,6 +14,7 @@ We are gearing up for the 3rd release of Chocolatey Central Management (CCM), an
 
 <!-- TOC depthFrom:2 -->
 
+- [Join Our Webinar!](#join-our-webinar)
 - [Why Did We Create Central Management Deployments?](#why-did-we-create-central-management-deployments)
 - [What is Central Management Deployments?](#what-is-central-management-deployments)
 - [What Does Central Management Deployments Look Like?](#what-does-central-management-deployments-look-like)
@@ -24,6 +25,11 @@ We are gearing up for the 3rd release of Chocolatey Central Management (CCM), an
 - [When Can I Get Deployments?](#when-can-i-get-deployments)
 
 <!-- /TOC -->
+
+### Join Our Webinar!
+We are doing a webinar on [June 23rd, 2020](https://chocolatey.org/events/chocolatey-deployments). Reserve [your spot now](https://chocolatey.zoom.us/webinar/register/WN_MPT5b34zQnud8R0nGgpe5A) and we'll see you there! We may even have a special surprise to share at the end.
+
+Can't make it? Missed it? Don't worry, we have you covered - it's being recorded and will be available soon after the presentation. Follow [the same link to access the recording](https://chocolatey.zoom.us/webinar/register/WN_MPT5b34zQnud8R0nGgpe5A) after the webinar has ended.
 
 ### Why Did We Create Central Management Deployments?
 We often hear from Windows System Engineers that they are looking for a simple and easy way to manage Windows endpoints that offers advanced functionality when they need it. As Chocolatey Software has been a leader in Windows automation for over nine years, it was a natural progression to offer a simple and intuitive solution for managing remote Windows endpoints, especially given Chocolatey’s guiding principle of making hard concepts approachable.
@@ -138,4 +144,4 @@ We're also enhancing the documentation for CCM, including supporting materials a
 After everything releases, we'll rev the version of [Quick Deployment Environment (QDE)](https://chocolatey.org/docs/quick-deployment-environment) to include CCM w/Deployments so folks will have another way of getting up and running quickly.
 
 ### When Can I Get Deployments?
-The timeline for release is early June, with betas going out to select customers soon. Reach out to your Chocolatey Software representative for more details. If you are not a current customer, you can also [reach out to our team](https://chocolatey.org/contact/trial) to get started. We are excited to get it in your hands!
+The timeline for release is early to mid-June, with betas going out to select customers soon. Reach out to your Chocolatey Software representative for more details. If you are not a current customer, you can also [reach out to our team](https://chocolatey.org/contact/trial) to get started. We are excited to get it in your hands!
