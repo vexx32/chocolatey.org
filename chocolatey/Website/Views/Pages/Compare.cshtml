@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Packaging Templates</a></th>
+                <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })">Create Packages</a> (even offline) / <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-create-custom-package-templates" })">Customize Packaging Templates</a></th>
                 <td><span class="fas fa-check"></span></td>
                 <td><span class="fas fa-check"></span></td>
                 <td><span class="fas fa-check"></span></td>
@@ -75,7 +75,14 @@
                 <td><span class="fas fa-check"></span></td>
             </tr>
             <tr>
-                <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> - Convert existing packages for complete offline / reliable use (removes need for internet access from existing packages)!</th>
+              <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-recompile-packages" })">Manually Internalize Packages</a> - Take existing community packages and convert for offline use.</th>
+              <td><span class="fas fa-check"></span></td>
+              <td><span class="fas fa-check"></span></td>
+              <td><span class="fas fa-check"></span></td>
+              <td><span class="fas fa-check"></span></td>
+            </tr>
+            <tr>
+                <th scope="row"><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-automatically-recompile-packages" })">Package Internalizer</a> - Convert existing community packages for complete offline / reliable use (removes need for internet access from community packages) with one command that can be <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-internal-package-repository" })">automated/scheduled</a>!</th>
                 <td><span class="fas fa-ban"></span></td>
                 <td><span class="fas fa-ban"></span></td>
                 <td><span class="fas fa-check"></span></td>
