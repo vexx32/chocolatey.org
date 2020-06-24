@@ -14,6 +14,7 @@ ___
   - [Can I run Self-Service and Central Management Deployments at the same time?](#can-i-run-self-service-and-central-management-deployments-at-the-same-time)
   - [How can I increase the level of logging for Chocolatey Central Management?](#how-can-i-increase-the-level-of-logging-for-chocolatey-central-management)
   - [Can I save an image with the agent already installed that I can deploy new machines from?](#can-i-save-an-image-with-the-agent-already-installed-that-i-can-deploy-new-machines-from)
+  - [What is the CCM compatibility matrix?](#what-is-the-ccm-compatibility-matrix)
 - [Common Errors And Resolutions](#common-errors-and-resolutions)
   - [Unable to report computer information to CCM](#unable-to-report-computer-information-to-ccm)
   - [Unable to check for deployments from CCM](#unable-to-check-for-deployments-from-ccm)
@@ -100,7 +101,7 @@ This can be done by changing the level value, which should be currently `INFO`, 
 
 In the following files:
 
-* `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service\chocolatey-central-management.exe.config`
+* `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service\log4net.config`. If you are on a version less than 0.2.0, then it will be in `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service\chocolatey-central-management.exe.config`.
 * `$env:ChocolateyInstall\lib\chocolatey-agent\tools\service\chocolatey-agent.exe.config`
 
 When the value is changed, the services may also need restarted.
@@ -111,9 +112,15 @@ Yes, however you need to keep in mind that there is a unique machine Id that wil
 Make sure to include the following in your provisioning script to deploy the new images:
 
 ```powershell
-Write-Information "Removing Machine GUID"
-Remove-Item HKLM:\Software\Chocolatey -Recurse -Force
+Write-Host "Removing Chocolatey Unique Machine GUID"
+Remove-ItemProperty -Path "HKLM:\Software\Chocolatey" -Name "UniqueId" -Force
+# Restart the Agent Service if it is running
 ```
+
+Once you've removed this, you'll need to restart the Agent Service to get it regenerated.
+
+### What is the CCM compatibility matrix?
+Central Management has specific compatibility requirements with quite a few moving parts. It is important to understand that there are some Chocolatey Agent versions that may not be able to communicate with some versions of CCM and vice versa.  Please see the [[CCM Component Compatibility Matrix|CentralManagement#ccm-component-compatibility-matrix]] for details.
 
 ___
 ## Common Errors And Resolutions
@@ -157,9 +164,12 @@ When the licensed agent service is installed on a machine, a unique machine id i
 Basically you need to go find the machine id at `HKEY_LOCAL_MACHINE\SOFTWARE\Chocolatey\` (`UniqueId`) and remove it as part of your image deployment mechanism.
 
 ```powershell
-Write-Information "Removing Machine GUID"
-Remove-Item HKLM:\Software\Chocolatey -Recurse -Force
+Write-Host "Removing Chocolatey Unique Machine GUID"
+Remove-ItemProperty -Path "HKLM:\Software\Chocolatey" -Name "UniqueId" -Force
+# Restart the Agent Service if it is running
 ```
+
+Once you've removed this, you'll need to restart the Agent Service to get it regenerated.
 
 ___
 [[Central Management Setup|CentralManagementSetup]] | [[Chocolatey Central Management|CentralManagement]]

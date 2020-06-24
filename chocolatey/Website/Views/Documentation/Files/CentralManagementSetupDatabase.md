@@ -26,6 +26,7 @@ ___
 - [Step 4: Verify Installation](#step-4-verify-installation)
 - [FAQ](#faq)
   - [Can I use MySQL (or PostgreSQL)?](#can-i-use-mysql-or-postgresql)
+  - [What is the CCM compatibility matrix?](#what-is-the-ccm-compatibility-matrix)
 - [Common Errors and Resolutions](#common-errors-and-resolutions)
   - [Chocolatey Central Management database package installs without error, but ChocolateyManagement database is not created](#chocolatey-central-management-database-package-installs-without-error-but-chocolateymanagement-database-is-not-created)
   - [The term 'Install-ChocolateyAppSettingsJsonFile' is not recognized as the name of a cmdlet, function, script file, or operable program.](#the-term-install-chocolateyappsettingsjsonfile-is-not-recognized-as-the-name-of-a-cmdlet-function-script-file-or-operable-program)
@@ -174,7 +175,7 @@ The CCM database package will add or update a database to an existing SQL Server
 Scenario 1: You are installing the database package on the same machine as a SQL Server Express installation:
 
 ```powershell
-choco install chocolatey-management-database -y --package-paramaeters-sensitive="'/ConnectionString=""Server=Localhost\SQLEXRESS;Database=ChocolateyManagement;Trusted_Connection=true;""'"
+choco install chocolatey-management-database -y --package-parameters-sensitive="'/ConnectionString=""Server=Localhost\SQLEXPRESS;Database=ChocolateyManagement;Trusted_Connection=true;""'"
 ```
 
 Scenario 2: You are installing the database package on a single server, but connecting to an existing SQL Server in your environment:
@@ -214,9 +215,9 @@ function Add-DatabaseUserAndRoles {
   )
 
 
-  $LoginOptions = 'FROM WINDOWS'
+  $LoginOptions = "FROM WINDOWS WITH DEFAULT_DATABASE=[$DatabaseName]"
   if ($CreateSqlUser) {
-    $LoginOptions = "WITH PASSWORD '$SqlUserPassword'"
+    $LoginOptions = "WITH PASSWORD='$SqlUserPassword', DEFAULT_DATABASE=[$DatabaseName], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF"
   }
 
   $addUserSQLCommand = @"
@@ -225,7 +226,8 @@ IF EXISTS(SELECT * FROM msdb.sys.syslogins WHERE UPPER([name]) = UPPER('$Usernam
   BEGIN
     DROP LOGIN [$Username]
   END
-CREATE LOGIN [$Username] $LoginOptions WITH DEFAULT_DATABASE=[$DatabaseName]
+
+CREATE LOGIN [$Username] $LoginOptions
 
 USE [$DatabaseName]
 IF EXISTS(SELECT * FROM sys.sysusers WHERE UPPER([name]) = UPPER('$Username'))
@@ -281,6 +283,9 @@ ___
 
 ### Can I use MySQL (or PostgreSQL)?
 Unfortunately only SQL Server SKUs work with Chocolatey Central Management at this time. You can use SQL Server Express in smaller shops.
+
+### What is the CCM compatibility matrix?
+Central Management has specific compatibility requirements with quite a few moving parts. It is important to understand that there are some Chocolatey Agent versions that may not be able to communicate with some versions of CCM and vice versa.  Please see the [[CCM Component Compatibility Matrix|CentralManagement#ccm-component-compatibility-matrix]] for details.
 
 ___
 ## Common Errors and Resolutions

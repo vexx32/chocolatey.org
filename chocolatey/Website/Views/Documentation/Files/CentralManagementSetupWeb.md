@@ -30,6 +30,7 @@ ___
   - [Step 4.3: Application Settings File](#step-43-application-settings-file)
 - [FAQ](#faq)
   - [Can I install the Chocolatey Central Management Web Site under a Virtual Directory in IIS?](#can-i-install-the-chocolatey-central-management-web-site-under-a-virtual-directory-in-iis)
+  - [What is the CCM compatibility matrix?](#what-is-the-ccm-compatibility-matrix)
 - [Common Errors and Resolutions](#common-errors-and-resolutions)
   - [The specified path, file name, or both are too long](#the-specified-path-file-name-or-both-are-too-long)
   - [HTTP Error when trying to access Chocolatey Central Management Website](#http-error-when-trying-to-access-chocolatey-central-management-website)
@@ -194,6 +195,9 @@ ___
 ### Step 4.1: Login And Change Default Credentials
 When you access the CCM Website you will be prompted to provide a username and password to access the site.  By default, the username is `ccmadmin` and the password is `123qwe`.  After you input this, you will be prompted to change the password.
 
+![First time login - change password](images/features/ccm/change_password.png)
+
+
 ### Step 4.2: SMTP Configuration
 
 The CCM Site needs to be able to send email for certain actions.  For example, when a new user is registering with the system, or when sending out forgotten password emails.  Valid SMTP Configuration has to be provided in order for these emails to be sent out.  Follow these steps to configure SMTP for CCM.
@@ -272,6 +276,9 @@ ___
 ### Can I install the Chocolatey Central Management Web Site under a Virtual Directory in IIS?
 
 Currently no.  The Chocolatey Central Management Web Site expects to reside at the site level within IIS.
+
+### What is the CCM compatibility matrix?
+Central Management has specific compatibility requirements with quite a few moving parts. It is important to understand that there are some Chocolatey Agent versions that may not be able to communicate with some versions of CCM and vice versa.  Please see the [[CCM Component Compatibility Matrix|CentralManagement#ccm-component-compatibility-matrix]] for details.
 
 ___
 ## Common Errors and Resolutions
