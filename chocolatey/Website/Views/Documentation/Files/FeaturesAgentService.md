@@ -70,6 +70,7 @@ The Chocolatey Agent can be independently configured to support any or all of th
   - [Installs from custom source locations are not allowed in background mode. Please remove custom source and try again using default (configured) package source locations.](#installs-from-custom-source-locations-are-not-allowed-in-background-mode-please-remove-custom-source-and-try-again-using-default-configured-package-source-locations)
   - [I'm getting the following: "There are no sources enabled for packages and none were passed as arguments."](#im-getting-the-following-there-are-no-sources-enabled-for-packages-and-none-were-passed-as-arguments)
   - [I'm having trouble seeing packages on a file share source](#im-having-trouble-seeing-packages-on-a-file-share-source)
+  - [The agent service is not picking up the new license](#the-agent-service-is-not-picking-up-the-new-license)
 
 <!-- /TOC -->
 
@@ -376,7 +377,6 @@ choco feature enable --name="'useBackgroundServiceWithNonAdministratorsOnly'"
 > * When using options that have a value passed, add an `=` between and surround the value with `"''"` (`--name="'value'"`). This ensures that the argument is not split between different versions/editions of Chocolatey. This also ensures that values like `.` and `\\` are not escaped by PowerShell.
 
 #### Command Customization Consideration
-
 Starting with Chocolatey Licensed Extension v1.12.4, you are allowed to configure what commands can be routed through the background service. Please note that Chocolatey Licensed defaults to `install` and `upgrade` as that is the most secure experience. However you can add uninstall and some other commands as well. Uninstall does have some security considerations as it would allow a non-administrator to remove software that you may have installed, including the background service itself.
 
 **Available Commands**:
@@ -417,13 +417,12 @@ If you must run in the context of working with "unattended", non-silent installa
 
 ___
 ### Chocolatey Central Management Agent Setup
-
 Please see [[Central Management Client Setup|CentralManagementSetupClient]] for details.
 
 
 ### Log File Location For Chocolatey Agent
-
 The Chocolatey Agent log file is located at `$env:ChocolateyInstall\logs\chocolatey-agent.log`. If you are on a version of Chocolatey Agent prior to v0.10.0, the log will be located at `$env:ChocolateyInstall\lib\chocolatey-agent\tools\service\logs\chocolatey-agent.log`.
+
 ___
 ## Chocolatey Agent Roadmap
 
@@ -436,7 +435,6 @@ ___
 
 ___
 ## FAQ
-
 ### How do I take advantage of Chocolatey Agent?
 You must have a [Business edition of Chocolatey](https://chocolatey.org/compare). Business editions are great for organizations that need to manage the total software lifecycle.
 
@@ -568,7 +566,6 @@ Remove-ItemProperty -Path "HKLM:\Software\Chocolatey" -Name "UniqueId" -Force
 Once you've removed this, you'll need to restart the Agent Service to get it regenerated.
 
 ## Common Errors and Resolutions
-
 ### Installs from custom source locations are not allowed in background mode. Please remove custom source and try again using default (configured) package source locations.
 You can not pass custom source arguments to Chocolatey, it will error. You need to set up sources in the Chocolatey configuration and any that are marked as allowed for self-service will be passed by the background service.
 
@@ -599,3 +596,11 @@ A way to do this with LocalSystem:
 1. Add this group to the NTFS permissions with "Read" Access
 
 **Note**:  You'll need to add this group itself and not nest it inside of another one.
+
+### The agent service is not picking up the new license
+Currently, you do need to restart agents. Here's a handy script:
+
+```powershell
+Get-Service chocolatey-* | Stop-Service
+Get-Service chocolatey-* | Start-Service
+```

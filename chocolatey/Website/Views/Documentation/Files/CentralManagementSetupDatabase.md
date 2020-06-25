@@ -95,7 +95,12 @@ We've prepared a handy script (that may turn into a package later) to help you e
 
 #### Script to Prepare SQL Server Express
 
-The following is a script for SQL Server Express. You may be configuring a default instance. This should be run on the computer that has SQL Server Express installed as it will have the right binaries necessary for accessing SQL Server programmatically
+The following is a script for SQL Server Express. You may be configuring a default instance. This should be run on the computer that has SQL Server Express installed as it will have the right binaries necessary for accessing SQL Server programmatically.
+
+> :warning: **WARNING**
+>
+> This script is SQL Server version dependent! Please see the TODO in the script below and adjust accordingly.
+
 
 ```powershell
 # https://docs.microsoft.com/en-us/sql/tools/configuration-manager/tcp-ip-properties-ip-addresses-tab
@@ -127,8 +132,10 @@ $tcpPort = $tcpIpAll.IpAddressProperties | Where-Object { $_.Name -eq 'TcpPort' 
 $tcpPort.Value = "1433"
 $tcp.Alter()
 
+# TODO: THIS LINE IS VERSION DEPENDENT! Replace MSSQL12 with whatever version you have
 Write-Output "SQL Server: Setting Mixed Mode Authentication."
 New-ItemProperty 'HKLM:\Software\Microsoft\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQLServer\' -Name 'LoginMode' -Value 2 -Force
+# VERSION DEPENDENT ABOVE
 
 Write-Output "SQL Server: Forcing Restart of Instance."
 Restart-Service -Force 'MSSQL$SQLEXPRESS'
@@ -183,6 +190,9 @@ Scenario 2: You are installing the database package on a single server, but conn
 ```powershell
 choco install chocolatey-management-database -y --package-parameters-sensitive="'/ConnectionString=""Server=DatabaseServer;Database=ChocolateyManagement;Trusted_Connection=true;""'"
 ```
+
+> :memo: **NOTE**:
+
 
 ___
 ## Step 3: Set up SQL Server Logins And Access

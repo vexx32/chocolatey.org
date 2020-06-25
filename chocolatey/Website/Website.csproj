@@ -1192,7 +1192,9 @@
     <Content Include="Content\Images\docs\features\ccm\agent_ccm_communication.png" />
     <Content Include="Content\Images\docs\features\ccm\agent_ccm_setup_good.png" />
     <Content Include="Content\Images\docs\features\ccm\ccm_overview.jpg" />
+    <Content Include="Content\Images\docs\features\ccm\ccm_swagger_api.png" />
     <Content Include="Content\Images\docs\features\ccm\central-management.png" />
+    <Content Include="Content\Images\docs\features\ccm\change_password.png" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_500.png" />
     <Content Include="Content\Images\docs\features\ccm\error_when_sending_email_inline.png" />
     <Content Include="Content\Images\docs\features\ccm\test_email_sent_correctly.png" />
@@ -1873,6 +1875,7 @@
     <Content Include="Views\Documentation\Files\CentralManagementSetupService.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupWeb.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupClient.md" />
+    <Content Include="Views\Documentation\Files\CentralManagementSetupUpgrade.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

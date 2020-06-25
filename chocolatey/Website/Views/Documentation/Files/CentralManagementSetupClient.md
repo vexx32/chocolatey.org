@@ -88,7 +88,6 @@ ___
 Yes
 
 ### How can I increase the level of logging for Chocolatey Central Management?
-
 This can be done by changing the level value, which should be currently `INFO`, to use `DEBUG`, as per the following:
 
 ~~~xml
@@ -125,7 +124,6 @@ Central Management has specific compatibility requirements with quite a few movi
 ___
 ## Common Errors And Resolutions
 ### Unable to report computer information to CCM
-
 You may see messaging like the following in the chocolatey-agent.log:
 
 ```sh
@@ -138,14 +136,12 @@ You may see messaging like the following in the chocolatey-agent.log:
  requirements, e.g. Message, Transport, None).
 ```
 
-This is due to having a Chocolatey Agent that is v0.10.0+ versus an older Central Management Service (< v0.2.0). Newer agents are incompatible because they use newer and more secure methods of communication. Please upgrade Central Management to v0.2.0+ at your earliest convenience
+This is due to having a Chocolatey Agent that is v0.10.0+ versus an older Central Management Service (< v0.2.0). Newer agents are incompatible because they use newer and more secure methods of communication. Please upgrade Central Management to v0.2.0+ at your earliest convenience. Or if you are on CCM v0.3.0+, your agents need to be on v0.11.0+. Please refer to the [[CCM Compability Matrix|CentralManagement#ccm-component-compatibility-matrix]].
 
 ### Unable to check for deployments from CCM
-
-This will provide similar messaging as the above. The fix is the same, upgrade Chocolatey Central Management to v0.2.0+.
+This will provide similar messaging as the above. The fix is the same, upgrade Chocolatey Central Management to v0.2.0+. Or if you are on CCM v0.3.0+, your agents need to be on v0.11.0+. Please refer to the [[CCM Compability Matrix|CentralManagement#ccm-component-compatibility-matrix]].
 
 ### Chocolatey Agent Service is unable to communicate with Chocolatey Central Management Service
-
 There is a known issue with the beta release of Chocolatey Central Management where an inconsistent Port Number is used between these two services.  One used 24020 and the other used 24040.  The correct default Port Number is 24020, and this is used in the 0.1.0 release of Chocolatey Central Management.  If required, the Port Number can be explicitly set during the installation of the Chocolatey Central Management packages using the following option when installing `chocolatey-management-service`:
 
 ```powershell
@@ -153,7 +149,6 @@ There is a known issue with the beta release of Chocolatey Central Management wh
 ```
 
 ### The remote server returned an unexpected response: (413) Request Entity Too Large
-
 When reporting a larger number of packages (approximately 200), this error may be reported.  This is due to the size of the information, in bytes, being too large to send between the Chocolatey Agent Service and the Chocolatey Central Management Service.  This has been identified as a [bug](https://github.com/chocolatey/chocolatey-licensed-issues/issues/95), which is due to be corrected in version 0.1.1 of Chocolatey Central Management
 
 ### Computers checking in are overwriting each other
