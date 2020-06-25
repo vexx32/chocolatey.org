@@ -18,9 +18,11 @@ When setting up Central Management, currently, the CCM packages do not provision
 >
 > If this seems like a lot to set up, you have the ability to get access to the [[Quick Deployment Environment (QDE)|QuickDeploymentEnvironment]]. It comes preloaded with Central Management and other Chocolatey recommended infrastructure. Please see [[Quick Deployment Environment (QDE)|QuickDeploymentEnvironment]].
 
->:warning: **WARNING**
+> :warning: **WARNING**
 >
 > All deployed components of the CCM packages should **always** be the ***SAME VERSION***. The only time you should not have this is when you are in a state of upgrading and that transition time should be quite short.
+
+> :memo: **NOTE**: Looking for upgrade instructions? See [[Central Management Upgrade|CentralManagementSetupUpgrade]].
 
 ___
 <!-- TOC depthFrom:2 depthTo:5 -->
