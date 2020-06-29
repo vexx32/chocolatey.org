@@ -1135,6 +1135,14 @@ namespace NuGetGallery
             packageRegistrationRepo.CommitChanges();
         }
 
+        public void ExemptPackageFromValidation(Package package)
+        {
+            package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Exempted;
+            package.PackageValidationResultDate = DateTime.UtcNow;
+
+            packageRepo.CommitChanges();
+        }
+
         // TODO: Should probably be run in a transaction
         public void MarkPackageUnlisted(Package package)
         {

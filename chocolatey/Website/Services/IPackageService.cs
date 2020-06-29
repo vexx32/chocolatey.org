@@ -82,6 +82,8 @@ namespace NuGetGallery
 
         void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer);
 
+        void ExemptPackageFromValidation(Package package);
+
         IEnumerable<ScanResult> GetPackageScanResults(string id, string version, bool useCache = true);
         IEnumerable<PackageFile> GetPackageFiles(Package package, bool useCache = true);
     }

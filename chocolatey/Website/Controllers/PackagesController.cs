@@ -252,6 +252,12 @@ namespace NuGetGallery
                 newComments += "Package Cacher (CDN Download Cache) has ben set to rerun";
             }
 
+            bool exemptPackageFromValidation = form["ExemptPackageFromValidation"].clean_html() == "true";
+            if (exemptPackageFromValidation)
+            {
+                packageSvc.ExemptPackageFromValidation(package);
+            }
+
             // could be null if no moderation has happened yet
             var moderator = isModerationRole ? currentUser : package.ReviewedBy;
 
