@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -63,7 +63,7 @@ namespace NuGetGallery
             IEntityRepository<PackageFramework> packageFrameworksRepo,
             IEntityRepository<PackageDependency> packageDependenciesRepo,
             IEntityRepository<PackageFile> packageFilesRepo,
-            IEntityRepository<ScanResult> scanResultRepo, 
+            IEntityRepository<ScanResult> scanResultRepo,
             IMessageService messageSvc,
             IImageFileService imageFileSvc,
             IIndexingService indexingSvc,
@@ -113,7 +113,6 @@ namespace NuGetGallery
             return package;
         }
 
-       
         public void UpdateAndNotifyPackageSubmission(Package package, User currentUser)
         {
             // Do the following:
@@ -183,14 +182,14 @@ namespace NuGetGallery
                         .Include(pr => pr.Packages)
                         .Where(pr => pr.Id == id)
                         .SingleOrDefault());
-            } 
+            }
 
             return packageRegistrationRepo.GetAll()
                     .Include(pr => pr.Owners)
                     .Include(pr => pr.Packages)
                     .Where(pr => pr.Id == id)
                     .SingleOrDefault();
-         
+
         }
 
         public virtual Package FindPackageByIdAndVersion(string id, string version, bool allowPrerelease = true)
@@ -202,9 +201,9 @@ namespace NuGetGallery
         {
             if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("id");
 
-            // Optimization: Everytime we look at a package we almost always want to see 
-            // all the other packages with the same ID via the PackageRegistration property. 
-            // This resulted in a gnarly query. 
+            // Optimization: Everytime we look at a package we almost always want to see
+            // all the other packages with the same ID via the PackageRegistration property.
+            // This resulted in a gnarly query.
             // Instead, we can always query for all packages with the ID.
 
             IEnumerable<Package> packagesQuery = packageRepo.GetAll()
@@ -218,7 +217,7 @@ namespace NuGetGallery
                                                             .Include(p => p.ReviewedBy)
                                                             .Include(p => p.CreatedBy)
                                                             .Where(p => (p.PackageRegistration.Id == id));
-            
+
             var packageVersions = useCache
                             ? Cache.Get(
                                 string.Format("packageVersions-{0}", id.to_lower()),
@@ -261,7 +260,7 @@ namespace NuGetGallery
 
             return packageRepo.GetAll()
                 .Include(p => p.PackageRegistration)
-                .SingleOrDefault(p => 
+                .SingleOrDefault(p =>
                     p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase)
                     && p.Version.Equals(version, StringComparison.OrdinalIgnoreCase));
         }
@@ -277,8 +276,8 @@ namespace NuGetGallery
             Package package = null;
             if (version == null)
             {
-                package = allowPrerelease ? 
-                      packageVersions.FirstOrDefault(p => p.IsLatest) 
+                package = allowPrerelease ?
+                      packageVersions.FirstOrDefault(p => p.IsLatest)
                     : packageVersions.FirstOrDefault(p => p.IsLatestStable);
 
                 // If we couldn't find a package marked as latest, then
@@ -412,7 +411,7 @@ namespace NuGetGallery
 
             return dependents.Select(d => d.Package);
         }
-        
+
         public void PublishPackage(string id, string version)
         {
             var package = FindPackageByIdAndVersion(id, version, allowPrerelease:true, useCache:false);
@@ -473,7 +472,7 @@ namespace NuGetGallery
                                 "This package has been {0} and can no longer be submitted.",
                                 package.Status.GetDescriptionOrValue().ToLower()));
                     case PackageStatusType.Submitted :
-                        //continue on 
+                        //continue on
                         break;
                     default :
                         throw new EntityException(
@@ -519,7 +518,7 @@ namespace NuGetGallery
             {
                 package.PackageTestResultStatus = PackageAutomatedReviewResultStatusType.Exempted;
             }
-            
+
             package.PackageTestResultUrl = string.Empty;
             package.ApprovedDate = null;
 
@@ -663,7 +662,7 @@ namespace NuGetGallery
                             var sha256Hash =
                                BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA256")))
                                            .Replace("-", string.Empty);
-  
+
                             var sha512Hash =
                                BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA512")))
                                            .Replace("-", string.Empty);
@@ -728,7 +727,7 @@ namespace NuGetGallery
         {
             if (!packageRegistration.Packages.Any()) return;
 
-            // TODO: improve setting the latest bit; this is horrible. Trigger maybe? 
+            // TODO: improve setting the latest bit; this is horrible. Trigger maybe?
             foreach (var pv in packageRegistration.Packages.Where(p => p.IsLatest || p.IsLatestStable))
             {
                 pv.IsLatest = false;
@@ -746,7 +745,7 @@ namespace NuGetGallery
 
                 if (latestPackage.IsPrerelease)
                 {
-                    // If the newest uploaded package is a prerelease package, we need to find an older package that is 
+                    // If the newest uploaded package is a prerelease package, we need to find an older package that is
                     // a release version and set it to IsLatest.
                     var latestReleasePackage =
                         FindPackage(packageRegistration.Packages.Where(p => !p.IsPrerelease && p.Listed));
@@ -758,7 +757,7 @@ namespace NuGetGallery
                     }
                 } else
                 {
-                    // Only release versions are marked as IsLatestStable. 
+                    // Only release versions are marked as IsLatestStable.
                     latestPackage.IsLatestStable = true;
                 }
             }
@@ -768,7 +767,7 @@ namespace NuGetGallery
         {
             package.Owners.Add(user);
             packageRepo.CommitChanges();
-            
+
 
             var request = FindExistingPackageOwnerRequest(package, user);
             if (request != null)
@@ -790,7 +789,7 @@ namespace NuGetGallery
                 packageOwnerRequestRepository.CommitChanges();
 
                 Cache.InvalidateCacheItem(string.Format("maintainerpackages-{0}", user.Username));
-                InvalidateCache(package); 
+                InvalidateCache(package);
                 // NotifyIndexingService(package.Packages.FirstOrDefault());
 
                 return;
@@ -827,9 +826,9 @@ namespace NuGetGallery
         public void ChangePackageStatus(Package package, PackageStatusType status, string comments, string newReviewComments, User user, User reviewer, bool sendMaintainerEmail, PackageSubmittedStatusType submittedStatus, bool assignReviewer)
         {
             // no changes
-            if (package.Status == status 
-                && package.ReviewComments == comments 
-                && string.IsNullOrWhiteSpace(newReviewComments) 
+            if (package.Status == status
+                && package.ReviewComments == comments
+                && string.IsNullOrWhiteSpace(newReviewComments)
                 && package.SubmittedStatus == submittedStatus) return;
 
             var now = DateTime.UtcNow;
@@ -883,7 +882,7 @@ namespace NuGetGallery
             }
 
             // reviewer could be null / if user is requesting the package rejected, update
-            // assign the reviewer if the user is a reviewer and the status is staying 
+            // assign the reviewer if the user is a reviewer and the status is staying
             // submitted, or the status is changing
             if (assignReviewer && ((user == reviewer && status == PackageStatusType.Submitted) || (statusChanged && status != PackageStatusType.Submitted)))
             {
@@ -923,11 +922,11 @@ namespace NuGetGallery
             if (!sendMaintainerEmail || string.IsNullOrWhiteSpace(reviewComments)) return;
 
             var subject = string.Empty;
-            
+
             if (reviewComments.Contains(TESTING_PASSED_MESSAGE))
             {
                 subject = Constants.MODERATION_VERIFICATION_PASS;
-            } 
+            }
             else if (reviewComments.Contains(TESTING_FAILED_MESSAGE))
             {
                 subject = "Action Required - Failed Verification Testing";
@@ -1003,7 +1002,7 @@ namespace NuGetGallery
         {
             var now = DateTime.UtcNow;
 
-            var passingVerification = (package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Passing 
+            var passingVerification = (package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Passing
                                        || package.PackageTestResultStatus == PackageAutomatedReviewResultStatusType.Exempted);
             var passingValidation = (package.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Passing
                                      || package.PackageValidationResultStatus == PackageAutomatedReviewResultStatusType.Exempted);
@@ -1121,11 +1120,11 @@ namespace NuGetGallery
             foreach (var packageVersion in packagesToUpdate.OrEmptyListIfNull())
             {
                 // We go unknown because we don't know if the verifier is going to pick this up or not. Better not to leave it in a pending state.
-                packageVersion.PackageTestResultStatus = exemptPackage ? PackageAutomatedReviewResultStatusType.Exempted : PackageAutomatedReviewResultStatusType.Unknown; 
+                packageVersion.PackageTestResultStatus = exemptPackage ? PackageAutomatedReviewResultStatusType.Exempted : PackageAutomatedReviewResultStatusType.Unknown;
             }
 
             // this may not be a package in submitted status.
-            package.PackageTestResultStatus = exemptPackage ? PackageAutomatedReviewResultStatusType.Exempted : PackageAutomatedReviewResultStatusType.Unknown; 
+            package.PackageTestResultStatus = exemptPackage ? PackageAutomatedReviewResultStatusType.Exempted : PackageAutomatedReviewResultStatusType.Unknown;
             var packageRegistration = package.PackageRegistration;
             packageRegistration.ExemptedFromVerification = exemptPackage;
             packageRegistration.ExemptedFromVerificationById = reviewer.Key;
