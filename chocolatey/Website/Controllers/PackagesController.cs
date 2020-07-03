@@ -256,6 +256,8 @@ namespace NuGetGallery
             if (exemptPackageFromValidation)
             {
                 packageSvc.ExemptPackageFromValidation(package);
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Auto Validation Change - Validation tests have been exempted.";
             }
 
             // could be null if no moderation has happened yet
