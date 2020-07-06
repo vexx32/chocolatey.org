@@ -27,12 +27,13 @@ You will receive a download link via email for an archive of the VM image. Once 
   - [Step 3.4: Database Password Changes (Optional)](#step-34-database-password-changes-optional)
 - [Step 4: Firewall Changes](#step-4-firewall-changes)
 - [Step 5: Install and Configure Chocolatey on Clients](#step-5-install-and-configure-chocolatey-on-clients)
+- [FAQ](#faq)
+  - [How do I upgrade QDE?](#how-do-i-upgrade-qde)
 
 <!-- /TOC -->
 
 ___
 ## Step 0: Setup Considerations
-
 The following are points to keep in mind during initial setup:
 
 * You will need access to AWS to download the environment (specifically `s3.amazonaws.com`).
@@ -218,14 +219,18 @@ Choco install chocolatey-management-web -y --package-parameters-sensitive=”’
 
 ___
 ## Step 4: Firewall Changes
-
 See [[QDE Firewall Changes|QuickDeploymentFirewallChanges]].
 
 ___
 ## Step 5: Install and Configure Chocolatey on Clients
-
 See [[QDE Client Setup|QuickDeploymentClientSetup]].
 
+___
+## FAQ
+### How do I upgrade QDE?
+While we will continue to make improvements to the QDE, there is no upgrade path for the Virtual Machine itself. You can choose to start over with a newer version, but that feels like the wrong way to go.
 
+It is simple to upgrade the components and that it how we recommend upgrading aspects of QDE. Should you want to upgrade say Central Management, you can follow the Central Management steps for upgrade at [[Upgrade Central Management|CentralManagementSetupUpgrade]].
 
+___
 [[Quick Deployment Environment|QuickDeploymentEnvironment]]
