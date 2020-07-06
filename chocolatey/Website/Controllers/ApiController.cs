@@ -42,6 +42,7 @@ namespace NuGetGallery
         //private const int MAX_ALLOWED_CONTENT_LENGTH = 157286400; // 150 MB
         private const int MAX_ALLOWED_CONTENT_LENGTH = 367001600; // 350 MB
         private const int ONE_MB = 1048576;
+        private IList<string> _forbiddenPackageNames = new List<string>();
 
         public ApiController(IPackageService packageSvc, IScanService scanSvc, IPackageFileService packageFileSvc, IUserService userSvc, INuGetExeDownloaderService nugetExeDownloaderSvc, IConfiguration settings)
         {
@@ -51,6 +52,15 @@ namespace NuGetGallery
             this.userSvc = userSvc;
             this.nugetExeDownloaderSvc = nugetExeDownloaderSvc;
             this.settings = settings;
+
+            var forbiddenPackageNames = Configuration.ReadAppSettings("ForbiddenPackageNames");
+            if (!string.IsNullOrWhiteSpace(forbiddenPackageNames))
+            {
+                foreach (var forbiddenPackageName in forbiddenPackageNames.Split(new []{',', ';'},StringSplitOptions.RemoveEmptyEntries))
+                {
+                    _forbiddenPackageNames.Add(forbiddenPackageName.to_string().Trim());
+                }
+            }
         }
 
         [ActionName("GetPackageApi"), HttpGet]
@@ -131,6 +141,12 @@ namespace NuGetGallery
             var temporaryFile = Path.GetTempFileName();
 
             var packageToPush = ReadPackageFromRequest(temporaryFile);
+
+            // don't allow forbidden package names to be pushed
+            if (_forbiddenPackageNames.Contains(packageToPush.Id, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
+            }
 
             // Ensure that the user can push packages for this partialId.
             var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id, useCache: false);

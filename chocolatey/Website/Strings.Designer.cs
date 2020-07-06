@@ -61,7 +61,7 @@ namespace NuGetGallery {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified API key does not provide the authority to {0} packages. This package may already exist and be owned by a different user. It could also be hidden. Try going directly to https://chocolatey.org/packages/&apos;packageName&apos; to determine maintainers..
+        ///   Looks up a localized string similar to The specified API key does not provide the authority to {0} packages. This package may already exist and be owned by a different user. It could also be hidden. Try going directly to https://chocolatey.org/packages/&apos;packageName&apos; to determine maintainers. It might also be on the non-allowed package names list..
         /// </summary>
         public static string ApiKeyNotAuthorized {
             get {

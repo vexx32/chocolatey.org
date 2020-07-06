@@ -136,7 +136,7 @@
     <value>A nuget package's {0} property may not be more than {1} characters long.</value>
   </data>
   <data name="ApiKeyNotAuthorized" xml:space="preserve">
-    <value>The specified API key does not provide the authority to {0} packages. This package may already exist and be owned by a different user. It could also be hidden. Try going directly to https://chocolatey.org/packages/'packageName' to determine maintainers.</value>
+    <value>The specified API key does not provide the authority to {0} packages. This package may already exist and be owned by a different user. It could also be hidden. Try going directly to https://chocolatey.org/packages/'packageName' to determine maintainers. It might also be on the non-allowed package names list.</value>
   </data>
   <data name="PackageTooLarge" xml:space="preserve">
     <value>The package file size was too large. The maximum upload size is {0} MB. Please seek to use official distribution location to download software. For more information see https://chocolatey.org/docs/create-packages.</value>
