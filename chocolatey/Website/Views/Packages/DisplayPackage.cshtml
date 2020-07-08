@@ -1379,7 +1379,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                     <span>6-10</span>
                                 </li>
                                 <li class="list-inline-item virus-scan virus-scan-dark">
-                                    <span>10+</span>
+                                    <span>11+</span>
                                 </li>
                             </ul>
                         }
@@ -1393,15 +1393,15 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                 var fileScanHighlight = string.Empty;
                                 if (User != null && HttpContext.Current.User.Identity.IsAuthenticated)
                                 {
-                                    if (fileScan.Positives > 0 && fileScan.Positives < 6)
+                                    if (fileScan.Positives >= 1 && fileScan.Positives <= 5)
                                     {
                                         fileScanHighlight = "virus-scan-light";
                                     }
-                                    else if (fileScan.Positives > 5 && fileScan.Positives < 11)
+                                    else if (fileScan.Positives >= 6 && fileScan.Positives <= 10)
                                     {
                                         fileScanHighlight = "virus-scan-medium";
                                     }
-                                    else if (fileScan.Positives > 10)
+                                    else if (fileScan.Positives >= 11)
                                     {
                                         fileScanHighlight = "virus-scan-dark";
                                     }
