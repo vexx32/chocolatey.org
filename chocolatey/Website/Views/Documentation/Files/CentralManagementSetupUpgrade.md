@@ -23,6 +23,7 @@ ___
 - [FAQs](#faqs)
   - [Can I simply upgrade all three CCM packages in the same command?](#can-i-simply-upgrade-all-three-ccm-packages-in-the-same-command)
   - [If I update the license file, do I need to restart my services and web?](#if-i-update-the-license-file-do-i-need-to-restart-my-services-and-web)
+  - [Can I use Chocolatey Deployments to upgrade CCM based components?](#can-i-use-chocolatey-deployments-to-upgrade-ccm-based-components)
 - [Common Errors and Resolutions](#common-errors-and-resolutions)
   - [ERROR: There was an error deserializing the requested JSON file: C:\ProgramData\chocolatey\lib\chocolatey-management-database\tools\app\appsettings.json Padding is invalid and cannot be removed.](#error-there-was-an-error-deserializing-the-requested-json-file-c\programdata\chocolatey\lib\chocolatey-management-database\tools\app\appsettingsjson-padding-is-invalid-and-cannot-be-removed)
   - [When I upgrade the website, it wipes out any http port bindings I created](#when-i-upgrade-the-website-it-wipes-out-any-http-port-bindings-i-created)
@@ -148,7 +149,8 @@ ___
 We strongly advise against it as there is an explicit order that things must be upgraded in. Since CCM components can be installed on separate machines, there is no explicit dependency that can be taken. Just note that running
 
 ```powershell
-choco upgrade chocolatey-management-database chocolatey-management-service chocolatey-management-web -y
+# !!!DO NOT DO THIS!!!
+# choco upgrade chocolatey-management-database chocolatey-management-service chocolatey-management-web -y
 ```
 
 when you have everything on the same box may work, but it may not. Please follow the steps here for best success.
@@ -161,6 +163,10 @@ Get-Service chocolatey-* | Stop-Service
 Get-Process ChocolateySoftware.ChocolateyManagement.Web.Mvc | Stop-Process
 Get-Service chocolatey-* | Start-Service
 ```
+
+### Can I use Chocolatey Deployments to upgrade CCM based components?
+Likely you absolutely can, just keep in mind that there may be a specific ordering in how you would upgrade everything and adhere to that order. In some instances, you may need to upgrade agents first, then CCM components as once CCM is upgraded it may not be able to talk to the agents. However agents will stop being able to talk to CCM for a small period of time while you are upgrading CCM, but then things will start working again.
+
 
 ___
 ## Common Errors and Resolutions
