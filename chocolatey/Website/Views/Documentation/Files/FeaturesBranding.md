@@ -78,7 +78,7 @@ would then expect to find the above asset files in this location:
 The first time Chocolatey GUI, with the Chocolatey GUI licensed extension installed,
 is executed, and the above asset files are in one of the defined locations, a new
 file will be generated in the same location called `ChocolateyGuiBranding.dll`.
-The new file actually contains all the image files that were created, as they have 
+The new file actually contains all the image files that were created, as they have
 been embedded as resources within this assembly file.  This approach is used in
 order to optimize the loading of the assets.  Once this ChocolateyGuiBranding.dll
 has been created, Chocolatey GUI will use it each time the application runs.  The
@@ -121,7 +121,7 @@ for more information.
 What follows is a suggestion on how a branded version of Chocolatey GUI can be
 deployed out to your environment.
 
-> :memo: **NOTE:** In order for the below to work, you must have the Chocolatey GUI licensed 
+> :memo: **NOTE:** In order for the below to work, you must have the Chocolatey GUI licensed
 extension (chocolateygui.extension) installed.
 
 1. Follow the steps above to place the branding image assets into the correct location.
@@ -239,26 +239,3 @@ extension (chocolateygui.extension) installed.
 `11.` Deploy the generated `chocolateygui-branding.nupkg` to the repository that you are using
 
 `12.` Install the Chocolatey GUI Branding package
-
-# What is Chocolatey GUI?
-
-Chocolatey GUI is a WPF application that allows the installation, uninstallation,
-updating, and searching for Chocolatey Packages.  It is intended as a replacement
-for the Chocolatey CLI for those that prefer interacting with an application,
-rather than with commands.
-
-# What functionality is offered by Chocolatey GUI?
-
-While Chocolatey GUI has a number of pieces of functionality, is doesn't have
-everything that is offered by the Chocolatey CLI.  Over time, additional functionality
-will likely be added, but for the time being, the following is possible in
-Chocolatey GUI:
-
-* List Chocolatey Packages installed on local machine
-* List Chocolatey Packages available for installation from remote sources
-* Install/Uninstall/Update/Pin/Unpin Chocolatey Packages
-* Add/Remove Chocolatey Sources
-* Enable/disable Chocolatey Features
-* Modify Chocolatey configuration values
-* Visual indications provided when installed Chocolatey Packages are out of date
-* List and Tile View of installed/available packages
