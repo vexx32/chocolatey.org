@@ -1876,6 +1876,8 @@
     <Content Include="Views\Documentation\Files\CentralManagementSetupWeb.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupClient.md" />
     <Content Include="Views\Documentation\Files\CentralManagementSetupUpgrade.md" />
+    <Content Include="Views\Documentation\Files\ChocolateyGuiKnownIssues.md" />
+    <Content Include="Views\Documentation\Files\ChocolateyGuiOverview.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
