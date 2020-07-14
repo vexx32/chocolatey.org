@@ -7,6 +7,7 @@ git submodule update --remote --rebase
 # copy the images
 Copy-Item "choco.wiki\images\*" "chocolatey\Website\content\images\docs" -Force -Recurse
 
+$filesToExclude = @('_Footer.md','_Sidebar.md')
 # copy the md
-Copy-Item "choco.wiki\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Force -Recurse
-Copy-Item "choco.wiki\*.md" "chocolatey\Website\Views\Documentation\Files" -Force -Recurse
+Copy-Item "choco.wiki\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Exclude $filesToExclude -Force -Recurse
+Copy-Item "choco.wiki\*.md" "chocolatey\Website\Views\Documentation\Files" -Exclude $filesToExclude -Force -Recurse
