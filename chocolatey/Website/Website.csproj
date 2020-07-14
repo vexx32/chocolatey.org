@@ -1535,31 +1535,10 @@
     <Content Include="Views\Pages\Thanks.cshtml" />
     <Content Include="Views\Pages\MarkdownPostArticle.cshtml" />
     <Content Include="Views\Pages\MarkdownPostIndex.cshtml" />
-    <Content Include="Views\Blog\Celebrating50Million.md" />
-    <Content Include="Views\Blog\_Layout.cshtml" />
-    <Content Include="Views\Blog\Celebrating5Years.md" />
-    <Content Include="Views\Blog\ChocolateyBusinessAndProfessionalComing.md" />
-    <Content Include="Views\Blog\ChocolateyHasANewLogo.md" />
-    <Content Include="Views\Blog\CreateChocolateyPackages.md" />
-    <Content Include="Views\Blog\HostYourOwnServer.md" />
-    <Content Include="Views\Blog\InternalizePackages.md" />
-    <Content Include="Views\Blog\Hacktoberfest2016.md" />
-    <Content Include="Views\Blog\ExtendingChocolateyPackagingAtWalmart.md" />
-    <Content Include="Views\Blog\MukeshSharmaJoinsChocolatey.md" />
-    <Content Include="Views\Blog\PackageBuilderAnnouncements.md" />
-    <Content Include="Views\Blog\PackageSynchronizerSyncCommand.md" />
     <Content Include="Views\Pages\Discount.cshtml" />
-    <Content Include="Views\Blog\ChocolateyGUI0.15.0.md" />
     <Content Include="Views\Pages\Evaluation.cshtml" />
     <Content Include="Views\Shared\_CookiePolicy.cshtml" />
     <Content Include="Views\Packages\_CommunityInfoDisclaimer.cshtml" />
-    <Content Include="Views\Blog\GaryEwanParkJoinsChocolatey.md" />
-    <Content Include="Views\Blog\BoxstarterMovesUnderChocolateyGitHubOrganization.md" />
-    <Content Include="Views\Blog\SaveTheDateChocolateyFest.md" />
-    <Content Include="Views\Blog\PaulBroadwithJoinsChocolatey.md" />
-    <Content Include="Views\Blog\ChocolateyFestComingSoon.md" />
-    <Content Include="Views\Blog\StephanieBurrowsJoinsChocolatey.md" />
-    <Content Include="Views\Blog\ChocolateyFestReturns2020.md" />
     <Content Include="Views\Shared\MainLayout.cshtml" />
     <Content Include="Views\Shared\MinimalLayout.cshtml" />
     <Content Include="Views\Shared\_AlertTop.cshtml" />
@@ -1660,11 +1639,9 @@
     <Content Include="Views\Pages\ContactSales.cshtml" />
     <Content Include="Views\Pages\ContactSalesOther.cshtml" />
     <Content Include="Views\Pages\ContactBlocked.cshtml" />
-    <Content Include="Views\Blog\ChocolateyRedesign.md" />
     <Content Include="Views\Pages\Careers.cshtml" />
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Documentation\Search.cshtml" />
-    <Content Include="Views\Blog\InfrastructureChangesOctober2019.md" />
     <Content Include="Views\Shared\_Loader.cshtml" />
     <Content Include="Views\Documentation\Documentation.cshtml" />
     <Content Include="Views\Documentation\DocumentationLayout.cshtml" />
@@ -1685,8 +1662,6 @@
     <Content Include="Views\Shared\NewsletterLayout.cshtml" />
     <Content Include="Views\Shared\_NewsletterNavigation.cshtml" />
     <Content Include="Views\Shared\_Modals.cshtml" />
-    <Content Include="Views\Blog\ChocolateyCommunityRepositoryServiceInterruptions.md" />
-    <Content Include="Views\Blog\RemoveSupportForOldTLSProtocols.md" />
     <Content Include="Views\Shared\_AuthenticationSubNavigation.cshtml" />
     <Content Include="Views\Shared\_PackageStatusSubNavigation.cshtml" />
     <Content Include="Views\Shared\_ResourceSubNavigation.cshtml" />
@@ -1698,7 +1673,6 @@
     <Content Include="Views\Pages\_SelfServiceResources.cshtml" />
     <Content Include="Views\Resources\Files\04-0502-C4BSelfServiceAndChocolateyGuiDemo.md" />
     <Content Include="Views\Resources\Files\04-0501-C4BSelfServiceAndChocolateyGuiIntro.md" />
-    <Content Include="Views\Blog\EnableRemoteWorkQuickDeploymentEnvironment.md" />
     <Content Include="Views\Resources\Features.cshtml" />
     <Content Include="Views\Resources\Files\04-01-C4BIntroduction.md" />
     <Content Include="Views\Resources\Files\04-02-C4BWhyChocolatey.md" />
@@ -1708,10 +1682,7 @@
     <Content Include="Views\Resources\Files\04-0402-C4BPackageInternalizerPart2.md" />
     <Content Include="Views\Resources\Files\04-06-C4BChocolateyCentralManagement.md" />
     <Content Include="Views\Shared\_C4BSubNavigation.cshtml" />
-    <Content Include="Views\Blog\HowToDeliverWorkFromHomeInUnprecedentedTimesWithChocolateySelfServiceAnywhere.md" />
     <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
-    <Content Include="Views\Blog\OneBillionInstalls.md" />
-    <Content Include="Views\Blog\AnnouncingDeployments.md" />
     <Content Include="Views\Events\Home.cshtml" />
     <Content Include="Views\Events\Files\01-01-EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.md" />
     <Content Include="Views\Events\Files\01-02-ChocolateyDeployments.md" />
@@ -1719,6 +1690,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Documentation\Files\**\*.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\_Layout.cshtml" />
+    <Content Include="Views\Blog\**\*.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
