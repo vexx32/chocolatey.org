@@ -1354,6 +1354,7 @@
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
     <Content Include="Content\Images\speakers\default-speaker.jpg" />
+    <Content Include="Content\Images\speakers\derek-campbell.jpg" />
     <Content Include="Content\Images\speakers\gary-ewan-park.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
     <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
