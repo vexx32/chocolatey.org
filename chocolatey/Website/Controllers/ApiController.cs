@@ -151,7 +151,7 @@ namespace NuGetGallery
             var user = userSvc.FindByApiKey(parsedApiKey);
             if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
 
-            if (user.IsBanned) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved."); 
+            if (user.IsBanned) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
 
             if (Request.ContentLength > MAX_ALLOWED_CONTENT_LENGTH)
             {
@@ -167,13 +167,13 @@ namespace NuGetGallery
             var packageId = packageToPush.Id;
             var packageVersion = packageToPush.Version;
             // don't allow forbidden package names to be pushed
-            if (_forbiddenPackageNames.Contains(packageToPush.Id, StringComparer.InvariantCultureIgnoreCase))
+            if (_forbiddenPackageNames.Contains(packageId, StringComparer.InvariantCultureIgnoreCase))
             {
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
             }
 
             // Ensure that the user can push packages for this partialId.
-            var packageRegistration = packageSvc.FindPackageRegistrationById(packageToPush.Id, useCache: false);
+            var packageRegistration = packageSvc.FindPackageRegistrationById(packageId, useCache: false);
             if (packageRegistration != null)
             {
                 if (!packageRegistration.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
@@ -211,7 +211,7 @@ namespace NuGetGallery
                     return new HttpStatusCodeWithBodyResult(
                         HttpStatusCode.Forbidden,
                         string.Format("The package {0} has a previous version in a submitted state, and no approved stable releases. Please work to have the existing package version approved or rejected first.",
-                            packageToPush.Id),
+                            packageId),
                         string.Format(@"
 Please wait until a minimum of 1 version of the {0} package have been approved,
 before pushing a new version.
@@ -219,7 +219,7 @@ before pushing a new version.
 If the package is currently failing, please see any failure emails sent
 out on why it could be failing, as well as instructions on how to fix
 any moderation related failures.",
-                            packageToPush.Id));
+                            packageId));
                 }
 
                 var allowedNumberOfPackageVersionsInSubmittedStatus = 10;
@@ -236,7 +236,7 @@ Please wait to submit more versions of {0} until the current versions are approv
 If the package is currently failing, please see any failure emails sent
 out on why it could be failing, as well as instructions on how to fix
 any moderation related failures.",
-                            packageToPush.Id));
+                            packageId));
                 }
             }
 
