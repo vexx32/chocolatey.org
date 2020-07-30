@@ -45,6 +45,7 @@ ___
   - [What is the CCM compatibility matrix?](#what-is-the-ccm-compatibility-matrix)
   - [I entered incorrect database details on install, do I need to reinstall to fix that?](#i-entered-incorrect-database-details-on-install-do-i-need-to-reinstall-to-fix-that)
   - [Can we use an account for the service that is not a local administrator?](#can-we-use-an-account-for-the-service-that-is-not-a-local-administrator)
+  - [Where is the management service installed?](#where-is-the-management-service-installed)
 - [Common Errors and Resolutions](#common-errors-and-resolutions)
   - [Chocolatey Agent Service is unable to communicate with Chocolatey Central Management Service](#chocolatey-agent-service-is-unable-to-communicate-with-chocolatey-central-management-service)
   - [Unable to report computer information to CCM](#unable-to-report-computer-information-to-ccm)
@@ -58,7 +59,7 @@ ___
   - [ERROR: Cannot index into a null array](#error-cannot-index-into-a-null-array)
   - [The new license is not being picked up](#the-new-license-is-not-being-picked-up)
   - [Failed to generate a user instance of SQL Server due to failure in retrieving the user's local application data path.](#failed-to-generate-a-user-instance-of-sql-server-due-to-failure-in-retrieving-the-users-local-application-data-path)
-  - [System.ServiceModel.AddressAccessDeniedException: HTTP could not register URL . Your process does not have access rights to this namespace](#systemservicemodeladdressaccessdeniedexception-http-could-not-register-url--your-process-does-not-have-access-rights-to-this-namespace)
+  - [System.ServiceModel.AddressAccessDeniedException HTTP could not register URL](#systemservicemodeladdressaccessdeniedexception-http-could-not-register-url)
 
 <!-- /TOC -->
 
@@ -268,7 +269,8 @@ ___
 
 The `chocolatey-management-service` is responsible for making a number of changes to your system.  A successful installation of this package can be verified by:
 
-* Open the services snap-in (services.msc) and check for the presence of the `Chocolatey Management Service` which should be in the started state
+* Open the services snap-in (services.msc) and check for the presence of the `Chocolatey Management Service` which should be in the "Started" state.
+* The installation folder for `chocolatey-management-service` is at `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service`.
 * Open the Service log file located at `$env:ChocolateyInstall\logs\ccm-service.log` and verify that there are no recently reported errors. If you are on a version of CCM prior to 0.2.0, the log will be located at `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service\logs\chocolatey.service.host.log`.
 
 ___
@@ -395,6 +397,9 @@ If you would like to attempt this scenario, please do the following:
 * Ensure the user has `Logon as Batch` privilege
 * Run `netsh http add urlacl url=https://+:24020/ChocolateyManagementService user=<DOMAIN\USERNAME>` from an elevated shell (replacing `<DOMAIN\USERNAME>` with the account)
 
+### Where is the management service installed?
+The installation folder for `chocolatey-management-service` is at `$env:ChocolateyInstall\lib\chocolatey-management-service\tools\service`.
+
 ___
 ## Common Errors and Resolutions
 ### Chocolatey Agent Service is unable to communicate with Chocolatey Central Management Service
@@ -495,7 +500,7 @@ This means you are attempting to attach a Local DB file as part of your connecti
 
 This could also mean that there is something wrong with your connection strings format in the `appsettings.json`.
 
-### System.ServiceModel.AddressAccessDeniedException: HTTP could not register URL . Your process does not have access rights to this namespace
+### System.ServiceModel.AddressAccessDeniedException HTTP could not register URL
 
 You may see the following: "System.ServiceModel.AddressAccessDeniedException: HTTP could not register URL https://+:24020/ChocolateyManagementService/. Your process does not have access rights to this namespace (see http://go.microsoft.com/fwlink/?LinkId=70353 for details). ---> System.Net.HttpListenerException: Access is denied"
 
