@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using Elmah;
 using NuGet;
 
 namespace NuGetGallery
@@ -150,25 +152,41 @@ namespace NuGetGallery
 
             var user = userSvc.FindByApiKey(parsedApiKey);
             if (user == null) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
+            var requestIp = GetIpAddress();
+            var cfRay = Request.Headers["CF-RAY"].to_string();
+            var cfRequestId = Request.Headers["CF-REQUEST-ID"].to_string();
+            var requestId = "{0}|{1}|{2}|{3}".format_with(cfRay, cfRequestId, requestIp, user.Username);
+            if (string.IsNullOrWhiteSpace(cfRay))
+            {
+                // we are not using cloudflare, so remove some items
+                requestId = "{0}|{1}".format_with(requestIp, user.Username);
+            }
+
+            Trace.TraceInformation("[{0}] - New package being pushed by {1} from ip address {2}".format_with(requestId, user.Username, requestIp));
 
             if (user.IsBanned) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
 
             if (Request.ContentLength > MAX_ALLOWED_CONTENT_LENGTH)
             {
+                Trace.TraceError("[{0}] - Package is too large at '{1}' (max size allowed is '{2}'".format_with(requestId, Request.ContentLength, MAX_ALLOWED_CONTENT_LENGTH));
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.RequestEntityTooLarge,String.Format(CultureInfo.CurrentCulture, Strings.PackageTooLarge, MAX_ALLOWED_CONTENT_LENGTH / ONE_MB));
             }
 
             // Tempfile to store the package from stream. 
             // Based on https://github.com/NuGet/NuGetGallery/issues/3042
             var temporaryFile = Path.GetTempFileName();
-
+            Trace.TraceInformation("[{0}] - Saving temp file for package at '{1}'".format_with(requestId, temporaryFile));
             var packageToPush = ReadPackageFromRequest(temporaryFile);
 
             var packageId = packageToPush.Id;
             var packageVersion = packageToPush.Version;
+            Trace.TraceInformation("[{0}] - Package being pushed is {1} (v{2})".format_with(requestId, packageId, packageVersion.to_string()));
+            requestId += "|{0}|{1}".format_with(packageId, packageVersion);
+
             // don't allow forbidden package names to be pushed
             if (_forbiddenPackageNames.Contains(packageId, StringComparer.InvariantCultureIgnoreCase))
             {
+                Trace.TraceError("[{0}] - Package is using a forbidden name of '{1}'".format_with(requestId, packageId));
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
             }
 
@@ -176,7 +194,11 @@ namespace NuGetGallery
             var packageRegistration = packageSvc.FindPackageRegistrationById(packageId, useCache: false);
             if (packageRegistration != null)
             {
-                if (!packageRegistration.IsOwner(user)) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
+                if (!packageRegistration.IsOwner(user))
+                {
+                    Trace.TraceError("[{0}] - User '{1}' doesn't have rights to push package '{2}'".format_with(requestId, user.Username, packageId));
+                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.Forbidden, String.Format(CultureInfo.CurrentCulture, Strings.ApiKeyNotAuthorized, "push"));
+                }
 
                 var existingPackage = packageRegistration.Packages.FirstOrDefault(p => p.Version.Equals(packageToPush.Version.ToString(), StringComparison.OrdinalIgnoreCase));
 
@@ -192,22 +214,26 @@ namespace NuGetGallery
                                 existingPackage.ReviewedById == testReporterUser.Key
                                 )
                             {
+                                Trace.TraceInformation("[{0}] - Package version has been rejected, but change is allowed by cleanup service.".format_with(requestId));
                                 //allow rejected by cleanup to return a value
                                 break;
                             }
 
+                            Trace.TraceError("[{0}] - Package version has been rejected and can no longer be submitted.".format_with(requestId));
                             return new HttpStatusCodeWithBodyResult(
                                 HttpStatusCode.Conflict, string.Format("This package has been {0} and can no longer be submitted.", existingPackage.Status.GetDescriptionOrValue().ToLower()));
                         case PackageStatusType.Submitted:
                             //continue on 
                             break;
                         default:
+                            Trace.TraceError("[{0}] - Package version is in state {1} and can no longer be submitted.".format_with(requestId, existingPackage.Status.GetDescriptionOrValue().ToLower()));
                             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, String.Format(CultureInfo.CurrentCulture, Strings.PackageExistsAndCannotBeModified, packageToPush.Id, packageToPush.Version));
                     }
                 }
                 else if(!packageRegistration.Packages.Any(p => !p.IsPrerelease && p.Status == PackageStatusType.Approved)
                       && packageRegistration.Packages.Any(p => p.Status == PackageStatusType.Submitted))
                 {
+                    Trace.TraceError("[{0}] - Package has a previous version in a submitted state with no approved stable releases.".format_with(requestId));
                     return new HttpStatusCodeWithBodyResult(
                         HttpStatusCode.Forbidden,
                         string.Format("The package {0} has a previous version in a submitted state, and no approved stable releases. Please work to have the existing package version approved or rejected first.",
@@ -226,6 +252,7 @@ any moderation related failures.",
                 var packageVersionsInModerationCount = packageRegistration.Packages.Count(p => p.Status == PackageStatusType.Submitted);
                 if (packageVersionsInModerationCount >= allowedNumberOfPackageVersionsInSubmittedStatus)
                 {
+                    Trace.TraceError("[{0}] - Package has {1} versions currently in submitted state. We limit to {2} versions in moderation at a time.".format_with(requestId, packageVersionsInModerationCount, allowedNumberOfPackageVersionsInSubmittedStatus));
                     return new HttpStatusCodeWithBodyResult(
                         HttpStatusCode.Forbidden,
                         string.Format("The package {0} has {1} versions currently in a submitted state. For moderation purposes we limit to {2} versions in moderation at a time. Please wait to have the existing package version(s) approved or rejected first.",
@@ -242,28 +269,42 @@ any moderation related failures.",
 
             try
             {
-                packageSvc.CreatePackage(packageToPush, user);
+                Trace.TraceInformation("[{0}] - Creating/updating package information in database.".format_with(requestId));
+                packageSvc.CreatePackage(packageToPush, user, requestId);
 
                 packageToPush = null;
 
                 try
                 {
+                    Trace.TraceInformation("[{0}] - Deleting the temp file at '{1}'.".format_with(requestId, temporaryFile));
                     System.IO.File.Delete(temporaryFile);
                 }
                 catch (Exception ex)
                 {
-                    return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, "Could not remove temporary upload file: {0}", ex.Message);
+                    Trace.TraceError("[{0}] - Unable to delete temporary file at '{1}':{2} {3}.".format_with(requestId, temporaryFile, Environment.NewLine, ex.to_string()));
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                    //todo: is this really an error if we can't remove a file? Everything else was successful for the user
+                    //return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, "Could not remove temporary upload file: {0}", ex.Message);
                 }
             }
             catch (Exception ex)
             {
+                var errorMessage = new StringBuilder();
+                errorMessage.Append(ex.Message);
+                foreach (var innerException in ex.get_inner_exceptions().OrEmptyListIfNull())
+                {
+                    errorMessage.AppendLine(innerException.Message);
+                }
+
+                Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):{3} {4}", requestId, packageId, packageVersion.to_string(), Environment.NewLine, errorMessage.to_string());
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}", ex.Message));
             }
             finally
             {
                 OptimizedZipPackage.PurgeCache();
             }
-
+            
+            Trace.TraceInformation("[{0}] - Package {1} (v{2}) has been pushed successfully.".format_with(requestId, packageId, packageVersion.to_string()));
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
         }
 

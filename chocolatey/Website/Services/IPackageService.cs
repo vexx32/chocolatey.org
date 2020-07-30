@@ -24,7 +24,7 @@ namespace NuGetGallery
 {
     public interface IPackageService
     {
-        Package CreatePackage(IPackage nugetPackage, User currentUser);
+        Package CreatePackage(IPackage nugetPackage, User currentUser, string requestInformation);
 
         void DeletePackage(string id, string version);
 

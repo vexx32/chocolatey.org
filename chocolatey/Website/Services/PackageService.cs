@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
@@ -85,17 +86,21 @@ namespace NuGetGallery
             this.packageStatsSvc = packageStatsSvc;
         }
 
-        public Package CreatePackage(IPackage nugetPackage, User currentUser)
+        public Package CreatePackage(IPackage nugetPackage, User currentUser, string requestInformation)
         {
+            Trace.TraceInformation("[{0}] - Validating package.".format_with(requestInformation));
             ValidateNuGetPackage(nugetPackage);
 
+            Trace.TraceInformation("[{0}] - Getting or creating package registration.".format_with(requestInformation));
             var packageRegistration = CreateOrGetPackageRegistration(currentUser, nugetPackage);
 
+            Trace.TraceInformation("[{0}] - Adding/updating package information in the database.".format_with(requestInformation));
             var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage, currentUser);
             packageRegistration.Packages.Add(package);
 
             using (var tx = new TransactionScope())
             {
+                Trace.TraceInformation("[{0}] - Starting transaction.".format_with(requestInformation));
                 using (var stream = nugetPackage.GetStream())
                 {
                     UpdateIsLatest(packageRegistration);
@@ -104,16 +109,23 @@ namespace NuGetGallery
                     tx.Complete();
                 }
             }
+            Trace.TraceInformation("[{0}] - Exited transaction.".format_with(requestInformation));
 
+            Trace.TraceInformation("[{0}] - Backgrounding the update and notify on package submission.".format_with(requestInformation));
             // Run the following without stopping grabbing the item
-            TaskEx.Run(() => UpdateAndNotifyPackageSubmission(package, currentUser));
+            TaskEx.Run(() =>
+            {
+                Trace.TraceInformation("[{0}] - Starting Update and Notify.".format_with(requestInformation));
+                UpdateAndNotifyPackageSubmission(package, currentUser, requestInformation);
+                Trace.TraceInformation("[{0}] - Finished Update and Notify.".format_with(requestInformation));
+            });
 
             //NotifyIndexingService();
 
             return package;
         }
 
-        public void UpdateAndNotifyPackageSubmission(Package package, User currentUser)
+        public void UpdateAndNotifyPackageSubmission(Package package, User currentUser, string requestInformation)
         {
             // Do the following:
             // - changes package status
@@ -123,17 +135,27 @@ namespace NuGetGallery
 
             try
             {
+                Trace.TraceInformation("[{0}] - Changing package status.".format_with(requestInformation));
                 ChangePackageStatus(package, package.Status, null, string.Format("User '{0}' (maintainer) submitted package.", currentUser.Username), currentUser, package.ReviewedBy, sendMaintainerEmail: false, submittedStatus: package.SubmittedStatus, assignReviewer: false);
+                Trace.TraceInformation("[{0}] - Deleting cached image icon.".format_with(requestInformation));
                 imageFileSvc.DeleteCachedImage(package.PackageRegistration.Id, package.Version);
+                Trace.TraceInformation("[{0}] - Downloading and caching image icon.".format_with(requestInformation));
                 imageFileSvc.CacheAndGetImage(package.IconUrl, package.PackageRegistration.Id, package.Version);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Trace.TraceError("[{0}] - Error with changing package status or image file service:{1} {2}".format_with(requestInformation, Environment.NewLine, ex.to_string()));
+
                 //ignore
             }
 
-            if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted) NotifyForModeration(package, comments: string.Empty);
+            if (package.Status != PackageStatusType.Approved && package.Status != PackageStatusType.Exempted)
+            {
+                Trace.TraceInformation("[{0}] - Sending moderation message.".format_with(requestInformation));
+                NotifyForModeration(package, comments: string.Empty);
+            }
 
+            Trace.TraceInformation("[{0}] - Invalidating cache(s).".format_with(requestInformation));
             InvalidateCache(package.PackageRegistration);
             Cache.InvalidateCacheItem(string.Format("dependentpackages-{0}", package.Key));
             Cache.InvalidateCacheItem(string.Format("packageFiles-{0}", package.Key));
@@ -697,6 +719,7 @@ namespace NuGetGallery
 
         private static void ValidateNuGetPackage(IPackage nugetPackage)
         {
+            Trace.TraceInformation("Validating package with id '{0}'".format_with(nugetPackage.Id));
             // TODO: Change this to use DataAnnotations
             if (nugetPackage.Id.Length > 128) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Id", "128");
             if (nugetPackage.Authors != null && String.Join(",", nugetPackage.Authors.ToArray()).Length > 4000) throw new EntityException(Strings.NuGetPackagePropertyTooLong, "Authors", "4000");
