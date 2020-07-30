@@ -663,6 +663,7 @@
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="Controllers\SolutionsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\StyleguideController.cs" />
