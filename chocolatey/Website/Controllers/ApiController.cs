@@ -164,6 +164,8 @@ namespace NuGetGallery
 
             var packageToPush = ReadPackageFromRequest(temporaryFile);
 
+            var packageId = packageToPush.Id;
+            var packageVersion = packageToPush.Version;
             // don't allow forbidden package names to be pushed
             if (_forbiddenPackageNames.Contains(packageToPush.Id, StringComparer.InvariantCultureIgnoreCase))
             {
@@ -221,12 +223,13 @@ any moderation related failures.",
                 }
 
                 var allowedNumberOfPackageVersionsInSubmittedStatus = 10;
-                if (packageRegistration.Packages.Count(p => p.Status == PackageStatusType.Submitted) >= allowedNumberOfPackageVersionsInSubmittedStatus)
+                var packageVersionsInModerationCount = packageRegistration.Packages.Count(p => p.Status == PackageStatusType.Submitted);
+                if (packageVersionsInModerationCount >= allowedNumberOfPackageVersionsInSubmittedStatus)
                 {
                     return new HttpStatusCodeWithBodyResult(
                         HttpStatusCode.Forbidden,
-                        string.Format("The package {0} has {1} versions currently in a submitted state. For moderation purposes we limit to {1} versions in moderation at a time. Please wait to have the existing package version(s) approved or rejected first.",
-                            packageToPush.Id, allowedNumberOfPackageVersionsInSubmittedStatus),
+                        string.Format("The package {0} has {1} versions currently in a submitted state. For moderation purposes we limit to {2} versions in moderation at a time. Please wait to have the existing package version(s) approved or rejected first.",
+                            packageId, packageVersionsInModerationCount, allowedNumberOfPackageVersionsInSubmittedStatus),
                         string.Format(@"
 Please wait to submit more versions of {0} until the current versions are approved or rejected.
 
