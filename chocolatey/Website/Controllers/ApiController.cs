@@ -121,6 +121,28 @@ namespace NuGetGallery
             return CreatePackageInternal(apiKey);
         }
 
+        protected string GetIpAddress()
+        {
+            var ipAddress = Request.Headers["CF-CONNECTING-IP"].to_string();
+            if (!string.IsNullOrWhiteSpace(ipAddress))
+            {
+                return ipAddress;
+            }
+
+            ipAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"].to_string();
+
+            if (!string.IsNullOrEmpty(ipAddress))
+            {
+                string[] addresses = ipAddress.Split(',');
+                if (addresses.Length != 0)
+                {
+                    return addresses[0].to_string();
+                }
+            }
+
+            return Request.ServerVariables["REMOTE_ADDR"].to_string();
+        }
+
         private ActionResult CreatePackageInternal(string apiKey)
         {
             Guid parsedApiKey;
