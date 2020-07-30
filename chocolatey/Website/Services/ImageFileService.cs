@@ -29,10 +29,25 @@ namespace NuGetGallery
     public class ImageFileService : IImageFileService
     {
         private readonly IConfiguration _configuration;
+        private string _imagesFolderPath;
 
         public ImageFileService(IConfiguration configuration)
         {
             _configuration = configuration;
+            if (HttpContext.Current != null)
+            {
+                _imagesFolderPath = Path.GetFullPath(Path.Combine(HttpContext.Current.Server.MapPath("~/content/"), Constants.PackageImagesFolderName));
+            }
+        }
+
+        private string GetImageFolderPath()
+        {
+            if (string.IsNullOrWhiteSpace(_imagesFolderPath))
+            {
+                _imagesFolderPath = Path.GetFullPath(Path.Combine(HttpContext.Current.Server.MapPath("~/content/"), Constants.PackageImagesFolderName));
+            }
+
+            return _imagesFolderPath;
         }
 
         /// <summary>
@@ -48,7 +63,7 @@ namespace NuGetGallery
             if (string.IsNullOrWhiteSpace(url)) return null;
             if (string.IsNullOrWhiteSpace(version)) version = "default";
 
-            var imagesFolder = Path.GetFullPath(Path.Combine(HttpContext.Current.Server.MapPath("~/content/"), Constants.PackageImagesFolderName));
+            var imagesFolder = GetImageFolderPath();
 
             var uri = new Uri(url);
             var originalExtension = Path.GetExtension(uri.AbsolutePath);
@@ -71,7 +86,7 @@ namespace NuGetGallery
 
         public void DeleteCachedImage(string packageId, string version)
         {
-            var imagesFolder = Path.GetFullPath(Path.Combine(HttpContext.Current.Server.MapPath("~/content/"), Constants.PackageImagesFolderName));
+            var imagesFolder = GetImageFolderPath();
 
             var image = GetOutputImagePath(imagesFolder, Path.DirectorySeparatorChar, packageId, version, Constants.ImageExtension);
             if (File.Exists(image)) File.Delete(image);  
