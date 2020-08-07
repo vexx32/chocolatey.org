@@ -1152,7 +1152,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                         }
                                     </div>
                                     <button class="btn btn-sm btn-secondary mt-2" type="button" data-toggle="collapse" data-target="#test-exemptions" aria-expanded="false" aria-controls="test-exemptions">Show Testing Exemption Section</button>
-                                    <div class="collapse form-field" id="test-exemptions">
+                                    <div class="collapse form-field text-editor-refresh" id="test-exemptions">
                                         <ul class="mb-0 mt-3">
                                             <li>Exempting a package id from testing requires a reason.</li>
                                             @if (moderator)
