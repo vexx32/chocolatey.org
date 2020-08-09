@@ -101,13 +101,14 @@ $(function () {
     
     // Initialize Text Editor
     $('.text-editor').each(function () {
+        var placeholder = "";
+
         if ($(this).is('#NewReviewComments')) {
-            var placeholder = "Add to Review Comments";
+            placeholder = "Add to Review Comments";
         }
         else if ($(this).is('#ExemptedFromVerificationReason')) {
             placeholder = "Exempted Reason";
         }
-
         var easymde = new EasyMDE({
             element: this,
             autoDownloadFontAwesome: false,
@@ -116,7 +117,21 @@ $(function () {
         });
         easymde.render();
         $('<span> Preview</span>').insertAfter($(this).next().find('.fa-eye')).parent().addClass('font-weight-bold text-primary');
+        // Below snippet added to allow content to be shown inside of collapsed or hidden items without having to click on the textarea. See https://github.com/Ionaru/easy-markdown-editor/issues/208#issuecomment-645656131.
+        easymde.element.cmirror = easymde.codemirror;
     });
+    // Below snippet added to allow content to be shown inside of collapsed or hidden items without having to click on the textarea. See https://github.com/Ionaru/easy-markdown-editor/issues/208#issuecomment-645656131.
+    $('.text-editor-refresh').each(function () {
+        $(this).on('shown.bs.collapse', function () {
+            if (!$(this).hasClass('text-editor-refreshed')) {
+                var easymdeRefresh = $(this).attr('id');
+
+                $('#' + easymdeRefresh + ' textarea')[0].cmirror.refresh();
+                $('#' + easymdeRefresh).addClass('text-editor-refreshed');
+            }
+        });
+    });
+
     // Hide comment instructions
     $('#instructions').on('hidden.bs.collapse', function () {
         if (!getCookie('chocolatey_hide_comment_instructions')) {
