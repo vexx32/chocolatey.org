@@ -11,6 +11,7 @@ Image: <img class="lazy img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAA
 RegisterLink: https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg
 Tags: 2020, c4b, chocolatey-for-business, self-service remote, remote-work, quick-deployment, qde
 Summary: Deploying software to remote desktop and endpoint devices is not always easy, especially in highly regulated and locked down environments. This can be even more challenging if your IT team is overworked, and you need to ensure your users are productive with no vulnerabilities.
+IncludeRegisterPage: true
 ---
 *Deploying software to remote desktop and endpoint devices is not always easy, especially in highly regulated and locked down environments. This can be even more challenging if your IT team is overworked, and you need to ensure your users are productive with no vulnerabilities.*
 

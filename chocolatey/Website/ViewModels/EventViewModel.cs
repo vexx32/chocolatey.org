@@ -37,5 +37,6 @@ namespace NuGetGallery
         public IEnumerable<string> Tags { get; set; }
         public string Summary { get; set; }
         public string Post { get; set; }
+        public string IncludeRegisterPage { get; set; }
     }
 }

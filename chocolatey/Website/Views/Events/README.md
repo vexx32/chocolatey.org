@@ -77,22 +77,23 @@ Example `.cshmtl` file: `AwesomeConference.cshtml`
 * **`IsArchived`** - Change this to `false`
 *  For all other fields, see the table below.
 
-| Name              | Required | Options/Type									| Default/Example					| Description					|
-|-------------------|----------|------------------------------------------------|-----------------------------------|-------------------------------|
-| IsArchived        | true     | true or false								| false                             | If this field is set to `true`, then it will not appear in the list of events, and the event page will be redirected back to the main events area. |
-| URL               | true     | string											| example-event	                    | This will be the title of the event, all lowercase, with dashes in between each word. |
-| Type              | true     | webinar, workshop, conference					| webinar                           | |
-| EventDate         | true     | yyyyMMddTHH:mm:ss								| 20250101T15:00:00                 | This date is primarily used to configure the countdown clock via JS, and to move items on the main event page from "upcoming" to "on-demand". The format uses a 24-hour clock from 0 to 23 and should be set to UTC. |
-| Time              | true     | string											| 10-11 AM CDT (8-9 AM PDT / 3-4 PM GMT) | This is the user friendly time of the event. This format can be whatever makes sense for the event. |
-| Duration          | true     | string											| 1 hour | The estimated length of event. |
-| Title             | true     | string with every word capitalized				| Example Event                     | |
-| Tagline           | true     | string with every word capitalized				| Awesome Example Tagline Here      | This tagline will appear near the bottom of the page as a closing call-to-action. |
-| Speakers          | false    | string seperated by commas						| John Doe, Jane Doe                | If no speakers are defined yet, use `TBD`. |
-| Image             | true     | html											| `<img class="lazy img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/events/00.jpg" alt="Example Event" title="Example Event" />` | This image will appear on the event listing, and aspect ratio of 16:9. Name the file similar to the `.md` file, but exclude title. Remember to update attributes! |
-| RegisterLink		| true     | string											| https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg	| This is the link the user will sign up for the event at. |	
-| Tags			    | true     | string seperated by commas - **Year required** | 2020, tag1, tag2                  | The year is required at a minimum. Tags are not utilized curretnly, but may be in the futre. Choose tags wisely. |
-| Summary           | true     | 2-3 sentences									| Here is a short sentence describing what this event is. This should be strait to the point. | This summary is what will show up on the home event page when the event is listed. |
-| Post              | true     | markdown										|                                   | Markdown is encouraged in this section, but html can also be used. This is the bulk of the content that will appear on the webinar page. This is defined by anything below the `---` in the `.md` file. |
+| Name                | Required | Options/Type									    | Default/Example					| Description					|
+|---------------------|----------|--------------------------------------------------|-----------------------------------|-------------------------------|
+| IsArchived          | true     | true or false								    | false                             | If this field is set to `true`, then it will not appear in the list of events, and the event page will be redirected back to the main events area. |
+| URL                 | true     | string											| example-event	                    | This will be the title of the event, all lowercase, with dashes in between each word. |
+| Type                | true     | webinar, workshop, conference					| webinar                           | |
+| EventDate           | true     | yyyyMMddTHH:mm:ss								| 20250101T15:00:00                 | This date is primarily used to configure the countdown clock via JS, and to move items on the main event page from "upcoming" to "on-demand". The format uses a 24-hour clock from 0 to 23 and should be set to UTC. |
+| Time                | true     | string											| 10-11 AM CDT (8-9 AM PDT / 3-4 PM GMT) | This is the user friendly time of the event. This format can be whatever makes sense for the event. |
+| Duration            | true     | string											| 1 hour | The estimated length of event. |
+| Title               | true     | string with every word capitalized				| Example Event                     | |
+| Tagline             | true     | string with every word capitalized				| Awesome Example Tagline Here      | This tagline will appear near the bottom of the page as a closing call-to-action. |
+| Speakers            | false    | string seperated by commas						| John Doe, Jane Doe                | If no speakers are defined yet, use `TBD`. |
+| Image               | true     | html											    | `<img class="lazy img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/content/images/events/00.jpg" alt="Example Event" title="Example Event" />` | This image will appear on the event listing, and aspect ratio of 16:9. Name the file similar to the `.md` file, but exclude title. Remember to update attributes! |
+| RegisterLink		  | true     | string											| https://chocolatey.zoom.us/webinar/register/WN_1U91f_LiR8uLiQXJtVwlKg	| This is the link the user will sign up for the event at. |	
+| Tags			      | true     | string seperated by commas - **Year required**   | 2020, tag1, tag2                  | The year is required at a minimum. Tags are not utilized curretnly, but may be in the futre. Choose tags wisely. |
+| Summary             | true     | 2-3 sentences									| Here is a short sentence describing what this event is. This should be strait to the point. | This summary is what will show up on the home event page when the event is listed. |
+| Post                | true     | markdown										    |                                   | Markdown is encouraged in this section, but html can also be used. This is the bulk of the content that will appear on the webinar page. This is defined by anything below the `---` in the `.md` file. |
+| IncludeRegisterPage | true     | true or false                                    | true                              | On some events, we will redirect registration to another website instead of our own. If this is the case, this value should be set to false. This will create an event on the event listing page and include a link to register at the appropriate website. |
 
 ## Step 4: Update The CSHTML File
 
