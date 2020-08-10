@@ -1297,6 +1297,7 @@
     <Content Include="Content\Images\events\01-01.jpg" />
     <Content Include="Content\Images\events\01-02.jpg" />
     <Content Include="Content\Images\events\01-03.jpg" />
+    <Content Include="Content\Images\events\01-04.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
@@ -1690,6 +1691,7 @@
     <Content Include="Views\Events\Files\01-01-EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.md" />
     <Content Include="Views\Events\Files\01-02-ChocolateyDeployments.md" />
     <Content Include="Views\Events\ChocolateyDeployments.cshtml" />
+    <Content Include="Views\Events\Files\01-04-TheBusinessValueOfModernizingYourWindowsInfrastructure.md" />
     <Content Include="Views\Events\Files\01-03-OperationsAutomationWithOctopusRunbooksAndChocolatey.md" />
   </ItemGroup>
   <ItemGroup>
