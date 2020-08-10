@@ -1359,6 +1359,7 @@
     <Content Include="Content\Images\speakers\default-speaker.jpg" />
     <Content Include="Content\Images\speakers\derek-campbell.jpg" />
     <Content Include="Content\Images\speakers\gary-ewan-park.jpg" />
+    <Content Include="Content\Images\speakers\nigel-kersten.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
     <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
     <Content Include="Content\Images\stackexchange.png" />
