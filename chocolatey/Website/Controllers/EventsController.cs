@@ -112,7 +112,9 @@ namespace NuGetGallery.Controllers
                 model.RegisterLink = GetPostMetadataValue("RegisterLink", contents);
                 model.Tags = GetPostMetadataValue("Tags", contents).Split(',').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                 model.Summary = GetPostMetadataValue("Summary", contents);
-                model.Post = Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline); 
+                model.Post = Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
+                model.IncludeRegisterPage = GetPostMetadataValue("IncludeRegisterPage", contents.ToLower());
+                model.IsOnDemand = GetPostMetadataValue("IsOnDemand", contents.ToLower());
             }
 
             return model;
