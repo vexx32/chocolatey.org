@@ -12,6 +12,7 @@ RegisterLink: https://chocolatey.zoom.us/webinar/register/WN_MPT5b34zQnud8R0nGgp
 Tags: 2020, c4b, chocolatey-for-business, self-service remote, remote-work, quick-deployment, qde, deployments
 Summary: Chocolatey Central Management now includes the premiere feature of managing endpoints through a Chocolatey-centered solution aka Deployments. We are excited to share what Deployments is all about!
 IncludeRegisterPage: true
+IsOnDemand: true
 ---
 Chocolatey Central Management now includes the premiere feature of managing endpoints through a Chocolatey-centered solution aka Deployments. We are excited to share what Deployments is all about!
 

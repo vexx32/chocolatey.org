@@ -94,6 +94,7 @@ Example `.cshmtl` file: `AwesomeConference.cshtml`
 | Summary             | true     | 2-3 sentences									| Here is a short sentence describing what this event is. This should be strait to the point. | This summary is what will show up on the home event page when the event is listed. |
 | Post                | true     | markdown										    |                                   | Markdown is encouraged in this section, but html can also be used. This is the bulk of the content that will appear on the webinar page. This is defined by anything below the `---` in the `.md` file. |
 | IncludeRegisterPage | true     | true or false                                    | true                              | On some events, we will redirect registration to another website instead of our own. If this is the case, this value should be set to false. This will create an event on the event listing page and include a link to register at the appropriate website. |
+| IsOnDemand          | true     | true or false                                    | true                              | After a webinar has began, it is moved into the "replay" section on /events. If this option is set to false, the words "Replay Coming Soon" will appear instead of a "Watch Now" button. |
 
 ## Step 4: Update The CSHTML File
 

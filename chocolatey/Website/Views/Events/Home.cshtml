@@ -147,11 +147,18 @@
                                     </ul>
                                 }
                                 <div class="mt-3 text-center text-md-right">
-                                    @if (post.IncludeRegisterPage == "true")
+                                    @if (post.IsOnDemand == "true")
                                     {
-                                        <a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })" class="btn btn-outline-primary">Learn More</a>
+                                        if (post.IncludeRegisterPage == "true")
+                                        {
+                                            <a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })" class="btn btn-outline-primary">Learn More</a>
+                                        }
+                                        <a href="@post.RegisterLink" class="btn btn-primary" target="_blank" rel="nofollow">Watch Now</a>
                                     }
-                                    <a href="@post.RegisterLink" class="btn btn-primary" target="_blank" rel="nofollow">Watch Now</a>
+                                    else
+                                    { 
+                                        <p class="font-weight-bold">Replay Coming Soon!</p>
+                                    }
                                 </div>
                             </div>
                         </div>
