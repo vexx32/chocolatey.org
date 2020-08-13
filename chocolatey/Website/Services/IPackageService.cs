@@ -48,13 +48,13 @@ namespace NuGetGallery
 
         IEnumerable<Package> FindDependentPackages(Package package);
 
-        PackageOwnerRequest CreatePackageOwnerRequest(PackageRegistration package, User currentOwner, User newOwner);
+        PackageOwnerRequest CreatePackageOwnerRequest(PackageRegistration packageRegistration, User currentOwner, User newOwner);
 
-        bool ConfirmPackageOwner(PackageRegistration package, User user, string token);
+        bool ConfirmPackageOwner(PackageRegistration packageRegistration, User user, string token);
 
-        void AddPackageOwner(PackageRegistration package, User user);
+        void AddPackageOwner(PackageRegistration packageRegistration, User user);
 
-        void RemovePackageOwner(PackageRegistration package, User user);
+        void RemovePackageOwner(PackageRegistration packageRegistration, User user);
 
         void AddDownloadStatistics(Package package, string userHostAddress, string userAgent);
 
