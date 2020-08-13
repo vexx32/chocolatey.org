@@ -48,7 +48,7 @@
 
 /*Gitter*/
 .gitter-chat-embed {
-    right: 60%;
+    right: 0;
     left: 0;
     border-right: 3px solid #5c9fd8;
 
@@ -65,4 +65,10 @@
 .gitter-open-chat-button {
     right: unset;
     left: 10px;
+}
+
+@media (min-width: 720px) {
+    .gitter-chat-embed {
+        right: 60%;
+    }
 }
