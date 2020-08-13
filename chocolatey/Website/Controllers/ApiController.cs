@@ -166,6 +166,9 @@ namespace NuGetGallery
 
             if (user.IsBanned) return new HttpStatusCodeWithBodyResult(HttpStatusCode.Created, "Package has been pushed and will show up once moderated and approved.");
 
+
+            Trace.TraceInformation("[{0}] - Package has a content length of: {1} MB".format_with(requestId, Request.ContentLength / ONE_MB));
+
             if (Request.ContentLength > MAX_ALLOWED_CONTENT_LENGTH)
             {
                 Trace.TraceError("[{0}] - Package is too large at '{1}' (max size allowed is '{2}'".format_with(requestId, Request.ContentLength, MAX_ALLOWED_CONTENT_LENGTH));
@@ -294,6 +297,19 @@ any moderation related failures.",
                 foreach (var innerException in ex.get_inner_exceptions().OrEmptyListIfNull())
                 {
                     errorMessage.AppendLine(innerException.Message);
+                }
+
+                // Capture the amount of hard drive space left on the web server
+                // There is a suspicion that the web server might be having an issue with clearing up resources
+                Trace.TraceInformation("[{0}] - Available Hard Drive Space:".format_with(requestId));
+                DriveInfo[] allDrives = DriveInfo.GetDrives();
+                foreach (DriveInfo drive in allDrives)
+                {
+                    Trace.TraceInformation("[{0}]   - Drive {1}".format_with(requestId, drive.Name));
+                    if (drive.IsReady == true)
+                    {
+                        Trace.TraceInformation("[{0}]     - Available space to current user: {1} MBs. Total available space: {2} MBs. Total size of drive: {3} MBs", requestId, drive.AvailableFreeSpace / ONE_MB, drive.TotalFreeSpace / ONE_MB, drive.TotalSize / ONE_MB);
+                    }
                 }
 
                 Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):{3} {4}", requestId, packageId, packageVersion.to_string(), Environment.NewLine, errorMessage.to_string());

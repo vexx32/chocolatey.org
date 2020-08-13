@@ -95,7 +95,7 @@ namespace NuGetGallery
             var packageRegistration = CreateOrGetPackageRegistration(currentUser, nugetPackage);
 
             Trace.TraceInformation("[{0}] - Adding/updating package information in the database.".format_with(requestInformation));
-            var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage, currentUser);
+            var package = CreatePackageFromNuGetPackage(packageRegistration, nugetPackage, currentUser, requestInformation);
             packageRegistration.Packages.Add(package);
 
             using (var tx = new TransactionScope())
@@ -479,8 +479,9 @@ namespace NuGetGallery
             return packageRegistration;
         }
 
-        private Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage, User currentUser)
+        private Package CreatePackageFromNuGetPackage(PackageRegistration packageRegistration, IPackage nugetPackage, User currentUser, string requestInformation)
         {
+            Trace.TraceInformation("[{0}] - Finding package by Id and Version.".format_with(requestInformation));
             var package = FindPackageByIdAndVersion(packageRegistration.Id, nugetPackage.Version.ToString(), allowPrerelease:true, useCache:false);
 
             if (package != null)
@@ -504,8 +505,11 @@ namespace NuGetGallery
             }
 
             var now = DateTime.UtcNow;
+
+            Trace.TraceInformation("[{0}] - Getting package stream.".format_with(requestInformation));
             var packageFileStream = nugetPackage.GetStream();
 
+            Trace.TraceInformation("[{0}] - Creating and populating new package with information.".format_with(requestInformation));
             //if new package versus updating an existing package.
             if (package == null) package = new Package();
 
@@ -569,6 +573,8 @@ namespace NuGetGallery
             {
                 packageAuthorRepo.DeleteOnCommit(item);
             }
+
+            Trace.TraceInformation("[{0}] - Committing package changes to package authors repository.".format_with(requestInformation));
             packageAuthorRepo.CommitChanges();
             foreach (var author in nugetPackage.Authors)
             {
@@ -583,7 +589,11 @@ namespace NuGetGallery
             {
                 packageFrameworksRepo.DeleteOnCommit(item);
             }
+
+            Trace.TraceInformation("[{0}] - Committing package changes to package frameworks repository.".format_with(requestInformation));
             packageFrameworksRepo.CommitChanges();
+
+            Trace.TraceInformation("[{0}] - Getting supported frameworks for package.".format_with(requestInformation));
             var supportedFrameworks = GetSupportedFrameworks(nugetPackage).Select(fn => fn.ToShortNameOrNull()).ToArray();
             if (!supportedFrameworks.AnySafe(sf => sf == null))
             {
@@ -601,6 +611,8 @@ namespace NuGetGallery
             {
                 packageDependenciesRepo.DeleteOnCommit(item);
             }
+
+            Trace.TraceInformation("[{0}] - Committing package changes to package dependencies repository.".format_with(requestInformation));
             packageDependenciesRepo.CommitChanges();
             foreach (var dependencySet in nugetPackage.DependencySets)
             {
@@ -634,35 +646,40 @@ namespace NuGetGallery
                 }
             }
 
+            Trace.TraceInformation("[{0}] - Getting package files.".format_with(requestInformation));
             package.Files = GetPackageFiles(package, useCache: false).ToList();
             foreach (var item in package.Files.OrEmptyListIfNull().ToList())
             {
                 packageFilesRepo.DeleteOnCommit(item);
             }
+
+            Trace.TraceInformation("[{0}] - Committing package changes to package files repository.".format_with(requestInformation));
             packageFilesRepo.CommitChanges();
+
+            IList<string> extensions = new List<string>();
+            var approvedExtensions = Configuration.ReadAppSettings("PackageFileTextExtensions");
+            if (!string.IsNullOrWhiteSpace(approvedExtensions))
+            {
+                foreach (var extension in approvedExtensions.Split(',', ';'))
+                {
+                    extensions.Add("." + extension);
+                }
+            }
+            IList<string> checksumExtensions = new List<string>();
+            var checksumApprovedExtensions = Configuration.ReadAppSettings("PackageFileChecksumExtensions");
+            if (!string.IsNullOrWhiteSpace(checksumApprovedExtensions))
+            {
+                foreach (var extension in checksumApprovedExtensions.Split(',', ';'))
+                {
+                    checksumExtensions.Add("." + extension);
+                }
+            }
+
+            Trace.TraceInformation("[{0}] - Calculating checksums for package files.".format_with(requestInformation));
             foreach (var packageFile in nugetPackage.GetFiles().OrEmptyListIfNull())
             {
                 var filePath = packageFile.Path;
                 var fileContent = " ";
-
-                IList<string> extensions = new List<string>();
-                var approvedExtensions = Configuration.ReadAppSettings("PackageFileTextExtensions");
-                if (!string.IsNullOrWhiteSpace(approvedExtensions))
-                {
-                    foreach (var extension in approvedExtensions.Split(',', ';'))
-                    {
-                        extensions.Add("." + extension);
-                    }
-                }
-                IList<string> checksumExtensions = new List<string>();
-                var checksumApprovedExtensions = Configuration.ReadAppSettings("PackageFileChecksumExtensions");
-                if (!string.IsNullOrWhiteSpace(checksumApprovedExtensions))
-                {
-                    foreach (var extension in checksumApprovedExtensions.Split(',', ';'))
-                    {
-                        checksumExtensions.Add("." + extension);
-                    }
-                }
 
                 try
                 {
@@ -708,6 +725,7 @@ namespace NuGetGallery
             package.FlattenedAuthors = package.Authors.Flatten();
             package.FlattenedDependencies = package.Dependencies.Flatten();
 
+            Trace.TraceInformation("[{0}] - Returning created package.".format_with(requestInformation));
             return package;
         }
 
