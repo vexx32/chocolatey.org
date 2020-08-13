@@ -45,3 +45,24 @@
     overflow: hidden;
     transition: height .35s ease;
 }
+
+/*Gitter*/
+.gitter-chat-embed {
+    right: 60%;
+    left: 0;
+    border-right: 3px solid #5c9fd8;
+
+    &:after {
+        left: 0;
+        right: 100%;
+    }
+
+    &.is-collapsed:not(.is-loading) {
+        transform: translateX(-110%);
+    }
+}
+
+.gitter-open-chat-button {
+    right: unset;
+    left: 10px;
+}

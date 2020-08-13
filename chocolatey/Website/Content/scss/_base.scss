@@ -64,6 +64,10 @@ code:not([class*="language-"]) {
     text-decoration: underline;
 }
 
+.btn-row > div:not(:last-child) {
+    margin-right: 1rem;
+}
+
 .btn-secondary {
     &.btn-twitter {
         background: #00aced;
@@ -449,5 +453,25 @@ footer {
 
     .divider-row [class*=col-] {
         padding: 0 2rem;
+    }
+}
+
+@media (min-width: 1660px) {
+    .d-xxxl-block {
+        display: block !important;
+    }
+
+    .col-xxxl-2 {
+        flex: 0 0 16.66667%;
+        max-width: 16.66667%;
+    }
+
+    .col-xxxl-8 {
+        flex: 0 0 66.66667% !important;
+        max-width: 66.66667% !important;
+    }
+
+    .pr-xxxl-5 {
+        padding-right: 3rem !important;
     }
 }
