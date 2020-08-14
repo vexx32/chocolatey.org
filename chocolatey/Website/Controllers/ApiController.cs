@@ -382,7 +382,7 @@ any moderation related failures.",
             }
             else stream = Request.InputStream;
 
-            using (var temporaryFileStream = System.IO.File.Open(temporaryFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (var temporaryFileStream = System.IO.File.Open(temporaryFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 stream.CopyTo(temporaryFileStream);
             }
