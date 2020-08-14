@@ -506,9 +506,6 @@ namespace NuGetGallery
 
             var now = DateTime.UtcNow;
 
-            Trace.TraceInformation("[{0}] - Getting package stream.".format_with(requestInformation));
-            var packageFileStream = nugetPackage.GetStream();
-
             Trace.TraceInformation("[{0}] - Creating and populating new package with information.".format_with(requestInformation));
             //if new package versus updating an existing package.
             if (package == null) package = new Package();
@@ -518,8 +515,20 @@ namespace NuGetGallery
             package.ReleaseNotes = nugetPackage.ReleaseNotes;
             package.RequiresLicenseAcceptance = nugetPackage.RequireLicenseAcceptance;
             package.HashAlgorithm = Constants.Sha512HashAlgorithmId;
-            package.Hash = cryptoSvc.GenerateHash(packageFileStream.ReadAllBytes());
-            package.PackageFileSize = packageFileStream.Length;
+
+            Trace.TraceInformation("[{0}] - Getting package stream.".format_with(requestInformation));
+            using(var packageFileStream = nugetPackage.GetStream())
+            {
+                Trace.TraceInformation("[{0}] - Reading all package bytes.".format_with(requestInformation));
+                var packageBytes = packageFileStream.ReadAllBytes();
+
+                Trace.TraceInformation("[{0}] - Generating Hash for package.".format_with(requestInformation));
+                package.Hash = cryptoSvc.GenerateHash(packageBytes);
+
+                Trace.TraceInformation("[{0}] - Setting Package File Size.".format_with(requestInformation));
+                package.PackageFileSize = packageFileStream.Length;
+            }
+
             package.Created = now;
             package.Language = nugetPackage.Language;
             package.LastUpdated = now;
