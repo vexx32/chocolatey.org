@@ -519,11 +519,8 @@ namespace NuGetGallery
             Trace.TraceInformation("[{0}] - Getting package stream.".format_with(requestInformation));
             using(var packageFileStream = nugetPackage.GetStream())
             {
-                Trace.TraceInformation("[{0}] - Reading all package bytes.".format_with(requestInformation));
-                var packageBytes = packageFileStream.ReadAllBytes();
-
                 Trace.TraceInformation("[{0}] - Generating Hash for package.".format_with(requestInformation));
-                package.Hash = cryptoSvc.GenerateHash(packageBytes);
+                package.Hash = cryptoSvc.GenerateHash(packageFileStream);
 
                 Trace.TraceInformation("[{0}] - Setting Package File Size.".format_with(requestInformation));
                 package.PackageFileSize = packageFileStream.Length;
@@ -698,23 +695,25 @@ namespace NuGetGallery
                         if (extensions.Contains(extension, StringComparer.InvariantCultureIgnoreCase)) fileContent = packageFile.GetStream().ReadToEnd();
                         else if (checksumExtensions.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
                         {
-                            var bytes = packageFile.GetStream().ReadAllBytes();
-                            var md5Hash =
-                                BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "MD5")))
-                                            .Replace("-", string.Empty);
-                            var sha1Hash =
-                                BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA1")))
-                                            .Replace("-", string.Empty);
+                            using (var packageFileStream = packageFile.GetStream())
+                            {
+                                var md5Hash =
+                                    BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(packageFileStream, "MD5")))
+                                                .Replace("-", string.Empty);
+                                var sha1Hash =
+                                    BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(packageFileStream, "SHA1")))
+                                                .Replace("-", string.Empty);
 
-                            var sha256Hash =
-                               BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA256")))
-                                           .Replace("-", string.Empty);
+                                var sha256Hash =
+                                   BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(packageFileStream, "SHA256")))
+                                               .Replace("-", string.Empty);
 
-                            var sha512Hash =
-                               BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(bytes, "SHA512")))
-                                           .Replace("-", string.Empty);
+                                var sha512Hash =
+                                   BitConverter.ToString(Convert.FromBase64String(cryptoSvc.GenerateHash(packageFileStream, "SHA512")))
+                                               .Replace("-", string.Empty);
 
-                            fileContent = string.Format("md5: {0} | sha1: {1} | sha256: {2} | sha512: {3}", md5Hash, sha1Hash, sha256Hash, sha512Hash);
+                                fileContent = string.Format("md5: {0} | sha1: {1} | sha256: {2} | sha512: {3}", md5Hash, sha1Hash, sha256Hash, sha512Hash);
+                            }
                         }
                     }
                 } catch (Exception ex)

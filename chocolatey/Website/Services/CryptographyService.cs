@@ -17,6 +17,7 @@
 // limitations under the License.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -28,6 +29,23 @@ namespace NuGetGallery
     public class CryptographyService : ICryptographyService
     {
         private const int SaltLengthInBytes = 16;
+
+        public string GenerateHash(
+            Stream input,
+            string hashAlgorithmId = Constants.Sha512HashAlgorithmId)
+        {
+            byte[] hashBytes;
+
+            input.Position = 0;
+
+            using (var hashAlgorithm = HashAlgorithm.Create(hashAlgorithmId))
+            {
+                hashBytes = hashAlgorithm.ComputeHash(input);
+            }
+
+            var hash = Convert.ToBase64String(hashBytes);
+            return hash;
+        }
 
         public string GenerateHash(
             byte[] input,
@@ -92,6 +110,14 @@ namespace NuGetGallery
 
                 return HttpServerUtility.UrlTokenEncode(data).Replace('_', '-');
             }
+        }
+
+        public bool ValidateHash(
+            string hash,
+            Stream input,
+            string hashAlgorithmId = Constants.Sha512HashAlgorithmId)
+        {
+            return hash.Equals(GenerateHash(input));
         }
 
         public bool ValidateHash(
