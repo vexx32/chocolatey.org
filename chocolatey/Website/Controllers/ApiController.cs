@@ -276,19 +276,6 @@ any moderation related failures.",
                 packageSvc.CreatePackage(packageToPush, user, requestId);
 
                 packageToPush = null;
-
-                try
-                {
-                    Trace.TraceInformation("[{0}] - Deleting the temp file at '{1}'.".format_with(requestId, temporaryFile));
-                    System.IO.File.Delete(temporaryFile);
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError("[{0}] - Unable to delete temporary file at '{1}':{2} {3}.".format_with(requestId, temporaryFile, Environment.NewLine, ex.to_string()));
-                    ErrorSignal.FromCurrentContext().Raise(ex);
-                    //todo: is this really an error if we can't remove a file? Everything else was successful for the user
-                    //return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, "Could not remove temporary upload file: {0}", ex.Message);
-                }
             }
             catch (Exception ex)
             {
@@ -318,6 +305,19 @@ any moderation related failures.",
             finally
             {
                 OptimizedZipPackage.PurgeCache();
+
+                try
+                {
+                    Trace.TraceInformation("[{0}] - Deleting the temp file at '{1}'.".format_with(requestId, temporaryFile));
+                    System.IO.File.Delete(temporaryFile);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("[{0}] - Unable to delete temporary file at '{1}':{2} {3}.".format_with(requestId, temporaryFile, Environment.NewLine, ex.to_string()));
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                    //todo: is this really an error if we can't remove a file? Everything else was successful for the user
+                    //return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, "Could not remove temporary upload file: {0}", ex.Message);
+                }
             }
 
             Trace.TraceInformation("[{0}] - Package {1} (v{2}) has been pushed successfully.".format_with(requestId, packageId, packageVersion.to_string()));
