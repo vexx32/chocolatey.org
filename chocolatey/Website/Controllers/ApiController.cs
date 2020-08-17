@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -276,6 +277,22 @@ any moderation related failures.",
                 packageSvc.CreatePackage(packageToPush, user, requestId);
 
                 packageToPush = null;
+            }
+            catch (DbEntityValidationException dbvex)
+            {
+                Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):", requestId, packageId, packageVersion.to_string());
+                Trace.TraceError("[{0}] - {1}", requestId, dbvex.Message);
+
+                foreach (var entityValidationError in dbvex.EntityValidationErrors)
+                {
+                    Trace.TraceError("[{0}] - Entity of type '{1}' in state '{2}' has the following validation errors:", requestId, entityValidationError.Entry.Entity.GetType().Name, entityValidationError.Entry.State);
+                    foreach (var validationError in entityValidationError.ValidationErrors)
+                    {
+                        Trace.TraceError("[{0}]   - Property: '{1}', Error: '{2}'", requestId, validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+
+                return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}", dbvex.Message));
             }
             catch (Exception ex)
             {
