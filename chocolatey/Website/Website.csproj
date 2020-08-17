@@ -1499,8 +1499,7 @@
     <Content Include="Scripts\install-steps\install-steps.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-countdown\jquery.countdown.js" />
-    <Content Include="Scripts\manageowners\bundle.txt" />
-    <Content Include="Scripts\manageowners\knockout.3.5.0.js" />
+    <Content Include="Scripts\manageowners\knockout-latest.js" />
     <Content Include="Scripts\package-list\package-list.js" />
     <Content Include="Scripts\packages\package-details.js" />
     <Content Include="Scripts\prism\prism.js" />
