@@ -286,18 +286,22 @@ any moderation related failures.",
                     errorMessage.AppendLine(innerException.Message);
                 }
 
-                // Capture the amount of hard drive space left on the web server
-                // There is a suspicion that the web server might be having an issue with clearing up resources
-                Trace.TraceInformation("[{0}] - Available Hard Drive Space:".format_with(requestId));
-                DriveInfo[] allDrives = DriveInfo.GetDrives();
-                foreach (DriveInfo drive in allDrives)
-                {
-                    Trace.TraceInformation("[{0}]   - Drive {1}".format_with(requestId, drive.Name));
-                    if (drive.IsReady == true)
-                    {
-                        Trace.TraceInformation("[{0}]     - Available space to current user: {1} MBs. Total available space: {2} MBs. Total size of drive: {3} MBs", requestId, drive.AvailableFreeSpace / ONE_MB, drive.TotalFreeSpace / ONE_MB, drive.TotalSize / ONE_MB);
-                    }
-                }
+                // NOTE: The following code was added to establish whether a lack of hard drive space on the webhosts was causing
+                // the Out of Memory exceptions that were occuring when pushing embedded packages.  It was found that lack of hard
+                // drive space was not the issue.  As such, this logging has been commented out, and left for reference, should
+                // it be needed again.
+                //// Capture the amount of hard drive space left on the web server
+                //// There is a suspicion that the web server might be having an issue with clearing up resources
+                ////Trace.TraceInformation("[{0}] - Available Hard Drive Space:".format_with(requestId));
+                ////DriveInfo[] allDrives = DriveInfo.GetDrives();
+                ////foreach (DriveInfo drive in allDrives)
+                ////{
+                ////    Trace.TraceInformation("[{0}]   - Drive {1}".format_with(requestId, drive.Name));
+                ////    if (drive.IsReady == true)
+                ////    {
+                ////        Trace.TraceInformation("[{0}]     - Available space to current user: {1} MBs. Total available space: {2} MBs. Total size of drive: {3} MBs", requestId, drive.AvailableFreeSpace / ONE_MB, drive.TotalFreeSpace / ONE_MB, drive.TotalSize / ONE_MB);
+                ////    }
+                ////}
 
                 Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):{3} {4}", requestId, packageId, packageVersion.to_string(), Environment.NewLine, errorMessage.to_string());
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}", ex.Message));
