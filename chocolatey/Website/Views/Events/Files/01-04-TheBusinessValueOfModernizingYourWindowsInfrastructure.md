@@ -1,7 +1,7 @@
 IsArchived: false
 Type: webinar
 EventDate: 20200922T14:00:00
-Time: 9-10 AM CDT (7-8 AM PDT / 2-3 PM GMT)
+Time: 3 PM BST/GMT+1 / 4 PM CEST / 9 AM Central / 10 AM Eastern
 Duration: 1 hour
 Title: The Business Value of Modernizing Your Windows Infrastructure and Bringing Linux & Windows Teams Closer
 Speakers: Rob Reynolds, Nigel Kersten
