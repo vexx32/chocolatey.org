@@ -15,7 +15,7 @@
     }
 }
 
-<form class="form-inline search-box position-relative @if(!pageDocs){<text>search-packages</text>} d-none" autocomplete= "off" role="search" action="@searchAction" method="get">
+<form class="form-inline search-box position-relative @if(!pageDocs){<text>search-packages</text>}" autocomplete= "off" role="search" action="@searchAction" method="get">
     <div class="input-group w-100">
         <input class="form-control" name="q" type="text" title="Search" placeholder="Search @if(pagePackages){<text>Packages</text>}" value="@(String.IsNullOrEmpty(ViewBag.SearchTerm) ? "" : ViewBag.SearchTerm)" autofocus>
         <div class="input-group-append">

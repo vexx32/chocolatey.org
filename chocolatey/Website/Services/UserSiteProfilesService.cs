@@ -51,13 +51,6 @@ namespace NuGetGallery
                 siteProfiles,
                 prefix: string.Empty);
             CompareAndPrepareProfile(
-                SiteProfileConstants.Codeplex,
-                profile.CodeplexUserName,
-                user.Username,
-                SiteProfileConstants.Images.codeplex,
-                siteProfiles,
-                prefix: SiteProfileConstants.CodeplexProfilePrefix);
-            CompareAndPrepareProfile(
                 SiteProfileConstants.Github,
                 profile.GithubUserName,
                 user.Username,
@@ -139,8 +132,6 @@ namespace NuGetGallery
         public const string TwitterProfilePrefix = "http://twitter.com/";
         public const string Github = "Github";
         public const string GithubProfilePrefix = "https://github.com/";
-        public const string Codeplex = "Codeplex";
-        public const string CodeplexProfilePrefix = "http://www.codeplex.com/site/users/view/";
         public const string StackExchange = "StackExchange";
         public const string Homepage = "Personal Homepage";
         public const string Blog = "Personal Blog";
@@ -158,7 +149,6 @@ namespace NuGetGallery
 
             public static readonly string twitter = Url("twitter.png");
             public static readonly string github = Url("github.jpg");
-            public static readonly string codeplex = Url("codeplex.jpg");
             public static readonly string stackexchange = Url("stackexchange.png");
             public static readonly string nothing_50x50_png = Url("nothing-50x50.png");
         }

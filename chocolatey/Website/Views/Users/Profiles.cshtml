@@ -50,14 +50,13 @@
             {
                 <div class="text-center">
                     <i class="d-none btn-twitter btn-stackexchange btn-github"></i>
-                    @foreach (var siteProfile in Model.UserProfiles)
+                    @foreach (var siteProfile in Model.UserProfiles.Where(x => !x.Name.Equals("Codeplex")))
                     {
                         <a class="btn btn-sm btn-@if(siteProfile.Name.Contains("Repository")){<text>primary</text>}else{<text>secondary</text>} btn-@siteProfile.Name.ToLower().Replace(" ", "")" href="@siteProfile.Url" target="_blank" title="View more about @Model.Username at @siteProfile.Name">
                             <i class="@if(siteProfile.Name == SiteProfileConstants.Twitter){<text>fab fa-twitter</text>}
                                 else if(siteProfile.Name == SiteProfileConstants.Github){<text>fab fa-github</text>}
                                 else if(siteProfile.Name == SiteProfileConstants.StackExchange){<text>fab fa-stack-exchange</text>}
                                 else if(siteProfile.Name.Contains("Repository")){<text>fas fa-code</text>}
-                                else if(siteProfile.Name.Contains("Personal") || siteProfile.Name == SiteProfileConstants.Codeplex){<text>fas fa-link</text>}
                             "></i>
                             @siteProfile.Name
                         </a>
@@ -73,7 +72,7 @@
         <div class="row profile-packages card-row">
             @foreach (var package in Model.PackagesModerationQueue)
             {
-                var submittedStatus = "Reviewed, waiting for user action";
+                var submittedStatus = "Waiting for Maintainer";
 
                 switch (package.SubmittedStatus)
                 {
@@ -85,6 +84,9 @@
                         break;
                     case PackageSubmittedStatusType.Responded:
                         submittedStatus = "Responded";
+                        break;
+                    case PackageSubmittedStatusType.Pending:
+                        submittedStatus = "Pending Automated Review";
                         break;
                     default:
                         break;

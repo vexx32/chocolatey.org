@@ -20,7 +20,9 @@
             @if (!ViewContext.RouteData.Values["Action"].Equals("ListPackages"))
             {
                 <div class="nav-search">
-                    @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                    <div class="nav-search-container d-none">
+                        @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                    </div>
                     <button class="btn btn-outline-light btn-search">
                         <span class="fas fa-search" alt="Search"></span>
                     </button>
@@ -299,7 +301,9 @@
                 {
                     <li class="nav-item d-none d-lg-block">
                         <div class="nav-search">
-                            @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                            <div class="nav-search-container d-none">
+                                @Html.Partial("~/Views/Shared/_SearchBox.cshtml")
+                            </div>
                             <button class="btn btn-outline-light btn-search">
                                 <span class="fas fa-search" alt="Search"></span>
                             </button>

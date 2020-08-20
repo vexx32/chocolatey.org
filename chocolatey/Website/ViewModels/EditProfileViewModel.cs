@@ -45,10 +45,6 @@ namespace NuGetGallery
         [StringLength(255)]
         public string GithubUserName { get; set; }
 
-        [Display(Name = "Codeplex Username")]
-        [StringLength(255)]
-        public string CodeplexUserName { get; set; }
-
         [Display(Name = "StackExchange Profile Url")]
         [StringLength(255)]
         public string StackExchangeUrl { get; set; }

@@ -909,7 +909,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @if (Model.PackageVersions.Any(pv => pv.Status == PackageStatusType.Submitted))
             {
                 <div class="callout callout-warning">
-                    <p>There are versions of this package awaiting moderation @(Model.Status == PackageStatusType.Submitted ? "(possibly just this one)" : string.Empty). See the <a href="#versionhistory">Version History section</a> below.</p>
+                    <p>There are versions of this package awaiting moderation @(Model.Status == PackageStatusType.Submitted ? "(possibly just this one)" : string.Empty). See the <a class="collapse-nav" href="#versionhistory">Version History section</a> below.</p>
                 </div>
             }
             @* Maintainers always see the review comments *@

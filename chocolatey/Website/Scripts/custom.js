@@ -206,12 +206,19 @@ $(document).on('click', 'input[type=text]', function () {
 
 // Toggle and scroll to collapse elements on click
 $('.collapse-nav').click(function () {
+    // Expand collapsed element if not already
     $(this).parent().parent().find(".active").removeClass("active");
     $(this).addClass('active');
     if (!$(this.hash).hasClass('show')) {
         $(this.hash).collapse('show');
     }
-    $('html, body').animate({ scrollTop: $(this.hash).offset().top - 120 }, 1100);
+
+    // Find scroll position and scroll to it
+    var collapseScrollHeight = $(this.hash).offset().top - $('[data-toggle="collapse"][href="' + $(this).attr('href') + '"]').outerHeight(true);
+    if ($('.sticky-top:not(.vertical-nav)').length) {
+        collapseScrollHeight = collapseScrollHeight - $('.sticky-top').outerHeight(true);
+    }
+    $('html, body').animate({ scrollTop: collapseScrollHeight }, 1100 );
 });
 
 // Smooth Scroll
@@ -618,16 +625,11 @@ $('.btn').click(function () {
 });
 
 // Search box
-$('.search-box').each(function () {
-    if (!$(this).parent().hasClass('nav-search')) {
-        $(this).removeClass('d-none');
-    }
-});
 $('.nav-search .btn-search').click(function () {
     var btnSearch = $('.nav-search .btn-search');
     var btnSearchOption = btnSearch.prev().find('button');
 
-    btnSearch.addClass('d-none').parent().find('form').removeClass('d-none').find('input').focus();
+    btnSearch.addClass('d-none').parent().find('.nav-search-container').removeClass('d-none').find('form').removeClass('d-none').find('input').focus();
     if (!btnSearchOption.hasClass('btn-docs') && document.location.pathname.indexOf("/docs") != 0) {
         btnSearchOption.html('<span class="small"><i class="fas fa-search" alt="Search Packages"></i> Packages</span>');
         btnSearchOption.after('<button class="btn btn-light btn-docs" type="submit" formaction="/docs/search"><span class="small"><i class="fas fa-file" alt="Search Docs"></i> Docs</span></button>');
@@ -641,7 +643,8 @@ $('.nav-search .btn-search').click(function () {
 });
 $(window).on("resize click", function () {
     if ($('.nav-search .btn-search').hasClass('d-none')) {
-        $('.nav-search form').addClass('d-none').next().removeClass('d-none');
+        $('.nav-search-container').addClass('d-none').find('form').addClass('d-none');
+        $('.btn-search').removeClass('d-none');
 
         if (window.innerWidth < 625) {
             $('#topNav').find('.navbar-brand').removeClass('d-none').next().removeClass('w-100').find('.nav-search').removeClass('w-100');

@@ -1154,7 +1154,6 @@
     <Content Include="Content\Images\Chocolatey_Future.png" />
     <Content Include="Content\Images\circle_green_small.png" />
     <Content Include="Content\Images\circle_red_small.png" />
-    <Content Include="Content\Images\codeplex.jpg" />
     <Content Include="Content\Images\community-mockup-grey.gif" />
     <Content Include="Content\Images\community-mockup.gif" />
     <Content Include="Content\Images\contribGraphic.png" />

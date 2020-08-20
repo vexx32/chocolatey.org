@@ -602,10 +602,6 @@ namespace Links {
 
 
 
-    public static readonly string codeplex_jpg = Url("codeplex.jpg");
-
-
-
     public static readonly string contribGraphic_png = Url("contribGraphic.png");
 
 
