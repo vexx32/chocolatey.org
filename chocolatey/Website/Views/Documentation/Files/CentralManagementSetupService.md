@@ -29,10 +29,11 @@ ___
       - [Use SQL Server Account to Remote SQL Server](#use-sql-server-account-to-remote-sql-server)
 - [Step 3: Verify Installation](#step-3-verify-installation)
 - [FAQ](#faq)
-  - [How can I increase the level of logging for Chocolatey Central Management?](#how-can-i-increase-the-level-of-logging-for-chocolatey-central-management)
-  - [How can I view what SSL registrations have been made by the installation of chocolatey-management-service](#how-can-i-view-what-ssl-registrations-have-been-made-by-the-installation-of-chocolatey-management-service)
-  - [How can I remove a netsh binding that has been created](#how-can-i-remove-a-netsh-binding-that-has-been-created)
-  - [Can I manually create an SSL binding?](#can-i-manually-create-an-ssl-binding)
+  - [How can we increase the level of logging for Chocolatey Central Management?](#how-can-we-increase-the-level-of-logging-for-chocolatey-central-management)
+  - [How can we view what SSL registrations have been made by the installation of chocolatey-management-service](#how-can-we-view-what-ssl-registrations-have-been-made-by-the-installation-of-chocolatey-management-service)
+  - [How can we remove a netsh binding that has been created](#how-can-we-remove-a-netsh-binding-that-has-been-created)
+  - [Can we manually create an SSL binding?](#can-we-manually-create-an-ssl-binding)
+  - [Can we install Central Management Service behind a load balancer?](#can-we-install-central-management-service-behind-a-load-balancer)
   - [We want to set up the Chocolatey Central Management service to use a domain account that will have local admin on each box. Can we do this?](#we-want-to-set-up-the-chocolatey-central-management-service-to-use-a-domain-account-that-will-have-local-admin-on-each-box-can-we-do-this)
   - [Is the password stored anywhere?](#is-the-password-stored-anywhere)
   - [We are going to use our own account with a rotating password. When we rotate the password for the account that we use for the Chocolatey Management Service, what do we need to do?](#we-are-going-to-use-our-own-account-with-a-rotating-password-when-we-rotate-the-password-for-the-account-that-we-use-for-the-chocolatey-management-service-what-do-we-need-to-do)
@@ -170,7 +171,7 @@ When Chocolatey manages the password for a local administrator, it creates a ver
 Scenario 1: Active Directory - you have set up the [[database|CentralManagementSetupDatabase]] to use Windows Authentication (or Mixed Mode Authentication).
 
 ```powershell
-choco install chocolatey-management-service -y --package-parameters="'/ConnectionString:""Server=<RemoteSqlHost>;Database=ChocolateyManagement;Trusted_Connection=True;"" /Username:<DomainAccount>'" --package-parameters-sensitive="'/Password:<domain account password>'"
+choco install chocolatey-management-service -y --package-parameters="'/ConnectionString:Server=<RemoteSqlHost>;Database=ChocolateyManagement;Trusted_Connection=True; /Username:<DomainAccount>'" --package-parameters-sensitive="'/Password:<domain account password>'"
 ```
 > :warning: **WARNING**
 >
@@ -185,7 +186,7 @@ Scenario 2: Monolithic - you have set up the [[database|CentralManagementSetupDa
 * Specify User:
 
 ```powershell
-choco install chocolatey-management-service -y --package-parameters="'/ConnectionString:""Server=<Localhost\SQLEXPRESS>;Database=ChocolateyManagement;Trusted_Connection=True;"" /Username:<LocalWindowsAccount>'" --package-parameters-sensitive="'/Password:<Local account password>'"
+choco install chocolatey-management-service -y --package-parameters="'/ConnectionString:Server=<Localhost\SQLEXPRESS>;Database=ChocolateyManagement;Trusted_Connection=True; /Username:<LocalWindowsAccount>'" --package-parameters-sensitive="'/Password:<Local account password>'"
 ```
 
 > :warning: **WARNING**
@@ -195,7 +196,7 @@ choco install chocolatey-management-service -y --package-parameters="'/Connectio
 * ChocolateyLocalAdmin User:
 
 ```powershell
-choco install chocolatey-management-service -y --package-parameters="'/ConnectionString:""Server=<Localhost\SQLEXPRESS>;Database=ChocolateyManagement;Trusted_Connection=True;""'"
+choco install chocolatey-management-service -y --package-parameters="'/ConnectionString:Server=<Localhost\SQLEXPRESS>;Database=ChocolateyManagement;Trusted_Connection=True;'"
 ```
 
 > :warning: **WARNING**
@@ -235,7 +236,7 @@ It's worth noting here that the local Windows user `ChocolateyLocalAdmin` on two
 Scenario 4: Monolithic - you are installing the management service on the same machine as a SQL Server Express instance. You likely have a smaller environment where you have up to 1,000 machines. You have set up the [[database|CentralManagementSetupDatabase]] to use Mixed Mode Authentication.
 
 ```powershell
-choco install chocolatey-management-service -y --package-parameters-sensitive="'/ConnectionString:""Server=Localhost;Database=ChocolateyManagement;User ID=ChocoUser;Password='Ch0c0R0cks';""'"
+choco install chocolatey-management-service -y --package-parameters-sensitive="'/ConnectionString:Server=Localhost;Database=ChocolateyManagement;User ID=ChocoUser;Password=Ch0c0R0cks;'"
 ```
 
 > :warning: **WARNING**
@@ -245,7 +246,7 @@ choco install chocolatey-management-service -y --package-parameters-sensitive="'
 * SQL Server Express:
 
 ```powershell
-choco install chocolatey-management-service -y --package-parameters-sensitive="'/ConnectionString:""Server=Localhost\SQLEXPRESS;Database=ChocolateyManagement;User ID=ChocoUser;Password='Ch0c0R0cks';""'"
+choco install chocolatey-management-service -y --package-parameters-sensitive="'/ConnectionString:Server=Localhost\SQLEXPRESS;Database=ChocolateyManagement;User ID=ChocoUser;Password=Ch0c0R0cks;'"
 ```
 
 > :warning: **WARNING**
@@ -257,7 +258,7 @@ choco install chocolatey-management-service -y --package-parameters-sensitive="'
 Scenario 5: Split - you are installing the management service(s) on a server, and targeting an existing SQL Server instance in your organization. You have set up the [[database|CentralManagementSetupDatabase]] to use Mixed Mode Authentication.
 
 ```powershell
-choco install chocolatey-management-service -y --package-parameters-sensitive="'/ConnectionString:""Server=<RemoteSqlHost>;Database=ChocolateyManagement;User ID=ChocoUser;Password='Ch0c0R0cks';""'"
+choco install chocolatey-management-service -y --package-parameters-sensitive="'/ConnectionString:Server=<RemoteSqlHost>;Database=ChocolateyManagement;User ID=ChocoUser;Password=Ch0c0R0cks;'"
 ```
 
 > :warning: **WARNING**
@@ -275,7 +276,7 @@ The `chocolatey-management-service` is responsible for making a number of change
 
 ___
 ## FAQ
-### How can I increase the level of logging for Chocolatey Central Management?
+### How can we increase the level of logging for Chocolatey Central Management?
 This can be done by changing the level value, which should be currently INFO, to use DEBUG, as per the following:
 
 ~~~xml
@@ -293,14 +294,14 @@ In the following files:
 
 When the value is changed, the services may also need restarted.
 
-### How can I view what SSL registrations have been made by the installation of chocolatey-management-service
+### How can we view what SSL registrations have been made by the installation of chocolatey-management-service
 By default, the installation of the `chocolatey-management-service` package will register a single netsh binding between a self-signed certificate (created at the point of installation) and port 24020.  This can be verified using the following command:
 
 ~~~powershell
 netsh http show sslcert
 ~~~
 
-### How can I remove a netsh binding that has been created
+### How can we remove a netsh binding that has been created
 If you need to remove a netsh binding, you can do that using the following command:
 
 ~~~powershell
@@ -309,7 +310,7 @@ netsh http delete sslcert ipport=0.0.0.0:<port_number>
 
 **NOTE:** Here `<port_number>` should be replaced with the Port Number that has been registered
 
-### Can I manually create an SSL binding?
+### Can we manually create an SSL binding?
 If required, it is possible to manually create a netsh binding.  This is done using the following command:
 
 ~~~powershell
@@ -317,6 +318,11 @@ netsh http add sslcert ipport=0.0.0.0:<port_number> certhash=<certificate_thumbp
 ~~~
 
 **NOTE:** Here, `<port_number>` should be replaced with the Port Number to be used for the registration.  `<certifcate_thumbprint>` should be replaced with the thumbprint for the certificate that is to be used for the registration.  `<random_guid>` should be replaced with a random guid in the following format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
+
+### Can we install Central Management Service behind a load balancer?
+Unfortunately, it's not a supported scenario. If you are trying to load balance requests to CCM service, you should install multiple instances on multiple machines and point clients explicitly to an instance so they can work together. If you are trying to load balance other things on a machine and CCM service just happens to be there (like with QDE), move CCM service to a different machine or allow direct connections to the box for CCM.
+
+> :memo: **NOTE:** If you are an expert in managing X509 certificates with load balancing, you can certainly set this up, but if you can't get it to work, move to a supported scenario. Support folks will tell you the same.
 
 ### We want to set up the Chocolatey Central Management service to use a domain account that will have local admin on each box. Can we do this?
 Yes, absolutely. You will pass those credentials through at install/upgrade time, and you will also want to turn on the feature useRememberedArgumentsForUpgrades (see [configuration](https://chocolatey.org/docs/chocolatey-configuration#features)) so that future upgrades will have that information available. The remembered arguments are stored encrypted on the box (that encryption is reversible so you may opt to pass that information each time).
