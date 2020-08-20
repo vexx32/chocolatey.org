@@ -74,7 +74,7 @@ function cssStyleguide() {
 // Next concat JS files in temp folder
 function jsStyleguideConcat() {
     return gulp.src([
-        "styleguide/tmp/jquery-3.3.1.js",
+        "styleguide/tmp/jquery-3.5.1.js",
         "styleguide/tmp/bootstrap.bundle.js",
         "styleguide/tmp/clipboard.js",
         "styleguide/tmp/custom.js"])

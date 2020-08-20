@@ -1,6 +1,10 @@
 .card {
     box-shadow: $box-shadow;
 
+    .card-body {
+        min-height: unset;
+    }
+
     .card-body, .card-footer {
         p:last-child {
             margin-bottom: 0;

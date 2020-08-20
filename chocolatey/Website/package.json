@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "del": "^3.0.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
@@ -10,11 +10,15 @@
     "gulp-uglify": "^3.0.2",
     "gulp-zip": "^4.2.0",
     "jquery-countdown": "^2.2.0",
-    "node-sass": "^4.13.0"
+    "node-sass": "^4.14.1"
   },
   "dependencies": {
-    "anchor-js": "^4.2.0",
-    "bootstrap": "^4.3.1",
-    "easymde": "^2.8.0"
+    "anchor-js": "^4.2.2",
+    "bootstrap": "^4.5.2",
+    "clipboard": "^2.0.6",
+    "easymde": "^2.11.0",
+    "jquery": "^3.5.1",
+    "jquery-validation": "^1.19.2",
+    "knockout": "^3.5.1"
   }
 }

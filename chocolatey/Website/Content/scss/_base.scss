@@ -109,6 +109,10 @@ code:not([class*="language-"]) {
         }
     }
 }
+.editor-toolbar button.preview {
+    width: auto;
+    padding: 0 5px;
+}
 
 /*Backgrounds & Text*/
 .bg-medium-light {
