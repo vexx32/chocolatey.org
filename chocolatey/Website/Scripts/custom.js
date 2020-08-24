@@ -114,6 +114,21 @@ $(document).ready(function () {
     }
 });
 
+// Show/Hide right side announcement bar notification badge
+var announcementCookie = $('#announcementCookie').val();
+var announcementCount = $('#announcementCount').val();
+
+if (!getCookie(announcementCookie)) {
+    $(".notification-badge").text(announcementCount).removeClass('d-none');
+}
+
+$(".btn-announcement-notifications").click(function () {
+    if (!getCookie(announcementCookie)) {
+        document.cookie = announcementCookie + "=true; path=/;";
+        $(".notification-badge").addClass('d-none');
+    }
+});
+
 // Opens tabbed/collapse information based on hash
 $(function () {
     var urlHash = document.location.toString();

@@ -1,4 +1,10 @@
-﻿<div id="informationCarousel" class="carousel slide carousel-fade information-carousel" data-ride="carousel" data-touch="true" data-interval="6000" style="height: auto;">
+﻿@*When adding a new announcement, change the number on the end of the value to the next available. Example: 1 becomes 2, 2 becomes 3.*@
+<input id="announcementCookie" value="chocolatey_announcement_0" type="hidden" />
+@*When adding a new announcement, update the value number to the amount of new announcements added.*@
+<input id="announcementCount" value="4" type="hidden" />
+
+<div id="announcementCount"></div>
+<div id="informationCarousel" class="carousel slide carousel-fade information-carousel" data-ride="carousel" data-touch="true" data-interval="6000" style="height: auto;">
     <div class="carousel-inner px-3" style="height: auto;">
         <div class="carousel-item active">
             <div class="card bg-primary mb-0">
