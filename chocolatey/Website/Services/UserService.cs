@@ -292,7 +292,7 @@ namespace NuGetGallery
 
         public ReadOnlyCollection<string> CheckForStrongPassword(string password)
         {
-            Regex passwordSymbolPattern = new Regex(@"[!@#$%^&*(),.?:{}|<>]");
+            Regex passwordSymbolPattern = new Regex(@"[^A-Za-z0-9\s]");
 
             var errors = new List<string>();
 
