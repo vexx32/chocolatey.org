@@ -24,7 +24,7 @@
                     	<span class="@Model.PackageTestResultsStatus"></span>
                     </a>
                 </div>
-                <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h5 font-weight-bold text-dark mb-0 btn-link">@Model.Title <span class="@if(gridView){<text>d-block small</text>}">@Model.Version</span></a>
+                <a href="@Url.Package(Model.Id, Model.UseVersion ? Model.Version : null)" title="Learn more about @Model.Title" aria-label="Learn more about @Model.Title" class="h5 font-weight-bold text-dark mb-0 btn-link text-break">@Model.Title <span class="@if(gridView){<text>d-block small</text>}">@Model.Version</span></a>
             </div>
             @*Badges*@
             <div class="@if(gridView){<text>mt-1</text>} d-flex align-items-center">
