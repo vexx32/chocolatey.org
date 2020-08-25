@@ -55,19 +55,19 @@
                     <td><span class="badge badge-pill badge-success">Ready</span></td>
                     break;
                 case PackageSubmittedStatusType.Updated:
-                    <td class="d-flex align-items-center border-top-0">
+                    <td class="d-flex align-items-center">
                         <span class="badge badge-pill badge-orange mr-1">Updated</span>
                         @ViewHelpers.OwnersGravatarListPackages(Model.Package.Owners, 24, Url)   
                     </td>
                     break;
                 case PackageSubmittedStatusType.Responded:
-                    <td class="d-flex align-items-center border-top-0">
+                    <td class="d-flex align-items-center">
                     <span class="badge badge-pill badge-purple mr-1">Responded</span>
                         @ViewHelpers.OwnersGravatarListPackages(Model.Package.Owners, 24, Url)
                     </td>
                     break;
                 default:
-                    <td class="d-flex align-items-center border-top-0">
+                    <td class="d-flex align-items-center">
                         <span class="badge badge-pill badge-danger mr-1">Waiting for Maintainer</span>
                         @if (!string.IsNullOrWhiteSpace(Model.Package.ReviewerEmailAddress))
                         {
