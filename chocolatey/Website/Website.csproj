@@ -1264,6 +1264,14 @@
     <Content Include="Content\Images\docs\quickdeploy\QDE-hyperv.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-hypervapp.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-pw-error.png" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-1.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-2.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-3.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-4.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-5.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-6.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-7.gif" />
+    <Content Include="Content\Images\docs\quickdeploy\QDE-nexus-web-8.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk-esx.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk-fusion.gif" />
     <Content Include="Content\Images\docs\quickdeploy\QDE-vmdk.gif" />
