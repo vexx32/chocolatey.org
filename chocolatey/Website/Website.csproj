@@ -1692,7 +1692,6 @@
     <Content Include="Views\Resources\Files\04-0302-C4BPackageBuilderPart2.md" />
     <Content Include="Views\Resources\Files\04-0401-C4BPackageInternalizerPart1.md" />
     <Content Include="Views\Resources\Files\04-0402-C4BPackageInternalizerPart2.md" />
-    <Content Include="Views\Resources\Files\04-06-C4BChocolateyCentralManagement.md" />
     <Content Include="Views\Shared\_C4BSubNavigation.cshtml" />
     <Content Include="Views\Events\EnableYourRemoteWorkforceByImplementingModernInfrastructureWithChocolatey.cshtml" />
     <Content Include="Views\Events\Home.cshtml" />
@@ -1703,6 +1702,8 @@
     <Content Include="Views\Events\Files\01-04-TheBusinessValueOfModernizingYourWindowsInfrastructure.md" />
     <Content Include="Views\Pages\_CollapsingRightSidebarContent.cshtml" />
     <Content Include="Views\Events\Files\01-03-OperationsAutomationWithOctopusRunbooksAndChocolatey.md" />
+    <Content Include="Views\Resources\Files\04-06-C4BPackageSynchronizer.md" />
+    <Content Include="Views\Resources\Files\04-07-C4BChocolateyCentralManagement.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Documentation\Files\**\*.md" />
