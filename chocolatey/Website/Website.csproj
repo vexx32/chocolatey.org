@@ -1393,51 +1393,6 @@
     <Content Include="Content\Images\userGraphic.png" />
     <Content Include="Content\Images\userIcon.png" />
     <Content Include="Content\Images\userIconWhite.png" />
-    <Content Include="Content\Images\videos\03-15.jpg" />
-    <Content Include="Content\Images\videos\03-01.jpg" />
-    <Content Include="Content\Images\videos\03-18.jpg" />
-    <Content Include="Content\Images\videos\03-19.jpg" />
-    <Content Include="Content\Images\videos\03-16.jpg" />
-    <Content Include="Content\Images\videos\03-17.jpg" />
-    <Content Include="Content\Images\videos\03-20.jpg" />
-    <Content Include="Content\Images\videos\03-21.jpg" />
-    <Content Include="Content\Images\videos\03-01.jpg" />
-    <Content Include="Content\Images\videos\04-01.jpg" />
-    <Content Include="Content\Images\videos\04-02.jpg" />
-    <Content Include="Content\Images\videos\04-0301.jpg" />
-    <Content Include="Content\Images\videos\04-0302.jpg" />
-    <Content Include="Content\Images\videos\04-0401.jpg" />
-    <Content Include="Content\Images\videos\04-0402.jpg" />
-    <Content Include="Content\Images\videos\04-0501.jpg" />
-    <Content Include="Content\Images\videos\04-0502.jpg" />
-    <Content Include="Content\Images\videos\04-06.jpg" />
-    <Content Include="Content\Images\videos\blog-01.jpg" />
-    <Content Include="Content\Images\videos\blog-02.jpg" />
-    <Content Include="Content\Images\videos\blog-03.jpg" />
-    <Content Include="Content\Images\videos\CaseStudy.jpg" />
-    <Content Include="Content\Images\videos\01-01.jpg" />
-    <Content Include="Content\Images\videos\02-01.jpg" />
-    <Content Include="Content\Images\videos\02-04.jpg" />
-    <Content Include="Content\Images\videos\03-03.jpg" />
-    <Content Include="Content\Images\videos\03-04.jpg" />
-    <Content Include="Content\Images\videos\02-05.jpg" />
-    <Content Include="Content\Images\videos\03-05.jpg" />
-    <Content Include="Content\Images\videos\03-06.jpg" />
-    <Content Include="Content\Images\videos\03-07.jpg" />
-    <Content Include="Content\Images\videos\02-03.jpg" />
-    <Content Include="Content\Images\videos\03-08.jpg" />
-    <Content Include="Content\Images\videos\03-09.jpg" />
-    <Content Include="Content\Images\videos\02-02.jpg" />
-    <Content Include="Content\Images\videos\03-10.jpg" />
-    <Content Include="Content\Images\videos\03-11.jpg" />
-    <Content Include="Content\Images\videos\01-02.jpg" />
-    <Content Include="Content\Images\videos\01-03.jpg" />
-    <Content Include="Content\Images\videos\03-02.jpg" />
-    <Content Include="Content\Images\videos\03-12.jpg" />
-    <Content Include="Content\Images\videos\01-04.jpg" />
-    <Content Include="Content\Images\videos\03-13.jpg" />
-    <Content Include="Content\Images\videos\03-14.jpg" />
-    <Content Include="Content\Images\videos\01-05.jpg" />
     <Content Include="Content\Images\xmark.png" />
     <Content Include="Content\Images\YourPackage.png" />
     <Content Include="Content\packages.css" />
@@ -1704,6 +1659,9 @@
     <Content Include="Views\Events\Files\01-03-OperationsAutomationWithOctopusRunbooksAndChocolatey.md" />
     <Content Include="Views\Resources\Files\04-06-C4BPackageSynchronizer.md" />
     <Content Include="Views\Resources\Files\04-07-C4BChocolateyCentralManagement.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Images\videos\**\*.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Documentation\Files\**\*.md" />
