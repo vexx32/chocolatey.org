@@ -332,6 +332,7 @@ namespace NuGetGallery
             // Documentation redirects
             routes.Redirect(r => r.MapRoute("InstallRedirect", "docs/install")).To(docsRoute, new { docName = "installation" });
             routes.Redirect(r => r.MapRoute("FeaturesShimsRedirect", "docs/features-shims")).To(docsRoute, new { docName = "features-shim" });
+            routes.Redirect(r => r.MapRoute("ChocolateyInstallPS1", "docs/chocolatey-install-ps-1")).To(docsRoute, new { docName = "chocolatey-install-ps1" });
 
             // Add in Docs route after redirects have been made
             routes.Add(RouteName.Docs, docsRoute);
