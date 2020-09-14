@@ -1232,6 +1232,7 @@
     <Content Include="Content\Images\docs\gifs\choco_install.gif" />
     <Content Include="Content\Images\docs\gifs\choco_install_pro.gif" />
     <Content Include="Content\Images\docs\gifs\choco_outdated.gif" />
+    <Content Include="Content\Images\docs\gifs\choco_qde_update_apikey.gif" />
     <Content Include="Content\Images\docs\gifs\choco_search.gif" />
     <Content Include="Content\Images\docs\gifs\choco_tab_completion.gif" />
     <Content Include="Content\Images\docs\gifs\choco_uninstall.gif" />
@@ -1251,6 +1252,7 @@
     <Content Include="Content\Images\docs\hero.png" />
     <Content Include="Content\Images\docs\internalizer\architecture-diagram.png" />
     <Content Include="Content\Images\docs\internalizer\jenkins-ps-plugin.png" />
+    <Content Include="Content\Images\docs\jenkins-upgrade-notification.png" />
     <Content Include="Content\Images\docs\moderation-1.jpg" />
     <Content Include="Content\Images\docs\moderation-10.jpg" />
     <Content Include="Content\Images\docs\moderation-11.jpg" />
