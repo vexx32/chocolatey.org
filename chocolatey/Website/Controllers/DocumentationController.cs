@@ -136,11 +136,6 @@ namespace NuGetGallery.Controllers
                             hyphenatedValue.Append("-");
                         }
 
-                        if (Char.IsDigit(valueChar) && !Char.IsDigit(previousChar) && hyphenatedValue.Length != 0)
-                        {
-                            hyphenatedValue.Append("-");
-                        }
-
                         previousChar = valueChar;
                         hyphenatedValue.Append(valueChar.to_string());
                     }
@@ -224,11 +219,6 @@ namespace NuGetGallery.Controllers
                 }
 
                 if (Char.IsUpper(valueChar) && hyphenatedValue.Length != 0 && !Char.IsUpper(previousChar) && !fileName.Contains("-"))
-                {
-                    hyphenatedValue.Append("-");
-                }
-
-                if (Char.IsDigit(valueChar) && !Char.IsDigit(previousChar) && hyphenatedValue.Length != 0)
                 {
                     hyphenatedValue.Append("-");
                 }
