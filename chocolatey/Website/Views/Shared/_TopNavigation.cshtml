@@ -134,7 +134,15 @@
                                     <a class="goback" href="#"><span class="fas fa-chevron-left"></span> Go Back</a>
                                     <h4 class="text-center">Solutions</h4>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li>
+                                            <a href="@Url.RouteUrl(RouteName.Products, new {productName = "chocolatey-for-business"})">Chocolatey for Business</a>
+                                            <p class="d-none d-md-block">Chocolatey for Business (C4B) is the enterprise offering that enables companies to adopt a DevOps approach to managing their Windows environment, allowing you to deliver applications to your users more reliably and faster.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Solutions, new {solutionName = "home"})">Self-Service Anywhere</a>
@@ -145,7 +153,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <ul>
                                         <li>
                                             <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "quick-deployment-environment" })">Quick Deployment Environment (QDE)</a>
