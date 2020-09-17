@@ -152,7 +152,7 @@
             <ul class="list-unstyled">
                 @foreach (var author in Model.Authors)
                 {
-                    <li>@author.Name.clean_html()</li>
+                    <li class="text-break">@author.Name.clean_html()</li>
                 }
             </ul>
             @if (@Model.Tags.AnySafe())
@@ -360,7 +360,7 @@
             <ul class="list-unstyled mb-0 pb-1 border-bottom">
                 @foreach (var author in Model.Authors)
                 {
-                    <li>@author.Name.clean_html()</li>
+                    <li class="text-break">@author.Name.clean_html()</li>
                 }
             </ul>
             @if (@Model.Tags.AnySafe())
