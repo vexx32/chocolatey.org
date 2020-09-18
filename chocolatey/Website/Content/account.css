@@ -39,7 +39,7 @@
     padding-left: 1rem;
     border-left: 6px solid #f4516c;
 }
-#account .validation-summary-errors ul li:not(:first-child) {
+#account .validation-summary-errors ul li:not(:first-child), #account ul li.field-validation-error:not(:first-child) {
     margin-top: .5rem;
 }
 #account .validation-summary-errors ul li, #account .field-hint-message, #account .field-validation-error, #account .was-validated .form-check-input:invalid ~ .form-check-label {

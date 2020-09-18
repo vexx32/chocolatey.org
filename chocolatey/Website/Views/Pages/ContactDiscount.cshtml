@@ -68,11 +68,18 @@
                             </label>
                             @Html.ValidationMessageFor(m => m.CheckBox)
                         </div>
-                        <div class="form-field">
-                            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-                        </div>
+                        @if(ViewData.ModelState["SpamValidationResponse"] != null)
+                        {
+                            <ul class="list-unstyled callout callout-danger">
+                                <li><strong>reCAPTCHA Error(s):</strong></li>
+                                @foreach(var error in ViewData.ModelState["SpamValidationResponse"].Errors)
+                                {
+                                    <li class="field-validation-error">@Html.Raw(error.ErrorMessage)</li>
+                                }
+                            </ul>
+                        }
                         <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="fas fa-asterisk"></span> <small>are required.</small></p>
-                        <input class="btn btn-primary mt-3 g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Send Message" title="Send us a message. We'll be in touch soon!" />
+                        <input class="btn btn-primary mt-3 g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" data-action="Form_ContactDiscount" type="submit" value="Send Message" title="Send us a message. We'll be in touch soon!" />
                     </fieldset>
                 }
             </div>
