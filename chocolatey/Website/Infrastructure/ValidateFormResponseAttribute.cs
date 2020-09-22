@@ -50,6 +50,13 @@ namespace NuGetGallery.Infrastructure
                     "SpamValidationResponse",
                     string.Format("Unable to correctly validate spam validation response: {0}", response.ErrorMessage[0]));
             }
+
+            if (response.Score < 0.5 || !response.Action.StartsWith("Form_"))
+            {
+                filterContext.Controller.ViewData.ModelState.AddModelError(
+                    "SpamValidationResponse",
+                    string.Format("Suspicious behavior detected. Sometimes this misidentifies legitimate requests. If this request is legitimate, please <a href='https://gitter.im/chocolatey/chocolatey.org'>visit our Gitter channel</a> to reach out to our team."));
+            }
         }
     }
 }

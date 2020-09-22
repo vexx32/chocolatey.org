@@ -47,7 +47,7 @@
             @Html.ValidationMessageFor(m => m.Password)
         </div>
         <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="fas fa-asterisk"></span> <small>are required.</small></p>
-        <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Log In" title="Log In" />
+        <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" data-action="Form_LogOn" type="submit" value="Log In" title="Log In" />
 	<p class="mb-0 mt-2 text-center"><small>@Html.ActionLink("Lost your Password?", "ForgotPassword", "Users")</small></p>
     </fieldset>
 }     

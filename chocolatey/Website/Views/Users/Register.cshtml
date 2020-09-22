@@ -48,11 +48,18 @@
             <span class="field-hint-message">Please reenter your password and ensure that it matches the one above.</span>
             @Html.ValidationMessageFor(m => m.ConfirmPassword)
         </div>
-        <div class="form-field">
-            @Html.ValidationMessageFor(m => m.SpamValidationResponse)
-        </div>
+        @if(ViewData.ModelState["SpamValidationResponse"] != null)
+        {
+            <ul class="list-unstyled callout callout-danger">
+                <li><strong>reCAPTCHA Error(s):</strong></li>
+                @foreach(var error in ViewData.ModelState["SpamValidationResponse"].Errors)
+                {
+                    <li class="field-validation-error">@Html.Raw(error.ErrorMessage)</li>
+                }
+            </ul>
+        }
         <p class="mb-0 mt-3"><small>Fields marked with</small> <span class="fas fa-asterisk"></span> <small>are required.</small></p>
-        <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" type="submit" value="Register" title="Register" />
+        <input class="btn btn-primary mx-auto mt-3 d-block g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["reCAPTCHA::PublicKey"]" data-callback="onSubmit" data-badge="bottomleft" data-action="Form_Register" type="submit" value="Register" title="Register" />
         <p class="mb-0 mt-2 text-center"><small><a class="cancel" href="@Url.LogOn()" title="Cancel Changes and go back.">Cancel</a></small></p>
     </fieldset>
 }

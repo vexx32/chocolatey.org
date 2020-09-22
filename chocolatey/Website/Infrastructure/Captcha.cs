@@ -56,5 +56,19 @@ namespace NuGetGallery.Infrastructure
             get;
             set;
         }
+
+        [JsonProperty("score")]
+        public double Score
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty("action")]
+        public string Action
+        {
+            get;
+            set;
+        }
     }
 }
