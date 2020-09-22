@@ -398,7 +398,7 @@ Machines: {5}
 
             //Find out if the user is part of a pipeline by examining the current URL query string
             var pipeline = true;
-            if (Request.QueryString.ToString().Contains("pipline=false"))
+            if (Request.QueryString.ToString().Contains("pipeline=false"))
             {
                 pipeline = false;
             }
