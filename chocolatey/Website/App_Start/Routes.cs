@@ -386,7 +386,12 @@ namespace NuGetGallery
 
             routes.Add(new JsonRoute("json/{controller}"));
 
-            routes.MapRoute(RouteName.Policies, "policies/{action}", MVC.Pages.Terms());
+            routes.MapRouteSeo(
+               RouteName.Policies, "policies", new
+               {
+                   controller = "Pages",
+                   Action = "Terms"
+               });
 
             var packageListRoute = routes.MapRoute(RouteName.ListPackages, "packages", MVC.Packages.ListPackages());
 
