@@ -450,7 +450,7 @@ We can't wait to see what packages you'll upload.
 Remember to read the packaging guidelines:
 https://chocolatey.org/docs/create-packages
 
-All packages sumbitted to the Chocolatey Gallery must meet these guidelines.
+All packages submitted to the Chocolatey Gallery must meet these guidelines.
 
 If you can't adhere to this advice, the chocolatey gods might get unhappy and put you in the hall of shame.
 Hall of shame users might notice their packages getting unlisted or deleted.
