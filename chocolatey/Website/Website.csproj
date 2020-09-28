@@ -1043,6 +1043,7 @@
     <EmbeddedResource Include="..\..\nugetgallery\Website\Infrastructure\Elmah.SqlServer.sql">
       <Link>Infrastructure\Elmah.SqlServer.sql</Link>
     </EmbeddedResource>
+    <Content Include=".well-known\security.txt" />
     <Content Include="7za.exe" />
     <Content Include="apple-touch-icon-114x114.png" />
     <Content Include="apple-touch-icon-120x120.png" />
