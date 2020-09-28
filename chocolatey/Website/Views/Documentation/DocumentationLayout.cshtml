@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Configuration
+@{
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
     Bundles.Reference("Content/dist/chocolatey.slim.css");
     Bundles.Reference("Content/pages.css");
@@ -7,6 +8,9 @@
     Bundles.Reference("Scripts/anchorjs");
     Bundles.Reference("Scripts/prism");
     Bundles.Reference("Scripts/documentation");
+    Bundles.Reference("Scripts/chat");
+
+    var chatBotId = ConfigurationManager.AppSettings["ChatBotId"];
 }
 @section css
 {
@@ -287,6 +291,12 @@
         ((window.gitter = {}).chat = {}).options = {
             room: 'chocolatey/chocolatey.org'
         };
+        $('#quick-deployment-environment').add('#chocolatey-central-management').add('#features-paid').on('shown.bs.collapse', function () {
+            if ($(this).find('li').not('.active-chat').hasClass('active')) {
+                $(this).find('li').addClass('active-chat');
+                chatBot('@chatBotId');
+            }
+        });
     </script>
 
     <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
