@@ -1308,6 +1308,7 @@
     <Content Include="Content\Images\events\01-02.jpg" />
     <Content Include="Content\Images\events\01-03.jpg" />
     <Content Include="Content\Images\events\01-04.jpg" />
+    <Content Include="Content\Images\events\02-01.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
     <Content Include="Content\Images\github.jpg" />
@@ -1664,6 +1665,7 @@
     <Content Include="Views\Resources\Files\04-06-C4BPackageSynchronizer.md" />
     <Content Include="Views\Resources\Files\04-07-C4BChocolateyCentralManagement.md" />
     <Content Include="Views\Shared\ChatLayout.cshtml" />
+    <Content Include="Views\Events\Files\02-01-OSAD2020.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\videos\**\*.jpg" />
