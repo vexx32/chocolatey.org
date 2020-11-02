@@ -1205,6 +1205,7 @@
     <Content Include="Content\Images\docs\DownloadChocolateyPackage.png" />
     <Content Include="Content\Images\docs\features\ccm\agent_ccm_communication.png" />
     <Content Include="Content\Images\docs\features\ccm\agent_ccm_setup_good.png" />
+    <Content Include="Content\Images\docs\features\ccm\ccm_ldap_setup.png" />
     <Content Include="Content\Images\docs\features\ccm\ccm_overview.jpg" />
     <Content Include="Content\Images\docs\features\ccm\ccm_swagger_api.png" />
     <Content Include="Content\Images\docs\features\ccm\central-management.png" />
