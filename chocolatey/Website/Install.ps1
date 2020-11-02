@@ -477,7 +477,7 @@ if ($PSVersionTable.PSVersion.Major -lt 5) {
         }
     }
 } else {
-    Expand-Archive -Path $file -DestinationPath $tempDir -Force
+    Microsoft.PowerShell.Archive\Expand-Archive -Path $file -DestinationPath $tempDir -Force
 }
 
 #endregion Download & Extract Chocolatey
