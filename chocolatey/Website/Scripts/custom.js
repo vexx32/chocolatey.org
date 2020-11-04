@@ -653,13 +653,8 @@ $('.btn').click(function () {
 // Search box
 $('.nav-search .btn-search').click(function () {
     var btnSearch = $('.nav-search .btn-search');
-    var btnSearchOption = btnSearch.prev().find('button');
 
     btnSearch.addClass('d-none').parent().find('.nav-search-container').removeClass('d-none').find('form').removeClass('d-none').find('input').focus();
-    if (!btnSearchOption.hasClass('btn-docs') && document.location.pathname.indexOf("/docs") != 0) {
-        btnSearchOption.html('<span class="small"><i class="fas fa-search" alt="Search Packages"></i> Packages</span>');
-        btnSearchOption.after('<button class="btn btn-light btn-docs" type="submit" formaction="/docs/search"><span class="small"><i class="fas fa-file" alt="Search Docs"></i> Docs</span></button>');
-    }
     if (window.innerWidth < 625) {
         $('#topNav').find('.navbar-brand').addClass('d-none').next().addClass('w-100').find('.nav-search').addClass('w-100');
         $('#topNav').find('.btn-nav-toggle').parent().addClass('d-none');
@@ -680,14 +675,14 @@ $(window).on("resize click", function () {
     }
     searchHelpHide();
 });
-$('.search-box.search-packages input').bind("click keyup", function () {
+$('.search-box input').bind("click keyup", function () {
     if (!$(this).hasClass('active-input')) {
         $(this).addClass('active-input');
         searchHelpShow();
     }
 });
 function searchHelpShow() {
-    if ($('.nav-search .btn-search').hasClass('d-none') && $('.nav-search .search-box').hasClass('search-packages')) {
+    if ($('.nav-search .btn-search').hasClass('d-none')) {
         $('.nav-search').find('.search-box input').addClass('active-input');
     }
     $('.active-input').parentsUntil('form').parent().find('.search-help').removeClass('d-none');
