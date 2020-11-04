@@ -1467,7 +1467,6 @@
     <Content Include="Scripts\anchorjs\anchor.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bundle.txt" />
-    <Content Include="Scripts\chat\chat.js" />
     <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\closeable\index.js" />
     <Content Include="Scripts\courses\courses.js" />
@@ -1678,7 +1677,6 @@
     <Content Include="Views\Events\Files\01-03-OperationsAutomationWithOctopusRunbooksAndChocolatey.md" />
     <Content Include="Views\Resources\Files\04-06-C4BPackageSynchronizer.md" />
     <Content Include="Views\Resources\Files\04-07-C4BChocolateyCentralManagement.md" />
-    <Content Include="Views\Shared\ChatLayout.cshtml" />
     <Content Include="Views\Events\Files\02-01-OSAD2020.md" />
   </ItemGroup>
   <ItemGroup>
