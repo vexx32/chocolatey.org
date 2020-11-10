@@ -9,34 +9,45 @@ $(window).on('load', function () {
 // Show modal on tempdata "message"
 $('#tempdata-message').modal('show');
 
-// Cookies Notice
-var CookiesNotice = (function () {
-    return {
-        modal: function (cookieName) {
-            $(".cookies-popup .cookies-close").click(function (e) {
-                $(e.target).closest(".cookies-popup").hide();
-                var d = new Date();
-                // 100 years in milliseconds: 100 years * 365 days * 24 hours * 60 minutes * 60 seconds * 1000ms
-                d.setTime(d.getTime() + (100 * 365 * 24 * 60 * 60 * 1000));
-                var expires = "expires=" + d.toUTCString();
-                document.cookie = cookieName + "=true;" + expires + ";path=/";
-            });
-        }
+// Cookie Notice
+var cookieNoticeAlert = $('#cookieNoticeAlert'),
+    cookieNoticeName = 'chocolatey_hide_cookies_notice',
+    cookieNotice = getCookie(cookieNoticeName);
+
+if (cookieNotice) {
+    cookieNoticeAlert.remove();
+} else {
+    cookieNoticeAlert.removeClass('d-none');
+}
+
+cookieNoticeAlert.find('button').click(function () {
+    console.log(getCookieExpirationNever());
+    if (~location.hostname.indexOf('chocolatey.org')) {
+        document.cookie = cookieNoticeName + '=true; ' + getCookieExpirationNever() + 'path=/; domain=chocolatey.org;';
+    } else {
+        document.cookie = cookieNoticeName + '=true;' + getCookieExpirationNever() + 'path=/;';
     }
-})();
-CookiesNotice.modal("chocolatey_hide_cookies_notice");
-if (!getCookie('chocolatey_hide_cookies_notice')) {
-    $(".cookies-popup").css('display', 'block');
+});
+function getCookieExpirationNever() {
+    var d = new Date();
+    // 100 years in milliseconds: 100 years * 365 days * 24 hours * 60 minutes * 60 seconds * 1000ms
+    d.setTime(d.getTime() + (100 * 365 * 24 * 60 * 60 * 1000));
+    return 'expires=' + d.toUTCString() + ';';
 }
 
 // Top Navigation
 $(document).ready(function () {
-    // Top Alert
-    var notice = window.sessionStorage.getItem('notice');
-    if (!notice && !$(".notice-text").hasClass('d-none')) {
-        $('.notice-text').show();
+    // Top notice alert
+    var topNoticeAlert = $('#topNoticeAlert'),
+        topNotice = window.sessionStorage.getItem('notice');
+
+    if (topNotice) {
+        topNoticeAlert.remove();
+    } else {
+        topNoticeAlert.removeClass('d-none');
     }
-    $('.notice-text button').click(function () {
+
+    topNoticeAlert.find('button').click(function () {
         sessionStorage.setItem('notice', 'true');
     });
 
