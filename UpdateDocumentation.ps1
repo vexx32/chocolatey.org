@@ -11,4 +11,5 @@ $filesToExclude = @('_Footer.md','_Sidebar.md')
 # copy the md
 Copy-Item "choco.wiki\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Exclude $filesToExclude -Force -Recurse
 Copy-Item "choco.wiki\**\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Exclude $filesToExclude -Force -Recurse
+Copy-Item "choco.wiki\**\**\**\*.md" "chocolatey\Website\Views\Documentation\Files" -Exclude $filesToExclude -Force -Recurse
 Copy-Item "choco.wiki\*.md" "chocolatey\Website\Views\Documentation\Files" -Exclude $filesToExclude -Force -Recurse
