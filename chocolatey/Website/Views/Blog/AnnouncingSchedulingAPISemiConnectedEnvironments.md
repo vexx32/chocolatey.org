@@ -23,21 +23,21 @@ This is an exciting new feature to help you schedule deployments for a specific 
 
 You can add a schedule to any deployment by selecting a start time. If you need to use an end time, for a maintenance window for example, you can add that as well!
 
-<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_Deployments_Edit_Schedule.gif" alt="Edit Deployment Schedule" title="Edit Deployment Schedule" /></div>
+<div class="text-center"><img class="img-fluid border mb-3" src="/content/images/blog/CCM_Deployments_Edit_Schedule.gif" alt="Edit Deployment Schedule" title="Edit Deployment Schedule" /></div>
 
 Find out more about [working with Central Management Deployments](https://chocolatey.org/docs/central-management-deployments).
 
 ### Support Semi-Connected Environments with Central Management Deployments
 With organizations allowing staff to work from home, we’ve been hearing from customers who want to use Central Management Deployments in environments where the endpoints are not always online.
 
-<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_Deployments_Edit_MachineContactTimeout.jpg" alt="Machine Contact Timeout" title="Machine Contact Timeout" /></div>
+<div class="text-center"><img class="img-fluid border mb-3" src="/content/images/blog/CCM_Deployments_Edit_MachineContactTimeout.jpg" alt="Machine Contact Timeout" title="Machine Contact Timeout" /></div>
 
 To allow you to deploy to these environments, Central Management Deployments now allows you to set a Machine Contact Timeout to wait for a machine to be connected to the network before it is given a deployment step (and even make it wait indefinitely for those machines to check in).
 
 Find out more about [working with Central Management Deployments in a Semi-Connected Environment](https://chocolatey.org/docs/central-management-deployments#how-can-i-run-deployments-in-a-semi-connected-environment).
 
 ### Automate Central Management with the new API
-<div class="text-center"><img class="img-fluid border mb-3 w-100" src="/content/images/blog/CCM_API.gif" alt="CCM API" title="CCM API" /></div>
+<div class="text-center"><img class="img-fluid border mb-3" src="/content/images/blog/CCM_API.gif" alt="CCM API" title="CCM API" /></div>
 
 To cover the Central Management API in depth we will have a blog post available soon! If you can’t wait, [join our webinar on December 3rd](https://chocolatey.zoom.us/webinar/register/2016050271071/WN__AtcpeIbQnGACco6PE2QbA) where we will be also show you how to create a recurring deployment using the API!
 
