@@ -1,7 +1,7 @@
 ﻿@*When adding a new announcement, change the number on the end of the value to the next available. Example: 1 becomes 2, 2 becomes 3.*@
-<input id="announcementCookie" value="chocolatey_announcement_0" type="hidden" />
+<input id="announcementCookie" value="chocolatey_announcement_1" type="hidden" />
 @*When adding a new announcement, update the value number to the amount of new announcements added.*@
-<input id="announcementCount" value="4" type="hidden" />
+<input id="announcementCount" value="1" type="hidden" />
 
 <div id="announcementCount"></div>
 <div id="announcementCarousel" class="carousel slide carousel-fade information-carousel" data-ride="carousel" data-touch="true" data-interval="6000" style="height: auto;">
@@ -38,18 +38,6 @@
 <hr />
 <div class="shuffle">
     <div class="text-center">
-        <a href="https://puppet.com/resources/webinar/the-business-value-of-modernizing-your-windows-infrastructure-and-bringing-linux-windows" rel="noreferrer" target="_blank">
-            <img class="img-fluid mb-3" src="@Url.Content("~/content/images/events/01-04.jpg")" alt="The Business Value of Modernizing Your Windows Infrastructure and Bringing Linux & Windows Teams Closer" />
-        </a>
-        <p><strong>Webinar Replay from<br />Tuesday, 22 September 2020</strong></p>
-        <p class="text-left">
-            Standardising tool sets across different Teams is not always easy... especially when different Teams have traditionally used different approaches and methodologies.
-            In this webinar we will unpack the advantages of a more standard, consistent approach with Puppet & Chocolatey.
-        </p>
-        <a href="https://puppet.com/resources/webinar/the-business-value-of-modernizing-your-windows-infrastructure-and-bringing-linux-windows" rel="noreferrer" target="_blank" class="btn btn-primary">Watch Now</a>
-        <hr />
-    </div>
-    <div class="text-center">
         <a href="@Url.RouteUrl(RouteName.Events, new { eventName= "chocolatey-deployments" })">
             <img class="img-fluid mb-3" src="@Url.Content("~/content/images/events/01-02.jpg")" alt="Webinar: Chocolatey Deployments - Easily Orchestrate Amazing Things!" />
         </a>
@@ -76,6 +64,19 @@
             mitigate risks with a greatly-simplified patching workflow, and access a Support Team that will guide you on your automation journey.
         </p>
         <a href="@Url.RouteUrl(RouteName.Resources, new {resourceType = "features"})" class="btn btn-primary">Watch the Series</a>
+        <hr />
+    </div>
+    <div class="text-center">
+        <a href="https://chocolatey.zoom.us/webinar/register/3516056467398/WN__AtcpeIbQnGACco6PE2QbA" rel="noreferrer" target="_blank">
+            <img class="img-fluid mb-3" src="@Url.Content("~/content/images/events/01-05.jpg")" alt="Chocolatey Central Managements Deployments Scheduling, Semi-Connected Environments, and API" />
+        </a>
+        <p><strong>Thursday, 3 December 2020<br />9-10 AM CST (7-8 AM PST / 3-4 PM GMT)</strong></p>
+        <p class="text-left">
+            Chocolatey Central Management's premiere feature of Deployments now can work with schedules, semi-connected environments, and CCM (Chocolatey Central Management) overall has a published API so you can accomplish more, much more.
+            We are excited to share that with you!
+        </p>
+        <a href="@Url.RouteUrl(RouteName.Events, new { eventName= "chocolatey-deployment-schedules" })" class="btn btn-outline-primary">Learn More</a>
+        <a href="https://chocolatey.zoom.us/webinar/register/3516056467398/WN__AtcpeIbQnGACco6PE2QbA" rel="noreferrer" target="_blank" class="btn btn-success">Register Now</a>
         <hr />
     </div>
 </div>
