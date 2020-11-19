@@ -1322,6 +1322,7 @@
     <Content Include="Content\Images\events\01-02.jpg" />
     <Content Include="Content\Images\events\01-03.jpg" />
     <Content Include="Content\Images\events\01-04.jpg" />
+    <Content Include="Content\Images\events\01-05.jpg" />
     <Content Include="Content\Images\events\02-01.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
@@ -1384,6 +1385,7 @@
     <Content Include="Content\Images\speakers\default-speaker.jpg" />
     <Content Include="Content\Images\speakers\derek-campbell.jpg" />
     <Content Include="Content\Images\speakers\gary-ewan-park.jpg" />
+    <Content Include="Content\Images\speakers\joel-sallow-francis.jpg" />
     <Content Include="Content\Images\speakers\nigel-kersten.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
     <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
@@ -1678,6 +1680,8 @@
     <Content Include="Views\Resources\Files\04-06-C4BPackageSynchronizer.md" />
     <Content Include="Views\Resources\Files\04-07-C4BChocolateyCentralManagement.md" />
     <Content Include="Views\Events\Files\02-01-OSAD2020.md" />
+    <Content Include="Views\Events\Files\01-05-ChocolateyDeploymentSchedules.md" />
+    <Content Include="Views\Events\ChocolateyDeploymentSchedules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\videos\**\*.jpg" />
