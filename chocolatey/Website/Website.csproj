@@ -1070,6 +1070,9 @@
     <Content Include="Content\Images\Badges\GettingStartedWithChocolatey.png" />
     <Content Include="Content\Images\Badges\InstallingUpgradingUninstalling.png" />
     <Content Include="Content\Images\blog\1billion.png" />
+    <Content Include="Content\Images\blog\CCM_API.gif" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_MachineContactTimeout.jpg" />
+    <Content Include="Content\Images\blog\CCM_Deployments_Edit_Schedule.gif" />
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_SM-lg.png" />
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_AdvancedCommand_SM-lg.png" />
     <Content Include="Content\Images\blog\CCM_Deployments_Edit_StepModal_AdvancedCommand_Tips_SM-lg.png" />
