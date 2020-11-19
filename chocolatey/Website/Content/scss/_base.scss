@@ -140,30 +140,6 @@ footer.bg-medium-dark a:hover, #editions ul li a:hover, .sticky-nav a.active {
     color: $primary;
 }
 
-/*Alerts and Cookies Notifications*/
-.alert {
-    z-index: 2;
-}
-
-.alert-primary .alert-link {
-    color: $primary;
-    text-decoration: underline;
-}
-
-.alert-dismissible .close {
-    padding: 0;
-    right: 10px;
-    height: 100%;
-}
-
-.cookies-popup {
-    display: none;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    z-index: 9999;
-}
-
 .gitter-chat-embed {
     z-index: 9999;
 }
