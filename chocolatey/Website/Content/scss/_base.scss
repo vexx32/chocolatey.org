@@ -386,6 +386,9 @@ a + .collapse.show, a + .collapsing {
 .event-speaker:not(:last-child) {
     margin-bottom: 2rem;
 }
+.img-berry {
+    width: 30px;
+}
 
 /*z-index*/
 .z-index-1 {
@@ -415,6 +418,12 @@ footer {
 
     .text-sm-center {
         text-align: center;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .img-berry {
+        width: 40px;
     }
 }
 

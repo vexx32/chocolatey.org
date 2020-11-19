@@ -54,7 +54,14 @@
                             </div>
                             <div class="col">
                                 <div class="d-flex justify-content-between align-items-md-center mb-3">
-                                    <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>@post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")<br class="d-md-none" /><i class="fas fa-clock text-secondary ml-md-3 mr-1"></i>@post.Time</p>
+                                    @if (!String.IsNullOrEmpty(post.EventDateRange))
+                                    {
+                                        <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>@post.EventDateRange<br /><i class="fas fa-clock text-secondary mr-1"></i>Daily from @post.Time</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>@post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")<br class="d-md-none" /><i class="fas fa-clock text-secondary ml-md-3 mr-1"></i>@post.Time</p>
+                                    }
                                     <div>
                                         <span class="badge badge-pill text-right text-capitalize @badgeClass">@post.Type</span>
                                     </div>
@@ -83,7 +90,10 @@
                                     {
                                         <a href="@Url.RouteUrl(RouteName.Events, new { eventName = post.UrlPath })" class="btn btn-outline-primary">Learn More</a>
                                     }
-                                    <a href="@post.RegisterLink" class="btn btn-primary" target="_blank" rel="nofollow">Register Now</a>
+                                    @if (post.Title != "12 Days of Chocolatey")
+                                    {
+                                        <a href="@post.RegisterLink" class="btn btn-primary" target="_blank" rel="nofollow">Register Now</a>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -122,7 +132,14 @@
                             </div>
                             <div class="col">
                                 <div class="d-flex justify-content-between align-items-md-center mb-3">
-                                    <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>Past event from @post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</p>
+                                    @if (!String.IsNullOrEmpty(post.EventDateRange))
+                                    {
+                                        <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>Past event from @post.EventDateRange</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="mb-0"><i class="fas fa-calendar text-secondary mr-1"></i>Past event from @post.EventDate.GetValueOrDefault().ToString("dddd, %d MMMM yyyy")</p>
+                                    }
                                     <div>
                                         <span class="badge badge-pill text-right text-capitalize @badgeClass">@post.Type</span>
                                     </div>

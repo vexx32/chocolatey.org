@@ -39,5 +39,6 @@ namespace NuGetGallery
         public string Post { get; set; }
         public string IncludeRegisterPage { get; set; }
         public string IsOnDemand { get; set; }
+        public string EventDateRange { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@*When adding a new announcement, change the number on the end of the value to the next available. Example: 1 becomes 2, 2 becomes 3.*@
-<input id="announcementCookie" value="chocolatey_announcement_1" type="hidden" />
+<input id="announcementCookie" value="chocolatey_announcement_2" type="hidden" />
 @*When adding a new announcement, update the value number to the amount of new announcements added.*@
 <input id="announcementCount" value="1" type="hidden" />
 
@@ -36,6 +36,17 @@
     </div>
 </div>
 <hr />
+<div class="text-center">
+    <a href="#" rel="noreferrer" target="_blank">
+        <img class="img-fluid mb-3" src="@Url.Content("~/content/images/events/01-06.jpg")" alt="12 Days of Chocolatey" />
+    </a>
+    <p><strong>December 1 - December 16<br />Daily at 4-5 PM GMT / 8-9 AM PST / 10-11 AM CST / 11-12 AM EST</strong></p>
+    <p class="text-left">
+        We'll have a live daily event for an hour - every weekday from Dec 1 - Dec 16. While registration is optional, it is strongly encouraged as we plan to have prizes and giveaways and other fun things.
+    </p>
+    <a href="@Url.RouteUrl(RouteName.Events, new { eventName= "12-days-of-chocolatey" })" class="btn btn-success">Learn More</a>
+    <hr />
+</div>
 <div class="shuffle">
     <div class="text-center">
         <a href="@Url.RouteUrl(RouteName.Events, new { eventName= "chocolatey-deployments" })">
