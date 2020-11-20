@@ -1,8 +1,8 @@
 IsArchived: false
 Url: chocolatey-deployment-schedules
 Type: webinar
-EventDate: 20201203T15:00:00
-Time: 9-10 AM CST (7-8 AM PST / 3-4 PM GMT)
+EventDate: 20201203T16:00:00
+Time: 10 AM CST (8 AM PST / 4 PM GMT)
 Duration: 1 hour
 Title: Chocolatey Central Managements Deployments Scheduling, Semi-Connected Environments, and API
 Speakers: Gary Ewan Park, Joel (Sallow) Francis
