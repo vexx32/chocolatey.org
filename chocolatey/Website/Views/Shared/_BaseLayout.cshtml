@@ -63,7 +63,13 @@
     }
     @if (propertyId != null)
     {
-        @Analytics.GetGoogleHtml(propertyId)
+        <script async src="https://www.googletagmanager.com/gtag/js?id=@propertyId"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '@propertyId');
+        </script>
     }
     @RenderSection("TopScripts", required: false)
 </head>
