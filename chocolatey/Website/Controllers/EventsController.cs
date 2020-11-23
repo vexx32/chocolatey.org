@@ -115,6 +115,7 @@ namespace NuGetGallery.Controllers
                 model.Post = Markdown.ToHtml(contents.Remove(0, contents.IndexOf("---") + 3), MarkdownPipeline);
                 model.IncludeRegisterPage = GetPostMetadataValue("IncludeRegisterPage", contents.ToLower());
                 model.IsOnDemand = GetPostMetadataValue("IsOnDemand", contents.ToLower());
+                model.EventDateRange = GetPostMetadataValue("EventDateRange", contents);
             }
 
             return model;

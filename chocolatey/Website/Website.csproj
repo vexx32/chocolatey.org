@@ -1060,6 +1060,7 @@
     <Content Include="Content\easymde.min.css" />
     <Content Include="Content\fonts\fa-brands-400.svg" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
+    <Content Include="Content\Images\12-days-logo-light.svg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\404.svg" />
     <Content Include="Content\Images\AH_Logo_vertical.png" />
@@ -1152,6 +1153,7 @@
     <Content Include="Content\Images\changePassword.png" />
     <Content Include="Content\Images\choco-chefconf.jpg" />
     <Content Include="Content\Images\choco-ps-summit.jpg" />
+    <Content Include="Content\Images\chocolatey-holiday-icon.svg" />
     <Content Include="Content\Images\chocolatey-logo.png" />
     <Content Include="Content\Images\chocolatey-staff.jpg" />
     <Content Include="Content\Images\chocolateyHeadquarters.jpg" />
@@ -1326,6 +1328,7 @@
     <Content Include="Content\Images\events\01-03.jpg" />
     <Content Include="Content\Images\events\01-04.jpg" />
     <Content Include="Content\Images\events\01-05.jpg" />
+    <Content Include="Content\Images\events\01-06.jpg" />
     <Content Include="Content\Images\events\02-01.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
@@ -1340,6 +1343,7 @@
     <Content Include="Content\Images\headers\web.jpg" />
     <Content Include="Content\Images\hero.png" />
     <Content Include="Content\Images\herowithlogo.png" />
+    <Content Include="Content\Images\holly.svg" />
     <Content Include="Content\Images\How-Chocolatey-Works.mp4" />
     <Content Include="Content\Images\icons\arrow-watch.png" />
     <Content Include="Content\Images\icon_slogan.png" />
@@ -1385,6 +1389,8 @@
     <Content Include="Content\Images\required.png" />
     <Content Include="Content\Images\searchButton.png" />
     <Content Include="Content\Images\sendMessageGraphic.png" />
+    <Content Include="Content\Images\snowflake-background.png" />
+    <Content Include="Content\Images\speakers\adil-leghari.jpg" />
     <Content Include="Content\Images\speakers\default-speaker.jpg" />
     <Content Include="Content\Images\speakers\derek-campbell.jpg" />
     <Content Include="Content\Images\speakers\gary-ewan-park.jpg" />
@@ -1392,6 +1398,7 @@
     <Content Include="Content\Images\speakers\nigel-kersten.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
     <Content Include="Content\Images\speakers\rob-reynolds.jpg" />
+    <Content Include="Content\Images\speakers\stephen-valdinger.jpg" />
     <Content Include="Content\Images\stackexchange.png" />
     <Content Include="Content\Images\styleguide\logo-space.jpg" />
     <Content Include="Content\Images\sync-watch.png" />
@@ -1686,6 +1693,9 @@
     <Content Include="Views\Events\Files\02-01-OSAD2020.md" />
     <Content Include="Views\Events\Files\01-05-ChocolateyDeploymentSchedules.md" />
     <Content Include="Views\Events\ChocolateyDeploymentSchedules.cshtml" />
+    <Content Include="Views\Events\Files\01-06-12DaysOfChocolatey.md" />
+    <Content Include="Views\Events\12DaysOfChocolatey.cshtml" />
+    <Content Include="Views\Shared\_LivestreamShare.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\videos\**\*.jpg" />
