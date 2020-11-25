@@ -17,12 +17,7 @@
 {
     if (post.Title.Equals("12 Days of Chocolatey"))
     {
-        @* Used by JS to configure countdown clock *@
-        <input class="date" type="hidden" value="2020/12/01" />
-        <input class="hour" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("HH")" />
-        <input class="minutes" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("mm")" />
-
-        <div id="countdown-header" class="bg-medium-dark text-white border-top-dark text-center bg-snowflake">
+        <div id="countdown-header" class="bg-medium-dark text-white border-top-dark text-center bg-snowflake countdown-multi-event">
             <section class="pt-3 pt-lg-5 pb-5">
                 <div class="container-fluid pt-lg-3">
                     <div class="d-md-flex align-items-md-center justify-content-md-center">
@@ -34,7 +29,7 @@
                         <br class="d-lg-none" />
                         <span><i class="fas fa-clock"></i> Daily at 4-5 PM GMT / 8-9 AM PST / 10-11 AM CST / 11-12 AM EST</span>
                     </h5>
-                    <a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-success btn-lg mb-4 mb-md-5"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
+                    <a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-success btn-not-on-demand btn-lg mb-4 mb-md-5"><span class="h2 font-weight-bold">Reserve My Spot Now</span></a>
                 </div>
             </section>
             <div class="position-relative"><div class="countdown-container countdown-container-range countdown-container-blocks countdown-container-absolute-center countdown-container-success"></div></div>
@@ -63,7 +58,7 @@
                             <li>NEW exciting Chocolatey announcements</li>
                         </ul>
                         <p>Can't attend live? We'll try to record for later, but you'll miss out on being able to contribute and shape the discussions during the livestream sessions! Plus you'll miss out on giveaways!</p>
-                        <div class="text-center d-md-none"><a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-success">Reserve My Spot Now</a></div>
+                        <div class="text-center d-md-none"><a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-success btn-not-on-demand">Reserve My Spot Now</a></div>
                     </div>
                     <div class="col-lg-6 d-none d-md-block">
                         <div class="d-none d-lg-block">
@@ -124,6 +119,7 @@
                 <div class="row">
                     <div class="col-lg-10 mx-auto">
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/01 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -151,6 +147,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/02 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -178,6 +175,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/03 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -201,6 +199,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/04 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -228,6 +227,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/07 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -255,6 +255,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/08 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -282,6 +283,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/09 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -309,6 +311,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/10 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -323,7 +326,7 @@
                                     <span><i class="fas fa-microphone text-secondary mr-1"></i>Speakers: Adil Leghari, Paul Broadwith, George James</span>
                                 </p>
                                 <p>
-                                    Together, Ansible and Chocolatey bring faster and more secure deployments to your Windows environments. Use Chocolatey for software/package management and Ansible to automate and guarantee the desired state of your Windows infrastructure, 
+                                    Together, Ansible and Chocolatey bring faster and more secure deployments to your Windows environments. Use Chocolatey for software/package management and Ansible to automate and guarantee the desired state of your Windows infrastructure,
                                     allowing your team to securely deploy applications faster than ever. <strong>Separate Registration Required!</strong>
                                 </p>
                                 <a class="btn btn-outline-success" target="_blank" href="https://chocolatey.zoom.us/webinar/register/9116058944622/WN_4sBxu-fqRRSL3-fglGqclQ">Register Now</a>
@@ -332,6 +335,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/11 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -359,6 +363,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/14 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -386,6 +391,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/15 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -413,6 +419,7 @@
                         <hr class="my-4" />
 
                         <div class="d-flex flex-row mb-3">
+                            <input class="date-range" type="hidden" value="2020/12/16 16:00:00 UTC" />
                             <div>
                                 <div class="calendar-date calendar-date-sm mr-3">
                                     <div>December</div>
@@ -439,7 +446,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center d-md-none mt-3"><a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-success">Reserve My Spot Now</a></div>
+                <div class="text-center d-md-none"><a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-success btn-not-on-demand mt-3">Reserve My Spot Now</a></div>
             </div>
         </section>
         <section class="py-3 py-lg-5 pb-lg-0">
@@ -556,7 +563,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-3 mt-md-0"><a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-success">Reserve My Spot Now</a></div>
+                <div class="text-center"><a href="@post.RegisterLink" target="_blank" rel="noreferrer" class="btn btn-lg btn-success btn-not-on-demand mt-3 mt-md-0">Reserve My Spot Now</a></div>
             </div>
         </section>
     }

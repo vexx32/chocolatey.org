@@ -16,11 +16,11 @@
     if (post.Title.Equals("Chocolatey Deployments - Easily Orchestrate Amazing Things!"))
     {
         @* Used by JS to configure countdown clock *@
-        <input class="date" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("yyyy/MM/dd")" />
-        <input class="hour" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("HH")" />
-        <input class="minutes" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("mm")" />
+        <div>
+            <input class="countdown-date-time" type="hidden" value="@post.EventDate.GetValueOrDefault().ToString("yyyy/MM/dd HH:mm:ss") UTC" />
+        </div>
 
-        <div id="countdown-header" class="bg-primary text-center">
+        <div id="countdown-header" class="bg-primary text-center countdown-single-event">
             <section class="pt-3 pt-lg-5 pb-5">
                 <div class="container-fluid pt-lg-3">
                     <div class="d-md-flex align-items-center justify-content-center mb-4">
