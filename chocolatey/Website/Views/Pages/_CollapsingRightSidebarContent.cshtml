@@ -1,5 +1,5 @@
 ﻿@*When adding a new announcement, change the number on the end of the value to the next available. Example: 1 becomes 2, 2 becomes 3.*@
-<input id="announcementCookie" value="chocolatey_announcement_2" type="hidden" />
+<input id="announcementCookie" value="chocolatey_announcement_3" type="hidden" />
 @*When adding a new announcement, update the value number to the amount of new announcements added.*@
 <input id="announcementCount" value="1" type="hidden" />
 
@@ -88,6 +88,19 @@
         </p>
         <a href="@Url.RouteUrl(RouteName.Events, new { eventName= "chocolatey-deployment-schedules" })" class="btn btn-outline-primary">Learn More</a>
         <a href="https://chocolatey.zoom.us/webinar/register/3516056467398/WN__AtcpeIbQnGACco6PE2QbA" rel="noreferrer" target="_blank" class="btn btn-success">Register Now</a>
+        <hr />
+    </div>
+    <div class="text-center">
+        <a href="https://chocolatey.zoom.us/webinar/register/9116058944622/WN_4sBxu-fqRRSL3-fglGqclQ" rel="noreferrer" target="_blank">
+            <img class="img-fluid mb-3 border" src="@Url.Content("~/content/images/events/01-07.jpg")" alt="Accelerate Automation of Windows with Ansible + Chocolatey" />
+        </a>
+        <p><strong>Thursday, 10 December 2020<br />4 PM GMT / 8 AM PST / 10 AM CST / 11 AM EST</strong></p>
+        <p class="text-left">
+            Together, Ansible and Chocolatey bring faster and more secure deployments to your Windows environments. Use Chocolatey for software/package management and Ansible to automate and guarantee the desired state of your Windows infrastructure, 
+            allowing your team to securely deploy applications faster than ever.
+        </p>
+        <a href="@Url.RouteUrl(RouteName.Events, new { eventName= "chocolatey-and-ansible" })" class="btn btn-outline-primary">Learn More</a>
+        <a href="https://chocolatey.zoom.us/webinar/register/9116058944622/WN_4sBxu-fqRRSL3-fglGqclQ" rel="noreferrer" target="_blank" class="btn btn-success">Register Now</a>
         <hr />
     </div>
 </div>

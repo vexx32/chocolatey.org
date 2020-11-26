@@ -1329,6 +1329,7 @@
     <Content Include="Content\Images\events\01-04.jpg" />
     <Content Include="Content\Images\events\01-05.jpg" />
     <Content Include="Content\Images\events\01-06.jpg" />
+    <Content Include="Content\Images\events\01-07.jpg" />
     <Content Include="Content\Images\events\02-01.jpg" />
     <Content Include="Content\Images\gene.svg" />
     <Content Include="Content\Images\genes.jpg" />
@@ -1394,6 +1395,7 @@
     <Content Include="Content\Images\speakers\default-speaker.jpg" />
     <Content Include="Content\Images\speakers\derek-campbell.jpg" />
     <Content Include="Content\Images\speakers\gary-ewan-park.jpg" />
+    <Content Include="Content\Images\speakers\george-james.jpg" />
     <Content Include="Content\Images\speakers\joel-sallow-francis.jpg" />
     <Content Include="Content\Images\speakers\nigel-kersten.jpg" />
     <Content Include="Content\Images\speakers\paul-broadwith.jpg" />
@@ -1706,6 +1708,8 @@
     <Content Include="Views\Events\Files\01-06-12DaysOfChocolatey.md" />
     <Content Include="Views\Events\12DaysOfChocolatey.cshtml" />
     <Content Include="Views\Shared\_LivestreamShare.cshtml" />
+    <Content Include="Views\Events\Files\01-07-ChocolateyAndAnsible.md" />
+    <Content Include="Views\Events\ChocolateyAndAnsible.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\videos\**\*.jpg" />
