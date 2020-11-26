@@ -1473,6 +1473,16 @@
     <Content Include="Content\scss\_countdown.scss" />
     <Content Include="Content\scss\_collapsing-sidebar.scss" />
     <Content Include="Content\scss\_alerts.scss" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-01December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-02December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-04December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-07December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-08December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-09December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-11December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-14December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-15December2020.ics" />
+    <Content Include="Content\calendars\12DaysOfChocolatey-16December2020.ics" />
     <None Include="optipng.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
