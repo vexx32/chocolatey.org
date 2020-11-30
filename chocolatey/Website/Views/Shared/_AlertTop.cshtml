@@ -1,10 +1,10 @@
 ﻿@{
-    var noticeText = "<a href='/covid-19'>Here's how we're responding to COVID-19 plus resources to help</a>";
+    var noticeText = "<a href='/events/12-days-of-chocolatey'>Join us for The 12 Days of Chocolatey Livestream!</a>";
 }
 
 @if (!string.IsNullOrEmpty(noticeText))
 {
-    <div id="topNoticeAlert" class="alert alert-danger alert-dismissible alert-dismissible-center fade show d-none" role="alert">
+    <div id="topNoticeAlert" class="alert alert-success alert-dismissible alert-dismissible-center fade show d-none" role="alert">
         <p class="mb-0">@Html.Raw(noticeText)</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
