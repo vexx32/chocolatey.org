@@ -26,12 +26,12 @@ DTSTAMP:20201126T032821Z
 UID:20201126T032821Z-1322802828@marudot.com
 DTSTART;TZID=Europe/London:20201204T160000
 DTEND;TZID=Europe/London:20201204T170000
-SUMMARY:12 Days of Chocolatey - "Chocolatey in the Organizations" - Gary Ewan Park
-DESCRIPTION:Join the Chocolatey team for Day 4 of The 12 Days of Chocolatey!\n\nTopic: 12 Days of Chocolatey - "Chocolatey in the Organizations" - Gary Ewan Park\n\nJoin Chocolatey live on:\nTwitch: https://www.twitch.tv/chocolateysoftware\nYouTube: https://www.youtube.com/chocolateysoftware\nTwitter: https://twitter.com/chocolateynuget\nFacebook: https://www.facebook.com/ChocolateySoftware
+SUMMARY:12 Days of Chocolatey - "Chocolatey in the Organization" - Gary Ewan Park
+DESCRIPTION:Join the Chocolatey team for Day 4 of The 12 Days of Chocolatey!\n\nTopic: 12 Days of Chocolatey - "Chocolatey in the Organization" - Gary Ewan Park\n\nJoin Chocolatey live on:\nTwitch: https://www.twitch.tv/chocolateysoftware\nYouTube: https://www.youtube.com/chocolateysoftware\nTwitter: https://twitter.com/chocolateynuget\nFacebook: https://www.facebook.com/ChocolateySoftware
 LOCATION:Livestream - See description for details
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:12 Days of Chocolatey - "Chocolatey in the Organizations" - Gary Ewan Park
+DESCRIPTION:12 Days of Chocolatey - "Chocolatey in the Organization" - Gary Ewan Park
 TRIGGER:-PT30M
 END:VALARM
 END:VEVENT
