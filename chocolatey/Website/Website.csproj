@@ -1497,7 +1497,6 @@
     <Content Include="Scripts\closeable\index.js" />
     <Content Include="Scripts\courses\courses.js" />
     <Content Include="Scripts\custom.js" />
-    <Content Include="Scripts\documentation\documentation.js" />
     <Content Include="Scripts\easymde\easymde.min.js" />
     <Content Include="Scripts\header\bundle.txt" />
     <Content Include="Scripts\header\modernizr-2.6.2.js" />
