@@ -12,8 +12,8 @@
 }
 
 <h2 id="command-example" class="mb-3">Command Example</h2>
-<p>Now that you have Chocolatey on your machine (<a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">need to install?</a>), you can run several commands.</p>
-<p>Take a look at the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })">command reference</a>. We are going to be using the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })">install command</a>.</p>
+<p>Now that you have Chocolatey on your machine (<a href="https://docs.chocolatey.org/en-us/choco/setup">need to install?</a>), you can run several commands.</p>
+<p>Take a look at the <a href="https://docs.chocolatey.org/en-us/choco/commands/">command reference</a>. We are going to be using the <a href="https://docs.chocolatey.org/en-us/choco/commands/install">install command</a>.</p>
 <p>Let's install <a href="http://notepad-plus-plus.org/">Notepad++</a>.</p>
 <ol>
     <li>Open a command line.</li>
@@ -24,12 +24,12 @@
 
 <h2 id="advanced-install-concepts" class="mt-5 mb-3">Overriding Default Install Directory or Other Advanced Install Concepts</h2>
 <ol>
-    <li>Yes we support that through the use of install arguments - see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-install" })#installarguments">Install Arguments</a></li>
+    <li>Yes we support that through the use of install arguments - see <a href="https://docs.chocolatey.org/en-us/choco/commands/install#installarguments">Install Arguments</a></li>
     <li>If you wanted to pass native argument to the installer, like the install directory, you would need to know the silent argument passed to that particular installer and then you would specify it on the command line or in the packages.config.</li>
-    <li>If it was an MSI, then usually you could pass <code>-ia &quot;INSTALLDIR=&quot;&quot;D:\Program Files&quot;&quot;&quot;</code> (for cmd.exe, it's different for PowerShell). See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">how to pass options/switches</a> for specifics on passing quoted values through.</li>
+    <li>If it was an MSI, then usually you could pass <code>-ia &quot;INSTALLDIR=&quot;&quot;D:\Program Files&quot;&quot;&quot;</code> (for cmd.exe, it's different for PowerShell). See <a href="https://docs.chocolatey.org/en-us/choco/commands/#how-to-pass-options-switches">how to pass options/switches</a> for specifics on passing quoted values through.</li>
     <li>For example, Notepad++ uses the <a href="http://nsis.sourceforge.net/Main_Page">NSIS</a> (NullSoft Scriptable Install System) installer. If we look at the silent options, we see that <a href="http://nsis.sourceforge.net/Docs/Chapter3.html#installerusagecommon">/D</a> is how we influence the install directory. So we would pass <code>choco install notepadplusplus.install -ia &quot;'/D=E:\SomeDirectory\somebody\npp'&quot;</code> -note that we are looking at the specific package over the virtual (although you can do the same with notepadplusplus as well).</li>
 </ol>
-<p>Is there a better way? Absolutely, see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-install-directory-override" })">ubiquitous install directory switch</a>!</p>
+<p>Is there a better way? Absolutely, see <a href="https://docs.chocolatey.org/en-us/features/install-directory-override">ubiquitous install directory switch</a>!</p>
 
 @*Quiz*@
 <div>

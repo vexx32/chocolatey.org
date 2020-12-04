@@ -13,7 +13,7 @@
 }
 
 <h2 id="building" class="mb-3">Building Your Package</h2>
-<p>Open a command line in the directory where the nuspec is and type <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-pack" })"><code>choco pack</code></a>. That's it.</p>
+<p>Open a command line in the directory where the nuspec is and type <a href="https://docs.chocolatey.org/en-us/create/commands/pack"><code>choco pack</code></a>. That's it.</p>
 
 <h2 id="testing" class="mt-5 mb-3">Testing Your Package</h2>
 <div class="callout callout-danger"><strong>NOTE</strong>: We strongly suggest the following should be performed in a VM and not on your machine.</div>
@@ -30,7 +30,7 @@
 &lt;/dependencies&gt;</code></pre>
 <p>
     You'll need to append the API path like so:<br />
-    <code>-source &quot;'.;https://chocolatey.org/api/v2/'&quot;</code> (note the double quotes bookending the apostrophes here, use <code>%cd%</code> in cmd.exe or <code>$pwd</code> in Powershell.exe if <code>.</code> doesn't resolve). See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#how-to-pass-options-switches">passing options with quotes</a>. <strong>Note:</strong> If you need to do this, please ensure you run <code>choco pack</code> first. This method of passing a source won't work calling a nuspec or nupkg directly as it will override the source passed to the local folder.
+    <code>-source &quot;'.;https://chocolatey.org/api/v2/'&quot;</code> (note the double quotes bookending the apostrophes here, use <code>%cd%</code> in cmd.exe or <code>$pwd</code> in Powershell.exe if <code>.</code> doesn't resolve). See <a href="https://docs.chocolatey.org/en-us/choco/commands/#how-to-pass-options-switches">passing options with quotes</a>. <strong>Note:</strong> If you need to do this, please ensure you run <code>choco pack</code> first. This method of passing a source won't work calling a nuspec or nupkg directly as it will override the source passed to the local folder.
 </p>
 <p>You can also use the <code>-debug</code> switch on <code>choco install</code> to provide more information.</p>
 <div class="callout callout-danger"><strong>NOTE:</strong> Do not call install with <code>.nupkg</code> - pointing to a file explicitly overrides source. You must call your install with the package name, not the nupkg file and location. You've already specified for choco to look in a local source with <code>-s &quot;'.;https://chocolatey.org/api/v2/'&quot;</code>. Call <code>choco install dude -s &quot;'.;https://chocolatey.org/api/v2/'&quot;</code>, not <code>choco install .\dude.nupkg -s &quot;'.;https://chocolatey.org/api/v2/'&quot;</code>.</div>
@@ -39,7 +39,7 @@
 <div class="callout callout-warning"><strong>NOTE:</strong> This is not recommended if you are passing install arguments or package parameters due to some weirdness, and definitely does not work with passed sources as it need to override that with the local folder once it builds the package. Most likely you will want to stick with the recommended strategy.</div>
 
 <h2 id="pushing" class="mt-5 mb-3">Pushing Your Package</h2>
-<p>To push your package after you have built and tested it, you type <code>choco push packageName.nupkg -s sourceLocation</code> where <em>packageName.nupkg</em> is the name of the nupkg that was built with a version number as part of the package name and <em>sourceLocation</em> is the location of the source you want to push to (e.g. <code>https://push.chocolatey.org/</code> for chocolatey's community feed). You must have an api key for <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> set. Take a look at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-push" })">choco push</a></p>
+<p>To push your package after you have built and tested it, you type <code>choco push packageName.nupkg -s sourceLocation</code> where <em>packageName.nupkg</em> is the name of the nupkg that was built with a version number as part of the package name and <em>sourceLocation</em> is the location of the source you want to push to (e.g. <code>https://push.chocolatey.org/</code> for chocolatey's community feed). You must have an api key for <a href="https://chocolatey.org/" class="uri">https://chocolatey.org/</a> set. Take a look at <a href="https://docs.chocolatey.org/en-us/create/commands/push">choco push</a></p>
 
 @*Quiz*@
 <div>

@@ -327,19 +327,6 @@ namespace NuGetGallery
             // Add in ResourceName route after redirects have been made
             routes.Add(RouteName.ResourceName, resourceNameRoute);
 
-            var docsRoute = new Route("docs/{docName}", new RouteValueDictionary(new { controller = "Documentation", action = "Documentation", docName = "home" }), new HyphenatedRouteHandler());
-
-            // Documentation redirects
-            routes.Redirect(r => r.MapRoute("InstallRedirect", "docs/install")).To(docsRoute, new { docName = "installation" });
-            routes.Redirect(r => r.MapRoute("FeaturesShimsRedirect", "docs/features-shims")).To(docsRoute, new { docName = "features-shim" });
-            routes.Redirect(r => r.MapRoute("ChocolateyInstallPS1", "docs/chocolatey-install-ps-1")).To(docsRoute, new { docName = "chocolatey-install-ps1" });
-
-            // Add in Docs route after redirects have been made
-            routes.Add(RouteName.Docs, docsRoute);
-
-            // temporary redirect
-            routes.Redirect(r => r.MapRoute("CentralManagementFeature", "features-chocolatey-central-management")).To(docsRoute, new { docName = "features-chocolatey-central-management" });
-
             routes.MapRouteSeo(
                 RouteName.Courses,
                 "courses",

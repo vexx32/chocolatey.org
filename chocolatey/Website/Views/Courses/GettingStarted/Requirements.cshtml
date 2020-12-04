@@ -26,7 +26,7 @@
 <ul>
     <li>Chocolatey CLI aka choco (or choco.exe) is a client (not a Windows service) that provides the core of Chocolatey and the installation store for locally installed packages. This is important as Chocolatey manages packages, not Programs and Features directly - Programs and Features is limited only to software that has "installers" and Chocolatey treats all aspects of Windows software as first class citizens (zips, scripts, binaries, installers), thus it needs to track and manage those things separately.</li>
     <li>Chocolatey GUI is an application that runs when a user runs it (also not a Windows Service).</li>
-    <li>Chocolatey Agent (aka chocolatey-agent) is a Windows service available in Chocolatey for Business. It is used for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-agent-service" })">Self-Service Installation</a> and Chocolatey Central Management.</li>
+    <li>Chocolatey Agent (aka chocolatey-agent) is a Windows service available in Chocolatey for Business. It is used for <a href="https://docs.chocolatey.org/en-us/features/self-service-anywhere">Self-Service Installation</a> and Chocolatey Central Management.</li>
 </ul>
 <h4 class="mt-4 mb-3">Space Requirements</h4>
 <ul>
@@ -59,7 +59,7 @@
     <strong>SPACE RECOMMENDATION</strong>: Have enough space for 10x the size of the installers and other software you will store. This will allow for some default growth. We would recommend 100 GB at a minimum.
 </div>
 <p>
-    We've compiled a list of requirements for <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })#commercial-repository-system-requirements">commercial repository options</a>. Chocolatey Simple Server (Chocolatey.Server) can be put on really minimum hardware that
+    We've compiled a list of requirements for <a href="https://docs.chocolatey.org/en-us/features/host-packages#commercial-repository-system-requirements">commercial repository options</a>. Chocolatey Simple Server (Chocolatey.Server) can be put on really minimum hardware that
     could be 1–2GB of RAM, low CPU, and as little as 5 GB of space (number of packages you store will drive this). You will just want the network transfer to be fast.
 </p>
 
