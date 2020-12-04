@@ -739,6 +739,7 @@ $(function () {
 
             var upcomingEventTime = $(this).val();
             var eventListingContainer = $(this).parent();
+            var eventListingContainerOnDemand = eventListingContainer.find('.btn-on-demand');
 
             if (getUTCNow($(this).val()) > getUTCNow(new Date())) {
                 countdownContainer.each(function () {
@@ -757,8 +758,10 @@ $(function () {
             } else {
                 // Individual event complete
                 eventListingContainer.find('.calendar-date').css('opacity', '.5');
-                eventListingContainer.find('.btn:not(".btn-on-demand")').addClass('disabled');
-
+                eventListingContainer.find('.btn:not(".btn-on-demand"):not(".btn-replay")').addClass('disabled');
+                if (eventListingContainerOnDemand.length > 0) {
+                    eventListingContainerOnDemand.html(eventListingContainerOnDemand.html().replace(eventListingContainerOnDemand.html(), ellapsedButtonText))
+                }
                 // If all times are past (event over)
                 if (i == countdownDateTime.length - 1) {
                     $('#countdown-header.countdown-multi-event section').removeClass('pb-5').addClass('pb-3 pb-lg-5');
