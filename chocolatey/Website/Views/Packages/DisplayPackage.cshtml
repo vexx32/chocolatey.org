@@ -198,11 +198,11 @@
                 {
                     <li><a href="@possiblePackageRepository" title="This is a possible package source. NuSpec did not contain &lt;packageSourceUrl /&gt;, but it did contain an icon url from a repository location.">Possible Package Source</a></li>
                 }
-                <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package outdated?</a></li>
-                <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package broken?</a></li>
+                <li><a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process">Package outdated?</a></li>
+                <li><a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process">Package broken?</a></li>
                 <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
                 <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Moderators">Contact Site Admins</a></li>
-                <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Software Vendor?</a></li>
+                <li><a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process#are-you-a-software-vendor">Software Vendor?</a></li>
                 <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">Report Abuse</a></li>
                 <li>
                     <a class="btn btn-secondary btn-sm mt-2" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="fas fa-download" alt="Download"></i> Download</a>
@@ -293,11 +293,11 @@
                         {
                             <li><a href="@possiblePackageRepository" title="This is a possible package source. NuSpec did not contain &lt;packageSourceUrl /&gt;, but it did contain an icon url from a repository location.">Possible Package Source</a></li>
                         }
-                        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package outdated?</a></li>
-                        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">Package broken?</a></li>
+                        <li><a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process">Package outdated?</a></li>
+                        <li><a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process">Package broken?</a></li>
                         <li><a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">Contact Maintainers</a></li>
                         <li><a href="@Url.RouteUrl(RouteName.PackageVersionAction, new { action = "ContactAdmins", id = Model.Id, version = Model.Version })" title="Contact Site Moderators">Contact Site Admins</a></li>
-                        <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })#are-you-a-software-vendor">Software Vendor?</a></li>
+                        <li><a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process#are-you-a-software-vendor">Software Vendor?</a></li>
                         <li><a href="@Url.Action(MVC.Packages.ReportAbuse(Model.Id, Model.Version))" title="Report Abuse">Report Abuse</a></li>
                         <li>
                             <a href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file.">Download</a>
@@ -677,7 +677,7 @@
                             <p class="small font-weight-bold">NOTE: This applies to both open source and commercial editions of Chocolatey.</p>
                             @*Step 1*@
                             <h4>1. Ensure you are set for organizational deployment</h4>
-                            <p>Please see the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-offline-installation" })">organizational deployment guide</a></p>
+                            <p>Please see the <a href="https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide">organizational deployment guide</a></p>
                             @*Step 2*@
                             <a class="h4 collapsed d-block" data-toggle="collapse" href="#install-step2" role="button" aria-expanded="false" aria-controls="install-step2" title="Install Step 2">2. Get the package into your environment</a>
                             <div class="collapse" id="install-step2">
@@ -689,7 +689,7 @@
                                             <li>
                                                 Open Source or Commercial:
                                                 <ul>
-                                                    <li>Proxy Repository - Create a proxy nuget repository on Nexus, Artifactory Pro, or a proxy Chocolatey repository on ProGet. Point your upstream to <strong>https://chocolatey.org/api/v2</strong>. Packages cache on first access automatically. Make sure your choco clients are using your proxy repository as a source and NOT the default community repository. See <a href="@Url.RouteUrl(RouteName.Docs, new {docName = "commands-sources"})">source command</a> for more information.</li>
+                                                    <li>Proxy Repository - Create a proxy nuget repository on Nexus, Artifactory Pro, or a proxy Chocolatey repository on ProGet. Point your upstream to <strong>https://chocolatey.org/api/v2</strong>. Packages cache on first access automatically. Make sure your choco clients are using your proxy repository as a source and NOT the default community repository. See <a href="https://docs.chocolatey.org/en-us/choco/commands/sources">source command</a> for more information.</li>
                                                     <li>You can also just download the package and push it to a repository <a class="btn btn-secondary btn-sm" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="fas fa-download" alt="Download"></i> Download</a></li>
                                                 </ul>
                                             </li>
@@ -703,15 +703,15 @@
                                                 Open Source
                                                 <ul>
                                                     <li>Download the Package <a class="btn btn-secondary btn-sm" href="@Url.PackageDownload(2, Model.Id, Model.Version)" title="Download the raw nupkg file." download><i class="fas fa-download" alt="Download"></i> Download</a></li>
-                                                    <li><a href="@Url.RouteUrl(RouteName.Docs, new {docName = "how-to-recompile-packages"})">Follow manual internalization instructions</a></li>
+                                                    <li><a href="https://docs.chocolatey.org/en-us/guides/create/recompile-packages">Follow manual internalization instructions</a></li>
                                                 </ul>
                                             </li>
                                             <li>
                                                 Package Internalizer (C4B)
                                                 <ul>
-                                                    <li>Run <code>choco download @Model.Id.ToLower() --internalize @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed){<text> --version=@Model.Version</text>} --source=https://chocolatey.org/api/v2</code> <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-download" })">(additional options)</a></li>
+                                                    <li>Run <code>choco download @Model.Id.ToLower() --internalize @if ((!Model.LatestVersion && !Model.LatestStableVersion) || !Model.Listed){<text> --version=@Model.Version</text>} --source=https://chocolatey.org/api/v2</code> <a href="https://docs.chocolatey.org/en-us/choco/commands/download">(additional options)</a></li>
                                                     <li>Run <code>choco push --source=&quot;'http://internal/odata/repo'&quot;</code> for package and dependencies</li>
-                                                    <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-setup-internal-package-repository" })">Automate package internalization</a></li>
+                                                    <li><a href="https://docs.chocolatey.org/en-us/guides/organizations/automate-package-internalization">Automate package internalization</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -755,8 +755,8 @@
 <pre class="language-powershell border py-3"><code>
 choco upgrade @Model.Id.ToLower() -y --source=&quot;'STEP 3 URL'&quot; [other options]
 </code></pre>
-                                    <p class="mt-3">See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-upgrade" })#options-and-switches">options you can pass to upgrade.</a></p>
-                                    <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-reference" })#scripting-integration-best-practices-style-guide">best practices for scripting.</a></p>
+                                    <p class="mt-3">See <a href="https://docs.chocolatey.org/en-us/choco/commands/upgrade#options-and-switches">options you can pass to upgrade.</a></p>
+                                    <p>See <a href="https://docs.chocolatey.org/en-us/choco/commands/#scripting-integration-best-practices-style-guide">best practices for scripting.</a></p>
                                     <p>Add this to a PowerShell script or use a Batch script with tools and in places where you are calling directly to Chocolatey. If you are integrating, keep in mind enhanced exit codes.</p>
                                     <p>If you do use a PowerShell script, use the following to ensure bad exit codes are shown as failures:</p>
 <pre class="language-powershell line-numbers border py-3"><code>
@@ -784,7 +784,7 @@ Exit $exitCode
                                     <p>See docs at <a href="https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html" target="_blank" rel="noreferrer">https://docs.ansible.com/ansible/latest/modules/win_chocolatey_module.html</a>.</p>
                                 </div>
                                 <div class="tab-pane fade" id="ccm" role="tabpanel" aria-labelledby="ccm-tab">
-                                    <p>Coming early 2020! Central Managment Reporting available now! <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-chocolatey-central-management" })">More information...</a></p>
+                                    <p>Coming early 2020! Central Managment Reporting available now! <a href="https://docs.chocolatey.org/en-us/features/chocolatey-central-management">More information...</a></p>
                                 </div>
                                 <div class="tab-pane fade" id="chef" role="tabpanel" aria-labelledby="chef-tab">
 <pre class="language-ruby line-numbers border py-3"><code>
@@ -838,7 +838,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                             </div>
                             @*Step 5*@
                             <h4 class="mt-4">5. If applicable - Chocolatey configuration/installation</h4>
-                            <p>See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-infrastructure-automation" })#chocolatey-integration-implementation-with-common-configuration-managers">infrastructure management matrix</a> for Chocolatey configuration elements and examples.</p>
+                            <p>See <a href="https://docs.chocolatey.org/en-us/features/integrations#chocolatey-integration-implementation-with-common-configuration-managers">infrastructure management matrix</a> for Chocolatey configuration elements and examples.</p>
                         </div>
                     </div>
                 }
@@ -846,7 +846,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             else
             {
                 <div class="bg-white p-3 shadow-sm mb-3">
-                    <p><strong>Note: </strong> Please <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "installation" })">visit our documentation</a> to learn how to install/uninstall @Model.Title.</p>
+                    <p><strong>Note: </strong> Please <a href="https://docs.chocolatey.org/en-us/choco/setup">visit our documentation</a> to learn how to install/uninstall @Model.Title.</p>
                     <p class="mb-3">To upgrade @Model.Title, run the following command from the command line or from PowerShell:</p>
                     <div class="input-group copyBox">
                         <div class="input-group-prepend">
@@ -878,7 +878,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
             @if (Model.IsDownloadCacheAvailable)
             {
                 <div class="callout callout-secondary">
-                    <p>Private CDN cached downloads available for licensed customers. Never experience 404 breakages again! <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-private-cdn" })">Learn more...</a></p>
+                    <p>Private CDN cached downloads available for licensed customers. Never experience 404 breakages again! <a href="https://docs.chocolatey.org/en-us/features/private-cdn">Learn more...</a></p>
                 </div>
             }
             @if (Model.IsInstallOrPortable)
@@ -1020,7 +1020,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         @if (moderationRole)
                         {
                             <ul>
-                                <li>Reviewers/Moderators must follow review process at <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "moderation" })#reviewer-moderator-process">moderation</a>.
+                                <li>Reviewers/Moderators must follow review process at <a href="https://docs.chocolatey.org/en-us/community-repository/maintainers/moderation#reviewer-moderator-process">moderation</a>.
                                 <li>**Please do not reject a package until the end of the conversation.**</li>
                                 <li>Check over the powershell scripts - anything look unsafe? Download urls should be official distro</li>
                                 @if (Model.Status == PackageStatusType.Approved || Model.Status == PackageStatusType.Exempted)
@@ -1422,7 +1422,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                         </ul>
                         <div class="callout callout-warning">
                             <p>In cases where actual malware is found, the packages are subject to removal. Software sometimes has false positives. Moderators do not necessarily validate the safety of the underlying software, only that a package retrieves software from the official distribution point and/or validate embedded software against official distribution point (where distribution rights allow redistribution).</p>
-                            <p>Chocolatey Pro provides <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-virus-check" })">runtime protection</a> from possible malware.</p>
+                            <p>Chocolatey Pro provides <a href="https://docs.chocolatey.org/en-us/features/virus-check">runtime protection</a> from possible malware.</p>
                         </div>
                     }
                     else
@@ -1521,7 +1521,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                             The maintainers of this Chocolatey Package will be notified about new comments that are posted to this Disqus thread, however, it is NOT a guarantee that you
                             will get a response. If you do not hear back from the maintainers after posting a message below, please follow up by using the link
                             on the left side of this page or follow this link to <a href="@Url.Action(MVC.Packages.ContactOwners(Model.Id))">contact maintainers</a>.
-                            If you still hear nothing back, please follow the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "package-triage-process" })">package triage process</a>.
+                            If you still hear nothing back, please follow the <a href="https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process">package triage process</a>.
                         </li>
                         <li>Tell us what you love about the package or @Model.Title, or tell us what needs improvement.</li>
                         <li>Share your experiences with the package, or extra configuration or gotchas that you've found.</li>

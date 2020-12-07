@@ -14,7 +14,7 @@
 
 <h2 id="installation" class="mb-3">Installation</h2>
 <ol>
-    <li>Chocolatey uses NuGet (NuGet.Core.dll) to retrieve the package from the source. This is typically a nupkg that is stored in a folder, share, or an OData location (HTTP/HTTPS). For more information on sources, please see <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "commands-sources" })">Sources</a> and <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "how-to-host-feed" })">Source Repositories</a>.</li>
+    <li>Chocolatey uses NuGet (NuGet.Core.dll) to retrieve the package from the source. This is typically a nupkg that is stored in a folder, share, or an OData location (HTTP/HTTPS). For more information on sources, please see <a href="https://docs.chocolatey.org/en-us/choco/commands/sources">Sources</a> and <a href="https://docs.chocolatey.org/en-us/features/host-packages">Source Repositories</a>.</li>
     <li>The package is installed into <code>$env:ChocolateyInstall\lib\&lt;pkgId&gt;</code>. The package install location is not configurable - the package must install here for tracking, upgrade, and uninstall purposes. The software that may be installed later during this process <strong><em>is</em></strong> configurable. See <a href="@Url.RouteUrl(RouteName.CourseName, new { courseName= "getting-started", courseModuleName= "terminology" })">Terminology</a> to understand the difference between "package" and "software" as the terms relate to Chocolatey.</li>
     <li>Choco determines if it is self-contained or has automation scripts - PowerShell scripts (*.ps1 files) and possibly other formats at a later date.</li>
     <li>Choco takes a registry snapshot for later comparison.</li>
@@ -42,7 +42,7 @@
     <li>If everything is successful so far, the files snapshot is used to determine what files can be removed from the package folder. If those files have not changed, they will be removed.</li>
     <li>If everything is deleted from the package folder, the folder is also removed.</li>
 </ol>
-<p>When a package has an exe file, Chocolatey will create a link "shortcut" to the file (called a shim) so that you can run that tool anywhere on the machine. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "features-shim" })">shimming</a> for more information.</p>
+<p>When a package has an exe file, Chocolatey will create a link "shortcut" to the file (called a shim) so that you can run that tool anywhere on the machine. See <a href="https://docs.chocolatey.org/en-us/features/shim">shimming</a> for more information.</p>
 <p>When a package has a chocolateyInstall.ps1, it will run the script. The instructions in the file can be anything. This is limited only by the .NET framework and PowerShell.</p>
 <p>Most of the Chocolatey packages that take advantage of the PowerShell download an application installer and execute it silently.</p>
 

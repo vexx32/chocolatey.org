@@ -14,7 +14,7 @@
 }
 
 <h2 id="installation-paths" class="mb-3">Installation Paths</h2>
-<p>As the package maintainer, you decide where the packaged application is installed or extracted to. Depending on your type of application (see <em>"What distinction does Chocolatey make between an installable and a portable application?"</em> at the bottom of the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-faqs" })">FAQ</a>) there are a couple of suitable locations (not listed in any particular order):</p>
+<p>As the package maintainer, you decide where the packaged application is installed or extracted to. Depending on your type of application (see <em>"What distinction does Chocolatey make between an installable and a portable application?"</em> at the bottom of the <a href="https://docs.chocolatey.org/en-us/faqs">FAQ</a>) there are a couple of suitable locations (not listed in any particular order):</p>
 <h4 class="mt-4">1. The Default Installation Path of Your .msi/.exe Setup File</h4>
 <p>
     The original creator probably had a reason for choosing a specific default installation path.<br />
@@ -40,14 +40,14 @@
 <div class="callout callout-warning"><strong>NOTE</strong>: We will ultimately enhance the nuspec and take care of this for you automatically. Until we get there, follow the above avenue.</div>
 
 <h2 id="upgrading" class="mt-5 mb-3">Upgrading</h2>
-<p>Prior to choco version 0.9.10, there is no dedicated automation script for upgrade scenarios. Instead, your <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a> script should support installing/upgrading on top of any previous versions of your package.</p>
+<p>Prior to choco version 0.9.10, there is no dedicated automation script for upgrade scenarios. Instead, your <a href="https://docs.chocolatey.org/en-us/chocolatey-install-ps1">chocolateyInstall.ps1</a> script should support installing/upgrading on top of any previous versions of your package.</p>
 <p>
     More recent versions of choco (0.9.10+) give you the option of supplying a <code>chocolateyBeforeModify.ps1</code> script.<br />
     If applicable, the version of this script from the currently installed package will be run before subsequent chocolateyInstall or chocolateyUninstall scripts.
 </p>
 
 <h2 id="uninstalling" class="mt-5 mb-3">Uninstalling</h2>
-<p>Uninstalling is handled by a <code>chocolateyUninstall.ps1</code> script, which should be in your package's <code>tools</code> directory, next to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a>. All the usual <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">helper reference</a> are available. If your package doesn&#39;t uninstall cleanly, people will get grumpy because they&#39;ll have to manually clean up after you. Be a good human being and write an uninstaller.</p>
+<p>Uninstalling is handled by a <code>chocolateyUninstall.ps1</code> script, which should be in your package's <code>tools</code> directory, next to <a href="https://docs.chocolatey.org/en-us/chocolatey-install-ps1">chocolateyInstall.ps1</a>. All the usual <a href="https://docs.chocolatey.org/en-us/create/functions/">helper reference</a> are available. If your package doesn&#39;t uninstall cleanly, people will get grumpy because they&#39;ll have to manually clean up after you. Be a good human being and write an uninstaller.</p>
 
 @*Quiz*@
 <div>

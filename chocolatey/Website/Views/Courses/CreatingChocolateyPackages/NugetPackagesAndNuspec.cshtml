@@ -15,10 +15,10 @@
 <h2 id="general-information" class="mb-3">General Information</h2>
 <p>There are four main elements to a Chocolatey package. Only the nuspec is required (#1 below).</p>
 <ol>
-    <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "create-packages" })#nuspec">Nuspec</a></li>
-    <li><a href="@Url.RouteUrl(RouteName.Docs, new { docName = "chocolatey-install-ps1" })">chocolateyInstall.ps1</a> - check out the <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">helper reference</a></li>
-    <li>Any application files to include (it is highly suggested that you are the author in this case or you have the right to <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "legal" })">distribute files</a>). EXE files in the package/downloaded to package folder from chocolateyInstall.ps1 will get a link to the command line.</li>
-    <li>chocolateyUninstall.ps1, for uninstalling your package. See <a href="@Url.RouteUrl(RouteName.Docs, new { docName = "helpers-reference" })">helper reference</a> for functions available in your script.</li>
+    <li><a href="https://docs.chocolatey.org/en-us/create/create-packages#nuspec">Nuspec</a></li>
+    <li><a href="https://docs.chocolatey.org/en-us/chocolatey-install-ps1">chocolateyInstall.ps1</a> - check out the <a href="https://docs.chocolatey.org/en-us/create/functions/">helper reference</a></li>
+    <li>Any application files to include (it is highly suggested that you are the author in this case or you have the right to <a href="https://docs.chocolatey.org/en-us/information/legal">distribute files</a>). EXE files in the package/downloaded to package folder from chocolateyInstall.ps1 will get a link to the command line.</li>
+    <li>chocolateyUninstall.ps1, for uninstalling your package. See <a href="https://docs.chocolatey.org/en-us/create/functions/">helper reference</a> for functions available in your script.</li>
 </ol>
 <div class="callout callout-warning"><strong>Note:</strong> Please maintain compatibility with Posh v2. Not every OS we support is on Posh v2 (nor comes OOB with Posh v3+). It's best to work with the widest compatibility of systems out there.</div>
 <p>
