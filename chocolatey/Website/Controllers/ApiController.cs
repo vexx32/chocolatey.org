@@ -280,7 +280,7 @@ any moderation related failures.",
             }
             catch (DbEntityValidationException dbvex)
             {
-                Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):", requestId, packageId, packageVersion.to_string());
+                Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had validation error(s):", requestId, packageId, packageVersion.to_string());
                 Trace.TraceError("[{0}] - {1}", requestId, dbvex.Message);
 
                 foreach (var entityValidationError in dbvex.EntityValidationErrors)
@@ -297,7 +297,6 @@ any moderation related failures.",
             catch (Exception ex)
             {
                 var errorMessage = new StringBuilder();
-                errorMessage.Append(ex.Message);
                 foreach (var innerException in ex.get_inner_exceptions().OrEmptyListIfNull())
                 {
                     errorMessage.AppendLine(innerException.Message);

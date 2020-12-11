@@ -36,6 +36,8 @@ namespace NuGetGallery
                 currentException = currentException.InnerException;
             }
 
+            exceptions.Add(currentException);
+
             return exceptions;
         }
     }
