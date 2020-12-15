@@ -306,6 +306,30 @@ function Set-PSConsoleWriter {
     }
 }
 
+function Test-ChocolateyInstalled {
+    [CmdletBinding()]
+    param()
+
+    $checkPath = if ($env:ChocolateyInstall) { $env:ChocolateyInstall } else { 'C:\ProgramData\chocolatey' }
+
+    if (Get-Command choco -CommandType Application) {
+        # choco is on the PATH, assume it's installed
+        $true
+    }
+    elseif (-not (Test-Path $checkPath)) {
+        # Install folder doesn't exist
+        $false
+    }
+    elseif (-not (Get-ChildItem -Path $checkPath)) {
+        # Install folder exists but is empty
+        $false
+    }
+    elseif (-not (Get-Command choco -CommandType Application)) {
+        # Install folder exists and is not empty
+        $true
+    }
+}
+
 function Install-7zip {
     [CmdletBinding()]
     param(
@@ -334,6 +358,19 @@ function Install-7zip {
 
 # Ensure we have all our streams setup correctly, needed for older PSVersions.
 Set-PSConsoleWriter
+
+if (Test-ChocolateyInstalled) {
+    $message = @(
+        "An existing Chocolatey installation was detected. Installation will not continue."
+        "For security reasons, this script will not overwrite existing installations."
+        ""
+        "Please use `choco upgrade chocolatey` to handle upgrades of Chocolatey itself."
+    ) -join [Environment]::NewLine
+
+    Write-Warning $message
+
+    return
+}
 
 #endregion Pre-check
 
